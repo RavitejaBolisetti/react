@@ -15,7 +15,12 @@ export const validateEmailField = (fieldName) => ({
 
 export const validationFieldLetterAndNumber = (fieldName) => ({
     pattern: /^[A-Za-z0-9]*$/,
-    message: 'Please use only letters and numbers In ' + fieldName,
+    message: 'Please use only letters and numbers in ' + fieldName,
+});
+
+export const validationFieldLetter = (fieldName) => ({
+    pattern: /^[A-Za-z0-9]*$/,
+    message: 'Please use only letters in ' + fieldName,
 });
 
 export const validatePanField = (fieldName) => ({
@@ -48,10 +53,16 @@ export const validateAlphanumericWithSpace = (fieldName) => ({
     pattern: /^[a-zA-Z0-9 ]*$/,
 });
 
+export const validateLettersWithWhitespaces = (fieldName) => ({
+    message: fieldName + ' can contain only letters with whitespaces',
+    pattern: /^[a-zA-Z ]*$/,
+});
+
 export const validationFieldLetteNumberandPeriod = (fieldName) => ({
     pattern: /^[a-zA-Z0-9.]*$/,
     message: 'Please use only letters, numbers and period in' + fieldName,
 });
+
 export const validationNumber = (fieldName) => ({
     pattern: /^(0|[1-9][0-9]*)$/,
     message: 'Please enter valid ' + fieldName,
@@ -70,6 +81,11 @@ export const validateGSTIN = (fieldName) => ({
 export const validateNumberWithTwoDecimalPlaces = (fieldName) => ({
     pattern: /^[0-9]*\.[0-9]{2}$/,
     message: 'Please enter valid ' + fieldName,
+});
+
+export const validatePincodeField = (fieldName, digit = '6') => ({
+    pattern: /^\d{6}(?:\s*,\s*\d{6})*$/,
+    message: 'Please enter 6 digit valid ' + fieldName,
 });
 
 export const duplicateValidator = (value, fieldName, dataList, updateVal) => {
@@ -97,9 +113,8 @@ export const valueBetween0to100 = (value, fieldName) => {
 };
 
 export const duplicateProductValidator = (value, dataList) => {
-
-    console.log(value,'changeValue')
-    console.log(dataList,'arrayList')
+    console.log(value, 'changeValue');
+    console.log(dataList, 'arrayList');
 
     let status = false;
     for (let i = 0; i < dataList?.length; i++) {
@@ -112,4 +127,17 @@ export const duplicateProductValidator = (value, dataList) => {
             return Promise.resolve('');
         }
     }
+};
+export const searchValidator = (_, value) => {
+    if (!value || (value && value.trim().length >= 3)) {
+        return Promise.resolve();
+    }
+    return Promise.reject(new Error('Please enter atleast 3 character to search'));
+};
+
+export const searchValidatorPincode = (_, value) => {
+    if (value === '' || (value && value.trim().length >= 6)) {
+        return Promise.resolve();
+    }
+    return Promise.reject(new Error('Please enter atleast 6 character to search'));
 };

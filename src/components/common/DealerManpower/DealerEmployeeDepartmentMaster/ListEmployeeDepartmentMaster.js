@@ -9,18 +9,21 @@ import { dealerManpowerEmployeeDepartmentDataActions } from 'store/actions/data/
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
+import { searchValidator } from 'utils/validation';
+import { ListDataTable } from 'utils/ListDataTable';
+
+import { AdvancedSearch } from './AdvancedSearch';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { showGlobalNotification } from 'store/actions/notification';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
-
+import { FilterIcon } from 'Icons';
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
-const { Option } = Select;
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -32,7 +35,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Dealer Employee Department Master';
+    const moduleTitle = 'Dealer Employee Department';
 
     let returnValue = {
         userId,
@@ -57,6 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: dealerManpowerEmployeeDepartmentDataActions.fetchList,
             saveData: dealerManpowerEmployeeDepartmentDataActions.saveData,
             listShowLoading: dealerManpowerEmployeeDepartmentDataActions.listShowLoading,
+            resetData: dealerManpowerEmployeeDepartmentDataActions.reset,
             showGlobalNotification,
         },
         dispatch
@@ -64,10 +68,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListEmployeeDepartmentMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle, resetData } = props;
     const { isDivisionDataLoaded, listDivisionShowLoading, fetchDivisionList, isDivisionLoading, divisionData } = props;
 
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
+    const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
@@ -77,12 +83,15 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [filteredDivisionData, setFilteredDivisionData] = useState([]);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -116,8 +125,10 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const division = filterString?.division;
+                const division = filterString?.divisionCode;
+
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.departmentCode) || filterFunction(keyword)(item?.departmentName) : true) && (division ? filterFunction(division)(item?.divisionCode) : true));
+
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -144,17 +155,32 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
-    const onSearchHandle = (value) => {
-        setFilterString({ ...filterString, keyword: value });
-    };
+    const extraParams = [
+        {
+            key: 'divisionCode',
+            title: 'Division',
+            value: filterString?.divisionCode,
+            name: divisionData?.find((i) => i?.code === filterString?.divisionCode)?.divisionName,
+            canRemove: true,
+        },
+        {
+            key: 'keyword',
+            title: 'Keyword',
+            value: filterString?.keyword,
+            name: filterString?.keyword,
+            canRemove: true,
+        },
+    ];
 
-    const onChangeHandle = (e) => {
-        setFilterString({ ...filterString, keyword: e.target.value });
-    };
+    const handleFilterChange =
+        (name, type = 'value') =>
+        (value) => {
+            //const filterValue = type === 'text' ? value.target.value : value;
 
-    const handleDivisionChange = (value) => {
-        setFilterString({ ...filterString, division: value });
-    };
+            if (name === 'divisionCode') {
+                advanceFilterForm.setFieldsValue({ divisionCode: undefined });
+            }
+        };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -201,6 +227,19 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const onAdvanceSearchCloseAction = () => {
+        setAdvanceSearchVisible(false);
+        advanceFilterForm.resetFields();
+    };
+
+    const handleResetFilter = () => {
+        setFilterString();
+        resetData();
+        listFilterForm.resetFields();
+        advanceFilterForm.resetFields();
+        setShowDataLoading(false);
+    };
+
     const formProps = {
         form,
         formData,
@@ -231,83 +270,77 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         tableData: searchData,
         setPage,
     };
+
+    const advanceFilterProps = {
+        isVisible: isAdvanceSearchVisible,
+        onCloseAction: onAdvanceSearchCloseAction,
+        icon: <FilterIcon size={20} />,
+        titleOverride: 'Advance Filters',
+        handleFilterChange,
+        divisionData,
+        filteredDivisionData,
+        filterString,
+        setFilterString,
+        advanceFilterForm,
+        resetData,
+        handleResetFilter,
+        setAdvanceSearchVisible,
+    };
+
+    const onSearchHandle = (value) => {
+        if (value?.trim()?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: true, keyword: value });
+            listFilterForm.setFieldsValue({ code: undefined });
+        }
+    };
+
+    const removeFilter = (key) => {
+        if (key === 'divisionCode') {
+            setFilterString(undefined);
+        } else if (key === 'departmentCode') {
+            const { departmentCode, keyword, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'keyword') {
+            const { [key]: names, ...rest } = filterString;
+
+            listFilterForm.setFieldsValue({ code: undefined });
+            advanceFilterForm.setFieldsValue({ keyword: undefined });
+
+            if (!rest?.departmentCode && !rest?.departmentCode && !rest?.departmentCode) {
+                setFilterString();
+            } else {
+                setFilterString({ ...rest });
+            }
+        }
+    };
+
+    const title = 'Employee Department';
+    const advanceFilterResultProps = {
+        advanceFilter: true,
+        filterString,
+        from: listFilterForm,
+        onFinish,
+        onFinishFailed,
+        extraParams,
+        removeFilter,
+        handleResetFilter,
+        onSearchHandle,
+        setAdvanceSearchVisible,
+        handleReferesh,
+        handleButtonClick,
+        advanceFilterProps,
+        title,
+    };
+
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.lineHeight33}>
-                                        {`${moduleTitle}`}
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Select placeholder="Division" loading={isDivisionLoading} onChange={handleDivisionChange} allowClear className={styles.headerSelectField}>
-                                            {divisionData?.map((item) => (
-                                                <Option value={item?.code}>{item?.divisionName}</Option>
-                                            ))}
-                                        </Select>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
-                                    </Col>
-                                </Row>
-                            </Col>
-
-                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add Department
-                                </Button>
-                            </Col>
-                        </Row>
-                    </div>
-                </Col>
-            </Row>
-
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() =>
-                            isDataLoaded && (
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        !searchData?.length ? (
-                                            <span>
-                                                No records found. Please add new parameter <br />
-                                                using below button
-                                            </span>
-                                        ) : (
-                                            <span> No records found.</span>
-                                        )
-                                    }
-                                >
-                                    {!searchData?.length ? (
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                    Add Department
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    ) : (
-                                        ''
-                                    )}
-                                </Empty>
-                            )
-                        }
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={showDataLoading} {...tableProps} />
-                        </div>
-                    </ConfigProvider>
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
+            <AdvancedSearch {...advanceFilterProps} />
             <AddEditForm {...formProps} />
         </>
     );

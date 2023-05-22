@@ -15,7 +15,8 @@ import { SVGComponent as MinusBorderedIcon } from './MinusBorderedIcon';
 import { SVGComponent as LinearTrash } from './LinearTrash';
 import { SVGComponent as EditIcon } from './EditIcon';
 import { SVGComponent as ViewEyeIcon } from './ViewEyeIcon';
+import { SVGComponent as FilterIcon } from './FilterIcon';
 // import { SVGComponent as MinusBorderedIcon } from './MinusBorderedIcon';
 // import { SVGComponent as PlusBorderedIcon } from './PlusBorderedIcon';
 
-export { HeadPhoneIcon, MenuArrow, AdminIcon, HomeIcon, CrmIcon, ServiceIcon, SparesIcon, HrIcon, ProfileIcon, ChangePasswordIcon, SettingsIcon, LogoutIcon, LinearTrash, EditIcon, ViewEyeIcon, PlusBorderedIcon, MinusBorderedIcon };
+export { HeadPhoneIcon, MenuArrow, AdminIcon, HomeIcon, CrmIcon, ServiceIcon, SparesIcon, HrIcon, ProfileIcon, ChangePasswordIcon, SettingsIcon, LogoutIcon, LinearTrash, EditIcon, ViewEyeIcon, FilterIcon, PlusBorderedIcon, MinusBorderedIcon };

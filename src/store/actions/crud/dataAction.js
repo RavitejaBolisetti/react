@@ -5,7 +5,7 @@ import { doLogout, unAuthenticateUser } from '../../actions/auth';
 import { LANGUAGE_EN } from 'language/en';
 
 export const dataActions = (params) => {
-    const { baseURL: inBaseURL, RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT } = params;
+    const { baseURL: inBaseURL, RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT } = params;
 
     const listShowLoading = (isLoading) => ({
         type: RECEIVE_DATA_LOADING_ACTION_CONSTANT,
@@ -15,6 +15,11 @@ export const dataActions = (params) => {
     const recieveData = (data) => ({
         type: RECEIVE_DATA_ACTION_CONSTANT,
         data,
+    });
+
+    const setFilter = (filter) => ({
+        type: RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT,
+        filter,
     });
 
     const filteredRecieveData = (filteredListData) => ({
@@ -34,7 +39,7 @@ export const dataActions = (params) => {
 
     const innerDataActions = {
         fetchList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, type = '', mytype = '', onSuccessAction = undefined } = params;
+            const { setIsLoading, data, type = '', mytype = '', onSuccessAction = undefined, extraParams = [] } = params;
             setIsLoading(true);
             const onError = (errorMessage) => message.error(errorMessage);
 
@@ -47,10 +52,17 @@ export const dataActions = (params) => {
                 }
             };
 
+            let sExtraParamsString = '?';
+            extraParams?.forEach((item, index) => {
+                sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+            });
+
+            sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+
             const apiCallParams = {
                 data,
                 method: 'get',
-                url: inBaseURL + (type ? '?type=' + type : '') + (mytype ? mytype : ''),
+                url: inBaseURL + (type ? '?type=' + type : '') + (mytype ? mytype : '') + (sExtraParamsString ? sExtraParamsString : ''),
                 token,
                 accessToken,
                 userId,
@@ -154,6 +166,9 @@ export const dataActions = (params) => {
         }),
         reset: () => (dispatch) => {
             dispatch(resetData());
+        },
+        setFilter: (filter) => (dispatch) => {
+            dispatch(setFilter(filter));
         },
         listShowLoading: (isLoading) => (dispatch) => {
             dispatch(listShowLoading(isLoading));

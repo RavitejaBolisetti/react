@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { withSpinner } from './withSpinner';
+import { SessionTimeout } from './SessionTimeout';
 import { doLogoutAPI } from '../store/actions/auth';
 import { bindActionCreators } from 'redux';
 
@@ -52,7 +53,7 @@ const MainPageBase = ({ notification }) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn]);
-    
+
     useEffect(() => {
         if (notification?.visible) {
             informationModalBox({ type: notification?.notificationType, title: notification?.title, message: notification?.message, placement: notification?.placement, showTitle: notification?.showTitle });
@@ -60,7 +61,18 @@ const MainPageBase = ({ notification }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [notification?.visible]);
 
-    return <div>{isLoggedIn ? <AuthenticatedUserPage /> : <UnAuthenticatedUserPage />}</div>;
+    return (
+        <div>
+            {isLoggedIn ? (
+                <>
+                    <SessionTimeout />
+                    <AuthenticatedUserPage />
+                </>
+            ) : (
+                <UnAuthenticatedUserPage />
+            )}
+        </div>
+    );
 };
 const MainPageWithSpinner = withSpinner(MainPageBase);
 export const MainPage = connect(mapStateToProps, mapDispatchToProps)(MainPageWithSpinner);

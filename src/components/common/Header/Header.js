@@ -209,7 +209,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             {!isLoading ? (
                 <div className={styles.headerContainer}>
                     <Row gutter={0} className={styles.columnInterchange}>
-                        <Col xs={24} sm={24} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
+                        <Col xs={24} sm={isDashboard ? 9 : 16} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
                             <div className={styles.headerLeft}>
                                 <Space>
                                     {/* <div className={styles.userAvatar}>
@@ -217,6 +217,9 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                             {dealerAvatar}
                                         </Avatar>
                                     </div> */}
+                                    <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} style={{ paddingLeft: '10px' }} onClick={handleCollapse}>
+                                        <img width={20} src={IMG_ICON} alt="" className={styles.brandImage} /> <Icon component={MenuArrow} />
+                                    </div>
                                     <div className={styles.userText}>
                                         <div className={styles.dealerName}>{dealerName}</div>
                                         <div className={styles.dealerInfo}>
@@ -246,19 +249,16 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                         </Col>
 
                         {pagePath === routing.ROUTING_DASHBOARD && (
-                            <Col xs={24} sm={24} md={7} lg={7} xl={7} xxl={7}>
+                            <Col xs={0} sm={0} md={7} lg={7} xl={7} xxl={7}>
                                 <div className={styles.headerRight} style={{ width: '100%' }}>
                                     <Search data-testid="search" allowClear placeholder="Search by Doc ID" onSearch={onSearch} />
                                 </div>
                             </Col>
                         )}
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
+                        <Col xs={24} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <div className={styles.headerRight}>
                                 <div className={styles.navbarExpand}>
                                     <div className={styles.navbarNav}>
-                                        <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} style={{ paddingLeft: '10px' }} onClick={handleCollapse}>
-                                            <img width={20} src={IMG_ICON} alt="" className={styles.brandImage} /> <Icon component={MenuArrow} />
-                                        </div>
 
                                         <div className={`${styles.floatLeft}`}>
                                             <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
