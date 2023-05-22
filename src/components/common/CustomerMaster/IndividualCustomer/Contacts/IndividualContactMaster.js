@@ -14,7 +14,7 @@ import ViewContactList from './ViewContactList';
 const { Panel } = Collapse;
 const { Text } = Typography;
 
-const IndividualContactMain = () => {
+const IndividualContactMain = ({ isViewModeVisible }) => {
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -28,16 +28,15 @@ const IndividualContactMain = () => {
         console.log('on finish value ', value);
         setContactData((prev) => {
             let formData = [...prev];
-            if(formData?.length<=1){
-                return [...prev, { ...value }]
-            }else {
-                formData?.forEach(contact => {
-                    if(contact?.defaultaddress === true){
+            if (formData?.length <= 1) {
+                return [...prev, { ...value }];
+            } else {
+                formData?.forEach((contact) => {
+                    if (contact?.defaultaddress === true) {
                         contact.defaultaddress = false;
                     }
                 });
                 return [...formData, value];
-               
             }
         });
         setShowAddEditForm(false);
@@ -62,23 +61,24 @@ const IndividualContactMain = () => {
     };
 
     return (
-        <Space direction='vertical' size='middle' style={{display: 'flex'}}>
+        <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
             <h2>Contacts</h2>
             <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
                 <Panel
                     header={
                         <Space>
                             <FaRegUserCircle className={styles.userCircle} />
-                            <Text strong> Individual Contact</Text>{' '}
-                            <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
-                                Add Contact
-                            </Button>
+                            <Text strong> Individual Contact</Text>
+                            {!isViewModeVisible && (
+                                <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
+                                    Add Contact
+                                </Button>
+                            )}
                         </Space>
                     }
                     key="1"
                 >
-                    {(showAddEditForm || !contactData?.length>0) && <AddEditForm {...formProps} />}
-                    {/* <ViewDetail {...formProps} /> */}
+                    {(showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />}
                     <ViewContactList {...formProps} />
                 </Panel>
             </Collapse>

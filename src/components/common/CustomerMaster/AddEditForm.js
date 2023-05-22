@@ -9,8 +9,9 @@ import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react
 import styles from 'components/common/Common.module.css';
 
 import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
-import { CustomerProfile, CompanyCustomerDetailsMaster } from './FirmOrCompany';
+import { CompanyCustomerDetailsMaster } from './FirmOrCompany';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
+import { CompanyProfile } from './FirmOrCompany';
 import FormProgressBar from './FormProgressBar';
 import CommonFooterButton from './CommonFooterButton';
 
@@ -151,7 +152,9 @@ const AddEditFormMain = (props) => {
             if (leftTimeline?.CustomerDetails) {
                 return <CompanyCustomerDetailsMaster {...CustomerDetailsMasterProps} />;
             } else if (leftTimeline?.CustomerProfile) {
-                return <CustomerProfile />;
+                return <CompanyProfile {...CustomerProfileMasterProps} />;
+            } else if (leftTimeline?.AccountRelated) {
+                return <IndividualAccountRelatedMaster {...IndividualAccountRelatedMasterProps} />;
             }
         }
     };

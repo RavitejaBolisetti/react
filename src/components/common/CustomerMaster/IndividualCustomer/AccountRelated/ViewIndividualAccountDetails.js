@@ -1,5 +1,6 @@
 import React from 'react';
 import { Descriptions } from 'antd';
+import { CheckSquareOutlined, CloseOutlined } from '@ant-design/icons';
 
 const ViewDetailBase = (props) => {
     const { styles, parameterType } = props;
@@ -17,7 +18,15 @@ const ViewDetailBase = (props) => {
         partsDiscount: '25',
         laborDiscount: '19',
         remarks: 'Loren Ispum Dummy Text',
-        vipDealerInd: 'active',
+        vipDealerInd: true,
+    };
+
+    const renderCheckbox = (value) => {
+        if (value) {
+            return <CheckSquareOutlined style={{ color: 'red' }} />;
+        } else {
+            return <CloseOutlined style={{ color: 'green' }} />;
+        }
     };
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
@@ -29,7 +38,7 @@ const ViewDetailBase = (props) => {
                     <Descriptions.Item label="Parts Discount">{formData?.partsDiscount}</Descriptions.Item>
                     <Descriptions.Item label="Labour Discount">{formData?.laborDiscount}</Descriptions.Item>
                     <Descriptions.Item label="Remarks">{formData?.remarks}</Descriptions.Item>
-                    <Descriptions.Item label="VIP Dealer">{formData?.vipDealerInd ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    <Descriptions.Item label="VIP Dealer">{renderCheckbox(formData?.vipDealerInd)}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>

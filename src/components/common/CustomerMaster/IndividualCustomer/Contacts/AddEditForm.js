@@ -93,8 +93,8 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item suffix={<Button>Send OTP</Button>} label="Mobile Number" name="contactMobileNumber">
-                            <Input className={style.inputBox} placeholder={preparePlaceholderText('mobile number')} {...disabledProps} />
+                        <Form.Item label="Mobile Number" name="contactMobileNumber">
+                            <Input className={style.inputBox} suffix={<Button >Send OTP</Button>} placeholder={preparePlaceholderText('mobile number')} {...disabledProps} />
                         </Form.Item>
                     </Col>
 
