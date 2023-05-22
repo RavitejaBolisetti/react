@@ -489,6 +489,7 @@ const ListPinCodeMasterBase = (props) => {
         filterString,
         setFilterString,
         title,
+        pincode : true,
     };
     return (
         <>

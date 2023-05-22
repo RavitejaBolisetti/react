@@ -241,7 +241,6 @@ export const ListStateMasterBase = (props) => {
     const handleResetFilter = () => {
         resetData();
         advanceFilterForm.resetFields();
-        setAdvanceSearchVisible(false);
         setShowDataLoading(false);
         advanceFilterForm.setFieldsValue({ keyword: undefined });
         listFilterForm.setFieldsValue({ code: undefined });
