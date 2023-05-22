@@ -8,43 +8,39 @@ const { Panel } = Collapse;
 const { Text, Link } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, setactiveKey, onChange, styles, parameterType } = props;
+    const { activeKey, setactiveKey, onChange, style, parameterType } = props;
     const viewProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-    const customerForm = {
-        customerType: 'uttar pradesh',
-        corporateCode: 'ssss',
-        CustomerCategory: '12312',
-        usageCategorization: 'Delhi',
-        usageCategorizationcategory: true,
+    const CompanyForm = {
+        companyName: 'Simran',
+        companyCode: 'S102',
+        ParentcompanyName: 'Vivek',
+        panNumber: 'LPKPS8930R',
+        gstinNumber: '2222',
+        membershipType: 'Gold',
+
     };
-    const AuthorityForm = {
-        companyName: 'uttar pradesh',
-        personName: 'ssss',
-        postion: '12312',
-        remarks: 'Delhi',
+    const SocialForm = {
+        m1mmfsl: 'MMFSL',
+        facebookId: 'simran@facebook.com',
+        twitterId: 'simran@twitter.com',
+        
     };
-    const keyAccountForm = {
-        accountClientName: 'uttar pradesh',
-        accountCode: 'ssss',
-        accountMappingDate: '12312',
-        accountName: 'Delhi',
-        accountSegment: true,
-    };
+    
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={`${style.viewContainer} ${style.hierarchyRightContaners}`}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Collapse
                     expandIcon={() => {
                         if (activeKey.includes(1)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
+                            return <MinusOutlined className={style.iconsColor} />;
                         } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
+                            return <PlusOutlined className={style.iconsColor} />;
                         }
                     }}
                     activeKey={activeKey}
@@ -53,22 +49,24 @@ const ViewDetailMain = (props) => {
                 >
                     <Panel
                         header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
+                            <div className={style.alignUser}>
+                                <FaRegUserCircle className={style.userCircle} />
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     {' '}
-                                    Customer Information
+                                    Company Information
                                 </Text>
                             </div>
                         }
                         key="1"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Customer Type">{customerForm?.customerType}</Descriptions.Item>
-                            <Descriptions.Item label="corporate Code">{customerForm?.corporateCode}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Category">{customerForm?.CustomerCategory}</Descriptions.Item>
-                            <Descriptions.Item label="Usage Categorization">{customerForm?.usageCategorization}</Descriptions.Item>
-                            <Descriptions.Item label="usage Categorization Category">{customerForm?.usageCategorizationcategory ? 'Active' : 'Inactive'}</Descriptions.Item>
+                            <Descriptions.Item label="Firm/Company Name">{CompanyForm?.companyName}</Descriptions.Item>
+                            <Descriptions.Item label="Parent Firm/Company Code">{CompanyForm?.companyCode}</Descriptions.Item>
+                            <Descriptions.Item label="Parent Firm/Company Name">{CompanyForm?.ParentcompanyName}</Descriptions.Item>
+                            <Descriptions.Item label="PAN">{CompanyForm?.panNumber}</Descriptions.Item>
+                            <Descriptions.Item label="GSTIN">{CompanyForm?.gstinNumber }</Descriptions.Item>
+                            <Descriptions.Item label="Membership Type">{CompanyForm?.membershipType }</Descriptions.Item>
+
                         </Descriptions>
                     </Panel>
                 </Collapse>
@@ -76,9 +74,9 @@ const ViewDetailMain = (props) => {
                 <Collapse
                     expandIcon={() => {
                         if (activeKey.includes(2)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
+                            return <MinusOutlined className={style.iconsColor} />;
                         } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
+                            return <PlusOutlined className={style.iconsColor} />;
                         }
                     }}
                     activeKey={activeKey}
@@ -87,8 +85,8 @@ const ViewDetailMain = (props) => {
                 >
                     <Panel
                         header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
+                            <div className={style.alignUser}>
+                                <FaRegUserCircle className={style.userCircle} />
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     {' '}
                                     Key Account Details
@@ -98,47 +96,15 @@ const ViewDetailMain = (props) => {
                         key="2"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Account Client Name">{keyAccountForm?.accountClientName}</Descriptions.Item>
-                            <Descriptions.Item label="Account Code">{keyAccountForm?.accountCode}</Descriptions.Item>
-                            <Descriptions.Item label="Account Mapping Date">{keyAccountForm?.accountMappingDate}</Descriptions.Item>
-                            <Descriptions.Item label="Account Name">{keyAccountForm?.accountName}</Descriptions.Item>
-                            <Descriptions.Item label="Account Segment">{keyAccountForm?.accountSegment ? 'Active' : 'Inactive'}</Descriptions.Item>
+                            <Descriptions.Item label="M1-MMFSL">{SocialForm?.m1mmfsl}</Descriptions.Item>
+                            <Descriptions.Item label="Facebook Link">{SocialForm?.facebookId}</Descriptions.Item>
+                            <Descriptions.Item label="Twitter Link">{SocialForm?.twitterId}</Descriptions.Item>
+                            
                         </Descriptions>
                     </Panel>
                 </Collapse>
 
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(3)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(3)}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {' '}
-                                    Authority Details
-                                </Text>
-                            </div>
-                        }
-                        key="3"
-                    >
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Company Name">{AuthorityForm?.companyName}</Descriptions.Item>
-                            <Descriptions.Item label="Person Name">{AuthorityForm?.personName}</Descriptions.Item>
-                            <Descriptions.Item label="Postion">{AuthorityForm?.postion}</Descriptions.Item>
-                            <Descriptions.Item label="Remarks">{AuthorityForm?.remarks}</Descriptions.Item>
-                        </Descriptions>
-                    </Panel>
-                </Collapse>
+            
             </Space>
         </div>
     );
