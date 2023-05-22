@@ -1,5 +1,5 @@
 import React from 'react';
-import { DesignationMaster } from 'components/common/DealerManpower';
+import { DesignationMaster } from 'components/common/DealerManpower/DesignationMaster/DesignationMaster';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 

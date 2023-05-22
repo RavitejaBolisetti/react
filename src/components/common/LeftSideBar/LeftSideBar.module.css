@@ -473,7 +473,28 @@
     margin: 5px auto 10px auto;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 576px) and (max-width: 768px) {
+    .leftMenuBox {
+        position: fixed !important;
+        width: 272px !important;
+        box-shadow: none !important;
+        min-width: 0 !important;
+    }
+
+    .logoContainer {
+        padding-right: 19px;
+    }
+
+    .brandLink {
+        padding-top: 14px;
+    }
+
+    .changeTheme {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 576px) {
     .leftMenuBox {
         position: fixed !important;
         width: 100vw !important;

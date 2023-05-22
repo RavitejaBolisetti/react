@@ -20,6 +20,7 @@ import * as IMAGES from 'assets';
 import { ROUTING_LOGIN } from 'constants/routing';
 import Footer from '../Footer';
 import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const mapStateToProps = (state) => {
     const {
@@ -48,12 +49,13 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogin, isOpen = false, onOk = () => { }, onCancel = () => { }, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId, isTrue = true }) => {
+const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogin, isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId, isTrue = true }) => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const canSkip = preLoginData?.passwordStatus?.status === 'A';
     const [showPassword, setShowPassword] = useState({ oldPassword: false, newPassword: false, confirmNewPassword: false });
     const [password, setPassword] = useState('');
+    const [tooltipVisible, setTooltipVisible] = useState(false);
 
     useEffect(() => {
         if (!preLoginData) {
@@ -124,17 +126,17 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="oldPassword" rules={[validateRequiredInputField('Old password')]} className={`${styles.inputBox}`}>
-                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.oldPassword ? 'text' : 'password'} placeholder="Old password*" visibilityToggle={true} suffix={passwordSuffix('oldPassword')} />
+                                                        <Form.Item name="oldPassword" rules={[validateRequiredInputField('old password')]} className={`${styles.inputBox}`}>
+                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.oldPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('Old password*', false)} visibilityToggle={true} suffix={passwordSuffix('oldPassword')} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('New Password')]} className={`${styles.changer} ${styles.inputBox}`}>
-                                                            <Input onChange={(e) => setPassword(e.target.value)} prefix={<FiLock size={18} />} type={showPassword?.newPassword ? 'text' : 'password'} placeholder="New password*" suffix={passwordSuffix('newPassword')} />
+                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]} className={`${styles.changer} ${styles.inputBox}`}>
+                                                            <Input onChange={(e) => setPassword(e.target.value)} prefix={<FiLock size={18} />} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('New password*', false)} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                                                         </Form.Item>
-                                                        <PasswordStrengthMeter password={password} beforeLogin={true} />
+                                                        <PasswordStrengthMeter password={password} beforeLogin={true} tooltipVisible={tooltipVisible} />
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>

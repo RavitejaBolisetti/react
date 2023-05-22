@@ -1,5 +1,5 @@
 import React from 'react';
-import { BayTypeMaster } from 'components/common/DealerManpower';
+import { BayTypeMaster } from 'components/common/DealerManpower/BayTypeMaster/BayTypeMaster';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 

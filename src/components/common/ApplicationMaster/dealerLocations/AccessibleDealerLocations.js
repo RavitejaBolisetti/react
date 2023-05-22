@@ -81,7 +81,7 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
 
             setDealerLocationList([...finalLocations]);
         },
-        [dealerLocations]
+        [ searchValue]
     );
 
     useEffect(() => {
@@ -135,7 +135,7 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {finalFormdata?.accessibleLocation?.length > 0
                         ? finalFormdata?.accessibleLocation?.map((location) => {
-                              return <LocationCard {...location} handleDeleteLocation={handleDeleteLocation} />;
+                              return <LocationCard key={location?.id} {...location} handleDeleteLocation={handleDeleteLocation} />;
                           })
                         : ''}
                 </Col>

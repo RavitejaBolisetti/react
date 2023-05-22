@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Switch, Select } from 'antd';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
+import { validateRequiredInputField, validationFieldLetter } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -31,7 +31,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleDivisionChange = (division) => {
-        form.setFieldValue('departmentName', undefined);
+        form.setFieldValue('departmentCode', undefined);
         setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === division));
     };
 
@@ -77,12 +77,12 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.roleCode} label="Role Code" name="roleCode" rules={[validateRequiredInputField('role code'), validationFieldLetterAndNumber('role code')]}>
+                            <Form.Item initialValue={formData?.roleCode} label="Role Code" name="roleCode" rules={[validateRequiredInputField('role code'), validationFieldLetter('role code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('role code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Role Description" initialValue={formData?.roleDescription} rules={[validateRequiredInputField('role description'), validateAlphanumericWithSpace('role description')]} name="roleDescription">
+                            <Form.Item label="Role Description" initialValue={formData?.roleDescription} rules={[validateRequiredInputField('role description'), validationFieldLetter('role description')]} name="roleDescription">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('role description')} maxLength={50} />
                             </Form.Item>
                         </Col>
