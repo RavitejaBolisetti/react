@@ -8,7 +8,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const {  formData, handleFilterChange } = props;
+    const { handleFilterChange } = props;
     const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible } = props;
 
     useEffect(() => {
@@ -45,7 +45,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.divisionCode} label="Division Name" name="divisionCode">
+                    <Form.Item initialValue={filterString?.divisionCode} label="Division Name" name="divisionCode">
                         <Select className={styles.headerSelectField} showSearch loading={!isDivisionDataLoaded} placeholder="Select" allowClear onChange={handleDivisionChange}>
                             {divisionData?.map((item) => (
                                 <Option value={item?.code}>{item?.divisionName}</Option>
@@ -55,7 +55,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.departmentCode} label="Department Name" name="departmentCode">
+                    <Form.Item initialValue={filterString?.departmentCode} label="Department Name" name="departmentCode">
                         <Select className={styles.headerSelectField} {...selectProps} showSearch loading={!isDepartmentDataLoaded} placeholder="Select" allowClear onChange={handleFilterChange('departmentCode')}>
                             {filteredDepartmentData?.map((item) => (
                                 <Option value={item?.departmentCode}>{item?.departmentName}</Option>
@@ -67,8 +67,8 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={24} sm={12} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={formData?.keyword} label="Role Code" name="keyword" rules={[{ validator: searchValidator }]}>
-                        <Input className={styles.inputBox} maxLength={6} placeholder="Search" />
+                    <Form.Item initialValue={filterString?.keyword} label="Role Name" name="keyword" rules={[{ validator: searchValidator }]}>
+                        <Input className={styles.inputBox} maxLength={50} placeholder="Search" />
                     </Form.Item>
                 </Col>
             </Row>

@@ -86,6 +86,7 @@ export const ListRoleMasterBase = (props) => {
     const { isDepartmentDataLoaded, listDepartmentShowLoading, fetchDepartmentList, isDepartmentLoading, departmentData } = props;
 
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -208,7 +209,11 @@ export const ListRoleMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
+        if (value?.trim()?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: true, keyword: value });
+            listFilterForm.setFieldsValue({ code: undefined });
+        }
+
     };
 
     const handleFilterChange =
@@ -309,6 +314,7 @@ export const ListRoleMasterBase = (props) => {
     const handleResetFilter = () => {
         setFilterString();
         resetData();
+        listFilterForm.resetFields();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
         setAdvanceSearchVisible(false);
@@ -342,51 +348,31 @@ export const ListRoleMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
+    const title = 'Role Master';
     const advanceFilterResultProps = {
+        advanceFilter: true,
         filterString,
+        from: listFilterForm,
+        onFinish,
+        onFinishFailed,
         extraParams,
         removeFilter,
         handleResetFilter,
+        onSearchHandle,
+        setAdvanceSearchVisible,
+        handleReferesh,
+        handleButtonClick,
+        advanceFilterProps,
+        title,
     };
 
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form autoComplete="off" colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinishFailed={onFinishFailed}>
-                                            <Form.Item label="Role Master" initialValue={filterString?.code} name="keyword" rules={[{ validator: searchValidator }]}>
-                                                <Search placeholder="Search" maxLength={50} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
-                                            </Form.Item>
-                                        </Form>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                                        <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
-                                            Advanced Filters
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </Col>
-
-                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add Role
-                                </Button>
-                            </Col>
-                        </Row>
-                        <AppliedAdvanceFilter {...advanceFilterResultProps} />
-                    </div>
-                </Col>
-            </Row>
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable scroll={2400} isLoading={showDataLoading} {...tableProps} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

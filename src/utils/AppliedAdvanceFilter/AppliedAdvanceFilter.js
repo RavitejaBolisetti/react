@@ -26,7 +26,7 @@ export default function AppliedAdvanceFilter(props) {
                             <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                                 <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} form={from} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                     <Form.Item
-                                        label={`${title} List`}
+                                        label={`${title}`}
                                         name="code"
                                         rules={[
                                             {
