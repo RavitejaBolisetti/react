@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Switch, DatePicker } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace, validateLettersWithWhitespaces } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -21,6 +21,11 @@ const AddEditFormMain = (props) => {
 
     const { stateData, districtData } = props;
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
+
+    useEffect(() => {
+        setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === formData?.stateCode));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [formData?.stateCode]);
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -63,7 +68,7 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
-    console.log(formData,'formData')
+    console.log(formData, 'formData');
 
     const dateInitialValue = { initialValue: editMode ? convertCalenderDate(formData?.includeOn, 'YYYY/MM/DD') : null };
 
