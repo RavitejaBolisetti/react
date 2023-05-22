@@ -5,11 +5,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { Form, Row, Col, Button, Input, Checkbox } from 'antd';
-import { UndoOutlined } from '@ant-design/icons';
-import { addToolTip } from 'utils/customMenuLink';
+
 import { TbRefresh } from 'react-icons/tb';
 import { RxCrossCircled } from 'react-icons/rx';
-import { AiOutlineEyeInvisible, AiOutlineEye, AiOutlineInfoCircle } from 'react-icons/ai';
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { showGlobalNotification, hideGlobalNotification } from 'store/actions/notification';
 
 import { BiUser } from 'react-icons/bi';
@@ -68,6 +67,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const [showPassword, setShowPassword] = useState({ newPassword: false, confirmNewPassword: false });
     const [password, setPassword] = useState('');
     const [verifiedUserData, setVerifiedUserData] = useState();
+    const [tooltipVisible, setTooltipVisible] = useState(false);
 
     useEffect(() => {
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -76,6 +76,11 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [counter]);
+
+    useEffect(() => {
+        password && setTooltipVisible(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [password]);
 
     const onError = (message) => {
         showGlobalNotification({ title: 'ERROR', message: Array.isArray(message[0]) || message });
@@ -389,7 +394,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                         </Row>
                                                     </Col>
                                                 </Row>
-                                                <Button onClick={handleVerifyOTP} disabled={otpInput?.length < 6 || typeof otpInput == 'undefined' } loading={isLoading} className={styles.button} type="primary">
+                                                <Button onClick={handleVerifyOTP} disabled={otpInput?.length < 6 || typeof otpInput == 'undefined'} loading={isLoading} className={styles.button} type="primary">
                                                     Verify OTP
                                                 </Button>
 
@@ -411,9 +416,9 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                 <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]} className={`${styles.changer} ${styles.inputBox}`}>
-                                                                    <Input onChange={(e) => setPassword(e.target.value)} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('New password*', false)} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} />
+                                                                    <Input onChange={(e) => setPassword(e.target.value)} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('New password*', false)} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                                                                 </Form.Item>
-                                                                <PasswordStrengthMeter password={form.getFieldValue('newPassword')} beforeLogin={true} />
+                                                                <PasswordStrengthMeter password={form.getFieldValue('newPassword')} beforeLogin={true} tooltipVisible={tooltipVisible} />
                                                             </Col>
                                                         </Row>
                                                         <Row gutter={20}>

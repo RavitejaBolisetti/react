@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Form, Input, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -50,6 +50,12 @@ const mapDispatchToProps = (dispatch) => ({
 const ChangePasswordBase = ({ form, password, setPassword, showGlobalNotification, isOpen = false, onOk = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState({ oldPassword: false, newPassword: false, confirmNewPassword: false });
+    const [tooltipVisible, setTooltipVisible] = useState(false);
+
+    useEffect(() => {
+        password && setTooltipVisible(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [password]);
 
     const onFinish = (values) => {
         const data = { ...values };
@@ -89,7 +95,6 @@ const ChangePasswordBase = ({ form, password, setPassword, showGlobalNotificatio
         </span>
     );
 
-
     return (
         <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="off" onFinish={onFinish}>
             <Row gutter={20}>
@@ -102,9 +107,9 @@ const ChangePasswordBase = ({ form, password, setPassword, showGlobalNotificatio
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]}>
-                        <Input onChange={(e) => setPassword(e.target.value)} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('New password*', false)} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} />
-                    </Form.Item>                
-                    <PasswordStrengthMeter Row={Row} Col={Col} password={password} />
+                        <Input onChange={(e) => setPassword(e.target.value)} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('New password*', false)} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
+                    </Form.Item>
+                    <PasswordStrengthMeter Row={Row} Col={Col} password={password} tooltipVisible={tooltipVisible} />
                 </Col>
             </Row>
             <Row gutter={20}>

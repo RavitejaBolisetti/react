@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider } from 'antd';
+import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { dealerManpowerDivisionMasterDataActions } from 'store/actions/data/dealerManpower/dealerDivisionMaster';
@@ -12,16 +12,10 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
-import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
-import { PlusOutlined } from '@ant-design/icons';
-import { TfiReload } from 'react-icons/tfi';
 
-import styles from 'components/common/Common.module.css';
 import { ListDataTable } from 'utils/ListDataTable';
-
-const { Search } = Input;
 
 const mapStateToProps = (state) => {
     const {
@@ -59,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListDealerDivisionMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
