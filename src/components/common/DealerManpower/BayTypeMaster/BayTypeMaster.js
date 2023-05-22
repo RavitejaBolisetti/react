@@ -134,10 +134,9 @@ export const BayTypeMasterBase = (props) => {
     };
 
     const handleResetFilter = (e) => {
-            setFilterString();
-            listFilterForm.resetFields();
-            setShowDataLoading(false);
-        
+        setFilterString();
+        listFilterForm.resetFields();
+        setShowDataLoading(false);
     };
 
     const handleClearInSearch = (e) => {
