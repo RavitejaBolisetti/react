@@ -101,7 +101,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.stateCode} label="State Code" name="stateCodeDisplay" rules={[validationFieldLetterAndNumber('State Code')]}>
+                            <Form.Item initialValue={formData?.stateCode} label="State Code" name="stateCodeDisplay" rules={[validateRequiredInputField('State Code')]}>
                                 <Input placeholder={preparePlaceholderText('State Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>
@@ -109,7 +109,7 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="District Name" initialValue={formData?.districtName} name="districtCode" rules={[validateAlphanumericWithSpace('District Name')]}>
+                            <Form.Item label="District Name" initialValue={formData?.districtName} name="districtCode" rules={[validateRequiredSelectField('District Name')]}>
                                 <Select placeholder={preparePlaceholderSelect('District Name')} onChange={handleDistrictChange}>
                                     {filteredDistrictData?.map((item) => (
                                         <Option key={item?.code} value={item?.code}>
