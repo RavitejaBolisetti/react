@@ -369,7 +369,7 @@ export const DesignationMasterBase = (props) => {
         removeFilter,
         handleResetFilter,
         onSearchHandle,
-        setAdvanceSearchVisible,
+        setAdvanceSearchVisible,    
         handleReferesh,
         handleButtonClick,
         advanceFilterProps,

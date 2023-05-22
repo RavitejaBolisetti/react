@@ -12,7 +12,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, pincode } = props;
+    const { advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, pincode } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -34,7 +34,7 @@ export default function AppliedAdvanceFilter(props) {
                                         ]}
                                         validateTrigger={['onSearch']}
                                     >
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={handleResetFilter} onPressEnter={false} />
+                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={handleClearInSearch} onPressEnter={false} />
                                     </Form.Item>
                                 </Form>
                             </Col>
