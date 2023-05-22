@@ -410,7 +410,6 @@ const ListPinCodeMasterBase = (props) => {
         setFilterString();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
     };
 
     const advanceFilterProps = {

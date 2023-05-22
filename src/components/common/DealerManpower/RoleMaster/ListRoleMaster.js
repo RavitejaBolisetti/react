@@ -391,7 +391,7 @@ export const ListRoleMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
+                    <ListDataTable isLoading={showDataLoading} scroll={1500} {...tableProps} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

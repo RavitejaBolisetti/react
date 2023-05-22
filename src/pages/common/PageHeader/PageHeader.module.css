@@ -3,7 +3,7 @@
     color: #ffffff !important;
 }
 
-:global .ant-btn {
+.pageHeader :global .ant-btn {
     height: 34px;
     padding: 4px 12px;
     border-radius: 4px;

@@ -323,7 +323,6 @@ export const DesignationMasterBase = (props) => {
         resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
         setFilterString();
     };
 
