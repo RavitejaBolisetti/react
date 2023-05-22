@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider } from 'antd';
+import { Col, Input, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { dealerManpowerLocationTypeMasterDataActions } from 'store/actions/data/dealerManpower/dealerLocationTypeMaster';
@@ -10,13 +10,13 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { DataTable } from 'utils/dataTable';
-import { filterFunction } from 'utils/filterFunction';
-import { AddEditForm } from './AddEditForm';
-import { PlusOutlined } from '@ant-design/icons';
-import { TfiReload } from 'react-icons/tfi';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
-import styles from 'components/common/Common.module.css';
+import { filterFunction } from 'utils/filterFunction';
+import { ListDataTable } from 'utils/ListDataTable';
+
+import { AddEditForm } from './AddEditForm';
+
 
 const { Search } = Input;
 
@@ -59,6 +59,8 @@ export const ListDealerLocationTypeMasterBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
 
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
+
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
@@ -129,13 +131,18 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         record && setFormData(record);
         setIsFormVisible(true);
     };
-
     const onSearchHandle = (value) => {
-        setFilterString({ ...filterString, keyword: value });
+        if (value?.trim()?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: false, keyword: value });
+        }
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString({ ...filterString, keyword: e.target.value });
+    const handleResetFilter = (e) => {
+        if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
     };
 
     const onFinish = (values) => {
@@ -210,74 +217,29 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         tableData: searchData,
         setPage,
     };
+
+    const title = 'Location Type Master';
+
+    const advanceFilterResultProps = {
+        advanceFilter: false,
+        filterString,
+        from: listFilterForm,
+        onFinish,
+        onFinishFailed,
+        onSearchHandle,
+        handleResetFilter,
+        handleReferesh,
+        handleButtonClick,
+        title,
+    };
+
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.lineHeight33}>
-                                        {`${moduleTitle}`}
-                                    </Col>
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
-                                    </Col>
-                                </Row>
-                            </Col>
-
-                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add Location Type
-                                </Button>
-                            </Col>
-                        </Row>
-                    </div>
-                </Col>
-            </Row>
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() =>
-                            isDataLoaded && (
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        !searchData?.length ? (
-                                            <span>
-                                                No records found. Please add new parameter <br />
-                                                using below button
-                                            </span>
-                                        ) : (
-                                            <span> No records found.</span>
-                                        )
-                                    }
-                                >
-                                    {!searchData?.length ? (
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                    Add Location Type
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    ) : (
-                                        ''
-                                    )}
-                                </Empty>
-                            )
-                        }
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={showDataLoading} {...tableProps} />
-                        </div>
-                    </ConfigProvider>
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />
