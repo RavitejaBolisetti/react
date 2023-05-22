@@ -396,11 +396,17 @@ export const ListTehsilBase = (props) => {
             listFilterForm.setFieldsValue({ code: undefined });
         }
     };
-    
+
     const removeFilter = (key) => {
-        advanceFilterForm.resetFields();
-        const { [key]: names, ...rest } = filterString;
-        setFilterString({ ...rest });
+        if (key === 'countryCode') {
+            setFilterString(undefined);
+        } else if (key === 'stateCode') {
+            setFilterString(undefined);
+        } else {
+            const { [key]: names, ...rest } = filterString;
+            advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
+            setFilterString({ ...rest });
+        }
     };
 
     const title = 'Tehsil';
