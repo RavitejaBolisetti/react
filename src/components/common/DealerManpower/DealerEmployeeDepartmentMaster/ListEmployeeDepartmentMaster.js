@@ -288,8 +288,10 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        value ? setFilterString({ ...filterString, advanceFilter: true, code: value }) : handleResetFilter();
-        listFilterForm.setFieldsValue({ code: undefined });
+        if (value?.trim()?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: true, keyword: value });
+            listFilterForm.setFieldsValue({ code: undefined });
+        }
     };
 
     const removeFilter = (key) => {
