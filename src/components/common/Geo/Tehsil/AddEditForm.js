@@ -64,6 +64,13 @@ const AddEditFormMain = (props) => {
     };
 
     const dateInitialValue = { initialValue: editMode ? convertCalenderDate(formData?.includeOn, 'YYYY/MM/DD') : null };
+
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+        className: styles.headerSelectField,
+    };
     return (
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
@@ -91,7 +98,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="State Name" initialValue={formData?.stateCode} name="stateCode" rules={[validateRequiredSelectField('State Name')]}>
-                                <Select placeholder={preparePlaceholderSelect('State Name')} onChange={handleStateChange}>
+                                <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps} onChange={handleStateChange}>
                                     {stateData?.map((item) => (
                                         <Option key={item?.code} value={item?.code}>
                                             {item?.name}
@@ -110,7 +117,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="District Name" initialValue={formData?.districtName} name="districtCode" rules={[validateRequiredSelectField('District Name')]}>
-                                <Select placeholder={preparePlaceholderSelect('District Name')} onChange={handleDistrictChange}>
+                                <Select placeholder={preparePlaceholderSelect('District Name')} {...selectProps} onChange={handleDistrictChange}>
                                     {filteredDistrictData?.map((item) => (
                                         <Option key={item?.code} value={item?.code}>
                                             {item?.name}
@@ -147,6 +154,7 @@ const AddEditFormMain = (props) => {
                                     placeholder={preparePlaceholderSelect('Tehsil Category')}
                                     allowClear
                                     optionFilterProp="children"
+                                    {...selectProps}
                                     options={[
                                         {
                                             value: 'CAT001',
