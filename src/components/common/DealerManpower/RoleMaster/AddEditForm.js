@@ -31,7 +31,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleDivisionChange = (division) => {
-        form.setFieldValue('departmentName', undefined);
+        form.setFieldValue('departmentCode', undefined);
         setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === division));
     };
 

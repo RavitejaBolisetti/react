@@ -10,6 +10,7 @@ import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { searchValidator } from 'utils/validation';
+import { ListDataTable } from 'utils/ListDataTable';
 
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
@@ -20,7 +21,6 @@ import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { FilterIcon } from 'Icons';
-
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
@@ -72,6 +72,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const { isDivisionDataLoaded, listDivisionShowLoading, fetchDivisionList, isDivisionLoading, divisionData } = props;
 
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -234,9 +235,9 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const handleResetFilter = () => {
         setFilterString();
         resetData();
+        listFilterForm.resetFields();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
     };
 
     const formProps = {
@@ -288,95 +289,53 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
 
     const onSearchHandle = (value) => {
         value ? setFilterString({ ...filterString, advanceFilter: true, code: value }) : handleResetFilter();
+        listFilterForm.setFieldsValue({ code: undefined });
     };
 
     const removeFilter = (key) => {
-        const { [key]: names, ...rest } = filterString;
-        setFilterString({ ...rest });
-        advanceFilterForm.resetFields();
+        if (key === 'divisionCode') {
+            setFilterString(undefined);
+        } else if (key === 'departmentCode') {
+            const { departmentCode, keyword, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'keyword') {
+            const { [key]: names, ...rest } = filterString;
+
+            listFilterForm.setFieldsValue({ code: undefined });
+            advanceFilterForm.setFieldsValue({ keyword: undefined });
+
+            if (!rest?.departmentCode && !rest?.departmentCode && !rest?.departmentCode) {
+                setFilterString();
+            } else {
+                setFilterString({ ...rest });
+            }
+        }
     };
 
+    const title = 'Employee Department';
     const advanceFilterResultProps = {
+        advanceFilter: true,
         filterString,
+        from: listFilterForm,
+        onFinish,
+        onFinishFailed,
         extraParams,
         removeFilter,
         handleResetFilter,
+        onSearchHandle,
+        setAdvanceSearchVisible,
+        handleReferesh,
+        handleButtonClick,
+        advanceFilterProps,
+        title,
     };
+
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={14} md={14} lg={16} xl={16}>
-                                        <Form autoComplete="off" colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                            <Form.Item label={`${moduleTitle}`} name="keyword" rules={[{ validator: searchValidator }]}>
-                                                <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
-                                            </Form.Item>
-                                        </Form>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                                        <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
-                                            Advanced Filters
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </Col>
-
-                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add Department
-                                </Button>
-                            </Col>
-                        </Row>
-                        <AppliedAdvanceFilter {...advanceFilterResultProps} />
-                    </div>
-                </Col>
-            </Row>
-
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() =>
-                            isDataLoaded && (
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        !searchData?.length ? (
-                                            <span>
-                                                No records found. Please add new parameter <br />
-                                                using below button
-                                            </span>
-                                        ) : (
-                                            <span> No records found.</span>
-                                        )
-                                    }
-                                >
-                                    {!searchData?.length ? (
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                    Add Department
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    ) : (
-                                        ''
-                                    )}
-                                </Empty>
-                            )
-                        }
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={showDataLoading} {...tableProps} />
-                        </div>
-                    </ConfigProvider>
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
