@@ -25,7 +25,7 @@ const AddEditFormMain = (props) => {
     useEffect(() => {
         setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === formData?.stateCode));
         // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [formData?.stateCode]);
+    }, [formData?.stateCode]);
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -52,6 +52,8 @@ const AddEditFormMain = (props) => {
     const handleDistrictChange = (district) => {
         const districtCode = districtData?.find((i) => i?.code === district)?.code;
         districtCode && form.setFieldValue('districtCodeDisplay', districtCode);
+        form.validateFields(['districtCodeDisplay']);
+
     };
 
     const viewProps = {
@@ -67,8 +69,6 @@ const AddEditFormMain = (props) => {
         setButtonData,
         handleButtonClick,
     };
-
-    console.log(formData, 'formData');
 
     const dateInitialValue = { initialValue: editMode ? convertCalenderDate(formData?.includeOn, 'YYYY/MM/DD') : null };
 
