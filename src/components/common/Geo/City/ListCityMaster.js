@@ -306,6 +306,7 @@ export const ListCityMasterBase = (props) => {
     };
 
     const onCloseAction = () => {
+
         form.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
@@ -344,6 +345,8 @@ export const ListCityMasterBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
+        setFilteredDistrictData(undefined);
+
     };
 
     const handleResetFilter = () => {
@@ -351,6 +354,7 @@ export const ListCityMasterBase = (props) => {
         resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
+        setFilteredDistrictData(undefined);
     };
 
     const advanceFilterProps = {
