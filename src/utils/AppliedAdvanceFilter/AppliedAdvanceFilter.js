@@ -40,7 +40,7 @@ export default function AppliedAdvanceFilter(props) {
                             </Col>
                             {advanceFilter && (
                                 <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                                    <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
+                                    <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true),handleResetFilter()} danger>
                                         Advanced Filters
                                     </Button>
                                 </Col>
