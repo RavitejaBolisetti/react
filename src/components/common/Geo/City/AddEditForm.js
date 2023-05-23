@@ -19,7 +19,7 @@ const AddEditFormMain = (props) => {
     const { buttonData, setButtonData, handleButtonClick } = props;
 
     const { stateData, districtData } = props;
-    const [filteredDistrictData, setFilteredDistrictData] = useState([]);
+    const [filteredDistrictData, setFilteredDistrictData] = useState(districtData?.filter((i) => i?.stateCode === formData?.stateCode));
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
