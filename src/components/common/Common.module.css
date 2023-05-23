@@ -166,7 +166,9 @@
 }
 
 .activeText {
-    color: #00a310;
+    color: #70C922;
+    background: #EEFCD2;
+    border-color: #70C922;
 }
 
 .inactiveText {

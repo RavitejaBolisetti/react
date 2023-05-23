@@ -418,7 +418,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                                 <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]} className={`${styles.changer} ${styles.inputBox}`}>
                                                                     <Input onChange={(e) => setPassword(e.target.value)} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('New password*', false)} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                                                                 </Form.Item>
-                                                                <PasswordStrengthMeter password={form.getFieldValue('newPassword')} beforeLogin={true} tooltipVisible={tooltipVisible} />
+                                                                {form.getFieldValue('newPassword') && <PasswordStrengthMeter password={form.getFieldValue('newPassword')} beforeLogin={true} tooltipVisible={tooltipVisible} />}
                                                             </Col>
                                                         </Row>
                                                         <Row gutter={20}>

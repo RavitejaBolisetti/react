@@ -225,6 +225,7 @@ p {
     font-size: 12px;
     font-weight: 400;
     line-height: 20px;
+    margin-top: 3px !important;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .inputBox input::-ms-reveal,
