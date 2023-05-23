@@ -1466,12 +1466,28 @@
     background: #f2f2f2;
     padding: 30px !important;
     height: 90vh;
+    overflow-y: overlay;
+}
+
+.timelineBg::-webkit-scrollbar-track {
+    background-color: #f4f4f4;
+}
+
+.timelineBg::-webkit-scrollbar {
+    background-color: #f4f4f4;
+    width: 5px;
+}
+
+.timelineBg::-webkit-scrollbar-thumb {
+    background-color: rgba(52, 44, 44, 0.34);
+    border-radius: 10px;
+    /* border: 2px solid ; */
 }
 
 .timelineBg :global .ant-collapse {
     background: #e6e6e6;
     border: 1px solid #b5b5b6;
-    margin-bottom: 30px;
+    margin-bottom: 38px;
 }
 
 .timelineBg :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
@@ -1554,11 +1570,22 @@
     line-height: 22px;
 }
 
-.timelineBg :global .ant-timeline .ant-timeline-item-last .ant-timeline-item-content {
+.timelineBg :global .ant-timeline .ant-timeline-item .ant-timeline-item-content .ant-btn-link {
+    padding-left: 9px !important;
+    padding-top: 0 !important;
+}
+
+/* .timelineBg :global .ant-timeline .ant-timeline-item .ant-timeline-item-content .ant-progress-line {
+    margin-top: 6px;
+    margin-left: 10px;
+} */
+
+.timelineBg :global .ant-timeline .ant-timeline-item:last-child .ant-timeline-item-label {
     color: #70c922;
     font-size: 14px;
     font-weight: 700;
     line-height: 22px;
+    margin-left: -2px;
 }
 
 .timelineBg :global .ant-timeline .ant-timeline-item-last .ant-timeline-item-content {
@@ -1572,15 +1599,20 @@
     background-color: #ff3e5b;
 }
 
+.timelineBg :global .ant-progress .ant-progress-inner {
+    margin-left: 10px;
+    width: 95%;
+}
+
 .timelineBg :global .ant-timeline .ant-timeline-item-tail {
     background: #70c922 !important;
     position: absolute;
-    left: 10px;
+    left: 11px;
 }
 
 .timelineBg :global .ant-timeline .ant-timeline-item-head-custom {
     position: absolute;
-    left: 10px;
+    left: 11px;
     background-color: transparent;
     font-size: 24px;
     color: #70c922;
@@ -1599,20 +1631,15 @@
 
 .userCircle {
     color: #ff3e5b !important;
-
     margin-top: 3px !important;
-
     margin-left: 3px !important;
-
     height: 24px !important;
-
     width: 24px !important;
 }
 
 .alignUser {
     display: flex;
     align-items: center;
-
 }
 
 .iconsColor {
@@ -1838,12 +1865,16 @@
     height: 24px !important;
     width: 24px !important;
 }
-
-.uploadUtl :global(.ant-upload-wrapper) {
-    background: #F2F2F2;
-    border: 1px dashed #B5B5B5;
-    border-radius: 6px;
-    min-height: 172px;
-    padding: 1rem 0 0 0;
-
+.uploadContainer :global .ant-upload-drag-container
+{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+.uploadtext {
+    font-weight: 600 !important;
+    font-size: 14px !important;
+}
+.accordianContainer .uploadContainer {
+  margin-bottom: 40px;
 }

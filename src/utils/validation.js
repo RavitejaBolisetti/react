@@ -24,7 +24,7 @@ export const validationFieldLetter = (fieldName) => ({
 });
 
 export const validatePanField = (fieldName) => ({
-    pattern: /^([A-Z]){5}([0-9]){4}([A-Z]){1}?$/,
+    pattern: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
     message: 'Please enter valid ' + fieldName,
 });
 
@@ -74,7 +74,7 @@ export const validateOnlyPositiveNumber = (fieldName) => ({
 });
 
 export const validateGSTIN = (fieldName) => ({
-    pattern: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
+    pattern: /^(?![0-9]{2})([0-9]{2})([0-9A-Z]{5})([0-9]{4})([0-9A-Z]{1})([0-9A-Z]{1})([0-9A-Z]{1})$/,
     message: 'Please enter valid ' + fieldName,
 });
 
@@ -173,4 +173,12 @@ export const validateDrivingLicenseNo = (fieldName) => ({
     message: 'Please enter valid ' + fieldName,
     
 });
+export const validateAadhar = (fieldName) => ({
+    pattern: /^\d{4}\d{4}\d{4}$/,
+    message: 'Please enter valid ' + fieldName,
+});
+export const validateVoterId = (fieldName) => ({
+    pattern: /^([a-zA-Z]){3}([0-9]){7}?$/,
+    mesage: 'Please enter valid ' + fieldName,
+})
 
