@@ -142,6 +142,7 @@ export const ListCityMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataCountryLoaded, isStateDataLoaded, isDataLoaded]);
+    
     useEffect(() => {
         if (userId && refershData) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
@@ -151,7 +152,8 @@ export const ListCityMasterBase = (props) => {
 
     useEffect(() => {
         if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
-            setFilteredStateData(stateData?.filter((i) => i?.countryCode === defaultCountry));
+            setFilterString({ countryCode: defaultCountry });
+            defaultCountry ? setFilteredStateData(stateData?.filter((i) => i?.countryCode === defaultCountry)) : setFilteredStateData();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataCountryLoaded, isStateDataLoaded]);
@@ -231,7 +233,13 @@ export const ListCityMasterBase = (props) => {
         } else {
             const { [key]: names, ...rest } = filterString;
             advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
-            setFilterString({ ...rest });
+
+            if (!filterString?.countryCode && !filterString?.stateCode && !filterString?.districtCode) {
+                setFilterString();
+                advanceFilterForm.resetFields();
+            } else {
+                setFilterString({ ...rest });
+            }
         }
     };
 

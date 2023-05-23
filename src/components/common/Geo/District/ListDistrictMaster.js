@@ -354,6 +354,13 @@ export const ListDistrictBase = (props) => {
             const { [key]: names, ...rest } = filterString;
             advanceFilterForm.setFieldsValue({ [key]: undefined });
             setFilterString({ ...rest });
+
+            if (!filterString?.countryCode && !filterString?.stateCode && !filterString?.keyword) {
+                setFilterString();                
+                advanceFilterForm.resetFields();
+            } else {
+                setFilterString({ ...rest });
+            }
         }
     };
 

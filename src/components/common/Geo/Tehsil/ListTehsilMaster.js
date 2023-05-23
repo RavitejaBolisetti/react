@@ -162,7 +162,6 @@ export const ListTehsilBase = (props) => {
     }, [defaultCountry]);
     useEffect(() => {
         if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
-            // setFilterString({ countryCode: defaultCountry });
             setFilteredStateData(stateData?.filter((i) => i?.countryCode === defaultCountry));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

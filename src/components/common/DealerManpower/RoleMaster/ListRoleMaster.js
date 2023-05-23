@@ -359,7 +359,7 @@ export const ListRoleMasterBase = (props) => {
             listFilterForm.setFieldsValue({ code: undefined });
             advanceFilterForm.setFieldsValue({ keyword: undefined });
 
-            if (!rest?.departmentCode && !rest?.departmentCode && !rest?.departmentCode) {
+            if (!filterString?.departmentCode && !filterString?.departmentCode && !filterString?.departmentCode) {
                 setFilterString();
             } else {
                 setFilterString({ ...rest });
