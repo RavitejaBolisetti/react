@@ -195,7 +195,7 @@ const ListPinCodeMasterBase = (props) => {
 
     useEffect(() => {
         if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
-            // setFilterString({ countryCode: defaultCountry });
+            setFilterString({ countryCode: defaultCountry });
             setFilteredStateData(stateData?.filter((i) => i?.countryCode === defaultCountry));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -486,7 +486,7 @@ const ListPinCodeMasterBase = (props) => {
         filterString,
         setFilterString,
         title,
-        pincode : true,
+        pincode: true,
     };
     return (
         <>
