@@ -1,5 +1,5 @@
 import { Button, Row, Col, Form, Input } from 'antd';
-import { searchValidator, searchValidatorPincode } from 'utils/validation';
+import { searchValidator } from 'utils/validation';
 import { RxCross2 } from 'react-icons/rx';
 import { FilterIcon } from 'Icons';
 // import styles from './AppliedAdvanceFilter.module.css';
@@ -12,7 +12,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, pincode } = props;
+    const { advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -29,7 +29,7 @@ export default function AppliedAdvanceFilter(props) {
                                         name="code"
                                         rules={[
                                             {
-                                                validator: pincode ? searchValidatorPincode : searchValidator,
+                                                validator: validator,
                                             },
                                         ]}
                                         validateTrigger={['onSearch']}

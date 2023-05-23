@@ -208,14 +208,9 @@ export const ListTehsilBase = (props) => {
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                console.log('filterString', filterString);
-
                 const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
                 const state = filterString?.stateCode;
                 const district = filterString?.districtCode;
-
-                console.log('keyword', keyword, 'state', state, 'district', district);
-
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
