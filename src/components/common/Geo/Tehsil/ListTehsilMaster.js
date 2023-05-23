@@ -355,6 +355,8 @@ export const ListTehsilBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
+        setFilteredDistrictData(undefined);
+
     };
 
     const handleResetFilter = () => {
@@ -362,6 +364,7 @@ export const ListTehsilBase = (props) => {
         resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
+        setFilteredDistrictData(undefined);
     };
 
     const advanceFilterProps = {

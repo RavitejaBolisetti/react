@@ -1,25 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import { Button, Col, Form, Row, Collapse, Input, Empty, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-
 import { HierarchyFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { showGlobalNotification } from 'store/actions/notification';
-
 import { AddEditForm } from './AddEditForm';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ChangeHistory } from './ChangeHistory';
 import LeftPanel from '../LeftPanel';
 
 import { FaHistory } from 'react-icons/fa';
-
 import { ViewProductDetail } from './ViewProductDetail';
-
 import { LANGUAGE_EN } from 'language/en';
 
 const { Panel } = Collapse;
@@ -71,7 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
             changeHistoryModelOpen: productHierarchyDataActions.changeHistoryModelOpen,
 
             cardBtnDisableAction: productHierarchyDataActions.cardBtnDisableAction,
-            skulist: productHierarchyDataActions.skulist,
+            //skulist: productHierarchyDataActions.skulist,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
@@ -86,7 +81,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, unFilteredAttributeData,fetchListHierarchyAttributeName,productHierarchyAttributeData }) => {
+export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, unFilteredAttributeData,fetchListHierarchyAttributeName,productHierarchyAttributeData }) => {
     const [form] = Form.useForm();
     const [isCollapsableView, setCollapsableView] = useState(true);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -147,12 +142,12 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedId, userId]);
 
-    useEffect(() => {
-        if (!isDataLoaded && userId) {
-            skulist({ setIsLoading: listShowLoading, userId, skuId: '5c182130-bf57-4f9b-9ccc-1ab865a502be' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, isDataAttributeLoaded, userId]);
+    // useEffect(() => {
+    //     if (!isDataLoaded && userId) {
+    //         skulist({ setIsLoading: listShowLoading, userId, skuId: '5c182130-bf57-4f9b-9ccc-1ab865a502be' });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isDataLoaded, isDataAttributeLoaded, userId]);
 
     useEffect(() => {
         setCollapsableView(!isChildAllowed);

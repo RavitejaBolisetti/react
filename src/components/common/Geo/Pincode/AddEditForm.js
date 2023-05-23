@@ -21,9 +21,9 @@ const AddEditFormMain = (props) => {
     const { buttonData, setButtonData, handleButtonClick } = props;
 
     const [filteredStateData, setFilteredStateData] = useState([]);
-    const [filteredDistrictData, setFilteredDistrictData] = useState([]);
-    const [filteredCityData, setFilteredCityData] = useState([]);
-    const [filteredTehsilData, setFilteredTehsilData] = useState([]);
+    const [filteredDistrictData, setFilteredDistrictData] = useState(districtData?.filter((i) => i?.stateCode === formData?.stateCode));
+    const [filteredCityData, setFilteredCityData] = useState(cityData?.filter((i) => i?.districtCode === formData?.districtCode));
+    const [filteredTehsilData, setFilteredTehsilData] = useState(tehsilData?.filter((i) => i?.districtCode === formData?.districtCode));
 
     useEffect(() => {
         form.resetFields();
