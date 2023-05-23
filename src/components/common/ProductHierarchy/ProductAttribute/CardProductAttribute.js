@@ -8,14 +8,18 @@ const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
     const [productAttributeEdit, setProductAttributeEdit] = useState(false);
-    const { isVisible, finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes, productHierarchyAttributeData } = props;
+    const { isVisible, finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive } = props;
     const [editedAttributeValue, setEditedAttributeValue] = useState(null);
+    const [ flag , setFlag] = useState(null);
     const [editForm] = Form.useForm();
 
     const onAttributeEdit = (props) => {
         setEditedAttributeValue({ attributeName: props.attributeName, attributeValue: props.attributeValue });
         setFormDecider(true);
+        setFormBtnActive(true)
     };
+
+    let formatData = [];
 
     const onAttributeSave = (val) => {
         setFormDecider(false);
@@ -31,11 +35,11 @@ const CardProductAttribute = (props) => {
             updatedValue?.splice(indx, 1, { ...formatData });
             return updatedValue;
         });
-
-        const formatData = [];
-        finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
+        
         setSKUAttributes(formatData);
+        setFlag(1);
         setProductAttributeEdit(false);
+        attributeForm.resetFields();
         forceUpdate();
     };
 
@@ -47,11 +51,12 @@ const CardProductAttribute = (props) => {
             return updatedValue;
         });
 
-        const formatData = [];
-        finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
+        // const formatData = [];
+        // finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
         setSKUAttributes(formatData);
-
+        setFlag(1);
         attributeForm.resetFields();
+        setProductAttributeEdit(false);
         forceUpdate();
     };
 
@@ -69,6 +74,14 @@ const CardProductAttribute = (props) => {
             }
         };
     }, [setFormDecider, view]);
+
+    useEffect( () => {
+        formatData = [];
+        finalFormdata?.map((item) => formatData?.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
+        if(!view){
+            setSKUAttributes(formatData);
+        } 
+    },[flag] )
 
     const colLeft = !isVisible ? 24 : 18;
     const colRight = !isVisible ? 24 : 6;

@@ -11,7 +11,7 @@ import ProductDetail from './ProductDetail';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute } = props;
+    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute, skuAttributes } = props;
     const { selectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { form, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
@@ -109,6 +109,7 @@ const AddEditFormMain = (props) => {
         isVisible,
         selectedTreeData,
         formActionType,
+        skuAttributes,
     };
 
     const productDetailsProps = {
@@ -130,8 +131,6 @@ const AddEditFormMain = (props) => {
         isFormBtnActive,
         isReadOnly,
     };
-
-    //console.log(showProductAttribute, 'qwertyuio');
 
     return (
         <>
