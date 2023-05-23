@@ -399,6 +399,7 @@ export const ListCityMasterBase = (props) => {
         handleButtonClick,
         advanceFilterProps,
         title,
+        setFilteredDistrictData,
     };
 
     return (
