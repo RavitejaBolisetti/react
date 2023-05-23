@@ -23,7 +23,7 @@ const ViewIndividualAddressDetailsBase = ({ formData, styles }) => {
                     <Descriptions.Item label="State">{formData?.state}</Descriptions.Item>
                     <Descriptions.Item label="Contact Name">{formData?.contactpersonName}</Descriptions.Item>
                     <Descriptions.Item label="Contact Mobile">{formData?.contactmobilenumber}</Descriptions.Item>
-                    <Descriptions.Item >{formData?.defaultaddress}</Descriptions.Item>
+                    <Descriptions.Item>{formData?.defaultaddress}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>

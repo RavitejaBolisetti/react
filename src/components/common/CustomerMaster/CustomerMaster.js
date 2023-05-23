@@ -42,8 +42,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Customer Details';
-
     let returnValue = {
         collapsed,
         userId,
@@ -51,7 +49,6 @@ const mapStateToProps = (state) => {
         isLoading,
         UserManagementDealerData,
         productHierarchyData,
-        moduleTitle,
         attributeData,
         isLoadingOnSave,
         isFormDataLoaded,
@@ -140,24 +137,21 @@ const savePayload = {
     ],
 };
 
-const CustomerMasterMain = ({ saveData, userId, moduleTitle, productHierarchyData, attributeData, hierarchyAttributeFetchList, saveDealerDetails, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
+const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeData, hierarchyAttributeFetchList, saveDealerDetails, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
     const [isLoadingOnSave, setisLoadingOnSave] = useState();
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const navigate = useNavigate();
 
     const [data, setData] = useState(initialTableData);
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [forceFormReset, setForceFormReset] = useState(false);
     const [searchData, setSearchdata] = useState();
     const [refershData, setRefershData] = useState(false);
-    const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [filterString, setFilterString] = useState();
     const [footerEdit, setFooterEdit] = useState(false);
@@ -185,19 +179,14 @@ const CustomerMasterMain = ({ saveData, userId, moduleTitle, productHierarchyDat
         ProductMapping: [],
     });
     const [toggleButton, settoggleButton] = useState({ individual: true, company: false });
+    const moduleTitle = 'Customer Details';
 
     const FetchError = (message) => {
         setError(true);
         setDealerData({});
         console.log('I am fetching Error');
     };
-    useEffect(() => {
-        console.log('UserManagementDealerData : ', UserManagementDealerData);
-        setDealerData(UserManagementDealerData);
-        if (Object.entries(UserManagementDealerData)?.length > 0) {
-            setSearchdata([UserManagementDealerData]);
-        }
-    }, [UserManagementDealerData]);
+
     useEffect(() => {
         console.log('This is the Final Form data : ', finalFormdata);
     }, [finalFormdata]);
@@ -617,7 +606,6 @@ const CustomerMasterMain = ({ saveData, userId, moduleTitle, productHierarchyDat
 
     return (
         <>
-            {contextAlertNotification}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
@@ -711,35 +699,6 @@ const CustomerMasterMain = ({ saveData, userId, moduleTitle, productHierarchyDat
                 </Col>
             </Row>
 
-            {/* <DrawerUtil
-                saveclick={saveclick}
-                setsaveclick={setsaveclick}
-                setsaveandnewclick={setsaveandnewclick}
-                saveandnewclick={saveandnewclick}
-                isLoadingOnSave={isLoadingOnSave}
-                formBtnDisable={formBtnDisable}
-                saveAndSaveNew={saveAndSaveNew}
-                saveBtn={saveBtn}
-                setFormBtnDisable={setFormBtnDisable}
-                onFinishFailed={onFinishFailed}
-                onFinish={onFinish}
-                form={form}
-                handleAdd={handleAdd}
-                open={drawer}
-                data={data}
-                setDrawer={setDrawer}
-                isChecked={isChecked}
-                formData={formData}
-                setIsChecked={setIsChecked}
-                formActionType={formActionType}
-                isReadOnly={isReadOnly}
-                setFormData={setFormData}
-                setForceFormReset={setForceFormReset}
-                footerEdit={footerEdit}
-                handleUpdate2={handleUpdate2}
-                DealerData={DealerData}
-                tableDetailData={tableDetailData}
-            /> */}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
@@ -762,4 +721,4 @@ const CustomerMasterMain = ({ saveData, userId, moduleTitle, productHierarchyDat
     );
 };
 
-export const CustomerMaster = connect(mapStateToProps, mapDispatchToProps)(CustomerMasterMain);
+export const CustomerMaster = connect(null, null)(CustomerMasterMain);
