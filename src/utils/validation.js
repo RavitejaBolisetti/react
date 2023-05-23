@@ -19,7 +19,7 @@ export const validationFieldLetterAndNumber = (fieldName) => ({
 });
 
 export const validationFieldLetter = (fieldName) => ({
-    pattern: /^[A-Za-z0-9]*$/,
+    pattern: /^[A-Za-z]*$/,
     message: 'Please use only letters in ' + fieldName,
 });
 
@@ -125,6 +125,8 @@ export const duplicateProductValidator = (value, dataList) => {
                 return Promise.resolve('');
             }
         }
+    } else {
+        return Promise.resolve('');
     }
     return Promise.resolve('');
 };

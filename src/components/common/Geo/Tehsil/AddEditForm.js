@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Switch, DatePicker } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace, validateLettersWithWhitespaces } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateLettersWithWhitespaces } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import dayjs from 'dayjs';
 import { convertCalenderDate } from 'utils/formatDateTime';
 
 import { ViewDetail } from './ViewDetail';
@@ -21,7 +20,7 @@ const AddEditFormMain = (props) => {
 
     const { stateData, districtData } = props;
     const [filteredStateData, setFilteredStateData] = useState(stateData?.filter((i) => i?.countryCode === defaultCountry));
-    const [filteredDistrictData, setFilteredDistrictData] = useState([]);
+    const [filteredDistrictData, setFilteredDistrictData] = useState(districtData?.filter((i) => i?.stateCode === formData?.stateCode));
 
     useEffect(() => {
         setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === formData?.stateCode));
@@ -40,7 +39,7 @@ const AddEditFormMain = (props) => {
         form.setFieldValue('stateCode', undefined);
         form.setFieldValue('districtCode', undefined);
         form.setFieldValue('countryCodeDisplay', stateData?.find((i) => i?.countryCode === countryCode)?.countryCode);
-        
+
         setFilteredStateData(stateData?.filter((i) => i?.countryCode === countryCode));
     };
 
@@ -57,6 +56,7 @@ const AddEditFormMain = (props) => {
     const handleDistrictChange = (district) => {
         const districtCode = districtData?.find((i) => i?.code === district)?.code;
         districtCode && form.setFieldValue('districtCodeDisplay', districtCode);
+        form.validateFields(['districtCodeDisplay']);
     };
 
     const viewProps = {

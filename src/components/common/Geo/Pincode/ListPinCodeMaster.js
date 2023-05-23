@@ -411,6 +411,9 @@ const ListPinCodeMasterBase = (props) => {
 
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
+        setFilteredDistrictData(undefined);
+        setFilteredCityData(undefined);
+        setFilteredTehsilData(undefined);
         advanceFilterForm.resetFields();
     };
 
@@ -419,6 +422,9 @@ const ListPinCodeMasterBase = (props) => {
         setFilterString();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
+        setFilteredDistrictData(undefined);
+        setFilteredCityData(undefined);
+        setFilteredTehsilData(undefined);
     };
 
     const advanceFilterProps = {

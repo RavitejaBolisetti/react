@@ -9,7 +9,6 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 
 import styles from 'components/common/Common.module.css';
-import { District } from 'store/reducers/data/geo/district';
 
 const { Option } = Select;
 
@@ -21,9 +20,9 @@ const AddEditFormMain = (props) => {
     const { buttonData, setButtonData, handleButtonClick } = props;
 
     const [filteredStateData, setFilteredStateData] = useState(stateData?.filter((i) => i?.countryCode === defaultCountry));
-    const [filteredDistrictData, setFilteredDistrictData] = useState([]);
-    const [filteredCityData, setFilteredCityData] = useState([]);
-    const [filteredTehsilData, setFilteredTehsilData] = useState([]);
+    const [filteredDistrictData, setFilteredDistrictData] = useState(districtData?.filter((i) => i?.stateCode === formData?.stateCode));
+    const [filteredCityData, setFilteredCityData] = useState(cityData?.filter((i) => i?.districtCode === formData?.districtCode));
+    const [filteredTehsilData, setFilteredTehsilData] = useState(tehsilData?.filter((i) => i?.districtCode === formData?.districtCode));
 
     useEffect(() => {
         form.resetFields();
