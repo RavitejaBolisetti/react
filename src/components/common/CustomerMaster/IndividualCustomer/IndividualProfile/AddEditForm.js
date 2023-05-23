@@ -6,11 +6,13 @@ import { validateAadhar, validateDrivingLicenseNo, validateEmailField, validateG
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { gender, income, maritialStatus, memberShip, occupation, religion, title, tongue, vehicle } from 'constants/modules/CustomerMaster/individualProfile';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { BiLockAlt } from 'react-icons/bi';
 
 
 import styles from 'components/common/Common.module.css';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { ViewDetail } from './ViewIndividualProfileDetails';
+import { MarkAsDefaultModal } from './MarkAsDefaultModal';
 
 
 
@@ -32,6 +34,11 @@ const AddEditForm = (props) => {
     const [individualFormValues, setIndividualFormValues] = useState();
     const [uploadCustomerFormValues, setUploadCustomerFormValues] = useState();
     const [done, setDone] = useState();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
     useEffect(() => {
         setFinalFormData({ ...FinalFormData, individualForm: individualFormValues, uploadCustomerForm: uploadCustomerFormValues });
     }, [done]);
@@ -95,6 +102,10 @@ const AddEditForm = (props) => {
     const onFinishAuthorityDetails = (values) => {
         setFinalFormData({ ...FinalFormData, uploadCustomerForm: values });
     };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
 
 
     const uploadProps = {
@@ -126,6 +137,13 @@ const AddEditForm = (props) => {
         activeKey,
         onChange,
         styles,
+    };
+    const modalProps = {
+        isVisible: isModalOpen,
+        icon: <BiLockAlt />,
+        titleOverride: 'Mobile Number Validation',
+        closable: false,
+        onCloseAction: handleCancel,
     };
 
     const disabledProps = { disabled: isReadOnly };
@@ -205,7 +223,7 @@ const AddEditForm = (props) => {
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Mobile Number" maxLength={10} name="mobileNumber" rules={[validateRequiredInputField('mobile number')][validateMobileNoField('mobile number')]}>
                                                     {/* <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('mobile number')} {...disabledProps} /> */}
-                                                    <Input placeholder={preparePlaceholderText('mobile number')} allowClear enterButton="Send OTP" size="small" suffix={<Button styles={{ marginRight: '-3px', borderColor: '#B5B5B6', color: '#B5B5B6' }}>Send OTP</Button>} />
+                                                    <Input placeholder={preparePlaceholderText('mobile number')} allowClear enterButton="Send OTP" size="small" suffix={<><Button onClick={showModal} style={{ marginRight: '-3px', borderColor: '#d9d9d9', color: '#B5B5B6' }}>Send OTP</Button> <MarkAsDefaultModal {...modalProps} /></>} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
