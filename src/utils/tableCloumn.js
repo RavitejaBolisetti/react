@@ -1,4 +1,4 @@
-import { Button, Space } from 'antd';
+import { Button, Space,Tag } from 'antd';
 import { FiEdit, FiEye } from 'react-icons/fi';
 
 import { DEFAULT_PAGE_SIZE } from 'constants/constants';
@@ -55,7 +55,7 @@ export const tblStatusColumn = ({ styles, width = '15%', fixed = '' }) => {
         title: 'Status',
         dataIndex: 'status',
         sorter: (a, b) => (a && b ? String(a['status']).localeCompare(String(b['status']), undefined, { sensitivity: 'base' }) : a),
-        render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
+        render: (_, record) => (record?.status ? <div className={styles.activeText}> <Tag color="green">Active </Tag></div> : <div className={styles.inactiveText}><Tag color="red">Inactive</Tag></div>),
         width,
         fixed: fixed,
     };
