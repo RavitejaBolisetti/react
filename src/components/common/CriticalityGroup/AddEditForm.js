@@ -90,7 +90,6 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item name="criticalityGroupCode" label="Criticality Group Id" initialValue={formData?.criticalityGroupCode} rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
-                                {addToolTip(passwordStrengthText, 'bottom', '#20232C', styles.infoTooltipDesign)(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}
                                     <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={formActionType?.editMode ? true : false} />
                                 </Form.Item>
                             </Col>
