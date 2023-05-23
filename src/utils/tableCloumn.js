@@ -1,6 +1,5 @@
 import { Button, Space } from 'antd';
-import { FiEdit } from 'react-icons/fi';
-import { FaRegEye } from 'react-icons/fa';
+import { FiEdit, FiEye } from 'react-icons/fi';
 
 import { DEFAULT_PAGE_SIZE } from 'constants/constants';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -31,7 +30,7 @@ export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellips
     };
 };
 
-export const tblSerialNumberColumn = ({ page = 1, pageSize = DEFAULT_PAGE_SIZE, width = '10%', fixed = '' }) => {
+export const tblSerialNumberColumn = ({ page = 1, pageSize = DEFAULT_PAGE_SIZE, width = '5%', fixed = '' }) => {
     return {
         title: 'Srl.',
         dataIndex: 'srl',
@@ -70,13 +69,12 @@ export const tblActionColumn = ({ styles, handleButtonClick, width = '8%', fixed
         fixed: fixed,
         render: (record) => [
             <Space wrap>
-                 <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
-                    <FaRegEye />
+                <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
+                    <FiEye />
                 </Button>
                 <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
                     <FiEdit />
                 </Button>
-               
             </Space>,
         ],
     };

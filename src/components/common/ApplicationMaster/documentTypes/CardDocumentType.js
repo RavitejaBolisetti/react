@@ -31,6 +31,7 @@ const CardDocumentType = (prop) => {
         setIsEditing(true);
         setIsBtnDisabled(true);
     };
+    
     const onUpdate = (value) => {
         form.validateFields()
             .then((newFormData) => {

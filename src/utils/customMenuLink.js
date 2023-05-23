@@ -4,17 +4,19 @@ import { generateRandomNumber } from 'utils/generateRandomNumber';
 
 const { Link } = require('react-router-dom');
 export const addToolTip =
-    (title, placement = 'bottom', color = '', className = '') =>
-    (inputComponent) =>
-        inputComponent ? (
-            <Tooltip overlayClassName={className} title={title} placement={placement} color={color}>
-                {inputComponent}
-            </Tooltip>
-        ) : (
-            title
-        );
+    (title, placement = 'bottom', color = '', className = '', defaultOpen = false) =>
+        (inputComponent) => {
+            const canOpen = defaultOpen ? { open: true } : undefined;
+            return inputComponent ? (
+                <Tooltip overlayClassName={className} title={title} placement={placement} color={color} {...canOpen}>
+                    {inputComponent}
+                </Tooltip>
+            ) : (
+                title
+            );
+        };
 
-const customMenuLink = ({ key = generateRandomNumber(), title, link, icon, children = undefined, onClick = () => {}, collapsed = false }) => {
+const customMenuLink = ({ key = generateRandomNumber(), title, link, icon, children = undefined, onClick = () => { }, collapsed = false }) => {
     return {
         key: key,
         label: link ? (

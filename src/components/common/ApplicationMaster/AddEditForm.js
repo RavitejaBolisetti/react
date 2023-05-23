@@ -12,11 +12,10 @@ import { accordianExpandIcon } from './../../../utils/accordianExpandIcon';
 
 const { Panel } = Collapse;
 
-const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotification, setparentAppCode, parentAppCode, applicationForm, forceUpdate, setFinalFormdata, finalFormdata, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, isVisible, setisVisible, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave, criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading, isFieldDisable }) => {
+const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotification, setparentAppCode, parentAppCode, applicationForm, forceUpdate, setFinalFormdata, finalFormdata, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, isVisible, setisVisible, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave, criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading, isFieldDisable,onCloseAction, applicationDetailsData, isBtnDisabled, setIsBtnDisabled }) => {
     const [openAccordian, setOpenAccordian] = useState('');
     const [isRestrictedLocation, setIsRestrictedLocation] = useState(false);
     const [isDocumentToGenerate, setIsDocumentToGenerate] = useState(true);
-    const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
     useEffect(() => {
         setIsRestrictedLocation(finalFormdata?.applicationDetails?.accessableIndicator === 2);
@@ -29,14 +28,6 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
-    };
-
-    const onClose = () => {
-        applicationForm.resetFields();
-        setisVisible(false);
-        setFormBtnDisable(false);
-        forceUpdate();
-        setIsBtnDisabled(false);
     };
 
     return (
@@ -85,7 +76,7 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
             </Spin>
             <Row gutter={20} className={style.formFooter}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnLeft}>
-                    <Button danger onClick={onClose}>
+                    <Button danger onClick={onCloseAction}>
                         Cancel
                     </Button>
                 </Col>

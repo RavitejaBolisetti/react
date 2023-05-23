@@ -1,17 +1,18 @@
 import React from 'react';
-import { Col, Card, Row, Button, Form, Descriptions, Space } from 'antd';
-import { RxCross2 } from 'react-icons/rx';
-import { Typography } from 'antd';
 
-import { LANGUAGE_EN } from 'language/en';
+import { Col, Row, Button, Space } from 'antd';
 
 import moment from 'moment';
+
+import { RxCross2 } from 'react-icons/rx';
+
+import { LANGUAGE_EN } from 'language/en';
 
 import styles from 'components/common/Common.module.css';
 
 const AllowedTimingCard = (props) => {
-    const { id, isBtnDisabled } = props;
-    const { setTimeData, setFormData, timeSlotFrom, timeSlotTo, timeData, deleteTime, i, key, removeItem, setTimesegmentLengthTracker, TimesegmentLengthTracker, disabledProps, showGlobalNotification, allowedTimingId, formData } = props;
+    const { id } = props;
+    const { setTimeData, timeSlotFrom, timeSlotTo, showGlobalNotification } = props;
 
     const handleDeleteAction = (val) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: LANGUAGE_EN.GENERAL.ALLOWED_TIMING_DELETED.MESSAGE, placement: 'bottomRight' });
@@ -37,7 +38,7 @@ const AllowedTimingCard = (props) => {
                     </Col>
 
                     <Col xs={24} sm={24} md={2} lg={2} xl={2} className={styles.timeSlotClearBtn}>
-                        {!id ? <Button disabled={isBtnDisabled} onClick={() => handleDeleteAction(timeSlotFrom)} type="link" icon={<RxCross2 size={20} />}></Button> : ''}
+                        {!id && <Button onClick={() => handleDeleteAction(timeSlotFrom)} type="link" icon={<RxCross2 size={20} />} />}
                     </Col>
                 </Row>
             </Space>

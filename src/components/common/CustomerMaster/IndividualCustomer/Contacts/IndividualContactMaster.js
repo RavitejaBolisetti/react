@@ -53,6 +53,7 @@ const IndividualContactMain = ({ isViewModeVisible }) => {
 
     const formProps = {
         setShowAddEditForm,
+        showAddEditForm,
         setContactData,
         contactData,
         onFinish,

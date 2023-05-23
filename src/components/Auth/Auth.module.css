@@ -212,6 +212,8 @@ p {
     color: #ffffff;
 }
 
+
+
 .loginSection .loginWrap .loginHtml .loginForm .inputBox.disabledInput input {
     background: transparent;
     color: #838383 !important;
@@ -303,6 +305,15 @@ p {
     line-height: 16px;
     transform: scaleX(-1) !important;
     color: #FF3E5B;
+}
+
+
+.loginForm :global .ant-btn-primary:disabled {
+    color: #858585
+}
+
+.loginForm :global .ant-btn-primary:disabled:hover {
+    color: #ffffff
 }
 
 /* .loginSection :global .ant-input-affix-wrapper .anticon.ant-input-password-icon {

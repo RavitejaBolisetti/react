@@ -3,6 +3,7 @@ import { CompanyProfile } from './CompanyProfile';
 import { AccountRelatedMaster } from './AccountRelated';
 import {CompanyAddressMaster} from './Address';
 
-export { CompanyProfile, AccountRelatedMaster, CompanyCustomerDetailsMaster, CompanyAddressMaster };
+import { CompanyContact } from './Contacts';
+export { CompanyProfile, AccountRelatedMaster, CompanyCustomerDetailsMaster, CompanyAddressMaster, CompanyContact };
 
 

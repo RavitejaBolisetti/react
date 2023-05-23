@@ -11,7 +11,7 @@ import styles from 'components/common/Common.module.css';
 import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
 import { CompanyCustomerDetailsMaster } from './FirmOrCompany';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
-import { CompanyAddressMaster, CompanyProfile } from './FirmOrCompany';
+import { CompanyAddressMaster, CompanyProfile, CompanyContact } from './FirmOrCompany';
 import FormProgressBar from './FormProgressBar';
 import CommonFooterButton from './CommonFooterButton';
 
@@ -156,6 +156,8 @@ const AddEditFormMain = (props) => {
                 return <CompanyProfile {...CustomerProfileMasterProps} />;
             } else if (leftTimeline?.AccountRelated) {
                 return <IndividualAccountRelatedMaster {...IndividualAccountRelatedMasterProps} />;
+            }else if (leftTimeline?.Contacts) {
+                return <CompanyContact />;
             } else if (leftTimeline?.Address) {
                 return <CompanyAddressMaster />;
             }
