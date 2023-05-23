@@ -160,6 +160,8 @@ const AddEditFormMain = (props) => {
                 return <CompanyContact />;
             } else if (leftTimeline?.Address) {
                 return <CompanyAddressMaster />;
+            }else if (leftTimeline?.IndividualProfile) {
+                return <IndividualProfileMaster {...IndividualProfileMasterProps}/>
             }
         }
     };
