@@ -366,6 +366,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
 
+    console.log(skuAttributes,'skuAttributesskuAttributesskuAttributes')
+
     return (
         <>
             <Row gutter={20} span={24}>

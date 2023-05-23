@@ -113,8 +113,6 @@ export const valueBetween0to100 = (value, fieldName) => {
 };
 
 export const duplicateProductValidator = (value, dataList) => {
-    console.log(value, 'changeValue');
-    console.log(dataList, 'arrayList');
 
     let status = false;
     if (dataList?.length > 0) {
@@ -128,6 +126,8 @@ export const duplicateProductValidator = (value, dataList) => {
                 return Promise.resolve('');
             }
         }
+    } else {
+        return Promise.resolve('');
     }
     return Promise.resolve('');
 };
