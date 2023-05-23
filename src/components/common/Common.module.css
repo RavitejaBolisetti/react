@@ -1465,8 +1465,11 @@
 .timelineBg {
     background: #f2f2f2;
     padding: 30px !important;
-    height: 90vh;
+    height: 100vh;
     overflow-y: overlay;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 989;
 }
 
 .timelineBg::-webkit-scrollbar-track {
