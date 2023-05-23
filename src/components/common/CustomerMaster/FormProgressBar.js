@@ -121,7 +121,7 @@ const FormProgressBar = (props) => {
 
                 {
                     dot: <FaCheckCircle />,
-                    children: 'Thank You',
+                    label: 'Thank You',
                 },
             ]}
         />

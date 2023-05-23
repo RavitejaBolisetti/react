@@ -1574,9 +1574,13 @@
 
 .timelineBg :global .ant-timeline .ant-timeline-item-tail {
     background: #70c922 !important;
+    position: absolute;
+    left: 10px;
 }
 
 .timelineBg :global .ant-timeline .ant-timeline-item-head-custom {
+    position: absolute;
+    left: 10px;
     background-color: transparent;
     font-size: 24px;
     color: #70c922;
