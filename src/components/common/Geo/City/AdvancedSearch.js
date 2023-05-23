@@ -10,7 +10,7 @@ const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
     const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData, filteredCityData, filteredTehsilData } = props;
-    const { filterString, setFilterString, advanceFilterForm, handleResetFilter, isAdvanceSearchVisible, setAdvanceSearchVisible } = props;
+    const { filterString, setFilterString, advanceFilterForm, handleResetFilter, isAdvanceSearchVisible, setAdvanceSearchVisible, setFilteredDistrictData } = props;
 
     useEffect(() => {
         advanceFilterForm.resetFields();
@@ -34,6 +34,7 @@ export const AdvancedSearchFrom = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
+
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>

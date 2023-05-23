@@ -247,11 +247,11 @@
     margin-top: -2px;
 }
 
-:global .ant-modal-mask,
+/* :global .ant-modal-mask,
 :global body {
     width: 100% !important;
     overflow: inherit !important;
-}
+} */
 
 :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-texts {
     font-weight: 600;
