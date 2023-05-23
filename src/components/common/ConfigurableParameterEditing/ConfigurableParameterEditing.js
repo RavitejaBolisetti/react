@@ -12,7 +12,6 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { convertDate } from 'utils/formatDateTime';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 
@@ -35,13 +34,21 @@ const mapStateToProps = (state) => {
 
     const moduleTitle = 'Configurable Parameter Editing';
 
+    let configDataFinal = [];
+
+    if (typeData) {
+        configDataFinal = configData?.map((config) => {
+            return { ...config, controlName: typeData && typeData?.CFG_PARAM?.find((item) => item?.key === config?.controlId)?.value };
+        });
+    }
+
     let returnValue = {
         userId,
         isDataLoaded,
         typeData,
         isLoading,
         moduleTitle,
-        configData: configData?.filter((i) => i),
+        configData: configDataFinal,
     };
     return returnValue;
 };
@@ -103,7 +110,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     useEffect(() => {
         if (isDataLoaded && configData && userId) {
             if (filterString) {
-                const filterDataItem = configData?.filter((item) => filterFunction(filterString)(item?.controlId) || filterFunction(filterString)(item?.controlDescription));
+                const filterDataItem = configData?.filter((item) => filterFunction(filterString)(item?.controlName) || filterFunction(filterString)(item?.controlDescription));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
                 setSearchdata(configData?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -119,10 +126,9 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setFooterEdit(false);
         setIsReadOnly(false);
         form.setFieldsValue({
-            toDate : formData?.toDate  ? dayjs(formData?.toDate,'DD-MM-YYYY') : null ,
-            fromDate : formData?.fromDate  ? dayjs(formData?.fromDate,'DD-MM-YYYY') : null
-
-        })
+            toDate: formData?.toDate ? dayjs(formData?.toDate, 'DD-MM-YYYY') : null,
+            fromDate: formData?.fromDate ? dayjs(formData?.fromDate, 'DD-MM-YYYY') : null,
+        });
         const data = configData.find((i) => i.id === record.id);
         console.log('data', data);
         if (data) {
@@ -130,7 +136,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
             console.log('formData', formData);
 
             setParameterType(data?.configurableParameterType.toString() || defaultParametarType);
-            console.log("parameterType",parameterType)
+            console.log('parameterType', parameterType);
             setIsFormVisible(true);
         }
     };
@@ -188,8 +194,8 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
 
         tblPrepareColumns({
             title: 'Control ID',
-            dataIndex: 'controlId',
-            render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
+            dataIndex: 'controlName',
+            // render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
             width: '15%',
         }),
 
@@ -235,7 +241,6 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                             <FiEdit />
                         </Button>
                     }
-                    
                 </Space>,
             ],
         }
@@ -327,7 +332,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setFooterEdit,
         typeData,
         isVisible: isFormVisible,
-        onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false), form.resetFields() ),
+        onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false), form.resetFields()),
         titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,
@@ -364,7 +369,6 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                                                 onChange={onChangeHandle}
                                             />
                                         </Col>
-                                       
                                     </div>
                                 </Row>
                             </Col>

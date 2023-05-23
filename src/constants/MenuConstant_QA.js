@@ -160,6 +160,20 @@ export const MenuConstant = {
         parentMenuId: 'RPT',
     },
 
+    [getMenyKey('RPT-ER')]: {
+        key: 'RPT-ER',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'RPT',
+    },
+
+    [getMenyKey('RPT-FR')]: {
+        key: 'RPT-FR',
+        link: routing.ROUTING_REPORT_URL_FILTER_REPORT,
+        icon: undefined,
+        parentMenuId: 'RPT',
+    },
+
     [getMenyKey('RPT-PG')]: {
         key: 'RPT-PG',
         link: routing.ROUTING_REPORT_PAGINATED_REPORT,

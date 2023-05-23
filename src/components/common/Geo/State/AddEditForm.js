@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Input, Form, Row, Select, Switch } from 'antd';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
+import { validateRequiredInputField, validateAlphanumericWithSpace, validateLettersWithWhitespaces, validationNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -66,19 +66,26 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
+
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="State Code" name="code" rules={[validateRequiredInputField('State Code'), validationFieldLetterAndNumber('State Code')]}>
+                            <Form.Item initialValue={formData?.code} label="State Code" name="code" rules={[validateRequiredInputField('State Code'), validationNumber('State Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="State Name" initialValue={formData?.name} rules={[validateRequiredInputField('State Name'), validateAlphanumericWithSpace('State Name')]} name="name">
+                            <Form.Item label="State Name" initialValue={formData?.name} rules={[validateRequiredInputField('State Name'), validateLettersWithWhitespaces('State Name')]} name="name">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Name')} maxLength={50} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={formData?.gstStateCode} label="GST State Code" name="gstStateCode" rules={[validateRequiredInputField('gst state code'), validationNumber('gst state code')]}>
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Code')} maxLength={2} disabled={editMode ? true : false} />
+                            </Form.Item>
+                        </Col>
+
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />

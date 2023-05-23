@@ -11,6 +11,8 @@ import { RxCross2 } from 'react-icons/rx';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
+import { filterFunction } from 'utils/filterFunction';
 
 import { TfiReload } from 'react-icons/tfi';
 
@@ -42,7 +44,7 @@ const mapStateToProps = (state) => {
                 District: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, data: districtData },
                 Tehsil: { isLoaded: isTehsilDataLoaded = false, isLoading: isTehsilLoading, data: tehsilData },
                 City: { isLoaded: isCityDataLoaded = false, isLoading: isCityLoading, data: cityData },
-                Pincode: { isLoaded: isDataLoaded = false, isLoading, data, filter: filterString = undefined },
+                Pincode: { isLoaded: isDataLoaded = false, isLoading, data },
             },
         },
     } = state;
@@ -73,7 +75,6 @@ const mapStateToProps = (state) => {
         isCityLoading,
         cityData,
         data,
-        filterString,
         stateData,
         isDataLoaded,
         isConfigDataLoaded,
@@ -103,7 +104,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: geoPincodeDataActions.fetchList,
             listShowLoading: geoPincodeDataActions.listShowLoading,
             saveData: geoPincodeDataActions.saveData,
-            setFilterString: geoPincodeDataActions.setFilter,
             resetData: geoPincodeDataActions.reset,
             showGlobalNotification,
         },
@@ -117,15 +117,15 @@ const ListPinCodeMasterBase = (props) => {
     const { isStateDataLoaded, isStateLoading, stateData, listStateShowLoading, fetchStateList } = props;
     const { isDistrictDataLoaded, isDistrictLoading, districtData, listDistrictShowLoading, fetchDistrictList } = props;
     const { isTehsilDataLoaded, isTehsilLoading, tehsilData, listTehsilShowLoading, fetchTehsilList } = props;
-    const { isCityDataLoaded, isCityLoading, cityData, listCityShowLoading, fetchCityList, filterString, setFilterString } = props;
+    const { isCityDataLoaded, isCityLoading, cityData, listCityShowLoading, fetchCityList } = props;
     const { isConfigDataLoaded, isConfigLoading, typeData, listConfigShowLoading, fetchConfigList } = props;
 
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
+
     const [advanceFilterForm] = Form.useForm();
 
-    console.log('🚀 ~ file: ListPinCodeMaster.js:124 ~ ListPinCodeMasterBase ~ filterString:', filterString);
-
-    const [showDataLoading, setShowDataLoading] = useState(true);
+    const [showDataLoading, setShowDataLoading] = useState(false);
     const [filteredStateData, setFilteredStateData] = useState([]);
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
     const [filteredCityData, setFilteredCityData] = useState([]);
@@ -135,10 +135,10 @@ const ListPinCodeMasterBase = (props) => {
     const [page, setPage] = useState(1);
 
     const [formData, setFormData] = useState([]);
-    // const [filterString, setFilterString] = useState();
+    const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    // const [extraParams, setExtraParams] = useState([]);
+    const [searchData, setSearchdata] = useState([]);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -201,42 +201,65 @@ const ListPinCodeMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataCountryLoaded, isStateDataLoaded]);
 
+    useEffect(() => {
+        if (!showDataLoading && data && userId) {
+            if (filterString) {
+                const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
+                const state = filterString?.stateCode;
+                const district = filterString?.districtCode;
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.pinCode) || filterFunction(keyword)(item?.pinCategory) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
+                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
+            } else {
+                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, isDataLoaded, data, userId]);
+
     const extraParams = [
         {
             key: 'countryCode',
             title: 'Country',
             value: filterString?.countryCode,
             name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
+            canRemove: false,
         },
         {
             key: 'stateCode',
             title: 'State',
             value: filterString?.stateCode,
             name: filteredStateData?.find((i) => i?.code === filterString?.stateCode)?.name,
+            canRemove: true,
         },
         {
             key: 'districtCode',
             title: 'District',
             value: filterString?.districtCode,
             name: filteredDistrictData?.find((i) => i?.code === filterString?.districtCode)?.name,
+            canRemove: true,
         },
         {
             key: 'tehsilCode',
             title: 'Tehsil',
             value: filterString?.tehsilCode,
             name: filteredTehsilData?.find((i) => i?.code === filterString?.tehsilCode)?.name,
+            canRemove: true,
         },
         {
             key: 'cityCode',
             title: 'City',
             value: filterString?.cityCode,
             name: filteredCityData?.find((i) => i?.code === filterString?.cityCode)?.name,
+            canRemove: true,
         },
         {
             key: 'code',
             title: 'Pincode',
             value: filterString?.code,
             name: filterString?.code,
+            canRemove: true,
         },
     ];
 
@@ -293,13 +316,13 @@ const ListPinCodeMasterBase = (props) => {
         };
 
     const onFinish = (values) => {
-        let data = { ...values };
+        let data = { ...values, localityCode: '01' };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction });
 
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
@@ -356,6 +379,8 @@ const ListPinCodeMasterBase = (props) => {
 
         districtData,
         stateData,
+        cityData,
+        tehsilData,
         data,
 
         typeData,
@@ -371,7 +396,7 @@ const ListPinCodeMasterBase = (props) => {
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
-        tableData: data,
+        tableData: searchData,
         setPage,
     };
 
@@ -381,11 +406,10 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const handleResetFilter = () => {
-        // advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
         resetData();
+        setFilterString();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
     };
 
     const advanceFilterProps = {
@@ -400,16 +424,18 @@ const ListPinCodeMasterBase = (props) => {
         districtData,
         stateData,
         data,
+
         handleFilterChange,
         filteredStateData,
         filteredDistrictData,
         filteredCityData,
         filteredTehsilData,
-        filterString,
-        setFilterString,
         advanceFilterForm,
         resetData,
         handleResetFilter,
+        filterString,
+        setFilterString,
+        setAdvanceSearchVisible,
     };
 
     const onSearchHandle = (value) => {
@@ -441,76 +467,40 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
+
+    const title = 'Pincode';
+    const advanceFilterResultProps = {
+        advanceFilter: true,
+        filterString,
+        from: listFilterForm,
+        onFinish,
+        onFinishFailed,
+        extraParams,
+        removeFilter,
+        handleResetFilter,
+        onSearchHandle,
+        setAdvanceSearchVisible,
+        handleReferesh,
+        handleButtonClick,
+        advanceFilterProps,
+        filterString,
+        setFilterString,
+        title,
+        pincode : true,
+    };
     return (
         <>
-            <Row gutter={20}>
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
+            <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                            <Form.Item label="PIN Code" initialValue={filterString?.code} name="keyword" rules={[validatePincodeField('Pincode')]}>
-                                                <Search placeholder="Search" maxLength={6} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
-                                            </Form.Item>
-                                        </Form>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                                        <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
-                                            Advanced Filters
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </Col>
-
-                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                    Add Code
-                                </Button>
-                            </Col>
-                        </Row>
-                        {filterString?.advanceFilter && (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
-                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
-                                        </Col>
-                                        <Col xs={24} sm={22} md={22} lg={18} xl={18} className={styles.advanceFilterContainer}>
-                                            {extraParams?.map((filter) => {
-                                                return (
-                                                    filter?.value && (
-                                                        <div className={styles.advanceFilterItem}>
-                                                            {filter?.name}
-                                                            <span>
-                                                                <RxCross2 onClick={() => removeFilter(filter?.key)} />
-                                                            </span>
-                                                        </div>
-                                                    )
-                                                );
-                                            })}
-                                        </Col>
-                                        <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                            <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
-                                                Clear
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        )}
+                    <div className={styles.tableProduct}>
+                        <ListDataTable isLoading={showDataLoading} scroll={2400} {...tableProps} />
                     </div>
                 </Col>
             </Row>
 
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={isLoading} {...tableProps} handleAdd={handleAdd} addTitle={'Code'} scroll={2400} />
-                </Col>
-            </Row>
             <AdvancedSearch {...advanceFilterProps} />
+
             <AddEditForm {...formProps} />
         </>
     );

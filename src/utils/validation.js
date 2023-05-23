@@ -15,7 +15,12 @@ export const validateEmailField = (fieldName) => ({
 
 export const validationFieldLetterAndNumber = (fieldName) => ({
     pattern: /^[A-Za-z0-9]*$/,
-    message: 'Please use only letters and numbers In ' + fieldName,
+    message: 'Please use only letters and numbers in ' + fieldName,
+});
+
+export const validationFieldLetter = (fieldName) => ({
+    pattern: /^[A-Za-z0-9]*$/,
+    message: 'Please use only letters in ' + fieldName,
 });
 
 export const validatePanField = (fieldName) => ({
@@ -46,6 +51,11 @@ export const validateAlphanumericWithSpaceHyphenPeriod = (fieldName) => ({
 export const validateAlphanumericWithSpace = (fieldName) => ({
     message: fieldName + ' can contain only alphanumeric characters with space',
     pattern: /^[a-zA-Z0-9 ]*$/,
+});
+
+export const validateLettersWithWhitespaces = (fieldName) => ({
+    message: fieldName + ' can contain only letters with whitespaces',
+    pattern: /^[a-zA-Z ]*$/,
 });
 
 export const validationFieldLetteNumberandPeriod = (fieldName) => ({
@@ -126,11 +136,37 @@ export const valueBetween0to100 = (value, fieldName) => {
     }
 };
 
+export const duplicateProductValidator = (value, dataList) => {
+    console.log(value, 'changeValue');
+    console.log(dataList, 'arrayList');
+
+    let status = false;
+    if (dataList?.length > 0) {
+        for (let i = 0; i < dataList?.length; i++) {
+            if (dataList[i]?.attributeName?.label === value?.attributeName?.label) {
+                status = true;
+                return Promise.reject('Duplicate found');
+            }
+
+            if (!status) {
+                return Promise.resolve('');
+            }
+        }
+    }
+    return Promise.resolve('');
+};
 export const searchValidator = (_, value) => {
-    if (!value || (value && value.length > 3)) {
+    if (!value || (value && value.trim().length >= 3)) {
         return Promise.resolve();
     }
-    return Promise.reject(new Error('Please enter atleat 3 character to search'));
+    return Promise.reject(new Error('Please enter atleast 3 character to search'));
+};
+
+export const searchValidatorPincode = (_, value) => {
+    if (value === '' || (value && value.trim().length >= 6)) {
+        return Promise.resolve();
+    }
+    return Promise.reject(new Error('Please enter atleast 6 character to search'));
 };
 export const validateDrivingLicenseNo = (fieldName) => ({
     pattern:  /^([A-Z]{2})(\d{2}|\d{3})[a-zA-Z]{0,1}(\d{4})(\d{7})$/,

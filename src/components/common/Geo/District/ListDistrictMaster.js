@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
+import { Button, Col, Input, Form, Row } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { tableColumn } from './tableColumn';
+import { AdvancedSearch } from './AdvancedSearch';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
-import { DataTable } from 'utils/dataTable';
+import ListDataTable from 'utils/ListDataTable/ListDataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { showGlobalNotification } from 'store/actions/notification';
 import { geoStateDataActions } from 'store/actions/data/geo/state';
 import { geoDistrictDataActions } from 'store/actions/data/geo/district';
 import { geoCountryDataActions } from 'store/actions/data/geo/country';
 
+import { searchValidator } from 'utils/validation';
+
 import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
+import { FilterIcon } from 'Icons';
+import { RxCross2 } from 'react-icons/rx';
 
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
-const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
@@ -69,17 +74,20 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: geoDistrictDataActions.saveData,
             fetchList: geoDistrictDataActions.fetchList,
             listShowLoading: geoDistrictDataActions.listShowLoading,
+            resetData: geoDistrictDataActions.reset,
         },
         dispatch
     ),
 });
 
 export const ListDistrictBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, resetData } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, countryShowLoading } = props;
     const { isStateDataLoaded, fetchStateList, listStateShowLoading, stateData } = props;
 
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
+    const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
@@ -89,6 +97,9 @@ export const ListDistrictBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+    const [filteredStateData, setFilteredStateData] = useState([]);
+    const [filteredDistrictData, setFilteredDistrictData] = useState([]);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -104,6 +115,7 @@ export const ListDistrictBase = (props) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
+        setAdvanceSearchVisible(false);
     };
 
     useEffect(() => {
@@ -129,16 +141,11 @@ export const ListDistrictBase = (props) => {
     }, [userId, refershData]);
 
     useEffect(() => {
-        setFilterString({ countryCode: defaultCountry });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [defaultCountry]);
-
-    useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const state = filterString?.state;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true));
+                const state = filterString?.stateCode;
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.districtCode) || filterFunction(keyword)(item?.name) || filterFunction(keyword)(item?.code) : true) && (state ? filterFunction(state)(item?.stateCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -148,6 +155,38 @@ export const ListDistrictBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
+
+    useEffect(() => {
+        if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
+            setFilterString({ countryCode: defaultCountry });
+            setFilteredStateData(stateData?.filter((i) => i?.countryCode === defaultCountry));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataCountryLoaded, isStateDataLoaded]);
+
+    const extraParams = [
+        {
+            key: 'countryCode',
+            title: 'Country',
+            value: filterString?.countryCode,
+            name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
+            canRemove: false,
+        },
+        {
+            key: 'stateCode',
+            title: 'State',
+            value: filterString?.stateCode,
+            name: filteredStateData?.find((i) => i?.code === filterString?.stateCode)?.name,
+            canRemove: true,
+        },
+        {
+            key: 'keyword',
+            title: 'District',
+            value: filterString?.keyword,
+            name: filterString?.keyword,
+            canRemove: true,
+        },
+    ];
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
@@ -165,17 +204,26 @@ export const ListDistrictBase = (props) => {
         setRefershData(!refershData);
     };
 
-    const onSearchHandle = (value) => {
-        setFilterString({ ...filterString, keyword: value });
-    };
+    const handleFilterChange =
+        (name, type = 'value') =>
+        (value) => {
+            const filterValue = type === 'text' ? value.target.value : value;
 
-    const onChangeHandle = (e) => {
-        setFilterString({ ...filterString, keyword: e.target.value });
-    };
+            if (name === 'countryCode') {
+                setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
+                advanceFilterForm.setFieldsValue({ stateCode: undefined });
+                advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            }
 
-    const handleStateChange = (value) => {
-        setFilterString({ ...filterString, state: value });
-    };
+            if (name === 'stateCode') {
+                setFilteredDistrictData(data?.filter((i) => i?.stateCode === filterValue));
+                advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            }
+        };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -255,94 +303,89 @@ export const ListDistrictBase = (props) => {
         setPage,
     };
 
+    const onAdvanceSearchCloseAction = () => {
+        setAdvanceSearchVisible(false);
+        advanceFilterForm.resetFields();
+    };
+
+    const handleResetFilter = () => {
+        resetData();
+        advanceFilterForm.resetFields();
+        setShowDataLoading(false);
+        setFilterString();
+    };
+
+    const onSearchHandle = (value) => {
+        if (value?.trim()?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: true, keyword: value });
+            listFilterForm.setFieldsValue({ code: undefined });
+        }
+    };
+
+    const advanceFilterProps = {
+        isVisible: isAdvanceSearchVisible,
+        onCloseAction: onAdvanceSearchCloseAction,
+        icon: <FilterIcon size={20} />,
+        titleOverride: 'Advance Filters',
+        isDataCountryLoaded,
+        isCountryLoading,
+        countryData,
+        defaultCountry,
+        districtData: data,
+        stateData,
+        data,
+        handleFilterChange,
+        filteredStateData,
+        filteredDistrictData,
+        filterString,
+        setFilterString,
+        advanceFilterForm,
+        resetData,
+        handleResetFilter,
+        onSearchHandle,
+        setAdvanceSearchVisible,
+    };
+
+    const removeFilter = (key) => {
+        if (key === 'countryCode') {
+            setFilterString(undefined);
+        } else if (key === 'stateCode') {
+            setFilterString(undefined);
+        } else {
+            const { [key]: names, ...rest } = filterString;
+            advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
+            setFilterString({ ...rest });
+        }
+    };
+
+    const title = 'District';
+    const advanceFilterResultProps = {
+        advanceFilter: true,
+        filterString,
+        from: listFilterForm,
+        onFinish,
+        onFinishFailed,
+        extraParams,
+        removeFilter,
+        handleResetFilter,
+        onSearchHandle,
+        setAdvanceSearchVisible,
+        handleReferesh,
+        handleButtonClick,
+        advanceFilterProps,
+        title,
+    };
     return (
         <>
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
-                                        District List
-                                    </Col>
-                                    <Col xs={24} sm={12} md={6} lg={6} xl={6}>
-                                        {defaultCountry && (
-                                            <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
-                                                {countryData?.map((item) => (
-                                                    <Option value={item?.countryCode}>{item?.countryName}</Option>
-                                                ))}
-                                            </Select>
-                                        )}
-                                    </Col>
-                                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                        <Select placeholder="State" onChange={handleStateChange} allowClear className={styles.headerSelectField}>
-                                            {stateData?.map((item) => (
-                                                <Option value={item?.code}>{item?.name}</Option>
-                                            ))}
-                                        </Select>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />{' '}
-                                    </Col>
-                                </Row>
-                            </Col>
-                            {data?.length ? (
-                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                        Add District
-                                    </Button>
-                                </Col>
-                            ) : (
-                                ''
-                            )}
-                        </Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <div className={styles.tableProduct}>
+                        <ListDataTable isLoading={showDataLoading} {...tableProps} />
                     </div>
                 </Col>
             </Row>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() => (
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={
-                                    !data?.length ? (
-                                        <span>
-                                            No records found. Please add <span style={{ color: 'rgba(0,0,0,0.7)' }}>"New District Details"</span>
-                                            <br />
-                                            using below button
-                                        </span>
-                                    ) : (
-                                        <span> No records found.</span>
-                                    )
-                                }
-                            >
-                                {!data?.length ? (
-                                    <Row>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                Add Group
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                ) : (
-                                    ''
-                                )}
-                            </Empty>
-                        )}
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={showDataLoading} {...tableProps} />
-                        </div>
-                    </ConfigProvider>
-                </Col>
-            </Row>
+            <AdvancedSearch {...advanceFilterProps} />
             <AddEditForm {...formProps} />
         </>
     );

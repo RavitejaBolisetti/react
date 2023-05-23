@@ -9,6 +9,7 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 
 import styles from 'components/common/Common.module.css';
+import { District } from 'store/reducers/data/geo/district';
 
 const { Option } = Select;
 
@@ -30,7 +31,6 @@ const AddEditFormMain = (props) => {
         if (formData?.stateName) {
             handleStateChange(formData?.stateCode);
             handleDistrictChange(formData?.districtCode);
-            handleTehsilChange(formData?.tehsilCode);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
@@ -52,15 +52,12 @@ const AddEditFormMain = (props) => {
         setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === state));
     };
 
-    const handleDistrictChange = (state) => {
-        form.setFieldValue('districtCode', undefined);
-        setFilteredDistrictData(tehsilData?.filter((i) => i?.stateCode === state));
+    const handleDistrictChange = (district) => {
+        setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === district));
+        setFilteredCityData(cityData?.filter((i) => i?.districtCode === district));
     };
 
-    const handleTehsilChange = (state) => {
-        form.setFieldValue('districtCode', undefined);
-        setFilteredDistrictData(cityData?.filter((i) => i?.stateCode === state));
-    };
+    
 
     const viewProps = {
         isVisible: viewMode,
@@ -91,7 +88,7 @@ const AddEditFormMain = (props) => {
                                 </Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        {/* <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" rules={[validateRequiredSelectField('State Name')]}>
                                 <Select placeholder={preparePlaceholderSelect('State Name')} onChange={handleStateChange}>
                                     {filteredStateData?.map((item) => (
@@ -99,17 +96,10 @@ const AddEditFormMain = (props) => {
                                     ))}
                                 </Select>
                             </Form.Item>
-                        </Col>
+                        </Col> */}
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.stateCode} label="State" name="stateCode" rules={[validateRequiredSelectField('State')]}>
-                                <Select
-                                    showSearch
-                                    filterOption={(input, option) => {
-                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
-                                    }}
-                                    placeholder={preparePlaceholderSelect('State')}
-                                    onChange={handleStateChange}
-                                >
+                                <Select showSearch optionFilterProp={'children'} placeholder={preparePlaceholderSelect('State')} onChange={handleStateChange}>
                                     {stateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -121,14 +111,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="District" initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
-                                <Select
-                                    showSearch
-                                    filterOption={(input, option) => {
-                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
-                                    }}
-                                    placeholder={preparePlaceholderSelect('District')}
-                                    onChange={handleDistrictChange}
-                                >
+                                <Select showSearch optionFilterProp={'children'} placeholder={preparePlaceholderSelect('District')} onChange={handleDistrictChange}>
                                     {filteredDistrictData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -137,14 +120,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="City" initialValue={formData?.cityName} name="cityCode" rules={[validateRequiredSelectField('City')]}>
-                                <Select
-                                    showSearch
-                                    filterOption={(input, option) => {
-                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
-                                    }}
-                                    placeholder={preparePlaceholderSelect('City')}
-                                    onChange={handleTehsilChange}
-                                >
+                                <Select showSearch optionFilterProp={'children'} placeholder={preparePlaceholderSelect('City')} >
                                     {filteredCityData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -156,13 +132,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Tehsil" initialValue={formData?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
-                                <Select
-                                    showSearch
-                                    filterOption={(input, option) => {
-                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
-                                    }}
-                                    placeholder={preparePlaceholderSelect('Tehsil')}
-                                >
+                                <Select showSearch optionFilterProp={'children'} placeholder={preparePlaceholderSelect('Tehsil')}>
                                     {filteredTehsilData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -172,13 +142,7 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Pin Category" initialValue={formData?.pinCategory} name="pinCategory" rules={[validateRequiredSelectField('Pin Category')]}>
-                                <Select
-                                    showSearch
-                                    filterOption={(input, option) => {
-                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
-                                    }}
-                                    placeholder={preparePlaceholderSelect('Pin Category')}
-                                >
+                                <Select showSearch optionFilterProp={'children'} placeholder={preparePlaceholderSelect('Pin Category')}>
                                     {typeData?.PIN_CATG?.map((item) => (
                                         <Option value={item?.key}>{item?.value}</Option>
                                     ))}
@@ -190,7 +154,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.pinCode} label="PIN Code" name="pinCode" rules={[validateRequiredInputField('PIN code'), validationNumber('Pincode')]}>
-                                <Input placeholder={preparePlaceholderText('PIN code')} className={styles.inputBox} disabled={true} />
+                                <Input placeholder={preparePlaceholderText('PIN code')} className={styles.inputBox}  />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>

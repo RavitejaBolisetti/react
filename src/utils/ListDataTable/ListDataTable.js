@@ -27,7 +27,7 @@ export default function ListDataTable({ isLoading, tableColumn, tableData, handl
                     >
                         {!tableData?.length ? (
                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                {`Add ${addTitle}`}
+                                {`Add`}
                             </Button>
                         ) : (
                             ''

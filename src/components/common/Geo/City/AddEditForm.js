@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Switch } from 'antd';
 
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter, validateAlphanumericWithSpace, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -113,7 +113,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.districtCode} label="District Code" name="districtCodeDisplay" rules={[validateRequiredInputField('District Code')]}>
+                            <Form.Item initialValue={formData?.districtCode} label="District Code" name="districtCodeDisplay" rules={[validateRequiredInputField('District Code'),validationFieldLetterAndNumber('District Code')]}>
                                 <Input placeholder={preparePlaceholderText('District Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>
@@ -121,12 +121,12 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="City Code" name="code" rules={[validateRequiredInputField('City Code'), validationFieldLetterAndNumber('City Code')]}>
+                            <Form.Item initialValue={formData?.code} label="City Code" name="code" rules={[validateRequiredInputField('City Code'), validationFieldLetter('City Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('City Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="City Name" initialValue={formData?.name} rules={[validateRequiredInputField('City Name'), validateAlphanumericWithSpace('City Name')]} name="name">
+                            <Form.Item label="City Name" initialValue={formData?.name} rules={[validateRequiredInputField('City Name'), validationFieldLetter('City Name')]} name="name">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('City Name')} maxLength={50} />
                             </Form.Item>
                         </Col>
