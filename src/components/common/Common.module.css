@@ -1526,9 +1526,6 @@
     margin-inline-start: 4px;
 }
 
-:global .ant-space-vertical {
-    margin-bottom: 100px;
-}
 .userCircle {
     color: #ff3e5b !important;
 
@@ -1716,3 +1713,13 @@
     height: 24px !important;
     width: 24px !important;
 }
+
+.uploadUtl :global(.ant-upload-wrapper) {
+    background: #F2F2F2;
+    border: 1px dashed #B5B5B5;
+    border-radius: 6px;
+    min-height: 172px;
+    padding: 1rem 0 0 0;
+
+}
+
