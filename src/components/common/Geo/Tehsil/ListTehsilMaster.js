@@ -162,7 +162,6 @@ export const ListTehsilBase = (props) => {
     }, [defaultCountry]);
     useEffect(() => {
         if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
-            // setFilterString({ countryCode: defaultCountry });
             setFilteredStateData(stateData?.filter((i) => i?.countryCode === defaultCountry));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -174,7 +173,7 @@ export const ListTehsilBase = (props) => {
             title: 'Country',
             value: filterString?.countryCode,
             name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
-            canRemove: false,
+            canRemove: true,
         },
         {
             key: 'stateCode',

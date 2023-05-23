@@ -159,7 +159,7 @@ export const ListDistrictBase = (props) => {
     useEffect(() => {
         if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
             setFilterString({ countryCode: defaultCountry });
-            setFilteredStateData(stateData?.filter((i) => i?.countryCode === defaultCountry));
+            defaultCountry ? setFilteredStateData(stateData?.filter((i) => i?.countryCode === defaultCountry)) : setFilteredStateData();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataCountryLoaded, isStateDataLoaded]);
@@ -170,7 +170,7 @@ export const ListDistrictBase = (props) => {
             title: 'Country',
             value: filterString?.countryCode,
             name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
-            canRemove: false,
+            canRemove: true,
         },
         {
             key: 'stateCode',
@@ -348,13 +348,19 @@ export const ListDistrictBase = (props) => {
 
     const removeFilter = (key) => {
         if (key === 'countryCode') {
-            setFilterString(undefined);
-        } else if (key === 'stateCode') {
+            advanceFilterForm.resetFields();
             setFilterString(undefined);
         } else {
             const { [key]: names, ...rest } = filterString;
-            advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
+            advanceFilterForm.setFieldsValue({ [key]: undefined });
             setFilterString({ ...rest });
+
+            if (!filterString?.countryCode && !filterString?.stateCode && !filterString?.keyword) {
+                setFilterString();                
+                advanceFilterForm.resetFields();
+            } else {
+                setFilterString({ ...rest });
+            }
         }
     };
 

@@ -61,22 +61,15 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.countryCode || defaultCountry} disabled label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
-                                <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange} disabled={true}>
+                            <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredSelectField('Country')]}>
+                                <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
                                     {countryData?.map((item) => (
                                         <Option value={item?.countryCode}>{item?.countryName}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Country Code" initialValue={formData?.countryCode || defaultCountry} rules={[validateRequiredInputField('Country Code'), validateAlphanumericWithSpace('Country Code')]} name="countryCodeDisplay">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Country Code')} maxLength={6} disabled={true} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
 
-                    <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" rules={[validateRequiredSelectField('State Name')]}>
                                 <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps} onChange={handleStateChange}>
@@ -84,11 +77,6 @@ const AddEditFormMain = (props) => {
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="State Code" initialValue={formData?.stateCode} name="stateCodeDisplay" rules={[validateRequiredInputField('State Code')]}>
-                                <Input placeholder={preparePlaceholderText('State Code')} className={styles.inputBox} maxLength={6} disabled={true} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -99,6 +87,7 @@ const AddEditFormMain = (props) => {
                                 <Input placeholder={preparePlaceholderText('District Code')} className={styles.inputBox} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
+
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.name} label="District Name" name="name" rules={[validateRequiredInputField('District Name'), validationFieldLetter('District Name')]}>
                                 <Input placeholder={preparePlaceholderText('District Name')} className={styles.inputBox} />
