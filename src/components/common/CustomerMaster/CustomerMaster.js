@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'User Access';
+    const moduleTitle = 'Customer Details';
 
     let returnValue = {
         collapsed,
@@ -599,7 +599,7 @@ const CustomerMasterMain = ({ saveData, userId, moduleTitle, productHierarchyDat
         setForceFormReset,
         footerEdit,
         handleUpdate2,
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.employeecode ? 'Edit ' : 'Manage ').concat(moduleTitle),
+        titleOverride: formActionType === 'add' ? 'Add New Customer' : (formActionType === 'view' ? 'View ' : 'Edit ').concat(moduleTitle),
         DealerData,
         productHierarchyData,
         tableDetailData,
