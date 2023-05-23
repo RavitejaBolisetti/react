@@ -339,3 +339,15 @@
     padding: 6px 16px;
     border-radius: 4px;
 }
+
+.modalButton{
+    width: 170px;
+    height: 36px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 16px;
+    border-radius: 4px;
+}
+

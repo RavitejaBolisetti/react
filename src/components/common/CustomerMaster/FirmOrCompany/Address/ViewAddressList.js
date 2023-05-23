@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ViewCompanyAddressDetails } from './ViewCompanyAddressDetails';
 import { Button, Collapse, Modal, Space, Typography, Row, Col, Checkbox, Divider } from 'antd';
 import { FaRegUserCircle } from 'react-icons/fa';
-import { LockOutlined } from '@ant-design/icons';
+import { BiLockAlt } from 'react-icons/bi';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { MarkAsDefaultModal } from './MarkAsDefaultModal';
 
@@ -35,7 +35,7 @@ const ViewAddressList = (formProps) => {
     };
     const modalProps = {
         isVisible: isModalOpen,
-        icon: <LockOutlined />,
+        icon: <BiLockAlt />,
         titleOverride: 'Mark As Default',
         closable: false,
         onCloseAction: handleCancel,
