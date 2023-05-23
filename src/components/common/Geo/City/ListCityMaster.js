@@ -172,12 +172,13 @@ export const ListCityMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
+
     const extraParams = [
         {
             key: 'countryCode',
             title: 'Country',
             value: filterString?.countryCode,
-            canRemove: false,
+            canRemove: true,
             name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
         },
         {

@@ -174,7 +174,7 @@ export const ListTehsilBase = (props) => {
             title: 'Country',
             value: filterString?.countryCode,
             name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
-            canRemove: false,
+            canRemove: true,
         },
         {
             key: 'stateCode',
