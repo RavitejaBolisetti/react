@@ -295,6 +295,7 @@ p {
     box-shadow: none !important;
     border-color: #FFFFFF;
     background: transparent;
+    z-index: 0;
 }
 
 .loginSection input:-webkit-autofill,
