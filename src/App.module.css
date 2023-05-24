@@ -17,15 +17,6 @@
 
  /*--------- Notification Pop Up Design Start ---------*/
 
- /* .error :global .ant-notification-notice,
- .warning :global .ant-notification-notice,
- .success :global .ant-notification-notice,
- .errorBeforeLogin :global .ant-notification-notice,
- .successBeforeLogin :global .ant-notification-notice {
-     width: 320px !important;
-     padding: 10px !important;
- } */
-
  .error :global .ant-notification-notice-icon,
  .warning :global .ant-notification-notice-icon,
  .success :global .ant-notification-notice-icon,
@@ -49,19 +40,19 @@
  .error :global .ant-notification-notice-message,
  .errorBeforeLogin :global .ant-notification-close-icon,
  .errorBeforeLogin :global .ant-notification-notice-message {
-     color: #ED302D;
+     color: #ED302D !important;
  }
 
  .warning :global .ant-notification-close-icon,
  .warning :global .ant-notification-notice-message {
-     color: #F99C22;
+     color: #F99C22 !important;
  }
 
  .success :global .ant-notification-close-icon,
  .success :global .ant-notification-notice-message,
  .successBeforeLogin :global .ant-notification-close-icon,
  .successBeforeLogin :global .ant-notification-notice-message {
-     color: #70C922;
+     color: #70C922 !important;
  }
 
  /* .success :global .ant-notification-notice-icon,
@@ -155,7 +146,7 @@
  /*--------- Error Notification Start ---------*/
  .error {
      color: #ED302D;
-     background-color: #FEE3D4;
+     background: #FEE3D4 !important;
      border: 1px solid #ED302D;
  }
 
@@ -166,21 +157,21 @@
  /*--------- Warning Notification Start ---------*/
  .warning {
      color: #F99C22;
-     background-color: #2B2521;
+     background: #2B2521 !important;
      border: 1px solid #F99C22;
  }
 
  /*--------- Error Notification Before Login Start ---------*/
  .errorBeforeLogin {
      color: #ED302D;
-     background-color: #2B2025;
+     background: #2B2025 !important;
      border: 1px solid #ED302D;
  }
 
  /*--------- Success Notification Start ---------*/
  .success {
      color: #70C922;
-     background-color: #EEFCD2;
+     background: #EEFCD2 !important;
      border: 1px solid #70C922;
  }
 
@@ -191,7 +182,7 @@
  /*--------- Success Notification Before Login Start ---------*/
  .successBeforeLogin {
      color: #70C922;
-     background-color: #222921;
+     background: #222921 !important;
      border: 1px solid #70C922;
  }
 
