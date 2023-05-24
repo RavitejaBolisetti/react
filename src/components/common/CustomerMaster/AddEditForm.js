@@ -11,7 +11,7 @@ import styles from 'components/common/Common.module.css';
 import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
 import { CompanyCustomerDetailsMaster } from './FirmOrCompany';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
-import { CompanyAddressMaster, CompanyProfile, CompanyContact } from './FirmOrCompany';
+import { CompanyAddressMaster, CompanyProfile, CompanyContact, AccountRelatedMaster } from './FirmOrCompany';
 import FormProgressBar from './FormProgressBar';
 import CommonFooterButton from './CommonFooterButton';
 
@@ -121,6 +121,11 @@ const AddEditFormMain = (props) => {
         isViewModeVisible,
         setIsViewModeVisible,
     };
+    const CustomerAccountMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
+        setIsViewModeVisible,
+    };
     const IndividualProfileMasterProps = {
         onCloseAction,
         isViewModeVisible,
@@ -161,13 +166,13 @@ const AddEditFormMain = (props) => {
             } else if (leftTimeline?.CustomerProfile) {
                 return <CompanyProfile {...CustomerProfileMasterProps} />;
             } else if (leftTimeline?.AccountRelated) {
-                return <IndividualAccountRelatedMaster {...IndividualAccountRelatedMasterProps} />;
+                return <AccountRelatedMaster {...CustomerAccountMasterProps} />;
             } else if (leftTimeline?.Contacts) {
                 return <CompanyContact />;
             } else if (leftTimeline?.Address) {
                 return <CompanyAddressMaster />;
-            }else if (leftTimeline?.IndividualProfile) {
-                return <IndividualProfileMaster {...IndividualProfileMasterProps}/>
+            } else if (leftTimeline?.IndividualProfile) {
+                return <IndividualProfileMaster {...IndividualProfileMasterProps} />;
             }
         }
     };
