@@ -13,7 +13,7 @@ import styles from 'components/common/Common.module.css';
 
 const AllowedTimingList = (props) => {
     const { timeData, setTimeData, isAddTimeVisible, setIsAddTimeVisible } = props;
-    const { formActionType, formData, setFormData, showGlobalNotification, forceUpdate, handleFormValueChange, handleFormFieldChange } = props;
+    const { buttonData, setButtonData, formActionType, formData, setFormData, showGlobalNotification, forceUpdate, handleFormValueChange, handleFormFieldChange } = props;
 
     const [timingForm] = Form.useForm();
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
@@ -59,6 +59,8 @@ const AllowedTimingList = (props) => {
 
     const cardProps = {
         form: timingForm,
+        buttonData,
+        setButtonData,
         setIsAddTimeVisible,
         formActionType,
         timeData,

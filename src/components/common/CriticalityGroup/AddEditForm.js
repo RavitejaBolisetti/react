@@ -43,6 +43,7 @@ const AddEditFormMain = (props) => {
     const cardProps = {
         form,
         style,
+      
         showGlobalNotification,
         setTimesegmentLengthTracker,
         forceUpdate,
@@ -50,6 +51,8 @@ const AddEditFormMain = (props) => {
     };
 
     const listProps = {
+        buttonData,
+        setButtonData,
         formData,
         timeData,
         setFormData,
