@@ -44,14 +44,12 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         productHierarchyData,
         skuData,
-        //productHierarchyData: [],
         moduleTitle,
         viewTitle,
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((item) => item?.status),
         unFilteredAttributeData: attributeData,
         productHierarchyAttributeData,
-        //attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
 };
@@ -66,13 +64,11 @@ const mapDispatchToProps = (dispatch) => ({
             changeHistoryModelOpen: productHierarchyDataActions.changeHistoryModelOpen,
 
             cardBtnDisableAction: productHierarchyDataActions.cardBtnDisableAction,
-            //skulist: productHierarchyDataActions.skulist,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
             showGlobalNotification,
-            // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
 
             fetchListHierarchyAttributeName: productHierarchyDataActions.fetchAttributeNameList,
             listAttibuteShowLoading: productHierarchyDataActions.listShowLoading,
@@ -137,30 +133,15 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, 
             setFormData([]);
             setSelectedTreeData([]);
             setSKUAttributes([]);
-            // skulist({ setIsLoading: listShowLoading, userId, skuId: '04089707-3708-4c2f-b8f2-eac5657e3653' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedId, userId]);
 
-    // useEffect(() => {
-    //     if (!isDataLoaded && userId) {
-    //         skulist({ setIsLoading: listShowLoading, userId, skuId: '5c182130-bf57-4f9b-9ccc-1ab865a502be' });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [isDataLoaded, isDataAttributeLoaded, userId]);
 
     useEffect(() => {
         setCollapsableView(!isChildAllowed);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isChildAllowed]);
-
-    
-    // if (formActionType === FROM_ACTION_TYPE.EDIT) {
-    //     setShowProductAttribute(true);
-    // } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
-    //     setShowProductAttribute(false);
-    // } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-    // }
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -219,20 +200,12 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, 
 
         setSelectedTreeKey(keys);
 
-        // if (keys && keys.length > 0) {
-        //     const formData = flatternData.find((i) => keys[0] === i.key);
-        //     const ID = formData.data.id;
-
-        //     setSelectedId(ID);
-        //     cardBtnDisableAction(true);
-
-        //     setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
-        // }
-
-        // setSelectedTreeKey(keys);
     };
 
     const handleSelectTreeClick = (value) => {
+        if (value === selectedTreeKey[0]) {
+            return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
+        }
         setSelectedTreeSelectKey(value);
     };
 
@@ -360,8 +333,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, 
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING
 
-    console.log(skuAttributes,'skuAttributesskuAttributesskuAttributes')
 
     return (
         <>
