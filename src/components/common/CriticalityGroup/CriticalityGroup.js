@@ -2,21 +2,20 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import moment from 'moment';
-import dayjs from 'dayjs';
+import { Button, Col, Input, Form, Row } from 'antd';
 
-import { Button, Col, Input, Form, Row, Space, Empty, notification, ConfigProvider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
+
 import { showGlobalNotification } from 'store/actions/notification';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
-import { EditIcon, ViewEyeIcon } from 'Icons';
+import { filterFunction } from 'utils/filterFunction';
+import { ListDataTable } from 'utils/ListDataTable';
+import { tableColumn } from './tableColumn';
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
-import { tblPrepareColumns } from 'utils/tableCloumn';
 import { AddEditForm } from './AddEditForm';
-import { DataTable } from 'utils/dataTable';
-import { filterFunction } from 'utils/filterFunction';
 
 import styles from 'components/common/Common.module.css';
 
@@ -26,7 +25,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            criticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [], isLoadingOnSave },
+            CriticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -42,7 +41,6 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isLoading,
         criticalityGroupData,
-        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -51,46 +49,54 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchData: criticalityDataActions.fetchData,
+            fetchList: criticalityDataActions.fetchList,
             saveData: criticalityDataActions.saveData,
             listShowLoading: criticalityDataActions.listShowLoading,
-            onSaveShowLoading: criticalityDataActions.onSaveShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification, onSaveShowLoading, isLoadingOnSave }) => {
-    const [formActionType, setFormActionType] = useState('');
-    const [isReadOnly, setIsReadOnly] = useState(false);
-    const [RefershData, setRefershData] = useState(false);
-    const [data, setData] = useState(criticalityGroupData);
-    const [formData, setFormData] = useState({});
-    const [isChecked, setIsChecked] = useState(data?.status === 'Y' ? true : false);
-    const [forceFormReset, setForceFormReset] = useState(false);
-    const [form] = Form.useForm();
-    const [searchData, setSearchdata] = useState(criticalityGroupData);
-    const [selectedRecord, setSelectedRecord] = useState(null);
-    const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
-    const [saveBtn, setSaveBtn] = useState(false);
-    const [footerEdit, setFooterEdit] = useState(false);
-    const [successAlert, setSuccessAlert] = useState(false);
-    const [formBtnDisable, setFormBtnDisable] = useState(false);
-    const [saveclick, setsaveclick] = useState();
-    const [saveandnewclick, setsaveandnewclick] = useState();
-    const [deletedItemList, setDeletedItemList] = useState([]);
-    const [filterString, setFilterString] = useState();
-    const [alertNotification, contextAlertNotification] = notification.useNotification();
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
+export const CriticalityGroupMain = (props) => {
+    const { moduleTitle, fetchList, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification } = props;
 
-    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+    const [form] = Form.useForm();
+
+    const [refershData, setRefershData] = useState(false);
+    const [formData, setFormData] = useState({});
+    const [forceFormReset, setForceFormReset] = useState(false);
+    const [searchData, setSearchdata] = useState(criticalityGroupData);
+
+    const [filterString, setFilterString] = useState();
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    const [page, setPage] = useState(1);
+
     const [isFormVisible, setIsFormVisible] = useState(false);
+
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
+    const [showDataLoading, setShowDataLoading] = useState(true);
+    const [timeData, setTimeData] = useState([]);
+
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const errorAction = (message) => {
         showGlobalNotification(message);
     };
+
+    const onSuccessAction = (res) => {
+        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
+
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -98,7 +104,7 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchData({ setIsLoading: listShowLoading, errorAction, userId });
+            fetchList({ setIsLoading: listShowLoading, errorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
@@ -118,54 +124,45 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
 
     useEffect(() => {
         if (userId) {
-            fetchData({ setIsLoading: listShowLoading, errorAction, userId });
+            fetchList({ setIsLoading: listShowLoading, errorAction, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [RefershData, userId]);
+    }, [refershData, userId]);
 
     const onFinish = (values) => {
-        const allowedTiming = values?.allowedTimings?.map((time) => {
-            return {
-                id: time?.id || '',
-                timeSlotFrom: time?.timeSlotFrom?.format('HH:mm'),
-                timeSlotTo: time?.timeSlotTo?.format('HH:mm'),
-                isDeleted: 'N',
-            };
+        const modifiedTimeData = timeData?.map((element) => {
+            return { id: element?.id || '', isDeleted: 'N', timeSlotFrom: element?.timeSlotFrom, timeSlotTo: element?.timeSlotTo };
         });
 
-        const finalAllowedTimingList = deletedItemList && allowedTiming ? [...deletedItemList, ...allowedTiming] : allowedTiming;
-
-        const recordId = selectedRecord?.id || '';
-        const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: finalAllowedTimingList || [] };
+        const recordId = formData?.id || '';
+        const data = { ...values, id: recordId, allowedTimings: modifiedTimeData || [] };
 
         const onSuccess = (res) => {
-            onSaveShowLoading(false);
+            setShowDataLoading(true);
             form.resetFields();
             setForceFormReset(generateRandomNumber());
-            setSelectedRecord({});
-            setSuccessAlert(true);
-            if (saveclick === true) {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            } else {
+            setTimeData([]);
+            if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            } else {
+                setIsFormVisible(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             }
         };
 
         setTimeout(() => {
-            fetchData({ setIsLoading: listShowLoading, userId });
-            
+            fetchList({ setIsLoading: listShowLoading, userId });
         }, 2000);
 
         const onError = (message) => {
-            onSaveShowLoading(false);
             showGlobalNotification({ message, placement: 'bottomRight' });
         };
 
         const requestData = {
             data: [data],
-            setIsLoading: onSaveShowLoading,
+            method: 'post',
+            setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
@@ -175,106 +172,12 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
-    };
-
-    const handleAdd = () => {
-        setFormActionType('add');
-        setIsFormVisible(true);
-        setSelectedRecord({});
-        setSaveAndSaveNew(true);
-        setSaveBtn(true);
-        setFooterEdit(false);
-        setIsReadOnly(false);
-        setsaveclick(false);
-        setsaveandnewclick(true);
-        setcodeIsReadOnly(false);
-    };
-
-    const handleUpdate = (record) => {
-        setFormActionType('update');
-        setSaveAndSaveNew(false);
-        setIsFormVisible(true);
-
-        setFooterEdit(false);
-        setSaveBtn(true);
-        setSelectedRecord(record);
-        const momentTime = record?.allowedTimings?.map((i) => {
-            return {
-                id: i?.id,
-                timeSlotFrom: dayjs(i.timeSlotFrom, 'HH:mm'),
-                timeSlotTo: dayjs(i.timeSlotTo, 'HH:mm'),
-            };
-        });
-        setFormData(record);
-
-        form.setFieldsValue({
-            criticalityGroupCode: record.criticalityGroupCode,
-            criticalityGroupName: record.criticalityGroupName,
-            criticalityDefaultGroup: Number(record.criticalityDefaultGroup),
-            activeIndicator: record.activeIndicator,
-            allowedTimings: momentTime,
-        });
-
-        setIsReadOnly(false);
-        setcodeIsReadOnly(true);
-    };
-
-    const handleUpdate2 = () => {
-        setFormActionType('update');
-        setIsFormVisible(true);
-        setIsViewModeVisible(false);
-
-        setSaveAndSaveNew(false);
-        setFooterEdit(false);
-        setSaveBtn(true);
-        const momentTime = selectedRecord?.allowedTimings?.map((i) => {
-            return {
-                timeSlotFrom: dayjs(i.timeSlotFrom, 'HH:mm'),
-                timeSlotTo: dayjs(i.timeSlotTo, 'HH:mm'),
-            };
-        });
-
-        form.setFieldsValue({
-            criticalityGroupCode: selectedRecord.criticalityGroupCode,
-            criticalityGroupName: selectedRecord.criticalityGroupName,
-            criticalityDefaultGroup: Number(selectedRecord.criticalityDefaultGroup),
-            activeIndicator: selectedRecord.activeIndicator,
-            allowedTimings: momentTime,
-        });
-        setsaveclick(true);
-        setIsReadOnly(false);
-        setcodeIsReadOnly(true);
-    };
-
-    const handleView = (record) => {
-        setFormActionType('view');
-        setIsViewModeVisible(true);
-        setIsFormVisible(true);
-
-        setSelectedRecord(record);
-        setSaveAndSaveNew(false);
-        setFooterEdit(true);
-        setSaveBtn(false);
-        const momentTime = record?.allowedTimings?.map((i) => {
-            return {
-                timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
-                timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
-            };
-        });
-        form.setFieldsValue({
-            criticalityGroupCode: record.criticalityGroupCode,
-            criticalityGroupName: record.criticalityGroupName,
-            criticalityDefaultGroup: Number(record.criticalityDefaultGroup),
-            activeIndicator: record.activeIndicator,
-            allowedTimings: momentTime,
-        });
-        setIsReadOnly(true);
-        setcodeIsReadOnly(true);
+        form.validateFields().then((values) => {});
     };
 
     const handleReferesh = () => {
-        setRefershData(!RefershData);
+        setShowDataLoading(true);
+        setRefershData(!refershData);
     };
 
     const onSearchHandle = (value) => {
@@ -285,115 +188,74 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
         setFilterString(e.target.value);
     };
 
-    const tableColumn = [
-        tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'srl',
-            sorter: false,
-            render: (_t, _r, i) => i + 1,
-            width: '5%',
-        }),
-        tblPrepareColumns({
-            title: 'Criticality Group ID',
-            dataIndex: 'criticalityGroupCode',
-            width: '20%',
-        }),
-        tblPrepareColumns({
-            title: 'Criticality Group Name',
-            dataIndex: 'criticalityGroupName',
-            width: '35%',
-        }),
-        tblPrepareColumns({
-            title: 'Default Group',
-            dataIndex: 'criticalityDefaultGroup',
-            render: (text, record) => <>{text === '1' ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-            width: '15%',
-        }),
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'activeIndicator',
-            render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-            width: '10%',
-        }),
-        tblPrepareColumns({
-            title: 'Actions',
-            sorter: false,
-            render: (text, record, index) => {
-                return (
-                    <Space>
-                        {
-                            <Button className={styles.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
-                                <EditIcon />
-                            </Button>
-                        }
-                        {
-                            <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
-                                <ViewEyeIcon />
-                            </Button>
-                        }
-                    </Space>
-                );
-            },
-            width: '15%',
-        }),
-    ];
+    const handleButtonClick = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        setFormData([]);
+
+        if (buttonAction === 'view' || buttonAction === 'edit') {
+            const momentTime = record?.allowedTimings?.map((i) => {
+                return {
+                    id: i?.id,
+                    timeSlotFrom: i.timeSlotFrom,
+                    timeSlotTo: i.timeSlotTo,
+                };
+            });
+            setTimeData(momentTime);
+        }
+
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+
+        record && setFormData(record);
+        setIsFormVisible(true);
+    };
+
+    const tableProps = {
+        isLoading,
+        tableData: searchData,
+        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        setPage,
+    };
+
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setTimeData([]);
+        setButtonData({ ...defaultBtnVisiblity });
+    };
 
     const formProps = {
-        isVisible: isFormVisible,
-        isViewModeVisible,
-        codeIsReadOnly,
-        showGlobalNotification,
-        deletedItemList,
-        setDeletedItemList,
-        setFormBtnDisable,
-        formBtnDisable,
-        successAlert,
-        handleUpdate2,
         form,
-        saveBtn,
+        isVisible: isFormVisible,
+        showGlobalNotification,
         onFinish,
         onFinishFailed,
-        footerEdit,
-        handleUpdate,
-        saveAndSaveNew,
-        setSaveAndSaveNew,
-        setSelectedRecord,
-        selectedRecord,
-        setIsViewModeVisible,
-        handleAdd,
-        data,
-        isChecked,
-        onCloseAction: () => {
-            setIsFormVisible(false);
-            form.resetFields();
-            setIsViewModeVisible(false);
-            form.setFieldsValue({
-                allowedTimings: [],
-            });
-            setFormBtnDisable(false);
-            setSelectedRecord(null);
-        },
-        titleOverride: (isViewModeVisible ? 'View ' : selectedRecord?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+
+        onCloseAction,
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
         formData,
         setIsFormVisible,
-        setIsChecked,
         formActionType,
-        isReadOnly,
         setFormData,
-        saveclick,
-        setsaveclick,
-        setsaveandnewclick,
-        saveandnewclick,
-        alertNotification,
-        contextAlertNotification,
-        isDataLoaded: isLoadingOnSave,
-        isLoading: isLoadingOnSave,
+        isLoading,
         forceUpdate,
+
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        buttonData,
+
+        handleButtonClick,
+        buttonData,
+        setButtonData,
+        defaultBtnVisiblity,
+
+        timeData,
+        setTimeData,
     };
 
     return (
         <>
-            {contextAlertNotification}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
@@ -409,66 +271,27 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
                                 </Row>
                             </Col>
 
-                            {criticalityGroupData?.length ? (
+                            {criticalityGroupData?.length > 0 && (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button className={styles.refreshBtn} aria-label='fa-ref' onClick={handleReferesh} danger>
+                                    <Button className={styles.refreshBtn} aria-label="fa-ref" onClick={handleReferesh} danger>
                                         <TfiReload />
                                     </Button>
-
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                         Add Group
                                     </Button>
                                 </Col>
-                            ) : (
-                                ''
                             )}
                         </Row>
                     </div>
                 </Col>
             </Row>
 
-            <AddEditForm {...formProps} />
-
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() => (
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: '20%',
-                                }}
-                                description={
-                                    !criticalityGroupData?.length ? (
-                                        <span>
-                                            No records found. Please add new parameter <br />
-                                            using below button
-                                        </span>
-                                    ) : (
-                                        <span> No records found.</span>
-                                    )
-                                }
-                            >
-                                {!criticalityGroupData?.length ? (
-                                    <Row>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Group
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                ) : (
-                                    ''
-                                )}
-                            </Empty>
-                        )}
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
-                        </div>
-                    </ConfigProvider>
+                    <ListDataTable handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={'Group'} {...tableProps} />
                 </Col>
             </Row>
+            <AddEditForm {...formProps} />
         </>
     );
 };

@@ -1,25 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import { Button, Col, Form, Row, Collapse, Input, Empty, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-
 import { HierarchyFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { showGlobalNotification } from 'store/actions/notification';
-
 import { AddEditForm } from './AddEditForm';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ChangeHistory } from './ChangeHistory';
 import LeftPanel from '../LeftPanel';
 
 import { FaHistory } from 'react-icons/fa';
-
 import { ViewProductDetail } from './ViewProductDetail';
-
 import { LANGUAGE_EN } from 'language/en';
 
 const { Panel } = Collapse;
@@ -30,7 +25,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], skudata: skuData = [], changeHistoryVisible },
+            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], skudata: skuData = [], changeHistoryVisible,attributeData: productHierarchyAttributeData = [], },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -55,6 +50,7 @@ const mapStateToProps = (state) => {
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((item) => item?.status),
         unFilteredAttributeData: attributeData,
+        productHierarchyAttributeData,
         //attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
@@ -70,19 +66,22 @@ const mapDispatchToProps = (dispatch) => ({
             changeHistoryModelOpen: productHierarchyDataActions.changeHistoryModelOpen,
 
             cardBtnDisableAction: productHierarchyDataActions.cardBtnDisableAction,
-            skulist: productHierarchyDataActions.skulist,
+            //skulist: productHierarchyDataActions.skulist,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
             showGlobalNotification,
             // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
+
+            fetchListHierarchyAttributeName: productHierarchyDataActions.fetchAttributeNameList,
+            listAttibuteShowLoading: productHierarchyDataActions.listShowLoading,
         },
         dispatch
     ),
 });
 
-export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData, userId, isDataLoaded, cardBtnDisableAction, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, unFilteredAttributeData }) => {
+export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, unFilteredAttributeData,fetchListHierarchyAttributeName,productHierarchyAttributeData }) => {
     const [form] = Form.useForm();
     const [isCollapsableView, setCollapsableView] = useState(true);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -105,6 +104,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const [isChildAllowed, setIsChildAllowed] = useState(true);
     const [selectedId, setSelectedId] = useState();
 
+    const [showProductAttribute, setShowProductAttribute] = useState(false);
+
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
@@ -125,6 +126,13 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     }, [isDataLoaded, isDataAttributeLoaded, userId]);
 
     useEffect(() => {
+        if (userId) {
+            fetchListHierarchyAttributeName({  userId, setIsLoading: listShowLoading });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
+
+    useEffect(() => {
         if (selectedId && userId) {
             setFormData([]);
             setSelectedTreeData([]);
@@ -134,17 +142,25 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedId, userId]);
 
-    useEffect(() => {
-        if (!isDataLoaded && userId) {
-            skulist({ setIsLoading: listShowLoading, userId, skuId: '5c182130-bf57-4f9b-9ccc-1ab865a502be' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, isDataAttributeLoaded, userId]);
+    // useEffect(() => {
+    //     if (!isDataLoaded && userId) {
+    //         skulist({ setIsLoading: listShowLoading, userId, skuId: '5c182130-bf57-4f9b-9ccc-1ab865a502be' });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isDataLoaded, isDataAttributeLoaded, userId]);
 
     useEffect(() => {
         setCollapsableView(!isChildAllowed);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isChildAllowed]);
+
+    
+    // if (formActionType === FROM_ACTION_TYPE.EDIT) {
+    //     setShowProductAttribute(true);
+    // } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
+    //     setShowProductAttribute(false);
+    // } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
+    // }
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -179,7 +195,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const handleTreeViewClick = (keys) => {
         setButtonData({ ...defaultBtnVisiblity });
-
         form.resetFields();
         setFormData([]);
         setSelectedTreeData([]);
@@ -238,6 +253,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const handleAttributeChange = (value) => {
         const selectedAttribute = attributeData?.find((i) => i.id === value);
+        selectedAttribute.hierarchyAttribueCode === "SKU" ? setShowProductAttribute(true) : setShowProductAttribute(false);
         setIsChildAllowed(selectedAttribute?.isChildAllowed);
     };
 
@@ -274,6 +290,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             onError,
             onSuccess,
         };
+        console.log(requestData,'final')
         saveData(requestData);
     };
 
@@ -323,6 +340,10 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         setFormBtnActive,
         skuAttributes,
         setSKUAttributes,
+        productHierarchyAttributeData,
+        showProductAttribute,
+        selectedTreeData,
+        setShowProductAttribute,
     };
 
     const viewProps = {
@@ -339,6 +360,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+
+    console.log(skuAttributes,'skuAttributesskuAttributesskuAttributes')
 
     return (
         <>

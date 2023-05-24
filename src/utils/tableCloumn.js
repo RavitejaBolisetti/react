@@ -1,6 +1,5 @@
-import { Button, Space } from 'antd';
-import { FiEdit2 } from 'react-icons/fi';
-import { FaRegEye } from 'react-icons/fa';
+import { Button, Space, Tag } from 'antd';
+import { FiEdit, FiEye } from 'react-icons/fi';
 
 import { DEFAULT_PAGE_SIZE } from 'constants/constants';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -31,37 +30,50 @@ export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellips
     };
 };
 
-export const tblSerialNumberColumn = ({ page = 1, pageSize = DEFAULT_PAGE_SIZE }) => {
+export const tblSerialNumberColumn = ({ page = 1, pageSize = DEFAULT_PAGE_SIZE, width = '5%', fixed = '' }) => {
     return {
         title: 'Srl.',
         dataIndex: 'srl',
         render: (_, __, index) => (page - 1) * pageSize + (index + 1),
-        width: '5%',
+        fixed: fixed,
+        width: width,
     };
 };
 
-export const tblStatusColumn = ({ styles, width = '15%' }) => {
+export const tblApprovalStatusColumn = ({ styles, width = '15%' }) => {
+    return {
+        title: 'Approval Status',
+        dataIndex: 'approvalStatus',
+        sorter: (a, b) => (a && b ? String(a['approvalStatus']).localeCompare(String(b['approvalStatus']), undefined, { sensitivity: 'base' }) : a),
+        render: (_, record) => (record?.approvalStatus ? <Tag color="success">Approved</Tag> : <Tag color="error">Not Approved</Tag>),
+        width,
+    };
+};
+
+export const tblStatusColumn = ({ styles, width = '15%', fixed = '' }) => {
     return {
         title: 'Status',
         dataIndex: 'status',
         sorter: (a, b) => (a && b ? String(a['status']).localeCompare(String(b['status']), undefined, { sensitivity: 'base' }) : a),
-        render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
+        render: (_, record) => (record?.status ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>),
         width,
+        fixed: fixed,
     };
 };
 
-export const tblActionColumn = ({ styles, handleButtonClick, width = '8%' }) => {
+export const tblActionColumn = ({ styles, handleButtonClick, width = '8%', fixed = '' }) => {
     return {
         title: 'Action',
         dataIndex: '',
         width,
+        fixed: fixed,
         render: (record) => [
             <Space wrap>
-                <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
-                    <FiEdit2 />
-                </Button>
                 <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
-                    <FaRegEye />
+                    <FiEye />
+                </Button>
+                <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
+                    <FiEdit />
                 </Button>
             </Space>,
         ],

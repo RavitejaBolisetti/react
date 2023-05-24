@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Input, Form, Row, Switch, Select } from 'antd';
 
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter, validateLettersWithWhitespaces } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -64,12 +64,12 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.departmentCode} label="Department Code" name="departmentCode" rules={[validateRequiredInputField('Department Code'), validationFieldLetterAndNumber('Department Code')]}>
+                            <Form.Item initialValue={formData?.departmentCode} label="Department Code" name="departmentCode" rules={[validateRequiredInputField('Department Code'), validationFieldLetter('Department Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Department Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.departmentName} label="Employee Department Name" name="departmentName" rules={[validateRequiredInputField('Department Name'), validateAlphanumericWithSpace('Department Name')]}>
+                            <Form.Item initialValue={formData?.departmentName} label="Employee Department Name" name="departmentName" rules={[validateRequiredInputField('Department Name'), validateLettersWithWhitespaces('Department Name')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Department Name')} maxLength={50} />
                             </Form.Item>
                         </Col>

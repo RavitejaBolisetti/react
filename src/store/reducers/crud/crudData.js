@@ -11,6 +11,7 @@ export const initialState = {
     saveDataId: undefined,
     detailData: [],
     extraParam: [],
+    filter: undefined,
 };
 
 const recieveDataCF = (state, action) => ({
@@ -19,6 +20,12 @@ const recieveDataCF = (state, action) => ({
     data: action.data,
     updatedAt: moment().toDate(),
 });
+
+const setFilterDataCF = (state, action) =>
+    console.log(state, action) || {
+        ...state,
+        filter: action.filter,
+    };
 
 const filteredListRecieveDataCF = (state, action) => ({
     ...state,
@@ -45,13 +52,15 @@ const resetDataCF = (state, action) => ({
 });
 
 export const crudDataReducer =
-    (RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, SAVE_DATA_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, myInitialState = initialState) =>
+    (RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, SAVE_DATA_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, myInitialState = initialState) =>
     (state = myInitialState, action) => {
         switch (action.type) {
             case RECEIVE_DATA_LOADING_ACTION_CONSTANT:
                 return showLoadingCF(state, action);
             case RECEIVE_DATA_ACTION_CONSTANT:
                 return recieveDataCF(state, action);
+            case RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT:
+                return setFilterDataCF(state, action);
             case RECEIVE_FILTERED_DATA_ACTION_CONSTANT:
                 return filteredListRecieveDataCF(state, action);
             case RECIEVE_DATA_DETAIL_ACTION_CONSTANT:

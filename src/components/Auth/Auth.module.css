@@ -212,6 +212,8 @@ p {
     color: #ffffff;
 }
 
+
+
 .loginSection .loginWrap .loginHtml .loginForm .inputBox.disabledInput input {
     background: transparent;
     color: #838383 !important;
@@ -223,6 +225,7 @@ p {
     font-size: 12px;
     font-weight: 400;
     line-height: 20px;
+    margin-top: 3px !important;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .inputBox input::-ms-reveal,
@@ -285,8 +288,17 @@ p {
 
 .loginSection :global .ant-input-affix-wrapper:hover,
 .loginSection :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
-    border-color: transparent;
-    border-inline-end-width: 0;
+    border-color: #545454;
+}
+
+.loginSection :global .ant-input-affix-wrapper-focused:hover,
+.loginSection :global .ant-input-affix-wrapper-focused:not(.ant-input-affix-wrapper-disabled):hover {
+    border-color: #FFFFFF;
+}
+
+.loginSection :global .ant-input-affix-wrapper-status-error:hover,
+.loginSection :global .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):hover {
+    border-color: #ff4d4f !important;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .inputBox :global .ant-input-affix-wrapper .ant-input-suffix {
@@ -294,6 +306,15 @@ p {
     line-height: 16px;
     transform: scaleX(-1) !important;
     color: #FF3E5B;
+}
+
+
+.loginForm :global .ant-btn-primary:disabled {
+    color: #858585
+}
+
+.loginForm :global .ant-btn-primary:disabled:hover {
+    color: #ffffff
 }
 
 /* .loginSection :global .ant-input-affix-wrapper .anticon.ant-input-password-icon {
@@ -313,7 +334,7 @@ p {
 .loginSection :global .ant-input-affix-wrapper:focus,
 .loginSection :global .ant-input-affix-wrapper-focused {
     box-shadow: none !important;
-    /* border-color: #FFFFFF; */
+    border-color: #FFFFFF;
 }
 
 .loginSection input:-webkit-autofill,
@@ -1199,61 +1220,4 @@ select.form-control:focus::-ms-value {
         font-size: 16px;
     }
 
-    .warning {
-        color: #FF7A00;
-        background-color: #FFEAD7;
-        border: 1px solid #FF7A00;
-    }
-
-    .warning :global .ant-notification-notice-icon {
-        font-weight: 700;
-    }
-
-    .warning :global .ant-notification-close-icon {
-        color: #FF7A00;
-    }
-
-    .warning :global .ant-notification-notice-message {
-        color: #FF7A00;
-        font-weight: 700;
-        margin-bottom: 0px !important;
-        font-size: 14px !important;
-        line-height: 22px !important;
-    }
-
-    .warning :global .ant-notification-notice-description {
-        color: #342C2C;
-        font-size: 12px !important;
-        line-height: 20px !important;
-        font-weight: 400 !important;
-        padding-right: 20px;
-    }
-
-    .warning :global .ant-notification-notice-btn {
-        margin-left: 35px;
-        float: left;
-        font-size: 12px;
-    }
-
-    .warning :global .ant-notification-notice-btn .ant-btn-primary {
-        background-color: #FF7A00;
-        color: #FFFFFF;
-    }
-
-    .warning :global .ant-notification-notice-btn .ant-btn-dangerous {
-        color: #FF7A00;
-        border-color: #FF7A00;
-    }
-
-    .warning :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
-        background-color: #FF7A00 !important;
-
-    }
-
-
-
-
-
-
-    /*--------- Success Notification End ---------*/
 }

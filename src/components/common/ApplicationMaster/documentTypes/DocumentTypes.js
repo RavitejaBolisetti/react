@@ -4,7 +4,6 @@ import { Form, Divider } from 'antd';
 import CardDocumentType from './CardDocumentType';
 import DocumentTypesForm from './DocumentTypesForm';
 
-import styles from './../ApplicationMaster.module.css'
 
 const DocumentTypes = ({ setIsBtnDisabled, isBtnDisabled, onFinish = () => {}, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);

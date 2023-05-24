@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Col, Input, Form, Row, Switch, Select, Checkbox, Upload, Button } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
+import { Col, Input, Form, Row, Switch, Select, Checkbox } from 'antd';
+
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter, validateLettersWithWhitespaces } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import { UploadOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
 const { Option } = Select;
@@ -15,8 +15,8 @@ const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
 
     const { buttonData, setButtonData, handleButtonClick, divisionData, departmentData, roleData } = props;
-    const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
-    const [filteredRoleData, setFilteredRoletData] = useState([]);
+    const [filteredDepartmentData, setFilteredDepartmentData] = useState(departmentData?.filter((i) => i?.divisionCode === formData?.divisionCode));
+    const [filteredRoleData, setFilteredRoletData] = useState(roleData?.filter((i) => i?.departmentCode === formData?.departmentCode));
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -27,11 +27,13 @@ const AddEditFormMain = (props) => {
     };
 
     const handleDivisionChange = (division) => {
-        form.setFieldValue('departmentName', undefined);
+        form.setFieldValue('departmentCode', undefined);
+        form.setFieldValue('roleCode', undefined);
+        setFilteredRoletData(undefined);
         setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === division));
     };
     const handleDepartmentChange = (department) => {
-        form.setFieldValue('roleDescription', undefined);
+        form.setFieldValue('roleCode', undefined);
         setFilteredRoletData(roleData?.filter((i) => i?.departmentCode === department));
     };
 
@@ -86,14 +88,14 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.designationCode} label="Designation Code" name="designationCode" rules={[validateRequiredInputField('Designation Code'), validationFieldLetterAndNumber('Location Type Code')]}>
+                            <Form.Item initialValue={formData?.designationCode} label="Designation Code" name="designationCode" rules={[validateRequiredInputField('Designation Code'), validationFieldLetter('Location Type Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Designation Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Designation Description" initialValue={formData?.designationDescription} rules={[validateRequiredInputField('Designation Description'), validateAlphanumericWithSpace('Location Type Description')]} name="designationDescription">
+                            <Form.Item label="Designation Description" initialValue={formData?.designationDescription} rules={[validateRequiredInputField('Designation Description'), validateLettersWithWhitespaces('Location Type Description')]} name="designationDescription">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Designation Description')} maxLength={50} />
                             </Form.Item>
                         </Col>
@@ -116,7 +118,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={editMode ? formData.isLeadershipIndicatorRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isLeadershipIndicatorRequired">
-                                <Checkbox>Leadship</Checkbox>
+                                <Checkbox>Leadership</Checkbox>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -157,7 +159,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    
+
                     {/* <Upload {...props}>
                         <Button icon={<UploadOutlined />}>Upload Job Description</Button>
                     </Upload> */}

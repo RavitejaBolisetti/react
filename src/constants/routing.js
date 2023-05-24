@@ -10,6 +10,7 @@ export const ROUTING_UPDATE_PASSWORD = '/update-password';
 export const ROUTING_DASHBOARD = '/dashboard';
 
 export const ROUTING_COMMON = '/common/';
+export const ROUTING_MILE = '/mile/';
 export const ROUTING_COMMON_GEO = ROUTING_COMMON.concat('geo/');
 
 export const ROUTING_COMMON_GEO_COUNTRY = ROUTING_COMMON_GEO.concat('country');
@@ -34,13 +35,13 @@ export const ROUTING_COMMON_LESSOR_COMPANY_MASTER = ROUTING_COMMON.concat('lesso
 
 export const ROUTING_COMMON_QUALIFICATION_MASTER = ROUTING_COMMON.concat('qualification-master');
 
-export const ROUTING_COMMON_DEALER_MANPOWER = ROUTING_COMMON.concat('dealer-manpower/');
-export const ROUTING_COMMON_DEALER_MANPOWER_LOCATION_TYPE_MASTER = ROUTING_COMMON_DEALER_MANPOWER.concat('location-type-master');
-export const ROUTING_COMMON_DEALER_MANPOWER_DIVISION_MASTER = ROUTING_COMMON_DEALER_MANPOWER.concat('division-master');
-export const ROUTING_COMMON_DEALER_MANPOWER_BAY_TYPE_MASTER = ROUTING_COMMON_DEALER_MANPOWER.concat('bay-type-master');
-export const ROUTING_COMMON_DEALER_MANPOWER_DESIGNATION_MASTER = ROUTING_COMMON_DEALER_MANPOWER.concat('designation-master');
-export const ROUTING_COMMON_DEALER_EMPLOYEE_DEPARTMENT_MASTER = ROUTING_COMMON_DEALER_MANPOWER.concat('employee-department');
-export const ROUTING_COMMON_ROLE_MASTER = ROUTING_COMMON_DEALER_MANPOWER.concat('role-master');
+export const ROUTING_MILE_DEALER_MANPOWER = ROUTING_MILE.concat('dealer-manpower/');
+export const ROUTING_MILE_DEALER_MANPOWER_LOCATION_TYPE_MASTER = ROUTING_MILE_DEALER_MANPOWER.concat('location-type-master');
+export const ROUTING_MILE_DEALER_MANPOWER_DIVISION_MASTER = ROUTING_MILE_DEALER_MANPOWER.concat('division-master');
+export const ROUTING_MILE_DEALER_MANPOWER_BAY_TYPE_MASTER = ROUTING_MILE_DEALER_MANPOWER.concat('bay-type-master');
+export const ROUTING_MILE_DEALER_MANPOWER_DESIGNATION_MASTER = ROUTING_MILE_DEALER_MANPOWER.concat('designation-master');
+export const ROUTING_MILE_DEALER_MANPOWER_EMPLOYEE_DEPARTMENT_MASTER = ROUTING_MILE_DEALER_MANPOWER.concat('employee-department');
+export const ROUTING_MILE_DEALER_MANPOWER_ROLE_MASTER = ROUTING_MILE_DEALER_MANPOWER.concat('role-master');
 
 export const ROUTING_COMMON_CONFIG_PARAM_EDIT = ROUTING_COMMON.concat('config-param-edit');
 
@@ -62,6 +63,8 @@ export const ROUTING_USER_CONTACT = ROUTING_HOME.concat('contact-us');
 export const ROUTING_REPORT = ROUTING_HOME.concat('report/');
 export const ROUTING_REPORT_BI_REPORT = ROUTING_REPORT.concat('bi-report');
 export const ROUTING_REPORT_PAGINATED_REPORT = ROUTING_REPORT.concat('paginated-report');
+export const ROUTING_REPORT_EMBEDDED_REPORT = ROUTING_REPORT.concat('embedded-report');
+export const ROUTING_REPORT_URL_FILTER_REPORT = ROUTING_REPORT.concat('url-filter-report');
 
 export const ROUTING_ADMIN = '/admin/';
 

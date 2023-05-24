@@ -2,10 +2,11 @@ import { combineReducers } from 'redux';
 import { Menu } from './menu';
 import { ProductHierarchy } from './productHierarchy';
 import { HierarchyAttributeMaster } from './hierarchyAttributeMaster';
-import { criticalityGroup } from './criticalityGroup';
+import { CriticalityGroup } from './criticalityGroup';
 import { RoleManagement } from './roleManagement';
 import { ManufacturerAdminHierarchy } from './manufacturerAdminHierarchy';
 import { ManufacturerOrgHierarchy } from './manufacturerOrgHierarchy';
+import { ForgotPassword } from './forgotPassword';
 import { ChangePassword } from './changePassword';
 import { DealerHierarchy } from './dealerHierarchy';
 import { ConfigurableParameterEditing } from './configurableParamterEditing';
@@ -22,10 +23,11 @@ export const data = combineReducers({
     Menu,
     ProductHierarchy,
     HierarchyAttributeMaster,
-    criticalityGroup,
+    CriticalityGroup,
     RoleManagement,
     ManufacturerAdminHierarchy,
     ManufacturerOrgHierarchy,
+    ForgotPassword,
     ChangePassword,
     DealerHierarchy,
     ConfigurableParameterEditing,

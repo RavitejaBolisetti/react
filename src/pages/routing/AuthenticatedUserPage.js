@@ -36,6 +36,8 @@ import { SplashPage } from 'pages/splash';
 import { ProfilePage, SettingPage, FaqPage, TrainingPage } from 'pages/user';
 import { BiReportPage } from 'pages/report/BiReport/BiReportPage';
 import { PaginatedReportPage } from 'pages/report/PaginatedReport/PaginatedReportPage';
+import { EmbeddedReportPage } from 'pages/report/EmbeddedReport/EmbeddedReportPage';
+import { URLFilterReportPage } from 'pages/report/URLFilterReport/URLFilterReportPage';
 
 import { CMSPage } from 'pages/cms';
 
@@ -58,13 +60,13 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_GEO_TEHSIL} element={<TehsilPage />} />
             <Route path={routing.ROUTING_COMMON_GEO_PINCODE} element={<PinCodePage />} />
 
-            <Route path={routing.ROUTING_COMMON_DEALER_MANPOWER_LOCATION_TYPE_MASTER} element={<DealerLocationTypePage />} />
-            <Route path={routing.ROUTING_COMMON_DEALER_EMPLOYEE_DEPARTMENT_MASTER} element={<DealerEmployeeDepartmentPage />} />
+            <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_LOCATION_TYPE_MASTER} element={<DealerLocationTypePage />} />
+            <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_EMPLOYEE_DEPARTMENT_MASTER} element={<DealerEmployeeDepartmentPage />} />
 
-            <Route path={routing.ROUTING_COMMON_DEALER_MANPOWER_DIVISION_MASTER} element={<DealerDivisionMasterPage />} />
-            <Route path={routing.ROUTING_COMMON_DEALER_MANPOWER_BAY_TYPE_MASTER} element={<BayTypeMasterPage />} />
-            <Route path={routing.ROUTING_COMMON_DEALER_MANPOWER_DESIGNATION_MASTER} element={<DesignationMasterPage />} />
-            <Route path={routing.ROUTING_COMMON_ROLE_MASTER} element={<RoleMasterPage />} />
+            <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_DIVISION_MASTER} element={<DealerDivisionMasterPage />} />
+            <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_BAY_TYPE_MASTER} element={<BayTypeMasterPage />} />
+            <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_DESIGNATION_MASTER} element={<DesignationMasterPage />} />
+            <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_ROLE_MASTER} element={<RoleMasterPage />} />
 
             <Route path={routing.ROUTING_COMMON_PRODUCT_MASTER} element={<ProductMasterPage />} />
             <Route path={routing.ROUTING_COMMON_APPLICATION_MASTER} element={<ApplicationMasterPage />} />
@@ -78,10 +80,15 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_DEALER_HIERARCHY} element={<DealerHierarchyPage />} />
             <Route path={routing.ROUTING_USER_PROFILE} element={<ProfilePage />} exact />
             <Route path={routing.ROUTING_COMMON_ROLE_MANAGEMENT} element={<RoleManagementPage />} />
-            <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
-            <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
+    
+
             <Route path={routing.ROUTING_REPORT_BI_REPORT} element={<BiReportPage />} exact />
             <Route path={routing.ROUTING_REPORT_PAGINATED_REPORT} element={<PaginatedReportPage />} exact />
+            <Route path={routing.ROUTING_REPORT_EMBEDDED_REPORT} element={<EmbeddedReportPage />} exact />
+            <Route path={routing.ROUTING_REPORT_URL_FILTER_REPORT} element={<URLFilterReportPage />} exact />
+            
+            <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
+            <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
             <Route path={routing.ROUTING_USER_TRAINING} element={<TrainingPage />} exact />
             <Route path={routing.ROUTING_USER_MANAGEMENT_DEALER} element={<UserManagementPage />} exact />
             <Route path={routing.ROUTING_USER_MANAGEMENT_MANUFACTURER} element={<UserManagementManufacturerPage />} exact />

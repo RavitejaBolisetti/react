@@ -1,5 +1,6 @@
 @import url('./global.css');
 
+
 .marR5 {
     margin-right: 5px;
 }
@@ -45,9 +46,11 @@
 
 .contentHeaderBackground {
     background-color: #f4f4f4;
-    padding: 10px !important;
+    border: 1px solid #e8e8e8;
+    padding: 18px 20px !important;
     margin-bottom: 20px;
-    border-radius: 7px;
+    border-radius: 8px !important;
+    font-weight: 500;
 }
 
 .contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper,
@@ -67,7 +70,7 @@
     color: #0b0b0c;
     width: 12px;
     height: 12px;
-    vertical-align: revert;
+    vertical-align: sub !important;
 }
 
 .contentHeaderBackground .headerSelectField :global .ant-btn-default,
@@ -163,7 +166,9 @@
 }
 
 .activeText {
-    color: #00a310;
+    color: #70C922;
+    background: #EEFCD2;
+    border-color: #70C922;
 }
 
 .inactiveText {
@@ -570,6 +575,7 @@
     left: 10px;
     bottom: 0px;
     box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
+    z-index: 1;
 }
 
 .formFooter .footerBtnLeft {
@@ -595,16 +601,6 @@
     justify-content: flex-end;
     margin-bottom: 0px !important;
     margin-top: 0px;
-}
-
-.contentHeaderBackground {
-    background-color: #f4f4f4;
-    padding: 8px 20px;
-    border-radius: 4px 4px 0px 0px;
-    -moz-border-radius: 4px 4px 0px 0px;
-    -webkit-border-radius: 4px 4px 0px 0px;
-    border: 1px solid #e8e8e8;
-    font-weight: 500;
 }
 
 .contentHeaderRightBackground {
@@ -736,7 +732,15 @@
 
 .headerSearchField {
     vertical-align: middle;
-    width: 100%;
+    /* width: 100%; */
+}
+
+.headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper {
+    border: 0;
+}
+
+.headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper-focused {
+    box-shadow: none !important;
 }
 
 .headerSearchField :global .anticon svg {
@@ -805,6 +809,18 @@
     margin-bottom: 5px;
 }
 
+.contentHeaderBackground .subheading .filterBtn {
+    line-height: 24px;
+    font-weight: 600;
+    margin-left: -10px;
+}
+
+.contentHeaderBackground .subheading .filterBtn svg {
+    margin-right: 6px;
+    margin-top: -4px;
+    vertical-align: middle;
+}
+
 .contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
@@ -821,8 +837,9 @@
 .content {
     border: 1px solid #e8e8e8;
     border-radius: 0 0 4px 4px;
-    margin-top: 0px;
+    margin-top: -21px;
     overflow-y: hidden;
+    height: 62.6vh;
 }
 
 .emptyContainer {
@@ -852,7 +869,7 @@
 .viewContainer :global .ant-descriptions .ant-descriptions-item-content {
     color: rgba(142, 133, 133, 1) !important;
     font-size: 14px !important;
-    display: inline-block
+    display: inline-block;
 }
 
 .hierarchyRightContaners {
@@ -879,42 +896,43 @@
     height: calc(100vh - 284px);
 }
 
-:global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-track {
+:global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-track,
+:global .ant-table-wrapper .ant-table .ant-table-content::-webkit-scrollbar-track {
     background-color: #f4f4f4;
 }
 
-:global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar {
+:global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar,
+:global .ant-table-wrapper .ant-table .ant-table-content::-webkit-scrollbar {
     background-color: #f4f4f4;
     width: 5px;
+}
+
+:global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-thumb,
+:global .ant-table-wrapper .ant-table .ant-table-content::-webkit-scrollbar-thumb {
+    background-color: rgba(52, 44, 44, 0.34);
+    border-radius: 10px;
+    /* border: 2px solid ; */
 }
 
 :global .ant-descriptions .ant-descriptions-view:hover::-webkit-scrollbar {
     width: 5px !important;
 }
 
-:global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-thumb {
-    background-color: rgba(52, 44, 44, 0.34);
-    border-radius: 10px;
-    /* border: 2px solid ; */
-}
-
 /* Crticality group allowed timing css*/
 
 .allowedTimingAlignment {
-    border-top: 1px solid #dedede;
-    padding-top: 24px;
-    padding-left: 0 !important;
-    font-size: 14px;
-    line-height: 20px;
+    padding: 20px 0 !important;
+    font-size: 16px;
+    line-height: 24px;
     font-weight: 700;
 }
 
+
+
 .addTimeBtn {
-    position: relative;
-    top: -28px;
-    margin-bottom: -10px;
-    text-align: right;
-    color: #ff3e5b;
+    display: flex;
+    align-items: center;
+    flex-flow: row-reverse;
 }
 
 .viewAllowedTiming button {
@@ -939,19 +957,24 @@
     border-radius: 8px;
     background-color: #f4f4f4;
     padding: 10px;
-    margin-bottom: 2px;
-    border-radius: 7px;
+    margin-bottom: 1px;
+    border-radius: 0;
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
     font-size: 14px;
     color: #342c2c;
 }
 
 .paddingLeft {
     padding-left: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
 }
 
-.paddingLeft2 {
+/* .paddingLeft2 {
     padding-left: 10px;
-}
+} */
 
 .allowedTiming {
     background: #f4f4f4;
@@ -960,11 +983,18 @@
     align-items: flex-start;
     padding: 20px 0px 20px 20px;
     gap: 20px;
-    margin-bottom: 20px;
+    /* padding-bottom: 0; */
+    /* margin-bottom: 20px; */
 }
 
 .allowedTiming :global .ant-space .ant-space-item .ant-form-item {
     margin-bottom: 0;
+}
+
+.allowedTiming :global .ant-space .ant-space-item .ant-btn span {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 22px;
 }
 
 .allowedTiming :global .ant-picker-input>input:placeholder-shown,
@@ -1184,6 +1214,255 @@
 
 .CardFormitemMargin :global .ant-card-body .ant-form-item {
     margin-bottom: 0px !important;
+}
+
+.alignLeft {
+    text-align: left;
+}
+
+.alignRight {
+    text-align: right;
+}
+
+.advanceFilterTop {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: solid 1px #e6e6e6;
+}
+
+.advanceFilterContainer {
+    display: flex;
+    flex-flow: wrap;
+    /* align-items: center; */
+}
+
+.advanceFilterClear {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    margin-bottom: -2px;
+}
+
+.advanceFilterTop .advanceFilterTitle {
+    padding: 10px 0px;
+    margin-right: 10px;
+    width: 160px;
+}
+
+/* .advanceFilterTop .advanceFilterItem:first-child {
+    margin-left: -40px;
+} */
+
+.advanceFilterTop .advanceFilterItem {
+    height: 30px;
+    border-radius: 20px;
+    margin-top: 6px;
+    padding: 4px 10px;
+    border: solid 1px #ff3e5b;
+    color: #ff3e5b;
+    line-height: 18px;
+    margin-right: 12px;
+}
+
+.advanceFilterTop .advanceFilterItem span {
+    vertical-align: middle;
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+.advanceFilterTop .clearBtn {
+    float: right !important;
+    height: 30px !important;
+    line-height: 16px;
+}
+
+.graySeparator {
+    border-top: 1px solid #dedede;
+}
+
+.advanceTimingContainer {
+    background-color: #f4f4f4;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.advanceTimingContainer :global .ant-card-bordered {
+    border: 1px solid #b5b5b6;
+    background-color: #b5b5b6;
+}
+
+.viewTiming {
+    padding: 0px 20px 10px 20px;
+}
+
+.viewTiming .seprator {
+    border-top: solid 1px #e6e6e6;
+    margin-bottom: 20px;
+}
+
+.timingCardItem {
+    margin: 10px 0px 5px 0px;
+    background-color: #e6e6e6;
+    border: 1px solid #b5b5b6;
+    border-radius: 10px;
+    padding: 4px 12px;
+}
+
+.timingCardItem .timeSlot {
+    padding: 4px 0 !important;
+    width: 190px;
+    color: #0b0b0c;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+}
+
+.timingCardItem .timeLabel {
+    padding-left: 0 !important;
+    color: #858585;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.timingCardItem .timeSlotClearBtn {
+    display: flex;
+    align-items: center;
+}
+
+.viewTiming .timingCardItem:first-child {
+    margin-top: 10px;
+}
+
+.timingCardItem :global .ant-descriptions .ant-descriptions-row>th,
+.timingCardItem :global .ant-descriptions .ant-descriptions-row>td {
+    padding-bottom: 0px;
+}
+
+.masterListSearchForm :global .ant-form-item {
+    margin-bottom: 0px;
+}
+
+.masterListSearchForm :global .ant-form-item .ant-form-item-label>label {
+    margin-right: 12px;
+}
+
+.masterListSearchForm :global .ant-form-item .ant-form-item-explain-error {
+    margin-bottom: -18px;
+    margin-top: -2px;
+}
+
+.advanceTimingContainer {
+    background-color: #f4f4f4;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.advanceTimingContainer :global .ant-card-bordered {
+    border: 1px solid #B5B5B6;
+    background-color: #B5B5B6;
+}
+
+.viewTiming {
+    padding: 0px 20px 10px 20px;
+}
+
+.viewTiming .seprator {
+    border-top: solid 1px #E6E6E6;
+    margin-bottom: 20px;
+}
+
+.timingCardItem {
+    margin: 10px 0px 5px 0px;
+    background-color: #E6E6E6;
+    border: 1px solid #B5B5B6;
+    border-radius: 10px;
+    padding: 4px 12px;
+}
+
+.timingCardItem .timeSlot {
+    padding: 4px 0 !important;
+    width: 190px;
+    color: #0B0B0C;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+}
+
+.timingCardItem .timeLabel {
+    padding-left: 0 !important;
+    color: #858585;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.timingCardItem .timeSlotClearBtn {
+    display: flex;
+    align-items: center;
+}
+
+.viewTiming .timingCardItem:first-child {
+    margin-top: 10px;
+}
+
+.timingCardItem :global .ant-descriptions .ant-descriptions-row>th,
+.timingCardItem :global .ant-descriptions .ant-descriptions-row>td {
+    padding-bottom: 0px;
+}
+
+.advanceFilterTop {
+    margin-top: 18px;
+    margin-bottom: -8px;
+    padding-top: 8px;
+    border-top: solid 1px #e6e6e6;
+}
+
+.advanceFilterContainer {
+    display: flex;
+    flex-flow: wrap;
+    /* margin: 0 0 0 8px; */
+    /* align-items: center; */
+}
+
+.advanceFilterClear {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    margin-bottom: -2px;
+}
+
+.advanceFilterTop .advanceFilterTitle {
+    padding: 10px 0px;
+    margin-right: 10px;
+    width: 160px;
+}
+
+/* .advanceFilterTop .advanceFilterItem:first-child {
+    margin-left: -40px;
+} */
+
+.advanceFilterTop .advanceFilterItem {
+    height: 30px;
+    border-radius: 20px;
+    margin-top: 6px;
+    padding: 4px 10px;
+    border: solid 1px #ff3e5b;
+    color: #ff3e5b;
+    line-height: 18px;
+    margin-right: 12px;
+}
+
+.advanceFilterTop .advanceFilterItem span {
+    vertical-align: middle;
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+.advanceFilterTop .clearBtn {
+    float: right !important;
+    height: 30px !important;
+    line-height: 16px;
 }
 
 @media (max-width: 768px) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Input, Form, Row, Switch } from 'antd';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
+import { validateRequiredInputField, validationFieldLetter, validateLettersWithWhitespaces } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -45,12 +45,12 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.locationCode} label="Location Type Code" name="locationCode" rules={[validateRequiredInputField('Location Type Code'), validationFieldLetterAndNumber('Location Type Code')]}>
+                            <Form.Item initialValue={formData?.locationCode} label="Location Type Code" name="locationCode" rules={[validateRequiredInputField('Location Type Code'), validationFieldLetter('Location Type Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Location Type Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Location Type Description" initialValue={formData?.locationDescription} rules={[validateRequiredInputField('Location Type Description'), validateAlphanumericWithSpace('Location Type Description')]} name="locationDescription">
+                            <Form.Item label="Location Type Description" initialValue={formData?.locationDescription} rules={[validateRequiredInputField('Location Type Description'), validateLettersWithWhitespaces('Location Type Description')]} name="locationDescription">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Location Type Description')} maxLength={50} />
                             </Form.Item>
                         </Col>
