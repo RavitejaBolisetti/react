@@ -37,8 +37,8 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Division" name="code" initialValue={filterString?.code}>
-                        <Select className={styles.headerSelectField} showSearch loading={!isDivisionDataLoaded} onChange={handleFilterChange('code')} placeholder="Select" allowClear>
+                    <Form.Item label="Division" name="code" initialValue={filterString?.code} rules={[validateRequiredSelectField('Division')]}>
+                        <Select className={styles.headerSelectField} showSearch loading={!isDivisionDataLoaded} onChange={handleFilterChange('code')} placeholder="Select" allowClear >
                             {divisionData?.map((item) => (
                                 <Option value={item?.code}>{item?.divisionName}</Option>
                             ))}
@@ -47,7 +47,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Department" initialValue={filterString?.departmentCode} name="departmentCode">
+                    <Form.Item label="Department" initialValue={filterString?.departmentCode}  name="departmentCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('departmentCode')}>
                             {filteredDepartmentData?.map((item) => (
                                 <Option value={item?.departmentCode}>{item?.departmentName}</Option>

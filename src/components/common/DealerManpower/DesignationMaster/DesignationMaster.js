@@ -367,18 +367,17 @@ export const DesignationMasterBase = (props) => {
         if (key === 'code') {
             setFilterString(undefined);
         } else if (key === 'departmentCode') {
-            const { departmentCode, keyword, ...rest } = filterString;
+            const { departmentCode, roleCode, ...rest } = filterString;
             setFilterString({ ...rest });
         } else if (key === 'roleCode') {
-            const { roleCode, keyword, ...rest } = filterString;
+            const { roleCode, ...rest } = filterString;
             setFilterString({ ...rest });
-        } else if (key === 'keyword') {
+        } else {
             const { [key]: names, ...rest } = filterString;
 
-            listFilterForm.setFieldsValue({ code: undefined });
-            advanceFilterForm.setFieldsValue({ keyword: undefined });
+            advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
 
-            if (!rest?.departmentCode && !rest?.departmentCode && !rest?.departmentCode) {
+            if (!rest?.departmentCode && !rest?.roleCode && !rest?.keyword) {
                 setFilterString();
             } else {
                 setFilterString({ ...rest });
