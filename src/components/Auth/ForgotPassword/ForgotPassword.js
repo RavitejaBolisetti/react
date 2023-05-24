@@ -64,10 +64,12 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const [otpInput, setOTPInput] = useState();
     const [validationKey, setValidationKey] = useState();
     const [inValidOTP, setInValidOTP] = useState(false);
+    const [disableVerifyOTP, setDisableVerifyOTP] = useState(true);
     const [showPassword, setShowPassword] = useState({ newPassword: false, confirmNewPassword: false });
     const [password, setPassword] = useState('');
     const [verifiedUserData, setVerifiedUserData] = useState();
     const [tooltipVisible, setTooltipVisible] = useState(false);
+    const [submitButtonActive, setSubmitButtonActive] = useState(true);
 
     useEffect(() => {
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -82,12 +84,18 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [password]);
 
+    const handleFormValueChange = () => {
+        setSubmitButtonActive(false);
+    };
+
     const onError = (message) => {
         showGlobalNotification({ title: 'ERROR', message: Array.isArray(message[0]) || message });
         if (otpInput?.length === 6) {
             setCounter(0);
         }
         setInValidOTP(true);
+        setDisableVerifyOTP(true);
+        setSubmitButtonActive(true);
     };
 
     const onVerifyUser = (values) => {
@@ -214,6 +222,12 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const handleOTPInput = (value) => {
         setOTPInput(value);
         setInValidOTP(false);
+        console.log('value', value);
+        if (value?.length === 6) {
+            setDisableVerifyOTP(false);
+        } else {
+            setDisableVerifyOTP(true);
+        }
     };
 
     const onFinishFailed = ({ values, errorFields, outOfDate }) => {
@@ -394,7 +408,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                         </Row>
                                                     </Col>
                                                 </Row>
-                                                <Button onClick={handleVerifyOTP} disabled={otpInput?.length < 6 || typeof otpInput == 'undefined'} loading={isLoading} className={styles.button} type="primary">
+                                                <Button onClick={handleVerifyOTP} disabled={disableVerifyOTP} loading={isLoading} className={styles.button} type="primary">
                                                     Verify OTP
                                                 </Button>
 
@@ -410,7 +424,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                     ) : currentStep === 4 ? (
                                         <div className={styles.centerInner}>
                                             <div className={styles.loginForm}>
-                                                <Form id="updatePassword" form={form} autoComplete="off" onFinish={onUpdatePassword} layout="vertical">
+                                                <Form id="updatePassword" form={form} autoComplete="off" onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onUpdatePassword} layout="vertical">
                                                     <div className={styles.loginHeading}>
                                                         <h1 className={styles.inputBox}>Create New Password</h1>
                                                         <Row gutter={20}>
@@ -445,7 +459,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                         </Row>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Button loading={isLoading} form="updatePassword" className={styles.button} type="primary" htmlType="submit">
+                                                                <Button loading={isLoading} disabled={submitButtonActive} form="updatePassword" className={styles.button} type="primary" htmlType="submit">
                                                                     Submit
                                                                 </Button>
                                                             </Col>
