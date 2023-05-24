@@ -26,12 +26,12 @@ const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true
     id && getMenuValue(MenuConstant, id, 'link') ? (
         <Link to={getMenuValue(MenuConstant, id, 'link')} title={tooltip ? menuOrgTitle : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
-            {showTitle && <span className={styles.menuTitle}>{title}</span>}
+            {showTitle && <span id={id} className={styles.menuTitle}>{title}</span>}{id}
         </Link>
     ) : (
         <Link to="#" title={tooltip ? menuOrgTitle : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
-            {showTitle && <span className={styles.menuTitle}>{title}</span>}
+            {showTitle && <span id={id} className={styles.menuTitle}>{title}</span>}{id}
         </Link>
     );
 
@@ -42,11 +42,11 @@ const mapStateToProps = (state) => {
             Menu: { isLoaded: isDataLoaded = false, isLoading, filter, data: menuData = [], flatternData },
         },
         common: {
-            LeftSideBar: { collapsed = false, isMobile = false },
+            LeftSideBar: { collapsed = false, isMobile = false, selectedMenudId = 'COMN-03.02' },
         },
     } = state;
 
-    let returnValue = { isLoading, userId, isDataLoaded, filter, menuData: menuData, flatternData, childredData: flatternData?.filter((i) => !i.childExist && i.parentMenuId !== 'FAV'), isMobile, collapsed };
+    let returnValue = { isLoading, selectedMenudId, userId, isDataLoaded, filter, menuData: menuData, flatternData, childredData: flatternData?.filter((i) => !i.childExist && i.parentMenuId !== 'FAV'), isMobile, collapsed };
     return returnValue;
 };
 
@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const LeftSideBarMain = (props) => {
-    const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, childredData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed } = props;
+    const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, childredData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed, selectedMenudId } = props;
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -79,6 +79,7 @@ const LeftSideBarMain = (props) => {
     const [selectedKeys, setSelectedKeys] = useState([]);
     const [selectedMenuId, setSelectedMenuId] = useState(menuId);
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const [selectKeyToScroll, setSelectKeyToScroll] = useState('');
 
     useEffect(() => {
         if (menuId) {
@@ -111,6 +112,7 @@ const LeftSideBarMain = (props) => {
                     return {
                         label: i.menuTitle,
                         value: i.menuId,
+                        // parent: i.parentMenuId,
                     };
                 }
                 return undefined;
@@ -119,6 +121,18 @@ const LeftSideBarMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
+
+    useEffect(() => {
+
+        setTimeout(() => {
+
+            if (selectKeyToScroll && isDataLoaded) {
+                const element = document.getElementById(selectKeyToScroll);
+                element.scrollIntoView();
+            }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, 1000)
+    }, [isDataLoaded, selectKeyToScroll])
 
     const handleThemeChange = () => {
         const changeTheme = theme === 'dark' ? 'light' : 'dark';
@@ -152,6 +166,7 @@ const LeftSideBarMain = (props) => {
     };
 
     const onOpenChange = (keys) => {
+        setSelectKeyToScroll(keys[0])
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
         if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
             setOpenKeys(keys);
@@ -171,6 +186,7 @@ const LeftSideBarMain = (props) => {
     const onSelect = (menuId, label) => {
         if (menuId && getMenuValue(MenuConstant, menuId, 'link')) navigate(getMenuValue(MenuConstant, menuId, 'link'));
         setSelectedMenuId(menuId);
+        setSelectKeyToScroll(menuId)
     };
 
     const onMenuCollapsed = () => {
