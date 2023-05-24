@@ -22,7 +22,7 @@ export const AdvancedSearchFrom = (props) => {
     const onFinish = (values) => {
         setFilterString({ ...values, advanceFilter: true });
         handleFilterChange(false);
-        setAdvanceSearchVisible(false);
+        //setAdvanceSearchVisible(false);
     };
 
     const onFinishFailed = () => {

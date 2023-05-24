@@ -12,6 +12,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { filterFunction } from 'utils/filterFunction';
 import { ListDataTable } from 'utils/ListDataTable';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { tableColumn } from './tableColumn';
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
@@ -62,6 +63,7 @@ export const CriticalityGroupMain = (props) => {
     const { moduleTitle, fetchList, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification } = props;
 
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
 
     const [refershData, setRefershData] = useState(false);
     const [formData, setFormData] = useState({});
@@ -110,17 +112,21 @@ export const CriticalityGroupMain = (props) => {
     }, [isDataLoaded, userId]);
 
     useEffect(() => {
-        if (isDataLoaded && criticalityGroupData) {
+        if (isDataLoaded && criticalityGroupData && userId) {
             if (filterString) {
-                const filterDataItem = criticalityGroupData?.filter((item) => filterFunction(filterString)(item?.criticalityGroupCode) || filterFunction(filterString)(item?.criticalityGroupName));
-                setSearchdata(filterDataItem);
+                const keyword = filterString?.keyword;
+                // const filterDataItem = criticalityGroupData?.filter((item) => filterFunction(filterString)(item?.criticalityGroupCode) || filterFunction(filterString)(item?.criticalityGroupName));
+                const filterDataItem = criticalityGroupData?.filter((item) => (keyword ? filterFunction(keyword)(item?.criticalityGroupCode) || filterFunction(keyword)(item?.criticalityGroupName) : true));
+
+                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             } else {
-                setSearchdata(criticalityGroupData);
+                setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             }
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, criticalityGroupData]);
+    }, [filterString, isDataLoaded, criticalityGroupData, userId]);
 
     useEffect(() => {
         if (userId) {
@@ -131,7 +137,7 @@ export const CriticalityGroupMain = (props) => {
 
     const onFinish = (values) => {
         const modifiedTimeData = timeData?.map((element) => {
-            return { id: element?.id || '', isDeleted: 'N', timeSlotFrom: element?.timeSlotFrom, timeSlotTo: element?.timeSlotTo };
+            return { id: element?.id || '', timeSlotFrom: element?.timeSlotFrom, timeSlotTo: element?.timeSlotTo, isDeleted: element?.isDeleted };
         });
 
         const recordId = formData?.id || '';
@@ -144,6 +150,7 @@ export const CriticalityGroupMain = (props) => {
             setTimeData([]);
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
+                setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 setIsFormVisible(false);
@@ -180,14 +187,6 @@ export const CriticalityGroupMain = (props) => {
         setRefershData(!refershData);
     };
 
-    const onSearchHandle = (value) => {
-        setFilterString(value);
-    };
-
-    const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
-    };
-
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
@@ -198,6 +197,7 @@ export const CriticalityGroupMain = (props) => {
                     id: i?.id,
                     timeSlotFrom: i.timeSlotFrom,
                     timeSlotTo: i.timeSlotTo,
+                    isDeleted: i?.isDeleted,
                 };
             });
             setTimeData(momentTime);
@@ -254,9 +254,39 @@ export const CriticalityGroupMain = (props) => {
         setTimeData,
     };
 
+    const handleClearInSearch = (e) => {
+        if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
+    };
+
+    const onSearchHandle = (value) => {
+        if (value?.trim()?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: false, keyword: value });
+        }
+    };
+
+    const title = 'Criticality Group List';
+
+    const advanceFilterResultProps = {
+        advanceFilter: false,
+        filterString,
+        from: listFilterForm,
+
+        onSearchHandle,
+        handleClearInSearch,
+        handleReferesh,
+        handleButtonClick,
+        title,
+    };
+
     return (
         <>
-            <Row gutter={20}>
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
+
+            {/* <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
@@ -277,14 +307,14 @@ export const CriticalityGroupMain = (props) => {
                                         <TfiReload />
                                     </Button>
                                     <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                        Add Group
+                                        Add
                                     </Button>
                                 </Col>
                             )}
                         </Row>
                     </div>
                 </Col>
-            </Row>
+            </Row> */}
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

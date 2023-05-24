@@ -33,6 +33,9 @@ const AddEditForm = (props) => {
                                 <Form.Item hidden name={'id'}>
                                     <Input />
                                 </Form.Item>
+                                <Form.Item hidden name={'isDeleted'} initialValue="N">
+                                <Input />
+                            </Form.Item>
                             </Row>
                         </Space>
                     </div>

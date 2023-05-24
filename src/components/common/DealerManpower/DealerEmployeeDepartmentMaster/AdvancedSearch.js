@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withModal } from 'components/withModal';
-
 import styles from 'components/common/Common.module.css';
+import { validateRequiredSelectField } from 'utils/validation';
+import { searchValidator } from 'utils/validation';
 
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { handleFilterChange, divisionData, setAdvanceSearchVisible } = props;
+    const { divisionData, setAdvanceSearchVisible } = props;
     const { filterString, setFilterString, advanceFilterForm, handleResetFilter } = props;
 
     useEffect(() => {
@@ -19,8 +19,8 @@ export const AdvancedSearchFrom = (props) => {
 
     const onFinish = (values) => {
         setFilterString({ ...values, advanceFilter: true });
-        handleFilterChange(false);
         setAdvanceSearchVisible(false);
+        advanceFilterForm.resetFields();
     };
 
     const onFinishFailed = () => {
@@ -37,7 +37,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Division" name="divisionCode">
+                    <Form.Item label="Division" name="divisionCode" rules={[validateRequiredSelectField('Division')]}>
                         <Select placeholder="Select" {...selectProps}>
                             {divisionData?.map((item) => (
                                 <Option value={item?.code}>{item?.divisionName}</Option>
@@ -46,7 +46,17 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Department" initialValue={filterString?.keyword} name="keyword">
+                    <Form.Item
+                        label="Department"
+                        initialValue={filterString?.keyword}
+                        name="keyword"
+                        rules={[
+                            {
+                                validator: searchValidator,
+                            },
+                        ]}
+                        validateTrigger={['onFinish']}
+                    >
                         <Input placeholder="Search" allowClear />
                     </Form.Item>
                 </Col>
