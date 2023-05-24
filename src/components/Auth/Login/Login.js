@@ -61,6 +61,8 @@ const Login = (props) => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [fieldData, setFieldData] = useState();
+    console.log('🚀 ~ file: Login.js:65 ~ Login ~ fieldData:', fieldData);
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
     const [, updateState] = React.useState();
@@ -186,6 +188,9 @@ const Login = (props) => {
             {!showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
         </span>
     );
+    const handleFormChange = (field) => (e) => {
+        setFieldData({ ...fieldData, [field]: e?.target?.value?.length > 0 ? true : false });
+    };
     return (
         <>
             {contextAlertNotification}
@@ -212,14 +217,11 @@ const Login = (props) => {
                                                     <div className={styles.loginSubHeading}>Please enter your credentials to login</div>
                                                 </div>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        {/* <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
-                                                            {<Input prefix={<BiUser size={18} />} type="text" maxLength={25} placeholder="User ID (MILE ID.Parent ID)*" />}
-                                                        </Form.Item> */}
-                                                        <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox} class="textfield">
-                                                            {<Input class="textfield__input" prefix={<BiUser size={18} />} type="text" maxLength={25} />}
-                                                            <label class="textfield__label">User ID (MILE ID.Parent ID)*</label>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfield">
+                                                        <Form.Item name="userId" class="textfield__input" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
+                                                            {<Input prefix={<BiUser size={18} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
                                                         </Form.Item>
+                                                        {!fieldData?.userId && <label class="textfield__label">User ID (MILE ID.Parent ID)*</label>}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
