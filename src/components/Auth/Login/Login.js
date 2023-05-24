@@ -213,8 +213,12 @@ const Login = (props) => {
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
+                                                        {/* <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
                                                             {<Input prefix={<BiUser size={18} />} type="text" maxLength={25} placeholder="User ID (MILE ID.Parent ID)*" />}
+                                                        </Form.Item> */}
+                                                        <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox} class="textfield">
+                                                            {<Input class="textfield__input" prefix={<BiUser size={18} />} type="text" maxLength={25} />}
+                                                            <label class="textfield__label">User ID (MILE ID.Parent ID)*</label>
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
