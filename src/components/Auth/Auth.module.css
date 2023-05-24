@@ -260,6 +260,11 @@ p {
     padding: 0;
 }
 
+.loginSection :global .ant-input-affix-wrapper:hover {
+    z-index: 0 !important;
+}
+
+
 .loginSection .disabledInput :global .ant-input-affix-wrapper {
 
     border-color: #838383;
