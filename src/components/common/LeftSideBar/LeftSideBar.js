@@ -9,7 +9,7 @@ import IMG_ICON from 'assets/img/icon.png';
 import IMG_LOGO from 'assets/images/RobinLightTheme.svg';
 
 import { menuDataActions } from 'store/actions/data/menu';
-import { setCollapsed, setIsMobile } from 'store/actions/common/leftsidebar';
+import { setCollapsed, setIsMobile, setSelectKeyToScroll } from 'store/actions/common/leftsidebar';
 
 import styles from './LeftSideBar.module.css';
 import * as routing from 'constants/routing';
@@ -26,12 +26,22 @@ const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true
     id && getMenuValue(MenuConstant, id, 'link') ? (
         <Link to={getMenuValue(MenuConstant, id, 'link')} title={tooltip ? menuOrgTitle : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
-            {showTitle && <span id={id} className={styles.menuTitle}>{title}</span>}{id}
+            {showTitle && (
+                <span id={id} className={styles.menuTitle}>
+                    {title}
+                </span>
+            )}
+            {id}
         </Link>
     ) : (
         <Link to="#" title={tooltip ? menuOrgTitle : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
-            {showTitle && <span id={id} className={styles.menuTitle}>{title}</span>}{id}
+            {showTitle && (
+                <span id={id} className={styles.menuTitle}>
+                    {title}
+                </span>
+            )}
+            {id}
         </Link>
     );
 
@@ -59,13 +69,14 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: menuDataActions.fetchList,
             setFilter: menuDataActions.setFilter,
             listShowLoading: menuDataActions.listShowLoading,
+            setSelectKeyToScroll,
         },
         dispatch
     ),
 });
 
 const LeftSideBarMain = (props) => {
-    const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, childredData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed, selectedMenudId } = props;
+    const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, childredData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed,setSelectKeyToScroll, selectedMenudId } = props;
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -79,7 +90,6 @@ const LeftSideBarMain = (props) => {
     const [selectedKeys, setSelectedKeys] = useState([]);
     const [selectedMenuId, setSelectedMenuId] = useState(menuId);
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-    const [selectKeyToScroll, setSelectKeyToScroll] = useState('');
 
     useEffect(() => {
         if (menuId) {
@@ -98,9 +108,9 @@ const LeftSideBarMain = (props) => {
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, errorAction: () => { } });
+            fetchList({ setIsLoading: listShowLoading, userId, errorAction: () => {} });
         }
-        return () => { };
+        return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
@@ -121,19 +131,17 @@ const LeftSideBarMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
-
     useEffect(() => {
-
-        setTimeout(() => {
-
-            if (selectKeyToScroll && isDataLoaded) {
-                const element = document.getElementById(selectKeyToScroll);
+        if (selectedMenudId && isDataLoaded) {
+           
+            setTimeout(() => {
+                const element = document.getElementById(selectedMenudId);
                 element.scrollIntoView({ behavior: 'smooth' });
-                
-            }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, 1000)
-    }, [isDataLoaded, selectKeyToScroll])
+                // setSelectKeyToScroll('');
+                // eslint-disable-next-line react-hooks/exhaustive-deps
+            }, 1000);
+        }
+    }, [isDataLoaded, selectedMenudId, openKeys]);
 
     const handleThemeChange = () => {
         const changeTheme = theme === 'dark' ? 'light' : 'dark';
@@ -167,12 +175,14 @@ const LeftSideBarMain = (props) => {
     };
 
     const onOpenChange = (keys) => {
-        setSelectKeyToScroll(keys[0])
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
         if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
             setOpenKeys(keys);
+
+            setSelectKeyToScroll(keys[0]);
         } else {
             setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+
         }
     };
 
@@ -187,7 +197,7 @@ const LeftSideBarMain = (props) => {
     const onSelect = (menuId, label) => {
         if (menuId && getMenuValue(MenuConstant, menuId, 'link')) navigate(getMenuValue(MenuConstant, menuId, 'link'));
         setSelectedMenuId(menuId);
-        setSelectKeyToScroll(menuId)
+        setSelectKeyToScroll(menuId);
     };
 
     const onMenuCollapsed = () => {
