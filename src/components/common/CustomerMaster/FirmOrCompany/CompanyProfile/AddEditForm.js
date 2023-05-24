@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 
-import { Col, Input, Collapse, Row, Button, Space, Spin, Form, Select, Upload, message, Checkbox, Progress, Typography, Divider} from 'antd';
+import { Col, Input, Collapse, Row, Button, Space, Spin, Form, Select, Upload, message, Checkbox, Progress, Typography, Divider } from 'antd';
 import { FaUserCircle } from 'react-icons/fa';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
@@ -83,11 +83,10 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
 
     const uploadProps = {
         name: 'file',
-
-        multiple: true,
-
+        multiple: false,
         action: '',
-
+        progress: { strokeWidth: 10 },
+        success: { percent: 100 },
         onChange(info) {
             const { status } = info.file;
 
@@ -97,12 +96,6 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
                 message.error(`${info.file.name} file upload failed.`);
             }
         },
-
-        // onDrop(e) {
-
-        //   console.log('Dropped files', e.dataTransfer.files);
-
-        // },
     };
 
     const onFinish = () => {
@@ -295,23 +288,8 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
                                         </Row>
                                         <Row gutter={20}>
                                             {' '}
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Dragger
-                                                    {...uploadProps}
-                                                    style={{
-                                                        // margin: '1.5rem 0 0 0',
-
-                                                        background: '#F2F2F2',
-
-                                                        border: '1px dashed #B5B5B5',
-
-                                                        borderRadius: '6px',
-
-                                                        minHeight: '172px',
-
-                                                        padding: '1rem 0 0 0',
-                                                    }}
-                                                >
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.uploadContainer}>
+                                                <Dragger {...uploadProps}>
                                                     <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
                                                         <img src={Svg} alt="" />
                                                     </p>
