@@ -224,7 +224,7 @@ const Login = (props) => {
                                                             <Input type={showPassword ? 'text' : 'password'} placeholder="Password*" prefix={<FiLock size={18} />} suffix={passowrdSuffix} />
                                                         </Form.Item>
                                                         <div className={styles.forgotPasswordLink}>
-                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
+                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forget Password?</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>

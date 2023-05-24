@@ -10,6 +10,7 @@ const ProductAttributePanel = ({ documentTypesList, setDocumentTypesList, select
     const [actionForm] = Form.useForm();
 
     const onActionFormFinish = (val) => {
+        console.log("val", val)
         const { key } = val.authorityTypeCode;
         setDocumentTypesList((prev) => [...prev, { id: val.id, authorityEmployeeTokenNo: val.authorityEmployeeTokenNo, authorityTypeCode: key, employeeName: val.EmployeeName, effectiveFrom: moment(val?.effectiveFrom).format('YYYY-MM-DD'), effectiveTo: moment(val?.effectiveTo).format('YYYY-MM-DD'), isModified: val.isModified }]);
         actionForm.resetFields();
@@ -18,7 +19,7 @@ const ProductAttributePanel = ({ documentTypesList, setDocumentTypesList, select
 
     return (
         <>
-            {!viewMode && <AddEditForm onFinish={onActionFormFinish} form={actionForm} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setDocumentTypesList={setDocumentTypesList} />}
+            {viewMode && <AddEditForm onFinish={onActionFormFinish} form={actionForm} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setDocumentTypesList={setDocumentTypesList} />}
 
             {documentTypesList?.length > 0 &&
                 documentTypesList?.map((action) => {

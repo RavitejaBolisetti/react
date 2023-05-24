@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListEmployeeDepartmentMaster } from 'components/common/DealerManpower';
+import { ListEmployeeDepartmentMaster } from 'components/common/DealerManpower/DealerEmployeeDepartmentMaster/ListEmployeeDepartmentMaster';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 

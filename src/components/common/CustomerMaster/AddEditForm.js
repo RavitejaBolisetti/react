@@ -11,7 +11,7 @@ import styles from 'components/common/Common.module.css';
 import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
 import { CompanyCustomerDetailsMaster } from './FirmOrCompany';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
-import { CompanyAddressMaster, CompanyProfile, CompanyContact } from './FirmOrCompany';
+import { CompanyAddressMaster, CompanyProfile, CompanyContact, AccountRelatedMaster } from './FirmOrCompany';
 import FormProgressBar from './FormProgressBar';
 import CommonFooterButton from './CommonFooterButton';
 
@@ -115,7 +115,13 @@ const AddEditFormMain = (props) => {
         onCloseAction,
         isViewModeVisible,
     };
+
     const CustomerDetailsMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
+        setIsViewModeVisible,
+    };
+    const CustomerAccountMasterProps = {
         onCloseAction,
         isViewModeVisible,
         setIsViewModeVisible,
@@ -133,6 +139,11 @@ const AddEditFormMain = (props) => {
         isViewModeVisible,
         styles,
     };
+    const individualAddressMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
+        styles,
+    };
 
     const renderElement = () => {
         if (toggleButton?.individual) {
@@ -141,7 +152,7 @@ const AddEditFormMain = (props) => {
             } else if (leftTimeline?.CustomerDetails) {
                 return <IndivisualCustomerDetailsMaster {...CustomerDetailsMasterProps} />;
             } else if (leftTimeline?.Address) {
-                return <IndividualAddressMaster />;
+                return <IndividualAddressMaster {...individualAddressMasterProps} />;
             } else if (leftTimeline?.Contacts) {
                 return <IndividualContact />;
             } else if (leftTimeline?.IndividualProfile) {
@@ -155,11 +166,13 @@ const AddEditFormMain = (props) => {
             } else if (leftTimeline?.CustomerProfile) {
                 return <CompanyProfile {...CustomerProfileMasterProps} />;
             } else if (leftTimeline?.AccountRelated) {
-                return <IndividualAccountRelatedMaster {...IndividualAccountRelatedMasterProps} />;
-            }else if (leftTimeline?.Contacts) {
+                return <AccountRelatedMaster {...CustomerAccountMasterProps} />;
+            } else if (leftTimeline?.Contacts) {
                 return <CompanyContact />;
             } else if (leftTimeline?.Address) {
                 return <CompanyAddressMaster />;
+            } else if (leftTimeline?.IndividualProfile) {
+                return <IndividualProfileMaster {...IndividualProfileMasterProps} />;
             }
         }
     };
