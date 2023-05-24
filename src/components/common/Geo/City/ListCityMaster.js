@@ -243,10 +243,7 @@ export const ListCityMasterBase = (props) => {
         }
     };
 
-    // const onSearchHandle = (value) => {
-    //     value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value, countryCode: 'IND' }) : handleResetFilter();
-    // };
-
+  
     const onSearchHandle = (value) => {
         if (value?.trim()?.length >= 3) {
             setFilterString({ ...filterString, advanceFilter: true, keyword: value });

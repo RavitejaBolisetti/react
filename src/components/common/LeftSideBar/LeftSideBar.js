@@ -131,11 +131,18 @@ const LeftSideBarMain = (props) => {
     }, [filter]);
    
     useEffect(() => {
-        if (selectedMenudId && isDataLoaded) {           
-            // setTimeout(() => {
-            //     const element = document?.getElementById(selectedMenudId)?.closest('ul');             
-            //     element?.scrollIntoView({ behavior: 'smooth' });
-            // }, 1000);
+        if (selectedMenudId && isDataLoaded) {
+           
+            setTimeout(() => {
+            //     const element1 = document.getElementById(selectedMenudId)?.closest('ul')?.closest('ul');
+            //  console.log("element1",element1)
+
+                const element = document.getElementById(selectedMenudId)?.closest('ul');
+            //  console.log("element",element)
+                element?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+                // setSelectKeyToScroll('');
+                // eslint-disable-next-line react-hooks/exhaustive-deps
+            }, 400);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, selectedMenudId, openKeys]);
@@ -172,11 +179,13 @@ const LeftSideBarMain = (props) => {
     };
 
     const onOpenChange = (keys) => {
+        if(keys?.length){
+            setSelectKeyToScroll(keys[keys.length-1]);
+        }
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
         if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
             setOpenKeys(keys);
 
-            setSelectKeyToScroll(keys[keys.length-1]);
         } else {
             setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
 
