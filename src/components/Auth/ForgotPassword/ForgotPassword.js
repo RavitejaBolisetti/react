@@ -64,6 +64,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const [otpInput, setOTPInput] = useState();
     const [validationKey, setValidationKey] = useState();
     const [inValidOTP, setInValidOTP] = useState(false);
+    const [disableVerifyOTP, setDisableVerifyOTP] = useState(true);
     const [showPassword, setShowPassword] = useState({ newPassword: false, confirmNewPassword: false });
     const [password, setPassword] = useState('');
     const [verifiedUserData, setVerifiedUserData] = useState();
@@ -214,6 +215,12 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const handleOTPInput = (value) => {
         setOTPInput(value);
         setInValidOTP(false);
+        console.log('value', value);
+        if (value?.length === 6) {
+            setDisableVerifyOTP(false);
+        } else {
+            setDisableVerifyOTP(true);
+        }
     };
 
     const onFinishFailed = ({ values, errorFields, outOfDate }) => {
@@ -394,7 +401,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                         </Row>
                                                     </Col>
                                                 </Row>
-                                                <Button onClick={handleVerifyOTP} disabled={otpInput?.length < 6 || typeof otpInput == 'undefined'} loading={isLoading} className={styles.button} type="primary">
+                                                <Button onClick={handleVerifyOTP} disabled={disableVerifyOTP} loading={isLoading} className={styles.button} type="primary">
                                                     Verify OTP
                                                 </Button>
 
