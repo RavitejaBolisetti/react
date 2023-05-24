@@ -376,9 +376,7 @@ export const DesignationMasterBase = (props) => {
             setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
-
             advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
-
             if (!rest?.departmentCode && !rest?.roleCode && !rest?.keyword) {
                 setFilterString();
             } else {

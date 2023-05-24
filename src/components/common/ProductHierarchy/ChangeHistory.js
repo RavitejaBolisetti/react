@@ -62,7 +62,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         }),
         tblPrepareColumns({
             title: 'Attribute',
-            dataIndex: 'parentAttributeName',
+            dataIndex: 'attributeKey',
         }),
         tblPrepareColumns({
             title: 'Code',
