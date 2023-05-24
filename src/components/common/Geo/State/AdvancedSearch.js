@@ -10,7 +10,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange } = props;
+    const { isDataCountryLoaded, countryData, defaultCountry } = props;
     const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible } = props;
 
     useEffect(() => {
@@ -21,8 +21,7 @@ export const AdvancedSearchFrom = (props) => {
 
     const onFinish = (values) => {
         setFilterString({ ...values, advanceFilter: true });
-        handleFilterChange(false);
-        //setAdvanceSearchVisible(false);
+        setAdvanceSearchVisible(false);
     };
 
     const onFinishFailed = () => {

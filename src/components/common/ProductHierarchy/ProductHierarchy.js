@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], skudata: skuData = [], changeHistoryVisible,attributeData: productHierarchyAttributeData = [], },
+            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], skudata: skuData = [], changeHistoryVisible, attributeData: productHierarchyAttributeData = [], },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, unFilteredAttributeData,fetchListHierarchyAttributeName,productHierarchyAttributeData }) => {
+export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, unFilteredAttributeData, fetchListHierarchyAttributeName, productHierarchyAttributeData }) => {
     const [form] = Form.useForm();
     const [isCollapsableView, setCollapsableView] = useState(true);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -106,6 +106,9 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
+    const onKeyPressHandler = (e) => {
+        e.key === 'Enter' && e.preventDefault();
+    };
 
     useEffect(() => {
         if (userId) {
@@ -123,7 +126,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, 
 
     useEffect(() => {
         if (userId) {
-            fetchListHierarchyAttributeName({  userId, setIsLoading: listShowLoading });
+            fetchListHierarchyAttributeName({ userId, setIsLoading: listShowLoading });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -263,11 +266,11 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, 
             onError,
             onSuccess,
         };
-        console.log(requestData,'final')
+        console.log(requestData, 'final')
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {};
+    const onFinishFailed = (errorInfo) => { };
 
     const myProps = {
         isTreeViewVisible,
@@ -335,30 +338,41 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, 
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
     const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING
 
+    const title = 'Hierarchy';
 
     return (
         <>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={24} sm={24} md={19} lg={19} xl={19} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
-                                        Hierarchy
-                                    </Col>
-                                    <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                        <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
-                                            <Option value="hyr">Hyr</Option>
-                                        </Select>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                        <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
-                                    </Col>
-                                </Row>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                    <Form.Item
+                                        label={`${title}`}
+                                        name="code"
+                                        // rules={[
+                                        //     {
+                                        //         validator: validator,
+                                        //     },
+                                        // ]}
+                                        validateTrigger={['onSearch']}
+                                    >
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                                <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
+                                                    <Option value="hyr">Hyr</Option>
+                                                </Select>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                                <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
+                                            </Col>
+                                        </Row>
+                                    </Form.Item>
+                                </Form>
                             </Col>
                             {productHierarchyData.length > 0 && (
-                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={5} lg={5} xl={5}>
+                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
                                     <Button type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`} onClick={changeHistoryModelOpen}>
                                         <FaHistory className={styles.buttonIcon} />
                                         Change History
