@@ -14,7 +14,7 @@ export const AdvancedSearchFrom = (props) => {
 
     useEffect(() => {
         advanceFilterForm.resetFields();
-        advanceFilterForm.setFieldsValue({ code: filterString?.code });
+        advanceFilterForm.setFieldsValue({ pincode: filterString?.pincode });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
@@ -94,7 +94,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="PIN Code" initialValue={filterString?.code} name="code">
+                    <Form.Item label="PIN Code" initialValue={filterString?.pincode} name="pincode">
                         <Input placeholder="Search" maxLength={6} allowClear />
                     </Form.Item>
                 </Col>

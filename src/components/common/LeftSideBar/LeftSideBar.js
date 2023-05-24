@@ -31,7 +31,6 @@ const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true
                     {title}
                 </span>
             )}
-            {id}
         </Link>
     ) : (
         <Link to="#" title={tooltip ? menuOrgTitle : ''}>
@@ -41,7 +40,6 @@ const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true
                     {title}
                 </span>
             )}
-            {id}
         </Link>
     );
 
@@ -146,6 +144,7 @@ const LeftSideBarMain = (props) => {
                 // eslint-disable-next-line react-hooks/exhaustive-deps
             }, 400);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, selectedMenudId, openKeys]);
 
     const handleThemeChange = () => {

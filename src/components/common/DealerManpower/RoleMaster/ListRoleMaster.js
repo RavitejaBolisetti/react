@@ -349,17 +349,15 @@ export const ListRoleMasterBase = (props) => {
 
     const removeFilter = (key) => {
         if (key === 'divisionCode') {
-            setFilterString(undefined);
-        } else if (key === 'departmentCode') {
-            const { departmentCode, keyword, ...rest } = filterString;
+            const { divisionCode, departmentCode, ...rest } = filterString;
             setFilterString({ ...rest });
-        } else if (key === 'keyword') {
-            const { [key]: names, ...rest } = filterString;
-
-            listFilterForm.setFieldsValue({ code: undefined });
-            advanceFilterForm.setFieldsValue({ keyword: undefined });
-
-            if (!filterString?.departmentCode && !filterString?.departmentCode && !filterString?.departmentCode) {
+        } else if (key === 'departmentCode') {
+            const { departmentCode, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else {
+            const { [key]: names, ...rest } = filterString;        
+            advanceFilterForm.setFieldsValue({ keyword: undefined , divisionCode: undefined});
+            if (!filterString?.keyword && !filterString?.divisionCode && !filterString?.departmentCode ) {
                 setFilterString();
             } else {
                 setFilterString({ ...rest });

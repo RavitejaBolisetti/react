@@ -1,7 +1,3 @@
-:global .ant {
-    font-family: 'Lato', sans-serif !important;
-}
-
 :global .ant-tree .ant-tree-switcher-leaf-line:before {
     border-inline-end: 1px dashed #d9d9d9;
 }

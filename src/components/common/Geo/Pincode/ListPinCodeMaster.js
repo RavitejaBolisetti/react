@@ -185,13 +185,14 @@ const ListPinCodeMasterBase = (props) => {
     }, [userId, isDataCountryLoaded, isStateDataLoaded, isDistrictDataLoaded, isCityDataLoaded, isTehsilDataLoaded, isDataLoaded]);
 
     const loadPinCodeDataList = () => {
-        if (userId && (filterString?.code || (filterString?.countryCode && filterString?.stateCode && filterString?.districtCode && (filterString?.tehsilCode || filterString?.cityCode)))) {
+        if (userId && (filterString?.pincode || (filterString?.countryCode && filterString?.stateCode && filterString?.districtCode && (filterString?.tehsilCode || filterString?.cityCode)))) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         } else {
-            onErrorAction('Please enter pincode OR country, state, tehsil, city to search data');
+            // onErrorAction('Please enter pincode OR country, state, tehsil, city to search data');
         }
     };
+
     useEffect(() => {
         loadPinCodeDataList();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -207,20 +208,21 @@ const ListPinCodeMasterBase = (props) => {
 
     useEffect(() => {
         if (!showDataLoading && data && userId) {
-            if (filterString) {
-                const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
+            if (filterString?.length > 0) {
+                const keyword = filterString?.pincode ? filterString?.pincode : filterString?.keyword;
                 const state = filterString?.stateCode;
                 const district = filterString?.districtCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.pinCode) || filterFunction(keyword)(item?.pinCategory) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.pincode) || filterFunction(keyword)(item?.pinCategory) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
-                setShowDataLoading(false);
-            } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, data, userId]);
+    }, [filterString, isDataLoaded, userId]);
+
+    useEffect(() => {
+        setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+    }, [data]);
 
     const extraParams = [
         {
@@ -228,28 +230,28 @@ const ListPinCodeMasterBase = (props) => {
             title: 'Country',
             value: filterString?.countryCode,
             name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
-            canRemove: true,
+            canRemove: false,
         },
         {
             key: 'stateCode',
             title: 'State',
             value: filterString?.stateCode,
             name: filteredStateData?.find((i) => i?.code === filterString?.stateCode)?.name,
-            canRemove: true,
+            canRemove: false,
         },
         {
             key: 'districtCode',
             title: 'District',
             value: filterString?.districtCode,
             name: filteredDistrictData?.find((i) => i?.code === filterString?.districtCode)?.name,
-            canRemove: true,
+            canRemove: false,
         },
         {
             key: 'tehsilCode',
             title: 'Tehsil',
             value: filterString?.tehsilCode,
             name: filteredTehsilData?.find((i) => i?.code === filterString?.tehsilCode)?.name,
-            canRemove: true,
+            canRemove: false,
         },
         {
             key: 'cityCode',
@@ -259,10 +261,10 @@ const ListPinCodeMasterBase = (props) => {
             canRemove: true,
         },
         {
-            key: 'code',
+            key: 'pincode',
             title: 'Pincode',
-            value: filterString?.code,
-            name: filterString?.code,
+            value: filterString?.pincode,
+            name: filterString?.pincode,
             canRemove: true,
         },
     ];
@@ -456,8 +458,13 @@ const ListPinCodeMasterBase = (props) => {
     const onSearchHandle = (value) => {
         const pattern = /^\d{6}(?:\s*,\s*\d{6})*$/;
         if (pattern.test(value)) {
-            value ? setFilterString({ ...filterString, advanceFilter: true, code: value }) : handleResetFilter();
-            listFilterForm.setFieldsValue({ code: undefined });
+            if (filterString?.stateCode) {
+                value ? setFilterString({ ...filterString, advanceFilter: true, pincode: value }) : handleResetFilter();
+            } else {
+                value ? setFilterString({ advanceFilter: true, pincode: value }) : handleResetFilter();
+            }
+            listFilterForm.setFieldsValue({ pincode: undefined,code:undefined });
+            
         }
     };
 
@@ -478,10 +485,15 @@ const ListPinCodeMasterBase = (props) => {
         } else if (key === 'cityCode') {
             const { cityCode, code, ...rest } = filterString;
             setFilterString({ ...rest });
-        } else if (key === 'code') {
+        } else if (key === 'pincode') {
             const { [key]: names, ...rest } = filterString;
-            advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
-            setFilterString({ ...rest });
+            advanceFilterForm.setFieldsValue({ keyword: undefined, pincode: undefined });
+            
+            if (!filterString?.countryCode && !filterString?.stateCode && !filterString?.districtCode && !filterString?.tehsilCode) {
+                setFilterString();
+            } else {
+                setFilterString({ ...rest });
+            }
         }
     };
 

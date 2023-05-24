@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -57,6 +57,12 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
     const [password, setPassword] = useState('');
     const [tooltipVisible, setTooltipVisible] = useState(false);
 
+    const [fieldData, setFieldData] = useState();
+
+    const oldPasswordInput = useRef(null);
+    const newPasswordInput = useRef(null);
+    const confirmPasswordInput = useRef(null);
+
     useEffect(() => {
         if (!preLoginData) {
             navigate(ROUTING_LOGIN);
@@ -100,6 +106,18 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
         </span>
     );
 
+    const handleFormChange = (field) => (e) => {
+        setFieldData({ ...fieldData, [field]: e?.target?.value?.length > 0 ? true : false });
+    };
+
+    const handleFieldFocus = (field) => (e) => {
+        field?.current.focus();
+    };
+
+    const handleNewPasswordChange = (e) => {
+        setPassword(e.target.value);
+        setFieldData({ ...fieldData, newPassword: e?.target?.value?.length > 0 ? true : false });
+    };
     return (
         <>
             <div className={styles.loginSection}>
@@ -125,40 +143,56 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                     <div className={styles.loginSubHeading}></div>
                                                 </div>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="oldPassword" rules={[validateRequiredInputField('old password')]} className={`${styles.inputBox}`}>
-                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.oldPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('Old password*', false)} visibilityToggle={true} suffix={passwordSuffix('oldPassword')} />
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
+                                                        <Form.Item name="oldPassword" class="textfieldWithPrefix__input" rules={[validateRequiredInputField('old password', false)]} className={`${styles.inputBox}`}>
+                                                            <Input type={showPassword?.oldPassword ? 'text' : 'password'} ref={oldPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('oldPassword')} suffix={passwordSuffix('oldPassword')} />
                                                         </Form.Item>
+                                                        {!fieldData?.oldPassword && (
+                                                            <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(oldPasswordInput)}>
+                                                                Old password
+                                                            </label>
+                                                        )}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]} className={`${styles.changer} ${styles.inputBox}`}>
-                                                            <Input onChange={(e) => setPassword(e.target.value)} prefix={<FiLock size={18} />} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('New password*', false)} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
+                                                        <Form.Item name="newPassword" class="textfieldWithPrefix__input" rules={[validateRequiredInputField('new password')]} className={`${styles.inputBox}`}>
+                                                            <Input onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                                                         </Form.Item>
+                                                        {!fieldData?.newPassword && (
+                                                            <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(newPasswordInput)}>
+                                                                New password
+                                                            </label>
+                                                        )}
                                                         {password && <PasswordStrengthMeter password={password} beforeLogin={true} tooltipVisible={tooltipVisible} />}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
                                                         <Form.Item
                                                             name="confirmNewPassword"
                                                             dependencies={['newPassword']}
+                                                            class="textfieldWithPrefix__input"
                                                             rules={[
-                                                                validateRequiredInputField('confirm password'),
+                                                                validateRequiredInputField('confirm password', false),
                                                                 ({ getFieldValue }) => ({
                                                                     validator(_, value) {
                                                                         if (!value || getFieldValue('newPassword') === value) {
                                                                             return Promise.resolve();
                                                                         }
-                                                                        return Promise.reject(new Error("New Password and Confirm Password don't match!"));
+                                                                        return Promise.reject(new Error("New Password and confirm Password doesn't match!"));
                                                                     },
                                                                 }),
                                                             ]}
-                                                            className={styles.inputBox}
+                                                            className={`${styles.inputBox}`}
                                                         >
-                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder="Confirm password*" suffix={passwordSuffix('confirmNewPassword')} />
+                                                            <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
                                                         </Form.Item>
+                                                        {!fieldData?.confirmNewPassword && (
+                                                            <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(confirmPasswordInput)}>
+                                                                Confirm password
+                                                            </label>
+                                                        )}
                                                     </Col>
                                                 </Row>
 

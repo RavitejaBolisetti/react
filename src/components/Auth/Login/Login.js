@@ -65,8 +65,6 @@ const Login = (props) => {
 
     const userIdRef = useRef(null);
     const passwordInputRef = useRef(null);
-
-    console.log('🚀 ~ file: Login.js:65 ~ Login ~ fieldData:', fieldData);
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
     const [, updateState] = React.useState();
