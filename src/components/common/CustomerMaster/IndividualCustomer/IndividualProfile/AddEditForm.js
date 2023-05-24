@@ -35,6 +35,7 @@ const AddEditForm = (props) => {
     const [uploadCustomerFormValues, setUploadCustomerFormValues] = useState();
     const [done, setDone] = useState();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [mobileLoader,setmobileLoader]=useState(false);
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -104,7 +105,23 @@ const AddEditForm = (props) => {
     };
     const handleCancel = () => {
         setIsModalOpen(false);
+        setmobileLoader(false);
     };
+    const handleNumberValidation =(event)=>{
+        const Mno=event.target.value;
+        if(Mno?.length===10)
+        {
+            setmobileLoader(true);
+            setTimeout(() => {
+                setIsModalOpen(true);
+            }, 1000);
+        }
+        else
+        {
+            setmobileLoader(false);
+
+        }
+    }   
 
 
 
@@ -221,9 +238,9 @@ const AddEditForm = (props) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Mobile Number" maxLength={10} name="mobileNumber" rules={[validateRequiredInputField('mobile number')][validateMobileNoField('mobile number')]}>
+                                                <Form.Item label="Mobile Number"  maxLength={10} name="mobileNumber" rules={[validateRequiredInputField('mobile number')][validateMobileNoField('mobile number')]}>
                                                     {/* <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('mobile number')} {...disabledProps} /> */}
-                                                    <Input placeholder={preparePlaceholderText('mobile number')} allowClear enterButton="Send OTP" size="small" suffix={<><Button onClick={showModal} style={{ marginRight: '-3px', borderColor: '#d9d9d9', color: '#B5B5B6' }}>Send OTP</Button> <MarkAsDefaultModal {...modalProps} /></>} />
+                                                    <Input onChange={handleNumberValidation} placeholder={preparePlaceholderText('mobile number')} allowClear enterButton="Send OTP" size="small" suffix={<><Button loading={mobileLoader} onClick={showModal} style={{ marginRight: '-3px', borderColor: '#d9d9d9', color: '#B5B5B6' }}>Send OTP</Button> <MarkAsDefaultModal {...modalProps} /></>} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
