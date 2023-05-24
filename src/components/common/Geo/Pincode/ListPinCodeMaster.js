@@ -189,10 +189,10 @@ const ListPinCodeMasterBase = (props) => {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         } else {
-            onErrorAction('Please enter pincode OR country, state, tehsil, city to search data');
+            // onErrorAction('Please enter pincode OR country, state, tehsil, city to search data');
         }
     };
-    
+
     useEffect(() => {
         loadPinCodeDataList();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -458,8 +458,13 @@ const ListPinCodeMasterBase = (props) => {
     const onSearchHandle = (value) => {
         const pattern = /^\d{6}(?:\s*,\s*\d{6})*$/;
         if (pattern.test(value)) {
-            value ? setFilterString({ ...filterString, advanceFilter: true, pincode: value }) : handleResetFilter();
-            listFilterForm.setFieldsValue({ pincode: undefined });
+            if (filterString?.stateCode) {
+                value ? setFilterString({ ...filterString, advanceFilter: true, pincode: value }) : handleResetFilter();
+            } else {
+                value ? setFilterString({ advanceFilter: true, pincode: value }) : handleResetFilter();
+            }
+            listFilterForm.setFieldsValue({ pincode: undefined,code:undefined });
+            
         }
     };
 
@@ -483,7 +488,12 @@ const ListPinCodeMasterBase = (props) => {
         } else if (key === 'pincode') {
             const { [key]: names, ...rest } = filterString;
             advanceFilterForm.setFieldsValue({ keyword: undefined, pincode: undefined });
-            setFilterString({ ...rest });
+            
+            if (!filterString?.countryCode && !filterString?.stateCode && !filterString?.districtCode && !filterString?.tehsilCode) {
+                setFilterString();
+            } else {
+                setFilterString({ ...rest });
+            }
         }
     };
 
