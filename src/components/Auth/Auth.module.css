@@ -212,7 +212,10 @@ p {
     color: #ffffff;
 }
 
-
+.loginSection .loginWrap .loginHtml .loginForm .inputBox :global .ant-form-item-control-input {
+    background: #0B0B0C !important;
+    border-radius: 6px !important;
+}
 
 .loginSection .loginWrap .loginHtml .loginForm .inputBox.disabledInput input {
     background: transparent;
@@ -340,6 +343,7 @@ p {
 .loginSection :global .ant-input-affix-wrapper-focused {
     box-shadow: none !important;
     border-color: #FFFFFF;
+    background: transparent;
 }
 
 .loginSection input:-webkit-autofill,

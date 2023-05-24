@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Button, Input, message, notification, Space } from 'antd';
@@ -62,6 +62,10 @@ const Login = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [fieldData, setFieldData] = useState();
+
+    const userIdRef = useRef(null);
+    const passwordInputRef = useRef(null);
+
     console.log('🚀 ~ file: Login.js:65 ~ Login ~ fieldData:', fieldData);
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
@@ -188,8 +192,13 @@ const Login = (props) => {
             {!showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
         </span>
     );
+
     const handleFormChange = (field) => (e) => {
         setFieldData({ ...fieldData, [field]: e?.target?.value?.length > 0 ? true : false });
+    };
+
+    const handleFieldFocus = (field) => (e) => {
+        field?.current.focus();
     };
     return (
         <>
@@ -204,10 +213,6 @@ const Login = (props) => {
                         <br></br>
                         <img src={IMAGES.LINE} className={styles.mainLogoLine} alt="" />
                         <div className={styles.logoText}>Dealer Management System</div>
-                        <div class="textfield" data-testid="userIdInput">
-                            <input class="textfield__input" type="text" maxLength={25} onChange={handleFormChange('userId')} />
-                            {!fieldData?.userId && <label class="textfield__label">User ID (MILE ID.Parent ID)</label>}
-                        </div>
                     </div>
                     <div className={styles.loginWrap}>
                         <Form form={form} name="login_from" autoComplete="off" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -223,16 +228,25 @@ const Login = (props) => {
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
                                                         <Form.Item name="userId" class="textfieldWithPrefix__input" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
-                                                            {<Input prefix={<BiUser size={18} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
+                                                            {<Input ref={userIdRef} prefix={<BiUser size={18} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
                                                         </Form.Item>
-                                                        {!fieldData?.userId && <label class="textfieldWithPrefix__label">User ID (MILE ID.Parent ID)*</label>}
+                                                        {!fieldData?.userId && (
+                                                            <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(userIdRef)}>
+                                                                User ID (MILE ID.Parent ID)
+                                                            </label>
+                                                        )}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="password" data-testid="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
-                                                            <Input type={showPassword ? 'text' : 'password'} placeholder="Password*" prefix={<FiLock size={18} />} suffix={passowrdSuffix} />
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
+                                                        <Form.Item name="password" class="textfieldWithPrefix__input" data-testid="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
+                                                            <Input ref={passwordInputRef} type={showPassword ? 'text' : 'password'} prefix={<FiLock size={18} />} suffix={passowrdSuffix} onChange={handleFormChange('password')} />
                                                         </Form.Item>
+                                                        {!fieldData?.password && (
+                                                            <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(passwordInputRef)}>
+                                                                Password
+                                                            </label>
+                                                        )}
                                                         <div className={styles.forgotPasswordLink}>
                                                             <Link to={ROUTING_FORGOT_PASSWORD}>Forget Password?</Link>
                                                         </div>
