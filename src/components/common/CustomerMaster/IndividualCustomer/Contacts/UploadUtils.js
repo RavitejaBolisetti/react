@@ -13,9 +13,9 @@ const UploadUtils = (props) => {
  
 
     return (
-        <Row gutter={20} justify="center">
+        <Row gutter={20} justify="center" style={{marginBotton: '40px'}} className={styles.uploadContainer}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <Dragger {...props} className={styles.uploadUtl}>
+                <Dragger {...props} >
                     <Space gutter={20} direction="vertical">
                         <Row gutter={20} justify="center">
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>

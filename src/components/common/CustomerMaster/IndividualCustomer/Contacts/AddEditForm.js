@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, Switch, DatePicker, Divider, Checkbox } from 'antd';
 
 import style from '../../../Common.module.css';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateMobileNoField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
-import UploadUtils from './UploadUtils'
+import UploadUtils from './UploadUtils';
 import { contactPurpose, title, gender } from 'constants/modules/CustomerMaster/individualProfile';
+import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
+import { BiLockAlt } from 'react-icons/bi';
 
 const { Option } = Select;
 const { Text } = Typography;
@@ -34,6 +37,9 @@ const uploadProps = {
 };
 
 const AddEditForm = (props) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [mobileLoader, setmobileLoader] = useState(false);
+
     const { isReadOnly = false, onFinish, form } = props;
     const disabledProps = { disabled: isReadOnly };
 
@@ -41,15 +47,43 @@ const AddEditForm = (props) => {
         form.resetFields();
     };
 
+    const handleNumberValidation = (event) => {
+        const Mno = event.target.value;
+        const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
+        if (Mno?.length === 10 && regex.test(Mno)) {
+            setmobileLoader(true);
+            setTimeout(() => {
+                setIsModalOpen(true);
+            }, 1000);
+        } else {
+            setmobileLoader(false);
+        }
+    };
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+        setmobileLoader(false);
+    };
+    const modalProps = {
+        isVisible: isModalOpen,
+        icon: <BiLockAlt />,
+        titleOverride: 'Mobile Number Validation',
+        closable: false,
+        onCloseAction: handleCancel,
+    };
+
     return (
         <>
             <Form form={form} autoComplete="off" onFinish={onFinish} layout="vertical">
-                <Space gutter={[0, 20]} direction="vertical">
+                <Space  direction="vertical">
                     <Row>
                         <Typography.Text strong>Add New Contact</Typography.Text>
                     </Row>
 
-                    <UploadUtils {...uploadProps}/>
+                    <UploadUtils {...uploadProps} />
 
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -62,8 +96,23 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Mobile Number" name="contactMobileNumber">
-                                <Input className={style.inputBox} suffix={<Button>Send OTP</Button>} placeholder={preparePlaceholderText('mobile number')} {...disabledProps} />
+                            <Form.Item label="Mobile Number" name="contactMobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
+                                <Input
+                                    maxLength={10}
+                                    onChange={handleNumberValidation}
+                                    placeholder={preparePlaceholderText('mobile number')}
+                                    allowClear
+                                    enterButton="Send OTP"
+                                    size="small"
+                                    suffix={
+                                        <>
+                                            <Button loading={mobileLoader} onClick={showModal} style={{ marginRight: '-3px', borderColor: '#d9d9d9', color: '#B5B5B6' }}>
+                                                Send OTP
+                                            </Button>{' '}
+                                            <ValidateMobileNumberModal {...modalProps} />
+                                        </>
+                                    }
+                                />
                             </Form.Item>
                         </Col>
 
@@ -154,18 +203,19 @@ const AddEditForm = (props) => {
                                 <Checkbox>Mark As Default</Checkbox>
                             </Form.Item>
                         </Col>
-                        
                     </Row>
-                   <Space >
-                            <Button htmlType="submit" type="primary">
-                                Save
-                            </Button>
-               
-                            <Button onClick={handleResetForm} danger>
-                                Reset
-                            </Button>
-                   
-                    </Space>
+                    <Row justify="left">
+                    <Col xs={2} sm={2} md={2} lg={2} xl={2}>
+                        <Button htmlType="submit" type="primary">
+                            Save
+                        </Button>
+                    </Col>
+                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                        <Button onClick={handleResetForm} danger>
+                            Reset
+                        </Button>
+                    </Col>
+                </Row>
                 </Space>
             </Form>
         </>

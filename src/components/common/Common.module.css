@@ -1881,3 +1881,9 @@
 .accordianContainer .uploadContainer {
   margin-bottom: 40px;
 }
+.contactFormContainer :global .ant-upload-wrapper {
+ margin-bottom: 20px;
+}
+.contactFormContainer :global .ant-divider-horizontal{
+    margin: 0 0 8px 0;
+}

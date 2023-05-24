@@ -107,10 +107,10 @@ const AddEditForm = (props) => {
         setIsModalOpen(false);
         setmobileLoader(false);
     };
-    const handleNumberValidation =(event)=>{
-        const Mno=event.target.value;
-        if(Mno?.length===10)
-        {
+    const handleNumberValidation = (event) => {
+        const Mno = event.target.value;
+       const regex =  new RegExp("^([5-9]){1}([0-9]){9}$/")
+        if (Mno?.length === 10 && regex.test(Mno) ) {
             setmobileLoader(true);
             setTimeout(() => {
                 setIsModalOpen(true);
@@ -131,7 +131,7 @@ const AddEditForm = (props) => {
         action: '',
         progress: {strokeWidth:10},
         success: {percent:100},
-        
+
         onChange(info) {
             const { status } = info.file;
             //   if (status !== 'uploading') {
@@ -238,9 +238,24 @@ const AddEditForm = (props) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Mobile Number"  maxLength={10} name="mobileNumber" rules={[validateRequiredInputField('mobile number')][validateMobileNoField('mobile number')]}>
+                                                <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
                                                     {/* <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('mobile number')} {...disabledProps} /> */}
-                                                    <Input onChange={handleNumberValidation} placeholder={preparePlaceholderText('mobile number')} allowClear enterButton="Send OTP" size="small" suffix={<><Button loading={mobileLoader} onClick={showModal} style={{ marginRight: '-3px', borderColor: '#d9d9d9', color: '#B5B5B6' }}>Send OTP</Button> <MarkAsDefaultModal {...modalProps} /></>} />
+                                                    <Input
+                                                        maxLength={10}
+                                                        onChange={handleNumberValidation}
+                                                        placeholder={preparePlaceholderText('mobile number')}
+                                                        allowClear
+                                                        enterButton="Send OTP"
+                                                        size="small"
+                                                        suffix={
+                                                            <>
+                                                                <Button loading={mobileLoader} onClick={showModal} style={{ marginRight: '-3px', borderColor: '#d9d9d9', color: '#B5B5B6' }}>
+                                                                    Send OTP
+                                                                </Button>{' '}
+                                                                <MarkAsDefaultModal {...modalProps} />
+                                                            </>
+                                                        }
+                                                    />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -282,7 +297,7 @@ const AddEditForm = (props) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Maritial Status" name="martialStatus" >
+                                                <Form.Item label="Maritial Status" name="martialStatus">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('maritial status')} {...disabledProps}>
                                                         {maritialStatus?.map((item) => (
                                                             <Option value={item.key}>{item.name}</Option>
@@ -491,12 +506,10 @@ const AddEditForm = (props) => {
                                                     <div>
                                                         <img src={Svg} alt="" />
                                                     </div>
-                                                    <div className={styles.uploadtext} >
+                                                    <div className={styles.uploadtext}>
                                                         Click or drop your file here to upload the signed and <br /> scanned customer form.
                                                     </div>
-                                                    <div >
-                                                        File type should be png, jpg or pdf and max file size to be 5Mb
-                                                    </div>
+                                                    <div>File type should be png, jpg or pdf and max file size to be 5Mb</div>
                                                     <Button {...disabledProps} type="primary" style={{ marginLeft: '30px', marginTop: '16px' }}>
                                                         Upload File
                                                     </Button>
@@ -527,6 +540,4 @@ const AddEditForm = (props) => {
         </>
     );
 };
-export default AddEditForm ;
-
-
+export default AddEditForm;
