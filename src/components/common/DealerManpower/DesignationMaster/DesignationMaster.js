@@ -232,6 +232,7 @@ export const DesignationMasterBase = (props) => {
                 setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === filterValue));
                 advanceFilterForm.setFieldsValue({ departmentCode: undefined });
                 advanceFilterForm.setFieldsValue({ roleCode: undefined });
+                setFilteredRoleData(undefined);
             }
 
             if (name === 'departmentCode') {
