@@ -175,10 +175,8 @@
 
 /* font-family & size for left-menu text */
 :global .ant-menu {
-    font-family: 'Lato', sans-serif;
     font-size: 15px;
     font-weight: 500 !important;
-    /* color: #000000 !important; */
 }
 
 :global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon+span {
