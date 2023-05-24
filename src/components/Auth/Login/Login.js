@@ -141,7 +141,7 @@ const Login = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const updatePasswordStatusInfo = (data) => {
@@ -204,10 +204,10 @@ const Login = (props) => {
                         <br></br>
                         <img src={IMAGES.LINE} className={styles.mainLogoLine} alt="" />
                         <div className={styles.logoText}>Dealer Management System</div>
-                        <div class="textfield" data-testid="userIdInput">
+                        {/* <div class="textfield" data-testid="userIdInput">
                             <input class="textfield__input" type="text" maxLength={25} onChange={handleFormChange('userId')} />
                             {!fieldData?.userId && <label class="textfield__label">User ID (MILE ID.Parent ID)</label>}
-                        </div>
+                        </div> */}
                     </div>
                     <div className={styles.loginWrap}>
                         <Form form={form} name="login_from" autoComplete="off" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -225,7 +225,7 @@ const Login = (props) => {
                                                         <Form.Item name="userId" class="textfieldWithPrefix__input" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
                                                             {<Input prefix={<BiUser size={18} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
                                                         </Form.Item>
-                                                        {!fieldData?.userId && <label class="textfieldWithPrefix__label">User ID (MILE ID.Parent ID)*</label>}
+                                                        {!fieldData?.userId && <label class="textfieldWithPrefix__label">User ID (MILE ID.Parent ID)</label>}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
