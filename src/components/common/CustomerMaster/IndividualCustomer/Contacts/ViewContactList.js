@@ -9,7 +9,7 @@ const { Text } = Typography;
 
 const ViewContactList = (formProps) => {
     const { styles, contactData } = formProps;
-    const { setShowAddEditForm,showAddEditForm, setContactData, onFinish, form } = formProps;
+    const { setShowAddEditForm,showAddEditForm, setContactData, onFinish, form, isEditing, setIsEditing } = formProps;
 
     const [openAccordian, setOpenAccordian] = useState('');
 
@@ -29,6 +29,7 @@ const ViewContactList = (formProps) => {
         setContactData,
         onFinish,
         form,
+        isEditing, setIsEditing
     };
 
     return (
@@ -61,7 +62,7 @@ const ViewContactList = (formProps) => {
                                 }
                                 key={i}
                             >
-                                <ViewDetail styles={styles} formData={data} {...detailProps} />
+                                <ViewDetail styles={styles} formData={data} index={i} {...detailProps} />
                             </Panel>
                         </Collapse>
                     );

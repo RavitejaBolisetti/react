@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Descriptions, Row, Col, Button, Form } from 'antd';
+import { Descriptions, Row, Col, Button, Form, Space } from 'antd';
 import AddEditForm from './AddEditForm';
 
 const ViewDetailBase = (props) => {
     const { formData, styles } = props;
-    const { setShowAddEditForm, showAddEditForm, setContactData, onFinish, form } = props;
+    const { setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, isEditing, setIsEditing, index } = props;
 
     // const [form] = Form.useForm();
-    const [isEditing, setIsEditing] = useState(false);
+    // const [isEditing, setIsEditing] = useState(false);
 
     const viewProps = {
         bordered: false,
@@ -24,11 +24,11 @@ const ViewDetailBase = (props) => {
     };
 
     const formProps = {
-        setShowAddEditForm, 
-        setContactData, 
-        onFinish, 
-        form
-    }
+        setShowAddEditForm,
+        setContactData,
+        onFinish,
+        form,
+    };
 
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
@@ -55,16 +55,12 @@ const ViewDetailBase = (props) => {
                         <Descriptions.Item label="Mark As Default">{formData?.defaultaddress ? 'Yes' : 'No'}</Descriptions.Item>
                     </Descriptions>
 
-                    <Row justify="left">
-                        <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
-                            <Button type="primary" onClick={() => editContactHandeler(formData)}>
-                                Edit
-                            </Button>
-                        </Col>
-                        <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
-                            <Button>Delete</Button>
-                        </Col>
-                    </Row>
+                    <Space>
+                        <Button type="primary" onClick={() => editContactHandeler({formData, index})}>
+                            Edit
+                        </Button>
+                        <Button>Delete</Button>
+                    </Space>
                 </>
             ) : (
                 <AddEditForm {...formProps} />

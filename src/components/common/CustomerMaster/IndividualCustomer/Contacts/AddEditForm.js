@@ -50,7 +50,7 @@ const AddEditForm = (props) => {
                     </Row>
 
                     <UploadUtils {...uploadProps}/>
-                    
+
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Purpose of Contact" name="purposeOfContact">
@@ -154,19 +154,18 @@ const AddEditForm = (props) => {
                                 <Checkbox>Mark As Default</Checkbox>
                             </Form.Item>
                         </Col>
+                        
                     </Row>
-                    <Row justify="left">
-                        <Col xs={2} sm={2} md={2} lg={2} xl={2}>
+                   <Space >
                             <Button htmlType="submit" type="primary">
                                 Save
                             </Button>
-                        </Col>
-                        <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+               
                             <Button onClick={handleResetForm} danger>
                                 Reset
                             </Button>
-                        </Col>
-                    </Row>
+                   
+                    </Space>
                 </Space>
             </Form>
         </>

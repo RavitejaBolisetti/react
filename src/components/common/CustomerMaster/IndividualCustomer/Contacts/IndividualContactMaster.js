@@ -19,30 +19,43 @@ const IndividualContactMain = ({ isViewModeVisible }) => {
     const [contactData, setContactData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     const onFinish = (value) => {
+        // adding new item 
+        //also update logic go here
         console.log('on finish value ', value);
+        
+        form.validatefields()
+        .then(data => console.log("data", data))
+        .catch(error => console.error(error))
+
         setContactData((prev) => {
             let formData = [...prev];
-            if (formData?.length <= 1) {
-                return [...prev, { ...value }];
-            } else {
+
+           
+
+            if ( value?.defaultaddress && formData?.length >= 1) {
                 formData?.forEach((contact) => {
+                    
                     if (contact?.defaultaddress === true) {
                         contact.defaultaddress = false;
                     }
                 });
                 return [...formData, value];
+            } else {
+                return [...prev, { ...value }];
             }
         });
         setShowAddEditForm(false);
+        setIsEditing(false);
     };
 
-    const addContactHandeler = (e) => {
+    const addBtnContactHandeler = (e) => {
         // e.preventDefault();
         e.stopPropagation();
         form.resetFields();
@@ -59,6 +72,8 @@ const IndividualContactMain = ({ isViewModeVisible }) => {
         onFinish,
         styles,
         form,
+        isEditing, 
+        setIsEditing
     };
 
     return (
@@ -71,7 +86,7 @@ const IndividualContactMain = ({ isViewModeVisible }) => {
                             <FaRegUserCircle className={styles.userCircle} />
                             <Text strong> Individual Contact</Text>
                             {!isViewModeVisible && (
-                                <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
+                                <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary">
                                     Add Contact
                                 </Button>
                             )}
