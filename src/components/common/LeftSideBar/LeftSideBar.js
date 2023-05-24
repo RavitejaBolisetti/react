@@ -128,7 +128,8 @@ const LeftSideBarMain = (props) => {
 
             if (selectKeyToScroll && isDataLoaded) {
                 const element = document.getElementById(selectKeyToScroll);
-                element.scrollIntoView();
+                element.scrollIntoView({ behavior: 'smooth' });
+                
             }
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, 1000)
