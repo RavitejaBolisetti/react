@@ -169,7 +169,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setFormData([]);
         setSelectedTreeData([]);
 
-        //  console.log('Visible Function Working');
 
         if (keys && keys.length > 0) {
             const formData = flatternData.find((i) => keys[0] === i.key);
@@ -179,22 +178,16 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             cardBtnDisableAction(true);
 
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
-
-            // if (formData) {
-            // const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
-            // formData && setFormData({ ...formData?.data, isChildAllowed });
-
-            // const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
-            // const prodctShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.prodctShrtName;
-            // formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: prodctShrtName});
-            // }
         }
 
         setSelectedTreeKey(keys);
     };
 
     const handleSelectTreeClick = (value) => {
-        // setSelectedTreeKey([value]);
+        if (value === selectedTreeKey[0]) {
+            return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
+
+        }
         setSelectedTreeSelectKey(value);
     };
 
@@ -213,7 +206,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
     const handleAttributeChange = (value) => {
         const selectedAttribute = attributeData?.find((i) => i.id === value);
-        console.log('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:198 ~ handleAttributeChange ~ selectedAttribute:', selectedAttribute);
     };
 
     const handleResetBtn = () => {
@@ -233,7 +225,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
-                // res?.data && setSelectedTreeData(res?.data);
 
                 setSelectedTreeKey([res?.data?.id]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
@@ -319,6 +310,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING
 
     const historyOptions = [
         {
@@ -339,7 +331,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            {/* className={styles.searchAndLabelAlign} */}
                             <Col xs={19} sm={19} md={19} lg={19} xl={12}>
                                 Hierarchy
                                 <Search
@@ -354,7 +345,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                             </Col>
                             <div>
                                 <Button type="primary" onClick={uploadModelOpen}>
-                                    {/* <FaAngleUp className={styles.buttonIcon} /> */}
                                     Upload
                                 </Button>
                                 {manufacturerAdminHierarchyData?.length > 0 && (
