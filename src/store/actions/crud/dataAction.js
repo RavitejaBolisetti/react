@@ -39,9 +39,12 @@ export const dataActions = (params) => {
 
     const innerDataActions = {
         fetchList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, type = '', mytype = '', onSuccessAction = undefined, extraParams = [] } = params;
+            const { setIsLoading, data, type = '', mytype = '', onSuccessAction = undefined, onErrorAction = undefined, extraParams = [] } = params;
             setIsLoading(true);
-            const onError = (errorMessage) => message.error(errorMessage);
+            
+            const onError = (message) => {
+                onErrorAction(message);
+            };
 
             const onSuccess = (res) => {
                 if (res?.data) {

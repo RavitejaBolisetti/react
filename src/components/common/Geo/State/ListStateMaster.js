@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Col, Input, Form, Row } from 'antd';
+import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { geoCountryDataActions } from 'store/actions/data/geo/country';
@@ -102,7 +102,7 @@ export const ListStateMasterBase = (props) => {
             title: 'Country',
             value: filterString?.countryCode,
             name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
-            canRemove: false,
+            canRemove: true,
         },
         {
             key: 'keyword',
@@ -301,7 +301,12 @@ export const ListStateMasterBase = (props) => {
     const removeFilter = (key) => {
         const { [key]: names, ...rest } = filterString;
         advanceFilterForm.setFieldsValue({ [key]: undefined });
-        setFilterString({ ...rest, advanceFilter: false });
+        
+        if (!rest?.countryCode && !rest?.keyword) {
+            setFilterString();
+        } else {
+            setFilterString({ ...rest });
+        }
     };
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });

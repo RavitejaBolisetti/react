@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, searchValidator } from 'utils/validation';
+import { validateRequiredSelectField, searchValidator } from 'utils/validation';
 import { withModal } from 'components/withModal';
 
 import styles from 'components/common/Common.module.css';
@@ -15,7 +15,6 @@ export const AdvancedSearchFrom = (props) => {
         advanceFilterForm.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
-    console.log('🚀 ~ file: AdvancedSearch.js:18 ~ AdvancedSearchFrom ~ filterString:', filterString);
 
     const onFinish = (values) => {
         setFilterString({ ...values, advanceFilter: true });
@@ -37,9 +36,9 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={defaultCountry} label="Country" name="countryCode">
+                    <Form.Item initialValue={defaultCountry} label="Country" name="countryCode" rules={[validateRequiredSelectField('Country')]}>
                         {defaultCountry && (
-                            <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                            <Select defaultValue={defaultCountry} className={styles.headerSelectField} onChange={handleFilterChange('countryCode')} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
                                 {countryData?.map((item) => (
                                     <Option value={item?.countryCode}>{item?.countryName}</Option>
                                 ))}
@@ -49,7 +48,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="State" initialValue={filterString?.stateCode} rules={[validateRequiredSelectField('State')]} name="stateCode">
+                    <Form.Item label="State" initialValue={filterString?.stateCode} name="stateCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('stateCode')}>
                             {filteredStateData?.map((item) => (
                                 <Option value={item?.code}>{item?.name}</Option>

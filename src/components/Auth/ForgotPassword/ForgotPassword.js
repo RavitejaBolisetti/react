@@ -64,6 +64,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const [otpInput, setOTPInput] = useState();
     const [validationKey, setValidationKey] = useState();
     const [inValidOTP, setInValidOTP] = useState(false);
+    const [disableVerifyOTP, setDisableVerifyOTP] = useState(true);
     const [showPassword, setShowPassword] = useState({ newPassword: false, confirmNewPassword: false });
     const [password, setPassword] = useState('');
     const [verifiedUserData, setVerifiedUserData] = useState();
@@ -214,6 +215,12 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const handleOTPInput = (value) => {
         setOTPInput(value);
         setInValidOTP(false);
+        console.log('value', value);
+        if (value?.length === 6) {
+            setDisableVerifyOTP(false);
+        } else {
+            setDisableVerifyOTP(true);
+        }
     };
 
     const onFinishFailed = ({ values, errorFields, outOfDate }) => {
@@ -394,7 +401,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                         </Row>
                                                     </Col>
                                                 </Row>
-                                                <Button onClick={handleVerifyOTP} disabled={otpInput?.length < 6 || typeof otpInput == 'undefined'} loading={isLoading} className={styles.button} type="primary">
+                                                <Button onClick={handleVerifyOTP} disabled={disableVerifyOTP} loading={isLoading} className={styles.button} type="primary">
                                                     Verify OTP
                                                 </Button>
 
@@ -418,7 +425,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                                 <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]} className={`${styles.changer} ${styles.inputBox}`}>
                                                                     <Input onChange={(e) => setPassword(e.target.value)} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('New password*', false)} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                                                                 </Form.Item>
-                                                                <PasswordStrengthMeter password={form.getFieldValue('newPassword')} beforeLogin={true} tooltipVisible={tooltipVisible} />
+                                                                {form.getFieldValue('newPassword') && <PasswordStrengthMeter password={form.getFieldValue('newPassword')} beforeLogin={true} tooltipVisible={tooltipVisible} />}
                                                             </Col>
                                                         </Row>
                                                         <Row gutter={20}>

@@ -136,7 +136,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                         <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]} className={`${styles.changer} ${styles.inputBox}`}>
                                                             <Input onChange={(e) => setPassword(e.target.value)} prefix={<FiLock size={18} />} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('New password*', false)} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                                                         </Form.Item>
-                                                        <PasswordStrengthMeter password={password} beforeLogin={true} tooltipVisible={tooltipVisible} />
+                                                        {password && <PasswordStrengthMeter password={password} beforeLogin={true} tooltipVisible={tooltipVisible} />}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>

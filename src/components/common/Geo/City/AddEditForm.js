@@ -19,6 +19,7 @@ const AddEditFormMain = (props) => {
     const { buttonData, setButtonData, handleButtonClick } = props;
 
     const { stateData, districtData } = props;
+    const [filteredStateData, setFilteredStateData] = useState(stateData?.filter((i) => i?.countryCode === defaultCountry));
     const [filteredDistrictData, setFilteredDistrictData] = useState(districtData?.filter((i) => i?.stateCode === formData?.stateCode));
 
     const handleFormValueChange = () => {
@@ -30,7 +31,10 @@ const AddEditFormMain = (props) => {
     };
 
     const handleCountryChange = (countryCode) => {
-        form.setFieldValue('countryCodeDisplay', countryData?.find((i) => i?.countryCode === countryCode)?.countryCode);
+        form.setFieldValue('stateCode', undefined);
+        form.setFieldValue('districtCode', undefined);
+
+        setFilteredStateData(stateData?.filter((i) => i?.countryCode === countryCode));
     };
 
     const handleStateChange = (state) => {
@@ -89,7 +93,7 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" rules={[validateRequiredSelectField('State Name')]}>
                                 <Select placeholder={preparePlaceholderSelect('State Name')} onChange={handleStateChange}>
-                                    {stateData?.map((item) => (
+                                    {filteredStateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
@@ -113,7 +117,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.districtCode} label="District Code" name="districtCodeDisplay" rules={[validateRequiredInputField('District Code'),validationFieldLetterAndNumber('District Code')]}>
+                            <Form.Item initialValue={formData?.districtCode} label="District Code" name="districtCodeDisplay" rules={[validateRequiredInputField('District Code'), validationFieldLetterAndNumber('District Code')]}>
                                 <Input placeholder={preparePlaceholderText('District Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>
