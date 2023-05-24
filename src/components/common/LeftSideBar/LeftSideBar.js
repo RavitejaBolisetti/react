@@ -131,11 +131,13 @@ const LeftSideBarMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
+   
     useEffect(() => {
         if (selectedMenudId && isDataLoaded) {
            
             setTimeout(() => {
-                const element = document.getElementById(selectedMenudId);
+                const element = document.getElementById(selectedMenudId).closest('ul');
+             
                 element.scrollIntoView({ behavior: 'smooth' });
                 // setSelectKeyToScroll('');
                 // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -179,7 +181,7 @@ const LeftSideBarMain = (props) => {
         if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
             setOpenKeys(keys);
 
-            setSelectKeyToScroll(keys[0]);
+            setSelectKeyToScroll(keys[keys.length-1]);
         } else {
             setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
 
