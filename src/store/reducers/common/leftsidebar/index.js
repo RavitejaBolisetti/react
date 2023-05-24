@@ -1,4 +1,4 @@
-import { LEFT_SIDE_BAR_COLLAPSE, LEFT_SIDE_BAR_IS_MOBILE } from 'store/actions/common/leftsidebar';
+import { LEFT_SIDE_BAR_COLLAPSE, LEFT_SIDE_BAR_IS_MOBILE, MENU_SCROLL_VIEW_KEY } from 'store/actions/common/leftsidebar';
 
 const initialState = {
     collapsed: false,
@@ -11,6 +11,8 @@ export const LeftSideBar = (state = initialState, action) => {
             return { ...state, collapsed: action.collapsed };
         case LEFT_SIDE_BAR_IS_MOBILE:
             return { ...state, isMobile: action.isMobile };
+        case MENU_SCROLL_VIEW_KEY:
+            return { ...state, selectedMenudId: action.menuKey };
         default:
             return { ...state };
     } 
