@@ -31,7 +31,6 @@ const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true
                     {title}
                 </span>
             )}
-            {id}
         </Link>
     ) : (
         <Link to="#" title={tooltip ? menuOrgTitle : ''}>
@@ -41,7 +40,6 @@ const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true
                     {title}
                 </span>
             )}
-            {id}
         </Link>
     );
 
@@ -133,16 +131,13 @@ const LeftSideBarMain = (props) => {
     }, [filter]);
    
     useEffect(() => {
-        if (selectedMenudId && isDataLoaded) {
-           
+        if (selectedMenudId && isDataLoaded) {           
             setTimeout(() => {
-                const element = document.getElementById(selectedMenudId).closest('ul');
-             
-                element.scrollIntoView({ behavior: 'smooth' });
-                // setSelectKeyToScroll('');
-                // eslint-disable-next-line react-hooks/exhaustive-deps
+                const element = document?.getElementById(selectedMenudId)?.closest('ul');             
+                element?.scrollIntoView({ behavior: 'smooth' });
             }, 1000);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, selectedMenudId, openKeys]);
 
     const handleThemeChange = () => {
