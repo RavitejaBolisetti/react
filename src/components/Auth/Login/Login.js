@@ -139,7 +139,7 @@ const Login = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const updatePasswordStatusInfo = (data) => {
@@ -239,9 +239,7 @@ const Login = (props) => {
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <div className={styles.loginFooter}>
-                                                            <Link to={process.env.REACT_APP_SSO_LOGIN_URL}>
-                                                                M&M User Login
-                                                            </Link>
+                                                            <Link to={process.env.REACT_APP_SSO_LOGIN_URL}>M&M User Login</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>
