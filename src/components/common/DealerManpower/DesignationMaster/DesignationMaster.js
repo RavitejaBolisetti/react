@@ -124,25 +124,27 @@ export const DesignationMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId && !isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-        }
-        if (!isDivisionDataLoaded) {
-            fetchDivisionList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-        }
-        if (!isDepartmentDataLoaded) {
-            fetchDepartmentList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-        }
+        if (userId) {
+            if (!isDataLoaded) {
+                fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            }
+            if (!isDivisionDataLoaded) {
+                fetchDivisionList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            }
+            if (!isDepartmentDataLoaded) {
+                fetchDepartmentList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            }
 
-        if (!isRoleDataLoaded) {
-            fetchRoleList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            if (!isRoleDataLoaded) {
+                fetchRoleList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded, isDivisionDataLoaded, isDepartmentDataLoaded, isRoleDataLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -230,6 +232,7 @@ export const DesignationMasterBase = (props) => {
                 setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === filterValue));
                 advanceFilterForm.setFieldsValue({ departmentCode: undefined });
                 advanceFilterForm.setFieldsValue({ roleCode: undefined });
+                setFilteredRoleData(undefined);
             }
 
             if (name === 'departmentCode') {
@@ -317,6 +320,8 @@ export const DesignationMasterBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
+        setFilteredDepartmentData(undefined);
+        setFilteredRoleData(undefined);
     };
 
     const handleResetFilter = () => {
@@ -324,6 +329,8 @@ export const DesignationMasterBase = (props) => {
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
         setFilterString();
+        setFilteredDepartmentData(undefined);
+        setFilteredRoleData(undefined);
     };
 
     const advanceFilterProps = {
@@ -358,22 +365,21 @@ export const DesignationMasterBase = (props) => {
     // };
 
     const removeFilter = (key) => {
-        if (key === 'divisionCode') {
-            setFilterString(undefined);
+        if (key === 'code') {
+            const { code, departmentCode, roleCode, ...rest } = filterString;
+            setFilterString({ ...rest });
         } else if (key === 'departmentCode') {
-            const { departmentCode, keyword, ...rest } = filterString;
+            const { departmentCode, roleCode, ...rest } = filterString;
             setFilterString({ ...rest });
         } else if (key === 'roleCode') {
-            const { roleCode, keyword, ...rest } = filterString;
+            const { roleCode, ...rest } = filterString;
             setFilterString({ ...rest });
-        } 
-        else if (key === 'keyword') {
+        } else {
             const { [key]: names, ...rest } = filterString;
 
-            listFilterForm.setFieldsValue({ code: undefined });
-            advanceFilterForm.setFieldsValue({ keyword: undefined });
+            advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
 
-            if (!rest?.departmentCode && !rest?.departmentCode && !rest?.departmentCode) {
+            if (!rest?.departmentCode && !rest?.roleCode && !rest?.keyword) {
                 setFilterString();
             } else {
                 setFilterString({ ...rest });
@@ -392,7 +398,7 @@ export const DesignationMasterBase = (props) => {
         removeFilter,
         handleResetFilter,
         onSearchHandle,
-        setAdvanceSearchVisible,    
+        setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,
         advanceFilterProps,
@@ -405,7 +411,7 @@ export const DesignationMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps}  />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

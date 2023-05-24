@@ -23,7 +23,7 @@
         "react-dom": "^18.2.0",
         "react-google-recaptcha3": "^1.0.4",
         "react-helmet": "^6.1.0",
-        "react-icons": "^4.7.1",
+        "react-icons": "^4.8.0",        
         "react-idle-timer": "^5.6.2",
         "react-loading-skeleton": "^3.1.0",
         "react-redux": "^8.0.5",
