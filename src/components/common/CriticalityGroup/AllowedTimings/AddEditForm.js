@@ -17,12 +17,12 @@ const AddEditForm = (props) => {
                             <Row gutter={20}>
                                 <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
                                     <Form.Item name={'timeSlotFrom'} rules={[validateRequiredInputField('start time')]}>
-                                        <TimePicker use12Hours size="large" format="h:mm A" />
+                                        <TimePicker placeholder={'Start time*'} use12Hours size="large" format="h:mm A" />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
                                     <Form.Item name={'timeSlotTo'} rules={[validateRequiredInputField('end time')]}>
-                                        <TimePicker use12Hours size="large" format="h:mm A" />
+                                        <TimePicker placeholder={'End time*'} use12Hours size="large" format="h:mm A" />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>

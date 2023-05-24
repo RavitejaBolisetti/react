@@ -109,7 +109,7 @@ const ChangePasswordBase = ({ form, password, setPassword, showGlobalNotificatio
                     <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]}>
                         <Input onChange={(e) => setPassword(e.target.value)} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('New password*', false)} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                     </Form.Item>
-                    <PasswordStrengthMeter Row={Row} Col={Col} password={password} tooltipVisible={tooltipVisible} />
+                    {password && <PasswordStrengthMeter Row={Row} Col={Col} password={password} tooltipVisible={tooltipVisible} />}
                 </Col>
             </Row>
             <Row gutter={20}>

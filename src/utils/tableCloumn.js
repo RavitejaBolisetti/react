@@ -1,4 +1,4 @@
-import { Button, Space,Tag } from 'antd';
+import { Button, Space, Tag } from 'antd';
 import { FiEdit, FiEye } from 'react-icons/fi';
 
 import { DEFAULT_PAGE_SIZE } from 'constants/constants';
@@ -45,7 +45,7 @@ export const tblApprovalStatusColumn = ({ styles, width = '15%' }) => {
         title: 'Approval Status',
         dataIndex: 'approvalStatus',
         sorter: (a, b) => (a && b ? String(a['approvalStatus']).localeCompare(String(b['approvalStatus']), undefined, { sensitivity: 'base' }) : a),
-        render: (_, record) => (record?.approvalStatus ? <div className={styles.activeText}>Approved</div> : <div className={styles.inactiveText}>Not Approved</div>),
+        render: (_, record) => (record?.approvalStatus ? <Tag color="success">Approved</Tag> : <Tag color="error">Not Approved</Tag>),
         width,
     };
 };
@@ -55,7 +55,7 @@ export const tblStatusColumn = ({ styles, width = '15%', fixed = '' }) => {
         title: 'Status',
         dataIndex: 'status',
         sorter: (a, b) => (a && b ? String(a['status']).localeCompare(String(b['status']), undefined, { sensitivity: 'base' }) : a),
-        render: (_, record) => (record?.status ? <div className={styles.activeText}> <Tag color="green">Active </Tag></div> : <div className={styles.inactiveText}><Tag color="red">Inactive</Tag></div>),
+        render: (_, record) => (record?.status ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>),
         width,
         fixed: fixed,
     };

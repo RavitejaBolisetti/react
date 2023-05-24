@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider } from 'antd';
+import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { ListDataTable } from 'utils/ListDataTable';
-import { RxCross2 } from 'react-icons/rx';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { filterFunction } from 'utils/filterFunction';
+import { searchValidatorPincode } from 'utils/validation';
 
-import { TfiReload } from 'react-icons/tfi';
-
-import { PlusOutlined } from '@ant-design/icons';
 import { FilterIcon } from 'Icons';
 
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
@@ -27,11 +24,7 @@ import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
 import { geoCityDataActions } from 'store/actions/data/geo/city';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
 
-import { validatePincodeField } from 'utils/validation';
-
 import styles from 'components/common/Common.module.css';
-
-const { Search } = Input;
 
 const mapStateToProps = (state) => {
     const {
@@ -157,6 +150,11 @@ const ListPinCodeMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+        setShowDataLoading(false);
+    };
+
     useEffect(() => {
         if (userId) {
             if (!isDataCountryLoaded && !isCountryLoading) {
@@ -186,10 +184,16 @@ const ListPinCodeMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataCountryLoaded, isStateDataLoaded, isDistrictDataLoaded, isCityDataLoaded, isTehsilDataLoaded, isDataLoaded]);
 
-    useEffect(() => {
-        if (userId && refershData && extraParams) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
+    const loadPinCodeDataList = () => {
+        if (userId && (filterString?.code || (filterString?.countryCode && filterString?.stateCode && filterString?.districtCode && (filterString?.tehsilCode || filterString?.cityCode)))) {
+            setShowDataLoading(true);
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        } else {
+            onErrorAction('Please enter pincode OR country, state, tehsil, city to search data');
         }
+    };
+    useEffect(() => {
+        loadPinCodeDataList();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
 
@@ -265,7 +269,7 @@ const ListPinCodeMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && filterString) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction });
+            loadPinCodeDataList();
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -283,7 +287,6 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const handleReferesh = () => {
-        setShowDataLoading(true);
         setRefershData(!refershData);
     };
 
@@ -322,7 +325,7 @@ const ListPinCodeMasterBase = (props) => {
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction });
+            loadPinCodeDataList();
 
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
@@ -394,10 +397,16 @@ const ListPinCodeMasterBase = (props) => {
         handleButtonClick,
     };
 
+    const dataMessage = (
+        <>
+            Please search with pincode OR country, state, tehsil, city <br /> to view data
+        </>
+    );
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
         tableData: searchData,
         setPage,
+        noDataMessage: dataMessage,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -445,7 +454,11 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        value ? setFilterString({ ...filterString, advanceFilter: true, code: value }) : handleResetFilter();
+        const pattern = /^\d{6}(?:\s*,\s*\d{6})*$/;
+        if (pattern.test(value)) {
+            value ? setFilterString({ ...filterString, advanceFilter: true, code: value }) : handleResetFilter();
+            listFilterForm.setFieldsValue({ code: undefined });
+        }
     };
 
     const removeFilter = (key) => {
@@ -489,10 +502,9 @@ const ListPinCodeMasterBase = (props) => {
         handleReferesh,
         handleButtonClick,
         advanceFilterProps,
-        filterString,
         setFilterString,
         title,
-        pincode: true,
+        validator: searchValidatorPincode,
     };
     return (
         <>
@@ -500,7 +512,7 @@ const ListPinCodeMasterBase = (props) => {
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.tableProduct}>
-                        <ListDataTable isLoading={showDataLoading} scroll={2400} {...tableProps} />
+                        <ListDataTable isLoading={showDataLoading} scroll={1800} {...tableProps} handleAdd={handleAdd} addTitle={title} />
                     </div>
                 </Col>
             </Row>
