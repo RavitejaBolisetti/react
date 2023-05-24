@@ -21,6 +21,7 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString({ ...values, advanceFilter: true });
         handleFilterChange(false);
         setAdvanceSearchVisible(false);
+        advanceFilterForm.resetFields();
     };
 
     const onFinishFailed = () => {
