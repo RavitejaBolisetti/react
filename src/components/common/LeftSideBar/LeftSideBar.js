@@ -132,10 +132,10 @@ const LeftSideBarMain = (props) => {
    
     useEffect(() => {
         if (selectedMenudId && isDataLoaded) {           
-            setTimeout(() => {
-                const element = document?.getElementById(selectedMenudId)?.closest('ul');             
-                element?.scrollIntoView({ behavior: 'smooth' });
-            }, 1000);
+            // setTimeout(() => {
+            //     const element = document?.getElementById(selectedMenudId)?.closest('ul');             
+            //     element?.scrollIntoView({ behavior: 'smooth' });
+            // }, 1000);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, selectedMenudId, openKeys]);
