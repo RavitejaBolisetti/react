@@ -5,7 +5,7 @@ import { Col, Row, Button, Space } from 'antd';
 import moment from 'moment';
 
 import { RxCross2 } from 'react-icons/rx';
-import { BsTrash2 } from 'react-icons/bs';
+import { BsTrash3 } from 'react-icons/bs';
 
 import { LANGUAGE_EN } from 'language/en';
 
@@ -48,7 +48,7 @@ const AllowedTimingCard = (props) => {
                         <p className={styles.timeLabel}>End Time</p>
                     </Col>
                     <Col xs={24} sm={24} md={2} lg={2} xl={2} className={styles.timeSlotClearBtn}>
-                        {!formActionType?.viewMode && (!id ? <Button onClick={() => handleDeleteAction(timeSlotFrom)} type="link" icon={<RxCross2 size={20} />} /> : <Button onClick={() => handleDeleteActionServer(id)} type="link" icon={<BsTrash2 size={20} />} />)}
+                        {!formActionType?.viewMode && (!id ? <Button onClick={() => handleDeleteAction(timeSlotFrom)} type="link" icon={<RxCross2 size={20} />} /> : <Button onClick={() => handleDeleteActionServer(id)} type="link" icon={<BsTrash3 size={20} />} />)}
                     </Col>
                 </Row>
             </Space>
