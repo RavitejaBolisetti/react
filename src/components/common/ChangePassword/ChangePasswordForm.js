@@ -51,11 +51,6 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState({ oldPassword: false, newPassword: false, confirmNewPassword: false });
     const [tooltipVisible, setTooltipVisible] = useState(false);
-    const [fieldData, setFieldData] = useState();
-
-    const oldPasswordInput = useRef(null);
-    const newPasswordInput = useRef(null);
-    const confirmPasswordInput = useRef(null);
 
     const oldPasswordInput = useRef(null);
     const newPasswordInput = useRef(null);
