@@ -94,6 +94,7 @@
 .dropdownIcon {
     color: #ff3e5b;
     padding: 5px;
+    cursor: pointer;
 }
 
 .dropdownIcon :hover {
