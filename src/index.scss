@@ -90,9 +90,9 @@ button:focus {
     &__label {
         position: absolute;
         z-index: 0 !important;
-        top: 5px;
+        top: 6px;
         font-weight: 400;
-        left: 52px;
+        left: 53px;
         // display: block;
         font-size: 16px !important;
         line-height: 24px;
@@ -145,4 +145,12 @@ button:focus {
     // &__input:disabled+&__label {
     //   display: none;
     // }
+}
+
+@media (max-width: 768px) {
+    .textfieldWithPrefix {
+        &__label {
+            font-size: 14px !important;
+        }
+    }
 }
