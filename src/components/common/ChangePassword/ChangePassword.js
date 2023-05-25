@@ -8,8 +8,11 @@ import styles from './ChangePassword.module.css';
 export const ChangePassword = ({ setModalOpen, isOpen = false, onOk = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
     const [form] = Form.useForm();
     const [password, setPassword] = useState('');
+    const [fieldData, setFieldData] = useState();
+
     const onCancel = () => {
         form.resetFields();
+        setFieldData();
         setPassword('');
         setTimeout(function () {
             setModalOpen(false);
@@ -26,6 +29,8 @@ export const ChangePassword = ({ setModalOpen, isOpen = false, onOk = () => {}, 
     const formProps = {
         password,
         setPassword,
+        fieldData,
+        setFieldData,
     };
     return (
         <>
