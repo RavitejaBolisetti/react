@@ -770,13 +770,13 @@ select.form-control:focus::-ms-value {
         font-size: 14px;
     }
 
-    .loginSection :global .ant-input-affix-wrapper {
+    /* .loginSection :global .ant-input-affix-wrapper {
         padding: 2px 10px 0;
-    }
+    } */
 
-    .loginSection :global .ant-input-affix-wrapper>input.ant-input {
+    /* .loginSection :global .ant-input-affix-wrapper>input.ant-input {
         padding: 2px 5px 3px 5px;
-    }
+    } */
 
     .loginSection .loginWrap .loginHtml .loginForm .button {
         padding: 5px;
@@ -890,12 +890,12 @@ select.form-control:focus::-ms-value {
         font-size: 13px;
     }
 
-    .loginSection :global .ant-input-affix-wrapper {
+    /* .loginSection :global .ant-input-affix-wrapper {
         padding: 2px 10px 0;
-    }
+    } */
 
     .loginSection :global .ant-input-affix-wrapper>input.ant-input {
-        padding: 2px 5px 3px 5px;
+        padding: 2px 5px 3px 0px;
     }
 
     .loginSection .loginWrap .loginHtml .loginForm .button {
