@@ -181,6 +181,10 @@ p {
     border-radius: 6px !important;
 }
 
+.loginSection .loginWrap .loginHtml .loginForm .inputBox.disabledInput :global .ant-form-item-control-input {
+    background: transparent !important;
+}
+
 .loginSection .loginWrap .loginHtml .loginForm .inputBox.disabledInput input {
     background: transparent;
     color: #838383 !important;
