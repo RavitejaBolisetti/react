@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
     const moduleTitle = 'Application Details';
 
     let returnValue = {
-        criticalityGroupData,
+        criticalityGroupData: criticalityGroupData?.sort((a, b) => b?.activeIndicator - a?.activeIndicator),
         applicationDetailsData,
         dealerLocations,
         userId,

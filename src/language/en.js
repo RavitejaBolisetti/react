@@ -14,5 +14,6 @@ export const LANGUAGE_EN = {
         REMOVE_DEALER_LOCATION: { TITLE: 'Delete', MESSAGE: '{NAME} deleted sucessfully' },
         ALLOWED_TIMING_DELETED : {TITLE: 'SUCCESS',MESSAGE: 'Group Timing has been deleted Successfully'},
         TIME_OVERLAPPING : {TITLE: 'ERROR',MESSAGE: 'Time overlaps with other time'},
+        HIERARCHY_SAME_PARENT_AND_CHILD_WARNING : {TITLE: 'WARNING',MESSAGE: 'Select different parent'},
     },
 };

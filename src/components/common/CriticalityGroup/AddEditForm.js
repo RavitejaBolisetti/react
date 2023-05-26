@@ -43,6 +43,7 @@ const AddEditFormMain = (props) => {
     const cardProps = {
         form,
         style,
+      
         showGlobalNotification,
         setTimesegmentLengthTracker,
         forceUpdate,
@@ -50,6 +51,8 @@ const AddEditFormMain = (props) => {
     };
 
     const listProps = {
+        buttonData,
+        setButtonData,
         formData,
         timeData,
         setFormData,
@@ -107,7 +110,7 @@ const AddEditFormMain = (props) => {
                             </Col>
 
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={formActionType?.editMode ? formData?.activeIndicator : true} valuePropName="checked" label="Status" name="activeIndicator" rules={[validateRequiredInputField('Status')]}>
+                                <Form.Item initialValue={formActionType?.editMode ? formData?.activeIndicator : false} valuePropName="checked" label="Status" name="activeIndicator" rules={[validateRequiredInputField('Status')]}>
                                     <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                                 </Form.Item>
                             </Col>

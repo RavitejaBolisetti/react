@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Switch } from 'antd';
 
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter, validateAlphanumericWithSpace, validationFieldLetterAndNumber } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter, validateLettersWithWhitespaces, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -66,71 +66,67 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+        className: styles.headerSelectField,
+    };
+
     return (
-        <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical"  autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
                 <ViewDetail {...viewProps} />
             ) : (
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.countryCode || defaultCountry} disabled label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
-                                <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange} disabled={true}>
+                            <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
+                                <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
                                     {countryData?.map((item) => (
-                                        <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                        <Option key={item?.countryCode} value={item?.countryCode}>
+                                            {item?.countryName}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Country Code" initialValue={formData?.countryCode || defaultCountry} rules={[validateRequiredInputField('Country Code'), validateAlphanumericWithSpace('Country Code')]} name="countryCodeDisplay">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Country Code')} maxLength={6} disabled={true} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
 
-                    <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" rules={[validateRequiredSelectField('State Name')]}>
-                                <Select placeholder={preparePlaceholderSelect('State Name')} onChange={handleStateChange}>
+                            <Form.Item label="State Name" initialValue={formData?.stateCode} name="stateCode" rules={[validateRequiredSelectField('State Name')]}>
+                                <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps} onChange={handleStateChange}>
                                     {filteredStateData?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
+                                        <Option key={item?.code} value={item?.code}>
+                                            {item?.name}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="State Code" initialValue={formData?.stateCode} name="stateCodeDisplay" rules={[validateRequiredInputField('State Code')]}>
-                                <Input placeholder={preparePlaceholderText('State Code')} className={styles.inputBox} disabled={true} />
-                            </Form.Item>
-                        </Col>
                     </Row>
-
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.districtCode} label="District Name" name="districtCode" rules={[validateRequiredSelectField('District Name')]}>
-                                <Select placeholder={preparePlaceholderSelect('District Name')} onChange={handleDistrictChange}>
+                            <Form.Item label="District Name" initialValue={formData?.districtName} name="districtCode" rules={[validateRequiredSelectField('District Name')]}>
+                                <Select placeholder={preparePlaceholderSelect('District Name')} {...selectProps} onChange={handleDistrictChange}>
                                     {filteredDistrictData?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
+                                        <Option key={item?.code} value={item?.code}>
+                                            {item?.name}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.districtCode} label="District Code" name="districtCodeDisplay" rules={[validateRequiredInputField('District Code'), validationFieldLetterAndNumber('District Code')]}>
-                                <Input placeholder={preparePlaceholderText('District Code')} className={styles.inputBox} disabled={true} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
 
-                    <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="City Code" name="code" rules={[validateRequiredInputField('City Code'), validationFieldLetter('City Code')]}>
+                            <Form.Item initialValue={formData?.code} label="City Code" name="code" rules={[validateRequiredInputField('City Code'), validationFieldLetterAndNumber('City Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('City Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
+                    </Row>
+
+                    <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="City Name" initialValue={formData?.name} rules={[validateRequiredInputField('City Name'), validationFieldLetter('City Name')]} name="name">
+                            <Form.Item label="City Name" initialValue={formData?.name} rules={[validateRequiredInputField('City Name'), validateLettersWithWhitespaces('City Name')]} name="name">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('City Name')} maxLength={50} />
                             </Form.Item>
                         </Col>

@@ -45,7 +45,7 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
                 <ViewDetail {...viewProps} />
             ) : (
@@ -77,7 +77,7 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.gstStateCode} label="GST State Code" name="gstStateCode" rules={[validateRequiredInputField('gst state code'), validationNumber('gst state code')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Code')} maxLength={2} disabled={editMode ? true : false} />
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Code')} maxLength={2} />
                             </Form.Item>
                         </Col>
                     </Row>

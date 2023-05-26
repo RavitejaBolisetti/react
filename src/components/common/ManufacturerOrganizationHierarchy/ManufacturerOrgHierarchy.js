@@ -161,6 +161,9 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
     };
 
     const handleSelectTreeClick = (value) => {
+        if (value === selectedTreeKey[0]) {
+            return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
+        }
         setSelectedTreeSelectKey(value);
         setFormBtnActive(true);
     };
@@ -278,6 +281,9 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING
+
+
     const leftCol = manufacturerOrgHierarchyData?.length > 0 ? 16 : 24;
     const rightCol = manufacturerOrgHierarchyData?.length > 0 ? 8 : 24;
     return (
