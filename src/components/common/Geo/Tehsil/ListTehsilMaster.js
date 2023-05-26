@@ -47,7 +47,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Tehsil Details';
+    const moduleTitle = 'Tehsil';
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
     });
@@ -68,7 +68,7 @@ const mapStateToProps = (state) => {
         isTehsilCategoryDataLoaded,
         isTehsilCategoryDataLoading,
         tehsilCategoryData: tehsilCategoryData && tehsilCategoryData[PARAM_MASTER.GEO_TEH_CAT.id],
-        
+
         data,
         stateData,
         isDataLoaded,
@@ -103,7 +103,7 @@ export const ListTehsilBase = (props) => {
     const { data, saveData, fetchList, userId, resetData, isDataLoaded, isLoading, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
     const { isTehsilCategoryDataLoaded, isTehsilCategoryDataLoading, tehsilCategoryData, listTehsilCategoryShowLoading, fetchTehsilCategoryList } = props;
-    
+
     const { isStateDataLoaded, stateData, listStateShowLoading, fetchStateList } = props;
     const { isDistrictDataLoaded, districtData, listDistrictShowLoading, fetchDistrictList } = props;
 
@@ -343,7 +343,6 @@ export const ListTehsilBase = (props) => {
         stateData,
         data,
 
-
         isTehsilCategoryDataLoading,
         isTehsilCategoryDataLoaded,
         tehsilCategoryData,
@@ -367,7 +366,6 @@ export const ListTehsilBase = (props) => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
         setFilteredDistrictData(undefined);
-
     };
 
     const handleResetFilter = () => {
@@ -430,7 +428,7 @@ export const ListTehsilBase = (props) => {
         }
     };
 
-    const title = 'Tehsil';
+    const title = 'Tehsil Name';
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,
@@ -452,7 +450,7 @@ export const ListTehsilBase = (props) => {
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable {...tableProps} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
