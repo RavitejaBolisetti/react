@@ -23,6 +23,7 @@ import { geoDistrictDataActions } from 'store/actions/data/geo/district';
 import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
 import { geoCityDataActions } from 'store/actions/data/geo/city';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'components/common/Common.module.css';
 
@@ -72,7 +73,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isConfigDataLoaded,
         isConfigLoading,
-        typeData,
+        typeData: typeData && typeData[PARAM_MASTER.PIN_CATG.id],
         moduleTitle,
     };
     return returnValue;
@@ -135,7 +136,6 @@ const ListPinCodeMasterBase = (props) => {
 
     const [tehsilCodeValue, setTehsilCodeValue] = useState();
     const [cityCodeValue, setCityCodeValue] = useState();
-    console.log('🚀 ~ file: ListPinCodeMaster.js:138 ~ ListPinCodeMasterBase ~ cityCodeValue:', cityCodeValue, tehsilCodeValue);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -289,6 +289,9 @@ const ListPinCodeMasterBase = (props) => {
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
 
+        const tehsilCategory = typeData?.find((category) => category.key === record?.pinCategory)?.value;
+        record && setFormData({ ...record, tehsilCategory });
+
         record && setFormData(record);
         setIsFormVisible(true);
     };
@@ -334,10 +337,10 @@ const ListPinCodeMasterBase = (props) => {
         };
 
     const onFinish = (values) => {
-        let data = { ...values, localityCode: '01' };
+        let data = { ...values};
         const onSuccess = (res) => {
             form.resetFields();
-            setShowDataLoading(true);
+            // setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             loadPinCodeDataList();

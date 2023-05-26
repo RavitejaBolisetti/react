@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import {  Col, Input, Form, Row,  Select } from 'antd';
+import { Form, Row, Col } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { filterFunction } from 'utils/filterFunction';
@@ -35,6 +35,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+
     const moduleTitle = 'Tehsil';
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
@@ -56,7 +57,7 @@ const mapStateToProps = (state) => {
         isTehsilCategoryDataLoaded,
         isTehsilCategoryDataLoading,
         tehsilCategoryData: tehsilCategoryData && tehsilCategoryData[PARAM_MASTER.GEO_TEH_CAT.id],
-        
+
         data,
         stateData,
         isDataLoaded,
@@ -91,7 +92,7 @@ export const ListTehsilBase = (props) => {
     const { data, saveData, fetchList, userId, resetData, isDataLoaded, isLoading, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
     const { isTehsilCategoryDataLoaded, isTehsilCategoryDataLoading, tehsilCategoryData, listTehsilCategoryShowLoading, fetchTehsilCategoryList } = props;
-    
+
     const { isStateDataLoaded, stateData, listStateShowLoading, fetchStateList } = props;
     const { isDistrictDataLoaded, districtData, listDistrictShowLoading, fetchDistrictList } = props;
 
@@ -233,7 +234,8 @@ export const ListTehsilBase = (props) => {
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
 
-        record && setFormData(record);
+        const tehsilCategory = tehsilCategoryData?.find((category) => category.key === record?.tehsilCategoryCode)?.value;
+        record && setFormData({ ...record, tehsilCategory });
         setIsFormVisible(true);
     };
 

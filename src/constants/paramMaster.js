@@ -19,4 +19,8 @@ export const PARAM_MASTER = {
         id: 'GEO_TEH_CAT',
         title: 'GEO_TEH_CAT',
     },
+    PIN_CATG: {
+        id: 'PIN_CATG',
+        title: 'PIN_CATG',
+    },
 };
