@@ -62,7 +62,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         }),
         tblPrepareColumns({
             title: 'Attribute',
-            dataIndex: 'parentAttributeName',
+            dataIndex: 'attributeKey',
         }),
         tblPrepareColumns({
             title: 'Code',
@@ -70,7 +70,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         }),
         tblPrepareColumns({
             title: 'Parent',
-            dataIndex: 'parntHeirarchyCode',
+            dataIndex: 'parentAttributeName',
         }),
         tblPrepareColumns({
             title: 'Short Description',
@@ -83,16 +83,16 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            filters: [
-                {
-                    text: 'Active',
-                    value: 'Active',
-                },
-                {
-                    text: 'Inactive',
-                    value: 'Inactive',
-                },
-            ],
+            // filters: [
+            //     {
+            //         text: 'Active',
+            //         value: 'Active',
+            //     },
+            //     {
+            //         text: 'Inactive',
+            //         value: 'Inactive',
+            //     },
+            // ],
             render: (text) => (text === 'Y' ? 'Active' : 'In Active'),
         }),
     ];

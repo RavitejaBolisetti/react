@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Switch, Select } from 'antd';
 
-import { validateRequiredInputField, validationFieldLetter } from 'utils/validation';
+import { validateRequiredInputField, validationFieldLetter,validateLettersWithWhitespaces } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -20,7 +20,7 @@ const AddEditFormMain = (props) => {
     const { isDivisionDataLoaded, divisionData } = props;
     const { isDepartmentDataLoaded, departmentData } = props;
 
-    const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
+    const [filteredDepartmentData, setFilteredDepartmentData] = useState(departmentData?.filter((i) => i?.divisionCode === formData?.divisionCode));
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -82,7 +82,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Role Description" initialValue={formData?.roleDescription} rules={[validateRequiredInputField('role description'), validationFieldLetter('role description')]} name="roleDescription">
+                            <Form.Item label="Role Description" initialValue={formData?.roleDescription} rules={[validateRequiredInputField('role description'), validateLettersWithWhitespaces('role description')]} name="roleDescription">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('role description')} maxLength={50} />
                             </Form.Item>
                         </Col>

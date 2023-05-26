@@ -13,7 +13,7 @@ import styles from 'components/common/Common.module.css';
 
 const AllowedTimingList = (props) => {
     const { timeData, setTimeData, isAddTimeVisible, setIsAddTimeVisible } = props;
-    const { formActionType, formData, setFormData, showGlobalNotification, forceUpdate, handleFormValueChange, handleFormFieldChange } = props;
+    const { buttonData, setButtonData, formActionType, formData, setFormData, showGlobalNotification, forceUpdate, handleFormValueChange, handleFormFieldChange } = props;
 
     const [timingForm] = Form.useForm();
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
@@ -40,8 +40,9 @@ const AllowedTimingList = (props) => {
     const onTimingFormFinish = (values) => {
         let timeSlotFrom = values?.timeSlotFrom?.format('HH:mm');
         let timeSlotTo = values?.timeSlotTo?.format('HH:mm');
+        let isDeleted = values?.isDeleted;
         let overlap = validatedDuplicateTime(timeSlotFrom, timeSlotTo);
-        !overlap && setTimeData([...timeData, { timeSlotFrom, timeSlotTo }]);
+        !overlap && setTimeData([...timeData, { timeSlotFrom, timeSlotTo, isDeleted }]);
         timingForm.resetFields();
         setFormData(...formData, timeData);
         forceUpdate();
@@ -58,6 +59,10 @@ const AllowedTimingList = (props) => {
 
     const cardProps = {
         form: timingForm,
+        buttonData,
+        setButtonData,
+        setIsAddTimeVisible,
+        formActionType,
         timeData,
         setTimeData,
         formData,
@@ -117,7 +122,9 @@ const AllowedTimingList = (props) => {
                     <div className={styles.viewTiming}>
                         <div className={styles.seprator}></div>
                         {timeData?.map((timing) => {
-                            return <AllowedTimingCard styles={{ marginBottom: '10px', backgroundColor: '#B5B5B6' }} {...cardProps} {...timing} />;
+                            if (timing?.isDeleted === 'N') {
+                                return <AllowedTimingCard styles={{ marginBottom: '10px', backgroundColor: '#B5B5B6' }} {...cardProps} {...timing} />;
+                            }
                         })}
                     </div>
                 )}

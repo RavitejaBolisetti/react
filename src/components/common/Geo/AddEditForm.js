@@ -103,7 +103,7 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
-                        <Form.Item initialValue={formData?.geoName} label="Name" name="geoName" rules={[validateRequiredInputField('Name')]}>
+                        <Form.Item initialValue={formData?.geoName} label="Name" name="geoName" rules={[validateRequiredInputField('Name'), validateLettersWithWhitespaces('Name')]}>
                             <Input placeholder={preparePlaceholderText('Name')} className={styles.inputBox} maxLength={50} {...disabledProps} />
                         </Form.Item>
                     </Col>

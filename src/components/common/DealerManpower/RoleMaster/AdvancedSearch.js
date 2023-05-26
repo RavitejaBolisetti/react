@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
-import { validateRequiredSelectField} from 'utils/validation';
+import { validateRequiredSelectField } from 'utils/validation';
 
 import { withModal } from 'components/withModal';
 import { searchValidator } from 'utils/validation';
@@ -23,6 +23,7 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString({ ...values, advanceFilter: true });
         handleFilterChange(false);
         setAdvanceSearchVisible(false);
+        advanceFilterForm.resetFields();
     };
     const { isDivisionDataLoaded, divisionData } = props;
     const { isDepartmentDataLoaded, departmentData } = props;
@@ -68,9 +69,9 @@ export const AdvancedSearchFrom = (props) => {
             </Row>
 
             <Row gutter={16}>
-                <Col xs={24} sm={12} md={24} lg={24} xl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={filterString?.keyword} label="Role Name" name="keyword" rules={[{ validator: searchValidator }]}>
-                        <Input className={styles.inputBox} maxLength={50} placeholder="Search" />
+                        <Input style={{ width: '100%' }} className={styles.inputBox} maxLength={50} placeholder="Search" />
                     </Form.Item>
                 </Col>
             </Row>
