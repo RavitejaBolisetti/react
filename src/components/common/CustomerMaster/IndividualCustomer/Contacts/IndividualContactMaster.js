@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Col, Collapse, Form, Select, Space, Typography, Button } from 'antd';
+import { Col, Collapse, Form, Select, Space, Typography, Button, Row, Divider } from 'antd';
 import { UserOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import { FaUserCircle, FaRegUserCircle } from 'react-icons/fa';
@@ -14,36 +14,45 @@ import ViewContactList from './ViewContactList';
 const { Panel } = Collapse;
 const { Text } = Typography;
 
-const IndividualContactMain = () => {
+const IndividualContactMain = ({ isViewModeVisible }) => {
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     const onFinish = (value) => {
+        // adding new item
+        //also update logic go here
         console.log('on finish value ', value);
+
+        form.validatefields()
+            .then((data) => console.log('data', data))
+            .catch((error) => console.error(error));
+
         setContactData((prev) => {
             let formData = [...prev];
-            if(formData?.length<=1){
-                return [...prev, { ...value }]
-            }else {
-                formData?.forEach(contact => {
-                    if(contact?.defaultaddress === true){
+
+            if (value?.defaultaddress && formData?.length >= 1) {
+                formData?.forEach((contact) => {
+                    if (contact?.defaultaddress === true) {
                         contact.defaultaddress = false;
                     }
                 });
                 return [...formData, value];
-               
+            } else {
+                return [...prev, { ...value }];
             }
         });
         setShowAddEditForm(false);
+        setIsEditing(false);
     };
 
-    const addContactHandeler = (e) => {
+    const addBtnContactHandeler = (e) => {
         // e.preventDefault();
         e.stopPropagation();
         form.resetFields();
@@ -54,31 +63,40 @@ const IndividualContactMain = () => {
 
     const formProps = {
         setShowAddEditForm,
+        showAddEditForm,
         setContactData,
         contactData,
         onFinish,
         styles,
         form,
+        isEditing,
+        setIsEditing,
     };
 
     return (
-        <Space direction='vertical' size='middle' style={{display: 'flex'}}>
-            <h2>Contacts</h2>
+        <Space  className={styles.accordianContainer} direction="vertical" size="middle" style={{ display: 'flex' }}>
+            <Row>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <h2>Contacts</h2>
+                </Col>
+            </Row>
+            <Divider/>
             <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
                 <Panel
                     header={
                         <Space>
                             <FaRegUserCircle className={styles.userCircle} />
-                            <Text strong> Individual Contact</Text>{' '}
-                            <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
-                                Add Contact
-                            </Button>
+                            <Text strong> Individual Contact</Text>
+                            {!isViewModeVisible && (
+                                <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary">
+                                    Add Contact
+                                </Button>
+                            )}
                         </Space>
                     }
                     key="1"
                 >
-                    {(showAddEditForm || !contactData?.length>0) && <AddEditForm {...formProps} />}
-                    {/* <ViewDetail {...formProps} /> */}
+                    {(showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />}
                     <ViewContactList {...formProps} />
                 </Panel>
             </Collapse>

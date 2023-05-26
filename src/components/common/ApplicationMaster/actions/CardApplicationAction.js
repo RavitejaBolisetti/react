@@ -48,7 +48,9 @@ const CardApplicationAction = (props) => {
     };
 
     const handleDeleteAction = (val) => {
+        
         setFinalFormdata((prev) => {
+            console.log(prev,'deleter')
             const newList = prev?.applicationAction;
             const indx = prev?.applicationAction?.findIndex((el) => el?.actionId === val.actionId);
             newList.splice(indx, 1);

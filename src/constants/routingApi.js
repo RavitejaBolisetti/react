@@ -45,6 +45,7 @@ export const BASE_URL_PRODUCT_HIERARCHY_SAVE = BASE_URL + 'product';
 export const BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'product/hierarchychangehistory';
 export const BASE_URL_PRODUCT_HIERARCHY_SKU = BASE_URL + 'product/skuattribute';
 export const BASE_URL_PRODUCT_HIERARCHY_SKU_SAVE = BASE_URL + 'product/skuattribute';
+export const BASE_URL_PRODUCT_NAME_DROPDOWN = BASE_URL + 'product/attributes';
 
 export const BASE_URL_ATTRIBUTE_MASTER = BASE_URL + 'hierarchyattributes';
 
@@ -74,7 +75,7 @@ export const BASE_URL_APPLICATION_DETAILS = BASE_URL + 'application/applicationd
 
 export const BASE_URL_APPLICATION_ACTIONS = BASE_URL + 'application/actions';
 export const BASE_URL_APPLICATION_CRITICALITY_GROUP = BASE_URL + 'application/criticalitygroup';
-export const BASE_URL_APPLICATION_DEALER_LOCATION = BASE_URL + 'application/dealerlocation';
+export const BASE_URL_APPLICATION_DEALER_LOCATION = BASE_URL + 'dealer/search/locations';
 
 export const BASE_URL_DOCUMENT_TYPE = BASE_URL + 'document';
 

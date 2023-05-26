@@ -7,16 +7,13 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 
 import styles from 'components/common/Common.module.css';
 
-const applicationData = [
-    {
-        id: 'c5dae87b-6118-4228-8711-f08414050521',
-        applicationName: 'Tharr',
-    },
-];
 
-const fieldNames = { label: 'applicationName', value: 'id' };
 
-const ProductAttributeAddEditForm = ({ form, onFinish, status, name, id, canAdd = true, canEdit = false, isAddBtnDisabled, skuData, setSKUAttributes, setAddBtnDisabled }) => {
+const fieldNames = { label: 'attributeCode', value: 'id' };
+
+const ProductAttributeAddEditForm = ({ form, onFinish, status, name, id, canAdd = true, canEdit = false, isAddBtnDisabled, skuData, setSKUAttributes, setAddBtnDisabled,productHierarchyAttributeData }) => {
+        console.log(productHierarchyAttributeData,'productHierarchyAttributeData')
+    
     const handleFieldChange = () => {
         const attributeName = form.getFieldValue('attributeName');
         const attributeValue = form.getFieldValue('attributeValue');
@@ -50,7 +47,7 @@ const ProductAttributeAddEditForm = ({ form, onFinish, status, name, id, canAdd 
                         style={{
                             width: '100%',
                         }}
-                        options={applicationData}
+                        options={productHierarchyAttributeData}
                         fieldNames={fieldNames}
                         allowClear
                         labelInValue

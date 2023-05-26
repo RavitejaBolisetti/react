@@ -1,18 +1,22 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Input, Form, Row, Space, notification } from 'antd';
+
+import { Button, Col, Input, Form, Row } from 'antd';
+
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
+
 import { showGlobalNotification } from 'store/actions/notification';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
-import { EditIcon, ViewEyeIcon } from 'Icons';
+import { filterFunction } from 'utils/filterFunction';
+import { ListDataTable } from 'utils/ListDataTable';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
+import { tableColumn } from './tableColumn';
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
-import { tblPrepareColumns } from 'utils/tableCloumn';
 import { AddEditForm } from './AddEditForm';
-import { ListDataTable } from 'utils/ListDataTable';
-import { filterFunction } from 'utils/filterFunction';
 
 import styles from 'components/common/Common.module.css';
 
@@ -22,7 +26,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            criticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [], isLoadingOnSave },
+            CriticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -38,7 +42,6 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isLoading,
         criticalityGroupData,
-        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -47,48 +50,55 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchData: criticalityDataActions.fetchData,
+            fetchList: criticalityDataActions.fetchList,
             saveData: criticalityDataActions.saveData,
             listShowLoading: criticalityDataActions.listShowLoading,
-            onSaveShowLoading: criticalityDataActions.onSaveShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification, onSaveShowLoading, isLoadingOnSave }) => {
-    const [formActionType, setFormActionType] = useState('');
-    const [isReadOnly, setIsReadOnly] = useState(false);
-    const [RefershData, setRefershData] = useState(false);
-    const [data, setData] = useState(criticalityGroupData);
-    const [formData, setFormData] = useState({});
-    const [isChecked, setIsChecked] = useState(data?.status === 'Y' ? true : false);
-    const [forceFormReset, setForceFormReset] = useState(false);
-    const [form] = Form.useForm();
-    const [searchData, setSearchdata] = useState(criticalityGroupData);
-    const [selectedRecord, setSelectedRecord] = useState(null);
-    const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
-    const [saveBtn, setSaveBtn] = useState(false);
-    const [footerEdit, setFooterEdit] = useState(false);
-    const [successAlert, setSuccessAlert] = useState(false);
-    const [formBtnDisable, setFormBtnDisable] = useState(false);
-    const [saveclick, setsaveclick] = useState();
-    const [saveandnewclick, setsaveandnewclick] = useState();
-    const [deletedItemList, setDeletedItemList] = useState([]);
-    const [filterString, setFilterString] = useState();
-    const [alertNotification, contextAlertNotification] = notification.useNotification();
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
+export const CriticalityGroupMain = (props) => {
+    const { moduleTitle, fetchList, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification } = props;
 
-    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+    const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
+
+    const [refershData, setRefershData] = useState(false);
+    const [formData, setFormData] = useState({});
+    const [forceFormReset, setForceFormReset] = useState(false);
+    const [searchData, setSearchdata] = useState(criticalityGroupData);
+
+    const [filterString, setFilterString] = useState();
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    const [page, setPage] = useState(1);
+
     const [isFormVisible, setIsFormVisible] = useState(false);
 
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
+    const [showDataLoading, setShowDataLoading] = useState(true);
     const [timeData, setTimeData] = useState([]);
+
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const errorAction = (message) => {
         showGlobalNotification(message);
     };
+
+    const onSuccessAction = (res) => {
+        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
+
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,66 +106,70 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchData({ setIsLoading: listShowLoading, errorAction, userId });
+            fetchList({ setIsLoading: listShowLoading, errorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
     useEffect(() => {
-        if (isDataLoaded && criticalityGroupData) {
+        if (isDataLoaded && criticalityGroupData && userId) {
             if (filterString) {
-                const filterDataItem = criticalityGroupData?.filter((item) => filterFunction(filterString)(item?.criticalityGroupCode) || filterFunction(filterString)(item?.criticalityGroupName));
-                setSearchdata(filterDataItem);
+                const keyword = filterString?.keyword;
+                // const filterDataItem = criticalityGroupData?.filter((item) => filterFunction(filterString)(item?.criticalityGroupCode) || filterFunction(filterString)(item?.criticalityGroupName));
+                const filterDataItem = criticalityGroupData?.filter((item) => (keyword ? filterFunction(keyword)(item?.criticalityGroupCode) || filterFunction(keyword)(item?.criticalityGroupName) : true));
+
+                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             } else {
-                setSearchdata(criticalityGroupData);
+                setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             }
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, criticalityGroupData]);
+    }, [filterString, isDataLoaded, criticalityGroupData, userId]);
 
     useEffect(() => {
         if (userId) {
-            fetchData({ setIsLoading: listShowLoading, errorAction, userId });
+            fetchList({ setIsLoading: listShowLoading, errorAction, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [RefershData, userId]);
+    }, [refershData, userId]);
 
     const onFinish = (values) => {
         const modifiedTimeData = timeData?.map((element) => {
-            return { id: element?.id || '', isDeleted: 'N', timeSlotFrom: element?.timeSlotFrom, timeSlotTo: element?.timeSlotTo };
+            return { id: element?.id || '', timeSlotFrom: element?.timeSlotFrom, timeSlotTo: element?.timeSlotTo, isDeleted: element?.isDeleted };
         });
 
-        const recordId = selectedRecord?.id || '';
-        const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: modifiedTimeData || [] };
+        const recordId = formData?.id || '';
+        const data = { ...values, id: recordId, allowedTimings: modifiedTimeData || [] };
 
         const onSuccess = (res) => {
-            onSaveShowLoading(false);
+            setShowDataLoading(true);
             form.resetFields();
             setForceFormReset(generateRandomNumber());
-            setSelectedRecord({});
-            setSuccessAlert(true);
-            if (saveclick === true) {
+            setTimeData([]);
+            if (buttonData?.saveAndNewBtnClicked) {
+                setIsFormVisible(true);
+                setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            } else {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            } else {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             }
         };
 
         setTimeout(() => {
-            fetchData({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, userId });
         }, 2000);
 
         const onError = (message) => {
-            onSaveShowLoading(false);
             showGlobalNotification({ message, placement: 'bottomRight' });
         };
 
         const requestData = {
             data: [data],
-            setIsLoading: onSaveShowLoading,
+            method: 'post',
+            setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
@@ -168,238 +182,111 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
         form.validateFields().then((values) => {});
     };
 
-    const handleAdd = () => {
-        setFormActionType('add');
-        setIsFormVisible(true);
-        setSelectedRecord({});
-        setSaveAndSaveNew(true);
-        setSaveBtn(true);
-        setFooterEdit(false);
-        setIsReadOnly(false);
-        setsaveclick(false);
-        setsaveandnewclick(true);
-        setcodeIsReadOnly(false);
-        setTimeData([]);
-        setIsViewModeVisible(false);
-    };
-
-    const handleUpdate = (record) => {
-        setFormActionType('update');
-        setSaveAndSaveNew(false);
-        setIsFormVisible(true);
-        setIsViewModeVisible(false);
-
-        setFooterEdit(false);
-        setSaveBtn(true);
-        setSelectedRecord(record);
-        const momentTime = record?.allowedTimings?.map((i) => {
-            return {
-                id: i?.id,
-                timeSlotFrom: i.timeSlotFrom,
-                timeSlotTo: i.timeSlotTo,
-            };
-        });
-
-        setTimeData(momentTime);
-        setFormData(record);
-
-        form.setFieldsValue({
-            criticalityGroupCode: record.criticalityGroupCode,
-            criticalityGroupName: record.criticalityGroupName,
-            criticalityDefaultGroup: Number(record.criticalityDefaultGroup),
-            activeIndicator: record.activeIndicator,
-            allowedTimings: momentTime,
-        });
-
-        setIsReadOnly(false);
-        setcodeIsReadOnly(true);
-    };
-
-    const handleUpdate2 = () => {
-        setFormActionType('update');
-        setIsFormVisible(true);
-        setIsViewModeVisible(false);
-
-        setSaveAndSaveNew(false);
-        setFooterEdit(false);
-        setSaveBtn(true);
-        setTimeData([selectedRecord?.allowedTimings]);
-
-        const momentTime = selectedRecord?.allowedTimings?.map((i) => {
-            return {
-                id: i?.id,
-                timeSlotFrom: i.timeSlotFrom,
-                timeSlotTo: i.timeSlotTo,
-            };
-        });
-        setTimeData(momentTime);
-
-        form.setFieldsValue({
-            criticalityGroupCode: selectedRecord.criticalityGroupCode,
-            criticalityGroupName: selectedRecord.criticalityGroupName,
-            criticalityDefaultGroup: Number(selectedRecord.criticalityDefaultGroup),
-            activeIndicator: selectedRecord.activeIndicator,
-            allowedTimings: momentTime,
-        });
-        setsaveclick(true);
-        setIsReadOnly(false);
-        setcodeIsReadOnly(true);
-    };
-
-    const handleView = (record) => {
-        setFormActionType('view');
-
-        setSelectedRecord(record);
-        setSaveAndSaveNew(false);
-        setFooterEdit(true);
-        setSaveBtn(false);
-
-        const momentTime = record?.allowedTimings?.map((i) => {
-            return {
-                id: i?.id,
-                timeSlotFrom: i.timeSlotFrom,
-                timeSlotTo: i.timeSlotTo,
-            };
-        });
-        setTimeData(momentTime);
-        form.setFieldsValue({
-            criticalityGroupCode: record.criticalityGroupCode,
-            criticalityGroupName: record.criticalityGroupName,
-            criticalityDefaultGroup: Number(record.criticalityDefaultGroup),
-            activeIndicator: record.activeIndicator,
-            allowedTimings: momentTime,
-        });
-        setcodeIsReadOnly(true);
-        setIsViewModeVisible(true);
-        setIsFormVisible(true);
-    };
-
     const handleReferesh = () => {
-        setRefershData(!RefershData);
+        setShowDataLoading(true);
+        setRefershData(!refershData);
     };
 
-    const onSearchHandle = (value) => {
-        setFilterString(value);
+    const handleButtonClick = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        setFormData([]);
+
+        if (buttonAction === 'view' || buttonAction === 'edit') {
+            const momentTime = record?.allowedTimings?.map((i) => {
+                return {
+                    id: i?.id,
+                    timeSlotFrom: i.timeSlotFrom,
+                    timeSlotTo: i.timeSlotTo,
+                    isDeleted: i?.isDeleted,
+                };
+            });
+            setTimeData(momentTime);
+        }
+
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+
+        record && setFormData(record);
+        setIsFormVisible(true);
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
+    const tableProps = {
+        isLoading,
+        tableData: searchData,
+        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        setPage,
     };
 
-    const tableColumn = [
-        tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'srl',
-            sorter: false,
-            render: (_t, _r, i) => i + 1,
-            width: '5%',
-        }),
-        tblPrepareColumns({
-            title: 'Criticality Group ID',
-            dataIndex: 'criticalityGroupCode',
-            width: '20%',
-        }),
-        tblPrepareColumns({
-            title: 'Criticality Group Name',
-            dataIndex: 'criticalityGroupName',
-            width: '35%',
-        }),
-        tblPrepareColumns({
-            title: 'Default Group',
-            dataIndex: 'criticalityDefaultGroup',
-            render: (text, record) => <>{text === '1' ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-            width: '15%',
-        }),
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'activeIndicator',
-            render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-            width: '10%',
-        }),
-        tblPrepareColumns({
-            title: 'Actions',
-            sorter: false,
-            render: (text, record, index) => {
-                return (
-                    <Space>
-                        {
-                            <Button className={styles.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
-                                <EditIcon />
-                            </Button>
-                        }
-                        {
-                            <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
-                                <ViewEyeIcon />
-                            </Button>
-                        }
-                    </Space>
-                );
-            },
-            width: '15%',
-        }),
-    ];
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setTimeData([]);
+        setButtonData({ ...defaultBtnVisiblity });
+    };
 
     const formProps = {
-        isVisible: isFormVisible,
-        isViewModeVisible,
-        criticalityGroupData,
-        codeIsReadOnly,
-        showGlobalNotification,
-        deletedItemList,
-        setDeletedItemList,
-        setFormBtnDisable,
-        formBtnDisable,
-        successAlert,
-        handleUpdate2,
         form,
-        saveBtn,
+        isVisible: isFormVisible,
+        showGlobalNotification,
         onFinish,
         onFinishFailed,
-        footerEdit,
-        handleUpdate,
-        saveAndSaveNew,
-        setSaveAndSaveNew,
-        setSelectedRecord,
-        selectedRecord,
-        setIsViewModeVisible,
-        handleAdd,
-        data,
-        isChecked,
-        onCloseAction: () => {
-            setIsFormVisible(false);
-            form.resetFields();
-            setIsViewModeVisible(false);
-            form.setFieldsValue({
-                allowedTimings: [],
-            });
-            setFormBtnDisable(false);
-            setSelectedRecord(null);
-        },
-        titleOverride: (isViewModeVisible ? 'View ' : selectedRecord?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+
+        onCloseAction,
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
         formData,
         setIsFormVisible,
-        setIsChecked,
         formActionType,
-        isReadOnly,
         setFormData,
-        saveclick,
-        setsaveclick,
-        setsaveandnewclick,
-        saveandnewclick,
-        alertNotification,
-        contextAlertNotification,
-        isDataLoaded: isLoadingOnSave,
-        isLoading: isLoadingOnSave,
+        isLoading,
         forceUpdate,
+
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        buttonData,
+
+        handleButtonClick,
+        buttonData,
+        setButtonData,
+        defaultBtnVisiblity,
 
         timeData,
         setTimeData,
     };
 
+    const handleClearInSearch = (e) => {
+        if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
+    };
+
+    const onSearchHandle = (value) => {
+        if (value?.trim()?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: false, keyword: value });
+        }
+    };
+
+    const title = 'Criticality Group List';
+
+    const advanceFilterResultProps = {
+        advanceFilter: false,
+        filterString,
+        from: listFilterForm,
+
+        onSearchHandle,
+        handleClearInSearch,
+        handleReferesh,
+        handleButtonClick,
+        title,
+    };
+
     return (
         <>
-            {contextAlertNotification}
-            <Row gutter={20}>
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
+
+            {/* <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
@@ -414,24 +301,24 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
                                 </Row>
                             </Col>
 
-                            {criticalityGroupData?.length && (
+                            {criticalityGroupData?.length > 0 && (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button className={styles.refreshBtn} aria-label="fa-ref" onClick={handleReferesh} danger>
                                         <TfiReload />
                                     </Button>
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                        Add Group
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                        Add
                                     </Button>
                                 </Col>
                             )}
                         </Row>
                     </div>
                 </Col>
-            </Row>
+            </Row> */}
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} handleAdd={handleAdd} addTitle={'Group'} />
+                    <ListDataTable handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={'Group'} {...tableProps} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />

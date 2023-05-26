@@ -3,7 +3,7 @@
     color: #ffffff !important;
 }
 
-:global .ant-btn {
+.pageHeader :global .ant-btn {
     height: 34px;
     padding: 4px 12px;
     border-radius: 4px;
@@ -18,7 +18,7 @@
 }
 
 .pageHeader .headingGradient {
-    padding-bottom: 9px;
+    padding-bottom: 12px;
     border-radius: 5px;
     border: 0px;
     border-bottom: 4px solid;
@@ -75,7 +75,7 @@
     margin-top: 0;
 }
 
-:global .ant-modal-confirm .ant-modal-confirm-body .ant-modal-confirm-title + .ant-modal-confirm-content {
+:global .ant-modal-confirm .ant-modal-confirm-body .ant-modal-confirm-title+.ant-modal-confirm-content {
     max-width: 100%;
     padding: 10px;
     text-align: justify;

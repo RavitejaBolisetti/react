@@ -1,47 +1,46 @@
 import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
-
 import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
 import { withModal } from 'components/withModal';
+import { searchValidator } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData, filteredCityData, filteredTehsilData } = props;
-    const { filterString, setFilterString, advanceFilterForm, handleResetFilter,setAdvanceSearchVisible } = props;
+    const { isDataCountryLoaded, setAdvanceSearchVisible, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData, filteredCityData, filteredTehsilData } = props;
+    const { filterString, setFilterString, advanceFilterForm, handleResetFilter } = props;
 
     useEffect(() => {
         advanceFilterForm.resetFields();
-        advanceFilterForm.setFieldsValue({ code: filterString?.code });
+        advanceFilterForm.setFieldsValue({ pincode: filterString?.pincode });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
     const onFinish = (values) => {
         setFilterString({ ...values, advanceFilter: true });
         handleFilterChange(false);
+        setAdvanceSearchVisible(false);
     };
 
     const onFinishFailed = () => {
         return;
     };
 
-    const filterOption = (input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-
     const selectProps = {
-        filterOption,
+        optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
         className: styles.headerSelectField,
     };
     return (
-        <Form layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={defaultCountry} label="Country" name="countryCode">
                         {defaultCountry && (
-                            <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                            <Select defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleFilterChange('countryCode')}>
                                 {countryData?.map((item) => (
                                     <Option value={item?.countryCode}>{item?.countryName}</Option>
                                 ))}
@@ -73,7 +72,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="City" initialValue={filterString?.cityCode} name="cityCode" rules={[validateRequiredSelectField('City')]}>
+                    <Form.Item label="City" initialValue={filterString?.cityCode} name="cityCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('cityCode')}>
                             {filteredCityData?.map((item) => (
                                 <Option value={item?.code}>{item?.name}</Option>
@@ -95,7 +94,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="PIN Code" initialValue={filterString?.code} name="code" rules={[validatePincodeField('Pincode')]}>
+                    <Form.Item label="PIN Code" initialValue={filterString?.pincode} name="pincode">
                         <Input placeholder="Search" maxLength={6} allowClear />
                     </Form.Item>
                 </Col>

@@ -8,10 +8,12 @@ import { FaChevronDown } from 'react-icons/fa';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 
-import { CustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
+import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
+import { CompanyCustomerDetailsMaster } from './FirmOrCompany';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
-import { CustomerProfile } from './FirmOrCompany';
+import { CompanyAddressMaster, CompanyProfile, CompanyContact, AccountRelatedMaster } from './FirmOrCompany';
 import FormProgressBar from './FormProgressBar';
+import CommonFooterButton from './CommonFooterButton';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -20,8 +22,9 @@ const { Meta } = Card;
 const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 const AddEditFormMain = (props) => {
     const { saveclick, onCloseAction, productHierarchyData, DealerSearchvalue, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
-    const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setClosePanels, AccessMacid, setAccessMacid, setShowSaveBtn, hanndleEditData } = props;
+    const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setIsViewModeVisible, setClosePanels, AccessMacid, setAccessMacid, setShowSaveBtn, hanndleEditData } = props;
     const { finalFormdata, setfinalFormdata } = props;
+    const { toggleButton, settoggleButton } = props;
     const [leftTimeline, setleftTimeline] = useState({
         AccountRelated: false,
         Address: false,
@@ -90,6 +93,8 @@ const AddEditFormMain = (props) => {
     const TimelineProps = {
         leftTimeline,
         setleftTimeline,
+        toggleButton,
+        settoggleButton,
     };
 
     const viewProps = {
@@ -109,10 +114,17 @@ const AddEditFormMain = (props) => {
     const CustomerProfileMasterProps = {
         onCloseAction,
         isViewModeVisible,
-    }; 
+    };
+
     const CustomerDetailsMasterProps = {
         onCloseAction,
         isViewModeVisible,
+        setIsViewModeVisible,
+    };
+    const CustomerAccountMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
+        setIsViewModeVisible,
     };
     const IndividualProfileMasterProps = {
         onCloseAction,
@@ -122,21 +134,46 @@ const AddEditFormMain = (props) => {
         onCloseAction,
         isViewModeVisible,
     };
+    const commonfooterProps = {
+        onCloseAction,
+        isViewModeVisible,
+        styles,
+    };
+    const individualAddressMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
+        styles,
+    };
+
     const renderElement = () => {
-        if (leftTimeline?.AccountRelated) {
-            return <IndividualAccountRelatedMaster {...IndividualAccountRelatedMasterProps} />;
-        } else if (leftTimeline?.CustomerDetails) {
-            return <CustomerDetailsMaster {...CustomerDetailsMasterProps} />;
-        } else if (leftTimeline?.Address) {
-            return <IndividualAddressMaster />;
-        } else if (leftTimeline?.Contacts) {
-            return <IndividualContact />;
-        } else if (leftTimeline?.CustomerProfile) {
-            return <CustomerProfile />;
-        } else if (leftTimeline?.IndividualProfile) {
-            return <IndividualProfileMaster {...IndividualProfileMasterProps} />;
-        } else if (leftTimeline?.FamilyDetails) {
-            return <FamilyDetails />;
+        if (toggleButton?.individual) {
+            if (leftTimeline?.AccountRelated) {
+                return <IndividualAccountRelatedMaster {...IndividualAccountRelatedMasterProps} />;
+            } else if (leftTimeline?.CustomerDetails) {
+                return <IndivisualCustomerDetailsMaster {...CustomerDetailsMasterProps} />;
+            } else if (leftTimeline?.Address) {
+                return <IndividualAddressMaster {...individualAddressMasterProps} />;
+            } else if (leftTimeline?.Contacts) {
+                return <IndividualContact />;
+            } else if (leftTimeline?.IndividualProfile) {
+                return <IndividualProfileMaster {...IndividualProfileMasterProps} />;
+            } else if (leftTimeline?.FamilyDetails) {
+                return <FamilyDetails />;
+            }
+        } else {
+            if (leftTimeline?.CustomerDetails) {
+                return <CompanyCustomerDetailsMaster {...CustomerDetailsMasterProps} />;
+            } else if (leftTimeline?.CustomerProfile) {
+                return <CompanyProfile {...CustomerProfileMasterProps} />;
+            } else if (leftTimeline?.AccountRelated) {
+                return <AccountRelatedMaster {...CustomerAccountMasterProps} />;
+            } else if (leftTimeline?.Contacts) {
+                return <CompanyContact />;
+            } else if (leftTimeline?.Address) {
+                return <CompanyAddressMaster />;
+            } else if (leftTimeline?.IndividualProfile) {
+                return <IndividualProfileMaster {...IndividualProfileMasterProps} />;
+            }
         }
     };
 
@@ -178,7 +215,7 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                             {renderElement()}
 
-                            <Row gutter={20} className={styles.formFooter}>
+                            {/* <Row gutter={20} className={styles.formFooter}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
                                     <Button danger onClick={onCloseAction}>
                                         {footerEdit ? 'Close' : 'Cancel'}
@@ -198,7 +235,8 @@ const AddEditFormMain = (props) => {
                                         </Button>
                                     )}
                                 </Col>
-                            </Row>
+                            </Row> */}
+                            {/* <CommonFooterButton {...commonfooterProps} /> */}
                         </Col>
                     </Row>
                 </Col>

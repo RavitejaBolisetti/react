@@ -14,31 +14,29 @@ import { ViewIndividualAddressDetails } from './ViewIndividualAddressDetails';
 import ViewAddressList from './ViewAddressList';
 import AddEditForm from './AddEditForm';
 
-
-
 const { Panel } = Collapse;
 
 const { Text } = Typography;
 
-const formData = {
-    id: '076da86e-010c-445c-ac6c-6b905ca29338',
-    addressType: '9876543856',
-    address: 'offers',
-    address2: 'brother',
-    pincode: '09:00AM',
-    tehsil: '06:00AM',
-    city: 'mr',
-    district: 'jhon',
-    state: 'little',
-    contactpersonName: 'hashn',
-    contactmobilenumber: 'Male',
-    defaultaddress: true,
-};
+const formData = [
+    {
+        id: '076da86e-010c-445c-ac6c-6b905ca29338',
+        addressType: '9876543856',
+        address: 'offers',
+        address2: 'brother',
+        pincode: '09:00AM',
+        tehsil: '06:00AM',
+        city: 'mr',
+        district: 'jhon',
+        state: 'little',
+        contactpersonName: 'hashn',
+        contactmobilenumber: 'Male',
+        defaultaddress: true,
+    },
+];
 
-
-
-
-const IndividualAddressMasterBase = () => {
+const IndividualAddressMasterBase = (props) => {
+    const { isViewModeVisible } = props;
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -60,7 +58,7 @@ const IndividualAddressMasterBase = () => {
         form.resetFields();
         console.log('clicked');
         setShowAddEditForm(true);
-        setOpenAccordian('1')
+        setOpenAccordian('1');
     };
 
     const formProps = {
@@ -69,7 +67,8 @@ const IndividualAddressMasterBase = () => {
         setContactData,
         formData,
         onFinish,
-        form
+        form,
+        ...props,
     };
 
     return (

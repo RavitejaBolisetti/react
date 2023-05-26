@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 
-import { Col, Input, Collapse, Row, Button, Space, Spin, Form, Select, Upload, message, Checkbox, Progress, Typography } from 'antd';
+import { Col, Input, Collapse, Row, Button, Space, Spin, Form, Select, Upload, message, Checkbox, Progress, Typography, Divider } from 'antd';
 import { FaUserCircle } from 'react-icons/fa';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
@@ -34,7 +34,7 @@ const handleCheckboxChange = (event) => {
 
 const { Search } = Input;
 
-const AddEditForm = ({ form, isVisible, setisVisible, isViewModeVisible, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable }) => {
+const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeVisible, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable }) => {
     const [openAccordian, setOpenAccordian] = useState('');
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [companyInfoform] = Form.useForm();
@@ -83,11 +83,10 @@ const AddEditForm = ({ form, isVisible, setisVisible, isViewModeVisible, isReadO
 
     const uploadProps = {
         name: 'file',
-
-        multiple: true,
-
+        multiple: false,
         action: '',
-
+        progress: { strokeWidth: 10 },
+        success: { percent: 100 },
         onChange(info) {
             const { status } = info.file;
 
@@ -97,12 +96,6 @@ const AddEditForm = ({ form, isVisible, setisVisible, isViewModeVisible, isReadO
                 message.error(`${info.file.name} file upload failed.`);
             }
         },
-
-        // onDrop(e) {
-
-        //   console.log('Dropped files', e.dataTransfer.files);
-
-        // },
     };
 
     const onFinish = () => {
@@ -139,14 +132,14 @@ const AddEditForm = ({ form, isVisible, setisVisible, isViewModeVisible, isReadO
         activeKey,
         setactiveKey,
         onChange,
-        styles,
+        style,
     };
     return (
         <>
             {!isViewModeVisible ? (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Space style={{ display: 'flex' }} direction="vertical" size="middle">
+                        <Space style={{ display: 'flex' }} direction="vertical" size="middle" className={style.accordianContainer}>
                             <Collapse
                                 defaultActiveKey={['1']}
                                 expandIcon={() => {
@@ -171,6 +164,8 @@ const AddEditForm = ({ form, isVisible, setisVisible, isViewModeVisible, isReadO
                                     }
                                     key="1"
                                 >
+                                    <Divider />
+
                                     <Form autoComplete="off" layout="vertical" form={companyInfoform}>
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -233,6 +228,7 @@ const AddEditForm = ({ form, isVisible, setisVisible, isViewModeVisible, isReadO
                                         </>
                                     }
                                 >
+                                    <Divider />
                                     <Form form={form} layout="vertical">
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -281,6 +277,7 @@ const AddEditForm = ({ form, isVisible, setisVisible, isViewModeVisible, isReadO
                                         </>
                                     }
                                 >
+                                    <Divider />
                                     <Form autoComplete="off" layout="vertical" form={uploadCustomerForm}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -291,23 +288,8 @@ const AddEditForm = ({ form, isVisible, setisVisible, isViewModeVisible, isReadO
                                         </Row>
                                         <Row gutter={20}>
                                             {' '}
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Dragger
-                                                    {...uploadProps}
-                                                    style={{
-                                                        // margin: '1.5rem 0 0 0',
-
-                                                        background: '#F2F2F2',
-
-                                                        border: '1px dashed #B5B5B5',
-
-                                                        borderRadius: '6px',
-
-                                                        minHeight: '172px',
-
-                                                        padding: '1rem 0 0 0',
-                                                    }}
-                                                >
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.uploadContainer}>
+                                                <Dragger {...uploadProps}>
                                                     <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
                                                         <img src={Svg} alt="" />
                                                     </p>
@@ -328,9 +310,18 @@ const AddEditForm = ({ form, isVisible, setisVisible, isViewModeVisible, isReadO
                                 </Panel>
                             </Collapse>
 
-                            <Button type="primary" onClick={onFinish}>
-                                Save & Proceed
-                            </Button>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                    <Button danger onClick={onCloseAction}>
+                                        Cancel
+                                    </Button>
+                                </Col>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                    <Button type="primary" onClick={onFinish} className={styles.floatRight}>
+                                        Save & Proceed
+                                    </Button>
+                                </Col>
+                            </Row>
                         </Space>
                     </Col>
                 </Row>
@@ -341,4 +332,4 @@ const AddEditForm = ({ form, isVisible, setisVisible, isViewModeVisible, isReadO
     );
 };
 
-export default  AddEditForm;
+export default AddEditForm;

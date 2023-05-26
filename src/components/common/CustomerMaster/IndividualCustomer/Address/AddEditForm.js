@@ -20,7 +20,7 @@ const addressType = [
 ];
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onFinish, form } = props;
+    const { isReadOnly = false, onFinish, form, onCloseAction, isViewModeVisible, styles } = props;
 
     const disabledProps = { disabled: isReadOnly };
     const [items, setItems] = useState(['Office', 'Residence', 'Permanent', 'Other']);

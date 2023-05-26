@@ -147,37 +147,36 @@
     color: #ff3e5b !important;
 }
 
-:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-track,
-:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-track {
+:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-track {
     background-color: #ffffff;
 }
 
-:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar,
-:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar {
+:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar {
     width: 5px;
     background-color: #ffffff;
 }
 
-:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb,
-:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-thumb {
+:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb {
     background-color: rgba(52, 44, 44, 0.34);
     border-radius: 10px;
+}
+
+:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar:hover {
+    width: 8px !important;
 }
 
 :global .ant-menu-light.ant-menu-root.ant-menu-inline,
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical {
     border-inline-end: none;
-    overflow-y: scroll;
+    overflow-y: overlay;
     max-height: 72vh;
     padding: 0px 14px;
 }
 
 /* font-family & size for left-menu text */
 :global .ant-menu {
-    font-family: 'Lato', sans-serif;
     font-size: 15px;
     font-weight: 500 !important;
-    /* color: #000000 !important; */
 }
 
 :global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon+span {

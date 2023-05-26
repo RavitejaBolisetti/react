@@ -5,7 +5,7 @@ import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 
 const FormProgressBar = (props) => {
-    const { leftTimeline, setleftTimeline } = props;
+    const { leftTimeline, setleftTimeline, toggleButton, settoggleButton } = props;
     const onHandle = (key) => {
         switch (key) {
             case 'details': {
@@ -52,7 +52,18 @@ const FormProgressBar = (props) => {
                         </>
                     ),
                 },
-                {
+                toggleButton?.company && {
+                    dot: <FaCheckCircle />,
+                    children: (
+                        <>
+                            <Button onClick={() => onHandle('CustomerProfile')} type="link" danger>
+                                Company Profile
+                            </Button>
+                            <Progress percent={100} size="small" />
+                        </>
+                    ),
+                },
+                toggleButton?.individual && {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
@@ -85,7 +96,7 @@ const FormProgressBar = (props) => {
                         </>
                     ),
                 },
-                {
+                toggleButton?.individual && {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
@@ -107,20 +118,10 @@ const FormProgressBar = (props) => {
                         </>
                     ),
                 },
+
                 {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('CustomerProfile')} type="link" danger>
-                                Customer Profile
-                            </Button>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
-                },
-                {
-                    dot: <FaCheckCircle />,
-                    children: 'Thank You',
+                    label: 'Thank You',
                 },
             ]}
         />

@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import OTPInput from 'otp-input-react';
 import { useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { Form, Row, Col, Button, Input, Checkbox } from 'antd';
-import { UndoOutlined } from '@ant-design/icons';
-import { addToolTip } from 'utils/customMenuLink';
+
 import { TbRefresh } from 'react-icons/tb';
 import { RxCrossCircled } from 'react-icons/rx';
-import { AiOutlineEyeInvisible, AiOutlineEye, AiOutlineInfoCircle } from 'react-icons/ai';
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { showGlobalNotification, hideGlobalNotification } from 'store/actions/notification';
 
 import { BiUser } from 'react-icons/bi';
@@ -25,6 +24,17 @@ import Footer from '../Footer';
 import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
 import { FiLock } from 'react-icons/fi';
 import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
+
+const mapStateToProps = (state) => {
+    const {
+        data: {
+            ForgotPassword: { isLoading },
+        },
+    } = state;
+    return {
+        isLoading,
+    };
+};
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
@@ -42,9 +52,15 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, showGlobalNotification, hideGlobalNotification, listShowLoading }) => {
+const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, showGlobalNotification, hideGlobalNotification, listShowLoading, isLoading }) => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
+    const userIdRef = useRef(null);
+
+    const newPasswordInput = useRef(null);
+    const confirmPasswordInput = useRef(null);
+
+    const [fieldData, setFieldData] = useState();
 
     const RESEND_OTP_TIME = 60;
     const [currentStep, setCurrentStep] = useState(1);
@@ -54,9 +70,12 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const [otpInput, setOTPInput] = useState();
     const [validationKey, setValidationKey] = useState();
     const [inValidOTP, setInValidOTP] = useState(false);
+    const [disableVerifyOTP, setDisableVerifyOTP] = useState(true);
     const [showPassword, setShowPassword] = useState({ newPassword: false, confirmNewPassword: false });
     const [password, setPassword] = useState('');
     const [verifiedUserData, setVerifiedUserData] = useState();
+    const [tooltipVisible, setTooltipVisible] = useState(false);
+    const [submitButtonActive, setSubmitButtonActive] = useState(true);
 
     useEffect(() => {
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -66,12 +85,23 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [counter]);
 
+    useEffect(() => {
+        password && setTooltipVisible(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [password]);
+
+    const handleFormValueChange = () => {
+        setSubmitButtonActive(false);
+    };
+
     const onError = (message) => {
         showGlobalNotification({ title: 'ERROR', message: Array.isArray(message[0]) || message });
         if (otpInput?.length === 6) {
             setCounter(0);
         }
         setInValidOTP(true);
+        setDisableVerifyOTP(true);
+        setSubmitButtonActive(true);
     };
 
     const onVerifyUser = (values) => {
@@ -106,13 +136,22 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         }
     };
 
-    const handleSendOTP = (values) => {
+    const handleSendOTP = (values = '') => {
         setOTPInput();
         setInValidOTP(false);
 
+        let otpSentOnMobile = '';
+        let otpSentOnEmail = '';
+
         if (selectedUserId) {
-            const otpSentOnMobile = values?.otpSentOn.includes('sentOnMobile');
-            const otpSentOnEmail = values?.otpSentOn.includes('sentOnEmail');
+            if (values) {
+                otpSentOnMobile = values?.otpSentOn.includes('sentOnMobile');
+                otpSentOnEmail = values?.otpSentOn?.includes('sentOnEmail');
+            } else {
+                otpSentOnMobile = form.getFieldValue('otpSentOn').includes('sentOnMobile');
+                otpSentOnEmail = form.getFieldValue('otpSentOn')?.includes('sentOnEmail');
+            }
+
             if (otpSentOnMobile || otpSentOnEmail) {
                 hideGlobalNotification();
                 const data = { userId: selectedUserId, sentOnMobile: otpSentOnMobile, sentOnEmail: otpSentOnEmail };
@@ -126,7 +165,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
                 const requestData = {
                     data: data,
-                    setIsLoading: listShowLoading,
+                    setIsLoading: () => {},
                     onSuccess,
                     onError,
                 };
@@ -189,6 +228,12 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const handleOTPInput = (value) => {
         setOTPInput(value);
         setInValidOTP(false);
+        console.log('value', value);
+        if (value?.length === 6) {
+            setDisableVerifyOTP(false);
+        } else {
+            setDisableVerifyOTP(true);
+        }
     };
 
     const onFinishFailed = ({ values, errorFields, outOfDate }) => {
@@ -200,6 +245,19 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
             {!showPassword?.[type] ? <AiOutlineEyeInvisible size={18} /> : <AiOutlineEye size={18} />}
         </span>
     );
+
+    const handleFormChange = (field) => (e) => {
+        setFieldData({ ...fieldData, [field]: e?.target?.value?.length > 0 ? true : false });
+    };
+
+    const handleFieldFocus = (field) => (e) => {
+        field?.current.focus();
+    };
+
+    const handleNewPasswordChange = (e) => {
+        setPassword(e.target.value);
+        setFieldData({ ...fieldData, newPassword: e?.target?.value?.length > 0 ? true : false });
+    };
     return (
         <>
             <div className={styles.loginSection}>
@@ -227,16 +285,21 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                     </div>
 
                                                     <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Form.Item name="userId" rules={[validateRequiredInputField('user id')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
-                                                                <Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID)*" />
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
+                                                            <Form.Item name="userId" class="textfieldWithPrefix__input" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
+                                                                {<Input ref={userIdRef} prefix={<BiUser size={18} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
                                                             </Form.Item>
+                                                            {!fieldData?.userId && (
+                                                                <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(userIdRef)}>
+                                                                    User ID (MILE ID.Parent ID)
+                                                                </label>
+                                                            )}
                                                         </Col>
                                                     </Row>
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Button form="verifyUser" className={styles.button} type="primary" htmlType="submit">
+                                                            <Button form="verifyUser" loading={isLoading} className={styles.button} type="primary" htmlType="submit">
                                                                 Verify User
                                                             </Button>
                                                         </Col>
@@ -307,7 +370,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Button form="sendOTP" className={styles.button} type="primary" htmlType="submit">
+                                                                <Button form="sendOTP" loading={isLoading} className={styles.button} type="primary" htmlType="submit">
                                                                     Send OTP
                                                                 </Button>
                                                             </Col>
@@ -333,7 +396,8 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className={styles.otpTitle}>Enter OTP {addToolTip('Please enter 6 digit OTP', 'right')(<AiOutlineInfoCircle size={13} color={'#2782F9'} />)}</div>
+                                                        {/* <div className={styles.otpTitle}>Enter OTP {addToolTip('Please enter 6 digit OTP', 'bottom')(<AiOutlineInfoCircle size={13} color={'#2782F9'} />)}</div> */}
+                                                        <div className={styles.otpTitle}>Enter OTP</div>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
@@ -368,8 +432,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                         </Row>
                                                     </Col>
                                                 </Row>
-
-                                                <Button onClick={handleVerifyOTP} className={styles.button} type="primary">
+                                                <Button onClick={handleVerifyOTP} disabled={disableVerifyOTP} loading={isLoading} className={styles.button} type="primary">
                                                     Verify OTP
                                                 </Button>
 
@@ -385,42 +448,53 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                     ) : currentStep === 4 ? (
                                         <div className={styles.centerInner}>
                                             <div className={styles.loginForm}>
-                                                <Form id="updatePassword" form={form} autoComplete="off" onFinish={onUpdatePassword} layout="vertical">
+                                                <Form id="updatePassword" form={form} autoComplete="off" onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onUpdatePassword} layout="vertical">
                                                     <div className={styles.loginHeading}>
                                                         <h1 className={styles.inputBox}>Create New Password</h1>
                                                         <Row gutter={20}>
-                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]} className={`${styles.changer} ${styles.inputBox}`}>
-                                                                    <Input onChange={(e) => setPassword(e.target.value)} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('new password')} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} />
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
+                                                                <Form.Item name="newPassword" class="textfieldWithPrefix__input" rules={[validateRequiredInputField('new password')]} className={`${styles.inputBox}`}>
+                                                                    <Input onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                                                                 </Form.Item>
-                                                                <PasswordStrengthMeter password={password} beforeLogin={true} />
+                                                                {!fieldData?.newPassword && (
+                                                                    <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(newPasswordInput)}>
+                                                                        New password
+                                                                    </label>
+                                                                )}
+                                                                {form.getFieldValue('newPassword') && <PasswordStrengthMeter password={form.getFieldValue('newPassword')} beforeLogin={true} tooltipVisible={tooltipVisible} />}
                                                             </Col>
                                                         </Row>
                                                         <Row gutter={20}>
-                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
                                                                 <Form.Item
                                                                     name="confirmNewPassword"
                                                                     dependencies={['newPassword']}
+                                                                    class="textfieldWithPrefix__input"
                                                                     rules={[
-                                                                        validateRequiredInputField('confirm password'),
+                                                                        validateRequiredInputField('confirm password', false),
                                                                         ({ getFieldValue }) => ({
                                                                             validator(_, value) {
                                                                                 if (!value || getFieldValue('newPassword') === value) {
                                                                                     return Promise.resolve();
                                                                                 }
-                                                                                return Promise.reject(new Error("New password and confirm password doesn't match!"));
+                                                                                return Promise.reject(new Error("New Password and confirm Password doesn't match!"));
                                                                             },
                                                                         }),
                                                                     ]}
-                                                                    className={styles.inputBox}
+                                                                    className={`${styles.inputBox}`}
                                                                 >
-                                                                    <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('confirm password')} prefix={<FiLock size={18} />} suffix={passwordSuffix('confirmNewPassword')} />
+                                                                    <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
                                                                 </Form.Item>
+                                                                {!fieldData?.confirmNewPassword && (
+                                                                    <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(confirmPasswordInput)}>
+                                                                        Confirm password
+                                                                    </label>
+                                                                )}
                                                             </Col>
                                                         </Row>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Button form="updatePassword" className={styles.button} type="primary" htmlType="submit">
+                                                                <Button loading={isLoading} disabled={submitButtonActive} form="updatePassword" className={styles.button} type="primary" htmlType="submit">
                                                                     Submit
                                                                 </Button>
                                                             </Col>
@@ -441,4 +515,4 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     );
 };
 
-export const ForgotPassword = connect(null, mapDispatchToProps)(ForgotPasswordBase);
+export const ForgotPassword = connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordBase);

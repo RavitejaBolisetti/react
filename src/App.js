@@ -9,6 +9,8 @@ import { FcCancel } from 'react-icons/fc';
 import { hideGlobalNotification } from 'store/actions/notification';
 
 import styles from './App.module.css';
+// import styles1 from 'https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;1,100;1,300;1,400;1,700&display=swap';
+
 
 const mapStateToProps = (state) => ({});
 
@@ -63,6 +65,7 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => 
                         token: {
                             colorPrimary: '#ff3e5b',
                             colorBgContainer: '#ffffff',
+                            fontFamily: 'Lato',
                         },
                         components: {
                             Button: {

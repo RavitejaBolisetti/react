@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
     const moduleTitle = 'Application Details';
 
     let returnValue = {
-        criticalityGroupData,
+        criticalityGroupData: criticalityGroupData?.sort((a, b) => b?.activeIndicator - a?.activeIndicator),
         applicationDetailsData,
         dealerLocations,
         userId,
@@ -97,6 +97,8 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const [isReadOnly, setIsReadOnly] = useState(true);
     const [isFieldDisable, setIsFieldDisable] = useState(false);
     const [parentAppCode, setparentAppCode] = useState();
+    const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+
 
     const moduleTitle = 'Application Master';
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
@@ -234,7 +236,9 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         setisVisible(false);
         const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
         setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
-
+        applicationForm.resetFields();
+        forceUpdate();
+        setIsBtnDisabled(false);
     };
 
     const myProps = {
@@ -271,6 +275,9 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         isApplicatinoOnSaveLoading,
         onCloseAction: onClose,
         showGlobalNotification,
+        applicationDetailsData,
+        isBtnDisabled,
+        setIsBtnDisabled
     };
 
     const leftCol = menuData?.length > 0 ? 16 : 24;

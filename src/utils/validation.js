@@ -15,11 +15,16 @@ export const validateEmailField = (fieldName) => ({
 
 export const validationFieldLetterAndNumber = (fieldName) => ({
     pattern: /^[A-Za-z0-9]*$/,
-    message: 'Please use only letters and numbers In ' + fieldName,
+    message: 'Please use only letters and numbers in ' + fieldName,
+});
+
+export const validationFieldLetter = (fieldName) => ({
+    pattern: /^[A-Za-z]*$/,
+    message: 'Please use only letters in ' + fieldName,
 });
 
 export const validatePanField = (fieldName) => ({
-    pattern: /^([A-Z]){5}([0-9]){4}([A-Z]){1}?$/,
+    pattern: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
     message: 'Please enter valid ' + fieldName,
 });
 
@@ -48,6 +53,11 @@ export const validateAlphanumericWithSpace = (fieldName) => ({
     pattern: /^[a-zA-Z0-9 ]*$/,
 });
 
+export const validateLettersWithWhitespaces = (fieldName) => ({
+    message: fieldName + ' can contain only letters with whitespaces',
+    pattern: /^[a-zA-Z ]*$/,
+});
+
 export const validationFieldLetteNumberandPeriod = (fieldName) => ({
     pattern: /^[a-zA-Z0-9.]*$/,
     message: 'Please use only letters, numbers and period in ' + fieldName,
@@ -64,7 +74,7 @@ export const validateOnlyPositiveNumber = (fieldName) => ({
 });
 
 export const validateGSTIN = (fieldName) => ({
-    pattern: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
+    pattern: /^(?![0-9]{2})([0-9]{2})([0-9A-Z]{5})([0-9]{4})([0-9A-Z]{1})([0-9A-Z]{1})([0-9A-Z]{1})$/,
     message: 'Please enter valid ' + fieldName,
 });
 
@@ -126,15 +136,49 @@ export const valueBetween0to100 = (value, fieldName) => {
     }
 };
 
+export const duplicateProductValidator = (value, dataList) => {
+    let status = false;
+    if (dataList?.length > 0) {
+        for (let i = 0; i < dataList?.length; i++) {
+            if (dataList[i]?.attributeName?.label === value?.attributeName?.label) {
+                status = true;
+                return Promise.reject('Duplicate found');
+            }
+
+            if (!status) {
+                return Promise.resolve('');
+            }
+        }
+    } else {
+        return Promise.resolve('');
+    }
+    return Promise.resolve('');
+};
 export const searchValidator = (_, value) => {
-    if (!value || (value && value.length > 3)) {
+    if (!value || (value && value.trim().length >= 3)) {
         return Promise.resolve();
     }
-    return Promise.reject(new Error('Please enter atleat 3 character to search'));
+    return Promise.reject(new Error('Please enter atleast 3 character to search'));
+};
+
+export const searchValidatorPincode = (_, value) => {
+    const pattern = /^\d{6}(?:\s*,\s*\d{6})*$/;
+    if (!value || pattern.test(value)) {
+        return Promise.resolve();
+    }
+    return Promise.reject(new Error('Please enter atleast 6 character to search'));
 };
 export const validateDrivingLicenseNo = (fieldName) => ({
     pattern:  /^([A-Z]{2})(\d{2}|\d{3})[a-zA-Z]{0,1}(\d{4})(\d{7})$/,
     message: 'Please enter valid ' + fieldName,
     
 });
+export const validateAadhar = (fieldName) => ({
+    pattern: /^\d{4}\d{4}\d{4}$/,
+    message: 'Please enter valid ' + fieldName,
+});
+export const validateVoterId = (fieldName) => ({
+    pattern: /^([a-zA-Z]){3}([0-9]){7}?$/,
+    mesage: 'Please enter valid ' + fieldName,
+})
 

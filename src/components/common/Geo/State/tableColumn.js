@@ -5,7 +5,7 @@ import styles from 'components/common/Common.module.css';
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
-        tblSerialNumberColumn({ page, pageSize }),
+        tblSerialNumberColumn({ page, pageSize, width: '5%' }),
 
         tblPrepareColumns({
             title: 'State Code',
@@ -20,14 +20,20 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
 
         tblPrepareColumns({
-            title: 'Country',
-            dataIndex: 'countryName',
-            width: '20%',
+            title: 'State GST Code',
+            dataIndex: 'gstStateCode',
+            width: '15%',
         }),
 
-        tblStatusColumn({ styles }),
+        tblPrepareColumns({
+            title: 'Country',
+            dataIndex: 'countryName',
+            width: '15%',
+        }),
 
-        tblActionColumn({ handleButtonClick, styles })
+        tblStatusColumn({ styles, width: '15%' }),
+
+        tblActionColumn({ styles, handleButtonClick, width: '10%' })
     );
 
     return tableColumn;

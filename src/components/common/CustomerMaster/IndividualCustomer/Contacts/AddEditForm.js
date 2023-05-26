@@ -1,25 +1,25 @@
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, Switch, DatePicker, Divider, Checkbox } from 'antd';
 import { useState } from 'react';
-import { accordianExpandIcon } from 'utils/accordianExpandIcon';
-import Svg from 'assets/images/Filter.svg';
+import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, Switch, DatePicker, Divider, Checkbox } from 'antd';
 
 import style from '../../../Common.module.css';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateMobileNoField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
-
+import UploadUtils from './UploadUtils';
 import { contactPurpose, title, gender } from 'constants/modules/CustomerMaster/individualProfile';
+import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
+import { BiLockAlt } from 'react-icons/bi';
 
-
-const { Panel } = Collapse;
 const { Option } = Select;
 const { Text } = Typography;
-const { Dragger } = Upload;
 
 const uploadProps = {
     name: 'file',
     multiple: true,
     action: '',
+    uploadTitle: 'Upload Your Profile Picture',
+    uploadDescription: 'File type should be .png and .jpg and max file size to be 5MB',
+    uploadBtnName: 'Upload File',
     onChange(info) {
         const { status } = info.file;
         //   if (status !== 'uploading') {
@@ -36,8 +36,10 @@ const uploadProps = {
     // },
 };
 
-
 const AddEditForm = (props) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [mobileLoader, setmobileLoader] = useState(false);
+
     const { isReadOnly = false, onFinish, form } = props;
     const disabledProps = { disabled: isReadOnly };
 
@@ -45,151 +47,164 @@ const AddEditForm = (props) => {
         form.resetFields();
     };
 
+    const handleNumberValidation = (event) => {
+        const Mno = event.target.value;
+        const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
+        if (Mno?.length === 10 && regex.test(Mno)) {
+            setmobileLoader(true);
+            setTimeout(() => {
+                setIsModalOpen(true);
+            }, 1000);
+        } else {
+            setmobileLoader(false);
+        }
+    };
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+        setmobileLoader(false);
+    };
+    const modalProps = {
+        isVisible: isModalOpen,
+        icon: <BiLockAlt />,
+        titleOverride: 'Mobile Number Validation',
+        closable: false,
+        onCloseAction: handleCancel,
+    };
+
     return (
         <>
             <Form form={form} autoComplete="off" onFinish={onFinish} layout="vertical">
-                <Row>
-                    <Typography.Text strong>Add New Contact</Typography.Text>
-                </Row>
-                <Row gutter={20} style={{ marginBottom: '20px' }}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Dragger
-                            {...uploadProps}
-                            style={{
-                                margin: '1.5rem 0 2px0 0',
-                                background: '#F2F2F2',
-                                border: '1px dashed #B5B5B5',
-                                borderRadius: '6px',
-                                minHeight: '172px',
-                                padding: '1rem 0 0 0',
-                            }}
-                        >
-                            <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
-                                <img src={Svg} alt="" />
-                            </p>
-                            <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '600', fontSize: '18px', lineHeight: '23px', color: '#0B0B0C' }}>
-                                Upload Your Profile Picture
-                            </p>
-                            <Typography.Text>File type should be .png and .jpg and max file size to be 5MB</Typography.Text>
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ textAlign: 'center' }}>
-                                    {/* <Upload {...uploadProps}> */}
-                                    <Button danger>Upload File</Button>
-                                    {/* </Upload> */}
-                                </Col>
-                            </Row>
-                        </Dragger>
-                    </Col>
-                </Row>
+                <Space  direction="vertical">
+                    <Row>
+                        <Typography.Text strong>Add New Contact</Typography.Text>
+                    </Row>
 
-                <Row gutter={[20, 0]}>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Purpose of Contact" name="purposeOfContact">
-                            <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps}>
-                                {contactPurpose?.map((item) => (
-                                    <Option value={item.key}>{item.name}</Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item suffix={<Button>Send OTP</Button>} label="Mobile Number" name="contactMobileNumber">
-                            <Input className={style.inputBox} placeholder={preparePlaceholderText('mobile number')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
+                    <UploadUtils {...uploadProps} />
 
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Alternate Mobile Number" name="alternativeMobileNumber">
-                            <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate mobile number')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Relation" name="relationwithCustomer">
-                            <Input className={style.inputBox} placeholder={preparePlaceholderText('relation')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Gender" name="gender" rules={[validateRequiredSelectField('gender')]}>
-                            <Select placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
-                                {gender?.map((item) => (
-                                    <Option value={item.key}>{item.name}</Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Title" name="contactNameTitle" rules={[validateRequiredSelectField('title')]}>
-                            <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('title')} {...disabledProps}>
-                                {title?.map((item) => (
-                                    <Option value={item?.key}>{item?.name}</Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="First Name" name="contactNameFirstName" rules={[validateRequiredInputField('First Name')]}>
-                            <Input className={style.inputBox} placeholder={preparePlaceholderText('first name')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Middle Name" name="contactNameMiddleName">
-                            <Input className={style.inputBox} placeholder={preparePlaceholderText('middle name')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Last/Surname" name="contactNameLastName">
-                            <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="E-mail" name="contactEmail">
-                            <Input className={style.inputBox} placeholder={preparePlaceholderText('email id')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Alternate Email ID" name="alternativeEmail">
-                            <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate email id')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                </Row>
+                    <Row gutter={[20, 0]}>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="Purpose of Contact" name="purposeOfContact">
+                                <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps}>
+                                    {contactPurpose?.map((item) => (
+                                        <Option value={item.key}>{item.name}</Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="Mobile Number" name="contactMobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
+                                <Input
+                                    maxLength={10}
+                                    onChange={handleNumberValidation}
+                                    placeholder={preparePlaceholderText('mobile number')}
+                                    allowClear
+                                    enterButton="Send OTP"
+                                    size="small"
+                                    suffix={
+                                        <>
+                                            <Button loading={mobileLoader} onClick={showModal} style={{ marginRight: '-3px', borderColor: '#d9d9d9', color: '#B5B5B6' }}>
+                                                Send OTP
+                                            </Button>{' '}
+                                            <ValidateMobileNumberModal {...modalProps} />
+                                        </>
+                                    }
+                                />
+                            </Form.Item>
+                        </Col>
 
-                <Divider />
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="Alternate Mobile Number" name="alternativeMobileNumber">
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate mobile number')} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="Relation" name="relationwithCustomer">
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('relation')} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="Gender" name="gender" rules={[validateRequiredSelectField('gender')]}>
+                                <Select placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
+                                    {gender?.map((item) => (
+                                        <Option value={item.key}>{item.name}</Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="Title" name="contactNameTitle" rules={[validateRequiredSelectField('title')]}>
+                                <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('title')} {...disabledProps}>
+                                    {title?.map((item) => (
+                                        <Option value={item?.key}>{item?.name}</Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="First Name" name="contactNameFirstName" rules={[validateRequiredInputField('First Name')]}>
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('first name')} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="Middle Name" name="contactNameMiddleName">
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('middle name')} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="Last/Surname" name="contactNameLastName">
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="E-mail" name="contactEmail">
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('email id')} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="Alternate Email ID" name="alternativeEmail">
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate email id')} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
 
-                <Row gutter={20}>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Facebook Link" name="facebook" rules={[validatFacebookProfileUrl('facebook')]}>
-                            <Input className={style.inputBox} placeholder={preparePlaceholderText('facebook link')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Twitter Link" name="twitter" rules={[validattwitterProfileUrl('twitter')]}>
-                            <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Instagram Link" name="instagram" rules={[validatInstagramProfileUrl('instagram')]}>
-                            <Input className={style.inputBox} placeholder={preparePlaceholderText('instagram link')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Youtube Channel" name="youtube" rules={[validatYoutubeProfileUrl('Pincode')]}>
-                            <Input className={style.inputBox} placeholder={preparePlaceholderText('youtube channel')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Team BHP Link" name="teamBhp">
-                            <Input className={style.inputBox} placeholder={preparePlaceholderText('team BHP link')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item valuePropName="checked" name="defaultaddress">
-                            <Checkbox>Mark As Default</Checkbox>
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row justify="left">
+                        <Divider />
+
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="Facebook Link" name="facebook" rules={[validatFacebookProfileUrl('facebook')]}>
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('facebook link')} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="Twitter Link" name="twitter" rules={[validattwitterProfileUrl('twitter')]}>
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="Instagram Link" name="instagram" rules={[validatInstagramProfileUrl('instagram')]}>
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('instagram link')} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="Youtube Channel" name="youtube" rules={[validatYoutubeProfileUrl('Pincode')]}>
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('youtube channel')} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="Team BHP Link" name="teamBhp">
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('team BHP link')} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item valuePropName="checked" name="defaultaddress">
+                                <Checkbox>Mark As Default</Checkbox>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row justify="left">
                     <Col xs={2} sm={2} md={2} lg={2} xl={2}>
                         <Button htmlType="submit" type="primary">
                             Save
@@ -201,6 +216,7 @@ const AddEditForm = (props) => {
                         </Button>
                     </Col>
                 </Row>
+                </Space>
             </Form>
         </>
     );

@@ -11,7 +11,7 @@ import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
 
 import styles from 'components/common/Common.module.css';
-import { ViewDetail } from './ViewCompanyCustomerDetails';
+import { ViewDetail } from './ViewIndivisualCustomerDetails';
 const { Text, Link } = Typography;
 
 const { Option } = Select;
@@ -19,7 +19,7 @@ const { TextArea } = Input;
 const { Panel } = Collapse;
 const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible } = props;
+    const { onCloseAction, isViewModeVisible, setIsViewModeVisible } = props;
     const [customerForm] = Form.useForm();
     const [keyAccountForm] = Form.useForm();
     const [authorityForm] = Form.useForm();
@@ -44,6 +44,9 @@ const AddEditFormMain = (props) => {
     const [handleActive, sethandleActive] = useState();
     const handleFormValueChange = () => {};
     const handleFormFieldChange = () => {};
+    const handleEdit = () => {
+        setIsViewModeVisible(false);
+    };
     const onFinish = () => {
         const customerFormValues = customerForm.getFieldsValue();
         const keyAccountFormValues = keyAccountForm.getFieldsValue();
@@ -109,6 +112,8 @@ const AddEditFormMain = (props) => {
         setactiveKey,
         onChange,
         styles,
+        onCloseAction,
+        handleEdit,
     };
 
     return (

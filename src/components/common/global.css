@@ -14,10 +14,7 @@
     border-bottom: 1px dashed #d9d9d9;
 }
 
-:global .ant-btn .ant-btn-loading-icon {
-    position: absolute;
-    left: 124px;
-}
+
 
 :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary),
 :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):hover {
@@ -246,11 +243,11 @@
     margin-top: -2px;
 }
 
-:global .ant-modal-mask,
+/* :global .ant-modal-mask,
 :global body {
     width: 100% !important;
     overflow: inherit !important;
-}
+} */
 
 :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-texts {
     font-weight: 600;
