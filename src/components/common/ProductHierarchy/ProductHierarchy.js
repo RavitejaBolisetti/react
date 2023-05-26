@@ -4,18 +4,17 @@ import { bindActionCreators } from 'redux';
 
 import { Button, Col, Form, Row, Collapse, Input, Empty, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { HierarchyFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { showGlobalNotification } from 'store/actions/notification';
-
 import { AddEditForm } from './AddEditForm';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ChangeHistory } from './ChangeHistory';
 import LeftPanel from '../LeftPanel';
-
+import TreeSelectField from '../TreeSelectField';
 import { FaHistory } from 'react-icons/fa';
 
 import { ViewProductDetail } from './ViewProductDetail';
@@ -266,6 +265,58 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         form.resetFields();
     };
 
+    let treeCodeId = '';
+    let treeCodeReadOnly = false;
+
+    if (formActionType === FROM_ACTION_TYPE.EDIT) {
+        treeCodeId = formData?.parntProdctId;
+        // setShowProductAttribute(true);
+    } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
+        treeCodeId = selectedTreeKey && selectedTreeKey[0];
+        treeCodeReadOnly = true;
+        //setShowProductAttribute(false);
+    } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
+        treeCodeReadOnly = true;
+        const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
+        treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
+        //setShowProductAttribute(false);
+    }
+
+    const treeData = [{
+        label: 'Node1',
+        value: '0-0',
+        key: '0-0',
+        children: [{
+          label: 'Child Node1',
+          value: '0-0-1',
+          key: '0-0-1',
+        }, {
+          label: 'Child Node2',
+          value: '0-0-2',
+          key: '0-0-2',
+        }],
+      }, {
+        label: 'Node2',
+        value: '0-1',
+        key: '0-1',
+      }];
+
+    console.log(selectedTreeKey[0],'Checking')
+
+    const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
+
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: treeData,
+        //  productHierarchyData,
+        treeDisabled: treeCodeReadOnly,
+        //|| isReadOnly,
+        selectedTreeSelectKey,
+        handleSelectTreeClick,
+        defaultValue: treeCodeId,
+        placeholder: preparePlaceholderSelect(''),
+    };
+
     const onFinish = (values) => {
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
@@ -380,9 +431,10 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                                         Hierarchy
                                     </Col>
                                     <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                        <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
+                                        {/* <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
                                             <Option value="hyr">Hyr</Option>
-                                        </Select>
+                                        </Select> */}
+                                        <TreeSelectField {...treeSelectFieldProps} />
                                     </Col>
                                     <Col xs={24} sm={24} md={9} lg={9} xl={9}>
                                         <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
