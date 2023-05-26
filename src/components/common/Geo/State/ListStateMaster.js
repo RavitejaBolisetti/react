@@ -311,7 +311,7 @@ export const ListStateMasterBase = (props) => {
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
-    const title = 'State';
+    const title = 'State Name';
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

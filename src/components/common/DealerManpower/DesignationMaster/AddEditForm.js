@@ -79,7 +79,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.roleCode} label="Role Description" name="roleCode" rules={[validateRequiredSelectField('Role Description')]}>
+                            <Form.Item initialValue={formData?.roleCode} label="Role Name" name="roleCode" rules={[validateRequiredSelectField('Role Name')]}>
                                 <Select placeholder={preparePlaceholderSelect('Role Description')} allowClear>
                                     {filteredRoleData?.map((item) => (
                                         <Option value={item?.roleCode}>{item?.roleDescription}</Option>
@@ -88,15 +88,15 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.designationCode} label="Designation Code" name="designationCode" rules={[validateRequiredInputField('Designation Code'), validationFieldLetter('Designation Code')]}>
+                            <Form.Item initialValue={formData?.designationCode} label="Designation Code" name="designationCode" rules={[validateRequiredInputField('Designation Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Designation Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Designation Description" initialValue={formData?.designationDescription} rules={[validateRequiredInputField('Designation Description'), validateLettersWithWhitespaces('Designation Description')]} name="designationDescription">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Designation Description')} maxLength={50} />
+                            <Form.Item label="Designation Name" initialValue={formData?.designationDescription} rules={[validateRequiredInputField('Designation Name')]} name="designationDescription">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Designation Name')} maxLength={50} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>

@@ -38,7 +38,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Division" name="code" initialValue={filterString?.code} rules={[validateRequiredSelectField('Division')]}>
+                    <Form.Item label="Division Name" name="code" initialValue={filterString?.code} rules={[validateRequiredSelectField('Division Name')]}>
                         <Select className={styles.headerSelectField} showSearch loading={!isDivisionDataLoaded} onChange={handleFilterChange('code')} placeholder="Select" allowClear >
                             {divisionData?.map((item) => (
                                 <Option value={item?.code}>{item?.divisionName}</Option>
@@ -48,7 +48,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Department" initialValue={filterString?.departmentCode}  name="departmentCode">
+                    <Form.Item label="Department Name" initialValue={filterString?.departmentCode}  name="departmentCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('departmentCode')}>
                             {filteredDepartmentData?.map((item) => (
                                 <Option value={item?.departmentCode}>{item?.departmentName}</Option>
@@ -60,7 +60,7 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Role" initialValue={filterString?.roleCode} name="roleCode">
+                    <Form.Item label="Role Name" initialValue={filterString?.roleCode} name="roleCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('roleCode')}>
                             {filteredRoleData?.map((item) => (
                                 <Option value={item?.roleCode}>{item?.roleDescription}</Option>
@@ -69,7 +69,7 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Designation" initialValue={filterString?.keyword} name="keyword" rules={[{ validator: searchValidator }]}>
+                    <Form.Item label="Designation Name" initialValue={filterString?.keyword} name="keyword" rules={[{ validator: searchValidator }]}>
                         <Input placeholder="Search" allowClear />
                     </Form.Item>
                 </Col>

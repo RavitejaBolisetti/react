@@ -365,7 +365,7 @@ export const ListRoleMasterBase = (props) => {
         }
     };
 
-    const title = 'Role Master';
+    const title = 'Role Name';
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

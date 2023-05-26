@@ -38,20 +38,20 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
                 <ViewDetail {...viewProps} />
             ) : (
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="Bay Type Code" name="code" rules={[validateRequiredInputField('Bay Type Code'), validationFieldLetter('Location Type Code')]}>
+                            <Form.Item initialValue={formData?.code} label="Bay Type Code" name="code" rules={[validateRequiredInputField('Bay Type Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Bay Type Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Bay Type Description" initialValue={formData?.name} rules={[validateRequiredInputField('Bay Type Description'), validateLettersWithWhitespaces('Location Type Description')]} name="name">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Bay Type Description')} maxLength={50} />
+                            <Form.Item label="Bay Type Name" initialValue={formData?.name} rules={[validateRequiredInputField('Bay Type Name')]} name="name">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Bay Type Name')} maxLength={50} />
                             </Form.Item>
                         </Col>
                     </Row>
