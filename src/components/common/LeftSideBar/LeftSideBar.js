@@ -117,9 +117,6 @@ const LeftSideBarMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
-    console.clear();
-    console.log('childredData', childredData);
-
     useEffect(() => {
         setOptions([]);
         if (filter?.length >= 3) {

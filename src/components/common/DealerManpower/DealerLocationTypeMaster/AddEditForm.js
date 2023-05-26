@@ -39,6 +39,7 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
+    console.log('applicableToData', applicableToData);
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
