@@ -10,7 +10,7 @@ export const ROUTING_UPDATE_PASSWORD = '/update-password';
 export const ROUTING_DASHBOARD = '/dashboard';
 
 export const ROUTING_COMMON = '/common/';
-export const ROUTING_MILE = '/mile/';
+export const ROUTING_MILE = '/admin/';
 export const ROUTING_COMMON_GEO = ROUTING_COMMON.concat('geo/');
 
 export const ROUTING_COMMON_GEO_COUNTRY = ROUTING_COMMON_GEO.concat('country');
