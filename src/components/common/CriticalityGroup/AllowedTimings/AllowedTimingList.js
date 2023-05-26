@@ -13,7 +13,7 @@ import styles from 'components/common/Common.module.css';
 
 const AllowedTimingList = (props) => {
     const { timeData, setTimeData, isAddTimeVisible, setIsAddTimeVisible } = props;
-    const { buttonData, setButtonData, formActionType, formData, setFormData, showGlobalNotification, forceUpdate, handleFormValueChange, handleFormFieldChange } = props;
+    const { buttonData, setButtonData, formActionType, formData, setFormData, showGlobalNotification, forceUpdate, handleFormValueChange, handleFormFieldChange, allowedTimingSave, setAllowedTimingSave } = props;
 
     const [timingForm] = Form.useForm();
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
@@ -45,10 +45,13 @@ const AllowedTimingList = (props) => {
         !overlap && setTimeData([...timeData, { timeSlotFrom, timeSlotTo, isDeleted }]);
         timingForm.resetFields();
         setFormData(...formData, timeData);
+        setAllowedTimingSave(true)
+
         forceUpdate();
     };
 
     const formProps = {
+        allowedTimingSave,
         isAddTimeVisible,
         form: timingForm,
         onFinish: onTimingFormFinish,
@@ -71,6 +74,7 @@ const AllowedTimingList = (props) => {
         onFinish: onTimingFormFinish,
         forceUpdate,
     };
+
     const showTime = timeData?.length > 0 || ((formActionType?.addMode || formActionType?.editMode) && isAddTimeVisible);
 
     return (
@@ -120,7 +124,8 @@ const AllowedTimingList = (props) => {
                 {!formActionType?.viewMode && isAddTimeVisible && <AddEditForm {...formProps} />}
                 {timeData?.length > 0 && (
                     <div className={styles.viewTiming}>
-                        <div className={styles.seprator}></div>
+                        <div className={(formActionType?.viewMode || formActionType?.editMode) ? styles.viewSeparator : styles.separator}>
+                        </div>
                         {timeData?.map((timing) => {
                             if (timing?.isDeleted === 'N') {
                                 return <AllowedTimingCard styles={{ marginBottom: '10px', backgroundColor: '#B5B5B6' }} {...cardProps} {...timing} />;
