@@ -62,7 +62,7 @@ const AddEditFormMain = (props) => {
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="State Code" name="code" rules={[validateRequiredInputField('State Code'), validationNumber('State Code')]}>
+                            <Form.Item initialValue={formData?.code} label="State Code" name="code" rules={[validateRequiredInputField('State Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
@@ -70,13 +70,13 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="State Name" initialValue={formData?.name} rules={[validateRequiredInputField('State Name'), validateLettersWithWhitespaces('State Name')]} name="name">
+                            <Form.Item label="State Name" initialValue={formData?.name} rules={[validateRequiredInputField('State Name')]} name="name">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Name')} maxLength={50} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.gstStateCode} label="GST State Code" name="gstStateCode" rules={[validateRequiredInputField('gst state code'), validationNumber('gst state code')]}>
+                            <Form.Item initialValue={formData?.gstStateCode} label="GST State Code" name="gstStateCode" rules={[validateRequiredInputField('gst state code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Code')} maxLength={2} />
                             </Form.Item>
                         </Col>

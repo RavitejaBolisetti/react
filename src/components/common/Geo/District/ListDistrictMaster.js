@@ -364,7 +364,7 @@ export const ListDistrictBase = (props) => {
         }
     };
 
-    const title = 'District';
+    const title = 'District Name';
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

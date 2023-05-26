@@ -45,13 +45,13 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.locationCode} label="Location Type Code" name="locationCode" rules={[validateRequiredInputField('Location Type Code'), validationFieldLetter('Location Type Code')]}>
+                            <Form.Item initialValue={formData?.locationCode} label="Location Type Code" name="locationCode" rules={[validateRequiredInputField('Location Type Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Location Type Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Location Type Description" initialValue={formData?.locationDescription} rules={[validateRequiredInputField('Location Type Description'), validateLettersWithWhitespaces('Location Type Description')]} name="locationDescription">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Location Type Description')} maxLength={50} />
+                            <Form.Item label="Location Type Name" initialValue={formData?.locationDescription} rules={[validateRequiredInputField('Location Type Name')]} name="locationDescription">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Location Type Name')} maxLength={50} />
                             </Form.Item>
                         </Col>
                     </Row>

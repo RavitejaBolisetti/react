@@ -222,7 +222,7 @@ export const ListDealerDivisionMasterBase = (props) => {
         setPage,
     };
 
-    const title = 'Division Master';
+    const title = 'Division Name';
 
     const advanceFilterResultProps = {
         advanceFilter: false,
