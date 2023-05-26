@@ -10,7 +10,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { filterFunction } from 'utils/filterFunction';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -26,7 +25,7 @@ const mapStateToProps = (state) => {
             DealerManpower: {
                 DealerLocationTypeMaster: { isLoaded: isDataLoaded = false, isLoading, data },
             },
-            ConfigurableParameterEditing: { isLoaded: isConfigDataAdded = false, isConfigLoading, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { isLoaded: isApplicableToDataLoaded = false, isApplicableToDataLoading, paramdata: applicableToData = [] },
         },
     } = state;
 
@@ -36,10 +35,10 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         data,
-        isConfigDataAdded,
-        isConfigLoading,
         isLoading,
-        typeData,
+        isApplicableToDataLoaded,
+        isApplicableToDataLoading,
+        applicableToData: applicableToData && applicableToData[PARAM_MASTER.DLR_APP_TYPE.id],
         moduleTitle,
     };
     return returnValue;
@@ -49,8 +48,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
+            fetchTypeList: configParamEditActions.fetchList,
+            listTypeShowLoading: configParamEditActions.listShowLoading,
 
             fetchList: dealerManpowerLocationTypeMasterDataActions.fetchList,
             saveData: dealerManpowerLocationTypeMasterDataActions.saveData,
@@ -63,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ListDealerLocationTypeMasterBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { isConfigDataAdded, isConfigLoading, listConfigShowLoading, fetchConfigList, typeData } = props;
+    const { isApplicableToDataLoaded, isApplicableToDataLoading, applicableToData, listTypeShowLoading, fetchTypeList } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -97,7 +96,8 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         if (userId && !isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
-        fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.DLR_APP_TYPE.id });
+
+        fetchTypeList({ setIsLoading: listTypeShowLoading, userId, parameterType: PARAM_MASTER.DLR_APP_TYPE.id });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded]);
 
@@ -145,9 +145,9 @@ export const ListDealerLocationTypeMasterBase = (props) => {
     };
 
     const handleResetFilter = (e) => {
-            setFilterString();
-            listFilterForm.resetFields();
-            setShowDataLoading(false);
+        setFilterString();
+        listFilterForm.resetFields();
+        setShowDataLoading(false);
     };
 
     const handleClearInSearch = (e) => {
@@ -210,7 +210,9 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         setFormActionType,
         onFinish,
         onFinishFailed,
-        typeData,
+        isApplicableToDataLoaded,
+        isApplicableToDataLoading,
+        applicableToData,
 
         isVisible: isFormVisible,
         onCloseAction,
@@ -247,7 +249,6 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         handleButtonClick,
         title,
     };
-
 
     return (
         <>

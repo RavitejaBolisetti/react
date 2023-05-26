@@ -15,6 +15,8 @@ const { Option } = Select;
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
 
+    const { isApplicableToDataLoading, applicableToData } = props;
+    console.log("🚀 ~ file: AddEditForm.js:19 ~ AddEditFormMain ~ applicableToData:", applicableToData)
     const { buttonData, setButtonData, handleButtonClick } = props;
 
     const handleFormValueChange = () => {
@@ -38,10 +40,6 @@ const AddEditFormMain = (props) => {
         setButtonData,
         handleButtonClick,
     };
-    const applicableToData = [
-        { key: 'showroom', name: 'Showroom' },
-        { key: 'workshop', name: 'Workshop' },
-    ];
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
