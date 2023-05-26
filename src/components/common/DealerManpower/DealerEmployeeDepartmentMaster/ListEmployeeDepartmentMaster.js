@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Dealer Employee Department';
+    const moduleTitle = 'Employee Department';
 
     let returnValue = {
         userId,
@@ -294,7 +294,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         }
     };
 
-    const title = 'Employee Department';
+    const title = 'Department Name';
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,
