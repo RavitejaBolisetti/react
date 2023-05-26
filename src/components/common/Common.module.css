@@ -1459,9 +1459,11 @@
 
 /* Customer Master Drawer */
 .customerMasterDrawer {
-    margin-top: -20px;
+    /* margin-top: -20px; */
     padding-left: 0 !important;
     padding-right: 0 !important;
+    margin-top: -20px !important;
+    margin-bottom: -20px !important;
 }
 
 .timelineBg {
@@ -1470,7 +1472,7 @@
     height: 100vh;
     overflow-y: overlay;
     position: sticky !important;
-    top: 0 !important;
+    top: -20px !important;
     z-index: 989;
 }
 
@@ -1560,6 +1562,7 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 24px;
+    margin-bottom: 0;
 }
 
 .timelineBg :global .ant-timeline .ant-timeline-item {
@@ -1584,6 +1587,7 @@
     margin-top: 6px;
     margin-left: 10px;
 } */
+
 
 .timelineBg :global .ant-timeline .ant-timeline-item:last-child .ant-timeline-item-label {
     color: #70c922;
@@ -1632,6 +1636,10 @@
     font-size: 14px;
     font-weight: 700;
     margin-inline-start: 4px;
+}
+
+.drawerCustomerMaster {
+    padding: 20px;
 }
 
 .userCircle {
@@ -1703,6 +1711,37 @@
     float: right !important;
     height: 30px !important;
     line-height: 16px;
+}
+
+.userCircle {
+    color: #ff3e5b !important;
+    margin-top: 3px !important;
+    margin-left: 3px !important;
+    height: 24px !important;
+    width: 24px !important;
+}
+
+.uploadContainer :global .ant-upload-drag-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+.uploadtext {
+    font-weight: 600 !important;
+    font-size: 14px !important;
+}
+
+.accordianContainer .uploadContainer {
+    margin-bottom: 40px;
+}
+
+.contactFormContainer :global .ant-upload-wrapper {
+    margin-bottom: 20px;
+}
+
+.contactFormContainer :global .ant-divider-horizontal {
+    margin: 0 0 8px 0;
 }
 
 @media (max-width: 768px) {
@@ -1861,31 +1900,4 @@
         margin-top: 12px;
         width: '100%';
     }
-}
-
-.userCircle {
-    color: #ff3e5b !important;
-    margin-top: 3px !important;
-    margin-left: 3px !important;
-    height: 24px !important;
-    width: 24px !important;
-}
-.uploadContainer :global .ant-upload-drag-container
-{
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-}
-.uploadtext {
-    font-weight: 600 !important;
-    font-size: 14px !important;
-}
-.accordianContainer .uploadContainer {
-  margin-bottom: 40px;
-}
-.contactFormContainer :global .ant-upload-wrapper {
- margin-bottom: 20px;
-}
-.contactFormContainer :global .ant-divider-horizontal{
-    margin: 0 0 8px 0;
 }
