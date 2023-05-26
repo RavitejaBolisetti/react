@@ -60,7 +60,6 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: manufacturerOrgHierarchyDataActions.listShowLoading,
             changeHistoryModelOpen: manufacturerOrgHierarchyDataActions.changeHistoryModelOpen,
             fetchChangeHistoryList: manufacturerOrgHierarchyDataActions.fetchChangeHistoryList,
-
             hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
