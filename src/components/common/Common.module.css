@@ -746,6 +746,9 @@
 .headerSearchField {
     vertical-align: middle;
     width: 100%;
+}
+
+.searchAndLabelAlign .headerSearchField {
     margin-left: 20px;
 }
 

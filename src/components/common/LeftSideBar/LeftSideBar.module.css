@@ -53,7 +53,8 @@
 }
 
 .leftMenuBox li.subMenuItem {
-    min-height: 32px;
+    /* min-height: 32px; */
+    min-height: 40px;
 }
 
 .leftMenuBox li.subMenuItem:hover {
@@ -186,7 +187,8 @@
 
 :global .ant-menu-inline .ant-menu-submenu-title,
 :global .ant-menu-inline .ant-menu-item {
-    height: auto;
+    /* height: auto; */
+    height: 32px;
     padding-inline: 0 !important;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -209,7 +211,8 @@
 }
 
 :global .ant-menu-inline .ant-menu-sub.ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title {
-    height: 32px !important;
+    /* height: 32px !important; */
+    height: 40px !important;
 }
 
 :global .ant-input-affix-wrapper {
@@ -459,9 +462,9 @@
 .leftMenuBox :global .ant-menu-light .ant-menu-item a,
 .leftMenuBox :global .ant-menu-light .ant-menu-item a:hover {
     color: inherit;
-    display: flex;
+    /* display: flex;
     white-space: pre-wrap;
-    line-height: 22px;
+    line-height: 22px; */
 }
 
 .leftMenuBox .searchField {
