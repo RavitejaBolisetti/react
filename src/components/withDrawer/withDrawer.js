@@ -14,11 +14,9 @@ export const withDrawer =
                 document.body.style.overflow = 'overlay';
             }
         }, [isVisible]);
-
-        // open={onOpenAction}
         return (
             <Drawer title={titleOverride || title} onOk={onOk} footer={footer} onClose={onCloseAction} width={width} open={isVisible} className={styles.myDrawerStyle} keyboard={false} maskClosable={false}>
-                {isVisible && <InputComponent {...props} />}
+                <InputComponent {...props} />
             </Drawer>
         );
     };
