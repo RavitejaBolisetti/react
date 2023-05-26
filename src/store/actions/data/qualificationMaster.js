@@ -1,103 +1,16 @@
-import { doLogout, unAuthenticateUser } from 'store/actions/auth';
-import { axiosAPICall } from 'utils/axiosAPICall';
-import { withAuthToken } from 'utils/withAuthToken';
+import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_QUALIFICATION_MASTER } from 'constants/routingApi';
-import { message } from 'antd';
 
-export const QUALIFICATION_DATA_LOADED = 'QUALIFICATION_DATA_LOADED';
-export const QUALIFICATION_SET_FORM_DATA = 'QUALIFICATION_SET_FORM_DATA';
-export const QUALIFICATION_SET_FORM_IS_VISIBLE = 'QUALIFICATION_SET_FORM_IS_VISIBLE';
-export const QUALIFICATION_DATA_SHOW_LOADING = 'QUALIFICATION_DATA_SHOW_LOADING';
-export const QUALIFICATION_DATA_ON_SAVE_SHOW_LOADING = 'QUALIFICATION_DATA_ON_SAVE_SHOW_LOADING';
+export const QUALIFICATION_LOADING_DATA = 'QUALIFICATION_LOADING_DATA';
+export const QUALIFICATION_LIST_RECIEVE_DATA = 'QUALIFICATION_LIST_RECIEVE_DATA';
+export const QUALIFICATION_SAVE_DATA = 'QUALIFICATION_SAVE_DATA';
 
-const receiveData = (data) => ({
-    type: QUALIFICATION_DATA_LOADED,
-    isLoaded: true,
-    data,
+const baseURL = BASE_URL_QUALIFICATION_MASTER;
+
+export const qualificationDataActions = dataActions({
+    baseURL,
+    moduleName: 'Qualification Master',
+    RECEIVE_DATA_LOADING_ACTION_CONSTANT: QUALIFICATION_LOADING_DATA,
+    RECEIVE_DATA_ACTION_CONSTANT: QUALIFICATION_LIST_RECIEVE_DATA,
+    SAVE_DATA_ACTION_CONSTANT: QUALIFICATION_SAVE_DATA,
 });
-
-const qualificationDataActions = {};
-
-const baseURLPath = BASE_URL_QUALIFICATION_MASTER;
-
-qualificationDataActions.listShowLoading = (isLoading) => ({
-    type: QUALIFICATION_DATA_SHOW_LOADING,
-    isLoading,
-});
-
-qualificationDataActions.onSaveShowLoading = (isLoading) => ({
-    type: QUALIFICATION_DATA_ON_SAVE_SHOW_LOADING,
-    isLoading,
-});
-
-qualificationDataActions.setFormData = (formData) => ({
-    type: QUALIFICATION_SET_FORM_DATA,
-    isFormDataLoaded: true,
-    formData,
-});
-
-qualificationDataActions.setFormVisible = (isFormVisible) => ({
-    type: QUALIFICATION_SET_FORM_IS_VISIBLE,
-    isFormVisible,
-});
-
-qualificationDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onSuccess: onSuccessAction, data } = params;
-
-    setIsLoading(true);
-    const onError = (errorMessage) => {
-        setIsLoading(false);
-        message.error(errorMessage)
-    };
-
-    const onSuccess = (res) => {
-        setIsLoading(false)
-        if (res?.data) {
-            onSuccessAction && onSuccessAction(res);
-            dispatch(receiveData(res?.data));
-        } else {
-            onError('Internal Error, Please try again');
-        }
-    };
-
-    const apiCallParams = {
-        data,
-        method: 'get',
-        url: baseURLPath,
-        token,
-        accessToken,
-        userId,
-        onSuccess,
-        onError,
-        onTimeout: () => onError('Request timed out, Please try again'),
-        onUnAuthenticated: () => dispatch(doLogout()),
-        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
-        postRequest: () => setIsLoading(false),
-    };
-
-    axiosAPICall(apiCallParams);
-});
-
-qualificationDataActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { onError, data, onSuccess, setIsLoading } = params;
-    setIsLoading(true);
-    
-    const apiCallParams = {
-        data,
-        method: 'post',
-        url: baseURLPath,
-        token,
-        accessToken,
-        userId,
-        onSuccess,
-        onError,
-        onTimeout: () => onError('Request timed out, Please try again'),
-        onUnAuthenticated: () => dispatch(doLogout()),
-        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
-        postRequest: () => console.log('successs'),
-    };
-
-    axiosAPICall(apiCallParams);
-});
-
-export { qualificationDataActions };
