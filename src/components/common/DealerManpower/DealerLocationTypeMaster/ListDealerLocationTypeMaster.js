@@ -220,7 +220,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         setPage,
     };
 
-    const title = 'Location Type Master';
+    const title = 'Location Type Name';
 
     const advanceFilterResultProps = {
         advanceFilter: false,
@@ -235,6 +235,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         handleButtonClick,
         title,
     };
+
 
     return (
         <>

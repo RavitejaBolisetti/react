@@ -14,9 +14,14 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
 
         tblPrepareColumns({
-            title: 'Location Type Description',
+            title: 'Location Type Name',
             dataIndex: 'locationDescription',
             width: '30%',
+        }),
+        tblPrepareColumns({
+            title: 'Applicable To',
+            dataIndex: 'applicableTo',
+            width: '15%',
         }),
 
         tblStatusColumn({ styles, width: '20%' }),
