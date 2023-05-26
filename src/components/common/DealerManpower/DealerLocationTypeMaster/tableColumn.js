@@ -14,7 +14,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
 
         tblPrepareColumns({
-            title: 'Location Type Description',
+            title: 'Location Type Name',
             dataIndex: 'locationDescription',
             width: '30%',
         }),

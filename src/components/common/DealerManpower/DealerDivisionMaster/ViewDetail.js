@@ -13,7 +13,7 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Division Code">{formData?.code}</Descriptions.Item>
-                    <Descriptions.Item label="Division Description">{formData?.divisionName}</Descriptions.Item>
+                    <Descriptions.Item label="Division Name">{formData?.divisionName}</Descriptions.Item>
                     <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
                 </Descriptions>
             </>
