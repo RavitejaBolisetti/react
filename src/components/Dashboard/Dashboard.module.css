@@ -3,13 +3,19 @@
 }
 
 .dashboardContainer :global .ant-card .ant-card-head-title {
-    font-size: 1rem;
+    font-size: 16px;
     float: left;
-    font-weight: 500;
+    font-weight: 400;
+    line-height: 24px;
 }
 
 .dashboardContainer :global .ant-card .ant-card-head {
     min-height: 50px;
+    background-color: #E6E6E6;
+}
+.dashboardContainer .svgIcon {
+    vertical-align: sub;
+    margin-right: 10px;
 }
 
 /* .dashboardContainer :global .ant-card.ant-card-body {
@@ -31,7 +37,8 @@
 .dashboardContainer :global .ant-card .ant-card-body {
     padding: 10px 5px;
     border-radius: 0 0 8px 8px;
-    height: 270px;
+    height: 219px;
+    /* height: calc(100vh - 600px); */
 }
 
 .dashboardPageHeading {
@@ -45,9 +52,9 @@
 }
 
 .dashboardContainer :global .ant-card-bordered {
-    -webkit-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08);
+    /* -webkit-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08);
     -moz-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08);
-    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08);
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08); */
 }
 
 /* .dashboardContainer :global .ant-carousel .slick-dots-bottom{
@@ -117,13 +124,13 @@
   border:1px solid red;
 } */
 .dashboardboxContHeight {
-    height: 175px;
+    height: 143px;
 }
 
 .dashboardGraph .dashboardGraphBox {
     width: 100%;
     overflow: hidden;
-    height: 196px;
+    height: 169px;
 }
 
 .dashboardGraph .dashboardGraphBox .graphBoxfirstSec,
@@ -131,36 +138,36 @@
 .dashboardGraph .dashboardGraphBox .graphBoxthirdSec,
 .dashboardGraph .dashboardGraphBox .graphBoxforthSec {
     width: 50%;
-    height: 85px;
+    height: 82px;
     float: left;
     overflow: hidden;
-    border: 1px solid #f4f4f4;
+    border: 1px dashed #f4f4f4;
     text-align: center;
     font-size: 45px;
     padding: 11px 0;
 }
 
 .dashboardGraph .dashboardGraphBox .graphBoxfirstSec {
-    border-left: 0px solid #f4f4f4;
-    border-top: 0px solid #f4f4f4;
+    border-left: 0px dashed #f4f4f4;
+    border-top: 0px dashed #f4f4f4;
     color: #007bff;
 }
 
 .dashboardGraph .dashboardGraphBox .graphBoxSecoundSec {
-    border-right: 0px solid #f4f4f4;
-    border-top: 0px solid #f4f4f4;
+    border-right: 0px dashed #f4f4f4;
+    border-top: 0px dashed #f4f4f4;
     color: #ea3434;
 }
 
 .dashboardGraph .dashboardGraphBox .graphBoxthirdSec {
     border-left: 0px solid #f4f4f4;
-    border-bottom: 0px solid #f4f4f4;
+    border-top: 0px solid #f4f4f4;
     color: #ffc107;
 }
 
 .dashboardGraph .dashboardGraphBox .graphBoxforthSec {
-    border-right: 0px solid #f4f4f4;
-    border-bottom: 0px solid #f4f4f4;
+    border-right: 0px dashed #f4f4f4;
+    border-top: 0px dashed #f4f4f4;
     color: #28a745;
 }
 
@@ -172,15 +179,20 @@
 .dashboardList {
     margin: 0px;
     padding: 0px;
-    list-style: decimal-leading-zero;
-    width: 90%;
+    /* list-style: decimal-leading-zero; */
+    width: 100%;
 }
 
 .dashboardList li {
-    margin: 0 40px;
-    padding: 5px 0px 5px 0px;
+    /* margin: 0 40px; */
+    padding: 5px 0px 5px 20px;
     width: 90%;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 30px;
+    border-bottom: 1px solid #E6E6E6;
 }
+
 
 .badge {
     display: inline-block;
@@ -202,7 +214,7 @@
 .scrollbar {
     margin: 0px;
     float: left;
-    height: 250px;
+    height: 200px;
     width: 100%;
     overflow-y: scroll;
 }
@@ -233,15 +245,15 @@
 
 .newsCarsulalContaner {
     margin: 0px;
-    padding: 20px;
+    padding: 15px 20px 20px;
 }
 
 .newsCarsulalContaner h4 {
     margin: 0px;
     padding: 0px;
     font-size: 0.95rem;
-    text-align: center;
-    color: #ea3434;
+    text-align: left;
+    color: #0B0B0C;
 }
 
 .newsCarsulalContaner .textContaner {
@@ -261,13 +273,13 @@
 }
 
 .birthContainer {
-    min-height: 200px;
+    min-height: 180px;
     padding: 10px 0;
 }
 
 .birthContainer .birthdayImgcontaner {
     margin: 0 10px;
-    width: 25%;
+    width: 10%;
     float: left;
 }
 
@@ -275,11 +287,17 @@
     margin: 0 10px;
     width: 60%;
     float: left;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #FF3E5B;
 }
 
 .birthdayTxtcontaner .birthdayName {
-    color: #ea3434;
+    font-weight: 700;
     font-size: 14px;
+    line-height: 24px;
+    color: #342C2C;
 }
 
 .birthdayTxtcontaner .birthdayCal {

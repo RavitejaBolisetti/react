@@ -63,6 +63,7 @@
 
 :global .ant-btn-default {
     background-color: transparent;
+    box-shadow: none;
 }
 
 :global .ant-btn-default.ant-btn-dangerous:disabled {
@@ -114,11 +115,6 @@
 :global .ant-form-vertical .ant-form-item-label {
     margin: 0;
     padding: 0px;
-}
-
-:global .ant-tree .ant-tree-list-holder-inner {
-    align-items: flex-start;
-    margin-bottom: 50px;
 }
 
 :global .ant-modal .ant-modal-content {
@@ -205,11 +201,6 @@
 :global .ant-form-vertical .ant-form-item-label {
     margin: 0;
     padding: 0px;
-}
-
-:global .ant-tree .ant-tree-list-holder-inner {
-    align-items: flex-start;
-    margin-bottom: 50px;
 }
 
 :global .ant-switch .ant-switch-inner {

@@ -3,9 +3,9 @@
     /* padding: 0.2em; */
     /* padding: 4px; */
     width: 100%;
-    border-radius: 3px;
+    /* border-radius: 3px; */
     /* border-top-left-radius: 0; */
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     white-space: nowrap;
     /* margin-top: 4px; */
 }
@@ -23,14 +23,14 @@
     /* box-shadow: none; */
 }
 
-.treeViewContainer {
+/* .treeViewContainer {
     clear: both;
     margin-bottom: 10px;
-}
+} */
 
 .treemenu {
-    margin-bottom: 10px;
-    margin-top: 10px;
+    /* margin-bottom: 10px; */
+    /* margin-top: 10px; */
     /* padding-left: 25px; */
     padding-left: 0px;
     padding-bottom: 0px;
@@ -68,11 +68,12 @@
 .scrollTreeData {
     width: 100%;
     overflow: auto;
-    max-height: 66vh;
+    max-height: 60.3vh;
+    padding: 16px;
 }
 
 .scrollTreeData::-webkit-scrollbar-track {
-    background-color: #D9D9D9;
+    background-color: #f4f4f4;
 }
 
 .scrollTreeData::-webkit-scrollbar {
@@ -81,13 +82,13 @@
     background-color: #F4F4F4;
 }
 
-.scrollTreeData:hover::-webkit-scrollbar {
-    width: 10px !important;
+.scrollTreeData::-webkit-scrollbar-thumb {
+    background-color: rgba(52, 44, 44, 0.34);
+    border-radius: 10px;
 }
 
-.scrollTreeData::-webkit-scrollbar-thumb {
-    background-color: #342C2C;
-    border-radius: 10px;
+.scrollTreeData:hover::-webkit-scrollbar {
+    width: 8px !important;
 }
 
 /* .modalView{
@@ -126,6 +127,7 @@
     padding: 0px 14px;
     padding-bottom: 0px;
 }
+
 :global .ant-tree-show-line .ant-tree-switcher-line-icon {
     vertical-align: -0.28em;
 }
@@ -138,10 +140,11 @@
     padding: 0px 17px 0px 4px;
     font-weight: 500;
 }
+
 /* :global .ant-tree .ant-tree-node-content-wrapper:hover, :global .ant-tree .ant-tree-checkbox+span:hover{
     background-color: transparent;
     color: #FF3E5B;} */
-    
+
 :global .ant-tree .ant-tree-node-content-wrapper,
 :global .ant-tree .ant-tree-checkbox+span {
     position: relative;
@@ -164,7 +167,7 @@
 
 :global .ant-tree .ant-tree-node-content-wrapper:hover .site-tree-search-value,
 :global .ant-tree .ant-tree-checkbox+span:hover .site-tree-search-value {
-    color: #ffffff !important;
+    color: #ff3e5b !important;
 }
 
 :global .ant-tree .ant-tree-treenode {
@@ -172,7 +175,7 @@
     align-items: flex-start;
     padding: 0 0 4px 0;
     outline: none;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 }
 
 :global .ant-tree .ant-tree-switcher {
@@ -181,7 +184,7 @@
     align-self: stretch;
     width: 24px;
     margin: 0;
-    line-height: 20px;
+    line-height: 24px;
     text-align: center;
     cursor: pointer;
     user-select: none;
@@ -197,6 +200,7 @@
         height: calc(100vh - 350px);
         /* border:1px solid red; */
     }
+
     .panelVisible {
         height: calc(100vh - 368px);
     }

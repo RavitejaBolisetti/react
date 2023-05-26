@@ -6,6 +6,7 @@ import { AiFillDashboard } from 'react-icons/ai';
 import { BsFillBarChartFill } from 'react-icons/bs';
 import { BiLineChart } from 'react-icons/bi';
 import { RiFileShield2Line } from 'react-icons/ri';
+import { TbSpeakerphone } from 'react-icons/tb';
 import { FaChartPie, FaChartArea, FaClock, FaNewspaper, FaChalkboard, FaBirthdayCake } from 'react-icons/fa';
 import { convertDateTime } from 'utils/formatDateTime';
 import styles from './Dashboard.module.css';
@@ -54,7 +55,7 @@ const DashboardBase = ({ props }) => {
                     <Card
                         title={
                             <>
-                                <AiFillDashboard /> Dashboard
+                                <AiFillDashboard size={21} className={styles.svgIcon}/> Dashboard
                             </>
                         }
                         className={styles.mb10}
@@ -76,7 +77,7 @@ const DashboardBase = ({ props }) => {
                             </div>
 
                             <div className={styles.buttonHolder}>
-                                <Button className="btn btn-outline centerbtn boxShdwNon mrl15" danger>
+                                <Button className=" mrl15" danger type="primary" >
                                     View Dashboard
                                 </Button>
                             </div>
@@ -87,7 +88,7 @@ const DashboardBase = ({ props }) => {
                     <Card
                         title={
                             <>
-                                <FaClock /> Action Items
+                                <FaClock size={21} className={styles.svgIcon}/> Action Items
                             </>
                         }
                         className={styles.mb10}
@@ -139,7 +140,7 @@ const DashboardBase = ({ props }) => {
                     <Card
                         title={
                             <>
-                                <FaNewspaper /> News
+                                <TbSpeakerphone size={21} className={styles.svgIcon}/> News
                             </>
                         }
                         className={styles.newsCard}
@@ -151,7 +152,7 @@ const DashboardBase = ({ props }) => {
                                     <div className="textContaner">Anand Mahindra continues to amuse the netizens with his posts. This time he has highlighted car price hikes from 50 years ago. </div>
                                 </div>
                                 <div className={styles.buttonHolder}>
-                                    <Button danger className="btn btn-outline centerbtn boxShdwNon mrl15">
+                                    <Button className=" mrl15" danger type="primary">
                                         View Dashboard
                                     </Button>
                                 </div>
@@ -163,7 +164,7 @@ const DashboardBase = ({ props }) => {
                                     <div className="textContaner">Homegrown SUV specialist Mahindra revealed five concept electric SUVs at the brand's European design studio in August last year. </div>
                                 </div>
                                 <div className={styles.buttonHolder}>
-                                    <Button danger className="btn btn-outline centerbtn boxShdwNon mrl15">
+                                    <Button className="mrl15" danger type="primary">
                                         View Dashboard
                                     </Button>
                                 </div>
@@ -175,7 +176,7 @@ const DashboardBase = ({ props }) => {
                                     <div className="textContaner">Mahindra SUV sales up 66% in Jan 2023: Scorpio-N, Thar, XUV700 drive growthMahindra & Mahindra Ltd today announced that its overall auto sales for the month of January 2023 stood at 64,335 vehicles.</div>
                                 </div>
                                 <div className={styles.buttonHolder}>
-                                    <Button danger className="btn btn-outline centerbtn boxShdwNon mrl15">
+                                    <Button className=" mrl15" danger type="primary">
                                         View Dashboard
                                     </Button>
                                 </div>
@@ -187,7 +188,7 @@ const DashboardBase = ({ props }) => {
                     <Card
                         title={
                             <>
-                                <FaChalkboard /> Upcoming Trainings
+                                <FaChalkboard size={21} className={styles.svgIcon}/> Upcoming Trainings
                             </>
                         }
                         className={styles.mb10}
@@ -201,7 +202,7 @@ const DashboardBase = ({ props }) => {
                     <Card
                         title={
                             <>
-                                <FaBirthdayCake /> Birthday Calendar
+                                <FaBirthdayCake size={21} className={styles.svgIcon}/> Birthday Calendar
                             </>
                         }
                         className={styles.birthCalendarCard}
@@ -307,7 +308,7 @@ const DashboardBase = ({ props }) => {
                     <Card
                         title={
                             <>
-                                <RiFileShield2Line /> Knowledge Center
+                                <RiFileShield2Line size={21} className={styles.svgIcon}/> Knowledge Center
                             </>
                         }
                         className={styles.mb10}

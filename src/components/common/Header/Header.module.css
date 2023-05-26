@@ -154,7 +154,8 @@
 
 .headerRight .navbarNav .floatLeft .navLink {
     color: #342c2c;
-    padding: 5px;
+    padding-left: 10px;
+    padding-right: 14px;
 }
 
 .headerRight .navbarNav .floatLeft .navLink:hover svg {
@@ -192,11 +193,6 @@
 .navbarExpand {
     flex-flow: row nowrap;
     justify-content: flex-start;
-}
-
-.navbarExpand .navbarNav .navLink {
-    padding-left: 10px;
-    padding-right: 14px;
 }
 
 .navLink :global .ant-badge .ant-badge-count {
