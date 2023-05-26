@@ -57,7 +57,7 @@ const AddEditFormMain = (props) => {
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Location Type Name" initialValue={formData?.locationDescription} rules={[validateRequiredInputField('location type name'), validateLettersWithWhitespaces('Location Type Description')]} name="locationDescription">
+                            <Form.Item label="Location Type Name" initialValue={formData?.locationDescription} rules={[validateRequiredInputField('location type name')]} name="locationDescription">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('location type name')} maxLength={50} />
                             </Form.Item>
                         </Col>
