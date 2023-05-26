@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
-import { Button, Col, Form, Row, Collapse, Input, Empty, Select } from 'antd';
+import { Button, Col, Form, Row, Input, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { HierarchyFormButton } from 'components/common/Button';
@@ -16,14 +15,9 @@ import { ChangeHistory } from './ChangeHistory';
 import LeftPanel from '../LeftPanel';
 import TreeSelectField from '../TreeSelectField';
 import { FaHistory } from 'react-icons/fa';
-
 import { ViewProductDetail } from './ViewProductDetail';
-
 import { LANGUAGE_EN } from 'language/en';
-
-const { Panel } = Collapse;
 const { Search } = Input;
-const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
@@ -68,16 +62,11 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: productHierarchyDataActions.saveData,
             listShowLoading: productHierarchyDataActions.listShowLoading,
             changeHistoryModelOpen: productHierarchyDataActions.changeHistoryModelOpen,
-
             cardBtnDisableAction: productHierarchyDataActions.cardBtnDisableAction,
-            skulist: productHierarchyDataActions.skulist,
-
             hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
             showGlobalNotification,
-            // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
-
             fetchListHierarchyAttributeName: productHierarchyDataActions.fetchAttributeNameList,
             listAttibuteShowLoading: productHierarchyDataActions.listShowLoading,
         },
@@ -115,6 +104,12 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setButtonData({ ...defaultBtnVisiblity });
+    };
+
     useEffect(() => {
         if (userId) {
             hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Product Hierarchy' });
@@ -124,7 +119,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, userId, onCloseAction});
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded, userId]);
@@ -146,25 +141,17 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedId, userId]);
 
-    useEffect(() => {
-        if (!isDataLoaded && userId) {
-            skulist({ setIsLoading: listShowLoading, userId, skuId: '5c182130-bf57-4f9b-9ccc-1ab865a502be' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, isDataAttributeLoaded, userId]);
+    // useEffect(() => {
+    //     if (!isDataLoaded && userId) {
+    //         skulist({ setIsLoading: listShowLoading, userId, skuId: '5c182130-bf57-4f9b-9ccc-1ab865a502be' });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isDataLoaded, isDataAttributeLoaded, userId]);
 
     useEffect(() => {
         setCollapsableView(!isChildAllowed);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isChildAllowed]);
-
-    
-    // if (formActionType === FROM_ACTION_TYPE.EDIT) {
-    //     setShowProductAttribute(true);
-    // } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
-    //     setShowProductAttribute(false);
-    // } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-    // }
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -282,33 +269,11 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         //setShowProductAttribute(false);
     }
 
-    const treeData = [{
-        label: 'Node1',
-        value: '0-0',
-        key: '0-0',
-        children: [{
-          label: 'Child Node1',
-          value: '0-0-1',
-          key: '0-0-1',
-        }, {
-          label: 'Child Node2',
-          value: '0-0-2',
-          key: '0-0-2',
-        }],
-      }, {
-        label: 'Node2',
-        value: '0-1',
-        key: '0-1',
-      }];
-
-    console.log(selectedTreeKey[0],'Checking')
-
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
 
     const treeSelectFieldProps = {
         treeFieldNames,
-        treeData: treeData,
-        //  productHierarchyData,
+        treeData: productHierarchyData,
         treeDisabled: treeCodeReadOnly,
         //|| isReadOnly,
         selectedTreeSelectKey,
@@ -417,7 +382,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
 
-    console.log(skuAttributes,'skuAttributesskuAttributesskuAttributes')
+    console.log(selectedTreeData,'selectedTreeDataChecking')
 
     return (
         <>

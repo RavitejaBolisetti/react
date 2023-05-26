@@ -20,7 +20,7 @@ export default function TreeSelectField({ treeFieldNames, treeData, defaultValue
                 }}
                 placeholder={placeholder}
                 allowClear
-                //fieldNames={treeFieldNames}
+                fieldNames={treeFieldNames}
                 onChange={handleSelectTreeClick}
                 treeData={treeData}
                 treeNodeFilterProp={treeFieldNames?.label }
