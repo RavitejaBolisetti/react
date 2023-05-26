@@ -51,6 +51,12 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+        className: styles.headerSelectField,
+    };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
@@ -60,7 +66,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.divisionCode} label="Division Name" name="divisionCode" rules={[validateRequiredSelectField('Division Name')]}>
-                                <Select placeholder={preparePlaceholderSelect('Division Name')} allowClear onChange={handleDivisionChange}>
+                                <Select {...selectProps} placeholder={preparePlaceholderSelect('Division Name')} allowClear onChange={handleDivisionChange}>
                                     {divisionData?.map((item) => (
                                         <Option value={item?.code}>{item?.divisionName}</Option>
                                     ))}
@@ -69,7 +75,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.departmentCode} label="Department Name" name="departmentCode" rules={[validateRequiredSelectField('Department Name')]}>
-                                <Select placeholder={preparePlaceholderSelect('Department Name')} allowClear onChange={handleDepartmentChange}>
+                                <Select {...selectProps} placeholder={preparePlaceholderSelect('Department Name')} allowClear onChange={handleDepartmentChange}>
                                     {filteredDepartmentData?.map((item) => (
                                         <Option value={item?.departmentCode}>{item?.departmentName}</Option>
                                     ))}
@@ -80,7 +86,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.roleCode} label="Role Name" name="roleCode" rules={[validateRequiredSelectField('Role Name')]}>
-                                <Select placeholder={preparePlaceholderSelect('Role Description')} allowClear>
+                                <Select {...selectProps} placeholder={preparePlaceholderSelect('Role Description')} allowClear>
                                     {filteredRoleData?.map((item) => (
                                         <Option value={item?.roleCode}>{item?.roleDescription}</Option>
                                     ))}
