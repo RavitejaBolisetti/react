@@ -5,7 +5,7 @@ import styles from 'components/common/Common.module.css';
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
-        tblSerialNumberColumn({ page, pageSize, fixed: 'left' }),
+        tblSerialNumberColumn({ page, pageSize }),
 
         tblPrepareColumns({
             title: 'Role Code',
@@ -32,7 +32,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
 
         tblStatusColumn({ styles, width: '10%' }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%', fixed: 'right' })
+        tblActionColumn({ handleButtonClick, styles, width: '8%' })
     );
 
     return tableColumn;

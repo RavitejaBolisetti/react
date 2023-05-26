@@ -42,6 +42,12 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+        className: styles.headerSelectField,
+    };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
@@ -51,7 +57,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.divisionCode} label="Division Name" name="divisionCode" rules={[validateRequiredSelectField('Division Name')]}>
-                                <Select placeholder={preparePlaceholderSelect('Division')} loading={isDivisionLoading} onChange={handleDivisionChange}>
+                                <Select {...selectProps} placeholder={preparePlaceholderSelect('Division')} loading={isDivisionLoading} onChange={handleDivisionChange}>
                                     {divisionData?.map((item) => (
                                         <Option value={item?.code}>{item?.divisionName}</Option>
                                     ))}

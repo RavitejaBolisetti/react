@@ -16,7 +16,7 @@ export const withDrawer =
         }, [isVisible]);
         return (
             <Drawer title={titleOverride || title} onOk={onOk} footer={footer} onClose={onCloseAction} width={width} open={isVisible} className={styles.myDrawerStyle} keyboard={false} maskClosable={false}>
-                <InputComponent {...props} />
+                {isVisible && <InputComponent {...props} />}
             </Drawer>
         );
     };
