@@ -11,6 +11,8 @@ export const ROUTING_DASHBOARD = '/dashboard';
 
 export const ROUTING_COMMON = '/common/';
 export const ROUTING_MILE = '/mile/';
+export const ROUTING_DEALER=ROUTING_COMMON.concat('dealer')
+
 export const ROUTING_COMMON_GEO = ROUTING_COMMON.concat('geo/');
 
 export const ROUTING_COMMON_GEO_COUNTRY = ROUTING_COMMON_GEO.concat('country');
@@ -27,6 +29,7 @@ export const ROUTING_COMMON_CRITICALITY_GROUP = ROUTING_COMMON.concat('criticali
 export const ROUTING_COMMON_ROLE_MANAGEMENT = ROUTING_COMMON.concat('role-management');
 export const ROUTING_COMMON_USER_MANAGEMENT = ROUTING_COMMON.concat('user-management');
 export const ROUTING_COMMON_CUSTOMER_MASTER = ROUTING_COMMON.concat('customer-master');
+export const ROUTING_COMMON_TERM_CONDITION = ROUTING_DEALER.concat('/term-condition');
 
 export const ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER = ROUTING_COMMON.concat('hierarchy-attribute-master');
 export const ROUTING_COMMON_BRANCH_DEALER_MAPPING = ROUTING_COMMON.concat('branch-dealer-mapping');

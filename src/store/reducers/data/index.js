@@ -16,6 +16,7 @@ import { UserManagementManufacturer } from './UserManagementManufacturer';
 import { Geo } from './geo';
 import { DealerManpower } from './dealerManpower';
 import { PartyMaster } from './partyMaster';
+import { TermCondition } from './termsConditions'
 
 export const data = combineReducers({
     Menu,
@@ -35,4 +36,5 @@ export const data = combineReducers({
     Geo,
     DealerManpower,
     PartyMaster,
+    TermCondition
 });
