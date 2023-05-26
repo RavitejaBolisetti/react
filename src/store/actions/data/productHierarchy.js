@@ -80,7 +80,7 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acce
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_PRODUCT_HIERARCHY + (id ? '?skuId=' + id : ''),
+        url: BASE_URL_PRODUCT_HIERARCHY + (id ? '?mfgOrgSk=' + id : ''),
         token,
         accessToken,
         userId,

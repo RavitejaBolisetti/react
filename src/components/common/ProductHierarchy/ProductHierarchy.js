@@ -125,6 +125,13 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     }, [isDataLoaded, isDataAttributeLoaded, userId]);
 
     useEffect(() => {
+        if (isDataLoaded && userId) {
+            fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: selectedTreeSelectKey});
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, isDataAttributeLoaded, userId, selectedTreeSelectKey]);
+
+    useEffect(() => {
         if (userId) {
             fetchListHierarchyAttributeName({  userId, setIsLoading: listShowLoading });
         }
@@ -136,17 +143,9 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             setFormData([]);
             setSelectedTreeData([]);
             setSKUAttributes([]);
-            // skulist({ setIsLoading: listShowLoading, userId, skuId: '04089707-3708-4c2f-b8f2-eac5657e3653' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedId, userId]);
-
-    // useEffect(() => {
-    //     if (!isDataLoaded && userId) {
-    //         skulist({ setIsLoading: listShowLoading, userId, skuId: '5c182130-bf57-4f9b-9ccc-1ab865a502be' });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [isDataLoaded, isDataAttributeLoaded, userId]);
 
     useEffect(() => {
         setCollapsableView(!isChildAllowed);
@@ -176,6 +175,9 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     };
 
     const flatternData = generateList(productHierarchyData);
+
+    // console.log(productHierarchyData,'Raw Data')
+    // console.log(flatternData,'Flat Data')
 
     const formModifiedData = (selectedData) => {
         const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.id === selectedData?.attributeKey)?.hierarchyAttribueName;
@@ -282,6 +284,9 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         placeholder: preparePlaceholderSelect(''),
     };
 
+    console.log(selectedTreeSelectKey,'1'
+    )
+
     const onFinish = (values) => {
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
@@ -381,8 +386,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
-
-    console.log(selectedTreeData,'selectedTreeDataChecking')
 
     return (
         <>
