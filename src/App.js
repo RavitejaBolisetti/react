@@ -65,6 +65,7 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => 
                         token: {
                             colorPrimary: '#ff3e5b',
                             colorBgContainer: '#ffffff',
+                            fontFamily: 'Lato',
                         },
                         components: {
                             Button: {

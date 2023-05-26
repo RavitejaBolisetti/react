@@ -19,7 +19,7 @@ export const validationFieldLetterAndNumber = (fieldName) => ({
 });
 
 export const validationFieldLetter = (fieldName) => ({
-    pattern: /^[A-Za-z0-9]*$/,
+    pattern: /^[A-Za-z]*$/,
     message: 'Please use only letters in ' + fieldName,
 });
 
@@ -137,9 +137,6 @@ export const valueBetween0to100 = (value, fieldName) => {
 };
 
 export const duplicateProductValidator = (value, dataList) => {
-    console.log(value, 'changeValue');
-    console.log(dataList, 'arrayList');
-
     let status = false;
     if (dataList?.length > 0) {
         for (let i = 0; i < dataList?.length; i++) {
@@ -152,6 +149,8 @@ export const duplicateProductValidator = (value, dataList) => {
                 return Promise.resolve('');
             }
         }
+    } else {
+        return Promise.resolve('');
     }
     return Promise.resolve('');
 };
@@ -163,7 +162,8 @@ export const searchValidator = (_, value) => {
 };
 
 export const searchValidatorPincode = (_, value) => {
-    if (value === '' || (value && value.trim().length >= 6)) {
+    const pattern = /^\d{6}(?:\s*,\s*\d{6})*$/;
+    if (!value || pattern.test(value)) {
         return Promise.resolve();
     }
     return Promise.reject(new Error('Please enter atleast 6 character to search'));

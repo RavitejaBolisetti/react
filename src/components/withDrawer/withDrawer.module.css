@@ -36,6 +36,10 @@
     right: -24px;
 }
 
+.myDrawerStyle :global .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
+    background-color: #ff3e5b !important;
+}
+
 @media screen and (max-width: 1199px) {
     .myDrawerStyle :global .ant-drawer-title {
         font-size: 18px;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Switch, Select, Checkbox } from 'antd';
 
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter, validateLettersWithWhitespaces } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -15,8 +15,8 @@ const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
 
     const { buttonData, setButtonData, handleButtonClick, divisionData, departmentData, roleData } = props;
-    const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
-    const [filteredRoleData, setFilteredRoletData] = useState([]);
+    const [filteredDepartmentData, setFilteredDepartmentData] = useState(departmentData?.filter((i) => i?.divisionCode === formData?.divisionCode));
+    const [filteredRoleData, setFilteredRoletData] = useState(roleData?.filter((i) => i?.departmentCode === formData?.departmentCode));
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -29,7 +29,7 @@ const AddEditFormMain = (props) => {
     const handleDivisionChange = (division) => {
         form.setFieldValue('departmentCode', undefined);
         form.setFieldValue('roleCode', undefined);
-
+        setFilteredRoletData(undefined);
         setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === division));
     };
     const handleDepartmentChange = (department) => {
@@ -88,14 +88,14 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.designationCode} label="Designation Code" name="designationCode" rules={[validateRequiredInputField('Designation Code'), validationFieldLetter('Location Type Code')]}>
+                            <Form.Item initialValue={formData?.designationCode} label="Designation Code" name="designationCode" rules={[validateRequiredInputField('Designation Code'), validationFieldLetter('Designation Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Designation Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Designation Description" initialValue={formData?.designationDescription} rules={[validateRequiredInputField('Designation Description'), validationFieldLetter('Location Type Description')]} name="designationDescription">
+                            <Form.Item label="Designation Description" initialValue={formData?.designationDescription} rules={[validateRequiredInputField('Designation Description'), validateLettersWithWhitespaces('Designation Description')]} name="designationDescription">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Designation Description')} maxLength={50} />
                             </Form.Item>
                         </Col>

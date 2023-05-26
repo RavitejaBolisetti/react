@@ -2,7 +2,6 @@ import React from 'react';
 import { Descriptions } from 'antd';
 
 const ViewCriticalityGroupMain = (props) => {
-    const { cardProps } = props;
     const { formData, style } = props;
 
     const viewProps = {
@@ -18,8 +17,8 @@ const ViewCriticalityGroupMain = (props) => {
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Criticality Group Id">{formData?.criticalityGroupCode}</Descriptions.Item>
                     <Descriptions.Item label="Criticality Group Name">{formData?.criticalityGroupName}</Descriptions.Item>
-                    <Descriptions.Item label="Default Group">{formData?.criticalityDefaultGroup ? <div className={style.activeText}>Active</div> : <div className={style.inactiveText}>InActive</div>}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.activeIndicator ? <div className={style.activeText}>Active</div> : <div className={style.inactiveText}>InActive</div>}</Descriptions.Item>
+                    <Descriptions.Item label="Default Group">{formData?.criticalityDefaultGroup ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{formData?.activeIndicator ? 'Active' : 'Inactive'}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>

@@ -15,8 +15,13 @@ export const ViewDetail = ({ formData, styles, parameterType }) => {
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="PIN Code">{formData?.pinCode}</Descriptions.Item>
-                    <Descriptions.Item label="PIN Category">{formData?.pinCategory}</Descriptions.Item>
-                    <Descriptions.Item label="Locality">{formData?.localityName}</Descriptions.Item>
+                    <Descriptions.Item label="PIN Category">{formData?.pinCategory || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="Locality">{formData?.localityName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="Tehsil">{formData?.tehsilName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="City">{formData?.cityName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="District">{formData?.districtName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="State">{formData?.stateName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="Country">{formData?.countryName || 'NA'}</Descriptions.Item>
                     <Descriptions.Item label="Within 50 Km of GPO">{formData?.withIn50KmFromGpo ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
                     <Descriptions.Item label="Approval Status">{formData?.approvalStatus ? 'Approved' : 'Not Approved'}</Descriptions.Item>
