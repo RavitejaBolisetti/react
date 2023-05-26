@@ -53,7 +53,7 @@
 }
 
 .leftMenuBox li.subMenuItem {
-    min-height: 40px;
+    min-height: 32px;
 }
 
 .leftMenuBox li.subMenuItem:hover {
@@ -169,7 +169,7 @@
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical {
     border-inline-end: none;
     overflow-y: overlay;
-    max-height: 72vh;
+    max-height: 70vh;
     padding: 0px 14px;
 }
 
@@ -186,7 +186,7 @@
 
 :global .ant-menu-inline .ant-menu-submenu-title,
 :global .ant-menu-inline .ant-menu-item {
-    height: 32px;
+    height: auto;
     padding-inline: 0 !important;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -460,6 +460,8 @@
 .leftMenuBox :global .ant-menu-light .ant-menu-item a:hover {
     color: inherit;
     display: flex;
+    white-space: pre-wrap;
+    line-height: 22px;
 }
 
 .leftMenuBox .searchField {
