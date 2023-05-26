@@ -220,7 +220,7 @@ export const BayTypeMasterBase = (props) => {
         setPage,
     };
 
-    const title = 'Bay Type Master';
+    const title = 'Bay Type Name';
 
     const advanceFilterResultProps = {
         advanceFilter: false,

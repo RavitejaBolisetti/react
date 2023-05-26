@@ -21,12 +21,12 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Applicable To',
             dataIndex: 'applicableTo',
-            width: '15%',
+            width: '20%',
         }),
 
-        tblStatusColumn({ styles, width: '20%' }),
+        tblStatusColumn({ styles, width: '15%' }),
 
-        tblActionColumn({ handleButtonClick, styles })
+        tblActionColumn({ handleButtonClick, styles, width: '15%' })
     );
 
     return tableColumn;

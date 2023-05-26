@@ -90,8 +90,8 @@ const LeftSideBarMain = (props) => {
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
     const onMenuClick = (id = 'Sales') => {
-        const element = document.getElementById(id)?.closest('ul');
-        element?.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+        // const element = document.getElementById(id)?.closest('ul');
+        // element?.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
     };
 
     useEffect(() => {
@@ -117,6 +117,9 @@ const LeftSideBarMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
+    console.clear();
+    console.log('childredData', childredData);
+
     useEffect(() => {
         setOptions([]);
         if (filter?.length >= 3) {
@@ -129,7 +132,7 @@ const LeftSideBarMain = (props) => {
                 }
                 return undefined;
             });
-            setOptions(menuItem.filter((i) => i));
+            menuItem && setOptions(menuItem.filter((i) => i));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Input, Form, Row, Switch, Select } from 'antd';
 
-import { validateRequiredInputField, validationFieldLetter, validateLettersWithWhitespaces, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -14,9 +14,7 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
-
-    const { isApplicableToDataLoading, applicableToData } = props;
-    console.log("🚀 ~ file: AddEditForm.js:19 ~ AddEditFormMain ~ applicableToData:", applicableToData)
+    const { applicableToData } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
 
     const handleFormValueChange = () => {

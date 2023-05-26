@@ -14,9 +14,9 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Division Name">{formData?.divisionName}</Descriptions.Item>
                     <Descriptions.Item label="Department Name">{formData?.departmentName}</Descriptions.Item>
-                    <Descriptions.Item label="Role Description">{formData?.roleDescription}</Descriptions.Item>
+                    <Descriptions.Item label="Role Name">{formData?.roleDescription}</Descriptions.Item>
                     <Descriptions.Item label="Designation Code">{formData?.designationCode}</Descriptions.Item>
-                    <Descriptions.Item label="Designation Description">{formData?.designationDescription}</Descriptions.Item>
+                    <Descriptions.Item label="Designation Name">{formData?.designationDescription}</Descriptions.Item>
                     <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
                     <Descriptions.Item label="Common">{formData?.isCommonIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label="Manpower Required">{formData?.isManpowerIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
