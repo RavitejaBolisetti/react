@@ -132,6 +132,8 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
 
     const handleTypeClick = (type) => {
+        setSelectedTreeKey([]);
+
         setIsActive((current) => !current);
         setMenuType(type);
     };
@@ -290,7 +292,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
                     <Spin spinning={isLoading}>
                         <div className={styles.contentHeaderBackground}>
                             <Row gutter={20}>
-                                <Col xs={18} sm={18} md={18} lg={18} xl={18} className={styles.searchAndLabelAlign}>
+                                <Col xs={16} sm={16} md={16} lg={16} xl={16} className={styles.searchAndLabelAlign}>
                                     <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                         <Button className={styles.marR5} type={menuType === 'W' ? 'primary' : 'link'} danger onClick={() => handleTypeClick('W')}>
                                             Web
