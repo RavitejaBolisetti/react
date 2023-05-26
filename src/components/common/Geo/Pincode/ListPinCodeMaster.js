@@ -133,6 +133,10 @@ const ListPinCodeMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [searchData, setSearchdata] = useState([]);
 
+    const [tehsilCodeValue, setTehsilCodeValue] = useState();
+    const [cityCodeValue, setCityCodeValue] = useState();
+    console.log('🚀 ~ file: ListPinCodeMaster.js:138 ~ ListPinCodeMasterBase ~ cityCodeValue:', cityCodeValue, tehsilCodeValue);
+
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
@@ -151,6 +155,7 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const onErrorAction = (message) => {
+        resetData();
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
@@ -258,7 +263,7 @@ const ListPinCodeMasterBase = (props) => {
             title: 'City',
             value: filterString?.cityCode,
             name: filteredCityData?.find((i) => i?.code === filterString?.cityCode)?.name,
-            canRemove: true,
+            canRemove: false,
         },
         {
             key: 'pincode',
@@ -317,6 +322,14 @@ const ListPinCodeMasterBase = (props) => {
                 setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
                 advanceFilterForm.setFieldsValue({ cityCode: undefined });
                 advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            }
+
+            if (name === 'cityCode') {
+                setCityCodeValue(filterValue);
+            }
+
+            if (name === 'tehsilCode') {
+                setTehsilCodeValue(filterValue);
             }
         };
 
@@ -397,6 +410,9 @@ const ListPinCodeMasterBase = (props) => {
 
         setButtonData,
         handleButtonClick,
+
+        tehsilCodeValue,
+        cityCodeValue,
     };
 
     const dataMessage = (
@@ -413,20 +429,25 @@ const ListPinCodeMasterBase = (props) => {
 
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
-        setFilteredDistrictData(undefined);
-        setFilteredCityData(undefined);
-        setFilteredTehsilData(undefined);
+        // setFilteredDistrictData(undefined);
+        // setFilteredCityData(undefined);
+        // setFilteredTehsilData(undefined);
+        filterString?.tehsilCode && setTehsilCodeValue();
+        filterString?.cityCode && setCityCodeValue();
         advanceFilterForm.resetFields();
     };
 
     const handleResetFilter = () => {
         resetData();
         setFilterString();
-        advanceFilterForm.resetFields();
+        setTehsilCodeValue();
+        setCityCodeValue();
+
         setShowDataLoading(false);
         setFilteredDistrictData(undefined);
         setFilteredCityData(undefined);
         setFilteredTehsilData(undefined);
+        advanceFilterForm.resetFields();
     };
 
     const advanceFilterProps = {
@@ -453,6 +474,9 @@ const ListPinCodeMasterBase = (props) => {
         filterString,
         setFilterString,
         setAdvanceSearchVisible,
+
+        tehsilCodeValue,
+        cityCodeValue,
     };
 
     const onSearchHandle = (value) => {
@@ -463,8 +487,7 @@ const ListPinCodeMasterBase = (props) => {
             } else {
                 value ? setFilterString({ advanceFilter: true, pincode: value }) : handleResetFilter();
             }
-            listFilterForm.setFieldsValue({ pincode: undefined,code:undefined });
-            
+            listFilterForm.setFieldsValue({ pincode: undefined, code: undefined });
         }
     };
 
@@ -488,7 +511,7 @@ const ListPinCodeMasterBase = (props) => {
         } else if (key === 'pincode') {
             const { [key]: names, ...rest } = filterString;
             advanceFilterForm.setFieldsValue({ keyword: undefined, pincode: undefined });
-            
+
             if (!filterString?.countryCode && !filterString?.stateCode && !filterString?.districtCode && !filterString?.tehsilCode) {
                 setFilterString();
             } else {
