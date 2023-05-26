@@ -198,6 +198,10 @@
     width: 100%;
 }
 
+:global .ant-picker-dropdown .ant-picker-time-panel-column::after {
+    height: 0px;
+}
+
 :global .ant-form-vertical .ant-form-item-label {
     margin: 0;
     padding: 0px;
