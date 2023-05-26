@@ -11,4 +11,9 @@ export const PARAM_MASTER = {
         id: 'CTRL_GRP',
         title: 'CTRL_GRP',
     },
+    DLR_APP_TYPE: {
+        id: 'DLR_APP_TYPE',
+        title: 'DLR_APP_TYPE',
+    },
+    
 };
