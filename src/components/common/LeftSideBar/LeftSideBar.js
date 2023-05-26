@@ -74,20 +74,26 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const LeftSideBarMain = (props) => {
-    const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, childredData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed,setSelectKeyToScroll, selectedMenudId } = props;
+    const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, childredData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed, setSelectKeyToScroll, selectedMenudId } = props;
 
     const location = useLocation();
     const navigate = useNavigate();
     const pagePath = location.pathname;
 
     const menuId = flatternData?.find((i) => i.link === pagePath)?.menuId;
+    // const parentMenuId = flatternData?.find((i) => i.link === pagePath)?.parentMenuId;
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
 
     const [options, setOptions] = useState([]);
     const [openKeys, setOpenKeys] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState([]);
-    const [selectedMenuId, setSelectedMenuId] = useState(menuId);
+    const [selectedMenuId, setSelectedMenuId] = useState();
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+    const onMenuClick = (id = 'Sales') => {
+        const element = document.getElementById(id)?.closest('ul');
+        element?.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+    };
 
     useEffect(() => {
         if (menuId) {
@@ -129,23 +135,22 @@ const LeftSideBarMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
-   
-    useEffect(() => {
-        if (selectedMenudId && isDataLoaded) {
-           
-            setTimeout(() => {
-            //     const element1 = document.getElementById(selectedMenudId)?.closest('ul')?.closest('ul');
-            //  console.log("element1",element1)
 
-                const element = document.getElementById(selectedMenudId)?.closest('ul');
-            //  console.log("element",element)
-                element?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
-                // setSelectKeyToScroll('');
-                // eslint-disable-next-line react-hooks/exhaustive-deps
-            }, 400);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, selectedMenudId, openKeys]);
+    // useEffect(() => {
+    //     if (selectedMenudId && isDataLoaded) {
+    //         setTimeout(() => {
+    //             //     const element1 = document.getElementById(selectedMenudId)?.closest('ul')?.closest('ul');
+    //             //  console.log("element1",element1)
+
+    //             const element = document.getElementById(selectedMenudId)?.closest('ul');
+    //             //  console.log("element",element)
+    //             element?.scrollIntoView({ behavior: 'smooth' });
+    //             // setSelectKeyToScroll('');
+    //             // eslint-disable-next-line react-hooks/exhaustive-deps
+    //         }, 400);
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isDataLoaded, selectedMenudId, openKeys]);
 
     const handleThemeChange = () => {
         const changeTheme = theme === 'dark' ? 'light' : 'dark';
@@ -167,7 +172,7 @@ const LeftSideBarMain = (props) => {
             const isParentMenu = parentMenuId === 'Web';
 
             return subMenu?.length ? (
-                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <SubMenu onClick={onMenuClick(menuId)} key={menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
@@ -179,16 +184,14 @@ const LeftSideBarMain = (props) => {
     };
 
     const onOpenChange = (keys) => {
-        if(keys?.length){
-            setSelectKeyToScroll(keys[keys.length-1]);
+        if (keys?.length) {
+            setSelectKeyToScroll(keys[keys.length - 1]);
         }
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
         if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
             setOpenKeys(keys);
-
         } else {
             setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-
         }
     };
 
