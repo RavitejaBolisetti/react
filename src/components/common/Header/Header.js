@@ -306,7 +306,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                     {/* <span className={styles.userServiceArea}>{formatPhoneNumber(mobileNo)}</span> */}
                                                 </div>
                                                 <div className={`${styles.webmenuDropDownArrow} ${styles.dropdownArrow}`}>
-                                                    <Dropdown menu={{ items: userSettingMenu }}>
+                                                    <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
                                                         <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
                                                             <Space>
                                                                 <DownOutlined />
