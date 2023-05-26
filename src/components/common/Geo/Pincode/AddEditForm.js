@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Switch } from 'antd';
 
 import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
@@ -23,16 +23,6 @@ const AddEditFormMain = (props) => {
     const [filteredDistrictData, setFilteredDistrictData] = useState(districtData?.filter((i) => i?.stateCode === formData?.stateCode));
     const [filteredCityData, setFilteredCityData] = useState(cityData?.filter((i) => i?.districtCode === formData?.districtCode));
     const [filteredTehsilData, setFilteredTehsilData] = useState(tehsilData?.filter((i) => i?.districtCode === formData?.districtCode));
-
-    useEffect(() => {
-        form.resetFields();
-
-        if (formData?.stateName) {
-            handleStateChange(formData?.stateCode);
-            handleDistrictChange(formData?.districtCode);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -132,11 +122,9 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="City" initialValue={formData?.cityName} name="cityCode" rules={[validateRequiredSelectField('City')]}>
-                                <Select {...selectProps} placeholder={preparePlaceholderSelect('City')}>
-                                    {filteredCityData?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
-                                    ))}
+                            <Form.Item label="City" initialValue={formData?.cityCode} name="cityCode" rules={[validateRequiredSelectField('City')]}>
+                                <Select placeholder={preparePlaceholderSelect('City')} {...selectProps}>
+                                    {filteredCityData?.map((item) => console.log(item?.code, typeof item?.code) || <Option value={item?.code}>{item?.name}</Option>)}
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -172,7 +160,7 @@ const AddEditFormMain = (props) => {
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.localityName} label="Locality" name="localityName">
+                            <Form.Item initialValue={formData?.localityName || ''} label="Locality" name="localityName">
                                 <Input placeholder={preparePlaceholderText('Locality')} maxLength={50} className={styles.inputBox} />
                             </Form.Item>
                         </Col>
