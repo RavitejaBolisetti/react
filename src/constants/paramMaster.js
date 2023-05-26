@@ -15,5 +15,8 @@ export const PARAM_MASTER = {
         id: 'DLR_APP_TYPE',
         title: 'DLR_APP_TYPE',
     },
-    
+    GEO_TEH_CAT: {
+        id: 'GEO_TEH_CAT',
+        title: 'GEO_TEH_CAT',
+    },
 };

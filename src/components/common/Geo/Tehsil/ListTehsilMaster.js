@@ -27,6 +27,8 @@ import { RxCross2 } from 'react-icons/rx';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { validateAtLeastThreeChar } from 'utils/validation';
+import { PARAM_MASTER } from 'constants/paramMaster';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -41,6 +43,7 @@ const mapStateToProps = (state) => {
                 District: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading = false, data: districtData = [] },
                 Tehsil: { isLoaded: isDataLoaded = false, isLoading, data = [] },
             },
+            ConfigurableParameterEditing: { isLoaded: isTehsilCategoryDataLoaded = false, isTehsilCategoryDataLoading, paramdata: tehsilCategoryData = [] },
         },
     } = state;
 
@@ -62,6 +65,10 @@ const mapStateToProps = (state) => {
         isStateLoading,
         isDistrictDataLoaded,
         districtData,
+        isTehsilCategoryDataLoaded,
+        isTehsilCategoryDataLoading,
+        tehsilCategoryData: tehsilCategoryData && tehsilCategoryData[PARAM_MASTER.GEO_TEH_CAT.id],
+        
         data,
         stateData,
         isDataLoaded,
@@ -80,6 +87,8 @@ const mapDispatchToProps = (dispatch) => ({
             listStateShowLoading: geoStateDataActions.listShowLoading,
             fetchDistrictList: geoDistrictDataActions.fetchList,
             listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
+            fetchTehsilCategoryList: configParamEditActions.fetchList,
+            listTehsilCategoryShowLoading: configParamEditActions.listShowLoading,
             fetchList: geoTehsilDataActions.fetchList,
             saveData: geoTehsilDataActions.saveData,
             listShowLoading: geoTehsilDataActions.listShowLoading,
@@ -93,7 +102,8 @@ const mapDispatchToProps = (dispatch) => ({
 export const ListTehsilBase = (props) => {
     const { data, saveData, fetchList, userId, resetData, isDataLoaded, isLoading, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
-
+    const { isTehsilCategoryDataLoaded, isTehsilCategoryDataLoading, tehsilCategoryData, listTehsilCategoryShowLoading, fetchTehsilCategoryList } = props;
+    
     const { isStateDataLoaded, stateData, listStateShowLoading, fetchStateList } = props;
     const { isDistrictDataLoaded, districtData, listDistrictShowLoading, fetchDistrictList } = props;
 
@@ -146,6 +156,7 @@ export const ListTehsilBase = (props) => {
                 fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             }
         }
+        fetchTehsilCategoryList({ setIsLoading: listTehsilCategoryShowLoading, userId, parameterType: PARAM_MASTER.GEO_TEH_CAT.id });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataCountryLoaded, isStateDataLoaded, isDataLoaded]);
 
@@ -331,6 +342,11 @@ export const ListTehsilBase = (props) => {
         districtData,
         stateData,
         data,
+
+
+        isTehsilCategoryDataLoading,
+        isTehsilCategoryDataLoaded,
+        tehsilCategoryData,
 
         ADD_ACTION,
         EDIT_ACTION,

@@ -14,6 +14,7 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
+    const { tehsilCategoryData } = props;
 
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
@@ -141,27 +142,11 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.tehsilCategoryCode} label="Tehsil Category" name="tehsilCategoryCode">
-                                <Select
-                                    showSearch
-                                    placeholder={preparePlaceholderSelect('Tehsil Category')}
-                                    allowClear
-                                    optionFilterProp="children"
-                                    {...selectProps}
-                                    options={[
-                                        {
-                                            value: 'CAT001',
-                                            label: 'Category 1',
-                                        },
-                                        {
-                                            value: 'CAT002',
-                                            label: 'Category 2',
-                                        },
-                                        {
-                                            value: 'CAT003',
-                                            label: 'Category 3',
-                                        },
-                                    ]}
-                                />
+                            <Select className={styles.headerSelectField} placeholder={preparePlaceholderSelect('tehsil category')} allowClear>
+                                    {tehsilCategoryData?.map((item) => (
+                                        <Option value={item?.key}>{item?.name}</Option>
+                                    ))}
+                                </Select>
                             </Form.Item>
                         </Col>
                     </Row>
