@@ -11,7 +11,7 @@ import ProductDetail from './ProductDetail';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute, skuAttributes } = props;
+    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute, skuAttributes, treeSelectProps } = props;
     const { selectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { form, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
@@ -26,28 +26,28 @@ const AddEditFormMain = (props) => {
 
     const disabledProps = { disabled: isReadOnly };
 
-    let treeCodeId = '';
-    let treeCodeReadOnly = false;
+    // let treeCodeId = '';
+    // let treeCodeReadOnly = false;
 
-    if (formActionType === FROM_ACTION_TYPE.EDIT) {
-        treeCodeId = formData?.parntProdctId;
-        // setShowProductAttribute(true);
-    } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
-        treeCodeId = selectedTreeKey && selectedTreeKey[0];
-        treeCodeReadOnly = true;
-        //setShowProductAttribute(false);
-    } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-        treeCodeReadOnly = true;
-        const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-        treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
-        //setShowProductAttribute(false);
-    }
+    // if (formActionType === FROM_ACTION_TYPE.EDIT) {
+    //     treeCodeId = formData?.parntProdctId;
+    //     // setShowProductAttribute(true);
+    // } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
+    //     treeCodeId = selectedTreeKey && selectedTreeKey[0];
+    //     treeCodeReadOnly = true;
+    //     //setShowProductAttribute(false);
+    // } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
+    //     treeCodeReadOnly = true;
+    //     const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
+    //     treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
+    //     //setShowProductAttribute(false);
+    // }
 
-    useEffect(() => {
-        setSelectedTreeSelectKey(treeCodeId);
+    // useEffect(() => {
+    //     setSelectedTreeSelectKey(treeCodeId);
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [treeCodeId]);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [treeCodeId]);
 
     useEffect(() => {
         if (userId) {
@@ -66,15 +66,17 @@ const AddEditFormMain = (props) => {
         }
     }, [formActionType, selectedTreeData?.skuAttributes, setShowProductAttribute]);
 
-    const treeSelectFieldProps = {
-        treeFieldNames,
-        treeData: productHierarchyData,
-        treeDisabled: treeCodeReadOnly || isReadOnly,
-        selectedTreeSelectKey,
-        handleSelectTreeClick,
-        defaultValue: treeCodeId,
-        placeholder: preparePlaceholderSelect('parent'),
-    };
+    // const treeSelectFieldProps = {
+    //     treeFieldNames,
+    //     treeData: productHierarchyData,
+    //     treeDisabled: isReadOnly,
+    //     // treeCodeReadOnly ||
+    //     selectedTreeSelectKey,
+    //     handleSelectTreeClick,
+    //     //defaultValue: ,
+    //     //treeCodeId
+    //     placeholder: preparePlaceholderSelect('parent'),
+    // };
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -124,8 +126,8 @@ const AddEditFormMain = (props) => {
         isDataAttributeLoaded,
         disabledProps,
         attributeData,
-        treeCodeId,
-        treeSelectFieldProps,
+       // treeCodeId,
+       treeSelectProps,
         formActionType,
         onCloseAction,
         isFormBtnActive,

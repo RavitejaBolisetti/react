@@ -15,7 +15,7 @@ export const ViewProductDetailMain = ({ form, setSKUAttributes, isAddBtnDisabled
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 
-     //console.log('selectedTreeData', selectedTreeData, selectedTreeData?.skuAttributes);
+     console.log('selectedTreeData', selectedTreeData);
 
     const [view, setView] = useState(true);
 

@@ -9,8 +9,8 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const ProductDetail = (props) => {
-    const { mainFrom, handleFormValueChange, handleFormFieldChange, onMainFormFinish, onFinishFailed, formData, handleAttributeChange, handleProductchange, isDataAttributeLoaded, disabledProps, attributeData, treeCodeId, treeSelectFieldProps, formActionType, onCloseAction, isFormBtnActive, isReadOnly } = props;
-
+    const { mainFrom, handleFormValueChange, handleFormFieldChange, onMainFormFinish, onFinishFailed, formData, handleAttributeChange, handleProductchange, isDataAttributeLoaded, disabledProps, attributeData, treeCodeId, treeSelectProps, formActionType, onCloseAction, isFormBtnActive, isReadOnly } = props;
+    console.log(treeSelectProps,'view')
     return (
         // <Fragment>
             // <Form autoComplete="off" form={mainFrom} layout="vertical"   onFinish={onMainFormFinish} onFinishFailed={onFinishFailed}>
@@ -28,7 +28,7 @@ const ProductDetail = (props) => {
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
                         <Form.Item initialValue={treeCodeId} label="Parent" name="parntProdctId">
-                            <TreeSelectField {...treeSelectFieldProps} />
+                            <TreeSelectField {...treeSelectProps} />
                         </Form.Item>
                     </Col>
                 </Row>
