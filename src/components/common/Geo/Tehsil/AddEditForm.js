@@ -154,7 +154,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Included On" name="includedOn" {...dateInitialValue} rules={[validateRequiredInputField('Included On')]}>
-                                <DatePicker format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect('Included On Date')} className={styles.inputBox} />
+                                <DatePicker disabled format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect('Included On Date')} className={styles.inputBox} />
                             </Form.Item>
                         </Col>
 
