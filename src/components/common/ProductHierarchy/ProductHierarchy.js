@@ -150,7 +150,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     // }, [userId]);
     useEffect(() => {
         manufacturerOrgHierarchyData?.map((element) => {
-            console.log(disableParent(element));
+           // console.log(disableParent(element));
         });
     }, [manufacturerOrgHierarchyData]);
 
@@ -282,16 +282,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         placeholder: preparePlaceholderSelect(''),
     };
 
-    const treeSelectProps = {
-        treeFieldNames : treeProdFieldNames,
-        treeData: productHierarchyData,
-        //treeDisabled: treeCodeReadOnly,
-        //|| isReadOnly,
-        selectedTreeSelectKey,
-        handleSelectTreeClick,
-        //defaultValue: treeCodeId,
-        placeholder: preparePlaceholderSelect(''),
-    };
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
@@ -350,7 +340,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const formProps = {
         form,
-        treeSelectProps,
+        //treeSelectProps,
         isChecked,
         setIsChecked,
         setSelectedTreeKey,
