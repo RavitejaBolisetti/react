@@ -266,11 +266,10 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, 
             onError,
             onSuccess,
         };
-        console.log(requestData, 'final');
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {};
+    const onFinishFailed = (errorInfo) => { };
 
     const myProps = {
         isTreeViewVisible,

@@ -45,7 +45,6 @@ const AddEditFormMain = (props) => {
     const cardProps = {
         form,
         style,
-
         showGlobalNotification,
         setTimesegmentLengthTracker,
         forceUpdate,
