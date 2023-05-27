@@ -13,7 +13,7 @@ import styles from 'components/common/Common.module.css';
 
 const AllowedTimingCard = (props) => {
     const { id } = props;
-    const { buttonData, setButtonData, formActionType, setIsAddTimeVisible, timeData, setTimeData, timeSlotFrom, timeSlotTo, showGlobalNotification } = props;
+    const { deletedTime, setDeletedTime, buttonData, setButtonData, formActionType, setIsAddTimeVisible, timeData, setTimeData, timeSlotFrom, timeSlotTo, showGlobalNotification } = props;
 
     const handleDeleteAction = (val) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: LANGUAGE_EN.GENERAL.ALLOWED_TIMING_DELETED.MESSAGE, placement: 'bottomRight' });
@@ -33,6 +33,8 @@ const AllowedTimingCard = (props) => {
             const index = prev?.findIndex((el) => el?.id === val);
             setIsAddTimeVisible(true);
             newList[index].isDeleted = 'Y';
+            setDeletedTime([...deletedTime, newList[index]]);
+            newList.splice(index, 1);
             return [...newList];
         });
     };
