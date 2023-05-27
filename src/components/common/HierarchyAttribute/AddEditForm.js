@@ -8,7 +8,7 @@ import { ViewHierarchyAttribute } from './ViewHierarchyAttribute';
 
 import style from 'components/common/Common.module.css';
 
-const AddEditFormMain = ({ isViewModeVisible, codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave }) => {
+const AddEditFormMain = ({ isViewModeVisible, codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave, onCloseAction }) => {
     const [form] = Form.useForm();
     const disabledProps = { disabled: isReadOnly };
     const codeDisabledProp = { disabled: codeIsReadOnly };
@@ -19,13 +19,13 @@ const AddEditFormMain = ({ isViewModeVisible, codeIsReadOnly, editRow, setEditRo
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [editRow]);
 
-    const onClose = () => {
-        setShowDrawer(false);
+    // const onClose = () => {
+    //     setShowDrawer(false);
 
-        form.resetFields();
-        setIsReadOnly(false);
-        setFormBtnDisable(false);
-    };
+    //     form.resetFields();
+    //     setIsReadOnly(false);
+    //     setFormBtnDisable(false);
+    // };
     const handlesaveandnew = () => {
         setTimeout(() => {
             form.resetFields();
@@ -110,7 +110,7 @@ const AddEditFormMain = ({ isViewModeVisible, codeIsReadOnly, editRow, setEditRo
                 )}
                 <Row gutter={20} className={style.formFooter}>
                     <Col xs={24} sm={6} md={6} lg={6} xl={6} className={style.footerBtnLeft}>
-                        <Button danger onClick={onClose}>
+                        <Button danger onClick={()=> onCloseAction()}>
                             {formActionType === 'view' ? 'Close' : 'Cancel'}
                         </Button>
                     </Col>
