@@ -88,6 +88,9 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
+    const onSuccessAction = (res) => {
+        RefershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    };
     useEffect(() => {
         if (userId) {
             if (!isDataLoaded) {
@@ -109,8 +112,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
                 setSearchdata([]);
             } else if (RefershData) {
                 setRefershData((prev) => !prev);
-                hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Data refresh', placement: 'topRight' });
+                hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy, onSuccessAction });
                 setSearchdata(detailData?.hierarchyAttribute);
             } else if (detailData?.hierarchyAttribute) {
                 if (filterString) {
@@ -132,8 +134,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     useEffect(() => {
         if (!selectedHierarchy || !RefershData) return;
         setRefershData((prev) => !prev);
-        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'data refresh', placement: 'topRight' });
+        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy, onSuccessAction });
 
         if (filterString) {
             const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
