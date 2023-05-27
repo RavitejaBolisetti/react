@@ -340,8 +340,6 @@ const ListPinCodeMasterBase = (props) => {
         let data = { ...values, localityCode: Math.floor(Math.random() * 899999 + 100000) };
         const onSuccess = (res) => {
             form.resetFields();
-            // setShowDataLoading(true);
-
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             loadPinCodeDataList();
 
