@@ -44,6 +44,12 @@
     height: 1.25em;
 }
 
+.changeThemeBorder {
+    border: 1px solid red;
+    border-radius: 4px;
+    padding: 5px;
+}
+
 .contentHeaderBackground {
     background-color: #f4f4f4;
     border: 1px solid #e8e8e8;
@@ -51,6 +57,12 @@
     margin-bottom: 20px;
     border-radius: 8px !important;
     font-weight: 500;
+}
+
+.borderBottomCorner .contentHeaderBackground {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    padding: 12px 8px !important;
 }
 
 .contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper,
@@ -80,9 +92,9 @@
 }
 
 .contentHeaderBackground :global .ant-input-group {
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
     border: 1px solid #d9d9d9;
 }
 
@@ -105,12 +117,14 @@
 }
 
 .contentHeaderBackground .headingToggle {
+    min-width: 154px;
     border: #e6e6e6 1px solid;
     border-radius: 6px;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     padding: 7px 5px;
     display: inline-block;
+    margin-left: 10px;
 }
 
 .autoCompleteContent :global .ant-input-search .ant-input:hover,
@@ -167,8 +181,8 @@
 
 .activeText {
     color: #70C922;
-    background: #EEFCD2;
-    border-color: #70C922;
+    /* background: #EEFCD2;
+    border-color: #70C922; */
 }
 
 .inactiveText {
@@ -605,11 +619,11 @@
 
 .contentHeaderRightBackground {
     background-color: #f4f4f4;
-    padding: 13px;
-    border-radius: 4px 4px 0px 0px;
-    -moz-border-radius: 4px 4px 0px 0px;
-    -webkit-border-radius: 4px 4px 0px 0px;
-    border: 1px solid #e8e8e8;
+    padding: 24px 12px;
+    border-radius: 3px 3px 0px 0px;
+    -moz-border-radius: 3px 3px 0px 0px;
+    -webkit-border-radius: 3px 3px 0px 0px;
+    border-bottom: 1px solid #e8e8e8;
 }
 
 /* applicatiom master css */
@@ -649,6 +663,7 @@
 .accordianContainer :global .ant-collapse>.ant-collapse-item.ant-collapse-item-active>.ant-collapse-header {
     color: #e31837;
     background: #f2f2f2;
+    border-radius: 7px 7px 0 0;
 }
 
 .accordianContainer :global .ant-collapse .ant-collapse-content {
@@ -657,6 +672,7 @@
 
 .accordianContainer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     padding: 16px 20px;
+    border-radius: 0 0 7px 7px;
 }
 
 .accordianContainer :global .ant-collapse .ant-collapse-content .ant-divider-horizontal {
@@ -718,11 +734,8 @@
 }
 
 .searchAndLabelAlign {
-    padding-left: 0px !important;
-    padding-right: 0px !important;
-    margin-left: 0px !important;
-    margin-right: 0px !important;
-    vertical-align: middle;
+    display: flex;
+    align-items: center;
 }
 
 .searchField {
@@ -732,7 +745,11 @@
 
 .headerSearchField {
     vertical-align: middle;
-    /* width: 100%; */
+    width: 100%;
+}
+
+.searchAndLabelAlign .headerSearchField {
+    margin-left: 20px;
 }
 
 .headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper {
@@ -768,7 +785,13 @@
 .contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     background-color: #ffffff;
     border-left: #ffffff;
-    background-color: #ffffff;
+    border-radius: 0px 3px 3px 0;
+    margin-right: -1px;
+}
+
+.contentHeaderBackground :global .ant-input-search>.ant-input-group .ant-input-affix-wrapper:not(:last-child) {
+    border-start-start-radius: 3px;
+    border-end-start-radius: 3px;
 }
 
 .contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
@@ -839,7 +862,7 @@
     border-radius: 0 0 4px 4px;
     margin-top: -21px;
     overflow-y: hidden;
-    height: 62.6vh;
+    height: 60.6vh;
 }
 
 .emptyContainer {
@@ -847,7 +870,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    height: calc(100vh - 174px);
+    height: calc(100vh - 170px);
     border: 1px solid #e8e8e8;
     border-radius: 4px;
 }
@@ -893,7 +916,7 @@
 
 .hierarchyRightContaner :global .ant-descriptions .ant-descriptions-view {
     overflow-y: auto;
-    height: calc(100vh - 284px);
+    height: calc(100vh - 300px);
 }
 
 :global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-track,
@@ -926,8 +949,6 @@
     line-height: 24px;
     font-weight: 700;
 }
-
-
 
 .addTimeBtn {
     display: flex;
@@ -1295,13 +1316,22 @@
     padding: 0px 20px 10px 20px;
 }
 
-.viewTiming .seprator {
-    border-top: solid 1px #e6e6e6;
+.notViewTiming {
+    display: none;
+}
+
+.viewTiming .separator {
+    border-top: solid 1px #E6E6E6;
+    margin-bottom: 20px;
+}
+
+.viewTiming .viewSeparator {
+    border-top: solid 1px transparent;
     margin-bottom: 20px;
 }
 
 .timingCardItem {
-    margin: 10px 0px 5px 0px;
+    margin: 10px 0px;
     background-color: #e6e6e6;
     border: 1px solid #b5b5b6;
     border-radius: 10px;
@@ -1361,54 +1391,6 @@
 .advanceTimingContainer :global .ant-card-bordered {
     border: 1px solid #B5B5B6;
     background-color: #B5B5B6;
-}
-
-.viewTiming {
-    padding: 0px 20px 10px 20px;
-}
-
-.viewTiming .seprator {
-    border-top: solid 1px #E6E6E6;
-    margin-bottom: 20px;
-}
-
-.timingCardItem {
-    margin: 10px 0px 5px 0px;
-    background-color: #E6E6E6;
-    border: 1px solid #B5B5B6;
-    border-radius: 10px;
-    padding: 4px 12px;
-}
-
-.timingCardItem .timeSlot {
-    padding: 4px 0 !important;
-    width: 190px;
-    color: #0B0B0C;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-}
-
-.timingCardItem .timeLabel {
-    padding-left: 0 !important;
-    color: #858585;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 22px;
-}
-
-.timingCardItem .timeSlotClearBtn {
-    display: flex;
-    align-items: center;
-}
-
-.viewTiming .timingCardItem:first-child {
-    margin-top: 10px;
-}
-
-.timingCardItem :global .ant-descriptions .ant-descriptions-row>th,
-.timingCardItem :global .ant-descriptions .ant-descriptions-row>td {
-    padding-bottom: 0px;
 }
 
 .advanceFilterTop {

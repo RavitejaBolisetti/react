@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Input, Empty } from 'antd';
+import { Button, Col, Form, Row, Input, Empty, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { FaHistory } from 'react-icons/fa';
@@ -20,9 +20,10 @@ import { ViewManufacturerOrgDetail } from './ViewManufacturerOrgDetails';
 import LeftPanel from '../LeftPanel';
 
 import styles from 'components/common/Common.module.css';
+import TreeSelectField from '../TreeSelectField';
 
 const { Search } = Input;
-
+const { Option } = Select;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -69,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisible, fetchChangeHistoryList, viewTitle, userId, changeHistoryModelOpen, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, manufacturerOrgHierarchyData, showGlobalNotification, unFilteredAttributeData }) => {
+export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisible,fetchChangeHistoryList, viewTitle, userId, changeHistoryModelOpen, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, manufacturerOrgHierarchyData, showGlobalNotification, unFilteredAttributeData }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -88,6 +89,9 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
+    const onKeyPressHandler = (e) => {
+        e.key === 'Enter' && e.preventDefault();
+    };
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -285,15 +289,32 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
 
     const leftCol = manufacturerOrgHierarchyData?.length > 0 ? 16 : 24;
     const rightCol = manufacturerOrgHierarchyData?.length > 0 ? 8 : 24;
+    const title = 'Hierarchy';
     return (
         <>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={24} sm={24} md={18} lg={18} xl={18} className={styles.contentHeaderRightBackground}>
-                                Hierarchy
-                                <Search placeholder="Search" className={styles.headerSelectField} allowClear onChange={onChange} />
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                    <Form.Item
+                                        label={`${title}`}
+                                        name="code"
+                                        // rules={[
+                                        //     {
+                                        //         validator: validator,
+                                        //     },
+                                        // ]}
+                                        validateTrigger={['onSearch']}
+                                    >
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                                <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
+                                            </Col>
+                                        </Row>
+                                    </Form.Item>
+                                </Form>
                             </Col>
                             {manufacturerOrgHierarchyData?.length > 0 && (
                                 <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>

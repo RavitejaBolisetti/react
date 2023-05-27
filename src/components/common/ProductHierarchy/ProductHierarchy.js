@@ -236,6 +236,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         if (value === selectedTreeKey[0]) {
             return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
         }
+
+        setFormBtnActive(true);
         setSelectedTreeSelectKey(value);
     };
 

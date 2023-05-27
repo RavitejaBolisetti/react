@@ -48,7 +48,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="State" initialValue={filterString?.stateCode} name="stateCode">
+                    <Form.Item label="State Name" initialValue={filterString?.stateCode} name="stateCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('stateCode')}>
                             {filteredStateData?.map((item) => (
                                 <Option value={item?.code}>{item?.name}</Option>
@@ -60,7 +60,7 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item label="District" initialValue={filterString?.keyword} name="keyword" rules={[{ validator: searchValidator }]}>
+                    <Form.Item label="District Name" initialValue={filterString?.keyword} name="keyword" rules={[{ validator: searchValidator }]}>
                         <Input placeholder="Search" maxLength={50} allowClear />
                     </Form.Item>
                 </Col>

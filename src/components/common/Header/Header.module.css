@@ -94,6 +94,7 @@
 .dropdownIcon {
     color: #ff3e5b;
     padding: 5px;
+    cursor: pointer;
 }
 
 .dropdownIcon :hover {
@@ -134,15 +135,6 @@
     padding-top: 10px;
 }
 
-.navLink {
-    color: #342c2c;
-    padding: 5px;
-}
-
-.navLink:hover {
-    color: #ea3434;
-}
-
 :global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content>a:hover {
     text-decoration: none;
 }
@@ -158,6 +150,16 @@
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border: 1px solid #b5b5b6;
+}
+
+.headerRight .navbarNav .floatLeft .navLink {
+    color: #342c2c;
+    padding-left: 10px;
+    padding-right: 14px;
+}
+
+.headerRight .navbarNav .floatLeft .navLink:hover svg {
+    color: #ff3e5b;
 }
 
 .headerRight :global .ant-input-group:hover {
@@ -191,11 +193,6 @@
 .navbarExpand {
     flex-flow: row nowrap;
     justify-content: flex-start;
-}
-
-.navbarExpand .navbarNav .navLink {
-    padding-left: 10px;
-    padding-right: 14px;
 }
 
 .navLink :global .ant-badge .ant-badge-count {

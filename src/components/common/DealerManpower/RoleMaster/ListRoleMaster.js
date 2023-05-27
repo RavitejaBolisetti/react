@@ -365,7 +365,7 @@ export const ListRoleMasterBase = (props) => {
         }
     };
 
-    const title = 'Role Master';
+    const title = 'Role Name';
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,
@@ -389,7 +389,7 @@ export const ListRoleMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} scroll={1500} {...tableProps} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

@@ -177,6 +177,13 @@ export const MenuConstant = {
         parentMenuId: 'MILE-02',
     },
 
+    [getMenyKey('MILE-04.04')]: {
+        key: 'MILE-04.04',
+        link: routing.ROUTING_MILE_DEALER_MANPOWER_BAY_TYPE_MASTER,
+        icon: undefined,
+        parentMenuId: 'MILE-02',
+    },
+
     [getMenyKey('MILE-01.04')]: {
         key: 'MILE-01.04',
         link: routing.ROUTING_MILE_DEALER_MANPOWER_LOCATION_TYPE_MASTER,
@@ -294,7 +301,6 @@ export const MenuConstant = {
         parentMenuId: 'RPT',
     },
 
-    
     [getMenyKey('RPT-ER')]: {
         key: 'RPT-ER',
         link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
@@ -308,7 +314,6 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'RPT',
     },
-
 
     [getMenyKey('COMN-03.02')]: {
         key: 'COMN-03.02',

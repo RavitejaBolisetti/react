@@ -76,11 +76,10 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     useEffect(() => {
         if (confirms || isChangePasswordModalOpen) {
             document.body.style.overflow = 'hidden';
-        }
-        else {
+        } else {
             document.body.style.overflow = 'overlay';
         }
-    }, [confirms, isChangePasswordModalOpen])
+    }, [confirms, isChangePasswordModalOpen]);
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -120,7 +119,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             },
             onCancel() {
                 setConfirm(false);
-            }
+            },
         });
     };
 
@@ -197,7 +196,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             key: '7',
             title: 'Logout',
             onClick: () => {
-                setConfirm(true)
+                setConfirm(true);
                 showConfirm();
             },
             icon: <IoIosLogOut size={20} />,
@@ -241,20 +240,16 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                         <div className={styles.dealerInfo}>
                                             <span className={styles.dealerLocation}>{dealerLocation}</span>
                                             {userType === 'DLR' && (
-                                                <Dropdown className={styles.dropdownIcon} menu={{ items: locationMenuOption }} trigger={['click']}>
-                                                    <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
-                                                        <DownOutlined />
-                                                    </a>
+                                                <Dropdown className={styles.dropdownIcon} menu={{ items: locationMenuOption }}>
+                                                    <DownOutlined />
                                                 </Dropdown>
                                             )}{' '}
                                             {userType === 'DLR' && (
                                                 <>
                                                     <span className={styles.seprator}>|</span>
                                                     <span className={styles.dealerLocation}>FY2023</span>
-                                                    <Dropdown menu={{ items: fyMenuOption }} trigger={['click']}>
-                                                        <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
-                                                            <DownOutlined />
-                                                        </a>
+                                                    <Dropdown className={styles.dropdownIcon} menu={{ items: fyMenuOption }} /*trigger={['click']}*/>
+                                                        <DownOutlined />
                                                     </Dropdown>
                                                 </>
                                             )}
@@ -275,7 +270,6 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                             <div className={styles.headerRight}>
                                 <div className={styles.navbarExpand}>
                                     <div className={styles.navbarNav}>
-
                                         <div className={`${styles.floatLeft}`}>
                                             <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
                                                 <Badge size="small" count={notificationCount}>
@@ -297,7 +291,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                 <div className={styles.userAvatar}>
                                                     <Avatar className={styles.userAvatarInside}>{userAvatar}</Avatar>
                                                     <span className={`${styles.mobmenuDropDownArrow} ${styles.dropdownArrow}`}>
-                                                        <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                                                        <Dropdown menu={{ items: userSettingMenu }}>
                                                             <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
                                                                 <Space>
                                                                     <DownOutlined />

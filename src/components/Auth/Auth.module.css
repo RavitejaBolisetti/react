@@ -181,6 +181,10 @@ p {
     border-radius: 6px !important;
 }
 
+.loginSection .loginWrap .loginHtml .loginForm .inputBox.disabledInput :global .ant-form-item-control-input {
+    background: transparent !important;
+}
+
 .loginSection .loginWrap .loginHtml .loginForm .inputBox.disabledInput input {
     background: transparent;
     color: #838383 !important;
@@ -295,6 +299,7 @@ p {
     box-shadow: none !important;
     border-color: #FFFFFF;
     background: transparent;
+    z-index: 0;
 }
 
 .loginSection input:-webkit-autofill,
@@ -769,13 +774,13 @@ select.form-control:focus::-ms-value {
         font-size: 14px;
     }
 
-    .loginSection :global .ant-input-affix-wrapper {
+    /* .loginSection :global .ant-input-affix-wrapper {
         padding: 2px 10px 0;
-    }
+    } */
 
-    .loginSection :global .ant-input-affix-wrapper>input.ant-input {
+    /* .loginSection :global .ant-input-affix-wrapper>input.ant-input {
         padding: 2px 5px 3px 5px;
-    }
+    } */
 
     .loginSection .loginWrap .loginHtml .loginForm .button {
         padding: 5px;
@@ -889,12 +894,12 @@ select.form-control:focus::-ms-value {
         font-size: 13px;
     }
 
-    .loginSection :global .ant-input-affix-wrapper {
+    /* .loginSection :global .ant-input-affix-wrapper {
         padding: 2px 10px 0;
-    }
+    } */
 
     .loginSection :global .ant-input-affix-wrapper>input.ant-input {
-        padding: 2px 5px 3px 5px;
+        padding: 2px 5px 3px 0px;
     }
 
     .loginSection .loginWrap .loginHtml .loginForm .button {

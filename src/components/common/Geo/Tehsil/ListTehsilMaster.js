@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
+import { Form, Row, Col } from 'antd';
 
-import { tblPrepareColumns } from 'utils/tableCloumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { tableColumn } from './tableColumn';
 
@@ -15,21 +13,13 @@ import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
-import { PlusOutlined } from '@ant-design/icons';
 import { FilterIcon } from 'Icons';
-import { TfiReload } from 'react-icons/tfi';
-import { FiEdit } from 'react-icons/fi';
-import { FaRegEye } from 'react-icons/fa';
 import { bindActionCreators } from 'redux';
-import styles from 'components/common/Common.module.css';
 import { ListDataTable } from 'utils/ListDataTable';
-import { RxCross2 } from 'react-icons/rx';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-import { validateAtLeastThreeChar } from 'utils/validation';
-
-const { Search } = Input;
-const { Option } = Select;
+import { PARAM_MASTER } from 'constants/paramMaster';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 
 const mapStateToProps = (state) => {
     const {
@@ -41,10 +31,12 @@ const mapStateToProps = (state) => {
                 District: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading = false, data: districtData = [] },
                 Tehsil: { isLoaded: isDataLoaded = false, isLoading, data = [] },
             },
+            ConfigurableParameterEditing: { isLoaded: isTehsilCategoryDataLoaded = false, isTehsilCategoryDataLoading, paramdata: tehsilCategoryData = [] },
         },
     } = state;
 
-    const moduleTitle = 'Tehsil Details';
+
+    const moduleTitle = 'Tehsil';
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
     });
@@ -62,6 +54,10 @@ const mapStateToProps = (state) => {
         isStateLoading,
         isDistrictDataLoaded,
         districtData,
+        isTehsilCategoryDataLoaded,
+        isTehsilCategoryDataLoading,
+        tehsilCategoryData: tehsilCategoryData && tehsilCategoryData[PARAM_MASTER.GEO_TEH_CAT.id],
+
         data,
         stateData,
         isDataLoaded,
@@ -80,6 +76,8 @@ const mapDispatchToProps = (dispatch) => ({
             listStateShowLoading: geoStateDataActions.listShowLoading,
             fetchDistrictList: geoDistrictDataActions.fetchList,
             listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
+            fetchTehsilCategoryList: configParamEditActions.fetchList,
+            listTehsilCategoryShowLoading: configParamEditActions.listShowLoading,
             fetchList: geoTehsilDataActions.fetchList,
             saveData: geoTehsilDataActions.saveData,
             listShowLoading: geoTehsilDataActions.listShowLoading,
@@ -93,6 +91,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const ListTehsilBase = (props) => {
     const { data, saveData, fetchList, userId, resetData, isDataLoaded, isLoading, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
+    const { isTehsilCategoryDataLoaded, isTehsilCategoryDataLoading, tehsilCategoryData, listTehsilCategoryShowLoading, fetchTehsilCategoryList } = props;
 
     const { isStateDataLoaded, stateData, listStateShowLoading, fetchStateList } = props;
     const { isDistrictDataLoaded, districtData, listDistrictShowLoading, fetchDistrictList } = props;
@@ -146,6 +145,7 @@ export const ListTehsilBase = (props) => {
                 fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             }
         }
+        fetchTehsilCategoryList({ setIsLoading: listTehsilCategoryShowLoading, userId, parameterType: PARAM_MASTER.GEO_TEH_CAT.id });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataCountryLoaded, isStateDataLoaded, isDataLoaded]);
 
@@ -234,7 +234,8 @@ export const ListTehsilBase = (props) => {
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
 
-        record && setFormData(record);
+        const tehsilCategory = tehsilCategoryData?.find((category) => category.key === record?.tehsilCategoryCode)?.value;
+        record && setFormData({ ...record, tehsilCategory });
         setIsFormVisible(true);
     };
 
@@ -332,6 +333,10 @@ export const ListTehsilBase = (props) => {
         stateData,
         data,
 
+        isTehsilCategoryDataLoading,
+        isTehsilCategoryDataLoaded,
+        tehsilCategoryData,
+
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
@@ -351,7 +356,6 @@ export const ListTehsilBase = (props) => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
         setFilteredDistrictData(undefined);
-
     };
 
     const handleResetFilter = () => {
@@ -414,7 +418,7 @@ export const ListTehsilBase = (props) => {
         }
     };
 
-    const title = 'Tehsil';
+    const title = 'Tehsil Name';
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,
@@ -436,7 +440,7 @@ export const ListTehsilBase = (props) => {
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable {...tableProps} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

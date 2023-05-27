@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'State Master List';
+    const moduleTitle = 'State';
 
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
@@ -311,7 +311,7 @@ export const ListStateMasterBase = (props) => {
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
-    const title = 'State';
+    const title = 'State Name';
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

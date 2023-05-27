@@ -385,7 +385,7 @@ export const DesignationMasterBase = (props) => {
         }
     };
 
-    const title = 'Designation Master';
+    const title = 'Designation Name ';
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,
