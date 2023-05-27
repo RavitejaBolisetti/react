@@ -110,6 +110,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
             } else if (RefershData) {
                 setRefershData((prev) => !prev);
                 hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Data refresh', placement: 'topRight' });
                 setSearchdata(detailData?.hierarchyAttribute);
             } else if (detailData?.hierarchyAttribute) {
                 if (filterString) {
@@ -132,6 +133,8 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         if (!selectedHierarchy || !RefershData) return;
         setRefershData((prev) => !prev);
         hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'data refresh', placement: 'topRight' });
+
         if (filterString) {
             const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
             setSearchdata(filterDataItem);
