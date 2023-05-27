@@ -10,7 +10,6 @@ const { TextArea } = Input;
 
 const ProductDetail = (props) => {
     const { mainFrom, handleFormValueChange, handleFormFieldChange, onMainFormFinish, onFinishFailed, formData, handleAttributeChange, handleProductchange, isDataAttributeLoaded, disabledProps, attributeData, treeCodeId, treeSelectProps, formActionType, onCloseAction, isFormBtnActive, isReadOnly } = props;
-    console.log(treeCodeId,'treeCodeIdCheck')
     return (
         <Form form={mainFrom} id="myForm" autoComplete="off" layout="vertical" onFinish={onMainFormFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>

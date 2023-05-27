@@ -10,7 +10,7 @@ import ProductDetail from './ProductDetail';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute, skuAttributes, treeSelectProps,treeCodeId } = props;
+    const { onCloseAction, handleAttributeChange, formActionType, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute, skuAttributes, treeSelectProps, treeCodeId } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { form, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
 
@@ -22,6 +22,9 @@ const AddEditFormMain = (props) => {
 
     const disabledProps = { disabled: isReadOnly };
 
+    const productSKUKey = '63ec10a2-520d-44a4-85f6-f55a1d6911f3';
+
+    console.log('selectedTreeData', selectedTreeData);
     useEffect(() => {
         if (userId) {
             fetchListHierarchyAttributeName({ userId, setIsLoading: listShowLoading });
@@ -34,9 +37,10 @@ const AddEditFormMain = (props) => {
             setShowProductAttribute(false);
         }
         if (formActionType === FROM_ACTION_TYPE.EDIT) {
-            selectedTreeData?.skuAttributes ? setShowProductAttribute(true) : setShowProductAttribute(false);
+            setShowProductAttribute(selectedTreeData?.attributeKey === productSKUKey);
         }
-    }, [formActionType, selectedTreeData?.skuAttributes, setShowProductAttribute]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType, selectedTreeData]);
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -58,8 +62,6 @@ const AddEditFormMain = (props) => {
         setSKUAttributes((prev) => [...prev, { attributeName: label, id: value, attributeValue: val.attributeValue }]);
         actionForm.resetFields();
     };
-
-    
 
     const attributeFormProps = {
         form,
