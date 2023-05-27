@@ -430,11 +430,15 @@ const ListPinCodeMasterBase = (props) => {
 
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
-        // setFilteredDistrictData(undefined);
-        // setFilteredCityData(undefined);
-        // setFilteredTehsilData(undefined);
+
+        // !filterString?.stateCode && setFilteredStateData(undefined);
+        !filterString?.districtCode && setFilteredDistrictData(undefined);
+        !filterString?.cityCode && setFilteredCityData(undefined);
+        !filterString?.tehsilCode && setFilteredTehsilData(undefined);
+
         filterString?.tehsilCode && setTehsilCodeValue();
         filterString?.cityCode && setCityCodeValue();
+
         advanceFilterForm.resetFields();
     };
 
