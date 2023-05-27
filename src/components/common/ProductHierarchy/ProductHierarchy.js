@@ -18,6 +18,7 @@ import TreeSelectField from '../TreeSelectField';
 import { FaHistory } from 'react-icons/fa';
 import { ViewProductDetail } from './ViewProductDetail';
 import { LANGUAGE_EN } from 'language/en';
+import { FindprodctCode, FindParent } from './ProductHierarchyUtils';
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
@@ -197,6 +198,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     };
 
     const handleTreeViewClick = (keys) => {
+        console.log('keys', keys);
+
         setButtonData({ ...defaultBtnVisiblity });
         form.resetFields();
         setFormData([]);
@@ -302,9 +305,16 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
 
-        console.log(selectedTreeSelectKey,'selectedTreeSelectKeyselectedTreeSelectKey');
+        const myparentId = FindParent(flatternData, selectedTreeKey['0']);
 
-        const data = { ...values, id: recordId, parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N', skuAttributes, mfgOrgSk: selectedTreeSelectKey };
+        const filterproductdata = productHierarchyData?.filter((element) => element.id == myparentId);
+
+        if (FindprodctCode(filterproductdata['0'], values?.prodctCode, selectedTreeKey['0'])) {
+            showGlobalNotification({ notificationType: 'warning', title: 'Warning', message: 'Duplicate Parent Code' });
+            return;
+        }
+
+        const data = { ...values, id: recordId, parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N', skuAttributes, mfgOrgSk: selectedTreeSelectKey  };
         const onSuccess = (res) => {
             form.resetFields();
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
