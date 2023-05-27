@@ -34,23 +34,23 @@ export const AdvancedSearchFrom = (props) => {
         className: styles.headerSelectField,
     };
 
-    useEffect( () => {
-        handleResetFilter()
-    } ,[] )
+    useEffect(() => {
+        handleResetFilter();
+    }, []);
 
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={defaultCountry} label="Country" name="countryCode">
+                    <Form.Item initialValue={defaultCountry} label="Country" name="countryCode" rules={[validateRequiredInputField('Country')]}>
                         {defaultCountry && (
-                            <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                            <Select defaultValue={defaultCountry} onChange={handleFilterChange('countryCode')} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
                                 {countryData?.map((item) => (
                                     <Option value={item?.countryCode}>{item?.countryName}</Option>
                                 ))}
                             </Select>
                         )}
-                    </Form.Item>    
+                    </Form.Item>
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>

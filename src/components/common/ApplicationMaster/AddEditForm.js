@@ -81,9 +81,9 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
                         Cancel
                     </Button>
                 </Col>
-
+{console.log("isApplicatinoOnSaveLoading", isApplicatinoOnSaveLoading)}
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnRight}>
-                    <Button htmlType="submit" danger form="myForm" key="saveBtm" type="primary">
+                    <Button loading={isApplicatinoOnSaveLoading} htmlType="submit" danger form="myForm" key="saveBtm" type="primary">
                         Save
                     </Button>
                 </Col>

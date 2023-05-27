@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Dealer Employee Department';
+    const moduleTitle = 'Employee Department';
 
     let returnValue = {
         userId,
@@ -233,7 +233,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Employee Department'),
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Department'),
         tableData: searchData,
 
         isDivisionLoading,
@@ -294,7 +294,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         }
     };
 
-    const title = 'Employee Department';
+    const title = 'Department Name';
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

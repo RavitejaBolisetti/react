@@ -66,16 +66,6 @@ const AddEditFormMain = (props) => {
         }
     }, [formActionType, selectedTreeData?.skuAttributes, setShowProductAttribute]);
 
-    const treeSelectFieldProps = {
-        treeFieldNames,
-        treeData: productHierarchyData,
-        treeDisabled: treeCodeReadOnly || isReadOnly,
-        selectedTreeSelectKey,
-        handleSelectTreeClick,
-        defaultValue: treeCodeId,
-        placeholder: preparePlaceholderSelect('parent'),
-    };
-
     const handleFormValueChange = () => {
         setFormBtnActive(true);
     };
@@ -95,6 +85,17 @@ const AddEditFormMain = (props) => {
         const { value, label } = val?.attributeName;
         setSKUAttributes((prev) => [...prev, { attributeName: label, id: value, attributeValue: val.attributeValue }]);
         actionForm.resetFields();
+    };
+    
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: productHierarchyData,
+        treeDisabled: treeCodeReadOnly || isReadOnly,
+        selectedTreeSelectKey,
+        handleSelectTreeClick,
+        defaultValue: treeCodeId,
+        placeholder: preparePlaceholderSelect('parent'),
+        handleFormFieldChange,
     };
 
     const attributeFormProps = {

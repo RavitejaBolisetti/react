@@ -99,7 +99,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const [parentAppCode, setparentAppCode] = useState();
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
-
     const moduleTitle = 'Application Master';
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
 
@@ -133,6 +132,8 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
 
     const handleTypeClick = (type) => {
+        setSelectedTreeKey([]);
+
         setIsActive((current) => !current);
         setMenuType(type);
     };
@@ -277,7 +278,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         showGlobalNotification,
         applicationDetailsData,
         isBtnDisabled,
-        setIsBtnDisabled
+        setIsBtnDisabled,
     };
 
     const leftCol = menuData?.length > 0 ? 16 : 24;
@@ -287,43 +288,20 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     return (
         <>
             <Row gutter={20} span={24}>
-                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={styles.borderBottomCorner}>
                     <Spin spinning={isLoading}>
                         <div className={styles.contentHeaderBackground}>
-                            <Row gutter={20} className={styles.searchAndLabelAlign}>
-                                <Col xs={18} sm={18} md={18} lg={18} xl={18}>
-                                    <Row gutter={20} style={{ border: '1px' }} align="middle">
-                                        <Col xs={10} sm={10} md={10} lg={10} xl={8}>
-                                            <div className={styles.changeThemeBorder}>
-                                                <Button
-                                                    type="secondary"
-                                                    danger
-                                                    onClick={() => handleTypeClick('W')}
-                                                    style={{
-                                                        backgroundColor: isActive ? '' : '#ff3e5b',
-                                                        color: isActive ? '' : 'white',
-                                                    }}
-                                                >
-                                                    Web
-                                                </Button>
-
-                                                <Button
-                                                    type="secondary"
-                                                    danger
-                                                    onClick={() => handleTypeClick('M')}
-                                                    style={{
-                                                        backgroundColor: isActive ? '#ff3e5b' : '',
-                                                        color: isActive ? 'white' : '',
-                                                    }}
-                                                >
-                                                    Mobile
-                                                </Button>
-                                            </div>
-                                        </Col>
-                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                            <Search style={{ width: '100%' }} placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
-                                        </Col>
-                                    </Row>
+                            <Row gutter={20}>
+                                <Col xs={16} sm={16} md={16} lg={16} xl={16} className={styles.searchAndLabelAlign}>
+                                    <div className={`${styles.userManagement} ${styles.headingToggle}`}>
+                                        <Button className={styles.marR5} type={menuType === 'W' ? 'primary' : 'link'} danger onClick={() => handleTypeClick('W')}>
+                                            Web
+                                        </Button>
+                                        <Button type={menuType === 'M' ? 'primary' : 'link'} danger onClick={() => handleTypeClick('M')}>
+                                            Mobile
+                                        </Button>
+                                    </div>
+                                    <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
                                 </Col>
                             </Row>
                         </div>

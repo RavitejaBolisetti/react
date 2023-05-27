@@ -203,7 +203,7 @@ export const ListDealerDivisionMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Division'),
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Division'),
         tableData: searchData,
 
         ADD_ACTION,
@@ -222,7 +222,7 @@ export const ListDealerDivisionMasterBase = (props) => {
         setPage,
     };
 
-    const title = 'Division Master';
+    const title = 'Division Name';
 
     const advanceFilterResultProps = {
         advanceFilter: false,

@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], skudata: skuData = [], changeHistoryVisible, attributeData: productHierarchyAttributeData = [], },
+            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], skudata: skuData = [], changeHistoryVisible, attributeData: productHierarchyAttributeData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -140,7 +140,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedId, userId]);
 
-
     useEffect(() => {
         setCollapsableView(!isChildAllowed);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -202,13 +201,14 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, 
         }
 
         setSelectedTreeKey(keys);
-
     };
 
     const handleSelectTreeClick = (value) => {
         if (value === selectedTreeKey[0]) {
             return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
         }
+
+        setFormBtnActive(true);
         setSelectedTreeSelectKey(value);
     };
 
@@ -229,7 +229,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, 
 
     const handleAttributeChange = (value) => {
         const selectedAttribute = attributeData?.find((i) => i.id === value);
-        selectedAttribute.hierarchyAttribueCode === "SKU" ? setShowProductAttribute(true) : setShowProductAttribute(false);
+        selectedAttribute.hierarchyAttribueCode === 'SKU' ? setShowProductAttribute(true) : setShowProductAttribute(false);
         setIsChildAllowed(selectedAttribute?.isChildAllowed);
     };
 
@@ -266,7 +266,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, 
             onError,
             onSuccess,
         };
-        console.log(requestData, 'final')
         saveData(requestData);
     };
 
@@ -336,7 +335,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skuData, userId, 
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
-    const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING
+    const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
     const title = 'Hierarchy';
 

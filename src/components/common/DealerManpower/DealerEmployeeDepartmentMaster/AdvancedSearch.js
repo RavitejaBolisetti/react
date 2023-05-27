@@ -37,7 +37,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Division" name="divisionCode" rules={[validateRequiredSelectField('Division')]}>
+                    <Form.Item label="Division Name" name="divisionCode" rules={[validateRequiredSelectField('Division')]}>
                         <Select placeholder="Select" {...selectProps}>
                             {divisionData?.map((item) => (
                                 <Option value={item?.code}>{item?.divisionName}</Option>
@@ -47,7 +47,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item
-                        label="Department"
+                        label="Department Name"
                         initialValue={filterString?.keyword}
                         name="keyword"
                         rules={[
