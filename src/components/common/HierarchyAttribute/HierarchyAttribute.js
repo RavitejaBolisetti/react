@@ -34,6 +34,8 @@ const mapStateToProps = (state) => {
 
     const moduleTitle = 'Hierarchy Attribute Master';
 
+    console.log('detailData',detailData)
+
     let returnValue = {
         collapsed,
         userId,
