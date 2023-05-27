@@ -199,7 +199,9 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     useEffect(() => {
-        loadPinCodeDataList();
+        if (refershData) {
+            loadPinCodeDataList();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
 
