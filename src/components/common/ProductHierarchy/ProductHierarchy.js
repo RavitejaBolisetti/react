@@ -266,22 +266,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         form.resetFields();
     };
 
-    let treeCodeId = '';
-    let treeCodeReadOnly = false;
-
-    if (formActionType === FROM_ACTION_TYPE.EDIT) {
-        treeCodeId = formData?.parntProdctId;
-        // setShowProductAttribute(true);
-    } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
-        treeCodeId = selectedTreeKey && selectedTreeKey[0];
-        treeCodeReadOnly = true;
-        //setShowProductAttribute(false);
-    } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-        treeCodeReadOnly = true;
-        const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-        treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
-        //setShowProductAttribute(false);
-    }
+   
 
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
     const treeProdFieldNames = { ...fieldProductNames, label: fieldProductNames?.title, value: fieldProductNames?.key };
@@ -289,22 +274,22 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: manufacturerOrgHierarchyData,
-        treeDisabled: treeCodeReadOnly,
+        //treeDisabled: treeCodeReadOnly,
         //|| isReadOnly,
         selectedTreeSelectKey,
         handleSelectTreeClick,
-        defaultValue: treeCodeId,
+        //defaultValue: treeCodeId,
         placeholder: preparePlaceholderSelect(''),
     };
 
     const treeSelectProps = {
-        treeProdFieldNames,
-        treeData: manufacturerOrgHierarchyData,
-        treeDisabled: treeCodeReadOnly,
+        treeFieldNames : treeProdFieldNames,
+        treeData: productHierarchyData,
+        //treeDisabled: treeCodeReadOnly,
         //|| isReadOnly,
         selectedTreeSelectKey,
         handleSelectTreeClick,
-        defaultValue: treeCodeId,
+        //defaultValue: treeCodeId,
         placeholder: preparePlaceholderSelect(''),
     };
 
