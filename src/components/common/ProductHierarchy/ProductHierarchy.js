@@ -33,8 +33,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log(state, 'GLOBAL');
-
     const moduleTitle = 'Product Detail';
     const viewTitle = 'Hierarchy Details';
 
@@ -137,11 +135,11 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     // }, [isDataLoaded, userId]);
 
     useEffect(() => {
-        if (isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: 'de57f5de-d11f-4993-bf97-7cbd693a6207' });
+        if (selectedTreeSelectKey && userId) {
+            fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: selectedTreeSelectKey });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, isDataAttributeLoaded, userId, selectedTreeSelectKey]);
+    }, [userId, selectedTreeSelectKey]);
 
     // useEffect(() => {
     //     if (userId) {
@@ -226,6 +224,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     };
 
     const handleSelectTreeClick = (value) => {
+        console.log(value, 'checking');
         if (value === selectedTreeKey[0]) {
             return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
         }
@@ -317,7 +316,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             onError,
             onSuccess,
         };
-        console.log(requestData, 'final');
         saveData(requestData);
     };
 
@@ -398,28 +396,12 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                                <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                    <Form.Item
-                                        label={`${title}`}
-                                        name="code"
-                                        // rules={[
-                                        //     {
-                                        //         validator: validator,
-                                        //     },
-                                        // ]}
-                                        validateTrigger={['onSearch']}
-                                    >
+                                <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                    {/* onKeyPress={onKeyPressHandler} */}
+                                    <Form.Item label={`${title}`} name="code" validateTrigger={['onSearch']}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                                {/* <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
-                                                    <Option value="hyr">Hyr</Option>
-                                                </Select> */}
-                                                <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                                    {/* <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
-                                            <Option value="hyr">Hyr</Option>
-                                        </Select> */}
-                                                    <TreeSelectField {...treeSelectFieldProps} />
-                                                </Col>
+                                                <TreeSelectField {...treeSelectFieldProps} />
                                             </Col>
                                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                                 <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
@@ -428,14 +410,14 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                                     </Form.Item>
                                 </Form>
                             </Col>
-                            {productHierarchyData.length > 0 && (
+                            {
                                 <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
                                     <Button type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`} onClick={changeHistoryModelOpen}>
                                         <FaHistory className={styles.buttonIcon} />
                                         Change History
                                     </Button>
                                 </Col>
-                            )}
+                            }
                         </Row>
                     </div>
                     <div className={styles.content}>
