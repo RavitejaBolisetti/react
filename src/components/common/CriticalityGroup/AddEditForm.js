@@ -15,7 +15,7 @@ import style from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
     const { formActionType, setIsFormVisible, forceUpdate, showGlobalNotification, onFinish, onFinishFailed, form, formData, setFormData, defaultBtnVisiblity, criticalityGroupData, timeData, setTimeData } = props;
-    const { buttonData, setButtonData, handleButtonClick } = props;
+    const { deletedTime, setDeletedTime, buttonData, setButtonData, handleButtonClick } = props;
 
     const [TimesegmentLengthTracker, setTimesegmentLengthTracker] = useState(generateRandomNumber());
     const [isAddTimeVisible, setIsAddTimeVisible] = useState(false);
@@ -23,12 +23,12 @@ const AddEditFormMain = (props) => {
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
-        setAllowedTimingSave(false)
+        setAllowedTimingSave(false);
     };
 
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
-        setAllowedTimingSave(false)
+        setAllowedTimingSave(false);
     };
 
     const onCloseAction = () => {
@@ -53,6 +53,8 @@ const AddEditFormMain = (props) => {
     };
 
     const listProps = {
+        deletedTime,
+        setDeletedTime,
         allowedTimingSave,
         setAllowedTimingSave,
         buttonData,
