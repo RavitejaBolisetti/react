@@ -12,8 +12,24 @@ const { Option } = Select;
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
 
-    const { isDataCountryLoaded, countryData, defaultCountry, stateData } = props;
+    const { isDataCountryLoaded, countryData, defaultCountry, stateData, unFilteredStateData } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
+
+    let stateFieldValidation = {
+        rules: [validateRequiredSelectField('State Name')],
+    };
+
+    if (stateData && formData?.stateCode) {
+        if (stateData.find((attribute) => attribute.code === formData?.stateCode)) {
+            stateFieldValidation.initialValue = formData?.stateCode;
+        } else {
+            const Attribute = unFilteredStateData.find((attribute) => attribute.id === formData?.attributeKey);
+            if (Attribute) {
+                stateFieldValidation.initialValue = Attribute?.name;
+                stateFieldValidation.rules.push({ type: 'number', message: Attribute?.name + ' is not active anymore. Please select a different state. ' });
+            }
+        }
+    }
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -71,7 +87,7 @@ const AddEditFormMain = (props) => {
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" rules={[validateRequiredSelectField('State Name')]}>
+                            <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" {...stateFieldValidation}>
                                 <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps} onChange={handleStateChange}>
                                     {stateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>

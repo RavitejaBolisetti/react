@@ -50,11 +50,11 @@ const mapStateToProps = (state) => {
 
         isDivisionDataLoaded,
         isDivisionLoading,
-        divisionData,
-
+        divisionData: divisionData?.filter((i) => i.status),
+        
         isDepartmentDataLoaded,
         isDepartmentLoading,
-        departmentData,
+        departmentData: departmentData?.filter((i) => i.status),
 
         isLoading,
         moduleTitle,
@@ -355,9 +355,9 @@ export const ListRoleMasterBase = (props) => {
             const { departmentCode, ...rest } = filterString;
             setFilterString({ ...rest });
         } else {
-            const { [key]: names, ...rest } = filterString;        
-            advanceFilterForm.setFieldsValue({ keyword: undefined , divisionCode: undefined});
-            if (!filterString?.keyword && !filterString?.divisionCode && !filterString?.departmentCode ) {
+            const { [key]: names, ...rest } = filterString;
+            advanceFilterForm.setFieldsValue({ keyword: undefined, divisionCode: undefined });
+            if (!filterString?.keyword && !filterString?.divisionCode && !filterString?.departmentCode) {
                 setFilterString();
             } else {
                 setFilterString({ ...rest });

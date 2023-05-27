@@ -57,7 +57,8 @@ const mapStateToProps = (state) => {
         defaultCountry,
         isStateDataLoaded,
         isStateLoading,
-        stateData,
+        stateData: stateData?.filter((i) => i.status),
+        unFilteredStateData: stateData,
     };
     return returnValue;
 };
@@ -83,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const ListDistrictBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, resetData } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, countryShowLoading } = props;
-    const { isStateDataLoaded, fetchStateList, listStateShowLoading, stateData } = props;
+    const { isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, unFilteredStateData } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -287,6 +288,7 @@ export const ListDistrictBase = (props) => {
         countryData,
         defaultCountry,
         stateData,
+        unFilteredStateData,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -356,7 +358,7 @@ export const ListDistrictBase = (props) => {
             setFilterString({ ...rest });
 
             if (!filterString?.countryCode && !filterString?.stateCode && !filterString?.keyword) {
-                setFilterString();                
+                setFilterString();
                 advanceFilterForm.resetFields();
             } else {
                 setFilterString({ ...rest });
