@@ -18,7 +18,7 @@ import TreeSelectField from '../TreeSelectField';
 import { FaHistory } from 'react-icons/fa';
 import { ViewProductDetail } from './ViewProductDetail';
 import { LANGUAGE_EN } from 'language/en';
-import { FindprodctCode, FindParent } from './ProductHierarchyUtils';
+import { FindprodctCode, FindParent, disableParent } from './ProductHierarchyUtils';
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
@@ -148,6 +148,11 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     //     }
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [userId]);
+    useEffect(() => {
+        manufacturerOrgHierarchyData?.map((element) => {
+            console.log(disableParent(element));
+        });
+    }, [manufacturerOrgHierarchyData]);
 
     useEffect(() => {
         if (selectedId && userId) {
@@ -314,7 +319,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             return;
         }
 
-        const data = { ...values, id: recordId, parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N', skuAttributes, mfgOrgSk: selectedTreeSelectKey  };
+        const data = { ...values, id: recordId, parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N', skuAttributes, mfgOrgSk: selectedTreeSelectKey };
         const onSuccess = (res) => {
             form.resetFields();
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
@@ -349,7 +354,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         handleTreeViewVisiblity,
         selectedTreeKey,
         selectedTreeSelectKey,
-        fieldNames : treeProdFieldNames,
+        fieldNames: treeProdFieldNames,
         handleTreeViewClick,
         treeData: productHierarchyData,
         searchValue,

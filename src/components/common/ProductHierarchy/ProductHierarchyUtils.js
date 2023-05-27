@@ -32,3 +32,18 @@ export const FindParent = (node, key) => {
     }
     return newkey;
 };
+
+export const disableParent = (node) => {
+    function datas(node) {
+        if (node?.subManufactureOrg && node?.subManufactureOrg.length) {
+            node['disabled'] = true;
+            node?.subManufactureOrg?.forEach((child) => {
+                datas(child);
+            });
+        } else {
+            return;
+        }
+    }
+    datas(node);
+    return node;
+};
