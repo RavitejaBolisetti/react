@@ -1,6 +1,5 @@
 import React from 'react';
 import { Descriptions } from 'antd';
-import { convertDate } from 'utils/formatDateTime';
 
 const ViewDetailMain = ({ formData, styles, parameterType }) => {
     const viewProps = {
@@ -19,7 +18,7 @@ const ViewDetailMain = ({ formData, styles, parameterType }) => {
                     <Descriptions.Item label="Tehsil Code">{formData?.code}</Descriptions.Item>
                     <Descriptions.Item label="Tehsil Name">{formData?.name}</Descriptions.Item>
                     <Descriptions.Item label="Tehsil Category">{formData?.tehsilCategory}</Descriptions.Item>
-                    <Descriptions.Item label="Included On">{convertDate(formData?.includedOn, 'YYYY-MM-DD')}</Descriptions.Item>
+                    <Descriptions.Item label="Included On">{formData?.includedOn}</Descriptions.Item>
                     <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
                 </Descriptions>
             </>

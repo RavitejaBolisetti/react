@@ -29,7 +29,7 @@ export const ApplicationMaster = (state = initialState, action) => {
         case APPLICATION_MASTER_DATA_SHOW_LOADING:
             return { ...state, isLoading: action.isLoading };
         case APPLICATION_ON_SAVE_DATA_SHOW_LOADING:
-            return { ...state, isApplicatinoOnSaveLoading: action.isLoading };
+            return { ...state, isApplicatinoOnSaveLoading: action.isSaveLoading };
         case APPLICATION_LOCATION_DATA:
             return { ...state, isLocationsLoading: action.isLoading };
         case APPLICATION_MASTER_DETAIL_DATA_SHOW_LOADING:

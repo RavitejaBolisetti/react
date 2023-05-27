@@ -199,7 +199,9 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     useEffect(() => {
-        loadPinCodeDataList();
+        if (refershData) {
+            loadPinCodeDataList();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
 
@@ -337,11 +339,10 @@ const ListPinCodeMasterBase = (props) => {
         };
 
     const onFinish = (values) => {
-        let data = { ...values, localityCode: Math.floor(Math.random() * 899999 + 100000) };
+        let data = { ...values };
+        // let data = { ...values, localityCode: Math.floor(Math.random() * 899999 + 100000) };
         const onSuccess = (res) => {
             form.resetFields();
-            // setShowDataLoading(true);
-
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             loadPinCodeDataList();
 
@@ -432,11 +433,15 @@ const ListPinCodeMasterBase = (props) => {
 
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
-        // setFilteredDistrictData(undefined);
-        // setFilteredCityData(undefined);
-        // setFilteredTehsilData(undefined);
+
+        // !filterString?.stateCode && setFilteredStateData(undefined);
+        !filterString?.districtCode && setFilteredDistrictData(undefined);
+        !filterString?.cityCode && setFilteredCityData(undefined);
+        !filterString?.tehsilCode && setFilteredTehsilData(undefined);
+
         filterString?.tehsilCode && setTehsilCodeValue();
         filterString?.cityCode && setCityCodeValue();
+
         advanceFilterForm.resetFields();
     };
 

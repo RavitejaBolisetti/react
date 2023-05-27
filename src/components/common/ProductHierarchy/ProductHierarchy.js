@@ -346,7 +346,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {};
+    const onFinishFailed = (errorInfo) => { };
 
     const myProps = {
         isTreeViewVisible,
