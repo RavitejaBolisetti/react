@@ -35,7 +35,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-
     const moduleTitle = 'Tehsil';
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
@@ -211,7 +210,7 @@ export const ListTehsilBase = (props) => {
                 const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
                 const state = filterString?.stateCode;
                 const district = filterString?.districtCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -267,7 +266,7 @@ export const ListTehsilBase = (props) => {
     // console.log(setFilteredDistrictData,'setFilteredDistrictData')
 
     const onFinish = (values) => {
-        let data = { ...values };
+        let data = { ...values, includedOn: values?.includedOn?.format('YYYY-MM-DD') };
 
         const onSuccess = (res) => {
             form.resetFields();
