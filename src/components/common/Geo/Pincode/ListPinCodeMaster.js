@@ -161,6 +161,13 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     useEffect(() => {
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         if (userId) {
             if (!isDataCountryLoaded && !isCountryLoading) {
                 fetchCountryList({ setIsLoading: listCountryShowLoading, userId });
