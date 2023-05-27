@@ -10,7 +10,7 @@ import ProductDetail from './ProductDetail';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute, skuAttributes, treeSelectProps } = props;
+    const { onCloseAction, handleAttributeChange, formActionType, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute, skuAttributes, treeSelectProps,treeCodeId } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { form, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
 
@@ -59,6 +59,8 @@ const AddEditFormMain = (props) => {
         actionForm.resetFields();
     };
 
+    
+
     const attributeFormProps = {
         form,
         skuAttributes: formData?.skuAttributes,
@@ -80,6 +82,7 @@ const AddEditFormMain = (props) => {
         onMainFormFinish: onFinish,
         onFinishFailed,
         formData,
+        treeCodeId,
         handleAttributeChange,
         handleProductchange,
         isDataAttributeLoaded,

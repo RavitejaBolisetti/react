@@ -266,7 +266,19 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         form.resetFields();
     };
 
-   
+    let treeCodeId = '';
+    let treeCodeReadOnly = false;
+
+    if (formActionType === FROM_ACTION_TYPE.EDIT || formActionType === FROM_ACTION_TYPE.VIEW) {
+        treeCodeId = formData?.manufactureOrgParntId;
+    } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
+        treeCodeId = selectedTreeKey && selectedTreeKey[0];
+        treeCodeReadOnly = true;
+    } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
+        treeCodeReadOnly = true;
+        const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
+        treeCodeId = treeCodeData && treeCodeData?.data?.manufactureOrgParntId;
+    }
 
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
     const treeProdFieldNames = { ...fieldProductNames, label: fieldProductNames?.title, value: fieldProductNames?.key };
@@ -282,6 +294,16 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         placeholder: preparePlaceholderSelect(''),
     };
 
+    const treeSelectProps = {
+        treeFieldNames: treeProdFieldNames,
+        treeData: productHierarchyData,
+        treeDisabled: treeCodeReadOnly,
+        //|| isReadOnly,
+        selectedTreeSelectKey,
+        handleSelectTreeClick,
+        defaultValue: treeCodeId,
+        placeholder: preparePlaceholderSelect(''),   
+    }
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
@@ -340,7 +362,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const formProps = {
         form,
-        //treeSelectProps,
+        treeSelectProps,
+        treeCodeId,
         isChecked,
         setIsChecked,
         setSelectedTreeKey,
