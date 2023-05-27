@@ -8,6 +8,7 @@ import { HierarchyFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -24,13 +25,16 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], skudata: skuData = [], changeHistoryVisible, attributeData: productHierarchyAttributeData = [] },
+            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], changeHistoryVisible, attributeData: productHierarchyAttributeData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
+            ManufacturerOrgHierarchy: { isLoaded: isDataOrgLoaded = false, data: manufacturerOrgHierarchyData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
         },
     } = state;
+
+    console.log(state, 'GLOBAL');
 
     const moduleTitle = 'Product Detail';
     const viewTitle = 'Hierarchy Details';
@@ -42,15 +46,14 @@ const mapStateToProps = (state) => {
         isChangeHistoryVisible: changeHistoryVisible,
         isDataLoaded,
         productHierarchyData,
-        skuData,
-        //productHierarchyData: [],
+        manufacturerOrgHierarchyData,
         moduleTitle,
         viewTitle,
         isDataAttributeLoaded,
+        isDataOrgLoaded,
         attributeData: attributeData?.filter((item) => item?.status),
         unFilteredAttributeData: attributeData,
         productHierarchyAttributeData,
-        //attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
 };
@@ -60,6 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: productHierarchyDataActions.fetchList,
+            fetchOrgList: manufacturerOrgHierarchyDataActions.fetchList,
             saveData: productHierarchyDataActions.saveData,
             listShowLoading: productHierarchyDataActions.listShowLoading,
             changeHistoryModelOpen: productHierarchyDataActions.changeHistoryModelOpen,
@@ -75,7 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, unFilteredAttributeData, fetchListHierarchyAttributeName, productHierarchyAttributeData }) => {
+export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, unFilteredAttributeData, fetchListHierarchyAttributeName, productHierarchyAttributeData, fetchOrgList, isDataOrgLoaded, manufacturerOrgHierarchyData }) => {
     const [form] = Form.useForm();
     const [isCollapsableView, setCollapsableView] = useState(true);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -103,7 +107,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
+    //const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
+    const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
 
     const onCloseAction = () => {
         form.resetFields();
@@ -111,33 +116,40 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    useEffect(() => {
-        if (userId) {
-            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Product Hierarchy' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    // useEffect(() => {
+    //     if (userId) {
+    //         hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Product Hierarchy' });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId]);
 
     useEffect(() => {
-        if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, onCloseAction });
+        if (!isDataOrgLoaded && userId) {
+            fetchOrgList({ setIsLoading: listShowLoading, userId, onCloseAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, isDataAttributeLoaded, userId]);
+    }, [isDataOrgLoaded, userId]);
+
+    // useEffect(() => {
+    //     if (!isDataLoaded && userId) {
+    //         fetchList({ setIsLoading: listShowLoading, userId, onCloseAction});
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isDataLoaded, userId]);
 
     useEffect(() => {
         if (isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: selectedTreeSelectKey });
+            fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: 'de57f5de-d11f-4993-bf97-7cbd693a6207' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded, userId, selectedTreeSelectKey]);
 
-    useEffect(() => {
-        if (userId) {
-            fetchListHierarchyAttributeName({ userId, setIsLoading: listShowLoading });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    // useEffect(() => {
+    //     if (userId) {
+    //         fetchListHierarchyAttributeName({  userId, setIsLoading: listShowLoading });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId]);
 
     useEffect(() => {
         if (selectedId && userId) {
@@ -214,21 +226,12 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         }
 
         setSelectedTreeKey(keys);
-
-        // if (keys && keys.length > 0) {
-        //     const formData = flatternData.find((i) => keys[0] === i.key);
-        //     const ID = formData.data.id;
-
-        //     setSelectedId(ID);
-        //     cardBtnDisableAction(true);
-
-        //     setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
-        // }
-
-        // setSelectedTreeKey(keys);
     };
 
     const handleSelectTreeClick = (value) => {
+        if (value === selectedTreeKey[0]) {
+            return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
+        }
         setSelectedTreeSelectKey(value);
     };
 
@@ -275,10 +278,11 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     }
 
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
+    // const treeOrgFieldNames = { ...orgFieldNames, label: orgFieldNames?.title, value: orgFieldNames?.key };
 
     const treeSelectFieldProps = {
         treeFieldNames,
-        treeData: productHierarchyData,
+        treeData: manufacturerOrgHierarchyData,
         treeDisabled: treeCodeReadOnly,
         //|| isReadOnly,
         selectedTreeSelectKey,
@@ -395,31 +399,49 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
+
+    const title = 'Hierarchy';
 
     return (
         <>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={24} sm={24} md={19} lg={19} xl={19} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
-                                        Hierarchy
-                                    </Col>
-                                    <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                        {/* <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                    <Form.Item
+                                        label={`${title}`}
+                                        name="code"
+                                        // rules={[
+                                        //     {
+                                        //         validator: validator,
+                                        //     },
+                                        // ]}
+                                        validateTrigger={['onSearch']}
+                                    >
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                                {/* <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
+                                                    <Option value="hyr">Hyr</Option>
+                                                </Select> */}
+                                                <Col xs={24} sm={24} md={9} lg={9} xl={9}>
+                                                    {/* <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
                                             <Option value="hyr">Hyr</Option>
                                         </Select> */}
-                                        <TreeSelectField {...treeSelectFieldProps} />
-                                    </Col>
-                                    <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                        <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
-                                    </Col>
-                                </Row>
+                                                    <TreeSelectField {...treeSelectFieldProps} />
+                                                </Col>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                                <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
+                                            </Col>
+                                        </Row>
+                                    </Form.Item>
+                                </Form>
                             </Col>
                             {productHierarchyData.length > 0 && (
-                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={5} lg={5} xl={5}>
+                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
                                     <Button type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`} onClick={changeHistoryModelOpen}>
                                         <FaHistory className={styles.buttonIcon} />
                                         Change History

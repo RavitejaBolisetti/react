@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Button, Input, message, notification, Space } from 'antd';
@@ -61,6 +61,10 @@ const Login = (props) => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [fieldData, setFieldData] = useState();
+
+    const userIdRef = useRef(null);
+    const passwordInputRef = useRef(null);
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
     const [, updateState] = React.useState();
@@ -139,7 +143,7 @@ const Login = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const updatePasswordStatusInfo = (data) => {
@@ -186,6 +190,14 @@ const Login = (props) => {
             {!showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
         </span>
     );
+
+    const handleFormChange = (field) => (e) => {
+        setFieldData({ ...fieldData, [field]: e?.target?.value?.length > 0 ? true : false });
+    };
+
+    const handleFieldFocus = (field) => (e) => {
+        field?.current.focus();
+    };
     return (
         <>
             {contextAlertNotification}
@@ -212,17 +224,27 @@ const Login = (props) => {
                                                     <div className={styles.loginSubHeading}>Please enter your credentials to login</div>
                                                 </div>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
-                                                            {<Input prefix={<BiUser size={18} />} type="text" maxLength={25} placeholder="User ID (MILE ID.Parent ID)*" />}
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
+                                                        <Form.Item name="userId" class="textfieldWithPrefix__input" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
+                                                            {<Input ref={userIdRef} prefix={<BiUser size={18} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
                                                         </Form.Item>
+                                                        {!fieldData?.userId && (
+                                                            <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(userIdRef)}>
+                                                                User ID (MILE ID.Parent ID)
+                                                            </label>
+                                                        )}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="password" data-testid="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
-                                                            <Input type={showPassword ? 'text' : 'password'} placeholder="Password*" prefix={<FiLock size={18} />} suffix={passowrdSuffix} />
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
+                                                        <Form.Item name="password" class="textfieldWithPrefix__input" data-testid="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
+                                                            <Input ref={passwordInputRef} type={showPassword ? 'text' : 'password'} prefix={<FiLock size={18} />} suffix={passowrdSuffix} onChange={handleFormChange('password')} />
                                                         </Form.Item>
+                                                        {!fieldData?.password && (
+                                                            <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(passwordInputRef)}>
+                                                                Password
+                                                            </label>
+                                                        )}
                                                         <div className={styles.forgotPasswordLink}>
                                                             <Link to={ROUTING_FORGOT_PASSWORD}>Forget Password?</Link>
                                                         </div>
@@ -239,9 +261,7 @@ const Login = (props) => {
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <div className={styles.loginFooter}>
-                                                            <Link to={process.env.REACT_APP_SSO_LOGIN_URL}>
-                                                                M&M User Login
-                                                            </Link>
+                                                            <Link to={process.env.REACT_APP_SSO_LOGIN_URL}>M&M User Login</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>

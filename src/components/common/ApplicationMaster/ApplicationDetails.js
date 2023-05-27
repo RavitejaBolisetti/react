@@ -3,10 +3,13 @@ import { Input, Form, Col, Row, Switch, Select } from 'antd';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validationFieldLetteNumberandPeriod, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
+import { LANGUAGE_EN } from 'language/en';
 
 import TreeSelectField from '../TreeSelectField';
 
 const { Option } = Select;
+const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING
+
 
 const ApplicationDetails = ({ form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setparentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification }) => {
     useEffect(() => {
@@ -21,11 +24,12 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, parentAppCode, is
         setIsDocumentToGenerate(val);
     };
     const fieldNames = { label: 'menuTitle', value: 'menuId', children: 'subMenu' };
-
+ 
     const handleSelectTreeClick = (value) => {
         if (value === finalFormdata?.applicationDetails?.applicationId) {
-            return showGlobalNotification({ notificationType: 'warning', title: 'Warning', message: 'Select different parent', placement: 'bottomRight' });
+            return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
         }
+
 
         setparentAppCode(value);
     };

@@ -1,36 +1,37 @@
 import { tblPrepareColumns, tblSerialNumberColumn, tblActionColumn } from 'utils/tableCloumn';
+import { Tag } from 'antd';
 
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
-        tblSerialNumberColumn({ page, pageSize }),
+        tblSerialNumberColumn({ page, pageSize, width: '8%' }),
 
         tblPrepareColumns({
             title: 'Criticality Group ID',
             dataIndex: 'criticalityGroupCode',
-            width: '20%',
+            width: '15%',
         }),
         tblPrepareColumns({
             title: 'Criticality Group Name',
             dataIndex: 'criticalityGroupName',
-            width: '35%',
+            width: '25%',
         }),
         tblPrepareColumns({
             title: 'Default Group',
             dataIndex: 'criticalityDefaultGroup',
-            render: (text) => <>{text === true ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-            width: '10%',
+            render: (text) => <>{text === true ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
+            width: '15%',
         }),
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'activeIndicator',
-            render: (text) => <>{text === true ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-            width: '10%',
+            render: (text) => <>{text === true ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
+            width: '15%',
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '15%' })
+        tblActionColumn({ handleButtonClick, styles, width: '12%' })
     );
 
     return tableColumn;

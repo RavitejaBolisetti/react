@@ -4,7 +4,7 @@ import { Button, Empty, ConfigProvider } from 'antd';
 import styles from 'components/common/Common.module.css';
 import { PlusOutlined } from '@ant-design/icons';
 
-export default function ListDataTable({ isLoading, tableColumn, tableData, handleAdd, addTitle = 'Group', noDataMessage = '', scroll = 'auto' }) {
+export default function ListDataTable({ isLoading, tableColumn, tableData, handleAdd, addTitle = 'Group', scroll = 'auto', noDataMessage = 'No records found. Please add new parameter <br />using below button' }) {
     return (
         <>
             <ConfigProvider
@@ -14,16 +14,7 @@ export default function ListDataTable({ isLoading, tableColumn, tableData, handl
                         imageStyle={{
                             height: '20%',
                         }}
-                        description={
-                            !tableData?.length ? (
-                                <span>
-                                    No records found. Please add new parameter <br />
-                                    using below button
-                                </span>
-                            ) : (
-                                <span> No records found.</span>
-                            )
-                        }
+                        description={!tableData?.length ? <span>{noDataMessage}</span> : <span> No records found.</span>}
                     >
                         {!tableData?.length ? (
                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>

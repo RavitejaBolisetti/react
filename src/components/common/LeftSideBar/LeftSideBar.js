@@ -9,7 +9,7 @@ import IMG_ICON from 'assets/img/icon.png';
 import IMG_LOGO from 'assets/images/RobinLightTheme.svg';
 
 import { menuDataActions } from 'store/actions/data/menu';
-import { setCollapsed, setIsMobile } from 'store/actions/common/leftsidebar';
+import { setCollapsed, setIsMobile, setSelectKeyToScroll } from 'store/actions/common/leftsidebar';
 
 import styles from './LeftSideBar.module.css';
 import * as routing from 'constants/routing';
@@ -26,12 +26,20 @@ const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true
     id && getMenuValue(MenuConstant, id, 'link') ? (
         <Link to={getMenuValue(MenuConstant, id, 'link')} title={tooltip ? menuOrgTitle : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
-            {showTitle && <span className={styles.menuTitle}>{title}</span>}
+            {showTitle && (
+                <span id={id} className={styles.menuTitle}>
+                    {title}
+                </span>
+            )}
         </Link>
     ) : (
         <Link to="#" title={tooltip ? menuOrgTitle : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
-            {showTitle && <span className={styles.menuTitle}>{title}</span>}
+            {showTitle && (
+                <span id={id} className={styles.menuTitle}>
+                    {title}
+                </span>
+            )}
         </Link>
     );
 
@@ -42,11 +50,11 @@ const mapStateToProps = (state) => {
             Menu: { isLoaded: isDataLoaded = false, isLoading, filter, data: menuData = [], flatternData },
         },
         common: {
-            LeftSideBar: { collapsed = false, isMobile = false },
+            LeftSideBar: { collapsed = false, isMobile = false, selectedMenudId = 'COMN-03.02' },
         },
     } = state;
 
-    let returnValue = { isLoading, userId, isDataLoaded, filter, menuData: menuData, flatternData, childredData: flatternData?.filter((i) => !i.childExist && i.parentMenuId !== 'FAV'), isMobile, collapsed };
+    let returnValue = { isLoading, selectedMenudId, userId, isDataLoaded, filter, menuData: menuData, flatternData, childredData: flatternData?.filter((i) => !i.childExist && i.parentMenuId !== 'FAV'), isMobile, collapsed };
     return returnValue;
 };
 
@@ -59,13 +67,14 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: menuDataActions.fetchList,
             setFilter: menuDataActions.setFilter,
             listShowLoading: menuDataActions.listShowLoading,
+            setSelectKeyToScroll,
         },
         dispatch
     ),
 });
 
 const LeftSideBarMain = (props) => {
-    const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, childredData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed } = props;
+    const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, childredData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed,setSelectKeyToScroll, selectedMenudId } = props;
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -97,9 +106,9 @@ const LeftSideBarMain = (props) => {
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, errorAction: () => { } });
+            fetchList({ setIsLoading: listShowLoading, userId, errorAction: () => {} });
         }
-        return () => { };
+        return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
@@ -111,6 +120,7 @@ const LeftSideBarMain = (props) => {
                     return {
                         label: i.menuTitle,
                         value: i.menuId,
+                        // parent: i.parentMenuId,
                     };
                 }
                 return undefined;
@@ -119,6 +129,16 @@ const LeftSideBarMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
+   
+    useEffect(() => {
+        if (selectedMenudId && isDataLoaded) {           
+            // setTimeout(() => {
+            //     const element = document?.getElementById(selectedMenudId)?.closest('ul');             
+            //     element?.scrollIntoView({ behavior: 'smooth' });
+            // }, 1000);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, selectedMenudId, openKeys]);
 
     const handleThemeChange = () => {
         const changeTheme = theme === 'dark' ? 'light' : 'dark';
@@ -155,8 +175,11 @@ const LeftSideBarMain = (props) => {
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
         if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
             setOpenKeys(keys);
+
+            setSelectKeyToScroll(keys[keys.length-1]);
         } else {
             setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+
         }
     };
 
@@ -171,6 +194,7 @@ const LeftSideBarMain = (props) => {
     const onSelect = (menuId, label) => {
         if (menuId && getMenuValue(MenuConstant, menuId, 'link')) navigate(getMenuValue(MenuConstant, menuId, 'link'));
         setSelectedMenuId(menuId);
+        setSelectKeyToScroll(menuId);
     };
 
     const onMenuCollapsed = () => {

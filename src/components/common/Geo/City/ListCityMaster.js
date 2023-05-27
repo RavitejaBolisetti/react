@@ -142,6 +142,7 @@ export const ListCityMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataCountryLoaded, isStateDataLoaded, isDataLoaded]);
+    
     useEffect(() => {
         if (userId && refershData) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
@@ -151,7 +152,8 @@ export const ListCityMasterBase = (props) => {
 
     useEffect(() => {
         if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
-            setFilteredStateData(stateData?.filter((i) => i?.countryCode === defaultCountry));
+            setFilterString({ countryCode: defaultCountry });
+            defaultCountry ? setFilteredStateData(stateData?.filter((i) => i?.countryCode === defaultCountry)) : setFilteredStateData();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataCountryLoaded, isStateDataLoaded]);
@@ -172,12 +174,13 @@ export const ListCityMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
+
     const extraParams = [
         {
             key: 'countryCode',
             title: 'Country',
             value: filterString?.countryCode,
-            canRemove: false,
+            canRemove: true,
             name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
         },
         {
@@ -230,14 +233,17 @@ export const ListCityMasterBase = (props) => {
         } else {
             const { [key]: names, ...rest } = filterString;
             advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
-            setFilterString({ ...rest });
+
+            if (!filterString?.countryCode && !filterString?.stateCode && !filterString?.districtCode) {
+                setFilterString();
+                advanceFilterForm.resetFields();
+            } else {
+                setFilterString({ ...rest });
+            }
         }
     };
 
-    // const onSearchHandle = (value) => {
-    //     value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value, countryCode: 'IND' }) : handleResetFilter();
-    // };
-
+  
     const onSearchHandle = (value) => {
         if (value?.trim()?.length >= 3) {
             setFilterString({ ...filterString, advanceFilter: true, keyword: value });
@@ -306,6 +312,7 @@ export const ListCityMasterBase = (props) => {
     };
 
     const onCloseAction = () => {
+
         form.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
@@ -344,6 +351,8 @@ export const ListCityMasterBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
+        setFilteredDistrictData(undefined);
+
     };
 
     const handleResetFilter = () => {
@@ -351,6 +360,7 @@ export const ListCityMasterBase = (props) => {
         resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
+        setFilteredDistrictData(undefined);
     };
 
     const advanceFilterProps = {
@@ -399,6 +409,7 @@ export const ListCityMasterBase = (props) => {
         handleButtonClick,
         advanceFilterProps,
         title,
+        setFilteredDistrictData,
     };
 
     return (

@@ -10,7 +10,7 @@ import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { ListDataTable } from 'utils/ListDataTable';
-
+import { searchValidator } from 'utils/validation';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -140,10 +140,8 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
-
         record && setFormData(record);
         setIsFormVisible(true);
     };
@@ -171,6 +169,8 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
+
+            setAdvanceSearchVisible(false);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
@@ -276,15 +276,17 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     };
 
     const removeFilter = (key) => {
+        const { [key]: names, ...rest } = filterString;
         if (key === 'divisionCode') {
-            setFilterString(undefined);
+            if (!rest?.keyword) {
+                setFilterString();
+            } else {
+                setFilterString({ ...rest });
+            }
         } else if (key === 'keyword') {
-            const { [key]: names, ...rest } = filterString;
-
             listFilterForm.setFieldsValue({ code: undefined });
             advanceFilterForm.setFieldsValue({ keyword: undefined });
-
-            if (!rest?.divisionCode && !rest?.divisionCode && !rest?.divisionCode) {
+            if (!rest?.divisionCode) {
                 setFilterString();
             } else {
                 setFilterString({ ...rest });
@@ -308,6 +310,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         handleButtonClick,
         advanceFilterProps,
         title,
+        searchValidator,
     };
 
     return (
