@@ -34,8 +34,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('productHierarchyAttributeData', productHierarchyAttributeData);
-
     const moduleTitle = 'Product Detail';
     const viewTitle = 'Hierarchy Details';
 
@@ -89,7 +87,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const [closePanels, setClosePanels] = React.useState([]);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
-    console.log('🚀 ~ file: ProductHierarchy.js:90 ~ ProductHierarchyMain ~ selectedTreeKey:', selectedTreeKey);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState();
     const [formActionType, setFormActionType] = useState('');
 
@@ -192,7 +189,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     };
 
     const handleTreeViewClick = (keys) => {
-        console.log('🚀 ~ file: ProductHierarchy.js:197 ~ handleTreeViewClick ~ flatternData:', flatternData);
         setButtonData({ ...defaultBtnVisiblity });
         form.resetFields();
         setFormData([]);
@@ -260,7 +256,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         treeCodeId = formData?.parntProdctId;
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
         treeCodeId = selectedTreeKey && selectedTreeKey[0];
-        console.log('🚀 ~ file: ProductHierarchy.js:256 ~ ProductHierarchyMain ~ treeCodeId:', treeCodeId);
         treeCodeReadOnly = true;
     } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
         treeCodeReadOnly = true;
@@ -274,7 +269,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: manufacturerOrgHierarchyData,
-        treeDisabled: treeCodeReadOnly,
         selectedTreeSelectKey: selectedOrganizationKey,
         defaultParent: false,
         handleSelectTreeClick: (value) => {
@@ -287,9 +281,9 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const treeSelectProps = {
         treeFieldNames: treeProdFieldNames,
         treeData: productHierarchyData,
-        // treeDisabled: treeCodeReadOnly,
+        treeDisabled: treeCodeReadOnly,
         //|| isReadOnly,
-        selectedTreeSelectKey,
+        selectedTreeSelectKey: treeCodeId,
         handleSelectTreeClick,
         defaultValue: treeCodeId,
         placeholder: preparePlaceholderSelect(''),
@@ -297,7 +291,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const onFinish = (values) => {
         const recordId = formData?.id?.toString() || '';
-        const codeToBeSaved = selectedTreeSelectKey || '';
+        // const codeToBeSaved = values?.parentCode || '';
 
         // const myparentId = FindParent(flatternData, selectedTreeKey['0']);
 
@@ -308,7 +302,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         //     return;
         // }
 
-        const data = { ...values, id: recordId, parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N', skuAttributes, mfgOrgSk: selectedOrganizationKey };
+        const data = { ...values, id: recordId, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N', skuAttributes, mfgOrgSk: selectedOrganizationKey };
 
         // console.log('🚀 ~ file: ProductHierarchy.js:305 ~ onFinish ~ data:', data);
 
@@ -360,6 +354,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const formProps = {
         form,
         treeSelectProps,
+        treeCodeId,
         isChecked,
         setIsChecked,
         setSelectedTreeKey,
@@ -422,7 +417,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                                 <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                    {/* onKeyPress={onKeyPressHandler} */}
                                     <Form.Item label={`${title}`} name="code" validateTrigger={['onSearch']}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>

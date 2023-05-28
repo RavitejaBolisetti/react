@@ -97,6 +97,7 @@ const AddEditFormMain = (props) => {
         isReadOnly,
     };
 
+    console.log('productDetailsProps', productDetailsProps, 'treeCodeId', treeCodeId);
     return (
         <>
             <ProductDetail {...productDetailsProps} />

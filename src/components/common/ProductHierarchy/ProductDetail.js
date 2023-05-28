@@ -26,7 +26,7 @@ const ProductDetail = (props) => {
                 </Col>
 
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
-                    <Form.Item initialValue={treeCodeId} label="Parent" name="parntProdctId">
+                    <Form.Item initialValue={treeCodeId} label="Parent" name="parentCode">
                         <TreeSelectField {...treeSelectProps} />
                     </Form.Item>
                 </Col>
