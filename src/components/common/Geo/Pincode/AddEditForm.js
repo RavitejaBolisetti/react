@@ -82,7 +82,7 @@ const AddEditFormMain = (props) => {
         className: styles.headerSelectField,
     };
     return (
-        <Form id="configForm" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" id="configForm" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
                 <ViewDetail {...viewProps} />
             ) : (

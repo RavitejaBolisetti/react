@@ -4,15 +4,13 @@ import { withDrawer } from 'components/withDrawer';
 import style from '../../common/DrawerAndTable.module.css';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import ProductAttributeMaster from './ProductAttribute/ProductAttributeMaster';
 import ProductDetail from './ProductDetail';
 
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute, skuAttributes } = props;
-    const { selectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
+    const { onCloseAction, handleAttributeChange, formActionType, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute, skuAttributes, treeSelectProps, treeCodeId } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { form, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
 
@@ -22,37 +20,14 @@ const AddEditFormMain = (props) => {
 
     const { onFinish, onFinishFailed } = props;
 
-    const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
-
     const disabledProps = { disabled: isReadOnly };
 
-    let treeCodeId = '';
-    let treeCodeReadOnly = false;
+    const productSKUKey = '63ec10a2-520d-44a4-85f6-f55a1d6911f3';
 
-    if (formActionType === FROM_ACTION_TYPE.EDIT) {
-        treeCodeId = formData?.parntProdctId;
-        // setShowProductAttribute(true);
-    } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
-        treeCodeId = selectedTreeKey && selectedTreeKey[0];
-        treeCodeReadOnly = true;
-        //setShowProductAttribute(false);
-    } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-        treeCodeReadOnly = true;
-        const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-        treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
-        //setShowProductAttribute(false);
-    }
-
-    useEffect(() => {
-        setSelectedTreeSelectKey(treeCodeId);
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [treeCodeId]);
-
+    console.log('selectedTreeData', selectedTreeData);
     useEffect(() => {
         if (userId) {
             fetchListHierarchyAttributeName({ userId, setIsLoading: listShowLoading });
-            //setIsLoading: listShowLoading,
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -62,9 +37,10 @@ const AddEditFormMain = (props) => {
             setShowProductAttribute(false);
         }
         if (formActionType === FROM_ACTION_TYPE.EDIT) {
-            selectedTreeData?.skuAttributes ? setShowProductAttribute(true) : setShowProductAttribute(false);
+            setShowProductAttribute(selectedTreeData?.attributeKey === productSKUKey);
         }
-    }, [formActionType, selectedTreeData?.skuAttributes, setShowProductAttribute]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType, selectedTreeData]);
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -86,17 +62,6 @@ const AddEditFormMain = (props) => {
         setSKUAttributes((prev) => [...prev, { attributeName: label, id: value, attributeValue: val.attributeValue }]);
         actionForm.resetFields();
     };
-    
-    const treeSelectFieldProps = {
-        treeFieldNames,
-        treeData: productHierarchyData,
-        treeDisabled: treeCodeReadOnly || isReadOnly,
-        selectedTreeSelectKey,
-        handleSelectTreeClick,
-        defaultValue: treeCodeId,
-        placeholder: preparePlaceholderSelect('parent'),
-        handleFormFieldChange,
-    };
 
     const attributeFormProps = {
         form,
@@ -110,7 +75,6 @@ const AddEditFormMain = (props) => {
         isVisible,
         selectedTreeData,
         formActionType,
-        skuAttributes,
     };
 
     const productDetailsProps = {
@@ -120,19 +84,20 @@ const AddEditFormMain = (props) => {
         onMainFormFinish: onFinish,
         onFinishFailed,
         formData,
+        treeCodeId,
         handleAttributeChange,
         handleProductchange,
         isDataAttributeLoaded,
         disabledProps,
         attributeData,
-        treeCodeId,
-        treeSelectFieldProps,
+        treeSelectProps,
         formActionType,
         onCloseAction,
         isFormBtnActive,
         isReadOnly,
     };
 
+    console.log('productDetailsProps', productDetailsProps, 'treeCodeId', treeCodeId);
     return (
         <>
             <ProductDetail {...productDetailsProps} />

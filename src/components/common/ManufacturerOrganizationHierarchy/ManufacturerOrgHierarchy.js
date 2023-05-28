@@ -61,7 +61,6 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: manufacturerOrgHierarchyDataActions.listShowLoading,
             changeHistoryModelOpen: manufacturerOrgHierarchyDataActions.changeHistoryModelOpen,
             fetchChangeHistoryList: manufacturerOrgHierarchyDataActions.fetchChangeHistoryList,
-
             hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
@@ -294,7 +293,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
     return (
         <>
             <Row gutter={20} span={24}>
-                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={styles.borderBottomCorner}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={18} lg={18} xl={18}>

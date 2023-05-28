@@ -43,7 +43,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Pincode Master List';
+    const moduleTitle = 'Pincode';
 
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
@@ -61,15 +61,15 @@ const mapStateToProps = (state) => {
         isDistrictLoading,
         isStateLoading,
         isDistrictDataLoaded,
-        districtData,
+        districtData: districtData?.filter((i) => i.status),
         isTehsilDataLoaded,
         isTehsilLoading,
-        tehsilData,
+        tehsilData: tehsilData?.filter((i) => i.status),
         isCityDataLoaded,
         isCityLoading,
-        cityData,
+        cityData: cityData?.filter((i) => i.status),
         data,
-        stateData,
+        stateData: stateData?.filter((i) => i.status),
         isDataLoaded,
         isConfigDataLoaded,
         isConfigLoading,
@@ -159,6 +159,13 @@ const ListPinCodeMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
+
+    useEffect(() => {
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (userId) {

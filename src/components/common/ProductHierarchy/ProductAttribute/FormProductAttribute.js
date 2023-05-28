@@ -38,7 +38,6 @@ function FormProductAttribute(props) {
                             allowClear
                             labelInValue
                             onChange={getValues}
-                            //disabled={ formDecider ? true : false}
                         />
                     </Form.Item>
                 </Col>

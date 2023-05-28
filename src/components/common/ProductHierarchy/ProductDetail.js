@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React from 'react';
 import { Input, Form, Col, Row, Switch, Select, Button } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpaceHyphenPeriod } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -9,16 +9,13 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const ProductDetail = (props) => {
-    const { mainFrom, handleFormValueChange, handleFormFieldChange, onMainFormFinish, onFinishFailed, formData, handleAttributeChange, handleProductchange, isDataAttributeLoaded, disabledProps, attributeData, treeCodeId, treeSelectFieldProps, formActionType, onCloseAction, isFormBtnActive, isReadOnly } = props;
-
+    const { mainFrom, handleFormValueChange, handleFormFieldChange, onMainFormFinish, onFinishFailed, formData, handleAttributeChange, handleProductchange, isDataAttributeLoaded, disabledProps, attributeData, treeCodeId, treeSelectProps, formActionType, onCloseAction, isFormBtnActive, isReadOnly } = props;
     return (
-        // <Fragment>
-        // <Form autoComplete="off" form={mainFrom} layout="vertical"   onFinish={onMainFormFinish} onFinishFailed={onFinishFailed}>
         <Form form={mainFrom} id="myForm" autoComplete="off" layout="vertical" onFinish={onMainFormFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
-                        <Select onChange={handleAttributeChange} onClick={handleProductchange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} {...disabledProps} showSearch allowClear>
+                        <Select onChange={handleAttributeChange} onClick={handleProductchange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} disabled={formData?.id || isReadOnly} showSearch allowClear>
                             {attributeData?.map((item) => (
                                 <Option key={item?.id} value={item?.id}>
                                     {item?.hierarchyAttribueName}
@@ -29,8 +26,8 @@ const ProductDetail = (props) => {
                 </Col>
 
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
-                    <Form.Item initialValue={treeCodeId} label="Parent" name="parntProdctId">
-                        <TreeSelectField {...treeSelectFieldProps} />
+                    <Form.Item initialValue={treeCodeId} label="Parent" name="parentCode">
+                        <TreeSelectField {...treeSelectProps} />
                     </Form.Item>
                 </Col>
             </Row>

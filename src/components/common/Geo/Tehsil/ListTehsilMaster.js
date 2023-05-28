@@ -52,13 +52,13 @@ const mapStateToProps = (state) => {
         isDistrictLoading,
         isStateLoading,
         isDistrictDataLoaded,
-        districtData,
+        districtData: districtData?.filter((i) => i.status),
         isTehsilCategoryDataLoaded,
         isTehsilCategoryDataLoading,
         tehsilCategoryData: tehsilCategoryData && tehsilCategoryData[PARAM_MASTER.GEO_TEH_CAT.id],
 
         data,
-        stateData,
+        stateData: stateData?.filter((i) => i.status),
         isDataLoaded,
         moduleTitle,
     };
