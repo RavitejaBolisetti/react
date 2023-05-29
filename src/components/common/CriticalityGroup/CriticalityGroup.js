@@ -143,6 +143,8 @@ export const CriticalityGroupMain = (props) => {
             form.resetFields();
             setForceFormReset(generateRandomNumber());
             setTimeData([]);
+
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
@@ -152,10 +154,6 @@ export const CriticalityGroupMain = (props) => {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             }
         };
-
-        setTimeout(() => {
-            fetchList({ setIsLoading: listShowLoading, userId });
-        }, 2000);
 
         const onError = (message) => {
             showGlobalNotification({ message, placement: 'bottomRight' });

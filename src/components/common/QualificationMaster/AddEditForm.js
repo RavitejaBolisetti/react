@@ -37,7 +37,7 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autocomplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!formActionType.viewMode ? (
                 <>
                     <Row gutter={20}>

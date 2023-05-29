@@ -74,7 +74,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item  label="Configurable Parameter Type" name="configurableParameterType" rules={[validateRequiredSelectField('ConfigParamType')]}>
+                            <Form.Item  label="Configurable Parameter Type"  rules={[validateRequiredSelectField('ConfigParamType')]}>
                                 <Select defaultValue={parameterType} placeholder="Select Parameter Type" onChange={changeSelectOptionHandler} disabled={isReadOnly}>
                                     {typeData && typeData[PARAM_MASTER.CFG_PARAM_TYPE.id] && typeData[PARAM_MASTER.CFG_PARAM_TYPE.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)}
                                 </Select>

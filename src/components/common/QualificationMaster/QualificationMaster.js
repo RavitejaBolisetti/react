@@ -40,7 +40,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         data,
-   
+
         moduleTitle,
     };
     return returnValue;
@@ -132,6 +132,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
         setIsFormVisible(true);
     };
 
+    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
         tableData: searchData,
@@ -253,7 +254,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />

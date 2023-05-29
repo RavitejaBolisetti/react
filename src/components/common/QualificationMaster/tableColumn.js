@@ -10,12 +10,12 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Qualification Code',
             dataIndex: 'qualificationCode',
-            width: '10%',
+            width: '20%',
         }),
         tblPrepareColumns({
             title: 'Qualification Name',
             dataIndex: 'qualificationName',
-            width: '40%',
+            width: '30%',
         }),
         tblPrepareColumns({
             title: 'Status',
