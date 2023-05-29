@@ -18,7 +18,8 @@ import TreeSelectField from '../TreeSelectField';
 import { FaHistory } from 'react-icons/fa';
 import { ViewProductDetail } from './ViewProductDetail';
 import { LANGUAGE_EN } from 'language/en';
-import { FindprodctCode, FindParent, disableParent } from './ProductHierarchyUtils';
+import { disableParent } from './ProductHierarchyUtils';
+
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
@@ -135,6 +136,11 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrganizationKey]);
+
+    useEffect(() => {
+        manufacturerOrgHierarchyData?.map((i) => disableParent(i));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [manufacturerOrgHierarchyData]);
 
     useEffect(() => {
         if (selectedId && userId) {
@@ -303,9 +309,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         // }
 
         const data = { ...values, id: recordId, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N', skuAttributes, mfgOrgSk: selectedOrganizationKey };
-
-        // console.log('🚀 ~ file: ProductHierarchy.js:305 ~ onFinish ~ data:', data);
-
         // return false;
         // const data = { ...values, id: recordId, parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N', skuAttributes, mfgOrgSk: selectedTreeSelectKey };
         const onSuccess = (res) => {
