@@ -414,7 +414,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     return (
         <>
             <Row gutter={20} span={24}>
-                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={styles.borderBottomCorner}>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={`${styles.borderBottomCorner} ${styles.productHierarchy}`}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={18} lg={18} xl={18}>
@@ -488,12 +488,12 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                         {isCollapsableView ? <></> : null}
 
                         {selectedTreeData && selectedTreeData?.id ? (
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <>
                                 <ViewProductDetail {...viewProps} />
                                 <div className={styles.hyrbuttonContainer}>
                                     <HierarchyFormButton {...viewProps} />
                                 </div>
-                            </Col>
+                            </>
                         ) : (
                             <div className={styles.emptyContainer}>
                                 <Empty

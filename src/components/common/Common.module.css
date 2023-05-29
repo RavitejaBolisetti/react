@@ -125,6 +125,7 @@
     padding: 7px 5px;
     display: inline-block;
     margin-left: 10px;
+    margin-right: 20px;
 }
 
 .autoCompleteContent :global .ant-input-search .ant-input:hover,
@@ -309,6 +310,8 @@
 .hyrbuttonContainer {
     border: 1px solid #e8e8e8;
     border-top: 0px solid #e8e8e8;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 
 .buttonContainer {
@@ -626,6 +629,10 @@
     border-bottom: 1px solid #e8e8e8;
 }
 
+.viewProductDetail .contentHeaderRightBackground {
+    padding: 18px 12px;
+}
+
 /* applicatiom master css */
 /* .accordianContainer {
     padding: 6px;
@@ -748,9 +755,9 @@
     width: 100%;
 }
 
-.searchAndLabelAlign .headerSearchField {
+/* .searchAndLabelAlign .headerSearchField {
     margin-left: 20px;
-}
+} */
 
 .headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper {
     border: 0;
@@ -865,6 +872,14 @@
     height: 60.6vh;
 }
 
+.productHierarchy .content {
+    height: 62.6vh;
+}
+
+.content .emptyContainer {
+    border: none !important;
+}
+
 .emptyContainer {
     display: flex;
     justify-content: center;
@@ -917,6 +932,11 @@
 .hierarchyRightContaner :global .ant-descriptions .ant-descriptions-view {
     overflow-y: auto;
     height: calc(100vh - 300px);
+}
+
+.viewProductDetail :global .ant-descriptions .ant-descriptions-view {
+    overflow-y: auto;
+    height: calc(100vh - 288px);
 }
 
 :global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-track,
@@ -1375,6 +1395,7 @@
 
 .masterListSearchForm :global .ant-form-item .ant-form-item-label>label {
     margin-right: 12px;
+    margin-left: 10px;
 }
 
 .masterListSearchForm :global .ant-form-item .ant-form-item-explain-error {

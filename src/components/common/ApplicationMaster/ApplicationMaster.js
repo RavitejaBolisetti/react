@@ -117,10 +117,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, menuType]);
 
-    useEffect(() => {
-        setSearchValue(menuData);
-    }, [menuData]);
-
     const handleAdd = (type) => {
         setisVisible(true);
         setFormActionType(type);

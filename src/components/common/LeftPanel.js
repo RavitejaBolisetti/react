@@ -48,7 +48,7 @@ const LeftPanel = (props) => {
     useEffect(() => {
         const newExpandedKeys = dataList
             ?.map((item) => {
-                if (item?.title.toLowerCase()?.indexOf(searchValue.toLowerCase()) > -1) {
+                if (item?.title.toLowerCase()?.indexOf(searchValue?.toLowerCase()) > -1) {
                     return getParentKey(item?.id, treeData);
                 }
                 return null;
@@ -68,7 +68,7 @@ const LeftPanel = (props) => {
                 const strTitle = item[fieldNames?.title];
 
                 const strTitleLowerCase = strTitle.toLowerCase();
-                const searchValueLowerCase = searchValue.toLowerCase();
+                const searchValueLowerCase = searchValue?.toLowerCase();
                 const index = strTitleLowerCase.indexOf(searchValueLowerCase);
 
                 const beforeStr = strTitle?.substring(0, index);
