@@ -48,7 +48,7 @@ const LeftPanel = (props) => {
     useEffect(() => {
         const newExpandedKeys = dataList
             ?.map((item) => {
-                if (item?.title?.indexOf(searchValue) > -1) {
+                if (item?.title.toLowerCase()?.indexOf(searchValue.toLowerCase()) > -1) {
                     return getParentKey(item?.id, treeData);
                 }
                 return null;
@@ -66,7 +66,11 @@ const LeftPanel = (props) => {
         const loop = (data) =>
             data?.map((item) => {
                 const strTitle = item[fieldNames?.title];
-                const index = strTitle?.indexOf(searchValue);
+
+                const strTitleLowerCase = strTitle.toLowerCase();
+                const searchValueLowerCase = searchValue.toLowerCase();
+                const index = strTitleLowerCase.indexOf(searchValueLowerCase);
+
                 const beforeStr = strTitle?.substring(0, index);
                 const afterStr = strTitle?.slice(index + searchValue?.length);
                 const title =
@@ -74,7 +78,7 @@ const LeftPanel = (props) => {
                         <span>
                             {beforeStr}
                             <span className="site-tree-search-value" style={{ color: 'red' }}>
-                                {searchValue}
+                                {strTitle?.substring(index, index + searchValue?.length)}
                             </span>
                             {afterStr}
                         </span>

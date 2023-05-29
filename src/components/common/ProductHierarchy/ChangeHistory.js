@@ -16,16 +16,16 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible: isVisible },
+            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible: isVisible, organizationId = '' },
         },
     } = state;
-
     let returnValue = {
         userId,
         isHistoryLoading,
         isHistoryLoaded,
         isVisible,
         changeHistoryData,
+        organizationId,
     };
     return returnValue;
 };
@@ -42,14 +42,14 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
+const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData, organizationId }) => {
     useEffect(() => {
-        if (!isHistoryLoaded) {
-            fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
+        if (!isHistoryLoaded && organizationId) {
+            fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId, manufactureOrgId: organizationId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isHistoryLoaded]);
-    
+    }, [isHistoryLoaded, organizationId]);
+
     const tableColumn = [
         tblPrepareColumns({
             title: 'Changed/Modified Date ',

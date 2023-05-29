@@ -1,7 +1,7 @@
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
-import { BASE_URL_PRODUCT_HIERARCHY, BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY, BASE_URL_PRODUCT_HIERARCHY_SAVE, BASE_URL_PRODUCT_HIERARCHY_SKU, BASE_URL_PRODUCT_HIERARCHY_SKU_SAVE ,BASE_URL_PRODUCT_NAME_DROPDOWN} from 'constants/routingApi';
+import { BASE_URL_PRODUCT_HIERARCHY, BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY, BASE_URL_PRODUCT_HIERARCHY_SAVE, BASE_URL_PRODUCT_HIERARCHY_SKU, BASE_URL_PRODUCT_HIERARCHY_SKU_SAVE, BASE_URL_PRODUCT_NAME_DROPDOWN } from 'constants/routingApi';
 import { message } from 'antd';
 
 export const PRODUCT_HIERARCHY_DATA_LOADED = 'PRODUCT_HIERARCHY_DATA_LOADED';
@@ -12,6 +12,8 @@ export const PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE = 'PRODUCT_HIERARCHY_CHANG
 export const PRODUCT_HIERARCHY_DATA_LOADED_SKU = 'PRODUCT_HIERARCHY_DATA_LOADED_SKU';
 export const PRODUCT_HIERARCHY_CARD_BTN_DISABLE = 'PRODUCT_HIERARCHY_CARD_BTN_DISABLE';
 export const PRODUCT_HIERARCHY_ATTRIBUTE_NAME_DROPDOWN = 'PRODUCT_HIERARCHY_ATTRIBUTE_NAME_DROPDOWN';
+export const PRODUCT_HIERARCHY_SELECTED_ORGANIZATION_ID = 'PRODUCT_HIERARCHY_SELECTED_ORGANIZATION_ID';
+export const PRODUCT_HIERARCHY_RESET_DATA = 'PRODUCT_HIERARCHY_RESET_DATA';
 
 const receiveProductHierarchyData = (data) => ({
     type: PRODUCT_HIERARCHY_DATA_LOADED,
@@ -39,6 +41,11 @@ const receiverProductAttributeName = (data) => ({
 
 const productHierarchyDataActions = {};
 
+productHierarchyDataActions.resetData = (data) => ({
+    type: PRODUCT_HIERARCHY_RESET_DATA,
+    data,
+});
+
 productHierarchyDataActions.listShowLoading = (isLoading) => ({
     type: PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING,
     isLoading,
@@ -47,6 +54,11 @@ productHierarchyDataActions.listShowLoading = (isLoading) => ({
 productHierarchyDataActions.changeHistoryModelOpen = (visible) => ({
     type: PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE,
     visible: true,
+});
+
+productHierarchyDataActions.setSelectedOrganizationId = (organizationId) => ({
+    type: PRODUCT_HIERARCHY_SELECTED_ORGANIZATION_ID,
+    organizationId: organizationId,
 });
 
 productHierarchyDataActions.changeHistoryModelClose = (visible) => ({
@@ -96,7 +108,7 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acce
 });
 
 productHierarchyDataActions.fetchChangeHistoryList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data } = params;
+    const { setIsLoading, onError, data, manufactureOrgId } = params;
     setIsLoading(true);
 
     const onSuccess = (res) => {
@@ -110,7 +122,7 @@ productHierarchyDataActions.fetchChangeHistoryList = withAuthToken((params) => (
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY,
+        url: BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY + (manufactureOrgId ? '?manufactureOrgId=' + manufactureOrgId : ''),
         token,
         accessToken,
         userId,
@@ -179,8 +191,7 @@ productHierarchyDataActions.skulist = withAuthToken((params) => ({ token, access
     axiosAPICall(apiCallParams);
 });
 
-productHierarchyDataActions.fetchAttributeNameList =  withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    
+productHierarchyDataActions.fetchAttributeNameList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, data } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
@@ -210,6 +221,5 @@ productHierarchyDataActions.fetchAttributeNameList =  withAuthToken((params) => 
 
     axiosAPICall(apiCallParams);
 });
-
 
 export { productHierarchyDataActions };
