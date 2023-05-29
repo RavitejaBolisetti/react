@@ -46,9 +46,9 @@ productHierarchyDataActions.resetData = (data) => ({
     data,
 });
 
-productHierarchyDataActions.listShowLoading = (isLoading) => ({
+productHierarchyDataActions.listShowLoading = (isHistoryLoading) => ({
     type: PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING,
-    isLoading,
+    isHistoryLoading,
 });
 
 productHierarchyDataActions.changeHistoryModelOpen = (visible) => ({

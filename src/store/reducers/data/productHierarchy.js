@@ -25,7 +25,7 @@ export const ProductHierarchy = (state = initialState, action) => {
         case PRODUCT_HIERARCHY_CHANGE_HISTORY_DATA_LOADED:
             return { ...state, isHistoryLoaded: action.isLoaded, historyData: action.data };
         case PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING:
-            return { ...state, isHistoryLoading: action.isLoading };
+            return { ...state, isHistoryLoading: action.isHistoryLoading };
         case PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE:
             return { ...state, changeHistoryVisible: action.visible };
         case PRODUCT_HIERARCHY_CARD_BTN_DISABLE:

@@ -19,6 +19,7 @@ const mapStateToProps = (state) => {
             ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible: isVisible, organizationId = '' },
         },
     } = state;
+
     let returnValue = {
         userId,
         isHistoryLoading,
@@ -42,13 +43,13 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData, organizationId }) => {
+const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, isHistoryLoading, changeHistoryData, organizationId }) => {
     useEffect(() => {
-        if (!isHistoryLoaded && organizationId) {
+        if (organizationId) {
             fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId, manufactureOrgId: organizationId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isHistoryLoaded, organizationId]);
+    }, [organizationId]);
 
     const tableColumn = [
         tblPrepareColumns({
@@ -98,7 +99,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
     ];
 
     const tableProps = {
-        isLoading,
+        isLoading: isHistoryLoading,
         tableColumn,
         tableData: changeHistoryData,
     };
