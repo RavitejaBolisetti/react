@@ -141,6 +141,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
 
     const onSuccess = (res) => {
         form.resetFields();
+        applicationForm.resetFields();
         setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
         if (res?.data) {
             const { accessibleLocation, applicationAction, documentType, ...rest } = res?.data[0];
