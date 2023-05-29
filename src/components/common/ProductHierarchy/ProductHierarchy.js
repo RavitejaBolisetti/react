@@ -119,6 +119,13 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     };
 
     useEffect(() => {
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         if (userId) {
             hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Product Hierarchy' });
         }
@@ -233,7 +240,9 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     };
 
     const handleAdd = () => {
+        setFormBtnActive(false);
         setIsFormVisible(true);
+        handleButtonClick(FROM_ACTION_TYPE.SIBLING);
     };
 
     const handleButtonClick = (type) => {
@@ -443,10 +452,21 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                                         height: 60,
                                     }}
                                     description={
-                                        <span>
-                                            {noDataTitle} <br /> {noDataMessage}
-                                        </span>
+                                        organizationId && !productHierarchyData?.hierarchyAttribute?.length ? (
+                                            <span className={styles.descriptionText}>
+                                                {noDataTitle} <br /> {noDataMessage}
+                                            </span>
+                                        ) : !organizationId ? (
+                                            <span className={styles.descriptionText}>Please select hierarchy type to view records.</span>
+                                        ) : (
+                                            <span className={styles.descriptionText}> No records found.</span>
+                                        )
                                     }
+                                    // description={
+                                    //     <span>
+                                    //         {noDataTitle} <br /> {noDataMessage}
+                                    //     </span>
+                                    // }
                                 >
                                     {organizationId && (
                                         <div>
