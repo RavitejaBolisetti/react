@@ -104,14 +104,19 @@ const AddEditFormMain = (props) => {
         isReadOnly,
     };
 
-    console.log('productDetailsProps', productDetailsProps, 'treeCodeId', treeCodeId);
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+        className: styles.headerSelectField,
+    };
     return (
         <>
             <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
-                            <Select onChange={handleAttributeChange} onClick={handleProductchange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} disabled={formData?.id || isReadOnly} showSearch allowClear>
+                            <Select {...selectProps} onChange={handleAttributeChange} onClick={handleProductchange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} disabled={formData?.id || isReadOnly}>
                                 {attributeData?.map((item) => (
                                     <Option key={item?.id} value={item?.id}>
                                         {item?.hierarchyAttribueName}
@@ -155,6 +160,15 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                 </Row>
+                {showProductAttribute && (
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item hidden name={'adAmHirchyAttrbtMstSk'} initialValue={formData?.attributeKey}>
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                )}
 
                 <Row gutter={20} className={styles.formFooter}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
