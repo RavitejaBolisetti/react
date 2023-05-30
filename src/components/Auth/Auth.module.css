@@ -34,6 +34,27 @@ p {
     margin-top: 20px;
     height: 40px;
     background: #FF3E5B;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button span:last-child {
+    margin-left: -8px;
+}
+
+.loginForm .button span svg {
+    margin-left: -24px;
+    visibility: hidden;
+}
+
+.loginForm .button span span {
+    margin-left: -24px;
+}
+
+.loginForm .button span span svg {
+    margin-left: 0px !important;
+    visibility: visible;
 }
 
 .button:hover {

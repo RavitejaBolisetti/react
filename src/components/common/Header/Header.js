@@ -111,6 +111,8 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             centered: true,
             closable: true,
             onOk() {
+                setConfirm(false);
+
                 doLogout({
                     onSuccess,
                     onError,

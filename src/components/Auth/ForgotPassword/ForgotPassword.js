@@ -299,7 +299,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Button form="verifyUser" loading={isLoading} className={styles.button} type="primary" htmlType="submit">
+                                                            <Button icon={<FiLock size={18} />} form="verifyUser" loading={isLoading} className={styles.button} type="primary" htmlType="submit">
                                                                 Verify User
                                                             </Button>
                                                         </Col>
@@ -370,7 +370,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Button form="sendOTP" loading={isLoading} className={styles.button} type="primary" htmlType="submit">
+                                                                <Button icon={<FiLock size={18} />} form="sendOTP" loading={isLoading} className={styles.button} type="primary" htmlType="submit">
                                                                     Send OTP
                                                                 </Button>
                                                             </Col>
@@ -432,7 +432,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                         </Row>
                                                     </Col>
                                                 </Row>
-                                                <Button onClick={handleVerifyOTP} disabled={disableVerifyOTP} loading={isLoading} className={styles.button} type="primary">
+                                                <Button icon={<FiLock size={18} />} onClick={handleVerifyOTP} disabled={disableVerifyOTP} loading={isLoading} className={styles.button} type="primary">
                                                     Verify OTP
                                                 </Button>
 
@@ -494,7 +494,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                         </Row>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Button loading={isLoading} disabled={submitButtonActive} form="updatePassword" className={styles.button} type="primary" htmlType="submit">
+                                                                <Button icon={<FiLock size={18} />} loading={isLoading} disabled={submitButtonActive} form="updatePassword" className={styles.button} type="primary" htmlType="submit">
                                                                     Submit
                                                                 </Button>
                                                             </Col>
