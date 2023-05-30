@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Input, Menu, Layout, Row, Col, AutoComplete, Button } from 'antd';
+import { Input, Menu, Layout, Row, Col, Form, AutoComplete, Button } from 'antd';
 import { BsMoon, BsSun, BsSearch } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
 import IMG_ICON from 'assets/img/icon.png';
@@ -47,14 +47,35 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Menu: { isLoaded: isDataLoaded = false, isLoading, filter, data: menuData = [], flatternData },
+            Menu: { isLoaded: isDataLoaded = false, isLoading, filter, data: menuData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false, isMobile = false, selectedMenudId = '' },
         },
     } = state;
 
-    let returnValue = { isLoading, selectedMenudId, userId, isDataLoaded, filter, menuData: menuData, flatternData, childredData: flatternData?.filter((i) => !i.childExist && i.parentMenuId !== 'FAV'), isMobile, collapsed };
+    const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
+
+    const dataList = [];
+    const generateList = (data) => {
+        for (let i = 0; i < data.length; i++) {
+            const node = data[i];
+            dataList.push({
+                ...node,
+                id: node[fieldNames?.key],
+                title: node[fieldNames?.title],
+                link: MenuConstant?.[node[fieldNames?.key]?.toLowerCase()]?.link,
+                childExist: node[fieldNames?.children]?.length > 0,
+            });
+            if (node[fieldNames?.children]) {
+                generateList(node[fieldNames?.children]);
+            }
+        }
+    };
+
+    menuData && generateList(menuData);
+
+    let returnValue = { isLoading, selectedMenudId, userId, isDataLoaded, filter, menuData: menuData, flatternData: dataList, childredData: dataList?.filter((i) => !i.childExist && i.parentMenuId !== 'FAV' && i.menuId !== 'HOM'), isMobile, collapsed };
     return returnValue;
 };
 
@@ -79,6 +100,7 @@ const LeftSideBarMain = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
     const pagePath = location.pathname;
+    const [menuForm] = Form.useForm();
 
     const menuId = flatternData?.find((i) => i.link === pagePath)?.menuId;
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
@@ -89,10 +111,10 @@ const LeftSideBarMain = (props) => {
     const [selectedMenuId, setSelectedMenuId] = useState();
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
-    const onMenuClick = (id = 'Sales') => {
-        // const element = document.getElementById(id)?.closest('ul');
-        // element?.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-    };
+    // const onMenuClick = (id = 'Sales') => {
+    // const element = document.getElementById(id)?.closest('ul');
+    // element?.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+    // };
 
     useEffect(() => {
         if (menuId) {
@@ -154,7 +176,7 @@ const LeftSideBarMain = (props) => {
             const isParentMenu = parentMenuId === 'Web';
 
             return subMenu?.length ? (
-                <SubMenu  key={menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
@@ -186,7 +208,11 @@ const LeftSideBarMain = (props) => {
     };
 
     const onSelect = (menuId, label) => {
-        if (menuId && getMenuValue(MenuConstant, menuId, 'link')) navigate(getMenuValue(MenuConstant, menuId, 'link'));
+        menuForm.setFieldValue('searchKeyword', undefined);
+        if (menuId && getMenuValue(MenuConstant, menuId, 'link')) {
+            navigate(getMenuValue(MenuConstant, menuId, 'link'));
+        }s
+
         setSelectedMenuId(menuId);
         setSelectKeyToScroll(menuId);
     };
@@ -216,13 +242,17 @@ const LeftSideBarMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className={styles.searchContainer}>
-                                {collapsed ? (
-                                    <BsSearch size={18} onClick={onMenuCollapsed} />
-                                ) : (
-                                    <AutoComplete className={styles.searchField} options={options} onSelect={onSelect} onChange={handleSearch}>
-                                        <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" />
-                                    </AutoComplete>
-                                )}
+                                <Form autoComplete="off" layout="vertical" form={menuForm}>
+                                    {collapsed ? (
+                                        <BsSearch size={18} onClick={onMenuCollapsed} />
+                                    ) : (
+                                        <Form.Item name="searchKeyword">
+                                            <AutoComplete className={styles.searchField} options={options} onSelect={onSelect} onChange={handleSearch}>
+                                                <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" />
+                                            </AutoComplete>
+                                        </Form.Item>
+                                    )}
+                                </Form>
                             </div>
                         </Col>
                     </Row>
