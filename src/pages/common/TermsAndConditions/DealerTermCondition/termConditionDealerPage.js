@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import { TermConditionDealer } from 'components/common/TnC';
+import { TermConditionDealerMaster } from 'components/common/TermsAndConditions/DealerTermCondition';
 
 const mapStateToProps = (state) => {
     const {
@@ -30,9 +30,9 @@ export const TermConditionPageBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <TermConditionDealer />
+            <TermConditionDealerMaster />
         </>
     );
 };
 
-export const TermConditionPage = connect(mapStateToProps, null)(withLayoutMaster(TermConditionPageBase));
+export const TermConditionMasterPage = connect(mapStateToProps, null)(withLayoutMaster(TermConditionPageBase));

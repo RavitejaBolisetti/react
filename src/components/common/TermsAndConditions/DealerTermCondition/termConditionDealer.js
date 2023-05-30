@@ -17,7 +17,6 @@ import { tncLanguage } from 'store/actions/data/termsConditions/tncLanguage';
 import { tncDealerSaveActions } from 'store/actions/data/termsConditions/tncDealerSave';
 
 import { AddEditForm } from './AddEditForm';
-import { ListDataTable } from 'utils/ListDataTable';
 
 import styles from 'components/common/Common.module.css';
 
@@ -246,10 +245,9 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, isDocumentType
     const onFinish = (values, e) => {
         const recordId = selectedRecord?.id || '';
         const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
-        console.log('values', values);
 
         const onSuccess = (res) => {
-            onSaveShowLoading(false);
+            listShowLoading(false);
             form.resetFields();
             setSelectedRecord({});
             setSuccessAlert(true);
@@ -262,18 +260,18 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, isDocumentType
             }
         };
 
-        // setTimeout(() => {
-        //     fetchList({ setIsLoading: listShowLoading, userId });
-        // }, 2000);
+        setTimeout(() => {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }, 2000);
 
         const onError = (message) => {
-            onSaveShowLoading(false);
+            listShowLoading(false);
             showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
         };
 
         const requestData = {
             data: [data],
-            setIsLoading: onSaveShowLoading,
+            setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
@@ -464,4 +462,4 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, isDocumentType
     );
 };
 
-export const TermConditionDealer = connect(mapStateToProps, mapDispatchToProps)(TncDealer);
+export const TermConditionDealerMaster = connect(mapStateToProps, mapDispatchToProps)(TncDealer);

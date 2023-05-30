@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
-import { ProductHierarchyPage, UserManagementPage, UserManagementManufacturerPage, ProductMasterPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage, DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DesignationMasterPage, DealerEmployeeDepartmentPage, RoleMasterPage, CustomerMasterPage, TermConditionPage } from 'pages/common';
+import { ProductHierarchyPage, UserManagementPage, UserManagementManufacturerPage, ProductMasterPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage, DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DesignationMasterPage, DealerEmployeeDepartmentPage, RoleMasterPage, CustomerMasterPage, TermConditionMasterPage } from 'pages/common';
 
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
@@ -53,7 +53,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_DEALER_HIERARCHY} element={<DealerHierarchyPage />} />
             <Route path={routing.ROUTING_USER_PROFILE} element={<ProfilePage />} exact />
             <Route path={routing.ROUTING_COMMON_CUSTOMER_MASTER} element={<CustomerMasterPage />} />
-            <Route path={routing.ROUTING_COMMON_TERM_CONDITION} element={<TermConditionPage />} />
+            <Route path={routing.ROUTING_COMMON_TERM_CONDITION} element={<TermConditionMasterPage />} />
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
             <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
 
