@@ -16,6 +16,11 @@
     height: max-content !important;
 }
 
+.myDrawerStyle :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover,
+.myDrawerStyle :global .ant-input-affix-wrapper-focused {
+    border-color: #0b0b0c !important;
+}
+
 .myDrawerStyle :global .ant-drawer-header {
     height: 60px;
 }
