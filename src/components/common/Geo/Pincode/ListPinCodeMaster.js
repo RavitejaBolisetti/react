@@ -197,7 +197,8 @@ const ListPinCodeMasterBase = (props) => {
     }, [userId, isDataCountryLoaded, isStateDataLoaded, isDistrictDataLoaded, isCityDataLoaded, isTehsilDataLoaded, isDataLoaded]);
 
     const loadPinCodeDataList = () => {
-        if (userId && (filterString?.pincode || (filterString?.countryCode && filterString?.stateCode && filterString?.districtCode && (filterString?.tehsilCode || filterString?.cityCode)))) {
+        // && (filterString?.tehsilCode || filterString?.cityCode)
+        if (userId && (filterString?.pincode || (filterString?.countryCode && filterString?.stateCode && filterString?.districtCode ))) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         } else {

@@ -73,7 +73,8 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="City" initialValue={filterString?.cityCode} name="cityCode" rules={[!tehsilCodeValue ? validateRequiredSelectField('City') : '']}>
+                    {/* rules={[!tehsilCodeValue ? validateRequiredSelectField('City') : '']} */}
+                    <Form.Item label="City" initialValue={filterString?.cityCode} name="cityCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('cityCode')}>
                             {filteredCityData?.map((item) => (
                                 <Option value={item?.code}>{item?.name}</Option>
@@ -85,7 +86,7 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Tehsil" initialValue={filterString?.tehsilCode} name="tehsilCode" rules={[!cityCodeValue ? validateRequiredSelectField('Tehsil') : '']}>
+                    <Form.Item label="Tehsil" initialValue={filterString?.tehsilCode} name="tehsilCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('tehsilCode')}>
                             {filteredTehsilData?.map((item) => (
                                 <Option value={item?.code}>{item?.name}</Option>
