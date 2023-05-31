@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -83,7 +83,6 @@ export const DealerCompanyBase = (props) => {
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
@@ -264,7 +263,6 @@ export const DealerCompanyBase = (props) => {
         listShowLoading,
         fetchPincodeDetailsList,
         dealerParentData,
-        forceUpdate,
     };
 
     const tableProps = {
