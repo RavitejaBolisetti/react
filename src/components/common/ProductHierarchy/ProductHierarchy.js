@@ -276,6 +276,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         selectedTreeSelectKey: organizationId,
         defaultParent: false,
         handleSelectTreeClick: (value) => {
+            setSelectedTreeKey();
+            setSelectedTreeSelectKey();
             setSelectedOrganizationId(value);
             !value && resetData();
         },
