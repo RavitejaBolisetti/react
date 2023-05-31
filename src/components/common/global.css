@@ -22,6 +22,17 @@
     color: #ff3e5b;
 }
 
+/* New css changes - 31st May 2023 */
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-treenode-active {
+    color: #ff3e5b;
+}
+
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-treenode-active .ant-select-tree-node-content-wrapper {
+    outline: none;
+}
+
+/* New css changes - 31st May 2023 */
+
 :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary),
 :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):hover {
     color: #ff3e5b;
