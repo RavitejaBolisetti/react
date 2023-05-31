@@ -19,7 +19,6 @@ import { FaHistory } from 'react-icons/fa';
 import { ViewProductDetail } from './ViewProductDetail';
 import { LANGUAGE_EN } from 'language/en';
 import { disableParent } from './ProductHierarchyUtils';
-import { ContentHeader } from 'utils/ContentHeader';
 
 const { Search } = Input;
 
@@ -205,7 +204,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     // };
 
     const handleTreeViewClick = (keys) => {
-        setButtonData({ ...defaultBtnVisiblity });
         form.resetFields();
         setFormData([]);
         setSelectedTreeData([]);
@@ -225,10 +223,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             } else {
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             }
-
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
-        } else {
-            setIsChildAllowed(true);
         }
         // else {
         //     setIsChildAllowed(true);
@@ -241,8 +235,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         if (value === selectedTreeKey[0]) {
             return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
         }
-
-        setFormBtnActive(true);
         setSelectedTreeSelectKey(value);
         setFormBtnActive(true);
     };
@@ -293,17 +285,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         placeholder: preparePlaceholderSelect('Organization Hierarchy'),
     };
 
-    const treeSelectProps = {
-        treeFieldNames: treeProdFieldNames,
-        treeData: productHierarchyData,
-        treeDisabled: treeCodeReadOnly,
-        //|| isReadOnly,
-        selectedTreeSelectKey: treeCodeId,
-        handleSelectTreeClick,
-        defaultValue: treeCodeId,
-        placeholder: preparePlaceholderSelect(''),
-    };
-
     const onFinish = (values) => {
         const recordId = formData?.id?.toString() || '';
         const codeToBeSaved = selectedTreeSelectKey !== 'null' && selectedTreeSelectKey ? selectedTreeSelectKey : '';
@@ -329,11 +310,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                     setFormBtnActive(false);
                     setIsFormVisible(false);
                 }
-                res?.data && setSelectedTreeData(formModifiedData(res?.data));
-                setSelectedTreeKey([res?.data?.id]);
-                setFormActionType('view');
-                setFormBtnActive(false);
-                setIsFormVisible(false);
             }
         };
         const onError = (message) => {
@@ -365,8 +341,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const formProps = {
         form,
-        treeSelectProps,
-        treeCodeId,
         isChecked,
         setIsChecked,
         setSelectedTreeKey,
@@ -412,7 +386,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         styles,
         viewTitle,
     };
-
     const leftCol = organizationId && productHierarchyData.length > 0 ? 16 : 24;
     const rightCol = organizationId && productHierarchyData.length > 0 ? 8 : 24;
 
@@ -421,13 +394,11 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
     const title = 'Hierarchy';
-    const ContentHeaderProps = { isAdvanceFilter: false, isTogglePresent: false, isDefaultContentHeader: true, toggleFirst: 'Web', toggleSecond: 'Mobile', styles, onChange, onFinish, onFinishFailed, validateTriggervalue: ['onSearch'], treeSelectFieldProps, organizationId, changeHistoryModelOpen, menuType: 'W', title };
-    // <ContentHeader {...ContentHeaderProps} />
+
     return (
         <>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={`${styles.borderBottomCorner} ${styles.productHierarchy}`}>
-
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={18} lg={18} xl={18}>
@@ -456,8 +427,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                             )}
                         </Row>
                     </div>
-
-                
                     <div className={styles.content}>
                         {productHierarchyData.length <= 0 ? (
                             <div className={styles.emptyContainer}>
