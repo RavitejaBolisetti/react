@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            LessorCompanyMaster: { isLoaded: isDataLoaded = false, isLoading, data },
+            LessorCompanyMaster: { isLoaded: isDataLoaded = false, isLoading, detailData },
         },
     } = state;
 
@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        data,
+        detailData,
         isLoading,
         moduleTitle,
     };
@@ -44,7 +44,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: lessorCompanyMasterDataActions.fetchList,
+            fetchDetail: lessorCompanyMasterDataActions.fetchDetail,
             saveData: lessorCompanyMasterDataActions.saveData,
             listShowLoading: lessorCompanyMasterDataActions.listShowLoading,
             showGlobalNotification,
@@ -54,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListLessorCompanyMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { detailData, saveData, fetchDetail, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
 
     const [form] = Form.useForm();
 
@@ -81,36 +81,36 @@ export const ListLessorCompanyMasterBase = (props) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
-    };
+    };  
 
     useEffect(() => {
         if (userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchDetail({ setIsLoading: listShowLoading, userId,customerCode: 'CUS003', onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
     useEffect(() => {
         if (userId && refershData) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchDetail({ setIsLoading: listShowLoading, userId,customerCode: 'CUS003', onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
 
     useEffect(() => {
-        if (isDataLoaded && data && userId) {
+        if (isDataLoaded && detailData && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyCode) || filterFunction(keyword)(item?.companyDescription) : true));
+                const filterDataItem = detailData?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyCode) || filterFunction(keyword)(item?.companyDescription) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(detailData?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, data, userId]);
+    }, [filterString, isDataLoaded, detailData, userId]);
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -144,7 +144,7 @@ export const ListLessorCompanyMasterBase = (props) => {
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchDetail({ setIsLoading: listShowLoading, userId, onSuccessAction,customerCode: 'CUS003', });
 
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
