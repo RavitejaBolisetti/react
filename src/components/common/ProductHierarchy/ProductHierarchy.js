@@ -19,6 +19,7 @@ import { FaHistory } from 'react-icons/fa';
 import { ViewProductDetail } from './ViewProductDetail';
 import { LANGUAGE_EN } from 'language/en';
 import { disableParent } from './ProductHierarchyUtils';
+import { ContentHeader } from 'utils/ContentHeader';
 
 const { Search } = Input;
 
@@ -403,6 +404,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         styles,
         viewTitle,
     };
+
     const leftCol = organizationId && productHierarchyData.length > 0 ? 16 : 24;
     const rightCol = organizationId && productHierarchyData.length > 0 ? 8 : 24;
 
@@ -411,39 +413,13 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
     const title = 'Hierarchy';
+    const ContentHeaderProps = { isAdvanceFilter: false, isTogglePresent: false, isDefaultContentHeader: true, toggleFirst: 'Web', toggleSecond: 'Mobile', styles, onChange, onFinish, onFinishFailed, validateTriggervalue: ['onSearch'], treeSelectFieldProps, organizationId, changeHistoryModelOpen, menuType: 'W', title };
 
     return (
         <>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={`${styles.borderBottomCorner} ${styles.productHierarchy}`}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                                <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                    <Form.Item label={`${title}`} name="code" validateTrigger={['onSearch']}>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                                <TreeSelectField {...treeSelectFieldProps} />
-                                            </Col>
-                                            {organizationId && (
-                                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                                    <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
-                                                </Col>
-                                            )}
-                                        </Row>
-                                    </Form.Item>
-                                </Form>
-                            </Col>
-                            {organizationId && (
-                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
-                                    <Button type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`} onClick={changeHistoryModelOpen}>
-                                        <FaHistory className={styles.buttonIcon} />
-                                        Change History
-                                    </Button>
-                                </Col>
-                            )}
-                        </Row>
-                    </div>
+                    <ContentHeader {...ContentHeaderProps} />
                     <div className={styles.content}>
                         {productHierarchyData.length <= 0 ? (
                             <div className={styles.emptyContainer}>
