@@ -1,5 +1,5 @@
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_GEO_GRAPHY_PINCODE } from 'constants/routingApi';
+import { BASE_URL_GEO_GRAPHY_PINCODE, BASE_URL_GEO_GRAPHY_PINCODE_DETAILS } from 'constants/routingApi';
 
 export const GEO_PINCODE_LOADING_DATA = 'GEO_PINCODE_LOADING_DATA,';
 export const GEO_PINCODE_LIST_RECIEVE_DATA = 'GEO_PINCODE_LIST_RECIEVE_DATA';
@@ -10,6 +10,7 @@ export const GEO_PINCODE_SAVE_DATA = 'GEO_PINCODE_SAVE_DATA';
 export const GEO_PINCODE_RESET_DATA = 'GEO_PINCODE_RESET_DATA';
 
 const baseURL = BASE_URL_GEO_GRAPHY_PINCODE;
+
 
 export const geoPincodeDataActions = dataActions({
     baseURL,

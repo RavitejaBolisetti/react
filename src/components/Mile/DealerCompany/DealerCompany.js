@@ -1,50 +1,61 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Form, Row, Col } from 'antd';
+import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
-import { geoCountryDataActions } from 'store/actions/data/geo/country';
-import { geoStateDataActions } from 'store/actions/data/geo/state';
+import { dealerCompanyDataActions } from 'store/actions/data/dealer/dealerCompany';
 
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { ListDataTable } from 'utils/ListDataTable';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
 import { filterFunction } from 'utils/filterFunction';
-import { AdvancedSearch } from './AdvancedSearch';
-import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { AddEditForm } from './AddEditForm';
-import { FilterIcon } from 'Icons';
+
+import { ListDataTable } from 'utils/ListDataTable';
+import { dealerParentGroupSearchDataActions } from 'store/actions/data/dealer/dealerParentGroupSearch';
+import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
+import { geoPincodeDetailsActions } from 'store/actions/data/pincodeDetails';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Geo: {
-                Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData = [] },
-                State: { isLoaded: isDataLoaded = false, isLoading, data },
+            DealerHierarchy: {
+                DealerCompany: { isLoaded: isDataLoaded = false, isLoading, data = [] },
+                DealerParentGroupSearch: { isLoaded: isParentGroupSearchDataLoaded = false, isLoading: isParentGroupSearchLoading = false, data: parentGroupSearchData = [] },
+                DealerParent: { isLoaded: isDealerParentDataLoaded = false, isLoading: isDealerParentDataLoading = false, data: dealerParentData = [] },
             },
+                PincodeDetails: { isLoaded: isPincodeDetailsLoaded = false, isLoading: isPincodeDetailsLoading = false, detailData: pincodeDetailsData = [] },
         },
     } = state;
 
-    const moduleTitle = 'State';
+    console.log(state,"GLOBAL")
 
-    const finalCountryData = countryData?.map((item, index) => {
-        return { ...item, default: index <= 0 || false };
-    });
+    const moduleTitle = 'Dealer Company';
+    
 
-    const defaultCountry = finalCountryData && finalCountryData?.find((i) => i.default)?.countryCode;
     let returnValue = {
         userId,
-        isDataCountryLoaded,
-        isCountryLoading,
-        countryData: finalCountryData,
-        defaultCountry,
         isDataLoaded,
         data,
+
+        isParentGroupSearchDataLoaded,
+        isParentGroupSearchLoading,
+        parentGroupSearchData,
+
+        isDealerParentDataLoaded,
+        isDealerParentDataLoading,
+        dealerParentData,
+
+        isPincodeDetailsLoaded,
+        isPincodeDetailsLoading,
+        pincodeDetailsData,
+
+
         isLoading,
         moduleTitle,
     };
@@ -55,26 +66,35 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchCountryList: geoCountryDataActions.fetchList,
-            countryShowLoading: geoCountryDataActions.listShowLoading,
+            fetchParentGroupSearchList: dealerParentGroupSearchDataActions.fetchList,
+            listParentGroupSearchShowLoading: dealerParentGroupSearchDataActions.listShowLoading,
 
-            fetchList: geoStateDataActions.fetchList,
-            saveData: geoStateDataActions.saveData,
-            resetData: geoStateDataActions.reset,
-            listShowLoading: geoStateDataActions.listShowLoading,
+            fetchDealerParentList: dealerParentDataActions.fetchList,
+            listDealerParentShowLoading: dealerParentDataActions.listShowLoading,
+
+
+            fetchPincodeDetailsList: geoPincodeDetailsActions.fetchDetail,
+            listPincodeDetailsShowLoading: geoPincodeDetailsActions.listShowLoading,
+
+            fetchList: dealerCompanyDataActions.fetchList,
+            saveData: dealerCompanyDataActions.saveData,
+            listShowLoading: dealerCompanyDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const ListStateMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, isLoading, listShowLoading, resetData, showGlobalNotification, moduleTitle } = props;
-    const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, countryShowLoading } = props;
+
+
+export const DealerCompanyBase = (props) => {
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification ,detailData} = props;
+    const {parentGroupSearchData,fetchParentGroupSearchList,listParentGroupSearchShowLoading,isParentGroupSearchDataLoaded} = props;
+    const { pincodeDetailsData, fetchPincodeDetailsList, listPincodeDetailsShowLoading, isPincodeDetailsLoaded } = props;
+    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
-    const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
@@ -84,7 +104,6 @@ export const ListStateMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -96,43 +115,41 @@ export const ListStateMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const extraParams = [
-        {
-            key: 'countryCode',
-            title: 'Country',
-            value: filterString?.countryCode,
-            name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
-            canRemove: true,
-        },
-        {
-            key: 'keyword',
-            title: 'Keyword',
-            value: filterString?.keyword,
-            name: filterString?.keyword,
-            canRemove: true,
-        },
-    ];
+
+    console.log(parentGroupSearchData, 'DATATAAT')
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
+    {console.log(formData,'FORMDATA');}
+    {console.log(refershData,'refershData');}
+
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+        setShowDataLoading(false);
+    };
+
 
     useEffect(() => {
-        setFilterString({ countryCode: defaultCountry, advanceFilter: false });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [defaultCountry]);
+        if (userId && !isDataLoaded) {
+            // console.log(extraParams,"PARAMS")
 
-    useEffect(() => {
-        if (userId && !isDataCountryLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            if (!isDataCountryLoaded) {
-                fetchCountryList({ setIsLoading: countryShowLoading, userId });
-            }
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
         }
+        if (userId && !isParentGroupSearchDataLoaded) {
+            fetchParentGroupSearchList({ setIsLoading: listParentGroupSearchShowLoading, userId });
+        }
+        if (userId && !isPincodeDetailsLoaded) {
+            fetchPincodeDetailsList({ setIsLoading: listPincodeDetailsShowLoading, userId, onErrorAction });
+        }
+        if (userId && !isDealerParentDataLoaded) {
+            fetchDealerParentList({ setIsLoading: listDealerParentShowLoading, userId });
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataCountryLoaded]);
+    }, [userId, isDataLoaded, isParentGroupSearchDataLoaded, isDealerParentDataLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {
@@ -145,8 +162,7 @@ export const ListStateMasterBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const countryCode = filterString?.countryCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (countryCode ? filterFunction(countryCode)(item?.countryCode) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyCode) || filterFunction(keyword)(item?.companyName) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -162,14 +178,6 @@ export const ListStateMasterBase = (props) => {
         setRefershData(!refershData);
     };
 
-    const handleFilterChange =
-        (name, type = 'value') =>
-        (value) => {
-            if (name === 'countryCode') {
-                advanceFilterForm.setFieldsValue({ stateCode: undefined });
-            }
-        };
-
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
@@ -183,13 +191,28 @@ export const ListStateMasterBase = (props) => {
 
     const onSearchHandle = (value) => {
         if (value?.trim()?.length >= 3) {
-            setFilterString({ ...filterString, advanceFilter: true, keyword: value });
-            listFilterForm.setFieldsValue({ code: undefined });
+            setFilterString({ ...filterString, advanceFilter: false, keyword: value });
+        }
+    };
+
+    const handleResetFilter = (e) => {
+        setFilterString();
+        listFilterForm.resetFields();
+        setShowDataLoading(false);
+    };
+
+    const handleClearInSearch = (e) => {
+        if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
         }
     };
 
     const onFinish = (values) => {
-        let data = { ...values };
+        const recordId = formData?.parentId || '';
+        let data = { ...values, parentId: recordId };
+
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -233,37 +256,6 @@ export const ListStateMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const onAdvanceSearchCloseAction = () => {
-        setAdvanceSearchVisible(false);
-        advanceFilterForm.resetFields();
-    };
-
-    const handleResetFilter = () => {
-        setFilterString();
-        resetData();
-        advanceFilterForm.resetFields();
-        setShowDataLoading(false);
-    };
-
-    const advanceFilterProps = {
-        isVisible: isAdvanceSearchVisible,
-        onCloseAction: onAdvanceSearchCloseAction,
-        setAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
-        isDataCountryLoaded,
-        isCountryLoading,
-        countryData,
-        defaultCountry,
-        data,
-        handleFilterChange,
-        filterString,
-        setFilterString,
-        advanceFilterForm,
-        resetData,
-        handleResetFilter,
-    };
-
     const formProps = {
         form,
         formData,
@@ -271,14 +263,11 @@ export const ListStateMasterBase = (props) => {
         setFormActionType,
         onFinish,
         onFinishFailed,
+
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Company'),
         tableData: searchData,
-        isDataCountryLoaded,
-        isCountryLoading,
-        countryData,
-        defaultCountry,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -287,6 +276,13 @@ export const ListStateMasterBase = (props) => {
 
         setButtonData,
         handleButtonClick,
+        handleResetFilter,
+
+        parentGroupSearchData,
+        pincodeDetailsData,
+        listShowLoading,
+        fetchPincodeDetailsList,
+        dealerParentData,
     };
 
     const tableProps = {
@@ -295,49 +291,34 @@ export const ListStateMasterBase = (props) => {
         setPage,
     };
 
-    const removeFilter = (key) => {
-        const { [key]: names, ...rest } = filterString;
-        advanceFilterForm.setFieldsValue({ [key]: undefined });
-        
-        if (!rest?.countryCode && !rest?.keyword) {
-            setFilterString();
-        } else {
-            setFilterString({ ...rest });
-        }
-    };
+    const title = 'Dealer Company';
 
-    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
-
-    const title = 'State Name';
     const advanceFilterResultProps = {
-        advanceFilter: true,
+        advanceFilter: false,
         filterString,
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        extraParams,
-        removeFilter,
-        handleResetFilter,
         onSearchHandle,
-        setAdvanceSearchVisible,
+        handleResetFilter,
+        handleClearInSearch,
         handleReferesh,
         handleButtonClick,
-        advanceFilterProps,
         title,
     };
 
     return (
         <>
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
+
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={isLoading} {...tableProps} handleAdd={handleAdd} addTitle={title} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
-            <AdvancedSearch {...advanceFilterProps} />
             <AddEditForm {...formProps} />
         </>
     );
 };
 
-export const ListStateMaster = connect(mapStateToProps, mapDispatchToProps)(ListStateMasterBase);
+export const DealerCompany = connect(mapStateToProps, mapDispatchToProps)(DealerCompanyBase);

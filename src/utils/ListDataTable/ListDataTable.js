@@ -1,6 +1,5 @@
 import { DataTable } from 'utils/dataTable';
 import { Button, Empty, ConfigProvider } from 'antd';
-
 import styles from 'components/common/Common.module.css';
 import { PlusOutlined } from '@ant-design/icons';
 

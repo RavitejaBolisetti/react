@@ -575,3 +575,16 @@ export const DealerEmployeeDepartmentMasterData = [
         divisionCodeDisplay: 'A01',
     },
 ];
+export const DealerCompanyData = [
+    {
+        companyName: 'Capgemini',
+        companyCode: 'C12',
+        parentId: '9048b798-6f97-42d1-aa83-dc8255f737b0',
+        companyTan: 'PDES03028F',
+        companyTin: '29GGGGG1314R9Z6',
+        companyPan: 'ABCTY1234D',
+        address: 'Beta',
+        pinCode: '201308',
+        status: true,
+    },
+];
