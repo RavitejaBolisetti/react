@@ -5,6 +5,7 @@ import { withDrawer } from 'components/withDrawer';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import TreeSelectField from '../TreeSelectField';
+import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
 import ProductAttributeMaster from './ProductAttribute/ProductAttributeMaster';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpaceHyphenPeriod } from 'utils/validation';
@@ -91,8 +92,6 @@ const AddEditFormMain = (props) => {
     let treeCodeId = '';
     let treeCodeReadOnly = false;
 
-    console.log('formActionType', formActionType);
-
     if (formActionType === FROM_ACTION_TYPE.EDIT || formActionType === FROM_ACTION_TYPE.VIEW) {
         treeCodeId = formData?.parntProdctId;
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
@@ -101,7 +100,6 @@ const AddEditFormMain = (props) => {
     } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
-        console.log('selectedTreeKey', selectedTreeKey);
         treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
     }
 
@@ -111,6 +109,16 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
+
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: productHierarchyData,
+        treeDisabled: treeCodeReadOnly || isReadOnly,
+        selectedTreeSelectKey,
+        handleSelectTreeClick,
+        defaultValue: treeCodeId,
+        placeholder: preparePlaceholderSelect('Parent'),
+    };
 
     const attributeFormProps = {
         form,
@@ -144,17 +152,6 @@ const AddEditFormMain = (props) => {
         onCloseAction,
         isFormBtnActive,
         isReadOnly,
-    };
-
-    const treeSelectFieldProps = {
-        treeFieldNames,
-        treeData: productHierarchyData,
-        treeDisabled: treeCodeReadOnly || isReadOnly,
-        selectedTreeSelectKey,
-        handleSelectTreeClick,
-        defaultValue: treeCodeId,
-        placeholder: preparePlaceholderSelect('Parent'),
-        defaultParent: true,
     };
 
     const selectProps = {
