@@ -408,6 +408,21 @@
     }
 }
 
+@media (min-width: 768px) and (max-width: 998px) {
+    .menuIcon {
+        display: inline;
+        padding-top: 14px;
+        padding-left: 0 !important;
+        /* position: absolute; */
+        /* left: 0; */
+        cursor: pointer;
+    }
+
+    .menuIcon :global .anticon {
+        vertical-align: 0.75em;
+    }
+}
+
 @media (min-width: 576px) and (max-width: 768px) {
     .dropdownArrow .navLink :global .ant-space .ant-space-item:last-child {
         padding-top: 0px;
@@ -502,15 +517,15 @@
 @media (max-width: 576px) {
     .dropdownArrow .navLink :global .ant-space .ant-space-item:last-child {
         padding-top: 0px;
-        padding-left: 10px;
+        padding-left: 4px;
     }
 
-    .columnInterchange {
+    /* .columnInterchange {
         flex-direction: column-reverse;
-    }
+    } */
 
     .headerLeft {
-        padding-left: 10px;
+        padding-left: 50px;
     }
 
     .mrt6 {
@@ -559,7 +574,8 @@
     .menuIcon {
         display: inline;
         position: absolute;
-        left: 0;
+        left: 8px;
+        top: 12px;
         cursor: pointer;
     }
 
@@ -567,9 +583,9 @@
         vertical-align: 0.75em;
     }
 
-    .navbarExpand .navbarNav .navLink {
-        padding-left: 10px;
-        padding-right: 10px;
+    .headerRight .navbarNav .floatLeft .navLink {
+        padding-left: 4px;
+        padding-right: 8px;
     }
 
     .dealerName {
@@ -614,5 +630,10 @@
 
     .welcomeUser {
         margin-top: -10px;
+        padding-left: 4px;
+    }
+
+    :global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu {
+        margin-top: 4px;
     }
 }
