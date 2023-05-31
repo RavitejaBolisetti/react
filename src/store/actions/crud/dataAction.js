@@ -111,7 +111,7 @@ export const dataActions = (params) => {
         }),
 
         fetchDetail: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, id = '', type = '', partyCode = '', customerCode = '' } = params;
+            const { setIsLoading, data, onErrorAction = undefined, onSuccessAction = undefined, extraParams = undefined, id = '', type = '', partyCode = '', customerCode = '' } = params;
             setIsLoading(true);
 
             const onError = (message) => {

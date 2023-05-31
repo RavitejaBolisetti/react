@@ -4,7 +4,7 @@ import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
 export const LessorCompanyMasterBase = (props) => {
-    const pageTitle = 'Lessor Company Master';
+    const pageTitle = 'Lessor Company Master (M&M)';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

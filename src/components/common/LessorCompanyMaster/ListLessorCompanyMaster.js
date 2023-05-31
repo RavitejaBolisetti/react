@@ -8,17 +8,13 @@ import { lessorCompanyMasterDataActions } from 'store/actions/data/lessorCompany
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
+import { ListDataTable } from 'utils/ListDataTable';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
+
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
-import { PlusOutlined } from '@ant-design/icons';
-import { TfiReload } from 'react-icons/tfi';
-
-import styles from 'components/common/Common.module.css';
-
-const { Search } = Input;
 
 const mapStateToProps = (state) => {
     const {
@@ -28,7 +24,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Lessor Company Master List';
+    const moduleTitle = 'Lessor Company';
 
     let returnValue = {
         userId,
@@ -57,6 +53,7 @@ export const ListLessorCompanyMasterBase = (props) => {
     const { detailData, saveData, fetchDetail, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
 
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
@@ -77,22 +74,26 @@ export const ListLessorCompanyMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
+    const onErrorAction = () => {
+        console.log('error');
+    };
+
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
-    };  
+    };
 
     useEffect(() => {
         if (userId) {
-            fetchDetail({ setIsLoading: listShowLoading, userId,customerCode: 'CUS003', onSuccessAction });
+            fetchDetail({ setIsLoading: listShowLoading, userId, customerCode: 'CUS003', onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
     useEffect(() => {
         if (userId && refershData) {
-            fetchDetail({ setIsLoading: listShowLoading, userId,customerCode: 'CUS003', onSuccessAction });
+            fetchDetail({ setIsLoading: listShowLoading, userId, customerCode: 'CUS003', onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -129,11 +130,17 @@ export const ListLessorCompanyMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        setFilterString({ ...filterString, keyword: value });
+        if (value?.trim()?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: false, keyword: value });
+        }
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString({ ...filterString, keyword: e.target.value });
+    const handleClearInSearch = (e) => {
+        if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
     };
 
     const onFinish = (values) => {
@@ -144,7 +151,7 @@ export const ListLessorCompanyMasterBase = (props) => {
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchDetail({ setIsLoading: listShowLoading, userId, onSuccessAction,customerCode: 'CUS003', });
+            fetchDetail({ setIsLoading: listShowLoading, userId, onSuccessAction, customerCode: 'CUS003' });
 
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
@@ -181,6 +188,8 @@ export const ListLessorCompanyMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
+
     const formProps = {
         form,
         formData,
@@ -208,75 +217,27 @@ export const ListLessorCompanyMasterBase = (props) => {
         tableData: searchData,
         setPage,
     };
+    const title = 'Lessor Company Name';
+
+    const advanceFilterResultProps = {
+        advanceFilter: false,
+        filterString,
+        from: listFilterForm,
+
+        onSearchHandle,
+        handleClearInSearch,
+        handleReferesh,
+        handleButtonClick,
+        title,
+    };
+
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
-                                        Lessor Company List
-                                    </Col>
-
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
-                                    </Col>
-                                </Row>
-                            </Col>
-
-                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add
-                                </Button>
-                            </Col>
-                        </Row>
-                    </div>
-                </Col>
-            </Row>
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() =>
-                            isDataLoaded && (
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        !searchData?.length ? (
-                                            <span>
-                                                No records found. Please add new parameter <br />
-                                                using below button
-                                            </span>
-                                        ) : (
-                                            <span> No records found.</span>
-                                        )
-                                    }
-                                >
-                                    {!searchData?.length ? (
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                    Add
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    ) : (
-                                        ''
-                                    )}
-                                </Empty>
-                            )
-                        }
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={showDataLoading} {...tableProps} />
-                        </div>
-                    </ConfigProvider>
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />
