@@ -170,7 +170,7 @@
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical {
     border-inline-end: none;
     overflow-y: overlay;
-    max-height: 70vh;
+    max-height: 71vh;
     padding: 0px 14px;
 }
 
@@ -329,7 +329,7 @@
 
 .logoContainer {
     padding: 0px 14px;
-    margin-bottom: 12px;
+    margin-bottom: 2px;
 }
 
 .logoContainerCollapsed {
