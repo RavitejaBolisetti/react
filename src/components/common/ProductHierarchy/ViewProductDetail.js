@@ -15,12 +15,12 @@ export const ViewProductDetailMain = ({ form, setSKUAttributes, isAddBtnDisabled
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 
-     //console.log('selectedTreeData', selectedTreeData, selectedTreeData?.skuAttributes);
+     console.log('selectedTreeData', selectedTreeData);
 
     const [view, setView] = useState(true);
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner}`}>
+        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner} ${styles.viewProductDetail}`}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Attribute Level">{selectedTreeData.hierarchyAttribueName}</Descriptions.Item>
                 <Descriptions.Item label="Parent">{selectedTreeData.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>

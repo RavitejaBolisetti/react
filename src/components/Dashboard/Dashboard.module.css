@@ -3,13 +3,21 @@
 }
 
 .dashboardContainer :global .ant-card .ant-card-head-title {
-    font-size: 1rem;
+    font-size: 16px;
     float: left;
-    font-weight: 500;
+    font-weight: 500 !important;
+    line-height: 24px;
 }
 
 .dashboardContainer :global .ant-card .ant-card-head {
     min-height: 50px;
+    background-color: #E6E6E6;
+    padding: 0 16px;
+}
+
+.dashboardContainer .svgIcon {
+    vertical-align: sub;
+    margin-right: 6px;
 }
 
 /* .dashboardContainer :global .ant-card.ant-card-body {
@@ -29,9 +37,10 @@
 }
 
 .dashboardContainer :global .ant-card .ant-card-body {
-    padding: 10px 5px;
+    padding: 0;
     border-radius: 0 0 8px 8px;
-    height: 270px;
+    height: 219px;
+    /* height: calc(100vh - 600px); */
 }
 
 .dashboardPageHeading {
@@ -44,11 +53,11 @@
     min-width: 0;
 }
 
-.dashboardContainer :global .ant-card-bordered {
-    -webkit-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08);
+/* .dashboardContainer :global .ant-card-bordered { */
+/* -webkit-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08);
     -moz-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08);
-    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08);
-}
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08); */
+/* } */
 
 /* .dashboardContainer :global .ant-carousel .slick-dots-bottom{
   bottom: 47px;
@@ -63,10 +72,6 @@
     margin-bottom: 30px;
 }
 
-.mb10 {
-    margin-bottom: 10px;
-}
-
 .mb20 {
     margin-bottom: 20px;
 }
@@ -77,6 +82,11 @@
 
 .textRightAlign {
     text-align: right;
+}
+
+.dashboardCard {
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .headingGradient {
@@ -117,13 +127,14 @@
   border:1px solid red;
 } */
 .dashboardboxContHeight {
-    height: 175px;
+    height: 143px;
 }
 
 .dashboardGraph .dashboardGraphBox {
     width: 100%;
+    border-bottom: 1px solid #f4f4f4;
     overflow: hidden;
-    height: 196px;
+    height: 164px;
 }
 
 .dashboardGraph .dashboardGraphBox .graphBoxfirstSec,
@@ -131,7 +142,7 @@
 .dashboardGraph .dashboardGraphBox .graphBoxthirdSec,
 .dashboardGraph .dashboardGraphBox .graphBoxforthSec {
     width: 50%;
-    height: 85px;
+    height: 82px;
     float: left;
     overflow: hidden;
     border: 1px solid #f4f4f4;
@@ -154,32 +165,62 @@
 
 .dashboardGraph .dashboardGraphBox .graphBoxthirdSec {
     border-left: 0px solid #f4f4f4;
-    border-bottom: 0px solid #f4f4f4;
+    border-top: 0px solid #f4f4f4;
     color: #ffc107;
 }
 
 .dashboardGraph .dashboardGraphBox .graphBoxforthSec {
     border-right: 0px solid #f4f4f4;
-    border-bottom: 0px solid #f4f4f4;
+    border-top: 0px solid #f4f4f4;
     color: #28a745;
 }
 
+.dashboardGraph .newsCard {
+    padding: 20px;
+}
+
+.dashboardGraph .trainingCard {
+    padding: 13px 20px;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.dashboardGraph .newsCard h4,
+.dashboardGraph .trainingCard h4 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.dashboardGraph .newsCard p,
+.dashboardGraph .trainingCard p {
+    padding-left: 0 !important;
+    font-weight: 500;
+    font-size: 14px;
+}
+
 .buttonHolder {
-    text-align: center;
-    width: 100%;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .dashboardList {
     margin: 0px;
     padding: 0px;
-    list-style: decimal-leading-zero;
-    width: 90%;
+    /* list-style: decimal-leading-zero; */
+    width: 100%;
 }
 
 .dashboardList li {
-    margin: 0 40px;
-    padding: 5px 0px 5px 0px;
-    width: 90%;
+    /* margin: 0 40px; */
+    padding: 5px 10px 5px 20px;
+    width: 100%;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 30px;
+    border-bottom: 1px solid #E6E6E6;
 }
 
 .badge {
@@ -197,30 +238,32 @@
 .badgedanger {
     color: #fff;
     background-color: #dc3545;
+    float: right;
+    margin: 8px 0;
 }
 
 .scrollbar {
     margin: 0px;
     float: left;
-    height: 250px;
+    height: 218px;
     width: 100%;
     overflow-y: scroll;
 }
 
 .scrollbar::-webkit-scrollbar-track {
     /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); */
-    background-color: #fff;
+    background-color: transparent;
 }
 
 .scrollbar::-webkit-scrollbar {
     width: 5px;
-    background-color: #fff;
+    background-color: transparent;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
     border-radius: 10px;
     /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3); */
-    background-color: #dc3545;
+    background-color: rgba(52, 44, 44, 0.34) !important;
 }
 
 .newsCard {
@@ -233,15 +276,15 @@
 
 .newsCarsulalContaner {
     margin: 0px;
-    padding: 20px;
+    padding: 15px 20px 20px;
 }
 
 .newsCarsulalContaner h4 {
     margin: 0px;
     padding: 0px;
     font-size: 0.95rem;
-    text-align: center;
-    color: #ea3434;
+    text-align: left;
+    color: #0B0B0C;
 }
 
 .newsCarsulalContaner .textContaner {
@@ -261,13 +304,13 @@
 }
 
 .birthContainer {
-    min-height: 200px;
+    min-height: 180px;
     padding: 10px 0;
 }
 
 .birthContainer .birthdayImgcontaner {
     margin: 0 10px;
-    width: 25%;
+    width: 10%;
     float: left;
 }
 
@@ -275,11 +318,17 @@
     margin: 0 10px;
     width: 60%;
     float: left;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #FF3E5B;
 }
 
 .birthdayTxtcontaner .birthdayName {
-    color: #ea3434;
+    font-weight: 700;
     font-size: 14px;
+    line-height: 24px;
+    color: #342C2C;
 }
 
 .birthdayTxtcontaner .birthdayCal {
@@ -296,6 +345,7 @@
 
 .birthdayItem {
     width: 100%;
+    padding: 6px;
 }
 
 @media (min-width: 997px) and (max-width: 1280px) {}

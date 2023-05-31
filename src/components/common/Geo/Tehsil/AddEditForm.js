@@ -14,6 +14,7 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
+    const { tehsilCategoryData } = props;
 
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
@@ -114,7 +115,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="District Name" initialValue={formData?.districtName} name="districtCode" rules={[validateRequiredSelectField('District Name')]}>
+                            <Form.Item label="District Name" initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District Name')]}>
                                 <Select placeholder={preparePlaceholderSelect('District Name')} {...selectProps} onChange={handleDistrictChange}>
                                     {filteredDistrictData?.map((item) => (
                                         <Option key={item?.code} value={item?.code}>
@@ -126,7 +127,7 @@ const AddEditFormMain = (props) => {
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="Tehsil Code" name="code" rules={[validateRequiredInputField('Tehsil Code'), validationFieldLetterAndNumber('Tehsil Code')]}>
+                            <Form.Item initialValue={formData?.code} label="Tehsil Code" name="code" rules={[validateRequiredInputField('Tehsil Code')]}>
                                 <Input placeholder={preparePlaceholderText('Tehsil Code')} className={styles.inputBox} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
@@ -134,34 +135,18 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.name} label="Tehsil Name" name="name" rules={[validateRequiredInputField('Tehsil Name'), validateLettersWithWhitespaces('Tehsil Name')]}>
+                            <Form.Item initialValue={formData?.name} label="Tehsil Name" name="name" rules={[validateRequiredInputField('Tehsil Name')]}>
                                 <Input placeholder={preparePlaceholderText('Tehsil Name')} className={styles.inputBox} maxLength={50} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.tehsilCategoryCode} label="Tehsil Category" name="tehsilCategoryCode">
-                                <Select
-                                    showSearch
-                                    placeholder={preparePlaceholderSelect('Tehsil Category')}
-                                    allowClear
-                                    optionFilterProp="children"
-                                    {...selectProps}
-                                    options={[
-                                        {
-                                            value: 'CAT001',
-                                            label: 'Category 1',
-                                        },
-                                        {
-                                            value: 'CAT002',
-                                            label: 'Category 2',
-                                        },
-                                        {
-                                            value: 'CAT003',
-                                            label: 'Category 3',
-                                        },
-                                    ]}
-                                />
+                                <Select className={styles.headerSelectField} placeholder={preparePlaceholderSelect('tehsil category')} allowClear>
+                                    {tehsilCategoryData?.map((item) => (
+                                        <Option value={item?.key}>{item?.value}</Option>
+                                    ))}
+                                </Select>
                             </Form.Item>
                         </Col>
                     </Row>

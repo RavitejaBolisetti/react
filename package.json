@@ -2,7 +2,7 @@
     "name": "dms-ui-application",
     "version": "0.0.1",
     "private": true,
-    "dependencies": {
+    "dependencies": { 
         "@nastyox/rando.js": "^2.0.5",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",

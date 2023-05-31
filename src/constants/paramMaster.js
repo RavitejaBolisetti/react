@@ -11,4 +11,16 @@ export const PARAM_MASTER = {
         id: 'CTRL_GRP',
         title: 'CTRL_GRP',
     },
+    DLR_APP_TYPE: {
+        id: 'DLR_APP_TYPE',
+        title: 'DLR_APP_TYPE',
+    },
+    GEO_TEH_CAT: {
+        id: 'GEO_TEH_CAT',
+        title: 'GEO_TEH_CAT',
+    },
+    PIN_CATG: {
+        id: 'PIN_CATG',
+        title: 'PIN_CATG',
+    },
 };

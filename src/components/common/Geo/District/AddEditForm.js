@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Input, Form, Row, Select, Switch } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter, validateAlphanumericWithSpace, validationFieldLetterAndNumber,validateLettersWithWhitespaces } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateLettersWithWhitespaces } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
@@ -12,8 +12,24 @@ const { Option } = Select;
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
 
-    const { isDataCountryLoaded, countryData, defaultCountry, stateData } = props;
+    const { isDataCountryLoaded, countryData, defaultCountry, stateData, unFilteredStateData } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
+
+    let stateFieldValidation = {
+        rules: [validateRequiredSelectField('State Name')],
+    };
+
+    if (stateData && formData?.stateCode) {
+        if (stateData.find((attribute) => attribute.code === formData?.stateCode)) {
+            stateFieldValidation.initialValue = formData?.stateCode;
+        } else {
+            const Attribute = unFilteredStateData.find((attribute) => attribute.id === formData?.attributeKey);
+            if (Attribute) {
+                stateFieldValidation.initialValue = Attribute?.name;
+                stateFieldValidation.rules.push({ type: 'number', message: Attribute?.name + ' is not active anymore. Please select a different state. ' });
+            }
+        }
+    }
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -71,7 +87,7 @@ const AddEditFormMain = (props) => {
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" rules={[validateRequiredSelectField('State Name')]}>
+                            <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" {...stateFieldValidation}>
                                 <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps} onChange={handleStateChange}>
                                     {stateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
@@ -83,13 +99,13 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="District Code" name="code" rules={[validateRequiredInputField('district Code'), validateLettersWithWhitespaces('District Code')]}>
+                            <Form.Item initialValue={formData?.code} label="District Code" name="code" rules={[validateRequiredInputField('district Code')]}>
                                 <Input placeholder={preparePlaceholderText('District Code')} className={styles.inputBox} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.name} label="District Name" name="name" rules={[validateRequiredInputField('District Name'), validateLettersWithWhitespaces('District Name')]}>
+                            <Form.Item initialValue={formData?.name} label="District Name" name="name" rules={[validateRequiredInputField('District Name')]}>
                                 <Input placeholder={preparePlaceholderText('District Name')} className={styles.inputBox} />
                             </Form.Item>
                         </Col>

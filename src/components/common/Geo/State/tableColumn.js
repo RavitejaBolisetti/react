@@ -20,7 +20,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
 
         tblPrepareColumns({
-            title: 'State GST Code',
+            title: 'GST State Code',
             dataIndex: 'gstStateCode',
             width: '15%',
         }),

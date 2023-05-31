@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Switch } from 'antd';
 
-import { validateRequiredInputField, validateRequiredSelectField, validationNumber } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -23,16 +23,6 @@ const AddEditFormMain = (props) => {
     const [filteredDistrictData, setFilteredDistrictData] = useState(districtData?.filter((i) => i?.stateCode === formData?.stateCode));
     const [filteredCityData, setFilteredCityData] = useState(cityData?.filter((i) => i?.districtCode === formData?.districtCode));
     const [filteredTehsilData, setFilteredTehsilData] = useState(tehsilData?.filter((i) => i?.districtCode === formData?.districtCode));
-
-    useEffect(() => {
-        form.resetFields();
-
-        if (formData?.stateName) {
-            handleStateChange(formData?.stateCode);
-            handleDistrictChange(formData?.districtCode);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -92,11 +82,12 @@ const AddEditFormMain = (props) => {
         className: styles.headerSelectField,
     };
     return (
-        <Form id="configForm" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" id="configForm" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
                 <ViewDetail {...viewProps} />
             ) : (
                 <>
+                    {/* {JSON.stringify(formData)} */}
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
@@ -109,7 +100,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.stateCode} label="State" name="stateCode" rules={[validateRequiredSelectField('State')]}>
-                                <Select {...selectProps} placeholder={preparePlaceholderSelect('State')} onChange={handleStateChange}>
+                                <Select placeholder={preparePlaceholderSelect('State')} {...selectProps} onChange={handleStateChange}>
                                     {filteredStateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -121,19 +112,19 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="District" initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
-                                <Select {...selectProps} placeholder={preparePlaceholderSelect('District')} onChange={handleDistrictChange}>
+                                <Select placeholder={preparePlaceholderSelect('District')} {...selectProps} onChange={handleDistrictChange}>
                                     {filteredDistrictData?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
+                                        <Option key={item?.code} value={item?.code}>
+                                            {item?.name}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="City" initialValue={formData?.cityName} name="cityCode" rules={[validateRequiredSelectField('City')]}>
-                                <Select {...selectProps} placeholder={preparePlaceholderSelect('City')}>
-                                    {filteredCityData?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
-                                    ))}
+                            <Form.Item label="City" initialValue={formData?.cityCode} name="cityCode" rules={[validateRequiredSelectField('City')]}>
+                                <Select placeholder={preparePlaceholderSelect('City')} {...selectProps}>
+                                    {filteredCityData?.map((item) => console.log(item?.code, typeof item?.code) || <Option value={item?.code}>{item?.name}</Option>)}
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -153,7 +144,7 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Pin Category" initialValue={formData?.pinCategory} name="pinCategory" rules={[validateRequiredSelectField('Pin Category')]}>
                                 <Select {...selectProps} placeholder={preparePlaceholderSelect('Pin Category')}>
-                                    {typeData?.PIN_CATG?.map((item) => (
+                                    {typeData?.map((item) => (
                                         <Option value={item?.key}>{item?.value}</Option>
                                     ))}
                                 </Select>
@@ -163,13 +154,14 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.pinCode} label="PIN Code" name="pinCode" rules={[validateRequiredInputField('PIN code'), validationNumber('Pincode')]}>
-                                <Input placeholder={preparePlaceholderText('PIN code')} className={styles.inputBox} />
+                            <Form.Item initialValue={formData?.pinCode} label="PIN Code" name="pinCode" rules={[validateRequiredInputField('PIN code'), validatePincodeField('Pincode')]}>
+                                <Input placeholder={preparePlaceholderText('PIN code')} maxLength={6} className={styles.inputBox} />
                             </Form.Item>
                         </Col>
+
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.localityName} label="Locality" name="localityName">
-                                <Input placeholder={preparePlaceholderText('Locality')} className={styles.inputBox} />
+                            <Form.Item initialValue={formData?.localityName || ''} label="Locality" name="localityName">
+                                <Input placeholder={preparePlaceholderText('Locality')} maxLength={50} className={styles.inputBox} />
                             </Form.Item>
                         </Col>
                     </Row>

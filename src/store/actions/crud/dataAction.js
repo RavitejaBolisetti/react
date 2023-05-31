@@ -27,10 +27,9 @@ export const dataActions = (params) => {
         filteredListData,
     });
 
-    const recieveDataDetail = (data, extraParam) => ({
+    const recieveDataDetail = (data) => ({
         type: RECIEVE_DATA_DETAIL_ACTION_CONSTANT,
         data,
-        extraParam,
     });
 
     const resetData = () => ({
@@ -114,15 +113,26 @@ export const dataActions = (params) => {
         fetchDetail: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
             const { setIsLoading, data, id = '', type = '', partyCode = '', customerCode = '' } = params;
             setIsLoading(true);
-            const onError = (errorMessage) => message.error(errorMessage);
+
+            const onError = (message) => {
+                onErrorAction(message);
+            };
 
             const onSuccess = (res) => {
                 if (res?.data) {
-                    dispatch(recieveDataDetail(res?.data, { id, type }));
+                    onSuccessAction && onSuccessAction(res);
+                    dispatch(recieveDataDetail(res?.data));
                 } else {
                     onError(LANGUAGE_EN.INTERNAL_SERVER_ERROR);
                 }
             };
+
+            let sExtraParamsString = '?';
+            extraParams?.forEach((item, index) => {
+                sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+            });
+
+            sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
 
             const apiCallParams = {
                 data,

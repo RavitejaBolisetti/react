@@ -1,7 +1,6 @@
 import React from 'react';
-import { Descriptions, Row, Col } from 'antd';
+import { Descriptions } from 'antd';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
-import { convertCalenderDate, convertDate } from 'utils/formatDateTime';
 
 const ViewConfigDetailsMain = ({ formData, styles, parameterType }) => {
     const viewProps = {
@@ -14,25 +13,26 @@ const ViewConfigDetailsMain = ({ formData, styles, parameterType }) => {
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
+                    
                     <Descriptions.Item label="Control ID">{formData?.controlId}</Descriptions.Item>
                     <Descriptions.Item label="Control Description">{formData?.controlDescription}</Descriptions.Item>
                     <Descriptions.Item label="Control Group">{formData?.controlGroup}</Descriptions.Item>
                     <Descriptions.Item label="Configurable Parameter Type">{parameterType}</Descriptions.Item>
 
-                    { parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY ? (
+                    {parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY ? (
                         <Descriptions.Item label="Configurable Parameter Values">{formData?.textValue}</Descriptions.Item>
-                    ) :  parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY ? (
+                    ) : parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY ? (
                         <>
                             <Descriptions.Item label="From Number">{formData?.fromNumber}</Descriptions.Item>
                             <Descriptions.Item label="To Number">{formData?.toNumber}</Descriptions.Item>
                         </>
-                    ) :  parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY ? (
+                    ) : parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY ? (
                         <>
-                            <Descriptions.Item label="From Date">{(formData?.fromDate)}</Descriptions.Item>
-                            <Descriptions.Item label="To Date">{(formData?.toDate)}</Descriptions.Item>
+                            <Descriptions.Item label="From Date">{formData?.fromDate}</Descriptions.Item>
+                            <Descriptions.Item label="To Date">{formData?.toDate}</Descriptions.Item>
                         </>
-                    ) :  parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY ? (
-                        <Descriptions.Item label="Configurable Parameter Values">{(formData?.booleanValue)}</Descriptions.Item>
+                    ) : parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY ? (
+                        <Descriptions.Item label="Configurable Parameter Values">{formData?.booleanValue? 'Yes' : 'No'}</Descriptions.Item>
                     ) : null}
                 </Descriptions>
             </>

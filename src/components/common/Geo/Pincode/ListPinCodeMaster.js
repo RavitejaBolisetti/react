@@ -23,6 +23,7 @@ import { geoDistrictDataActions } from 'store/actions/data/geo/district';
 import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
 import { geoCityDataActions } from 'store/actions/data/geo/city';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'components/common/Common.module.css';
 
@@ -42,7 +43,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Pincode Master List';
+    const moduleTitle = 'Pincode';
 
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
@@ -60,19 +61,19 @@ const mapStateToProps = (state) => {
         isDistrictLoading,
         isStateLoading,
         isDistrictDataLoaded,
-        districtData,
+        districtData: districtData?.filter((i) => i.status),
         isTehsilDataLoaded,
         isTehsilLoading,
-        tehsilData,
+        tehsilData: tehsilData?.filter((i) => i.status),
         isCityDataLoaded,
         isCityLoading,
-        cityData,
+        cityData: cityData?.filter((i) => i.status),
         data,
-        stateData,
+        stateData: stateData?.filter((i) => i.status),
         isDataLoaded,
         isConfigDataLoaded,
         isConfigLoading,
-        typeData,
+        typeData: typeData && typeData[PARAM_MASTER.PIN_CATG.id],
         moduleTitle,
     };
     return returnValue;
@@ -133,6 +134,9 @@ const ListPinCodeMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [searchData, setSearchdata] = useState([]);
 
+    const [tehsilCodeValue, setTehsilCodeValue] = useState();
+    const [cityCodeValue, setCityCodeValue] = useState();
+
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
@@ -151,9 +155,17 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const onErrorAction = (message) => {
+        resetData();
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
+
+    useEffect(() => {
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (userId) {
@@ -185,7 +197,8 @@ const ListPinCodeMasterBase = (props) => {
     }, [userId, isDataCountryLoaded, isStateDataLoaded, isDistrictDataLoaded, isCityDataLoaded, isTehsilDataLoaded, isDataLoaded]);
 
     const loadPinCodeDataList = () => {
-        if (userId && (filterString?.pincode || (filterString?.countryCode && filterString?.stateCode && filterString?.districtCode && (filterString?.tehsilCode || filterString?.cityCode)))) {
+        // && (filterString?.tehsilCode || filterString?.cityCode)
+        if (userId && (filterString?.pincode || (filterString?.countryCode && filterString?.stateCode && filterString?.districtCode ))) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         } else {
@@ -194,7 +207,9 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     useEffect(() => {
-        loadPinCodeDataList();
+        if (refershData) {
+            loadPinCodeDataList();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
 
@@ -258,7 +273,7 @@ const ListPinCodeMasterBase = (props) => {
             title: 'City',
             value: filterString?.cityCode,
             name: filteredCityData?.find((i) => i?.code === filterString?.cityCode)?.name,
-            canRemove: true,
+            canRemove: false,
         },
         {
             key: 'pincode',
@@ -283,6 +298,9 @@ const ListPinCodeMasterBase = (props) => {
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+
+        const tehsilCategory = typeData?.find((category) => category.key === record?.pinCategory)?.value;
+        record && setFormData({ ...record, tehsilCategory });
 
         record && setFormData(record);
         setIsFormVisible(true);
@@ -318,14 +336,21 @@ const ListPinCodeMasterBase = (props) => {
                 advanceFilterForm.setFieldsValue({ cityCode: undefined });
                 advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
             }
+
+            if (name === 'cityCode') {
+                setCityCodeValue(filterValue);
+            }
+
+            if (name === 'tehsilCode') {
+                setTehsilCodeValue(filterValue);
+            }
         };
 
     const onFinish = (values) => {
-        let data = { ...values, localityCode: '01' };
+        let data = { ...values };
+        // let data = { ...values, localityCode: Math.floor(Math.random() * 899999 + 100000) };
         const onSuccess = (res) => {
             form.resetFields();
-            setShowDataLoading(true);
-
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             loadPinCodeDataList();
 
@@ -397,6 +422,9 @@ const ListPinCodeMasterBase = (props) => {
 
         setButtonData,
         handleButtonClick,
+
+        tehsilCodeValue,
+        cityCodeValue,
     };
 
     const dataMessage = (
@@ -413,20 +441,29 @@ const ListPinCodeMasterBase = (props) => {
 
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
-        setFilteredDistrictData(undefined);
-        setFilteredCityData(undefined);
-        setFilteredTehsilData(undefined);
+
+        // !filterString?.stateCode && setFilteredStateData(undefined);
+        !filterString?.districtCode && setFilteredDistrictData(undefined);
+        !filterString?.cityCode && setFilteredCityData(undefined);
+        !filterString?.tehsilCode && setFilteredTehsilData(undefined);
+
+        filterString?.tehsilCode && setTehsilCodeValue();
+        filterString?.cityCode && setCityCodeValue();
+
         advanceFilterForm.resetFields();
     };
 
     const handleResetFilter = () => {
         resetData();
         setFilterString();
-        advanceFilterForm.resetFields();
+        setTehsilCodeValue();
+        setCityCodeValue();
+
         setShowDataLoading(false);
         setFilteredDistrictData(undefined);
         setFilteredCityData(undefined);
         setFilteredTehsilData(undefined);
+        advanceFilterForm.resetFields();
     };
 
     const advanceFilterProps = {
@@ -453,6 +490,9 @@ const ListPinCodeMasterBase = (props) => {
         filterString,
         setFilterString,
         setAdvanceSearchVisible,
+
+        tehsilCodeValue,
+        cityCodeValue,
     };
 
     const onSearchHandle = (value) => {
@@ -463,8 +503,7 @@ const ListPinCodeMasterBase = (props) => {
             } else {
                 value ? setFilterString({ advanceFilter: true, pincode: value }) : handleResetFilter();
             }
-            listFilterForm.setFieldsValue({ pincode: undefined,code:undefined });
-            
+            listFilterForm.setFieldsValue({ pincode: undefined, code: undefined });
         }
     };
 
@@ -488,7 +527,7 @@ const ListPinCodeMasterBase = (props) => {
         } else if (key === 'pincode') {
             const { [key]: names, ...rest } = filterString;
             advanceFilterForm.setFieldsValue({ keyword: undefined, pincode: undefined });
-            
+
             if (!filterString?.countryCode && !filterString?.stateCode && !filterString?.districtCode && !filterString?.tehsilCode) {
                 setFilterString();
             } else {

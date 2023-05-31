@@ -14,7 +14,13 @@
     border-bottom: 1px dashed #d9d9d9;
 }
 
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-treenode {
+    width: 100%;
+}
 
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-treenode:hover {
+    color: #ff3e5b;
+}
 
 :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary),
 :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):hover {
@@ -63,6 +69,7 @@
 
 :global .ant-btn-default {
     background-color: transparent;
+    box-shadow: none;
 }
 
 :global .ant-btn-default.ant-btn-dangerous:disabled {
@@ -114,11 +121,6 @@
 :global .ant-form-vertical .ant-form-item-label {
     margin: 0;
     padding: 0px;
-}
-
-:global .ant-tree .ant-tree-list-holder-inner {
-    align-items: flex-start;
-    margin-bottom: 50px;
 }
 
 :global .ant-modal .ant-modal-content {
@@ -198,14 +200,13 @@
     width: 100%;
 }
 
+:global .ant-picker-dropdown .ant-picker-time-panel-column::after {
+    height: 0px;
+}
+
 :global .ant-form-vertical .ant-form-item-label {
     margin: 0;
     padding: 0px;
-}
-
-:global .ant-tree .ant-tree-list-holder-inner {
-    align-items: flex-start;
-    margin-bottom: 50px;
 }
 
 :global .ant-switch .ant-switch-inner {

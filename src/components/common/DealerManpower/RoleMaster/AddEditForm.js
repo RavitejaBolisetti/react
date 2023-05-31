@@ -50,7 +50,7 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
                 <ViewDetail {...viewProps} />
             ) : (
@@ -77,13 +77,13 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.roleCode} label="Role Code" name="roleCode" rules={[validateRequiredInputField('role code'), validationFieldLetter('role code')]}>
+                            <Form.Item initialValue={formData?.roleCode} label="Role Code" name="roleCode" rules={[validateRequiredInputField('role code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('role code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Role Description" initialValue={formData?.roleDescription} rules={[validateRequiredInputField('role description'), validateLettersWithWhitespaces('role description')]} name="roleDescription">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('role description')} maxLength={50} />
+                            <Form.Item label="Role Name" initialValue={formData?.roleDescription} rules={[validateRequiredInputField('role Name')]} name="roleDescription">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('role Name')} maxLength={50} />
                             </Form.Item>
                         </Col>
                     </Row>

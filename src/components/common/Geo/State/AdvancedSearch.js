@@ -45,7 +45,7 @@ export const AdvancedSearchFrom = (props) => {
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item
-                        label="State"
+                        label="State Name"
                         initialValue={filterString?.keyword}
                         name="keyword"
                         rules={[

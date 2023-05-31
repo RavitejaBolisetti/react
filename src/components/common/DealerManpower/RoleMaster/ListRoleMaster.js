@@ -50,11 +50,11 @@ const mapStateToProps = (state) => {
 
         isDivisionDataLoaded,
         isDivisionLoading,
-        divisionData,
-
+        divisionData: divisionData?.filter((i) => i.status),
+        
         isDepartmentDataLoaded,
         isDepartmentLoading,
-        departmentData,
+        departmentData: departmentData?.filter((i) => i.status),
 
         isLoading,
         moduleTitle,
@@ -355,9 +355,9 @@ export const ListRoleMasterBase = (props) => {
             const { departmentCode, ...rest } = filterString;
             setFilterString({ ...rest });
         } else {
-            const { [key]: names, ...rest } = filterString;        
-            advanceFilterForm.setFieldsValue({ keyword: undefined , divisionCode: undefined});
-            if (!filterString?.keyword && !filterString?.divisionCode && !filterString?.departmentCode ) {
+            const { [key]: names, ...rest } = filterString;
+            advanceFilterForm.setFieldsValue({ keyword: undefined, divisionCode: undefined });
+            if (!filterString?.keyword && !filterString?.divisionCode && !filterString?.departmentCode) {
                 setFilterString();
             } else {
                 setFilterString({ ...rest });
@@ -365,7 +365,7 @@ export const ListRoleMasterBase = (props) => {
         }
     };
 
-    const title = 'Role Master';
+    const title = 'Role Name';
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,
@@ -389,7 +389,7 @@ export const ListRoleMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} scroll={1500} {...tableProps} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

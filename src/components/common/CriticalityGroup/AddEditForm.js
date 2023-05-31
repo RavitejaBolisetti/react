@@ -15,18 +15,20 @@ import style from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
     const { formActionType, setIsFormVisible, forceUpdate, showGlobalNotification, onFinish, onFinishFailed, form, formData, setFormData, defaultBtnVisiblity, criticalityGroupData, timeData, setTimeData } = props;
+    const { deletedTime, setDeletedTime, buttonData, setButtonData, handleButtonClick } = props;
 
     const [TimesegmentLengthTracker, setTimesegmentLengthTracker] = useState(generateRandomNumber());
     const [isAddTimeVisible, setIsAddTimeVisible] = useState(false);
-
-    const { buttonData, setButtonData, handleButtonClick } = props;
+    const [allowedTimingSave, setAllowedTimingSave] = useState(true);
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
+        setAllowedTimingSave(false);
     };
 
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
+        setAllowedTimingSave(false);
     };
 
     const onCloseAction = () => {
@@ -43,7 +45,6 @@ const AddEditFormMain = (props) => {
     const cardProps = {
         form,
         style,
-      
         showGlobalNotification,
         setTimesegmentLengthTracker,
         forceUpdate,
@@ -51,6 +52,10 @@ const AddEditFormMain = (props) => {
     };
 
     const listProps = {
+        deletedTime,
+        setDeletedTime,
+        allowedTimingSave,
+        setAllowedTimingSave,
         buttonData,
         setButtonData,
         formData,

@@ -5,9 +5,9 @@ import { bindActionCreators } from 'redux';
 import { TfiReload } from 'react-icons/tfi';
 import { PlusOutlined } from '@ant-design/icons';
 
-import { Button, Col, Form, Row, Select, Space, Input, notification, ConfigProvider, Empty } from 'antd';
+import { Button, Col, Form, Row, Select, Space, Input, notification, ConfigProvider, Empty, Tag } from 'antd';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
-import { EditIcon, ViewEyeIcon } from 'Icons';
+import { FiEdit, FiEye } from 'react-icons/fi';
 
 import styles from 'components/common/Common.module.css';
 
@@ -33,6 +33,8 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'Hierarchy Attribute Master';
+
+    console.log('detailData', detailData);
 
     let returnValue = {
         collapsed,
@@ -86,6 +88,9 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
+    const onSuccessAction = (res) => {
+        RefershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    };
     useEffect(() => {
         if (userId) {
             if (!isDataLoaded) {
@@ -107,7 +112,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
                 setSearchdata([]);
             } else if (RefershData) {
                 setRefershData((prev) => !prev);
-                hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
+                hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy, onSuccessAction });
                 setSearchdata(detailData?.hierarchyAttribute);
             } else if (detailData?.hierarchyAttribute) {
                 if (filterString) {
@@ -129,7 +134,8 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     useEffect(() => {
         if (!selectedHierarchy || !RefershData) return;
         setRefershData((prev) => !prev);
-        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
+        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy, onSuccessAction });
+
         if (filterString) {
             const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
             setSearchdata(filterDataItem);
@@ -216,25 +222,25 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
             title: 'Duplicate Allowed?',
             dataIndex: 'duplicateAllowedAtAttributerLevelInd',
             width: '14%',
-            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
         }),
         tblPrepareColumns({
             title: 'Duplicate Allowed under different Parent?',
             dataIndex: 'duplicateAllowedAtOtherParent',
             width: '20%',
-            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
         }),
         tblPrepareColumns({
             title: 'Child Allowed?',
             dataIndex: 'isChildAllowed',
             width: '10%',
-            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
         }),
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
             width: '10%',
-            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
         }),
         tblPrepareColumns({
             title: 'Action',
@@ -245,13 +251,13 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
                 return (
                     <Space>
                         {
-                            <Button className={styles.tableIcons} danger ghost aria-label="fa-edit" onClick={() => edit(record, 'edit')}>
-                                <EditIcon />
+                            <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => edit(record, 'view')}>
+                                <FiEye />
                             </Button>
                         }
                         {
-                            <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => edit(record, 'view')}>
-                                <ViewEyeIcon />
+                            <Button className={styles.tableIcons} danger ghost aria-label="fa-edit" onClick={() => edit(record, 'edit')}>
+                                <FiEdit />
                             </Button>
                         }
                     </Space>

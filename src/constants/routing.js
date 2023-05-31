@@ -3,7 +3,6 @@ export const ROUTING_HOME = '/';
 export const ROUTING_SSO_LOGIN = '/adidaccess';
 
 export const ROUTING_LOGIN = '/login';
-// export const ROUTING_LOGOUT = '/logout';
 export const ROUTING_FORGOT_PASSWORD = '/forgot-password';
 export const ROUTING_UPDATE_PASSWORD = '/update-password';
 
