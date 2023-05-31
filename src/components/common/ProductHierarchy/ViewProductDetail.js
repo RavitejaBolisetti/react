@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { Descriptions, Space, Row, Col, Collapse } from 'antd';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 import CardProductAttribute from './ProductAttribute/CardProductAttribute';
@@ -15,8 +15,6 @@ export const ViewProductDetailMain = ({ form, setSKUAttributes, isAddBtnDisabled
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 
-     console.log('selectedTreeData', selectedTreeData);
-
     const [view, setView] = useState(true);
 
     return (
@@ -32,13 +30,11 @@ export const ViewProductDetailMain = ({ form, setSKUAttributes, isAddBtnDisabled
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             {selectedTreeData?.skuAttributes?.length > 0 && (
-                                <Collapse  expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} >
+                                <Collapse expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
                                     <Panel header={<span>Product SKU</span>} key="2">
-                                       
-                                        {selectedTreeData?.skuAttributes?.map((item) => (
-                                            <CardProductAttribute attributeName={item.code} attributeValue={item.value}  view={view} setView={setView}/>
+                                        {selectedTreeData?.skuAttributes?.map((item, index) => (
+                                            <CardProductAttribute key={'sku' + index} attributeName={item.code} attributeValue={item.value} view={view} setView={setView} />
                                         ))}
-                                        
                                     </Panel>
                                 </Collapse>
                             )}

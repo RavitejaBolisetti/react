@@ -91,7 +91,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const [closePanels, setClosePanels] = React.useState([]);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
-    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState();
+    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
+    console.log("🚀 ~ file: ProductHierarchy.js:95 ~ ProductHierarchyMain ~ selectedTreeSelectKey:", selectedTreeSelectKey);
     const [formActionType, setFormActionType] = useState('');
 
     const [formData, setFormData] = useState([]);
@@ -109,8 +110,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
-    const fieldProductNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
+    const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
+    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
     const onCloseAction = () => {
         form.resetFields();
@@ -187,8 +188,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                 key,
                 data: node,
             });
-            if (node[fieldProductNames?.children]) {
-                generateList(node[fieldProductNames?.children]);
+            if (node[fieldNames?.children]) {
+                generateList(node[fieldNames?.children]);
             }
         }
         return dataList;
@@ -196,12 +197,12 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const flatternData = generateList(productHierarchyData);
 
-    const formModifiedData = (selectedData) => {
-        const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.id === selectedData?.attributeKey)?.hierarchyAttribueName;
-        const productName = flatternData.find((i) => selectedData?.parentCode === i.attributeKey)?.data?.prodctShrtName;
+    // const formModifiedData = (selectedData) => {
+    //     const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.id === selectedData?.attributeKey)?.hierarchyAttribueName;
+    //     const productName = flatternData.find((i) => selectedData?.parntProdctId === i.attributeKey)?.data?.prodctShrtName;
 
-        return { ...selectedData, hierarchyAttribueName, parentName: productName };
-    };
+    //     return { ...selectedData, hierarchyAttribueName, parentName: productName };
+    // };
 
     const handleTreeViewClick = (keys) => {
         setButtonData({ ...defaultBtnVisiblity });
@@ -212,13 +213,12 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         if (keys && keys.length > 0) {
             setFormActionType('view');
             const formData = flatternData.find((i) => keys[0] === i.key);
-
             if (formData) {
                 const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
                 formData && setFormData({ ...formData?.data, isChildAllowed });
 
                 const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
-                const prodctShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.prodctShrtName;
+                const prodctShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.prodctLongName;
                 formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: prodctShrtName });
             }
 
@@ -234,9 +234,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         if (value === selectedTreeKey[0]) {
             return showGlobalNotification({ title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
         }
-
-        setFormBtnActive(true);
         setSelectedTreeSelectKey(value);
+        setFormBtnActive(true);
     };
 
     const handleAdd = () => {
@@ -267,25 +266,10 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         form.resetFields();
     };
 
-    let treeCodeId = '';
-    let treeCodeReadOnly = false;
-
-    if (formActionType === FROM_ACTION_TYPE.EDIT) {
-        treeCodeId = formData?.parntProdctId;
-    } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
-        treeCodeId = selectedTreeKey && selectedTreeKey[0];
-        treeCodeReadOnly = true;
-    } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-        treeCodeReadOnly = true;
-        const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
-        treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
-    }
-
-    const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
-    const treeProdFieldNames = { ...fieldProductNames, label: fieldProductNames?.title, value: fieldProductNames?.key };
+    const treeOrgFieldNames = { ...organizationFieldNames, label: organizationFieldNames?.title, value: organizationFieldNames?.key };
 
     const treeSelectFieldProps = {
-        treeFieldNames,
+        treeFieldNames: treeOrgFieldNames,
         treeData: manufacturerOrgHierarchyData,
         selectedTreeSelectKey: organizationId,
         defaultParent: false,
@@ -297,20 +281,11 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         placeholder: preparePlaceholderSelect('Organization Hierarchy'),
     };
 
-    const treeSelectProps = {
-        treeFieldNames: treeProdFieldNames,
-        treeData: productHierarchyData,
-        treeDisabled: treeCodeReadOnly,
-        //|| isReadOnly,
-        selectedTreeSelectKey: treeCodeId,
-        handleSelectTreeClick,
-        defaultValue: treeCodeId,
-        placeholder: preparePlaceholderSelect(''),
-    };
-
     const onFinish = (values) => {
         const recordId = formData?.id?.toString() || '';
-        const data = { ...values, id: recordId, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N', skuAttributes, mfgOrgSk: organizationId };
+        const codeToBeSaved = selectedTreeSelectKey || '';
+
+        const data = { ...values, id: recordId, parntProdctId: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N', skuAttributes, mfgOrgSk: organizationId };
         const onSuccess = (res) => {
             form.resetFields();
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
@@ -319,9 +294,16 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 if (organizationId && userId) {
                     fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: organizationId });
+
+                    const formData = res;
+
+                    const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
+                    const prodctShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.prodctLongName;
+                    formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: prodctShrtName });
+
+                    // res?.data && setSelectedTreeData(formModifiedData(res?.data));
+                    setSelectedTreeKey([res?.data?.id]);
                 }
-                res?.data && setSelectedTreeData(formModifiedData(res?.data));
-                setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
                 setFormBtnActive(false);
                 setIsFormVisible(false);
@@ -347,7 +329,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         handleTreeViewVisiblity,
         selectedTreeKey,
         selectedTreeSelectKey,
-        fieldNames: treeProdFieldNames,
+        fieldNames,
         handleTreeViewClick,
         treeData: productHierarchyData,
         searchValue,
@@ -356,8 +338,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const formProps = {
         form,
-        treeSelectProps,
-        treeCodeId,
         isChecked,
         setIsChecked,
         setSelectedTreeKey,
@@ -420,7 +400,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                                 <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                    <Form.Item label={`${title}`} name="code" validateTrigger={['onSearch']}>
+                                    <Form.Item label={`${title}`} name="code">
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                                 <TreeSelectField {...treeSelectFieldProps} />

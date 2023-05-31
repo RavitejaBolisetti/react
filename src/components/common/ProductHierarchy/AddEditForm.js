@@ -17,9 +17,12 @@ const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute, skuAttributes, treeSelectProps, treeCodeId } = props;
+    const { onCloseAction, handleAttributeChange, unFilteredAttributeData, formActionType, isReadOnly = false, formData, fieldNames, isDataAttributeLoaded, attributeData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute, skuAttributes, treeSelectProps } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { form, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
+    const { selectedTreeKey, flatternData, setSelectedTreeSelectKey, selectedTreeSelectKey, handleSelectTreeClick, treeProdFieldNames, productHierarchyData } = props;
+
+    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
     const [actionForm] = Form.useForm();
     const [openAccordian, setOpenAccordian] = useState(1);
@@ -31,7 +34,22 @@ const AddEditFormMain = (props) => {
 
     const productSKUKey = '63ec10a2-520d-44a4-85f6-f55a1d6911f3';
 
-    console.log('selectedTreeData', selectedTreeData);
+    let attributeHierarchyFieldValidation = {
+        rules: [validateRequiredSelectField('attribute level')],
+    };
+
+    if (attributeData && formData?.attributeKey) {
+        if (attributeData.find((attribute) => attribute.id === formData?.attributeKey)) {
+            attributeHierarchyFieldValidation.initialValue = formData?.attributeKey;
+        } else {
+            const Attribute = unFilteredAttributeData.find((attribute) => attribute.id === formData?.attributeKey);
+            if (Attribute) {
+                attributeHierarchyFieldValidation.initialValue = Attribute?.hierarchyAttribueName;
+                attributeHierarchyFieldValidation.rules.push({ type: 'number', message: Attribute?.hierarchyAttribueName + ' is not active anymore. Please select a different attribute. ' });
+            }
+        }
+    }
+
     useEffect(() => {
         if (userId) {
             fetchListHierarchyAttributeName({ userId, setIsLoading: listShowLoading });
@@ -70,6 +88,30 @@ const AddEditFormMain = (props) => {
         actionForm.resetFields();
     };
 
+    let treeCodeId = '';
+    let treeCodeReadOnly = false;
+
+    console.log('formActionType', formActionType);
+
+    if (formActionType === FROM_ACTION_TYPE.EDIT || formActionType === FROM_ACTION_TYPE.VIEW) {
+        treeCodeId = formData?.parntProdctId;
+    } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
+        treeCodeId = selectedTreeKey && selectedTreeKey[0];
+        treeCodeReadOnly = true;
+    } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
+        treeCodeReadOnly = true;
+        const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
+        console.log('selectedTreeKey', selectedTreeKey);
+        treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
+    }
+
+    useEffect(() => {
+        if (treeCodeId) {
+            setSelectedTreeSelectKey(treeCodeId);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [treeCodeId]);
+
     const attributeFormProps = {
         form,
         skuAttributes: formData?.skuAttributes,
@@ -104,6 +146,17 @@ const AddEditFormMain = (props) => {
         isReadOnly,
     };
 
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: productHierarchyData,
+        treeDisabled: treeCodeReadOnly || isReadOnly,
+        selectedTreeSelectKey,
+        handleSelectTreeClick,
+        defaultValue: treeCodeId,
+        placeholder: preparePlaceholderSelect('Parent'),
+        defaultParent: true,
+    };
+
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: true,
@@ -127,8 +180,8 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
-                        <Form.Item initialValue={treeCodeId} label="Parent" name="parentCode">
-                            <TreeSelectField {...treeSelectProps} />
+                        <Form.Item initialValue={treeCodeId} label="Parent" name="parntProdctId">
+                            <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                     </Col>
                 </Row>

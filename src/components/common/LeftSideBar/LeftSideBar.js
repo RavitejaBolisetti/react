@@ -211,7 +211,7 @@ const LeftSideBarMain = (props) => {
         menuForm.setFieldValue('searchKeyword', undefined);
         if (menuId && getMenuValue(MenuConstant, menuId, 'link')) {
             navigate(getMenuValue(MenuConstant, menuId, 'link'));
-        }s
+        }
 
         setSelectedMenuId(menuId);
         setSelectKeyToScroll(menuId);
