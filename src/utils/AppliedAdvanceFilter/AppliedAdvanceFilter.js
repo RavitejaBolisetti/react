@@ -23,7 +23,7 @@ export default function AppliedAdvanceFilter(props) {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} form={from} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                     <Form.Item
                                         label={`${title}`}
@@ -41,7 +41,14 @@ export default function AppliedAdvanceFilter(props) {
                             </Col>
                             {advanceFilter && (
                                 <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                                    <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => { setAdvanceSearchVisible(true)}}>
+                                    <Button
+                                        icon={<FilterIcon />}
+                                        type="link"
+                                        className={styles.filterBtn}
+                                        onClick={() => {
+                                            setAdvanceSearchVisible(true);
+                                        }}
+                                    >
                                         Advanced Filters
                                     </Button>
                                 </Col>

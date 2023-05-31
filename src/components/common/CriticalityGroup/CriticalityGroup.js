@@ -10,6 +10,7 @@ import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { filterFunction } from 'utils/filterFunction';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
+import { ContentHeader } from 'utils/ContentHeader';
 import { tableColumn } from './tableColumn';
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
@@ -277,10 +278,12 @@ export const CriticalityGroupMain = (props) => {
         title,
     };
 
+    const ContentHeaderProps = { isAdvanceFilter: true, isTogglePresent: false, isDefaultContentHeader: false, advanceFilterResultProps };
+
     return (
         <>
-            <AppliedAdvanceFilter {...advanceFilterResultProps} />
-
+            {/* <AppliedAdvanceFilter {...advanceFilterResultProps} /> */}
+            <ContentHeader {...ContentHeaderProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={'Group'} {...tableProps} />
