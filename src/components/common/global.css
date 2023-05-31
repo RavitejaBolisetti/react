@@ -31,6 +31,11 @@
     outline: none;
 }
 
+:global .ant-select-single .ant-select-selector .ant-select-selection-item,
+:global .ant-select-single .ant-select-selector .ant-select-selection-placeholder {
+    line-height: 32px;
+}
+
 /* New css changes - 31st May 2023 */
 
 :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary),

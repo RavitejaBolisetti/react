@@ -232,9 +232,9 @@
     border-width: 0px;
 }
 
-:global .ant-input-affix-wrapper>input.ant-input {
+/* :global .ant-input-affix-wrapper>input.ant-input {
     line-height: 0;
-}
+} */
 
 .logoContainer input::placeholder {
     color: #8e8585;
