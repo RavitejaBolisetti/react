@@ -51,7 +51,7 @@ const mapStateToProps = (state) => {
         isDivisionDataLoaded,
         isDivisionLoading,
         divisionData: divisionData?.filter((i) => i.status),
-        
+
         isDepartmentDataLoaded,
         isDepartmentLoading,
         departmentData: departmentData?.filter((i) => i.status),
@@ -243,6 +243,7 @@ export const ListRoleMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
