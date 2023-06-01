@@ -116,6 +116,7 @@ const AddEditFormMain = (props) => {
                                     labelInValue
                                     onChange={parentName}
                                     showSearch
+                                    disabled={editMode}
                                 >
                                     {dealerParentData?.map((item) => {
                                         return <Option value={item?.id}>{item?.code}</Option>;
@@ -155,7 +156,6 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    {console.log(pincodeShow)}
                     {pincodeShow && (
                         <>
                             <Row gutter={16}>
@@ -187,7 +187,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.companyTin} label="TIN" name="companyTin" rules={[validateRequiredInputField('tin code'),validateTin('tin')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('tin')} />
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('tin')}  />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
