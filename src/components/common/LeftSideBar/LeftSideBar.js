@@ -47,35 +47,14 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Menu: { isLoaded: isDataLoaded = false, isLoading, filter, data: menuData = [] },
+            Menu: { isLoaded: isDataLoaded = false, isLoading, filter, data: menuData = [], flatternData },
         },
         common: {
             LeftSideBar: { collapsed = false, isMobile = false, selectedMenudId = '' },
         },
     } = state;
 
-    const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
-
-    const dataList = [];
-    const generateList = (data) => {
-        for (let i = 0; i < data.length; i++) {
-            const node = data[i];
-            dataList.push({
-                ...node,
-                id: node[fieldNames?.key],
-                title: node[fieldNames?.title],
-                link: MenuConstant?.[node[fieldNames?.key]?.toLowerCase()]?.link,
-                childExist: node[fieldNames?.children]?.length > 0,
-            });
-            if (node[fieldNames?.children]) {
-                generateList(node[fieldNames?.children]);
-            }
-        }
-    };
-
-    menuData && generateList(menuData);
-
-    let returnValue = { isLoading, selectedMenudId, userId, isDataLoaded, filter, menuData: menuData, flatternData: dataList, childredData: dataList?.filter((i) => !i.childExist && i.parentMenuId !== 'FAV' && i.menuId !== 'HOM'), isMobile, collapsed };
+    let returnValue = { isLoading, selectedMenudId, userId, isDataLoaded, filter, menuData: menuData, flatternData, childredData: flatternData?.filter((i) => !i.childExist && i.parentMenuId !== 'FAV' && i.menuId !== 'HOM'), isMobile, collapsed };
     return returnValue;
 };
 
