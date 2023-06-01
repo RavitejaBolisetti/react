@@ -104,9 +104,7 @@ const AddEditFormMain = (props) => {
     }
 
     useEffect(() => {
-        if (treeCodeId) {
-            setSelectedTreeSelectKey(treeCodeId);
-        }
+        setSelectedTreeSelectKey(!!treeCodeId ? treeCodeId : '');
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
 
@@ -132,26 +130,6 @@ const AddEditFormMain = (props) => {
         isVisible,
         selectedTreeData,
         formActionType,
-    };
-
-    const productDetailsProps = {
-        mainForm: form,
-        handleFormValueChange,
-        handleFormFieldChange,
-        onMainFormFinish: onFinish,
-        onFinishFailed,
-        formData,
-        treeCodeId,
-        handleAttributeChange,
-        handleProductchange,
-        isDataAttributeLoaded,
-        disabledProps,
-        attributeData,
-        treeSelectProps,
-        formActionType,
-        onCloseAction,
-        isFormBtnActive,
-        isReadOnly,
     };
 
     const selectProps = {

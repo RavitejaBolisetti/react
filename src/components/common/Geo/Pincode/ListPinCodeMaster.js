@@ -352,6 +352,7 @@ const ListPinCodeMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             loadPinCodeDataList();
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -359,6 +360,7 @@ const ListPinCodeMasterBase = (props) => {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             }
+            setButtonData({ ...defaultBtnVisiblity, formBtnActive: false });
         };
 
         const onError = (message) => {

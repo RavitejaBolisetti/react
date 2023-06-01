@@ -3,7 +3,7 @@ import { TreeSelect } from 'antd';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
 export default function TreeSelectField({ treeFieldNames, treeData, defaultValue, selectedTreeSelectKey, handleSelectTreeClick, placeholder, treeDisabled = false, defaultParent = true }) {
-    const treeKey = selectedTreeSelectKey !== 'null' && selectedTreeSelectKey ? selectedTreeSelectKey : defaultParent ? HIERARCHY_DEFAULT_PARENT : null;
+    // const treeKey = selectedTreeSelectKey !== 'null' && selectedTreeSelectKey ? selectedTreeSelectKey : defaultParent ? HIERARCHY_DEFAULT_PARENT : null;
     return (
         <>
             <TreeSelect
@@ -13,7 +13,7 @@ export default function TreeSelectField({ treeFieldNames, treeData, defaultValue
                 style={{
                     width: '100%',
                 }}
-                value={treeKey}
+                value={selectedTreeSelectKey || (defaultParent ? HIERARCHY_DEFAULT_PARENT : [])}
                 defaultValue={defaultValue}
                 dropdownStyle={{
                     maxHeight: 400,
