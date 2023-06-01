@@ -1,5 +1,5 @@
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_TERM_CONDITION_DOCUMENT_TYPE } from 'constants/routingApi';
+import { BASE_URL_TERM_CONDITION_LANGUAGE } from 'constants/routingApi';
 
 export const TNC_LANGUAGE_LOADING_DATA = 'TNC_LANGUAGE_LOADING_DATA';
 export const TNC_LANGUAGE_LIST_RECIEVE_DATA = 'TNC_LANGUAGE_LIST_RECIEVE_DATA';
@@ -8,7 +8,7 @@ export const TNC_LANGUAGE_RECIEVE_DETAIL_DATA = 'TNC_LANGUAGE_RECIEVE_DETAIL_DAT
 export const TNC_LANGUAGE_SAVE_DATA = 'TNC_LANGUAGE_SAVE_DATA';
 export const TNC_LANGUAGE_RESET_DATA = 'TNC_LANGUAGE_RESET_DATA';
 
-const baseURL = BASE_URL_TERM_CONDITION_DOCUMENT_TYPE;
+const baseURL = BASE_URL_TERM_CONDITION_LANGUAGE;
 
 export const tncLanguage = dataActions({
     baseURL,

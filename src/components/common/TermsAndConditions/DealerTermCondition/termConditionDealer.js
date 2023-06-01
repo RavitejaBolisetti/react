@@ -14,11 +14,16 @@ import { escapeRegExp } from 'utils/escapeRegExp';
 import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
 import { tncDocumentTypeDataActions } from 'store/actions/data/termsConditions/tncDocumentType';
 import { tncLanguage } from 'store/actions/data/termsConditions/tncLanguage';
+import { tncFetchDealerListActions } from 'store/actions/data/termsConditions/tncFetchDealerListActions';
 import { tncDealerSaveActions } from 'store/actions/data/termsConditions/tncDealerSave';
 
 import { AddEditForm } from './AddEditForm';
 
 import styles from 'components/common/Common.module.css';
+import { FilterIcon } from 'Icons';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { ListDataTable } from 'utils/ListDataTable';
+// import { AdvancedSearch } from './AdvancedSearch';
 
 const { Search } = Input;
 
@@ -32,6 +37,7 @@ const mapStateToProps = (state) => {
                 ProductHierarchyData: { isLoaded: isDataLoaded = false, data: productHierarchyList, isLoading, isLoadingOnSave, isFormDataLoaded },
                 DocumentTypeData: { isLoaded: isDocumentTypeDataLoaded = false, data: documentTypeList },
                 LanguageData: { isLoaded: islanguageDataLoaded = false, data: languageList },
+                FetchTermsConditionsList: { isLoaded: isTermConditionDataLoaded = false, data: termsConditionsList },
             },
         },
         common: {
@@ -56,6 +62,8 @@ const mapStateToProps = (state) => {
         isLoadingOnSave,
         isFormDataLoaded,
         moduleTitle,
+        isTermConditionDataLoaded,
+        termsConditionsList,
     };
     return returnValue;
 };
@@ -64,8 +72,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: tncProductHierarchyDataActions.fetchList,
-            saveProductHierarchyData: tncProductHierarchyDataActions.saveData,
+            fetchList: tncFetchDealerListActions.fetchList,
+            fetchProductList: tncProductHierarchyDataActions.fetchList,
             resetData: tncProductHierarchyDataActions.reset,
             listShowLoading: tncProductHierarchyDataActions.listShowLoading,
 
@@ -80,7 +88,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const initialTableData = [];
-const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchList, fetchDocumentTypeList, fetchLanguageList, listShowLoading, productHierarchyList, documentTypeList, languageList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, isTermConditionDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, listShowLoading, productHierarchyList, documentTypeList, languageList, fetchList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -106,6 +114,19 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, isDocumentType
     const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+    const [advanceFilterForm] = Form.useForm();
+    const [showDataLoading, setShowDataLoading] = useState(true);
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const [listFilterForm] = Form.useForm();
+    const [productName, setProductName] = useState();
+    const [documentName, setDocumentName] = useState();
+    const [languageName, setLanguageName] = useState();
+
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     useEffect(() => {
         form.resetFields();
@@ -115,7 +136,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, isDocumentType
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchProductList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
@@ -133,6 +154,13 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, isDocumentType
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [islanguageDataLoaded, userId]);
+
+    useEffect(() => {
+        if (!isTermConditionDataLoaded && userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isTermConditionDataLoaded, userId]);
 
     // useEffect(() => {
     //     setSearchdata(termConditionData);
@@ -242,9 +270,20 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, isDocumentType
         tableColumn: tableColumn,
     };
 
+    const removeFilter = (key) => {
+        const { [key]: names, ...rest } = filterString;
+        advanceFilterForm.setFieldsValue({ [key]: undefined });
+
+        if (!rest?.countryCode && !rest?.keyword) {
+            setFilterString();
+        } else {
+            setFilterString({ ...rest });
+        }
+    };
+
     const onFinish = (values, e) => {
         const recordId = selectedRecord?.id || '';
-        const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
+        const data = { ...values, productName: productName, documentTypeName: documentName, language: languageName, version: '1.0', id: recordId };
 
         const onSuccess = (res) => {
             listShowLoading(false);
@@ -284,19 +323,19 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, isDocumentType
         form.validateFields().then((values) => {});
     };
 
-    const handleAdd = () => {
-        setFormActionType('add');
-        setIsFormVisible(true);
-        setSaveAndSaveNew(true);
-        setSaveBtn(true);
-        setFooterEdit(false);
-        setIsViewModeVisible(false);
-        setSelectedRecord([]);
-        setIsReadOnly(false);
-        setsaveclick(false);
-        setsaveandnewclick(true);
-        setcodeIsReadOnly(false);
-    };
+    // const handleAdd = () => {
+    //     setFormActionType('add');
+    //     setIsFormVisible(true);
+    //     setSaveAndSaveNew(true);
+    //     setSaveBtn(true);
+    //     setFooterEdit(false);
+    //     setIsViewModeVisible(false);
+    //     setSelectedRecord([]);
+    //     setIsReadOnly(false);
+    //     setsaveclick(false);
+    //     setsaveandnewclick(true);
+    //     setcodeIsReadOnly(false);
+    // };
 
     const handleUpdate = (record) => {
         setFormActionType('update');
@@ -357,12 +396,39 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, isDocumentType
         setcodeIsReadOnly(true);
     };
 
+    useEffect(() => {
+        if (isDataLoaded && data && userId) {
+            if (filterString) {
+                const keyword = filterString?.keyword;
+                const countryCode = filterString?.countryCode;
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (countryCode ? filterFunction(countryCode)(item?.countryCode) : true));
+                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
+            } else {
+                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, isDataLoaded, data, userId]);
+
     const handleReferesh = (e) => {
         setRefershData(!refershData);
     };
 
     const onChange = (sorter, filters) => {
         form.resetFields();
+    };
+
+    const handleButtonClick = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        setFormData([]);
+
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+
+        record && setFormData(record);
+        setIsFormVisible(true);
     };
 
     const onSearchHandle = (value) => {
@@ -375,6 +441,50 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, isDocumentType
 
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
+    };
+
+    const onAdvanceSearchCloseAction = () => {
+        setAdvanceSearchVisible(false);
+        advanceFilterForm.resetFields();
+    };
+
+    const handleFilterChange = (name, type = 'value') => (value) => {
+        if (name === 'countryCode') {
+            advanceFilterForm.setFieldsValue({ stateCode: undefined });
+        }
+    };
+
+    const handleResetFilter = () => {
+        setFilterString();
+        resetData();
+        advanceFilterForm.resetFields();
+        setShowDataLoading(false);
+    };
+
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setButtonData({ ...defaultBtnVisiblity });
+    };
+
+    const advanceFilterProps = {
+        isVisible: isAdvanceSearchVisible,
+        onCloseAction: onAdvanceSearchCloseAction,
+        setAdvanceSearchVisible,
+        icon: <FilterIcon size={20} />,
+        titleOverride: 'Advance Filters',
+        // isDataCountryLoaded,
+        // isCountryLoading,
+        // countryData,
+        // defaultCountry,
+
+        data,
+        handleFilterChange,
+        filterString,
+        setFilterString,
+        advanceFilterForm,
+        resetData,
+        handleResetFilter,
     };
 
     const formProps = {
@@ -396,7 +506,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, isDocumentType
         onFinishFailed,
         onFinish,
         form,
-        handleAdd,
+        // handleAdd,
         data,
         isChecked,
         formData,
@@ -412,51 +522,51 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, isDocumentType
         productHierarchyList,
         documentTypeList,
         languageList,
+
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        buttonData,
+
+        setButtonData,
+        handleButtonClick,
+        productName,
+        setProductName,
+        documentName,
+        setDocumentName,
+        languageName,
+        setLanguageName,
+    };
+
+    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
+
+    const title = 'Term & Condition';
+
+    const advanceFilterResultProps = {
+        advanceFilter: true,
+        filterString,
+        from: listFilterForm,
+        onFinish,
+        onFinishFailed,
+        // extraParams,
+        removeFilter,
+        handleResetFilter,
+        onSearchHandle,
+        setAdvanceSearchVisible,
+        handleReferesh,
+        handleButtonClick,
+        advanceFilterProps,
+        // title,
     };
 
     return (
         <>
-            {contextAlertNotification}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() => (
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: '20%',
-                                }}
-                                description={
-                                    !termConditionData?.length ? (
-                                        <span>
-                                            No records found. Please add new parameter <br />
-                                            using below button
-                                        </span>
-                                    ) : (
-                                        <span> No records found.</span>
-                                    )
-                                }
-                            >
-                                {!termConditionData?.length ? (
-                                    <Row>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Child
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                ) : (
-                                    ''
-                                )}
-                            </Empty>
-                        )}
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable inputProps={{ 'data-testid': 'tbl-data' }} id="tbl" isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
-                        </div>
-                    </ConfigProvider>
+                    <ListDataTable isLoading={isLoading} {...tableProps} handleAdd={handleAdd} addTitle={title} />
                 </Col>
             </Row>
+            {/* <AdvancedSearch {...advanceFilterProps} /> */}
             <AddEditForm {...formProps} />
         </>
     );

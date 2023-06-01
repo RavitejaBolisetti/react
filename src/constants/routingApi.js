@@ -28,7 +28,7 @@ export const BASE_URL_DEALER_MANPOWER = BASE_URL + 'dealer';
 export const BASE_URL_DEALER_MANPOWER_LOCATION_TYPE = BASE_URL_DEALER_MANPOWER + '/locationtypes';
 export const BASE_URL_DEALER_MANPOWER_BAY_TYPE = BASE_URL_DEALER_MANPOWER + '/baytypes';
 export const BASE_URL_DEALER_MANPOWER_DIVISION_MASTER = BASE_URL_DEALER_MANPOWER + '/divisions';
-export const BASE_URL_DEALER_MANPOWER_DESIGNATION = BASE_URL_DEALER_MANPOWER + '/designations'
+export const BASE_URL_DEALER_MANPOWER_DESIGNATION = BASE_URL_DEALER_MANPOWER + '/designations';
 
 export const BASE_URL_DEALER_MANPOWER_EMPLOYEE_DEPARTMENT = BASE_URL_DEALER_MANPOWER + '/employee/departments';
 export const BASE_URL_ROLE = BASE_URL_DEALER_MANPOWER + '/roles';
@@ -84,4 +84,5 @@ export const BASE_URL_USER_MANAGEMENT_MANUFACTURER = BASE_URL + 'users/manufactu
 
 export const BASE_URL_TERM_CONDITION_PRODUCT_HIERARCHY = BASE_URL + 'product';
 export const BASE_URL_TERM_CONDITION_DOCUMENT_TYPE = BASE_URL + 'appmst/documenttypes?code=tns&type=DOCUMENT';
+export const BASE_URL_TERM_CONDITION_LANGUAGE = BASE_URL + 'configurableparametertypes?parametertype=TERMS_CONDITIONS _LNG';
 export const BASE_URL_TERM_CONDITION_DEALER_SAVE = BASE_URL + 'dealer/termcondition';
