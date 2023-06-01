@@ -91,6 +91,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const [selectedTreeData, setSelectedTreeData] = useState([]);
 
     const [isFormBtnActive, setFormBtnActive] = useState(false);
+    const [employeeName, setEmployeeName] = useState(false);
+    const [tokenValidate, setTokenValidate] = useState();
 
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -130,7 +132,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             setFormData({ ...detailData, isChildAllowed });
             setSelectedTreeData({ ...detailData, hierarchyAttribueName, parentName: prodctShrtName });
             setDocumentTypesList(detailData?.adminAuthority || []);
-            setFormActionType(FROM_ACTION_TYPE.VIEW);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [detailData, selectedId]);
@@ -169,6 +170,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setFormData([]);
         setSelectedTreeData([]);
 
+        setFormActionType(FROM_ACTION_TYPE.VIEW);
 
         if (keys && keys.length > 0) {
             const formData = flatternData.find((i) => keys[0] === i.key);
@@ -197,8 +199,12 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     };
 
     const handleButtonClick = (type) => {
-        form.resetFields();
-
+        if (type === FROM_ACTION_TYPE.CHILD || type === FROM_ACTION_TYPE.SIBLING) {
+            form.resetFields();
+            setFormData([]);
+            setSelectedTreeData([]);
+            setDocumentTypesList([]);
+        }
         setIsFormVisible(true);
         setFormActionType(type);
         setFormBtnActive(false);
@@ -245,8 +251,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             onSuccess,
         };
 
-        console.log(requestData, 'DATATATA');
-
         saveData(requestData);
     };
 
@@ -264,6 +268,10 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         searchValue,
         setSearchValue,
         treeData: manufacturerAdminHierarchyData,
+        employeeName,
+        setEmployeeName,
+        tokenValidate,
+        setTokenValidate,
     };
 
     const formProps = {
@@ -292,9 +300,14 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         documentTypesList,
         setDocumentTypesList,
         selectedTreeData,
+        employeeName,
+        setEmployeeName,
+        tokenValidate,
+        setTokenValidate,
     };
 
     const viewProps = {
+        formActionType,
         buttonData,
         attributeData,
         selectedTreeData,
@@ -304,6 +317,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         documentTypesList,
         setDocumentTypesList,
         cardBtnDisableAction,
+        viewMode: true,
     };
     const leftCol = manufacturerAdminHierarchyData?.length > 0 ? 16 : 24;
     const rightCol = manufacturerAdminHierarchyData?.length > 0 ? 8 : 24;

@@ -9,7 +9,7 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 
 const AuthorityDetailPanel = (props) => {
-    const { viewMode } = props;
+    const { viewMode, tokenValidate, setTokenValidate, } = props;
     const { selectedTreeData, documentTypesList, setDocumentTypesList } = props;
     const [openAccordian, setOpenAccordian] = useState('');
 
@@ -22,6 +22,8 @@ const AuthorityDetailPanel = (props) => {
         selectedTreeData,
         documentTypesList,
         setDocumentTypesList,
+        tokenValidate,
+        setTokenValidate,
     };
     return (
         <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>

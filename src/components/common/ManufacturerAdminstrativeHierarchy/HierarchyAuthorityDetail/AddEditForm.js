@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Input, Form, Col, Row, Button, Select, DatePicker, Typography } from 'antd';
@@ -60,20 +60,32 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
 
-            cardBtmDisableAction: manufacturerAdminHierarchyDataActions.cardBtmDisableAction,
+            cardBtnDisableAction: manufacturerAdminHierarchyDataActions.cardBtnDisableAction,
         },
         dispatch
     ),
 });
 
-const AuthorityFormMin = ({ recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtmDisableAction }) => {
+const AuthorityFormMin = ({ tokenValidate, setTokenValidate, setEmployeeName = undefined, employeeName = '', recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction }) => {
     const onFinishFailed = (err) => {
         console.error(err);
     };
-    console.log('formRecordId', formRecordId);
-
+console.log('tokenValidate',tokenValidate)
     const onSearchHandle = (recordId) => (data) => {
-        searchList({ setIsLoading: listShowLoading, tokenNumber: data, recordId });
+        setTokenValidate({ ['tokenVisible' + recordId]: true });
+        data && searchList({ setIsLoading: listShowLoading, tokenNumber: data, recordId });
+    };
+
+    const onChangeHandle = (recordId) => (e) => {
+        setTokenValidate({tokenVisible: !!e.target.value });
+        // setTokenValue(e.target.value);
+        // setEmployeeName(employeeName);
+        // console.log('recordId', recordId, 'EffectiveTo' + recordId);
+
+        form.setFieldsValue({
+            EffectiveTo: '',
+            EffectiveFrom: '',
+        });
     };
 
     useEffect(() => {
@@ -83,7 +95,7 @@ const AuthorityFormMin = ({ recordId = '', formRecordId, viewMode, userId, onFin
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    console.log(tokenNumber, 'TOKENNUMBER');
+    // const formTokenValue = form?.getFieldValue('tokenValidate' + recordId);
 
     return (
         <Form
@@ -99,78 +111,62 @@ const AuthorityFormMin = ({ recordId = '', formRecordId, viewMode, userId, onFin
         >
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Authority Type" name={'authorityTypeCode' + recordId} rules={[validateRequiredInputField('Authority Type')]}>
-                        <Select
-                            getPopupContainer={(triggerNode) => triggerNode.parentElement}
-                            labelInValue // defaultValue={name || ''} // showSearch
-                            placeholder="Select Authority Type" // optionFilterProp="children"
-                            options={apiData}
-                            //onChange={handleChange}
-                        />
+                    <Form.Item label="Authority Type" name='authorityTypeCode' rules={[validateRequiredInputField('Authority Type')]}>
+                        <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" options={apiData} disabled={isBtnDisabled} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item
-                        label="Token"
-                        name={'authorityEmployeeTokenNo' + recordId}
-                        rules={[
-                            validateRequiredInputField('Token Required'),
-                            validationFieldLetterAndNumber('Token Required'),
-                            {
-                                required: tokenNumber.length !== 0 ? false : true,
-                                message: 'No Result found',
-                            },
-                        ]}
-                    >
-                        <Search allowClear onSearch={onSearchHandle(recordId)} maxLength={50} placeholder={preparePlaceholderText('Token')} />
+                    <Form.Item label="Token" name={'authorityEmployeeTokenNo'} rules={[validateRequiredInputField('Token Required'), validationFieldLetterAndNumber('Token Required')]}>
+                        <Search disabled={isBtnDisabled} allowClear onChange={onChangeHandle(recordId)} onSearch={onSearchHandle(recordId)} maxLength={50} placeholder={preparePlaceholderText('Token')} />
                     </Form.Item>
                 </Col>
             </Row>
-            {/* tokenNumber - {recordId}
-            <br /> */}
-            {form?.getFieldValue('authorityEmployeeTokenNo' + recordId)}
-            {!viewMode && form?.getFieldValue('authorityEmployeeTokenNo' + recordId) !== 0 && (
+            {!viewMode && 
+            // tokenValidate?.['tokenVisible' + recordId] &&
+            tokenNumber?.employeeName
+            && (
                 <Row gutter={20}>
-                    {tokenNumber.length !== 0 ? (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item>
-                                <Text type="primary">Employee Name : {tokenNumber?.employeeName} </Text>
-                            </Form.Item>
-                        </Col>
-                    ) : null}
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Form.Item>
+                            <Text type="primary">Employee Name : {tokenNumber?.employeeName} </Text>
+                        </Form.Item>
+                    </Col>
 
                     <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                        <Form.Item label="" name={'EmployeeName' + recordId} initialValue={tokenNumber?.employeeName}>
+                        <Form.Item label="" name='employeeName' initialValue={tokenNumber?.employeeName}>
                             <Input />
                         </Form.Item>
                     </Col>
 
                     <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                        <Form.Item label="" name={'id' + recordId} initialValue={''}>
+                        <Form.Item hidden label="" name='id' initialValue={''}>
                             <Input />
                         </Form.Item>
                     </Col>
 
                     <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                        <Form.Item label="" name={'isModified' + recordId} initialValue={false}>
+                        <Form.Item hidden label="" name='isModified' value={false} initialValue={false}>
                             <Input />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Effective From" name={'dateFrom' + recordId} rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs('2015-01-01', 'YYYY-MM-DD')}>
+                        <Form.Item label="Effective From" name='effectiveFrom' rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs('2015-01-01', 'YYYY-MM-DD')}>
                             <DatePicker format="YYYY-MM-DD" className={style.datepicker} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Effective To" name={'dateTo' + recordId} rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs('2015-01-01', 'YYYY-MM-DD')}>
+                        <Form.Item label="Effective To" name='effectiveTo' rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs('2015-01-01', 'YYYY-MM-DD')}>
                             <DatePicker format="YYYY-MM-DD" className={style.datepicker} />
                         </Form.Item>
                     </Col>
                 </Row>
             )}
-            {!isEditing && (
-                <Button disabled={isBtnDisabled} icon={<PlusOutlined />} type="primary" danger htmlType="submit" onClick={() => cardBtmDisableAction(false)}>
+            {console.log("authorityVisible",authorityVisible)}
+            {!isEditing && authorityVisible &&(
+                <Button disabled={isBtnDisabled} icon={<PlusOutlined />} type="primary" danger htmlType="submit"
+                 onClick={() => cardBtnDisableAction(true)}
+                 >
                     Add
                 </Button>
             )}

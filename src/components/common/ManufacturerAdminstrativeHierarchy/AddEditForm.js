@@ -17,7 +17,7 @@ const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData } = props;
     const { selectedTreeKey, selectedTreeData, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
-    const { onFinish, onFinishFailed } = props;
+    const { onFinish, onFinishFailed, tokenValidate, setTokenValidate, } = props;
 
     const [form] = Form.useForm();
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
@@ -60,7 +60,6 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setFormBtnActive(true);
     };
-
     return (
         <>
             <Form autoComplete="off" form={form} id="myForm" layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -127,7 +126,7 @@ const AddEditFormMain = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <AuthorityDetailPanel {...props} />
+                    <AuthorityDetailPanel {...props} formActionType={formActionType} />
                 </Col>
             </Row>
         </>

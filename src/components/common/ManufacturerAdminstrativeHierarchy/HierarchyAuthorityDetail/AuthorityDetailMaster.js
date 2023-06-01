@@ -3,28 +3,32 @@ import { Form } from 'antd';
 import moment from 'moment';
 import AuthorityDetailCardItem from './AuthorityDetailCardItem';
 import { AddEditForm } from './AddEditForm';
+import dayjs from 'dayjs';
 
-const AuthorityDetailMaster = ({ documentTypesList, setDocumentTypesList, selectedTreeData, viewMode }) => {
+
+const AuthorityDetailMaster = ({ viewMode, documentTypesList, setDocumentTypesList, selectedTreeData, formActionType, tokenValidate, setTokenValidate, }) => {
+    console.log('🚀 ~ file: AuthorityDetailMaster.js:8 ~ AuthorityDetailMaster ~ viewMode:', viewMode);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [actionForm] = Form.useForm();
 
     const onActionFormFinish = (val) => {
-        const { key } = val.authorityTypeCode;
-        setDocumentTypesList((prev) => [...prev, { id: val.id, authorityEmployeeTokenNo: val.authorityEmployeeTokenNo, authorityTypeCode: key, employeeName: val.EmployeeName, effectiveFrom: moment(val?.effectiveFrom).format('YYYY-MM-DD'), effectiveTo: moment(val?.effectiveTo).format('YYYY-MM-DD'), isModified: val.isModified }]);
+        console.log('onActionFormFinish val',val)
+        console.log("date ==> ",dayjs(val?.effectiveFrom).format('YYYY-MM-DD'), moment(dayjs(val?.effectiveTo)).format('YYYY-MM-DD'))
+        // const { key } = val.authorityTypeCode;
+        setDocumentTypesList((prev) => [...prev, { ...val,effectiveFrom: dayjs(val?.effectiveFrom).format('YYYY-MM-DD'), effectiveTo: dayjs(val?.effectiveTo).format('YYYY-MM-DD'), isModified: val?.isModified ?? false }]);
+        // setDocumentTypesList((prev) => [...prev, { id: val?.id, authorityEmployeeTokenNo: val?.authorityEmployeeTokenNo, authorityTypeCode: authorityTypeCode, employeeName: val?.employeeName, effectiveFrom: moment(val?.effectiveFrom).format('YYYY-MM-DD'), effectiveTo: moment(val?.effectiveTo).format('YYYY-MM-DD'), isModified: val?.isModified ?? false}]);
         actionForm.resetFields();
         forceUpdate();
     };
 
-    console.log(documentTypesList,'documentTypesList')
-
     return (
         <>
-            {!viewMode && <AddEditForm onFinish={onActionFormFinish} form={actionForm} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setDocumentTypesList={setDocumentTypesList} />}
+            {!viewMode && <AddEditForm onFinish={onActionFormFinish} tokenValidate={tokenValidate} setTokenValidate={setTokenValidate} form={actionForm} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setDocumentTypesList={setDocumentTypesList} />}
 
             {documentTypesList?.length > 0 &&
-                documentTypesList?.map((action) => {
-                    return <AuthorityDetailCardItem {...action} viewMode={viewMode} form={actionForm} onFinish={onActionFormFinish} setDocumentTypesList={setDocumentTypesList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} documentTypesList={documentTypesList} authData={action} />;
+                documentTypesList?.map((record) => {
+                    return <AuthorityDetailCardItem record={record} formActionType={formActionType} setTokenValidate={setTokenValidate} viewMode={viewMode} form={actionForm} onFinish={onActionFormFinish} setDocumentTypesList={setDocumentTypesList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} documentTypesList={documentTypesList} />;
                 })}
         </>
     );
