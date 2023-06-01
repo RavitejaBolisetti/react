@@ -61,7 +61,7 @@ const AuthorityCardItemMain = (props) => {
         form.validateFields().then((data) => {
             console.log('data', data);
             setDocumentTypesList(prev => {
-                debugger
+                
                 const updatedData = prev;
                 const index = updatedData.findIndex(el => el?.authorityEmployeeTokenNo === record.authorityEmployeeTokenNo)
                 updatedData.splice(index, 1, {...data});
