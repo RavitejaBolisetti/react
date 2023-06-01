@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Switch, Select } from 'antd';
-import { validateRequiredInputField, searchValidator, validatePanField, validateTan, validateTin, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, searchValidator, validatePanField, validateTan, validateTin, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
@@ -65,7 +65,7 @@ const AddEditFormMain = (props) => {
         if(value === ''){
             setPincodeShow(false);
         }
-        else{
+        else if(value.length === 6){
             setPincodeDetails([
                 {
                     city: 'Georgepool',
@@ -81,7 +81,6 @@ const AddEditFormMain = (props) => {
             //     pincodeFields = true;
             // }
         }
-        
     };
 
     const viewProps = {
@@ -151,7 +150,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('pin code')]}>
+                            <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'),validatePincodeField('Pin Code')]}>
                                 <Search allowClear onSearch={handleOnSearch} placeholder={preparePlaceholderText('parent group code')} className={styles.headerSearchField} maxLength={6} />
                             </Form.Item>
                         </Col>
@@ -187,19 +186,19 @@ const AddEditFormMain = (props) => {
                     )}
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.companyTin} label="TIN" name="companyTin" rules={[validateTin('tin')]}>
+                            <Form.Item initialValue={formData?.companyTin} label="TIN" name="companyTin" rules={[validateRequiredInputField('tin code'),validateTin('tin')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('tin')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.companyTan} label="TAN" name="companyTan" rules={[validateTan('tan')]}>
+                            <Form.Item initialValue={formData?.companyTan} label="TAN" name="companyTan" rules={[validateRequiredInputField('tan code'),validateTan('tan')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('tan')} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.companyPan} label="PAN" name="companyPan" rules={[validatePanField('pan')]}>
+                            <Form.Item initialValue={formData?.companyPan} label="PAN" name="companyPan" rules={[validateRequiredInputField('pan code'),validatePanField('pan')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('pan')} />
                             </Form.Item>
                         </Col>

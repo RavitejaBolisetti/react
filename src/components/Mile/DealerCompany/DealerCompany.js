@@ -2,19 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
-
 import { dealerCompanyDataActions } from 'store/actions/data/dealer/dealerCompany';
-
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
 import { showGlobalNotification } from 'store/actions/notification';
-
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
-
 import { ListDataTable } from 'utils/ListDataTable';
 import { dealerParentGroupSearchDataActions } from 'store/actions/data/dealer/dealerParentGroupSearch';
 import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
@@ -87,14 +81,11 @@ export const DealerCompanyBase = (props) => {
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
     const [page, setPage] = useState(1);
-
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
-
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
@@ -227,7 +218,7 @@ export const DealerCompanyBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        return
     };
 
     const onCloseAction = () => {
@@ -243,21 +234,17 @@ export const DealerCompanyBase = (props) => {
         setFormActionType,
         onFinish,
         onFinishFailed,
-
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Company'),
         tableData: searchData,
-
-        ADD_ACTION,
-        EDIT_ACTION,
-        VIEW_ACTION,
+        // ADD_ACTION,
+        // EDIT_ACTION,
+        // VIEW_ACTION,
         buttonData,
-
         setButtonData,
         handleButtonClick,
         handleResetFilter,
-
         parentGroupSearchData,
         pincodeDetailsData,
         listShowLoading,

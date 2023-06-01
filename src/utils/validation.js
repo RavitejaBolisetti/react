@@ -120,7 +120,6 @@ export const duplicateProductValidator = (value, dataList) => {
                 status = true;
                 return Promise.reject('Duplicate found');
             }
-
             if (!status) {
                 return Promise.resolve('');
             }
@@ -130,6 +129,7 @@ export const duplicateProductValidator = (value, dataList) => {
     }
     return Promise.resolve('');
 };
+
 export const searchValidator = (_, value) => {
     if (!value || (value && value.trim().length >= 3)) {
         return Promise.resolve();
