@@ -1,31 +1,37 @@
 import React, { useState } from 'react';
-import { Drawer, Input, Form, Col, Row, Switch, Button, Select, DatePicker } from 'antd';
+import { Input, Form, Col, Row, Button, Select, DatePicker } from 'antd';
 
-import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
+import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/Common.module.css';
 import { ViewTermConditionList } from './ViewTermConditionList';
 import { withDrawer } from 'components/withDrawer';
 import styles from 'components/common/Common.module.css';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+// import { CKEditor } from '@ckeditor/ckeditor5-react';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+// import { CKEditor } from 'ckeditor4-react';
+
+import { CustomEditor } from 'components/common/CustomEditor';
 
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    console.log('Product Hierarchy:', props);
-    // const languages = ['Lang1', 'Lang2'];
     const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { editMode, isViewModeVisible } = undefined, onFinish, onFinishFailed, footerEdit, setIsFormVisible, onSaveShowLoading } = props;
 
     const { buttonData, setButtonData, handleButtonClick } = props;
-    const { stateData, districtData } = props;
-    const [filteredDistrictData, setFilteredDistrictData] = useState([]);
     const { productName, setProductName } = props;
     const { documentName, setDocumentName } = props;
     const { languageName, setLanguageName } = props;
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState();
+
+    const [termsAndCondition, setTermsAndCondition] = useState(undefined);
+    const onChange = (e) => {
+        setTermsAndCondition(e.editor.getData());
+    };
 
     const { TextArea } = Input;
 
@@ -49,25 +55,6 @@ const AddEditFormMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    // const handleCountryChange = (countryCode) => {
-    //     form.setFieldValue('countryCodeDisplay', countryData?.find((i) => i?.countryCode === countryCode)?.countryCode);
-    // };
-
-    const handleStateChange = (state) => {
-        form.setFieldValue('districtCode', undefined);
-        form.setFieldValue('districtCodeDisplay', undefined);
-
-        const stateCode = stateData?.find((i) => i?.code === state)?.code;
-        stateCode && form.setFieldValue('stateCodeDisplay', stateCode);
-
-        setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === state));
-    };
-
-    const handleDistrictChange = (district) => {
-        const districtCode = districtData?.find((i) => i?.code === district)?.code;
-        districtCode && form.setFieldValue('districtCodeDisplay', districtCode);
-    };
-
     const viewProps = {
         isVisible: isViewModeVisible,
         formData,
@@ -84,13 +71,8 @@ const AddEditFormMain = (props) => {
 
     const onClose = () => {
         setIsFormVisible(false);
-        // setFormBtnDisable(false);
         form.resetFields();
     };
-
-    // const getProductName = (code) => {
-    //     // form.setFieldValue('productName', productHierarchyList?.find((i) => i?.productCode === code) ? i?.prodctLongName);
-    // };
 
     return (
         <Form autoComplete="off" form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -102,8 +84,7 @@ const AddEditFormMain = (props) => {
                                 <Input maxLength={10} placeholder={preparePlaceholderText('Document Category')} />
                             </Form.Item>
                         </Col>
-                    </Row>
-                    <Row gutter={20}>
+
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item label="Product Hierarchy" name="productCode">
                                 <Select onSelect={handleProductHierarchySelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
@@ -113,6 +94,8 @@ const AddEditFormMain = (props) => {
                                 </Select>
                             </Form.Item>
                         </Col>
+                    </Row>
+                    <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item label="Document Type" name="documentTypeCode">
                                 <Select onSelect={handleDocumentTypeSelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
@@ -122,8 +105,7 @@ const AddEditFormMain = (props) => {
                                 </Select>
                             </Form.Item>
                         </Col>
-                    </Row>
-                    <Row gutter={20}>
+
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item label="Language" name="languageCode">
                                 <Select onSelect={handleLanguageSelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
@@ -135,19 +117,19 @@ const AddEditFormMain = (props) => {
                         </Col>
                     </Row>
                     <Row gutter={20}>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item label="Terms & Conditions" name="termsConditions">
-                                <CKEditor
-                                    editor={ClassicEditor}
-                                    data=""
-                                    onReady={(editor) => {
-                                        // You can store the "editor" and use when it is needed.
-                                        console.log('Editor is ready to use!', editor);
-                                    }}
-                                />
+                                <CustomEditor onChange={onChange} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            {termsAndCondition}
+                            <Form.Item name="description" initialValue={termsAndCondition}>
+                                <Input value />
                             </Form.Item>
                         </Col>
                     </Row>
+
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item label="Effective From" name="effectiveFrom" rules={[validateRequiredInputField('date')]}>
