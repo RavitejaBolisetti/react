@@ -1,5 +1,5 @@
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_TERM_CONDITION_DEALER_SAVE } from 'constants/routingApi';
+import { BASE_URL_TERM_CONDITION_DEALER } from 'constants/routingApi';
 
 export const TNC_DEALER_SAVE_LOADING_DATA = 'TNC_DEALER_SAVE_LOADING_DATA';
 export const TNC_DEALER_SAVE_RECIEVE_DATA = 'TNC_DEALER_SAVE_RECIEVE_DATA';
@@ -8,7 +8,7 @@ export const TNC_DEALER_SAVE_RECIEVE_DETAIL_DATA = 'TNC_DEALER_SAVE_RECIEVE_DETA
 export const TNC_DEALER_SAVE_DATA = 'TNC_DEALER_SAVE_DATA';
 export const TNC_DEALER_SAVE_RESET_DATA = 'TNC_DEALER_SAVE_RESET_DATA';
 
-const baseURL = BASE_URL_TERM_CONDITION_DEALER_SAVE;
+const baseURL = BASE_URL_TERM_CONDITION_DEALER;
 
 export const tncDealerSaveActions = dataActions({
     baseURL,

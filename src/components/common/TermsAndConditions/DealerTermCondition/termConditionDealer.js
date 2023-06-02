@@ -24,6 +24,8 @@ import { FilterIcon } from 'Icons';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ListDataTable } from 'utils/ListDataTable';
 import { tableColumn } from './tableColumn';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
+
 // import { AdvancedSearch } from './AdvancedSearch';
 
 const { Search } = Input;
@@ -38,7 +40,8 @@ const mapStateToProps = (state) => {
                 ProductHierarchyData: { isLoaded: isDataLoaded = false, data: productHierarchyList, isLoading, isLoadingOnSave, isFormDataLoaded },
                 DocumentTypeData: { isLoaded: isDocumentTypeDataLoaded = false, data: documentTypeList },
                 LanguageData: { isLoaded: islanguageDataLoaded = false, data: languageList },
-                FetchTermsConditionsList: { isLoaded: isTermConditionDataLoaded = false, data: termsConditionsListData = [] },
+                FetchTermsConditionsList: { isLoaded: isTermConditionDataLoaded = false, data: termsConditionsList },
+                DealerTermsConditions: { isLoaded: DealerTermsConditionsDataLoaded = false, data: DealerTermsConditionsData },
             },
         },
         common: {
@@ -46,7 +49,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('Redux state:', state);
+    // console.log('Redux state:', state);
 
     const moduleTitle = 'Term & Condition';
 
@@ -64,7 +67,9 @@ const mapStateToProps = (state) => {
         isFormDataLoaded,
         moduleTitle,
         isTermConditionDataLoaded,
-        termsConditionsListData,
+        termsConditionsList,
+        DealerTermsConditionsData,
+        DealerTermsConditionsDataLoaded,
     };
     return returnValue;
 };
@@ -90,7 +95,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const initialTableData = [];
-const TncDealer = ({ moduleTitle, saveData, termsConditionsListData, userId, fetchTermCondition, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, isTermConditionDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, listShowLoading, productHierarchyList, documentTypeList, languageList, fetchList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTermsConditionsDataLoaded, DealerTermsConditionsData, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, isTermConditionDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, listShowLoading, productHierarchyList, documentTypeList, languageList, fetchList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -173,100 +178,24 @@ const TncDealer = ({ moduleTitle, saveData, termsConditionsListData, userId, fet
 
     useEffect(() => {
         if (userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchTermCondition({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData, userId]);
 
     useEffect(() => {
-        if (isDataLoaded && termsConditionsListData) {
+        if (DealerTermsConditionsDataLoaded && DealerTermsConditionsData) {
             if (filterString) {
-                const filterDataItem = termsConditionsListData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.qualificationName));
+                const filterDataItem = DealerTermsConditionsData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.qualificationName));
                 setSearchdata(filterDataItem);
             } else {
-                setSearchdata(termsConditionsListData);
+                console.log('DealerTermsConditionsData', DealerTermsConditionsData);
+
+                setSearchdata(DealerTermsConditionsData);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, termsConditionsListData]);
-
-    // const tableColumn = [
-    //     tblPrepareColumns({
-    //         title: 'Product Hierarchy',
-    //         dataIndex: 'productHierarchy',
-    //         width: '17%',
-    //         sorter: false,
-    //     }),
-
-    //     tblPrepareColumns({
-    //         title: 'Document Type',
-    //         dataIndex: 'documentType',
-    //         width: '17%',
-    //         sorter: false,
-    //     }),
-    //     tblPrepareColumns({
-    //         title: 'Language',
-    //         dataIndex: 'language',
-    //         width: '8%',
-    //         sorter: false,
-    //     }),
-    //     tblPrepareColumns({
-    //         title: 'Description',
-    //         dataIndex: 'description',
-    //         width: '40%',
-    //         sorter: false,
-    //     }),
-    //     tblPrepareColumns({
-    //         title: 'Version',
-    //         dataIndex: 'version',
-    //         width: '8%',
-    //         sorter: false,
-    //     }),
-    //     tblPrepareColumns({
-    //         title: 'Effective From',
-    //         dataIndex: 'effectiveFrom',
-    //         width: '8%',
-    //         sorter: false,
-    //     }),
-    //     tblPrepareColumns({
-    //         title: 'Effective To',
-    //         dataIndex: 'effectiveTo',
-    //         width: '8%',
-    //         sorter: false,
-    //     }),
-    //     tblPrepareColumns({
-    //         title: 'MFG T&C',
-    //         width: '15%',
-    //         sorter: false,
-    //         render: (text, record, index) => {
-    //             return (
-    //                 <Space>
-    //                     {
-    //                         <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
-    //                             <ViewEyeIcon />
-    //                         </Button>
-    //                     }
-    //                 </Space>
-    //             );
-    //         },
-    //     }),
-    //     tblPrepareColumns({
-    //         title: 'View',
-    //         width: '15%',
-    //         sorter: false,
-    //         render: (text, record, index) => {
-    //             return (
-    //                 <Space>
-    //                     {
-    //                         <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
-    //                             <ViewEyeIcon />
-    //                         </Button>
-    //                     }
-    //                 </Space>
-    //             );
-    //         },
-    //     }),
-    // ];
+    }, [filterString, DealerTermsConditionsDataLoaded, DealerTermsConditionsData]);
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
@@ -413,22 +342,6 @@ const TncDealer = ({ moduleTitle, saveData, termsConditionsListData, userId, fet
         setcodeIsReadOnly(true);
     };
 
-    useEffect(() => {
-        if (isDataLoaded && data && userId) {
-            if (filterString) {
-                const keyword = filterString?.keyword;
-                const countryCode = filterString?.countryCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (countryCode ? filterFunction(countryCode)(item?.countryCode) : true));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
-                setShowDataLoading(false);
-            } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
-                setShowDataLoading(false);
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, data, userId]);
-
     const handleReferesh = (e) => {
         setRefershData(!refershData);
     };
@@ -547,26 +460,30 @@ const TncDealer = ({ moduleTitle, saveData, termsConditionsListData, userId, fet
     };
 
     const title = 'Term & Condition';
+    const handleClearInSearch = (e) => {
+        if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
+    };
 
     const advanceFilterResultProps = {
-        advanceFilter: true,
+        advanceFilter: false,
         filterString,
         from: listFilterForm,
-        onFinish,
-        onFinishFailed,
-        // extraParams,
-        removeFilter,
-        handleResetFilter,
+
         onSearchHandle,
-        setAdvanceSearchVisible,
+        handleClearInSearch,
         handleReferesh,
         handleButtonClick,
-        advanceFilterProps,
-        // title,
+        title,
     };
 
     return (
         <>
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
+
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable handleAdd={handleAdd} isLoading={isLoading} {...tableProps} />
