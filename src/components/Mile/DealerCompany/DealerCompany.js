@@ -244,7 +244,7 @@ export const DealerCompanyBase = (props) => {
         setPage,
     };
 
-    const title = 'Dealer Company';
+    const title = 'Company Code';
 
     const advanceFilterResultProps = {
         advanceFilter: false,

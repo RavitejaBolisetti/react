@@ -18,10 +18,11 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
                     <Descriptions.Item label="Company Name">{formData?.companyName}</Descriptions.Item>
                     <Descriptions.Item label="Company Address">{formData?.address}</Descriptions.Item>
                     <Descriptions.Item label="Pin Code">{formData?.pinCode}</Descriptions.Item>
-                    {/* <Descriptions.Item label="City">{formData?.city}</Descriptions.Item>
+                    <Descriptions.Item label="Locality">{formData?.locality}</Descriptions.Item>
+                    <Descriptions.Item label="City">{formData?.city}</Descriptions.Item>
                     <Descriptions.Item label="Tehsil">{formData?.tehsil}</Descriptions.Item>
                     <Descriptions.Item label="District">{formData?.district}</Descriptions.Item>
-                    <Descriptions.Item label="State">{formData?.state}</Descriptions.Item> */}
+                    <Descriptions.Item label="State">{formData?.state}</Descriptions.Item>
                     <Descriptions.Item label="TIN">{formData?.companyTin}</Descriptions.Item>
                     <Descriptions.Item label="TAN">{formData?.companyTan}</Descriptions.Item>
                     <Descriptions.Item label="PAN">{formData?.companyPan}</Descriptions.Item>
