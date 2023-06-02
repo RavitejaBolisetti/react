@@ -1,4 +1,5 @@
 import { MENU_DATA_LOADED, MENU_DATA_FILTER, MENU_DATA_SHOW_LOADING, MENU_DATA_CLEAR } from 'store/actions/data/menu';
+import { MenuConstant } from 'constants/MenuConstant';
 
 const initialState = {
     isLoaded: false,
@@ -9,30 +10,32 @@ const initialState = {
     isLoading: false,
 };
 
-// const dataList = [];
-// const generateList = (data) => {
-//     for (let i = 0; i < data.length; i++) {
-//         const node = data[i];
-//         const { subMenu, ...rest } = node;
-//         node &&
-//             dataList.push({
-//                 ...rest,
-//                 link: MenuConstant?.[node?.menuId?.toLowerCase()]?.link,
-//                 childExist: node?.subMenu?.length > 0,
-//             });
-//         if (node.subMenu) {
-//             generateList(node.subMenu);
-//         }
-//     }
-//     return dataList;
-// };
-
 const favouriteMenuData = (data) => data?.find((item) => item.menuId === 'FAV')?.subMenu;
+const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
 
 export const Menu = (state = initialState, action) => {
     switch (action.type) {
-        case MENU_DATA_LOADED:
-            return { ...state, isLoaded: action.isLoaded, data: refactorMenu(action.data), /*flatternData: generateList(action.data),*/ favouriteMenu: favouriteMenuData(action.data) };
+        case MENU_DATA_LOADED: {
+            const dataList = [];
+            const generateList = (data) => {
+                for (let i = 0; i < data.length; i++) {
+                    const node = data[i];
+                    dataList.push({
+                        ...node,
+                        id: node[fieldNames?.key],
+                        title: node[fieldNames?.title],
+                        link: MenuConstant?.[node[fieldNames?.key]?.toLowerCase()]?.link,
+                        childExist: node[fieldNames?.children]?.length > 0,
+                    });
+                    if (node[fieldNames?.children]) {
+                        generateList(node[fieldNames?.children]);
+                    }
+                }
+            };
+
+            action.data && generateList(action.data);
+            return { ...state, isLoaded: action.isLoaded, data: refactorMenu(action.data), flatternData: dataList, favouriteMenu: favouriteMenuData(action.data) };
+        }
         case MENU_DATA_FILTER:
             return { ...state, filter: action.filter };
         case MENU_DATA_SHOW_LOADING:

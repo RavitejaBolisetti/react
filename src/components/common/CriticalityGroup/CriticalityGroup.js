@@ -146,6 +146,8 @@ export const CriticalityGroupMain = (props) => {
             setTimeData([]);
 
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });

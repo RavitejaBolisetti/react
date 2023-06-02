@@ -168,7 +168,7 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
-                            <Form.Item initialValue={editMode ? formData?.withIn50KmFromGpo : true} label="Is Locality Under 50Km of GPO" name="withIn50KmFromGpo">
+                            <Form.Item initialValue={editMode ? formData?.withIn50KmFromGpo : true} valuePropName="checked" label="Is Locality Under 50Km of GPO" name="withIn50KmFromGpo">
                                 <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
                         </Col>
