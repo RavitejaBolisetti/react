@@ -7,6 +7,9 @@ import dayjs from 'dayjs';
 import moment from 'moment';
 import { bindActionCreators } from 'redux';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
+import styles from 'components/common/Common.module.css';
+import { showGlobalNotification } from 'store/actions/notification';
+
 
 import { AddEditForm } from './AddEditForm';
 
@@ -15,7 +18,7 @@ const { Text } = Typography;
 const mapStateToProps = (state) => {
     const {
         data: {
-            ManufacturerAdminHierarchy: { authorityVisible, tokenNumber = [], errorMessage, },
+            ManufacturerAdminHierarchy: { authorityVisible, tokenNumber = [], errorMessage },
         },
     } = state;
 
@@ -32,76 +35,77 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             errorTokenValidate: manufacturerAdminHierarchyDataActions.errorTokenValidate,
-
+            showGlobalNotification,
         },
         dispatch
     ),
 });
-
 
 const AuthorityCardItemMain = (props) => {
     const { viewMode, onFinish, setDocumentTypesList, forceUpdate, setIsBtnDisabled, isBtnDisabled, record, handleFormValueChange } = props;
     const { employeeName, setEmployeeName, tokenValidate, setTokenValidate, errorTokenValidate, tokenNumber, errorMessage } = props;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
-    const [tokenValidationData, setTokenValidationData ] = useState({});
+    const [tokenValidationData, setTokenValidationData] = useState({});
 
     useEffect(() => {
         if (errorMessage || tokenNumber) {
-            setTokenValidationData({errorMessage, ...tokenNumber });
+            setTokenValidationData({ errorMessage, ...tokenNumber });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ errorMessage, tokenNumber ]);
+    }, [errorMessage, tokenNumber]);
 
     const recordId = record?.id;
 
     const onEdit = ({ employeeName, authorityTypeCode, authorityEmployeeTokenNo, effectiveTo, effectiveFrom, id }) => {
         setTokenValidate({ ['tokenVisible' + recordId]: true });
-        if(tokenNumber?.employeeName || errorMessage){
-            errorTokenValidate('')
+        if (tokenNumber?.employeeName || errorMessage) {
+            errorTokenValidate('');
         }
-        form.setFieldsValue({...record,  effectiveTo: dayjs(record?.effectiveTo), effectiveFrom: dayjs(record?.effectiveFrom),});
+        form.setFieldsValue({ ...record, effectiveTo: dayjs(record?.effectiveTo), effectiveFrom: dayjs(record?.effectiveFrom) });
         // form.resetFields();
         setIsEditing(true);
         setIsBtnDisabled(true);
     };
-    
+
     const onUpdate = () => {
-        form.validateFields().then((data) => {
-            console.log('data', data);
-            setDocumentTypesList(prev => {
-                const updatedData = [...prev];
-                const index = updatedData.findIndex(el => el?.authorityEmployeeTokenNo === record?.authorityEmployeeTokenNo);
-                console.log("index",index)
-                updatedData.splice(index, 1, {...data});
-                console.log("updatedData",updatedData)
-                return updatedData
+        // if(!tokenNumber?.employeeName){
+        //     return showGlobalNotification({ notificationType: 'success', title: 'Warning', message: 'Validate token to proceed' });
+        // }
+        form.validateFields()
+            .then((data) => {
+                setDocumentTypesList((prev) => {
+                    const updatedData = [...prev];
+                    const index = updatedData.findIndex((el) => el?.authorityEmployeeTokenNo === record?.authorityEmployeeTokenNo);
+                    updatedData.splice(index, 1, { ...data });
+                    return updatedData;
+                });
             })
-        }).catch(error => console.error(error));;
+            .catch((error) => console.error(error));
         setIsEditing(false);
         setIsBtnDisabled(false);
-        errorTokenValidate('')
+        errorTokenValidate('');
         // form.resetFields();
         // forceUpdate();
     };
 
-    // const handleDeleteDocType = (val) => {
-    //     setDocumentTypesList((prev) => {
-    //         const newList = prev;
-    //         const indx = prev?.documentType.findIndex((el) => el.documentTypeCode === val?.documentTypeCode);
-    //         newList?.documentType?.splice(indx, 1);
-    //         return { ...prev, documentType: newList?.documentType };
-    //     });
+    const handleDeleteDocType = (val) => {
+        setDocumentTypesList((prev) => {
+            const newList = [...prev];
+            const indx = newList?.findIndex((el) => el?.authorityEmployeeTokenNo === val?.authorityEmployeeTokenNo && el?.authorityTypeCode === val?.authorityTypeCode);
+            newList?.splice(indx, 1);
+            return newList;
+        });
 
-    //     setIsEditing(false);
-    //     setIsBtnDisabled(false);
-    //     form.resetFields();
-    // };
+        setIsEditing(false);
+        setIsBtnDisabled(false);
+        form.resetFields();
+    };
 
     const onCancel = () => {
         setIsEditing(false);
         setIsBtnDisabled(false);
-        errorTokenValidate('')
+        errorTokenValidate('');
     };
 
     const colLeft = viewMode ? 24 : 18;
@@ -109,19 +113,13 @@ const AuthorityCardItemMain = (props) => {
 
     return (
         <>
-            <Card
-                style={{
-                    backgroundColor: '#F2F2F2',
-                    marginTop: '12px',
-                    border: '1px solid rgba(62, 62, 62, 0.1)',
-                }}
-            >
-                <Row>
+            <Card className={styles.viewCardSize}>
+                <Row style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     {/* {recordId + 'dsds'} */}
                     <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
                         <Row>
                             <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                                <Text type="secondary">Authority :{' '} {record?.authorityTypeCode}</Text>
+                                <Text type="secondary">Authority : {record?.authorityTypeCode}</Text>
                             </Col>
                         </Row>
 
@@ -142,11 +140,20 @@ const AuthorityCardItemMain = (props) => {
                     {!viewMode && (
                         <Col xs={colRight} sm={colRight} md={colRight} lg={colRight} xl={colRight} xxl={colRight}>
                             {!isEditing ? (
-                                <Row align="right">
-                                    <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2} style={{ float: 'right' }}>
+                                <Row gutter={20} justify="end">
+                                    <Col xs={6} sm={6} md={12} lg={12} xl={12} xxl={12} style={{ float: 'right' }}>
                                         <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(record)} />
-                                        {/* {!record?.id && <Button onClick={() => handleDeleteDocType(record)} type="link" icon={<FiTrash />}></Button>} */}
                                     </Col>
+                                    {!record?.id && (
+                                        <Col xs={4} sm={12} md={12} lg={12} xl={12} xxl={12} style={{ float: 'right' }}>
+                                            <Button disabled={isBtnDisabled} onClick={() => handleDeleteDocType(record)} type="link" icon={<FiTrash />}></Button>
+                                        </Col>
+                                    )}
+
+                                    {/* <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} style={{ float: 'right', display: 'flex' }}>
+                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(record)} />
+                                        {!record?.id && <Button onClick={() => handleDeleteDocType(record)} type="link" icon={<FiTrash />}></Button>}
+                                    </Col> */}
                                 </Row>
                             ) : (
                                 <Row align="right">

@@ -107,6 +107,11 @@ const AddEditFormMain = (props) => {
                             <Switch value={formData?.status} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
                         </Form.Item>
                     </Col>
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0}>
+                        <Form.Item hidden  name="isModified" initialValue={formData?.id ? true : false}>
+                            <Input />
+                        </Form.Item>
+                    </Col>
                 </Row>
 
                 <Row gutter={20} className={styles.formFooter}>
