@@ -21,7 +21,7 @@ const mapStateToProps = (state) => {
                 DealerCompany: { isLoaded: isDataLoaded = false, isLoading, data = [] },
                 DealerParent: { isLoaded: isDealerParentDataLoaded = false, isLoading: isDealerParentDataLoading = false, data: dealerParentData = [] },
             },
-            PincodeDetails: { isLoaded: isPincodeDetailsLoaded = false, isLoading: isPincodeDetailsLoading = false, detailData: pincodeDetailsData = [] },
+            //PincodeDetails: { isLoaded: isPincodeDetailsLoaded = false, isLoading: isPincodeDetailsLoading = false, detailData: pincodeDetailsData = [] },
         },
     } = state;
 
@@ -33,9 +33,9 @@ const mapStateToProps = (state) => {
         isDealerParentDataLoaded,
         isDealerParentDataLoading,
         dealerParentData,
-        isPincodeDetailsLoaded,
-        isPincodeDetailsLoading,
-        pincodeDetailsData,
+        // isPincodeDetailsLoaded,
+        // isPincodeDetailsLoading,
+        // pincodeDetailsData,
         isLoading,
         moduleTitle,
     };
@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const DealerCompanyBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { pincodeDetailsData, fetchPincodeDetailsList, listPincodeDetailsShowLoading, isPincodeDetailsLoaded } = props;
+    // const { pincodeDetailsData, fetchPincodeDetailsList, listPincodeDetailsShowLoading, isPincodeDetailsLoaded } = props;
     const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading } = props;
 
     const [form] = Form.useForm();
@@ -99,9 +99,9 @@ export const DealerCompanyBase = (props) => {
         if (userId && !isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
         }
-        if (userId && !isPincodeDetailsLoaded) {
-            fetchPincodeDetailsList({ setIsLoading: listPincodeDetailsShowLoading, userId, onErrorAction });
-        }
+        // if (userId && !isPincodeDetailsLoaded) {
+        //     fetchPincodeDetailsList({ setIsLoading: listPincodeDetailsShowLoading, userId, onErrorAction });
+        // }
         if (userId && !isDealerParentDataLoaded) {
             fetchDealerParentList({ setIsLoading: listDealerParentShowLoading, userId });
         }
@@ -228,9 +228,9 @@ export const DealerCompanyBase = (props) => {
         setButtonData,
         handleButtonClick,
         handleResetFilter,
-        pincodeDetailsData,
         listShowLoading,
-        fetchPincodeDetailsList,
+        // pincodeDetailsData,
+        // fetchPincodeDetailsList,
         dealerParentData,
     };
 

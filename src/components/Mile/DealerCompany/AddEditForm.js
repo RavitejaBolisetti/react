@@ -14,8 +14,6 @@ const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, listShowLoading, userId, fetchPincodeDetailsList, dealerParentData } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
 
-    console.log(dealerParentData,'dealerParentData')
-
     let pincodeObj = [
         {
             city: null,
