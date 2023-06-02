@@ -12,7 +12,7 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, listShowLoading, userId, fetchPincodeDetailsList, dealerParentData } = props;
-    const { buttonData, setButtonData, handleButtonClick, parentGroupSearchData, pincodeDetailsData } = props;
+    const { buttonData, setButtonData, handleButtonClick } = props;
 
     console.log(dealerParentData,'dealerParentData')
 

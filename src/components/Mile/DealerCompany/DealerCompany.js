@@ -10,7 +10,6 @@ import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
-import { dealerParentGroupSearchDataActions } from 'store/actions/data/dealer/dealerParentGroupSearch';
 import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
 import { geoPincodeDetailsActions } from 'store/actions/data/pincodeDetails';
 
@@ -20,7 +19,6 @@ const mapStateToProps = (state) => {
         data: {
             DealerHierarchy: {
                 DealerCompany: { isLoaded: isDataLoaded = false, isLoading, data = [] },
-                DealerParentGroupSearch: { isLoaded: isParentGroupSearchDataLoaded = false, isLoading: isParentGroupSearchLoading = false, data: parentGroupSearchData = [] },
                 DealerParent: { isLoaded: isDealerParentDataLoaded = false, isLoading: isDealerParentDataLoading = false, data: dealerParentData = [] },
             },
             PincodeDetails: { isLoaded: isPincodeDetailsLoaded = false, isLoading: isPincodeDetailsLoading = false, detailData: pincodeDetailsData = [] },
@@ -32,9 +30,6 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         data,
-        isParentGroupSearchDataLoaded,
-        isParentGroupSearchLoading,
-        parentGroupSearchData,
         isDealerParentDataLoaded,
         isDealerParentDataLoading,
         dealerParentData,
@@ -51,9 +46,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchParentGroupSearchList: dealerParentGroupSearchDataActions.fetchList,
-            listParentGroupSearchShowLoading: dealerParentGroupSearchDataActions.listShowLoading,
-
             fetchDealerParentList: dealerParentDataActions.fetchList,
             listDealerParentShowLoading: dealerParentDataActions.listShowLoading,
 
@@ -70,8 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DealerCompanyBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, detailData } = props;
-    const { parentGroupSearchData, fetchParentGroupSearchList, listParentGroupSearchShowLoading, isParentGroupSearchDataLoaded } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { pincodeDetailsData, fetchPincodeDetailsList, listPincodeDetailsShowLoading, isPincodeDetailsLoaded } = props;
     const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading } = props;
 
@@ -106,12 +97,7 @@ export const DealerCompanyBase = (props) => {
 
     useEffect(() => {
         if (userId && !isDataLoaded) {
-            // console.log(extraParams,"PARAMS")
-
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
-        }
-        if (userId && !isParentGroupSearchDataLoaded) {
-            fetchParentGroupSearchList({ setIsLoading: listParentGroupSearchShowLoading, userId });
         }
         if (userId && !isPincodeDetailsLoaded) {
             fetchPincodeDetailsList({ setIsLoading: listPincodeDetailsShowLoading, userId, onErrorAction });
@@ -121,7 +107,7 @@ export const DealerCompanyBase = (props) => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded, isParentGroupSearchDataLoaded, isDealerParentDataLoaded]);
+    }, [userId, isDataLoaded, isDealerParentDataLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {
@@ -238,14 +224,10 @@ export const DealerCompanyBase = (props) => {
         onCloseAction,
         titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Company'),
         tableData: searchData,
-        // ADD_ACTION,
-        // EDIT_ACTION,
-        // VIEW_ACTION,
         buttonData,
         setButtonData,
         handleButtonClick,
         handleResetFilter,
-        parentGroupSearchData,
         pincodeDetailsData,
         listShowLoading,
         fetchPincodeDetailsList,
