@@ -31,6 +31,7 @@ const AddEditFormMain = (props) => {
         const pinOption = pincodeData?.map((item) => ({
             label: item?.pinCode + ' - ' + item?.localityName + ' -',
             value: item?.pinCode,
+            key: item?.id,
         }));
         console.log(pinOption, 'pinOption');
         setOptions(pinOption);
@@ -78,6 +79,19 @@ const AddEditFormMain = (props) => {
         // });
     };
 
+    const handleOnSelect = (key, option) => {
+        const selectedPinCode = pincodeData?.find((i) => i.id === option?.key);
+        console.log("🚀 ~ file: AddEditForm.js:84 ~ handleOnSelect ~ selectedPinCode:", selectedPinCode)
+        if (selectedPinCode) {
+            form.setFieldsValue({
+                stateName: selectedPinCode?.stateName,
+                // name: selectedPinCode?.name,
+                city: selectedPinCode?.cityName,
+                tehsilName: selectedPinCode?.tehsilName,
+                districtName: selectedPinCode?.name,
+            });
+        }
+    };
     const handleOnSearch = (value) => {
         if (value.length > 5) {
             setOptions();
@@ -171,7 +185,7 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             {/* <Search allowClear onSearch={handleOnSearch} placeholder={preparePlaceholderText('Pin Code')} className={styles.headerSearchField} maxLength={6} /> */}
                             <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
-                                <AutoComplete className={styles.searchField} options={options} onSearch={handleOnSearch}>
+                                <AutoComplete className={styles.searchField} options={options} onSelect={handleOnSelect} onSearch={handleOnSearch}>
                                     <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" />
                                 </AutoComplete>
                             </Form.Item>
