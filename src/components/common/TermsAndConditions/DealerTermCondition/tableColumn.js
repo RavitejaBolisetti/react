@@ -1,34 +1,85 @@
 import { tblPrepareColumns, tblSerialNumberColumn, tblStatusColumn, tblActionColumn } from 'utils/tableCloumn';
-
+import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
+import { EditIcon, ViewEyeIcon } from 'Icons';
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
+
     tableColumn.push(
         tblSerialNumberColumn({ page, pageSize, width: '5%' }),
 
         tblPrepareColumns({
-            title: 'State Code',
-            dataIndex: 'code',
+            title: 'Product Hierarchy',
+            dataIndex: 'productCode',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'State Name',
-            dataIndex: 'name',
+            title: 'Document Type',
+            dataIndex: 'documentTypeCode',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'State GST Code',
-            dataIndex: 'gstStateCode',
+            title: 'Language',
+            dataIndex: 'languageCode',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Country',
-            dataIndex: 'countryName',
+            title: 'Description',
+            dataIndex: 'documentDescription',
             width: '15%',
+        }),
+        tblPrepareColumns({
+            title: 'Version',
+            dataIndex: 'version',
+            width: '15%',
+        }),
+        tblPrepareColumns({
+            title: 'Effective From',
+            dataIndex: 'effectiveFrom',
+            width: '15%',
+        }),
+        tblPrepareColumns({
+            title: 'Effective To',
+            dataIndex: 'effectiveTo',
+            width: '15%',
+        }),
+        tblPrepareColumns({
+            title: 'MFG T&C',
+            width: '15%',
+            sorter: false,
+            render: (text, record, index) => {
+                return (
+                    <Space>
+                        {
+                            <Button className={styles.tableIcons} danger ghost aria-label="ai-view">
+                                {/* onClick={() => handleView(record)} */}
+                                <ViewEyeIcon />
+                            </Button>
+                        }
+                    </Space>
+                );
+            },
+        }),
+        tblPrepareColumns({
+            title: 'View',
+            width: '15%',
+            sorter: false,
+            render: (text, record, index) => {
+                return (
+                    <Space>
+                        {
+                            <Button className={styles.tableIcons} danger ghost aria-label="ai-view">
+                                {/* onClick={() => handleView(record)} */}
+                                <ViewEyeIcon />
+                            </Button>
+                        }
+                    </Space>
+                );
+            },
         }),
 
         tblStatusColumn({ styles, width: '15%' }),

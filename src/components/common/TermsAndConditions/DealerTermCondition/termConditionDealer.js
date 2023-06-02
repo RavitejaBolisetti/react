@@ -23,6 +23,7 @@ import styles from 'components/common/Common.module.css';
 import { FilterIcon } from 'Icons';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ListDataTable } from 'utils/ListDataTable';
+import { tableColumn } from './tableColumn';
 // import { AdvancedSearch } from './AdvancedSearch';
 
 const { Search } = Input;
@@ -123,6 +124,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, resetData, isD
     const [productName, setProductName] = useState();
     const [documentName, setDocumentName] = useState();
     const [languageName, setLanguageName] = useState();
+    const [page, setPage] = useState(1);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -186,88 +188,99 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, resetData, isD
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [filterString, isDataLoaded, termConditionData]);
 
-    const tableColumn = [
-        tblPrepareColumns({
-            title: 'Product Hierarchy',
-            dataIndex: 'productHierarchy',
-            width: '17%',
-            sorter: false,
-        }),
+    // const tableColumn = [
+    //     tblPrepareColumns({
+    //         title: 'Product Hierarchy',
+    //         dataIndex: 'productHierarchy',
+    //         width: '17%',
+    //         sorter: false,
+    //     }),
 
-        tblPrepareColumns({
-            title: 'Document Type',
-            dataIndex: 'documentType',
-            width: '17%',
-            sorter: false,
-        }),
-        tblPrepareColumns({
-            title: 'Language',
-            dataIndex: 'language',
-            width: '8%',
-            sorter: false,
-        }),
-        tblPrepareColumns({
-            title: 'Description',
-            dataIndex: 'description',
-            width: '40%',
-            sorter: false,
-        }),
-        tblPrepareColumns({
-            title: 'Version',
-            dataIndex: 'version',
-            width: '8%',
-            sorter: false,
-        }),
-        tblPrepareColumns({
-            title: 'Effective From',
-            dataIndex: 'effectiveFrom',
-            width: '8%',
-            sorter: false,
-        }),
-        tblPrepareColumns({
-            title: 'Effective To',
-            dataIndex: 'effectiveTo',
-            width: '8%',
-            sorter: false,
-        }),
-        tblPrepareColumns({
-            title: 'MFG T&C',
-            width: '15%',
-            sorter: false,
-            render: (text, record, index) => {
-                return (
-                    <Space>
-                        {
-                            <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
-                                <ViewEyeIcon />
-                            </Button>
-                        }
-                    </Space>
-                );
-            },
-        }),
-        tblPrepareColumns({
-            title: 'View',
-            width: '15%',
-            sorter: false,
-            render: (text, record, index) => {
-                return (
-                    <Space>
-                        {
-                            <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
-                                <ViewEyeIcon />
-                            </Button>
-                        }
-                    </Space>
-                );
-            },
-        }),
-    ];
+    //     tblPrepareColumns({
+    //         title: 'Document Type',
+    //         dataIndex: 'documentType',
+    //         width: '17%',
+    //         sorter: false,
+    //     }),
+    //     tblPrepareColumns({
+    //         title: 'Language',
+    //         dataIndex: 'language',
+    //         width: '8%',
+    //         sorter: false,
+    //     }),
+    //     tblPrepareColumns({
+    //         title: 'Description',
+    //         dataIndex: 'description',
+    //         width: '40%',
+    //         sorter: false,
+    //     }),
+    //     tblPrepareColumns({
+    //         title: 'Version',
+    //         dataIndex: 'version',
+    //         width: '8%',
+    //         sorter: false,
+    //     }),
+    //     tblPrepareColumns({
+    //         title: 'Effective From',
+    //         dataIndex: 'effectiveFrom',
+    //         width: '8%',
+    //         sorter: false,
+    //     }),
+    //     tblPrepareColumns({
+    //         title: 'Effective To',
+    //         dataIndex: 'effectiveTo',
+    //         width: '8%',
+    //         sorter: false,
+    //     }),
+    //     tblPrepareColumns({
+    //         title: 'MFG T&C',
+    //         width: '15%',
+    //         sorter: false,
+    //         render: (text, record, index) => {
+    //             return (
+    //                 <Space>
+    //                     {
+    //                         <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
+    //                             <ViewEyeIcon />
+    //                         </Button>
+    //                     }
+    //                 </Space>
+    //             );
+    //         },
+    //     }),
+    //     tblPrepareColumns({
+    //         title: 'View',
+    //         width: '15%',
+    //         sorter: false,
+    //         render: (text, record, index) => {
+    //             return (
+    //                 <Space>
+    //                     {
+    //                         <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
+    //                             <ViewEyeIcon />
+    //                         </Button>
+    //                     }
+    //                 </Space>
+    //             );
+    //         },
+    //     }),
+    // ];
+
+    const handleButtonClick = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        setFormData([]);
+
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+
+        record && setFormData(record);
+        setIsFormVisible(true);
+    };
 
     const tableProps = {
-        isLoading: isLoading,
+        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
         tableData: searchData,
-        tableColumn: tableColumn,
+        setPage,
     };
 
     const removeFilter = (key) => {
@@ -323,19 +336,19 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, resetData, isD
         form.validateFields().then((values) => {});
     };
 
-    // const handleAdd = () => {
-    //     setFormActionType('add');
-    //     setIsFormVisible(true);
-    //     setSaveAndSaveNew(true);
-    //     setSaveBtn(true);
-    //     setFooterEdit(false);
-    //     setIsViewModeVisible(false);
-    //     setSelectedRecord([]);
-    //     setIsReadOnly(false);
-    //     setsaveclick(false);
-    //     setsaveandnewclick(true);
-    //     setcodeIsReadOnly(false);
-    // };
+    const handleAdd = () => {
+        setFormActionType('add');
+        setIsFormVisible(true);
+        setSaveAndSaveNew(true);
+        setSaveBtn(true);
+        setFooterEdit(false);
+        setIsViewModeVisible(false);
+        setSelectedRecord([]);
+        setIsReadOnly(false);
+        setsaveclick(false);
+        setsaveandnewclick(true);
+        setcodeIsReadOnly(false);
+    };
 
     const handleUpdate = (record) => {
         setFormActionType('update');
@@ -420,17 +433,6 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, resetData, isD
         form.resetFields();
     };
 
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormData([]);
-
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
-
-        record && setFormData(record);
-        setIsFormVisible(true);
-    };
-
     const onSearchHandle = (value) => {
         setFilterString(value);
     };
@@ -506,7 +508,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, resetData, isD
         onFinishFailed,
         onFinish,
         form,
-        // handleAdd,
+        handleAdd,
         data,
         isChecked,
         formData,
@@ -538,7 +540,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, resetData, isD
         setLanguageName,
     };
 
-    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
+    // const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
     const title = 'Term & Condition';
 
@@ -563,7 +565,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, isDataLoaded, resetData, isD
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={isLoading} {...tableProps} handleAdd={handleAdd} addTitle={title} />
+                    <ListDataTable isLoading={isLoading} {...tableProps} />
                 </Col>
             </Row>
             {/* <AdvancedSearch {...advanceFilterProps} /> */}
