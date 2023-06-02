@@ -14,6 +14,8 @@ const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, listShowLoading, userId, fetchPincodeDetailsList, dealerParentData } = props;
     const { buttonData, setButtonData, handleButtonClick, parentGroupSearchData, pincodeDetailsData } = props;
 
+    console.log(dealerParentData,'dealerParentData')
+
     let pincodeObj = [
         {
             city: null,
@@ -23,7 +25,7 @@ const AddEditFormMain = (props) => {
         },
     ];
 
-    const [pincodeDetails, setPincodeDetails] = useState({ ...pincodeObj });
+    const [ pincodeDetails, setPincodeDetails ] = useState({ ...pincodeObj });
     const [ pincodeShow, setPincodeShow ] = useState(false);
 
     const handleFormValueChange = () => {
@@ -35,15 +37,20 @@ const AddEditFormMain = (props) => {
     };
 
     let groupValue = null;
+    let parentGroupId = null;
     const parentName = (values) => {
+        console.log(values,'values')
         if (values === undefined) {
             groupValue = null;
             form.setFieldValue('dealerParentName', groupValue);
+            form.setFieldValue('parentId', parentGroupId);
         } else {
-            parentGroupSearchData?.map((item) => {
-                if (item?.dealerParentCode === values?.label) {
-                    groupValue = item?.dealerParentName;
+            dealerParentData?.map((item) => {
+                if (item?.code === values?.label) {
+                    groupValue = item?.name;
+                    parentGroupId = item?.id;
                     form.setFieldValue('dealerParentName', groupValue);
+                    form.setFieldValue('parentId', parentGroupId);
                 }
             });
         }
@@ -105,7 +112,7 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.parentCode} label="Parent Group Code" name="dealerParentCode" rules={[validateRequiredSelectField('parent group code')]}>
+                            <Form.Item initialValue={formData?.parentCode} label="Parent Group Code" rules={[validateRequiredSelectField('parent group code')]} name="parentCode">
                                 {/* <Search allowClear onSearch={handleGroupSearch} className={styles.headerSearchField} placeholder={preparePlaceholderText('parent group code')} maxLength={6} /> */}
                                 <Select
                                     placeholder={preparePlaceholderSelect('Parent Group Code')}
@@ -127,6 +134,12 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Parent Group Name" initialValue={groupValue ? groupValue : formData?.dealerParentName} name="dealerParentName">
                                 <Input disabled className={styles.inputBox} placeholder={preparePlaceholderText('parent name')} />
+                            </Form.Item>
+                        </Col>
+                        {console.log(parentGroupId,'parentGroupId')}
+                        <Col xs={0} sm={0} md={0} lg={0} xl={0}>
+                            <Form.Item label="Parent Id" name="parentId" initialValue={formData?.parentId}>
+                                <Input />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -160,24 +173,24 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={pincodeDetails[0]?.city} label="City" name="name">
+                                    <Form.Item initialValue={pincodeDetails[0]?.city} label="City" name="city">
                                         <Input className={styles.inputBox} placeholder={preparePlaceholderText('city')} disabled />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={pincodeDetails[0]?.tehsil} label="Tehsil" name="tehsilName">
+                                    <Form.Item initialValue={pincodeDetails[0]?.tehsil} label="Tehsil" name="tehsil">
                                         <Input className={styles.inputBox} placeholder={preparePlaceholderText('tehsil')} disabled />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={pincodeDetails[0]?.district} label="District" name="districtName">
+                                    <Form.Item initialValue={pincodeDetails[0]?.district} label="District" name="district">
                                         <Input className={styles.inputBox} placeholder={preparePlaceholderText('district')} disabled />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={pincodeDetails[0]?.state} label="State" name="stateName">
+                                    <Form.Item initialValue={pincodeDetails[0]?.state} label="State" name="state">
                                         <Input className={styles.inputBox} placeholder={preparePlaceholderText('state')} disabled />
                                     </Form.Item>
                                 </Col>

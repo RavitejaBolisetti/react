@@ -182,8 +182,8 @@ export const DealerCompanyBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.parentId || '';
-        let data = { ...values, parentId: recordId };
+        const recordId = formData?.parentId || form.getFieldValue('parentId');
+        let data = { ...values, parentId : recordId };
 
         const onSuccess = (res) => {
             form.resetFields();
