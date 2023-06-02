@@ -359,7 +359,6 @@ const ListPinCodeMasterBase = (props) => {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             }
-            setButtonData({ ...defaultBtnVisiblity, formBtnActive: false });
         };
 
         const onError = (message) => {
