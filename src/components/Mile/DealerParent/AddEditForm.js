@@ -43,13 +43,13 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="Group Code" name="code" rules={[validateRequiredInputField('Group Code'), validationFieldLetterAndNumber('code')]}>
+                            <Form.Item initialValue={formData?.code} label="Group Code" name="code" rules={[validateRequiredInputField('Group Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Group Code')} maxLength={6} disabled={editMode} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.name} label="Group Name" name="name" rules={[validateRequiredInputField('Group Name'),validateLettersWithWhitespaces('Group Name')]}>
+                            <Form.Item initialValue={formData?.name} label="Group Name" name="name" rules={[validateRequiredInputField('Group Name')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Group Name')} maxLenght={50} />
                             </Form.Item>
                         </Col>
@@ -75,7 +75,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.ownerName} label="Owner Name" name="ownerName" rules={[validateRequiredInputField('Owner Name'), validateLettersWithWhitespaces('Owner Name')]}>
+                            <Form.Item initialValue={formData?.ownerName} label="Owner Name" name="ownerName" rules={[validateRequiredInputField('Owner Name')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Owner Name')} />
                             </Form.Item>
                         </Col>
