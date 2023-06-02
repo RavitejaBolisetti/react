@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Col, Input, Form, Row, Switch, Select } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Col, Input, Form, Row, Switch, Select, AutoComplete } from 'antd';
 import { validateRequiredInputField, searchValidator, validatePanField, validateTan, validateTin, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetail';
@@ -7,12 +7,12 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 
-const { Search } = Input;
+const { Search, TextArea } = Input;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, listShowLoading, userId, fetchPincodeDetailsList, dealerParentData } = props;
-    const { buttonData, setButtonData, handleButtonClick } = props;
+    const { buttonData, setButtonData, handleButtonClick, pincodeData, fetchPincodeDetail } = props;
 
     let pincodeObj = [
         {
@@ -23,8 +23,22 @@ const AddEditFormMain = (props) => {
         },
     ];
 
-    const [ pincodeDetails, setPincodeDetails ] = useState({ ...pincodeObj });
-    const [ pincodeShow, setPincodeShow ] = useState(false);
+    const [pincodeDetails, setPincodeDetails] = useState({ ...pincodeObj });
+    const [pincodeShow, setPincodeShow] = useState(false);
+    const [options, setOptions] = useState(false);
+
+    useEffect(() => {
+        const pinOption = pincodeData?.map((item) => ({
+            label: item?.pinCode + ' - ' + item?.localityName + ' -',
+            value: item?.pinCode,
+        }));
+        console.log(pinOption, 'pinOption');
+        setOptions(pinOption);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pincodeData]);
+
+    console.log('pincodeData', pincodeData, options);
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -37,7 +51,7 @@ const AddEditFormMain = (props) => {
     let groupValue = null;
     let parentGroupId = null;
     const parentName = (values) => {
-        console.log(values,'values')
+        console.log(values, 'values');
         if (values === undefined) {
             groupValue = null;
             form.setFieldValue('dealerParentName', groupValue);
@@ -54,37 +68,26 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    // const onErrorAction = () => {};
-    // const onSuccessAction = () => {
-    //     form.setFieldsValue({
-    //         stateName: pincodeDetailsData?.state[0].stateName,
-    //         name: pincodeDetailsData?.city[0].name,
-    //         tehsilName: pincodeDetailsData?.tehsil[0].tehsilName,
-    //         districtName: pincodeDetailsData?.district[0].name,
-    //     });
-    // };
-
+    const onErrorAction = () => {};
+    const onSuccessAction = () => {
+        // form.setFieldsValue({
+        //     stateName: pincodeDetailsData?.state[0].stateName,
+        //     name: pincodeDetailsData?.city[0].name,
+        //     tehsilName: pincodeDetailsData?.tehsil[0].tehsilName,
+        //     districtName: pincodeDetailsData?.district[0].name,
+        // });
+    };
 
     const handleOnSearch = (value) => {
-        //fetchPincodeDetailsList({ setIsLoading: listShowLoading, userId, code: `${value}`, onSuccessAction, onErrorAction });
-        if(value === ''){
-            setPincodeShow(false);
-        }
-        else if(value.length === 6){
-            setPincodeDetails([
+        if (value.length > 5) {
+            setOptions();
+            const extraParams = [
                 {
-                    city: 'Georgepool',
-                    tehsil: 'Pochinki',
-                    district: 'Mylta',
-                    state: 'Goa',
+                    key: 'pincode',
+                    value: value,
                 },
-            ]);
-    
-            setPincodeShow(true);
-    
-            // if (pincodeDetails?.length > 1) {
-            //     pincodeFields = true;
-            // }
+            ];
+            fetchPincodeDetail({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
     };
 
@@ -102,8 +105,15 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+        className: styles.headerSelectField,
+    };
+
     return (
-        <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
                 <ViewDetail {...viewProps} />
             ) : (
@@ -111,16 +121,13 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.parentCode} label="Group Code" rules={[validateRequiredSelectField('Group Code')]} name="parentCode">
-                                {/* <Search allowClear onSearch={handleGroupSearch} className={styles.headerSearchField} placeholder={preparePlaceholderText('parent group code')} maxLength={6} /> */}
                                 <Select
                                     placeholder={preparePlaceholderSelect('Group Code')}
                                     style={{
                                         width: '100%',
                                     }}
-                                    allowClear
-                                    labelInValue
+                                    {...selectProps}
                                     onChange={parentName}
-                                    showSearch
                                     disabled={editMode}
                                 >
                                     {dealerParentData?.map((item) => {
@@ -134,7 +141,7 @@ const AddEditFormMain = (props) => {
                                 <Input disabled className={styles.inputBox} placeholder={preparePlaceholderText('Group Name')} />
                             </Form.Item>
                         </Col>
-                        {console.log(parentGroupId,'parentGroupId')}
+                        {console.log(parentGroupId, 'parentGroupId')}
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
                             <Form.Item label="Parent Id" name="parentId" initialValue={formData?.parentId}>
                                 <Input />
@@ -156,60 +163,60 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.address} label="Company Address" name="address" rules={[validateRequiredInputField('Company Address')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Company Address')} maxLength={50} />
+                                <TextArea rows={2} placeholder={preparePlaceholderText('Company Address')} showCount maxLength={255} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'),validatePincodeField('Pin Code')]}>
-                                <Search allowClear onSearch={handleOnSearch} placeholder={preparePlaceholderText('Pin Code')} className={styles.headerSearchField} maxLength={6} />
+                            {/* <Search allowClear onSearch={handleOnSearch} placeholder={preparePlaceholderText('Pin Code')} className={styles.headerSearchField} maxLength={6} /> */}
+                            <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
+                                <AutoComplete className={styles.searchField} options={options} onSearch={handleOnSearch}>
+                                    <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" />
+                                </AutoComplete>
                             </Form.Item>
                         </Col>
                     </Row>
-                    {pincodeShow && (
-                        <>
-                            <Row gutter={16}>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={pincodeDetails[0]?.city} label="City" name="city">
-                                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('City')} disabled />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={pincodeDetails[0]?.tehsil} label="Tehsil" name="tehsil">
-                                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('Tehsil')} disabled />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                            <Row gutter={16}>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={pincodeDetails[0]?.district} label="District" name="district">
-                                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('District')} disabled />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={pincodeDetails[0]?.state} label="State" name="state">
-                                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('State')} disabled />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                        </>
-                    )}
+
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.companyTin} label="TIN" name="companyTin" rules={[validateRequiredInputField('TIN'),validateTin('TIN')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('TIN')}  />
+                            <Form.Item initialValue={pincodeDetails[0]?.city} label="City" name="city">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('City')} disabled />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.companyTan} label="TAN" name="companyTan" rules={[validateRequiredInputField('TAN'),validateTan('TAN')]}>
+                            <Form.Item initialValue={pincodeDetails[0]?.tehsil} label="Tehsil" name="tehsil">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Tehsil')} disabled />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={pincodeDetails[0]?.district} label="District" name="district">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('District')} disabled />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={pincodeDetails[0]?.state} label="State" name="state">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State')} disabled />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={formData?.companyTin} label="TIN" name="companyTin" rules={[validateRequiredInputField('TIN'), validateTin('TIN')]}>
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('TIN')} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={formData?.companyTan} label="TAN" name="companyTan" rules={[validateRequiredInputField('TAN'), validateTan('TAN')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('TAN')} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.companyPan} label="PAN" name="companyPan" rules={[validateRequiredInputField('PAN'),validatePanField('PAN')]}>
+                            <Form.Item initialValue={formData?.companyPan} label="PAN" name="companyPan" rules={[validateRequiredInputField('PAN'), validatePanField('PAN')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('PAN')} />
                             </Form.Item>
                         </Col>
