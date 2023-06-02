@@ -26,6 +26,7 @@ export const MANUFACTURER_ADMIN_AUTHORITY_UPLOAD_VISIBLE = 'MANUFACTURER_ADMIN_A
 export const MANUFACTURER_ADMIN_HIERARCHY_SEARCH_DATA_LOADED = 'MANUFACTURER_ADMIN_HIERARCHY_SEARCH_DATA_LOADED';
 export const MANUFACTURER_AUTHORITY_HIERARCHY_DROPDOWN = 'MANUFACTURER_AUTHORITY_HIERARCHY_DROPDOWN';
 export const CARD_BTN_DISABLE = 'CARD_BTN_DISABLE';
+export const ON_ERROR_TOKEN_VALIDATION = 'ON_ERROR_TOKEN_VALIDATION';
 
 const receiveData = (data) => ({
     type: MANUFACTURER_ADMIN_HIERARCHY_DATA_LOADED,
@@ -65,6 +66,11 @@ const receiveAuthorityTypeData = (data) => ({
 });
 
 const manufacturerAdminHierarchyDataActions = {};
+
+manufacturerAdminHierarchyDataActions.errorTokenValidate = (message) => ({
+    type: ON_ERROR_TOKEN_VALIDATION,
+    data: message,
+});
 
 manufacturerAdminHierarchyDataActions.cardBtnDisableAction = (value) => ({
     type: CARD_BTN_DISABLE,
@@ -255,7 +261,7 @@ manufacturerAdminHierarchyDataActions.searchList = withAuthToken((params) => ({ 
         accessToken,
         userId,
         onSuccess,
-        onError,
+        onError: errorAction,
         onTimeout: () => errorAction('Request timed out, Please try again'),
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),

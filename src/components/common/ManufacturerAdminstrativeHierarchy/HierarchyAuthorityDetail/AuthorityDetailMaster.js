@@ -6,10 +6,10 @@ import { AddEditForm } from './AddEditForm';
 import dayjs from 'dayjs';
 
 
-const AuthorityDetailMaster = ({ viewMode, documentTypesList, setDocumentTypesList, selectedTreeData, formActionType, tokenValidate, setTokenValidate, }) => {
+const AuthorityDetailMaster = ({ viewMode, documentTypesList, setDocumentTypesList, formActionType, tokenValidate, setTokenValidate, forceUpdate}) => {
     console.log('🚀 ~ file: AuthorityDetailMaster.js:8 ~ AuthorityDetailMaster ~ viewMode:', viewMode);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    // const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [actionForm] = Form.useForm();
 
     const onActionFormFinish = (val) => {

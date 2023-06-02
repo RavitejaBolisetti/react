@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], recordId: formRecordId, tokenNumber = [], changeHistoryVisible, historyData = [], authTypeDropdown = [], authorityVisible },
+            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], recordId: formRecordId, tokenNumber = [], errorMessage, changeHistoryVisible, historyData = [], authTypeDropdown = [], authorityVisible },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -43,6 +43,7 @@ const mapStateToProps = (state) => {
         historyData,
         authorityVisible,
         attributeData: attributeData?.filter((i) => i),
+        errorMessage,
     };
     return returnValue;
 };
@@ -55,6 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: manufacturerAdminHierarchyDataActions.saveData,
             listShowLoading: manufacturerAdminHierarchyDataActions.listShowLoading,
             authTypeDropdown: manufacturerAdminHierarchyDataActions.authTypeDropdown,
+            errorTokenValidate: manufacturerAdminHierarchyDataActions.errorTokenValidate,
 
             hierarchyAttributesearchList: hierarchyAttributeMasterDataActions.searchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
@@ -66,14 +68,23 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const AuthorityFormMin = ({ tokenValidate, setTokenValidate, setEmployeeName = undefined, employeeName = '', recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction }) => {
+const AuthorityFormMin = ({ errorTokenValidate, tokenValidate, errorMessage, setTokenValidate, setEmployeeName = undefined, employeeName = '', recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction }) => {
+   const disableAddBtn = {disabled: isBtnDisabled || !tokenNumber?.employeeName}
+   
     const onFinishFailed = (err) => {
         console.error(err);
     };
-console.log('tokenValidate',tokenValidate)
+console.log('tokenValidate',tokenValidate, 'errorMessage',errorMessage)
+
+const errorAction = (message) => {
+    // showGlobalNotification({ message });
+    console.log("onErrorAction", message);
+    errorTokenValidate(message)
+};
+
     const onSearchHandle = (recordId) => (data) => {
         setTokenValidate({ ['tokenVisible' + recordId]: true });
-        data && searchList({ setIsLoading: listShowLoading, tokenNumber: data, recordId });
+        data && searchList({ setIsLoading: listShowLoading, tokenNumber: data, recordId, errorAction });
     };
 
     const onChangeHandle = (recordId) => (e) => {
@@ -81,6 +92,9 @@ console.log('tokenValidate',tokenValidate)
         // setTokenValue(e.target.value);
         // setEmployeeName(employeeName);
         // console.log('recordId', recordId, 'EffectiveTo' + recordId);
+        if(tokenNumber?.employeeName){
+            errorTokenValidate('')
+        }
 
         form.setFieldsValue({
             EffectiveTo: '',
@@ -119,6 +133,9 @@ console.log('tokenValidate',tokenValidate)
                     <Form.Item label="Token" name={'authorityEmployeeTokenNo'} rules={[validateRequiredInputField('Token Required'), validationFieldLetterAndNumber('Token Required')]}>
                         <Search disabled={isBtnDisabled} allowClear onChange={onChangeHandle(recordId)} onSearch={onSearchHandle(recordId)} maxLength={50} placeholder={preparePlaceholderText('Token')} />
                     </Form.Item>
+                </Col>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Text type="danger">{errorMessage}</Text>
                 </Col>
             </Row>
             {!viewMode && 
@@ -164,7 +181,7 @@ console.log('tokenValidate',tokenValidate)
             )}
             {console.log("authorityVisible",authorityVisible)}
             {!isEditing && authorityVisible &&(
-                <Button disabled={isBtnDisabled} icon={<PlusOutlined />} type="primary" danger htmlType="submit"
+                <Button {...disableAddBtn} icon={<PlusOutlined />} type="primary" danger htmlType="submit"
                  onClick={() => cardBtnDisableAction(true)}
                  >
                     Add
