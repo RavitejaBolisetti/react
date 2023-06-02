@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
+import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { lessorCompanyMasterDataActions } from 'store/actions/data/lessorCompanyMaster';
@@ -51,17 +51,16 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ListLessorCompanyMasterBase = (props) => {
     const { detailData, saveData, fetchDetail, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
-
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [searchData, setSearchdata] = useState('');
+    const [searchData, setSearchdata] = useState(detailData);
     const [refershData, setRefershData] = useState(false);
     const [page, setPage] = useState(1);
 
     const [formData, setFormData] = useState([]);
-    const [filterString, setFilterString] = useState();
+    const [filterString, setFilterString] = useState('');
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
@@ -85,21 +84,27 @@ export const ListLessorCompanyMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId) {
-            fetchDetail({ setIsLoading: listShowLoading, userId, customerCode: 'CUS003', onSuccessAction, onErrorAction });
+        if (userId && !isDataLoaded) {
+            fetchDetail({ setIsLoading: listShowLoading, userId, customerId: '673a6f88-6a5f-4e0b-9208-7b09819a5398', onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, isDataLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {
-            fetchDetail({ setIsLoading: listShowLoading, userId, customerCode: 'CUS003', onSuccessAction, onErrorAction });
+            fetchDetail({ setIsLoading: listShowLoading, userId, customerId: '673a6f88-6a5f-4e0b-9208-7b09819a5398', onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
 
     useEffect(() => {
-        if (isDataLoaded && detailData && userId) {
+        if (detailData?.length) {
+            setSearchdata(detailData);
+        }
+    }, [detailData]);
+
+    useEffect(() => {
+        if (detailData?.length > 0 && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
                 const filterDataItem = detailData?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyCode) || filterFunction(keyword)(item?.companyDescription) : true));
@@ -144,18 +149,19 @@ export const ListLessorCompanyMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        let data = { ...values };
+        let data = { customerId: '673a6f88-6a5f-4e0b-9208-7b09819a5398', customerLessorCompanyDetails: [{ ...values }] };
 
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchDetail({ setIsLoading: listShowLoading, userId, onSuccessAction, customerCode: 'CUS003' });
+            fetchDetail({ setIsLoading: listShowLoading, userId, onSuccessAction, customerId: '673a6f88-6a5f-4e0b-9208-7b09819a5398' });
 
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+                setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
             } else {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -217,6 +223,7 @@ export const ListLessorCompanyMasterBase = (props) => {
         tableData: searchData,
         setPage,
     };
+
     const title = 'Lessor Company Name';
 
     const advanceFilterResultProps = {

@@ -111,7 +111,7 @@ export const dataActions = (params) => {
         }),
 
         fetchDetail: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, onErrorAction = undefined, onSuccessAction = undefined, extraParams = undefined, id = '', type = '', partyCode = '', customerCode = '' } = params;
+            const { setIsLoading, data, onErrorAction = undefined, onSuccessAction = undefined, extraParams = undefined, id = '', type = '', partyCode = '', customerId = '' } = params;
             setIsLoading(true);
 
             const onError = (message) => {
@@ -137,7 +137,7 @@ export const dataActions = (params) => {
             const apiCallParams = {
                 data,
                 method: 'get',
-                url: inBaseURL + (id ? '?id=' + id : '') + (type ? '?type=' + type : '') + (partyCode ? '?partyCode=' + partyCode : '') + (customerCode ? '?customerCode=' + customerCode : ''),
+                url: inBaseURL + (id ? '?id=' + id : '') + (type ? '?type=' + type : '') + (partyCode ? '?partyCode=' + partyCode : '') + (customerId ? '?customerId=' + customerId : ''),
                 token,
                 accessToken,
                 userId,

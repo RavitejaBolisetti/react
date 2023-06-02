@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Input, Form, Row, Switch } from 'antd';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber, validateAlphanumericWithSpaceHyphenPeriod } from 'utils/validation';
+import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -45,13 +45,13 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.companyCode} disabled label="Company Code" name="companyCode" rules={[validateRequiredInputField('company code'),]}>
+                            <Form.Item initialValue={formData?.companyCode} label="Company Code" name="companyCode" rules={[validateRequiredInputField('company code'),]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('company code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Company Name" initialValue={formData?.companyDescription} rules={[validateRequiredInputField('company name')]} name="companyDescription">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('company name')} maxLength={250} disabled={editMode ? true : false} />
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('company name')} maxLength={250}  />
                             </Form.Item>
                         </Col>
                     </Row>

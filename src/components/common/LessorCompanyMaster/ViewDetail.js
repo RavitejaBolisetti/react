@@ -12,9 +12,8 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Country">{formData?.countryName}</Descriptions.Item>
-                    <Descriptions.Item label="State Code">{formData?.code}</Descriptions.Item>
-                    <Descriptions.Item label="State Name">{formData?.name}</Descriptions.Item>
+                    <Descriptions.Item label="Company Code">{formData?.companyCode}</Descriptions.Item>
+                    <Descriptions.Item label="Company Name">{formData?.companyDescription}</Descriptions.Item>
                     <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
                 </Descriptions>
             </>

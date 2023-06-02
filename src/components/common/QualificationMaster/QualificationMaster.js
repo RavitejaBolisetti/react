@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Col, Row, Input, Form } from 'antd';
-import { notification } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
@@ -12,12 +11,10 @@ import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { filterFunction } from 'utils/filterFunction';
-import { escapeRegExp } from 'utils/escapeRegExp';
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
 import { AddEditForm } from './AddEditForm';
 import { tableColumn } from './tableColumn';
 
-import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
 
@@ -94,6 +91,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
     useEffect(() => {
         if (userId && !isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded]);
@@ -101,6 +99,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
     useEffect(() => {
         if (userId && refershData) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -133,6 +132,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
     };
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
+
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
         tableData: searchData,
