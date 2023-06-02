@@ -85,4 +85,4 @@ export const BASE_URL_USER_MANAGEMENT_MANUFACTURER = BASE_URL + 'users/manufactu
 export const BASE_URL_TERM_CONDITION_PRODUCT_HIERARCHY = BASE_URL + 'product';
 export const BASE_URL_TERM_CONDITION_DOCUMENT_TYPE = BASE_URL + 'appmst/documenttypes?code=tns&type=DOCUMENT';
 export const BASE_URL_TERM_CONDITION_LANGUAGE = BASE_URL + 'configurableparametertypes?parametertype=TERMS_CONDITIONS _LNG';
-export const BASE_URL_TERM_CONDITION_DEALER_SAVE = BASE_URL + 'termconditiondealer';
+export const BASE_URL_TERM_CONDITION_DEALER_SAVE = BASE_URL + 'appmst/termconditiondealer';
