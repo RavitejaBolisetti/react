@@ -68,19 +68,17 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const AuthorityFormMin = ({ errorTokenValidate, tokenValidate, errorMessage, setTokenValidate, setEmployeeName = undefined, employeeName = '', recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction }) => {
-   const disableAddBtn = {disabled: isBtnDisabled || !tokenNumber?.employeeName}
-   
+const AuthorityFormMin = ({handleFormValueChange, tokenValidationData,  errorTokenValidate, tokenValidate, errorMessage, setTokenValidate, setEmployeeName = undefined, employeeName = '', recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction }) => {
+    const disableAddBtn = { disabled: isBtnDisabled || !tokenNumber?.employeeName };
+
     const onFinishFailed = (err) => {
         console.error(err);
     };
-console.log('tokenValidate',tokenValidate, 'errorMessage',errorMessage)
+    console.log('tokenValidate', tokenValidate, 'errorMessage', errorMessage);
 
-const errorAction = (message) => {
-    // showGlobalNotification({ message });
-    console.log("onErrorAction", message);
-    errorTokenValidate(message)
-};
+    const errorAction = (message) => {
+        errorTokenValidate(message);
+    };
 
     const onSearchHandle = (recordId) => (data) => {
         setTokenValidate({ ['tokenVisible' + recordId]: true });
@@ -88,12 +86,9 @@ const errorAction = (message) => {
     };
 
     const onChangeHandle = (recordId) => (e) => {
-        setTokenValidate({tokenVisible: !!e.target.value });
-        // setTokenValue(e.target.value);
-        // setEmployeeName(employeeName);
-        // console.log('recordId', recordId, 'EffectiveTo' + recordId);
-        if(tokenNumber?.employeeName){
-            errorTokenValidate('')
+        setTokenValidate({ tokenVisible: !!e.target.value });
+        if (tokenNumber?.employeeName || errorMessage) {
+            errorTokenValidate('');
         }
 
         form.setFieldsValue({
@@ -109,8 +104,6 @@ const errorAction = (message) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    // const formTokenValue = form?.getFieldValue('tokenValidate' + recordId);
-
     return (
         <Form
             autoComplete="off"
@@ -118,6 +111,7 @@ const errorAction = (message) => {
             id="myForm"
             onFinish={onFinish}
             layout="vertical"
+            onFieldsChange={handleFormValueChange}
             onFinishFailed={onFinishFailed}
             style={{
                 backgroundColor: '#F2F2F2',
@@ -125,7 +119,7 @@ const errorAction = (message) => {
         >
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Authority Type" name='authorityTypeCode' rules={[validateRequiredInputField('Authority Type')]}>
+                    <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type')]}>
                         <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" options={apiData} disabled={isBtnDisabled} />
                     </Form.Item>
                 </Col>
@@ -135,55 +129,55 @@ const errorAction = (message) => {
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Text type="danger">{errorMessage}</Text>
+                    <Text type="danger">{errorMessage}</Text>
                 </Col>
             </Row>
-            {!viewMode && 
-            // tokenValidate?.['tokenVisible' + recordId] &&
-            tokenNumber?.employeeName
-            && (
+            {((!viewMode &&
+                // tokenValidate?.['tokenVisible' + recordId] &&
+                tokenNumber?.employeeName) ||
+                isEditing) && (
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item>
-                            <Text type="primary">Employee Name : {tokenNumber?.employeeName} </Text>
-                        </Form.Item>
-                    </Col>
+                    {!isEditing && (
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item>
+                                <Text type="primary">Employee Name : {tokenNumber?.employeeName} </Text>
+                            </Form.Item>
+                        </Col>
+                    )}
 
                     <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                        <Form.Item label="" name='employeeName' initialValue={tokenNumber?.employeeName}>
+                        <Form.Item label="" name="employeeName" initialValue={tokenNumber?.employeeName}>
                             <Input />
                         </Form.Item>
                     </Col>
 
                     <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                        <Form.Item hidden label="" name='id' initialValue={''}>
+                        <Form.Item hidden label="" name="id" initialValue={''}>
                             <Input />
                         </Form.Item>
                     </Col>
 
                     <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                        <Form.Item hidden label="" name='isModified' value={false} initialValue={false}>
+                        <Form.Item hidden label="" name="isModified" value={false} initialValue={false}>
                             <Input />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Effective From" name='effectiveFrom' rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs('2015-01-01', 'YYYY-MM-DD')}>
+                        <Form.Item label="Effective From" name="effectiveFrom" rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs('2015-01-01', 'YYYY-MM-DD')}>
                             <DatePicker format="YYYY-MM-DD" className={style.datepicker} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Effective To" name='effectiveTo' rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs('2015-01-01', 'YYYY-MM-DD')}>
+                        <Form.Item label="Effective To" name="effectiveTo" rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs('2015-01-01', 'YYYY-MM-DD')}>
                             <DatePicker format="YYYY-MM-DD" className={style.datepicker} />
                         </Form.Item>
                     </Col>
                 </Row>
             )}
-            {console.log("authorityVisible",authorityVisible)}
-            {!isEditing && authorityVisible &&(
-                <Button {...disableAddBtn} icon={<PlusOutlined />} type="primary" danger htmlType="submit"
-                 onClick={() => cardBtnDisableAction(true)}
-                 >
+            {console.log('authorityVisible', authorityVisible)}
+            {!isEditing && authorityVisible && (
+                <Button {...disableAddBtn} icon={<PlusOutlined />} type="primary" danger htmlType="submit" onClick={() => cardBtnDisableAction(true)}>
                     Add
                 </Button>
             )}

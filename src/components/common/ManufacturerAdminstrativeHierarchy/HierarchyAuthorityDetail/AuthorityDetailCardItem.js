@@ -1,10 +1,12 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { Col, Card, Row, Button, Divider, Typography, Form } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import dayjs from 'dayjs';
 import moment from 'moment';
+import { bindActionCreators } from 'redux';
+import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 
 import { AddEditForm } from './AddEditForm';
 
@@ -13,44 +15,51 @@ const { Text } = Typography;
 const mapStateToProps = (state) => {
     const {
         data: {
-            ManufacturerAdminHierarchy: { authorityVisible },
+            ManufacturerAdminHierarchy: { authorityVisible, tokenNumber = [], errorMessage, },
         },
     } = state;
 
     let returnValue = {
         authorityVisible,
+        tokenNumber,
+        errorMessage,
     };
     return returnValue;
 };
 
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            errorTokenValidate: manufacturerAdminHierarchyDataActions.errorTokenValidate,
+
+        },
+        dispatch
+    ),
+});
+
+
 const AuthorityCardItemMain = (props) => {
-    const { viewMode, onFinish, setDocumentTypesList, forceUpdate, setIsBtnDisabled, isBtnDisabled, record } = props;
-    const { employeeName, setEmployeeName, tokenValidate, setTokenValidate } = props;
+    const { viewMode, onFinish, setDocumentTypesList, forceUpdate, setIsBtnDisabled, isBtnDisabled, record, handleFormValueChange } = props;
+    const { employeeName, setEmployeeName, tokenValidate, setTokenValidate, errorTokenValidate, tokenNumber, errorMessage } = props;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
+    const [tokenValidationData, setTokenValidationData ] = useState({});
+
+    useEffect(() => {
+        if (errorMessage || tokenNumber) {
+            setTokenValidationData({errorMessage, ...tokenNumber });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ errorMessage, tokenNumber ]);
 
     const recordId = record?.id;
+
     const onEdit = ({ employeeName, authorityTypeCode, authorityEmployeeTokenNo, effectiveTo, effectiveFrom, id }) => {
-        console.log('record', record);
-        // setEmployeeName(employeeName);
         setTokenValidate({ ['tokenVisible' + recordId]: true });
-        // {
-            //     ['authorityTypeCode' + recordId]: authorityTypeCode,
-        //     ['authorityEmployeeTokenNo' + recordId]: authorityEmployeeTokenNo,
-        //     ['EffectiveTo' + recordId]: effectiveTo,
-        //     ['EffectiveFrom' + recordId]: effectiveFrom,
-        //     ['id' + recordId ] : id,
-        //     ['employeeName' + recordId] : employeeName,
-        // }
-        // form.setFieldsValue({
-        //     authorityTypeCode: authorityTypeCode,
-        //     authorityEmployeeTokenNo: authorityEmployeeTokenNo,
-        //     EffectiveTo: effectiveTo,
-        //     EffectiveFrom: effectiveFrom,
-        //     id: id,
-        //     employeeName: employeeName,
-        // });
-        // formData?.toDate ? dayjs(formData?.toDate, 'DD-MM-YYYY') : null,
+        if(tokenNumber?.employeeName || errorMessage){
+            errorTokenValidate('')
+        }
         form.setFieldsValue({...record,  effectiveTo: dayjs(record?.effectiveTo), effectiveFrom: dayjs(record?.effectiveFrom),});
         // form.resetFields();
         setIsEditing(true);
@@ -61,19 +70,19 @@ const AuthorityCardItemMain = (props) => {
         form.validateFields().then((data) => {
             console.log('data', data);
             setDocumentTypesList(prev => {
-                
-                const updatedData = prev;
+                const updatedData = [...prev];
                 const index = updatedData.findIndex(el => el?.authorityEmployeeTokenNo === record?.authorityEmployeeTokenNo);
                 console.log("index",index)
                 updatedData.splice(index, 1, {...data});
                 console.log("updatedData",updatedData)
                 return updatedData
             })
-        });
+        }).catch(error => console.error(error));;
         setIsEditing(false);
         setIsBtnDisabled(false);
+        errorTokenValidate('')
         // form.resetFields();
-        forceUpdate();
+        // forceUpdate();
     };
 
     // const handleDeleteDocType = (val) => {
@@ -92,6 +101,7 @@ const AuthorityCardItemMain = (props) => {
     const onCancel = () => {
         setIsEditing(false);
         setIsBtnDisabled(false);
+        errorTokenValidate('')
     };
 
     const colLeft = viewMode ? 24 : 18;
@@ -123,9 +133,9 @@ const AuthorityCardItemMain = (props) => {
 
                         <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text type="secondary">From - {moment(record?.effectiveFrom).format('DD-MM-YYYY')}</Text>
+                                <Text type="secondary">From - {dayjs(record?.effectiveFrom).format('DD-MM-YYYY')}</Text>
                                 <Divider type="vertical" />
-                                <Text type="secondary">To - {moment(record?.effectiveTo)?.format('DD-MM-YYYY')}</Text>
+                                <Text type="secondary">To - {dayjs(record?.effectiveTo)?.format('DD-MM-YYYY')}</Text>
                             </Col>
                         </Row>
                     </Col>
@@ -159,7 +169,7 @@ const AuthorityCardItemMain = (props) => {
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <AddEditForm tokenValidate={tokenValidate} setEmployeeName={setEmployeeName} setTokenValidate={setTokenValidate} employeeName={employeeName} record={record} recordId={recordId} onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} isEditing={isEditing} />
+                        <AddEditForm handleFormValueChange={handleFormValueChange} tokenValidationData={tokenValidationData} tokenValidate={tokenValidate} setEmployeeName={setEmployeeName} setTokenValidate={setTokenValidate} employeeName={employeeName} record={record} recordId={recordId} onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} isEditing={isEditing} />
                     </Fragment>
                 )}
             </Card>
@@ -167,6 +177,6 @@ const AuthorityCardItemMain = (props) => {
     );
 };
 
-const AuthorityDetailCardItem = connect(mapStateToProps)(AuthorityCardItemMain);
+const AuthorityDetailCardItem = connect(mapStateToProps, mapDispatchToProps)(AuthorityCardItemMain);
 
 export default AuthorityDetailCardItem;

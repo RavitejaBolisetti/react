@@ -117,7 +117,7 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button htmlType="submit" danger disabled={!isFormBtnActive}>
+                        <Button htmlType="submit" type='primary' danger disabled={!isFormBtnActive}>
                             Save
                         </Button>
                     </Col>
@@ -126,7 +126,7 @@ const AddEditFormMain = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <AuthorityDetailPanel {...props} formActionType={formActionType} />
+                    <AuthorityDetailPanel {...props} formActionType={formActionType} handleFormValueChange={handleFormValueChange} />
                 </Col>
             </Row>
         </>

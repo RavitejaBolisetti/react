@@ -10,7 +10,7 @@ const { Panel } = Collapse;
 
 const AuthorityDetailPanel = (props) => {
     const { viewMode, tokenValidate, setTokenValidate, forceUpdate} = props;
-    const { selectedTreeData, documentTypesList, setDocumentTypesList } = props;
+    const { selectedTreeData, documentTypesList, setDocumentTypesList, handleFormValueChange } = props;
     const [openAccordian, setOpenAccordian] = useState('');
 
 
@@ -26,6 +26,7 @@ const AuthorityDetailPanel = (props) => {
         tokenValidate,
         setTokenValidate,
         forceUpdate,
+        handleFormValueChange,
     };
     return (
         <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
