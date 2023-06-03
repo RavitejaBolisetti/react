@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form } from 'antd';
+import { Form, Divider } from 'antd';
 import AuthorityDetailCardItem from './AuthorityDetailCardItem';
 import { AddEditForm } from './AddEditForm';
 import dayjs from 'dayjs';
@@ -32,7 +32,9 @@ const AuthorityDetailMain = ({ handleFormValueChange, errorTokenValidate, viewMo
 
     return (
         <>
+        <Divider/>
             {!viewMode && <AddEditForm isMainForm={true} handleFormValueChange={handleFormValueChange} onFinish={onActionFormFinish} tokenValidate={tokenValidate} setTokenValidate={setTokenValidate} form={actionForm} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setDocumentTypesList={setDocumentTypesList} />}
+            <Divider/>
 
             {documentTypesList?.length > 0 &&
                 documentTypesList?.map((record) => {
