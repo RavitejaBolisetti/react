@@ -26,8 +26,7 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { tableColumn } from './tableColumn';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { CustomEditor } from 'components/common/CustomEditor';
-
-// import { AdvancedSearch } from './AdvancedSearch';
+import moment from 'moment';
 
 const { Search } = Input;
 
@@ -131,11 +130,20 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
     const [productName, setProductName] = useState();
     const [documentName, setDocumentName] = useState();
     const [languageName, setLanguageName] = useState();
+    const [termsAndCondition, setTermsAndCondition] = useState(undefined);
+    const [effectiveFrom, seteffectiveFrom] = useState('');
+    const [effectiveTo, seteffectiveTo] = useState('');
+
     const [page, setPage] = useState(1);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    const onSuccessAction = (res) => {
+        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
 
     useEffect(() => {
         form.resetFields();
@@ -179,7 +187,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
 
     useEffect(() => {
         if (userId && refershData) {
-            fetchTermCondition({ setIsLoading: listShowLoading, userId });
+            fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData, userId]);
@@ -187,11 +195,9 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
     useEffect(() => {
         if (DealerTermsConditionsDataLoaded && DealerTermsConditionsData) {
             if (filterString) {
-                const filterDataItem = DealerTermsConditionsData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.qualificationName));
+                const filterDataItem = DealerTermsConditionsData?.filter((item) => filterFunction(filterString)(item?.documentTypeCode) || filterFunction(filterString)(item?.productCode));
                 setSearchdata(filterDataItem);
             } else {
-                console.log('DealerTermsConditionsData', DealerTermsConditionsData);
-
                 setSearchdata(DealerTermsConditionsData);
             }
         }
@@ -201,13 +207,22 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-        console.log('buttonAction', buttonAction);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: false, cancelBtn: true });
 
         record && setFormData(record);
-        setIsFormVisible(true);
+        if (record?.effectiveFrom && record?.effectiveTo && (formActionType?.editMode || formActionType?.viewMode)) {
+            const effectiveFromDateData = moment(record?.effectiveFrom);
+            const effectiveToDateData = moment(record?.effectiveTo);
+
+            seteffectiveFrom(effectiveFromDateData);
+            seteffectiveTo(effectiveToDateData);
+        }
+
+        setTimeout(() => {
+            setIsFormVisible(true);
+        }, 150);
     };
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
@@ -217,21 +232,14 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
         setPage,
     };
 
-    const removeFilter = (key) => {
-        const { [key]: names, ...rest } = filterString;
-        advanceFilterForm.setFieldsValue({ [key]: undefined });
-
-        if (!rest?.countryCode && !rest?.keyword) {
-            setFilterString();
-        } else {
-            setFilterString({ ...rest });
-        }
-    };
-
     const onFinish = (values, e) => {
-        const recordId = selectedRecord?.id || '';
-        const data = { ...values, productName: productName, documentTypeName: documentName, language: languageName, version: '1.0', id: recordId };
-        console.log('data', data);
+        const recordId = formData?.id || '';
+        const newVersion = Number(values?.version) + 0.1;
+        console.log('typeof', typeof termsAndCondition);
+        const termConsitionText = termsAndCondition.replace(/[&\/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
+        const data = { ...values, productName: productName, documentTypeName: documentName, language: languageName, version: String(newVersion), id: recordId, termsConditions: termConsitionText };
+        console.log('data', data, termConsitionText);
+        return;
         const onSuccess = (res) => {
             listShowLoading(false);
             form.resetFields();
@@ -419,7 +427,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
         saveandnewclick,
         setIsFormVisible,
         onCloseAction: () => (setIsFormVisible(false), setFormBtnDisable(false), form.resetFields()),
-        titleOverride: (isViewModeVisible ? 'View ' : selectedRecord?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
         selectedRecord,
         formBtnDisable,
         saveAndSaveNew,
@@ -459,6 +467,11 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
         languageName,
         setLanguageName,
         CustomEditor,
+        termsAndCondition,
+        effectiveFrom,
+        effectiveTo,
+        seteffectiveFrom,
+        seteffectiveTo,
     };
 
     const title = 'Term & Condition';
