@@ -10,7 +10,6 @@ import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufa
 import styles from 'components/common/Common.module.css';
 import { showGlobalNotification } from 'store/actions/notification';
 
-
 import { AddEditForm } from './AddEditForm';
 
 const { Text } = Typography;
@@ -50,10 +49,10 @@ const AuthorityCardItemMain = (props) => {
 
     useEffect(() => {
         if (errorMessage || tokenNumber) {
-            setTokenValidationData({ errorMessage, ...tokenNumber });
+            setTokenValidationData({ ...record, errorMessage, ...tokenNumber });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [errorMessage, tokenNumber]);
+    }, [errorMessage, tokenNumber, record]);
 
     const recordId = record?.id;
 
@@ -72,6 +71,8 @@ const AuthorityCardItemMain = (props) => {
         // if(!tokenNumber?.employeeName){
         //     return showGlobalNotification({ notificationType: 'success', title: 'Warning', message: 'Validate token to proceed' });
         // }
+
+        // whether check token on updation or not?
         form.validateFields()
             .then((data) => {
                 setDocumentTypesList((prev) => {
@@ -89,7 +90,7 @@ const AuthorityCardItemMain = (props) => {
         // forceUpdate();
     };
 
-    const handleDeleteDocType = (val) => {
+    const handleDelete = (val) => {
         setDocumentTypesList((prev) => {
             const newList = [...prev];
             const indx = newList?.findIndex((el) => el?.authorityEmployeeTokenNo === val?.authorityEmployeeTokenNo && el?.authorityTypeCode === val?.authorityTypeCode);
@@ -115,7 +116,6 @@ const AuthorityCardItemMain = (props) => {
         <>
             <Card className={styles.viewCardSize}>
                 <Row style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {/* {recordId + 'dsds'} */}
                     <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
                         <Row>
                             <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
@@ -146,14 +146,14 @@ const AuthorityCardItemMain = (props) => {
                                     </Col>
                                     {!record?.id && (
                                         <Col xs={4} sm={12} md={12} lg={12} xl={12} xxl={12} style={{ float: 'right' }}>
-                                            <Button disabled={isBtnDisabled} onClick={() => handleDeleteDocType(record)} type="link" icon={<FiTrash />}></Button>
+                                            <Button disabled={isBtnDisabled} onClick={() => handleDelete(record)} type="link" icon={<FiTrash />}></Button>
                                         </Col>
                                     )}
 
                                     {/* <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} style={{ float: 'right', display: 'flex' }}>
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(record)} />
-                                        {!record?.id && <Button onClick={() => handleDeleteDocType(record)} type="link" icon={<FiTrash />}></Button>}
-                                    </Col> */}
+                                            <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(record)} />
+                                            {!record?.id && <Button onClick={() => handleDelete(record)} type="link" icon={<FiTrash />}></Button>}
+                                        </Col> */}
                                 </Row>
                             ) : (
                                 <Row align="right">

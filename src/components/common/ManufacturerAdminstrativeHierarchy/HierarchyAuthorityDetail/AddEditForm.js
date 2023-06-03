@@ -43,7 +43,7 @@ const mapStateToProps = (state) => {
         historyData,
         authorityVisible,
         attributeData: attributeData?.filter((i) => i),
-        errorMessage,
+        errorMessage: errorMessage?.length ? errorMessage[0] : errorMessage,
     };
     return returnValue;
 };
@@ -68,14 +68,12 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const AuthorityFormMin = ({handleFormValueChange, tokenValidationData,  errorTokenValidate, tokenValidate, errorMessage, setTokenValidate, setEmployeeName = undefined, employeeName = '', recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction }) => {
+const AuthorityFormMin = ({ isMainForm, handleFormValueChange, tokenValidationData, errorTokenValidate, tokenValidate, errorMessage, setTokenValidate, setEmployeeName = undefined, employeeName = '', recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction }) => {
     const disableAddBtn = { disabled: isBtnDisabled || !tokenNumber?.employeeName };
 
     const onFinishFailed = (err) => {
         console.error(err);
     };
-    console.log('tokenValidate', tokenValidate, 'errorMessage', errorMessage);
-
     const errorAction = (message) => {
         errorTokenValidate(message);
     };
@@ -113,9 +111,9 @@ const AuthorityFormMin = ({handleFormValueChange, tokenValidationData,  errorTok
             layout="vertical"
             onFieldsChange={handleFormValueChange}
             onFinishFailed={onFinishFailed}
-            style={{
-                backgroundColor: '#F2F2F2',
-            }}
+            // style={{
+            //     backgroundColor: '#F2F2F2',
+            // }}
         >
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -129,25 +127,15 @@ const AuthorityFormMin = ({handleFormValueChange, tokenValidationData,  errorTok
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Text type="danger">{errorMessage}</Text>
+                    {isMainForm}
+                    <Text type="danger">{isMainForm ? errorMessage : tokenValidationData?.errorMessage}</Text>
                 </Col>
             </Row>
-            {((!viewMode &&
-                // tokenValidate?.['tokenVisible' + recordId] &&
-                tokenNumber?.employeeName) ||
-                isEditing) && (
+            {!viewMode && ((isMainForm && tokenNumber?.employeeName) || tokenValidationData?.employeeName) && (
                 <Row gutter={20}>
-                    {!isEditing && (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item>
-                                <Text type="primary">Employee Name : {tokenNumber?.employeeName} </Text>
-                            </Form.Item>
-                        </Col>
-                    )}
-
-                    <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                        <Form.Item label="" name="employeeName" initialValue={tokenNumber?.employeeName}>
-                            <Input />
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Form.Item name="employeeName">
+                            <Text type="primary">Employee Name : {tokenValidationData?.employeeName || tokenNumber?.employeeName} </Text>
                         </Form.Item>
                     </Col>
 
@@ -158,19 +146,19 @@ const AuthorityFormMin = ({handleFormValueChange, tokenValidationData,  errorTok
                     </Col>
 
                     <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                        <Form.Item hidden label="" name="isModified" initialValue={isEditing ? true : false} >
+                        <Form.Item hidden label="" name="isModified" initialValue={isEditing ? true : false}>
                             <Input />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Effective From" name="effectiveFrom" rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs()}>
-                            <DatePicker format="YYYY-MM-DD" className={style.datepicker} />
+                            <DatePicker disabledDate={(date) => date < dayjs()} format="YYYY-MM-DD" className={style.datepicker} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Effective To" name="effectiveTo" rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs()}>
-                            <DatePicker format="YYYY-MM-DD" className={style.datepicker} />
+                            <DatePicker disabledDate={(date) => date < dayjs()} format="YYYY-MM-DD" className={style.datepicker} />
                         </Form.Item>
                     </Col>
                 </Row>

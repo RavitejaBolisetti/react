@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState } from 'react';
 import { Collapse } from 'antd';
 
 import AuthorityDetailMaster from './AuthorityDetailMaster';
