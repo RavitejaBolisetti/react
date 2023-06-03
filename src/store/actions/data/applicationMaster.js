@@ -59,9 +59,9 @@ applicationMasterDataActions.detailListShowLoading = (isLoading) => ({
     type: APPLICATION_MASTER_DETAIL_DATA_SHOW_LOADING,
     isLoading,
 });
-applicationMasterDataActions.onSaveShowLoading = (isLoading) => ({
+applicationMasterDataActions.onSaveShowLoading = (isSaveLoading) => ({
     type: APPLICATION_ON_SAVE_DATA_SHOW_LOADING,
-    isLoading,
+    isSaveLoading,
 });
 
 applicationMasterDataActions.locationDataLoding = (isLoading) => ({

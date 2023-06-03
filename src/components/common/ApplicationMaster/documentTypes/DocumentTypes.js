@@ -5,7 +5,7 @@ import CardDocumentType from './CardDocumentType';
 import DocumentTypesForm from './DocumentTypesForm';
 
 
-const DocumentTypes = ({ setIsBtnDisabled, isBtnDisabled, onFinish = () => {}, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata }) => {
+const DocumentTypes = ({ setCanFormSave, setIsBtnDisabled, isBtnDisabled, onFinish = () => {}, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [docForm] = Form.useForm();
 
@@ -14,17 +14,21 @@ const DocumentTypes = ({ setIsBtnDisabled, isBtnDisabled, onFinish = () => {}, o
         docForm.resetFields();
         forceUpdate();
     };
+     
+    const onFieldsChange = () => {
+        setCanFormSave(true)
+    }
 
     return (
         <Fragment>
             <Divider />
             <div>
-                <DocumentTypesForm form={docForm} onFinish={onDocumentFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} finalFormdata={finalFormdata} />
+                <DocumentTypesForm form={docForm} onFinish={onDocumentFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} finalFormdata={finalFormdata} onFieldsChange={onFieldsChange} />
             </div>
 
             {finalFormdata?.documentType?.length > 0 &&
                 finalFormdata?.documentType.map((action) => {
-                    return <CardDocumentType {...action} form={docForm} onFinish={onDocumentFormFinish} finalFormdata={finalFormdata} setfinalFormdata={setFinalFormdata} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} />;
+                    return <CardDocumentType {...action} form={docForm} onFinish={onDocumentFormFinish} finalFormdata={finalFormdata} setfinalFormdata={setFinalFormdata} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} onFieldsChange={onFieldsChange} />;
                 })}
         </Fragment>
     );

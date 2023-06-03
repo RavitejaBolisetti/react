@@ -42,8 +42,14 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+        className: styles.headerSelectField,
+    };
     return (
-        <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
                 <ViewDetail {...viewProps} />
             ) : (
@@ -51,7 +57,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.divisionCode} label="Division Name" name="divisionCode" rules={[validateRequiredSelectField('Division Name')]}>
-                                <Select placeholder={preparePlaceholderSelect('Division')} loading={isDivisionLoading} onChange={handleDivisionChange}>
+                                <Select {...selectProps} placeholder={preparePlaceholderSelect('Division')} loading={isDivisionLoading} onChange={handleDivisionChange}>
                                     {divisionData?.map((item) => (
                                         <Option value={item?.code}>{item?.divisionName}</Option>
                                     ))}
@@ -59,22 +65,18 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Division Code" initialValue={formData?.divisionCode} name="divisionCodeDisplay" rules={[validateRequiredInputField('Division Code')]}>
-                                <Input placeholder={preparePlaceholderText('Division Code')} className={styles.inputBox} maxLength={6} disabled={true} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.departmentCode} label="Department Code" name="departmentCode" rules={[validateRequiredInputField('Department Code'), validationFieldLetter('Department Code')]}>
+                            <Form.Item initialValue={formData?.departmentCode} label="Department Code" name="departmentCode" rules={[validateRequiredInputField('Department Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Department Code')} maxLength={6} disabled={editMode ? true : false} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.departmentName} label="Employee Department Name" name="departmentName" rules={[validateRequiredInputField('Department Name'), validateLettersWithWhitespaces('Department Name')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Department Name')} maxLength={50} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={formData?.departmentName} label="Department Name" name="departmentName" rules={[validateRequiredInputField('Department Name')]}>
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Department Name')} maxLength={50} />
+                            </Form.Item>
+                        </Col>
+
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />

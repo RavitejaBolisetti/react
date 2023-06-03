@@ -17,6 +17,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { LANGUAGE_EN } from 'language/en';
 
 import styles from 'components/common/Common.module.css';
+import { ContentHeader } from 'utils/ContentHeader';
 
 const { Search } = Input;
 
@@ -99,7 +100,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const [parentAppCode, setparentAppCode] = useState();
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
-
     const moduleTitle = 'Application Master';
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
 
@@ -118,10 +118,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, menuType]);
 
-    useEffect(() => {
-        setSearchValue(menuData);
-    }, [menuData]);
-
     const handleAdd = (type) => {
         setisVisible(true);
         setFormActionType(type);
@@ -133,6 +129,8 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
 
     const handleTypeClick = (type) => {
+        setSelectedTreeKey([]);
+
         setIsActive((current) => !current);
         setMenuType(type);
     };
@@ -140,6 +138,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
 
     const onSuccess = (res) => {
         form.resetFields();
+        applicationForm.resetFields();
         setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
         if (res?.data) {
             const { accessibleLocation, applicationAction, documentType, ...rest } = res?.data[0];
@@ -277,56 +276,21 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         showGlobalNotification,
         applicationDetailsData,
         isBtnDisabled,
-        setIsBtnDisabled
+        setIsBtnDisabled,
     };
 
     const leftCol = menuData?.length > 0 ? 16 : 24;
     const rightCol = menuData?.length > 0 ? 8 : 24;
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const ContentHeaderProps = { isAdvanceFilter: false, isTogglePresent: true, isDefaultContentHeader: false, toggleFirst: 'Web', toggleSecond: 'Mobile', styles, onChange, onFinish, validateTriggervalue: ['onSearch'], menuType, title: '', handleTypeClick };
     return (
         <>
             <Row gutter={20} span={24}>
-                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={styles.borderBottomCorner}>
                     <Spin spinning={isLoading}>
-                        <div className={styles.contentHeaderBackground}>
-                            <Row gutter={20} className={styles.searchAndLabelAlign}>
-                                <Col xs={18} sm={18} md={18} lg={18} xl={18}>
-                                    <Row gutter={20} style={{ border: '1px' }} align="middle">
-                                        <Col xs={10} sm={10} md={10} lg={10} xl={8}>
-                                            <div className={styles.changeThemeBorder}>
-                                                <Button
-                                                    type="secondary"
-                                                    danger
-                                                    onClick={() => handleTypeClick('W')}
-                                                    style={{
-                                                        backgroundColor: isActive ? '' : '#ff3e5b',
-                                                        color: isActive ? '' : 'white',
-                                                    }}
-                                                >
-                                                    Web
-                                                </Button>
+                        <ContentHeader {...ContentHeaderProps} />
 
-                                                <Button
-                                                    type="secondary"
-                                                    danger
-                                                    onClick={() => handleTypeClick('M')}
-                                                    style={{
-                                                        backgroundColor: isActive ? '#ff3e5b' : '',
-                                                        color: isActive ? 'white' : '',
-                                                    }}
-                                                >
-                                                    Mobile
-                                                </Button>
-                                            </div>
-                                        </Col>
-                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                            <Search style={{ width: '100%' }} placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        </div>
                         <div className={styles.content}>
                             {menuData?.length <= 0 ? (
                                 <div className={styles.emptyContainer}>

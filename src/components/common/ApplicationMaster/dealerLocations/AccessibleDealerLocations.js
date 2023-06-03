@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdata, finalFormdata, fetchDealerLocations, locationDataLoding, showGlobalNotification }) => {
+const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations, setFinalFormdata, finalFormdata, fetchDealerLocations, locationDataLoding, showGlobalNotification }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [searchValue, setSearchValue] = useState('');
     const [dealerLocationsList, setDealerLocationList] = useState([]);
@@ -100,6 +100,7 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
         }
         setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { dealerMasterLocationId: locationDetails?.id, locationName: value, id: '' }] }));
         showGlobalNotification({ notificationType: 'success', title: addDealerLocationTitle, message: addDealerLocation, placement: 'bottomRight' });
+        setCanFormSave(true)
     };
 
     const onSearchLocation = debounce(function (text) {

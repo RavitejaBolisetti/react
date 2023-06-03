@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'State Master List';
+    const moduleTitle = 'State';
 
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
@@ -198,6 +198,7 @@ export const ListStateMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -255,7 +256,6 @@ export const ListStateMasterBase = (props) => {
         isCountryLoading,
         countryData,
         defaultCountry,
-
         data,
         handleFilterChange,
         filterString,
@@ -272,12 +272,10 @@ export const ListStateMasterBase = (props) => {
         setFormActionType,
         onFinish,
         onFinishFailed,
-
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
         tableData: searchData,
-
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
@@ -311,7 +309,7 @@ export const ListStateMasterBase = (props) => {
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
-    const title = 'State';
+    const title = 'State Name';
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

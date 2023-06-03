@@ -1,35 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
-import {
-    ProductHierarchyPage,
-    UserManagementPage,
-    UserManagementManufacturerPage,
-    ProductMasterPage,
-    HierarchyAttributeMasterPage,
-    ManufacturerAdministrativeHierarchyPage,
-    ManufacturerOrgHierarchyPage,
-    DealerHierarchyPage,
-    ConfigurableParameterEditingPage,
-    QualificationMasterPage,
-    ApplicationMasterPage,
-    CriticalityGroupPage,
-    RoleManagementPage,
-    StatePage,
-    DistrictPage,
-    CityPage,
-    TehsilPage,
-    PinCodePage,
-    DealerLocationTypePage,
-    DealerDivisionMasterPage,
-    BayTypeMasterPage,
-    DesignationMasterPage,
-    DealerEmployeeDepartmentPage,
-    RoleMasterPage,
-    CustomerMasterPage,
-    TermConditionDealerMasterPage,
-    TermConditionManufacturerMasterPage,
-} from 'pages/common';
+
+import { ProductHierarchyPage, UserManagementPage, UserManagementManufacturerPage, ProductMasterPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage, DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DesignationMasterPage, DealerEmployeeDepartmentPage, RoleMasterPage, DealerParentPage, CustomerMasterPage,TermConditionDealerMasterPage,TermConditionManufacturerMasterPage} from 'pages/common';
 
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
@@ -42,6 +15,7 @@ import { URLFilterReportPage } from 'pages/report/URLFilterReport/URLFilterRepor
 
 import { CMSPage } from 'pages/cms';
 import { PartyMasterPage } from 'pages/common/PartyMaster';
+import { DealerCompanyPage } from 'pages/common/Dealer';
 
 export const AuthenticatedUserPage = () => {
     return (
@@ -70,6 +44,9 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_DESIGNATION_MASTER} element={<DesignationMasterPage />} />
             <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_ROLE_MASTER} element={<RoleMasterPage />} />
 
+            <Route path={routing.ROUTING_MILE_DEALER_HIERARCHY_DEALER_PARENT} element={<DealerParentPage />}/>
+            <Route path={routing.ROUTING_MILE_DEALER_HIERARCHY_DEALER_COMPANY} element={<DealerCompanyPage />}/>
+            
             <Route path={routing.ROUTING_COMMON_PRODUCT_MASTER} element={<ProductMasterPage />} />
             <Route path={routing.ROUTING_COMMON_APPLICATION_MASTER} element={<ApplicationMasterPage />} />
             <Route path={routing.ROUTING_COMMON_QUALIFICATION_MASTER} element={<QualificationMasterPage />} />
@@ -77,8 +54,6 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_ROLE_MANAGEMENT} element={<RoleManagementPage />} />
 
             <Route path={routing.ROUTING_COMMON_PARTY_MASTER} element={<PartyMasterPage />} />
-
-            <Route path={routing.ROUTING_COMMON_DEALER_HIERARCHY} element={<DealerHierarchyPage />} />
             <Route path={routing.ROUTING_USER_PROFILE} element={<ProfilePage />} exact />
             <Route path={routing.ROUTING_COMMON_CUSTOMER_MASTER} element={<CustomerMasterPage />} />
             <Route path={routing.ROUTING_COMMON_TERM_CONDITION_DEALER} element={<TermConditionDealerMasterPage />} />

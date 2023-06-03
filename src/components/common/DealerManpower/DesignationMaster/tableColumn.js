@@ -14,13 +14,13 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
 
         tblPrepareColumns({
-            title: 'Designation Description',
+            title: 'Designation Name',
             dataIndex: 'designationDescription',
             width: '22%',
         }),
 
         tblPrepareColumns({
-            title: 'Role Description',
+            title: 'Role Name',
             dataIndex: 'roleDescription',
             width: '14%',
         }),
@@ -32,7 +32,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
 
         tblPrepareColumns({
-            title: 'Division Description ',
+            title: 'Division Name ',
             dataIndex: 'divisionName',
             width: '12%',
         }),

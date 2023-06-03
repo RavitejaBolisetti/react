@@ -4,7 +4,7 @@ import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
 export const RoleMasterPageBase = (props) => {
-    const pageTitle = 'Role Master';
+    const pageTitle = 'Dealer Role Master';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

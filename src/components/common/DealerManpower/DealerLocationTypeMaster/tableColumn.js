@@ -14,14 +14,19 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
 
         tblPrepareColumns({
-            title: 'Location Type Description',
+            title: 'Location Type Name',
             dataIndex: 'locationDescription',
             width: '30%',
         }),
+        tblPrepareColumns({
+            title: 'Applicable To',
+            dataIndex: 'applicableTo',
+            width: '20%',
+        }),
 
-        tblStatusColumn({ styles, width: '20%' }),
+        tblStatusColumn({ styles, width: '15%' }),
 
-        tblActionColumn({ handleButtonClick, styles })
+        tblActionColumn({ handleButtonClick, styles, width: '15%' })
     );
 
     return tableColumn;

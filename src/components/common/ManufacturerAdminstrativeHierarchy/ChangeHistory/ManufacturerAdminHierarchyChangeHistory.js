@@ -83,7 +83,7 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
     ];
 
     const tableProps = {
-        isLoading,
+        isLoading: !isHistoryLoaded,
         tableColumn,
         tableData: changeHistoryData,
     };

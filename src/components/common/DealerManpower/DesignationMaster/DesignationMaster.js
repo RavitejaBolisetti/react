@@ -58,9 +58,9 @@ const mapStateToProps = (state) => {
         isDepartmentLoading,
         isRoleDataLoaded,
         isRoleLoading,
-        roleData,
-        departmentData,
-        divisionData,
+        roleData: roleData?.filter((i) => i.status),
+        departmentData: departmentData?.filter((i) => i.status),
+        divisionData: divisionData?.filter((i) => i.status),
         moduleTitle,
     };
     return returnValue;
@@ -251,6 +251,7 @@ export const DesignationMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -385,7 +386,7 @@ export const DesignationMasterBase = (props) => {
         }
     };
 
-    const title = 'Designation Master';
+    const title = 'Designation Name ';
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

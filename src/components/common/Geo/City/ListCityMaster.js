@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Select } from 'antd';
+import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { geoCountryDataActions } from 'store/actions/data/geo/country';
@@ -16,15 +16,8 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { FilterIcon } from 'Icons';
 
-import { PlusOutlined } from '@ant-design/icons';
-import { TfiReload } from 'react-icons/tfi';
-
 import styles from 'components/common/Common.module.css';
 import { geoDistrictDataActions } from 'store/actions/data/geo/district';
-import { searchValidator } from 'utils/validation';
-
-const { Search } = Input;
-const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
@@ -39,7 +32,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'City Master List';
+    const moduleTitle = 'City';
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
     });
@@ -53,10 +46,10 @@ const mapStateToProps = (state) => {
         defaultCountry,
         isStateDataLoaded,
         isStateLoading,
-        stateData,
+        stateData: stateData?.filter((i) => i.status),
         isDistrictDataLoaded,
         isDistrictLoading,
-        districtData,
+        districtData: districtData?.filter((i) => i.status),
         isDataLoaded,
         isLoading,
         data,
@@ -142,7 +135,7 @@ export const ListCityMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataCountryLoaded, isStateDataLoaded, isDataLoaded]);
-    
+
     useEffect(() => {
         if (userId && refershData) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
@@ -243,7 +236,6 @@ export const ListCityMasterBase = (props) => {
         }
     };
 
-  
     const onSearchHandle = (value) => {
         if (value?.trim()?.length >= 3) {
             setFilterString({ ...filterString, advanceFilter: true, keyword: value });
@@ -281,6 +273,7 @@ export const ListCityMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -312,7 +305,6 @@ export const ListCityMasterBase = (props) => {
     };
 
     const onCloseAction = () => {
-
         form.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
@@ -352,7 +344,6 @@ export const ListCityMasterBase = (props) => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
         setFilteredDistrictData(undefined);
-
     };
 
     const handleResetFilter = () => {
@@ -393,7 +384,7 @@ export const ListCityMasterBase = (props) => {
         setPage,
     };
 
-    const title = 'City';
+    const title = 'City Name';
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

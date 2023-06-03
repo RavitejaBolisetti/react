@@ -158,6 +158,7 @@ export const ListDealerDivisionMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -203,7 +204,7 @@ export const ListDealerDivisionMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Division'),
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Division'),
         tableData: searchData,
 
         ADD_ACTION,
@@ -222,7 +223,7 @@ export const ListDealerDivisionMasterBase = (props) => {
         setPage,
     };
 
-    const title = 'Division Master';
+    const title = 'Division Name';
 
     const advanceFilterResultProps = {
         advanceFilter: false,

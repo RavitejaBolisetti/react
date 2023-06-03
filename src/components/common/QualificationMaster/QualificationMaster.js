@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
-import { EditIcon, ViewEyeIcon } from 'Icons';
-import { TfiReload } from 'react-icons/tfi';
+import { Col, Row, Input, Form } from 'antd';
 import { notification } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 
-import { tblPrepareColumns } from 'utils/tableCloumn';
-import DataTable from 'utils/dataTable/DataTable';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
+import { ListDataTable } from 'utils/ListDataTable';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
+
 import { showGlobalNotification } from 'store/actions/notification';
+
+import { filterFunction } from 'utils/filterFunction';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
 import { AddEditForm } from './AddEditForm';
+import { tableColumn } from './tableColumn';
 
 import styles from 'components/common/Common.module.css';
 
@@ -22,7 +25,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [], isLoading, isLoadingOnSave, isFormDataLoaded },
+            QualificationMaster: { isLoaded: isDataLoaded = false, data = [], isLoading },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -36,9 +39,8 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         isLoading,
-        qualificationData,
-        isLoadingOnSave,
-        isFormDataLoaded,
+        data,
+
         moduleTitle,
     };
     return returnValue;
@@ -51,149 +53,107 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: qualificationDataActions.listShowLoading,
             fetchList: qualificationDataActions.fetchList,
             saveData: qualificationDataActions.saveData,
-            onSaveShowLoading: qualificationDataActions.onSaveShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-const initialTableData = [];
-
-export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataLoaded, fetchList, listShowLoading, data, showGlobalNotification, isLoading }) => {
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
 
-    const [formActionType, setFormActionType] = useState('');
-    const [isReadOnly, setIsReadOnly] = useState(false);
-    const [data, setData] = useState(initialTableData);
-    const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
-    const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
 
-    const [forceFormReset, setForceFormReset] = useState(false);
-    const [searchData, setSearchdata] = useState();
+    const [searchData, setSearchdata] = useState(data);
     const [refershData, setRefershData] = useState(false);
-    const [alertNotification, contextAlertNotification] = notification.useNotification();
-    const [formBtnDisable, setFormBtnDisable] = useState(false);
-    const [filterString, setFilterString] = useState();
-    const [footerEdit, setFooterEdit] = useState(false);
-    const [selectedRecord, setSelectedRecord] = useState(null);
-    const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
-    const [saveBtn, setSaveBtn] = useState(false);
-    const [saveclick, setsaveclick] = useState();
-    const [saveandnewclick, setsaveandnewclick] = useState();
-    const [successAlert, setSuccessAlert] = useState(false);
-    const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
-    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    useEffect(() => {
-        form.resetFields();
-        form.setFieldValue(formData);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [forceFormReset]);
+    const [page, setPage] = useState(1);
+
+    const [showDataLoading, setShowDataLoading] = useState(true);
+    const [filterString, setFilterString] = useState();
+
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+
+    const onSuccessAction = (res) => {
+        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
 
     useEffect(() => {
-        if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+        if (userId && !isDataLoaded) {
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, userId]);
+    }, [userId, isDataLoaded]);
 
     useEffect(() => {
-        setSearchdata(qualificationData);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [qualificationData]);
-
-    useEffect(() => {
-        if (userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+        if (userId && refershData) {
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refershData, userId]);
+    }, [userId, refershData]);
 
     useEffect(() => {
-        if (isDataLoaded && qualificationData) {
+        if (isDataLoaded && data && userId) {
             if (filterString) {
-                const filterDataItem = qualificationData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.qualificationName));
-                setSearchdata(filterDataItem);
+                const keyword = filterString?.keyword;
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.qualificationCode) || filterFunction(keyword)(item?.qualificationName) : true));
+
+                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             } else {
-                setSearchdata(qualificationData);
+                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, qualificationData]);
+    }, [filterString, isDataLoaded, data, userId]);
 
-    const tableColumn = [
-        tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'srl',
-            width: '6%',
-            sorter: false,
-            render: (_t, _r, i) => i + 1,
-        }),
+    const handleButtonClick = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        setFormData([]);
 
-        tblPrepareColumns({
-            title: 'Qualification Code',
-            dataIndex: 'qualificationCode',
-            width: '17%',
-        }),
-        tblPrepareColumns({
-            title: 'Qualification Name',
-            dataIndex: 'qualificationName',
-            width: '40%',
-        }),
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'status',
-            render: (text, record) => {
-                return <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>;
-            },
-        }),
-        tblPrepareColumns({
-            title: 'Action',
-            width: '15%',
-            sorter: false,
-            render: (text, record, index) => {
-                return (
-                    <Space>
-                        {
-                            <Button className={styles.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
-                                <EditIcon />
-                            </Button>
-                        }
-                        {
-                            <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
-                                <ViewEyeIcon />
-                            </Button>
-                        }
-                    </Space>
-                );
-            },
-        }),
-    ];
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
 
-    const tableProps = {
-        isLoading: isLoading,
-        tableData: searchData,
-        tableColumn: tableColumn,
+        record && setFormData(record);
+        setIsFormVisible(true);
     };
 
-    const onFinish = (values, e) => {
-        const recordId = selectedRecord?.id || '';
+    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
+    const tableProps = {
+        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        tableData: searchData,
+        setPage,
+    };
+    const onFinish = (values) => {
+        const recordId = formData?.id || '';
         const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
 
         const onSuccess = (res) => {
-            onSaveShowLoading(false);
+            setShowDataLoading(true);
+
             form.resetFields();
-            setSelectedRecord({});
-            setSuccessAlert(true);
-            if (saveclick === true) {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            } else {
+
+            setButtonData({ ...buttonData, formBtnActive: false });
+            if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            } else {
+                setIsFormVisible(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             }
         };
 
@@ -202,13 +162,13 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
         }, 2000);
 
         const onError = (message) => {
-            onSaveShowLoading(false);
             showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
         };
 
         const requestData = {
             data: [data],
-            setIsLoading: onSaveShowLoading,
+            method: 'post',
+            setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
@@ -221,206 +181,83 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
         form.validateFields().then((values) => {});
     };
 
-    const handleAdd = () => {
-        setFormActionType('add');
-        setIsFormVisible(true);
-        setSaveAndSaveNew(true);
-        setSaveBtn(true);
-        setFooterEdit(false);
-        setIsViewModeVisible(false);
-        setSelectedRecord([]);
-        setIsReadOnly(false);
-        setsaveclick(false);
-        setsaveandnewclick(true);
-        setcodeIsReadOnly(false);
-    };
-
-    const handleUpdate = (record) => {
-        setFormActionType('update');
-        setSaveAndSaveNew(false);
-        setIsFormVisible(true);
-        setIsViewModeVisible(false);
-
-        setFooterEdit(false);
-        setSaveBtn(true);
-        setSelectedRecord(record);
-
-        setFormData(record);
-
-        form.setFieldsValue({
-            qualificationCode: record.qualificationCode,
-            qualificationName: record.qualificationName,
-            status: record.status,
-        });
-
-        setIsReadOnly(false);
-        setcodeIsReadOnly(true);
-    };
-
-    const handleUpdate2 = () => {
-        setFormActionType('update');
-        setIsFormVisible(true);
-        setIsViewModeVisible(false);
-
-        setSaveAndSaveNew(false);
-        setFooterEdit(false);
-        setSaveBtn(true);
-
-        form.setFieldsValue({
-            qualificationCode: selectedRecord.qualificationCode,
-            qualificationName: selectedRecord.qualificationName,
-            status: selectedRecord.status,
-        });
-        setsaveclick(true);
-        setIsReadOnly(false);
-        setcodeIsReadOnly(true);
-    };
-
-    const handleView = (record) => {
-        setFormActionType('view');
-        setIsViewModeVisible(true);
-        setSelectedRecord(record);
-        setSaveAndSaveNew(false);
-        setFooterEdit(true);
-        setSaveBtn(false);
-
-        form.setFieldsValue({
-            qualificationCode: record.qualificationCode,
-            qualificationName: record.qualificationName,
-            status: record.status,
-        });
-        setIsFormVisible(true);
-        setIsReadOnly(true);
-        setcodeIsReadOnly(true);
-    };
-
-    const handleReferesh = (e) => {
+    const handleReferesh = () => {
+        setShowDataLoading(true);
         setRefershData(!refershData);
     };
 
-    const onChange = (sorter, filters) => {
-        form.resetFields();
-    };
-
     const onSearchHandle = (value) => {
-        setFilterString(value);
+        if (value?.trim()?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: false, keyword: value });
+        }
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
+    const handleClearInSearch = (e) => {
+        if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
     };
 
-    const filterFunction = (filterString) => (title) => {
-        return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
+    const handleResetFilter = (e) => {
+        setFilterString();
+        listFilterForm.resetFields();
+        setShowDataLoading(false);
+    };
+
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setButtonData({ ...defaultBtnVisiblity });
     };
 
     const formProps = {
-        isVisible: isFormVisible,
-        isViewModeVisible,
-        codeIsReadOnly,
-        saveclick,
-        setsaveclick,
-        setsaveandnewclick,
-        saveandnewclick,
-        setIsFormVisible,
-        onCloseAction: () => (setIsFormVisible(false), setFormBtnDisable(false), form.resetFields()),
-        titleOverride: (isViewModeVisible ? 'View ' : selectedRecord?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
-        selectedRecord,
-        formBtnDisable,
-        saveAndSaveNew,
-        saveBtn,
-        setFormBtnDisable,
-        onFinishFailed,
-        onFinish,
         form,
-        handleAdd,
-        data,
-        isChecked,
         formData,
-        setIsChecked,
         formActionType,
-        isReadOnly,
-        setFormData,
-        setForceFormReset,
-        footerEdit,
-        handleUpdate2,
-        isLoadingOnSave,
-        setIsViewModeVisible,
+        setFormActionType,
+        onFinish,
+        onFinishFailed,
+
+        isVisible: isFormVisible,
+        onCloseAction,
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Qualification'),
+        tableData: searchData,
+
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        buttonData,
+
+        setButtonData,
+        handleButtonClick,
+        handleResetFilter,
+    };
+    const title = 'Qualification Name';
+
+    const advanceFilterResultProps = {
+        advanceFilter: false,
+        filterString,
+        from: listFilterForm,
+
+        onSearchHandle,
+        handleClearInSearch,
+        handleReferesh,
+        handleButtonClick,
+        title,
     };
 
     return (
         <>
-            {contextAlertNotification}
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
-                                        Qualification List
-                                    </Col>
-                                    <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                        <Search placeholder="Search" allowClear onSearch={onSearchHandle} onChange={onChangeHandle} className={styles.headerSearchField} />
-                                    </Col>
-                                </Row>
-                            </Col>
-                            {qualificationData?.length ? (
-                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} inputProps={{ 'data-testid': 'ref-btn' }} id="ref" className={styles.refreshBtn} onClick={handleReferesh} danger aria-label="fa-ref"></Button>
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
 
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                        Add Qualification
-                                    </Button>
-                                </Col>
-                            ) : (
-                                ''
-                            )}
-                        </Row>
-                    </div>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() => (
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: '20%',
-                                }}
-                                description={
-                                    !qualificationData?.length ? (
-                                        <span>
-                                            No records found. Please add new parameter <br />
-                                            using below button
-                                        </span>
-                                    ) : (
-                                        <span> No records found.</span>
-                                    )
-                                }
-                            >
-                                {!qualificationData?.length ? (
-                                    <Row>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Qualification
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                ) : (
-                                    ''
-                                )}
-                            </Empty>
-                        )}
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable inputProps={{ 'data-testid': 'tbl-data' }} id="tbl" isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
-                        </div>
-                    </ConfigProvider>
-                </Col>
-            </Row>
         </>
     );
 };

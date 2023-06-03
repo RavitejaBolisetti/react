@@ -3,7 +3,6 @@ export const ROUTING_HOME = '/';
 export const ROUTING_SSO_LOGIN = '/adidaccess';
 
 export const ROUTING_LOGIN = '/login';
-// export const ROUTING_LOGOUT = '/logout';
 export const ROUTING_FORGOT_PASSWORD = '/forgot-password';
 export const ROUTING_UPDATE_PASSWORD = '/update-password';
 
@@ -46,6 +45,9 @@ export const ROUTING_MILE_DEALER_MANPOWER_BAY_TYPE_MASTER = ROUTING_MILE_DEALER_
 export const ROUTING_MILE_DEALER_MANPOWER_DESIGNATION_MASTER = ROUTING_MILE_DEALER_MANPOWER.concat('designation-master');
 export const ROUTING_MILE_DEALER_MANPOWER_EMPLOYEE_DEPARTMENT_MASTER = ROUTING_MILE_DEALER_MANPOWER.concat('employee-department');
 export const ROUTING_MILE_DEALER_MANPOWER_ROLE_MASTER = ROUTING_MILE_DEALER_MANPOWER.concat('role-master');
+
+export const ROUTING_MILE_DEALER_HIERARCHY_DEALER_PARENT = ROUTING_MILE.concat('dealer-parent')
+export const ROUTING_MILE_DEALER_HIERARCHY_DEALER_COMPANY = ROUTING_MILE.concat('dealer-company')
 
 export const ROUTING_COMMON_CONFIG_PARAM_EDIT = ROUTING_COMMON.concat('config-param-edit');
 

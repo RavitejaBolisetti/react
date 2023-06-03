@@ -1,10 +1,22 @@
 import { DataTable } from 'utils/dataTable';
 import { Button, Empty, ConfigProvider } from 'antd';
-
 import styles from 'components/common/Common.module.css';
 import { PlusOutlined } from '@ant-design/icons';
 
-export default function ListDataTable({ isLoading, tableColumn, tableData, handleAdd, addTitle = 'Group', scroll = 'auto', noDataMessage = 'No records found. Please add new parameter <br />using below button' }) {
+export default function ListDataTable({
+    isLoading,
+    tableColumn,
+    tableData,
+    handleAdd,
+    addTitle = 'Group',
+    scroll = 'auto',
+    noDataMessage = (
+        <>
+            No records found. Please add new parameter <br />
+            using below button
+        </>
+    ),
+}) {
     return (
         <>
             <ConfigProvider

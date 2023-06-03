@@ -157,6 +157,7 @@ export const BayTypeMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -220,7 +221,7 @@ export const BayTypeMasterBase = (props) => {
         setPage,
     };
 
-    const title = 'Bay Type Master';
+    const title = 'Bay Type Name';
 
     const advanceFilterResultProps = {
         advanceFilter: false,

@@ -15,6 +15,7 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
                     <Descriptions.Item label="Country">{formData?.countryName}</Descriptions.Item>
                     <Descriptions.Item label="State Code">{formData?.code}</Descriptions.Item>
                     <Descriptions.Item label="State Name">{formData?.name}</Descriptions.Item>
+                    <Descriptions.Item label="GST State Code">{formData?.gstStateCode}</Descriptions.Item>
                     <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
                 </Descriptions>
             </>

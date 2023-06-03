@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Input, Menu, Layout, Row, Col, AutoComplete, Button } from 'antd';
+import { Input, Menu, Layout, Row, Col, Form, AutoComplete, Button } from 'antd';
 import { BsMoon, BsSun, BsSearch } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
 import IMG_ICON from 'assets/img/icon.png';
@@ -50,11 +50,11 @@ const mapStateToProps = (state) => {
             Menu: { isLoaded: isDataLoaded = false, isLoading, filter, data: menuData = [], flatternData },
         },
         common: {
-            LeftSideBar: { collapsed = false, isMobile = false, selectedMenudId = 'COMN-03.02' },
+            LeftSideBar: { collapsed = false, isMobile = false, selectedMenudId = '' },
         },
     } = state;
 
-    let returnValue = { isLoading, selectedMenudId, userId, isDataLoaded, filter, menuData: menuData, flatternData, childredData: flatternData?.filter((i) => !i.childExist && i.parentMenuId !== 'FAV'), isMobile, collapsed };
+    let returnValue = { isLoading, selectedMenudId, userId, isDataLoaded, filter, menuData: menuData, flatternData, childredData: flatternData?.filter((i) => !i.childExist && i.parentMenuId !== 'FAV' && i.menuId !== 'HOM'), isMobile, collapsed };
     return returnValue;
 };
 
@@ -79,9 +79,9 @@ const LeftSideBarMain = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
     const pagePath = location.pathname;
+    const [menuForm] = Form.useForm();
 
     const menuId = flatternData?.find((i) => i.link === pagePath)?.menuId;
-    // const parentMenuId = flatternData?.find((i) => i.link === pagePath)?.parentMenuId;
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
 
     const [options, setOptions] = useState([]);
@@ -90,10 +90,10 @@ const LeftSideBarMain = (props) => {
     const [selectedMenuId, setSelectedMenuId] = useState();
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
-    const onMenuClick = (id = 'Sales') => {
-        const element = document.getElementById(id)?.closest('ul');
-        element?.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-    };
+    // const onMenuClick = (id = 'Sales') => {
+    // const element = document.getElementById(id)?.closest('ul');
+    // element?.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+    // };
 
     useEffect(() => {
         if (menuId) {
@@ -126,31 +126,14 @@ const LeftSideBarMain = (props) => {
                     return {
                         label: i.menuTitle,
                         value: i.menuId,
-                        // parent: i.parentMenuId,
                     };
                 }
                 return undefined;
             });
-            setOptions(menuItem.filter((i) => i));
+            menuItem && setOptions(menuItem.filter((i) => i));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
-
-    // useEffect(() => {
-    //     if (selectedMenudId && isDataLoaded) {
-    //         setTimeout(() => {
-    //             //     const element1 = document.getElementById(selectedMenudId)?.closest('ul')?.closest('ul');
-    //             //  console.log("element1",element1)
-
-    //             const element = document.getElementById(selectedMenudId)?.closest('ul');
-    //             //  console.log("element",element)
-    //             element?.scrollIntoView({ behavior: 'smooth' });
-    //             // setSelectKeyToScroll('');
-    //             // eslint-disable-next-line react-hooks/exhaustive-deps
-    //         }, 400);
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [isDataLoaded, selectedMenudId, openKeys]);
 
     const handleThemeChange = () => {
         const changeTheme = theme === 'dark' ? 'light' : 'dark';
@@ -172,7 +155,7 @@ const LeftSideBarMain = (props) => {
             const isParentMenu = parentMenuId === 'Web';
 
             return subMenu?.length ? (
-                <SubMenu onClick={onMenuClick(menuId)} key={menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
@@ -204,7 +187,11 @@ const LeftSideBarMain = (props) => {
     };
 
     const onSelect = (menuId, label) => {
-        if (menuId && getMenuValue(MenuConstant, menuId, 'link')) navigate(getMenuValue(MenuConstant, menuId, 'link'));
+        menuForm.setFieldValue('searchKeyword', undefined);
+        if (menuId && getMenuValue(MenuConstant, menuId, 'link')) {
+            navigate(getMenuValue(MenuConstant, menuId, 'link'));
+        }
+
         setSelectedMenuId(menuId);
         setSelectKeyToScroll(menuId);
     };
@@ -234,13 +221,17 @@ const LeftSideBarMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className={styles.searchContainer}>
-                                {collapsed ? (
-                                    <BsSearch size={18} onClick={onMenuCollapsed} />
-                                ) : (
-                                    <AutoComplete className={styles.searchField} options={options} onSelect={onSelect} onChange={handleSearch}>
-                                        <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" />
-                                    </AutoComplete>
-                                )}
+                                <Form autoComplete="off" layout="vertical" form={menuForm}>
+                                    {collapsed ? (
+                                        <BsSearch size={18} onClick={onMenuCollapsed} />
+                                    ) : (
+                                        <Form.Item name="searchKeyword">
+                                            <AutoComplete className={styles.searchField} options={options} onSelect={onSelect} onChange={handleSearch}>
+                                                <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" />
+                                            </AutoComplete>
+                                        </Form.Item>
+                                    )}
+                                </Form>
                             </div>
                         </Col>
                     </Row>

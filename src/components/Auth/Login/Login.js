@@ -253,7 +253,7 @@ const Login = (props) => {
 
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Button data-testid="Login" className={styles.button} type="primary" htmlType="submit" loading={isLoading}>
+                                                        <Button icon={<FiLock size={18} />} data-testid="Login" className={styles.button} type="primary" htmlType="submit" loading={isLoading}>
                                                             Login
                                                         </Button>
                                                     </Col>

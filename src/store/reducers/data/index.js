@@ -8,7 +8,6 @@ import { ManufacturerAdminHierarchy } from './manufacturerAdminHierarchy';
 import { ManufacturerOrgHierarchy } from './manufacturerOrgHierarchy';
 import { ForgotPassword } from './forgotPassword';
 import { ChangePassword } from './changePassword';
-import { DealerHierarchy } from './dealerHierarchy';
 import { ConfigurableParameterEditing } from './configurableParamterEditing';
 import { ApplicationMaster } from './applicationMaster';
 import { QualificationMaster } from './qualificationMaster';
@@ -18,6 +17,8 @@ import { Geo } from './geo';
 import { DealerManpower } from './dealerManpower';
 import { PartyMaster } from './partyMaster';
 import { TermCondition } from './termsConditions'
+import { DealerHierarchy } from './dealer';
+import { PincodeDetails } from './pincodeDetails';
 
 export const data = combineReducers({
     Menu,
@@ -29,7 +30,6 @@ export const data = combineReducers({
     ManufacturerOrgHierarchy,
     ForgotPassword,
     ChangePassword,
-    DealerHierarchy,
     ConfigurableParameterEditing,
     ApplicationMaster,
     QualificationMaster,
@@ -39,4 +39,6 @@ export const data = combineReducers({
     DealerManpower,
     PartyMaster,
     TermCondition
+    DealerHierarchy,
+    PincodeDetails
 });

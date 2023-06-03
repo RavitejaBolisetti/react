@@ -2,10 +2,7 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Button, Col, Input, Form, Row } from 'antd';
-
-import { PlusOutlined } from '@ant-design/icons';
-import { TfiReload } from 'react-icons/tfi';
+import { Row, Col, Input, Form } from 'antd';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -13,14 +10,11 @@ import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { filterFunction } from 'utils/filterFunction';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
+import { ContentHeader } from 'utils/ContentHeader';
 import { tableColumn } from './tableColumn';
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { AddEditForm } from './AddEditForm';
-
-import styles from 'components/common/Common.module.css';
-
-const { Search } = Input;
 
 const mapStateToProps = (state) => {
     const {
@@ -84,6 +78,7 @@ export const CriticalityGroupMain = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [timeData, setTimeData] = useState([]);
+    const [deletedTime, setDeletedTime] = useState([]);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -115,7 +110,6 @@ export const CriticalityGroupMain = (props) => {
         if (isDataLoaded && criticalityGroupData && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                // const filterDataItem = criticalityGroupData?.filter((item) => filterFunction(filterString)(item?.criticalityGroupCode) || filterFunction(filterString)(item?.criticalityGroupName));
                 const filterDataItem = criticalityGroupData?.filter((item) => (keyword ? filterFunction(keyword)(item?.criticalityGroupCode) || filterFunction(keyword)(item?.criticalityGroupName) : true));
 
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -129,25 +123,31 @@ export const CriticalityGroupMain = (props) => {
     }, [filterString, isDataLoaded, criticalityGroupData, userId]);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && refershData) {
             fetchList({ setIsLoading: listShowLoading, errorAction, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refershData, userId]);
+    }, [refershData]);
 
     const onFinish = (values) => {
-        const modifiedTimeData = timeData?.map((element) => {
+        const modifiedDeletedTime = deletedTime.concat(timeData);
+
+        const modifiedTimeData = modifiedDeletedTime?.map((element) => {
             return { id: element?.id || '', timeSlotFrom: element?.timeSlotFrom, timeSlotTo: element?.timeSlotTo, isDeleted: element?.isDeleted };
         });
 
         const recordId = formData?.id || '';
         const data = { ...values, id: recordId, allowedTimings: modifiedTimeData || [] };
-
+        setDeletedTime([]);
         const onSuccess = (res) => {
             setShowDataLoading(true);
             form.resetFields();
             setForceFormReset(generateRandomNumber());
             setTimeData([]);
+
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
@@ -157,10 +157,6 @@ export const CriticalityGroupMain = (props) => {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             }
         };
-
-        setTimeout(() => {
-            fetchList({ setIsLoading: listShowLoading, userId });
-        }, 2000);
 
         const onError = (message) => {
             showGlobalNotification({ message, placement: 'bottomRight' });
@@ -252,6 +248,8 @@ export const CriticalityGroupMain = (props) => {
 
         timeData,
         setTimeData,
+        deletedTime,
+        setDeletedTime,
     };
 
     const handleClearInSearch = (e) => {
@@ -268,7 +266,7 @@ export const CriticalityGroupMain = (props) => {
         }
     };
 
-    const title = 'Criticality Group List';
+    const title = 'Criticality Group Name';
 
     const advanceFilterResultProps = {
         advanceFilter: false,
@@ -282,40 +280,12 @@ export const CriticalityGroupMain = (props) => {
         title,
     };
 
+    const ContentHeaderProps = { isAdvanceFilter: true, isTogglePresent: false, isDefaultContentHeader: false, advanceFilterResultProps };
+
     return (
         <>
-            <AppliedAdvanceFilter {...advanceFilterResultProps} />
-
-            {/* <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
-                                        Criticality Group List
-                                    </Col>
-                                    <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                        <Search placeholder="Search" allowClear onSearch={onSearchHandle} onChange={onChangeHandle} className={styles.headerSearchField} />
-                                    </Col>
-                                </Row>
-                            </Col>
-
-                            {criticalityGroupData?.length > 0 && (
-                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button className={styles.refreshBtn} aria-label="fa-ref" onClick={handleReferesh} danger>
-                                        <TfiReload />
-                                    </Button>
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                        Add
-                                    </Button>
-                                </Col>
-                            )}
-                        </Row>
-                    </div>
-                </Col>
-            </Row> */}
-
+            {/* <AppliedAdvanceFilter {...advanceFilterResultProps} /> */}
+            <ContentHeader {...ContentHeaderProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={'Group'} {...tableProps} />

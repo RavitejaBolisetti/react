@@ -14,7 +14,7 @@ const ViewHierarchyAttributeMain = ({editRow,style}) => {
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Code">{editRow?.hierarchyAttribueCode}</Descriptions.Item>
                     <Descriptions.Item label="Name">{editRow?.hierarchyAttribueName}</Descriptions.Item>
-                    <Descriptions.Item label="Duplicate Allowed?">{editRow?.duplicateAllowedAtAttributerLevelInd === '1' ? <text className={style.activeText}>Active</text> :<text    className={style.inactiveText}>InActive</text>}</Descriptions.Item>
+                    <Descriptions.Item label="Duplicate Allowed?">{editRow?.duplicateAllowedAtAttributerLevelInd  ? <text className={style.activeText}>Active</text> :<text    className={style.inactiveText}>InActive</text>}</Descriptions.Item>
                     <Descriptions.Item label="Duplicate Allowed under different Parent?">{editRow?.duplicateAllowedAtOtherParent  ? <text className={style.activeText}>Active</text> :<text    className={style.inactiveText}>InActive</text>}</Descriptions.Item>
                     <Descriptions.Item label="Child Allowed?">{editRow?.isChildAllowed  ? <text className={style.activeText}>Active</text> :<text    className={style.inactiveText}>InActive</text>}</Descriptions.Item>
                     <Descriptions.Item label="Status">{editRow?.status ? <text className={style.activeText}>Active</text> :<text    className={style.inactiveText}>InActive</text>}</Descriptions.Item>

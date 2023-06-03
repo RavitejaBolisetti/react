@@ -53,6 +53,7 @@
 }
 
 .leftMenuBox li.subMenuItem {
+    /* min-height: 32px; */
     min-height: 40px;
 }
 
@@ -169,7 +170,7 @@
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical {
     border-inline-end: none;
     overflow-y: overlay;
-    max-height: 72vh;
+    max-height: 71vh;
     padding: 0px 14px;
 }
 
@@ -186,6 +187,7 @@
 
 :global .ant-menu-inline .ant-menu-submenu-title,
 :global .ant-menu-inline .ant-menu-item {
+    /* height: auto; */
     height: 32px;
     padding-inline: 0 !important;
     overflow: hidden;
@@ -209,7 +211,8 @@
 }
 
 :global .ant-menu-inline .ant-menu-sub.ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title {
-    height: 32px !important;
+    /* height: 32px !important; */
+    height: 40px !important;
 }
 
 :global .ant-input-affix-wrapper {
@@ -229,9 +232,9 @@
     border-width: 0px;
 }
 
-:global .ant-input-affix-wrapper>input.ant-input {
+/* :global .ant-input-affix-wrapper>input.ant-input {
     line-height: 0;
-}
+} */
 
 .logoContainer input::placeholder {
     color: #8e8585;
@@ -326,7 +329,7 @@
 
 .logoContainer {
     padding: 0px 14px;
-    margin-bottom: 12px;
+    margin-bottom: 2px;
 }
 
 .logoContainerCollapsed {
@@ -459,7 +462,9 @@
 .leftMenuBox :global .ant-menu-light .ant-menu-item a,
 .leftMenuBox :global .ant-menu-light .ant-menu-item a:hover {
     color: inherit;
-    display: flex;
+    /* display: flex;
+    white-space: pre-wrap;
+    line-height: 22px; */
 }
 
 .leftMenuBox .searchField {

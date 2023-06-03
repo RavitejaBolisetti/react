@@ -5,7 +5,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { duplicateValidator, validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-function DocumentTypesForm({ form, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
+function DocumentTypesForm({ form,onFieldsChange,  onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
 
     const onFinishFailed = (err) => {
         console.error(err);
@@ -13,7 +13,7 @@ function DocumentTypesForm({ form, onFinish, isEditing, isBtnDisabled, setIsBtnD
 
 
     return (
-        <Form form={form} autoComplete="off" id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form form={form} onFieldsChange={onFieldsChange} autoComplete="off" id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Code" name="documentTypeCode" rules={[{ max: 3, message: 'Code must be 3 characters long.' }, validateRequiredInputField('document code'), validationFieldLetterAndNumber('document code'), 
