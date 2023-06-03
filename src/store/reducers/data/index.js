@@ -16,7 +16,7 @@ import { UserManagementManufacturer } from './UserManagementManufacturer';
 import { Geo } from './geo';
 import { DealerManpower } from './dealerManpower';
 import { PartyMaster } from './partyMaster';
-import { TermCondition } from './termsConditions'
+import { TermCondition } from './termsConditions';
 import { DealerHierarchy } from './dealer';
 import { PincodeDetails } from './pincodeDetails';
 
@@ -38,7 +38,7 @@ export const data = combineReducers({
     Geo,
     DealerManpower,
     PartyMaster,
-    TermCondition
+    TermCondition,
     DealerHierarchy,
-    PincodeDetails
+    PincodeDetails,
 });
