@@ -39,6 +39,6 @@ export const data = combineReducers({
     DealerManpower,
     PartyMaster,
     DealerHierarchy,
-    PincodeDetails
+    PincodeDetails,
     LessorCompanyMaster,
 });
