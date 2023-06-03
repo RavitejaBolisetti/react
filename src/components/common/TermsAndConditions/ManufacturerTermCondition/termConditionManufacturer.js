@@ -95,7 +95,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const initialTableData = [];
-const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTermsConditionsDataLoaded, DealerTermsConditionsData, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, isTermConditionDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, listShowLoading, productHierarchyList, documentTypeList, languageList, fetchList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTermsConditionsDataLoaded, DealerTermsConditionsData, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, isTermConditionDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, listShowLoading, productHierarchyList, documentTypeList, languageList, fetchList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -367,13 +367,11 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
         advanceFilterForm.resetFields();
     };
 
-    const handleFilterChange =
-        (name, type = 'value') =>
-        (value) => {
-            if (name === 'countryCode') {
-                advanceFilterForm.setFieldsValue({ stateCode: undefined });
-            }
-        };
+    const handleFilterChange = (name, type = 'value') => (value) => {
+        if (name === 'countryCode') {
+            advanceFilterForm.setFieldsValue({ stateCode: undefined });
+        }
+    };
 
     const handleResetFilter = () => {
         setFilterString();
@@ -495,4 +493,4 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
     );
 };
 
-export const TermConditionDealerMaster = connect(mapStateToProps, mapDispatchToProps)(TncDealer);
+export const TermConditionManufacturerMaster = connect(mapStateToProps, mapDispatchToProps)(TncManufacturer);

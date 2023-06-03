@@ -15,7 +15,36 @@ import { StatePage, DistrictPage, TehsilPage, CityPage, PinCodePage } from './Ge
 import { DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DealerEmployeeDepartmentPage, DesignationMasterPage, RoleMasterPage } from './DealerManpower';
 import { PartyMasterPage } from './PartyMaster';
 import { CustomerMasterPage } from './CustomerMaster';
-import { TermConditionMasterPage } from './TermsAndConditions/DealerTermCondition';
+import { TermConditionDealerMasterPage } from './TermsAndConditions/DealerTermCondition';
+import { TermConditionManufacturerMasterPage } from './TermsAndConditions/ManufacturerTermCondition';
 
-
-export { ProductMasterPage, ProductHierarchyPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, QualificationMasterPage, HierarchyAttributeMasterPage, UserManagementPage, UserManagementManufacturerPage, StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage, DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DealerEmployeeDepartmentPage, DesignationMasterPage, RoleMasterPage, PartyMasterPage, CustomerMasterPage, TermConditionMasterPage };
+export {
+    ProductMasterPage,
+    ProductHierarchyPage,
+    ManufacturerAdministrativeHierarchyPage,
+    ManufacturerOrgHierarchyPage,
+    DealerHierarchyPage,
+    ConfigurableParameterEditingPage,
+    ApplicationMasterPage,
+    CriticalityGroupPage,
+    RoleManagementPage,
+    QualificationMasterPage,
+    HierarchyAttributeMasterPage,
+    UserManagementPage,
+    UserManagementManufacturerPage,
+    StatePage,
+    DistrictPage,
+    CityPage,
+    TehsilPage,
+    PinCodePage,
+    DealerLocationTypePage,
+    DealerDivisionMasterPage,
+    BayTypeMasterPage,
+    DealerEmployeeDepartmentPage,
+    DesignationMasterPage,
+    RoleMasterPage,
+    PartyMasterPage,
+    CustomerMasterPage,
+    TermConditionDealerMasterPage,
+    TermConditionManufacturerMasterPage,
+};

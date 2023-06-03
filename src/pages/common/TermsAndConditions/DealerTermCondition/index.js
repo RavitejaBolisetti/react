@@ -1,3 +1,3 @@
-import { TermConditionMasterPage } from "./termConditionDealerPage";
+import { TermConditionDealerMasterPage } from './termConditionDealerPage';
 
-export { TermConditionMasterPage };
+export { TermConditionDealerMasterPage };

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import { TermConditionDealerMaster } from 'components/common/TermsAndConditions/DealerTermCondition';
+import { TermConditionManufacturerMaster } from 'components/common/TermsAndConditions/ManufacturerTermCondition';
 
 const mapStateToProps = (state) => {
     const {
@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
 };
 
 export const TermConditionPageBase = (props) => {
-    const pageTitle = 'Terms & Conditions - Dealer Branch';
+    const pageTitle = 'Terms & Conditions - Manufacturer Branch';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
@@ -30,9 +30,9 @@ export const TermConditionPageBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <TermConditionDealerMaster />
+            <TermConditionManufacturerMaster />
         </>
     );
 };
 
-export const TermConditionDealerMasterPage = connect(mapStateToProps, null)(withLayoutMaster(TermConditionPageBase));
+export const TermConditionManufacturerMasterPage = connect(mapStateToProps, null)(withLayoutMaster(TermConditionPageBase));
