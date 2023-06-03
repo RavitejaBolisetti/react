@@ -236,6 +236,7 @@ export const ListDistrictBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             fetchStateList({ setIsLoading: listStateShowLoading, userId });
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });

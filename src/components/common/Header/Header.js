@@ -111,6 +111,8 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             centered: true,
             closable: true,
             onOk() {
+                setConfirm(false);
+
                 doLogout({
                     onSuccess,
                     onError,
@@ -224,7 +226,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             {!isLoading ? (
                 <div className={styles.headerContainer}>
                     <Row gutter={0} className={styles.columnInterchange}>
-                        <Col xs={24} sm={isDashboard ? 9 : 16} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
+                        <Col xs={14} sm={isDashboard ? 9 : 16} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
                             <div className={styles.headerLeft}>
                                 <Space>
                                     {/* <div className={styles.userAvatar}>
@@ -266,7 +268,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                 </div>
                             </Col>
                         )}
-                        <Col xs={24} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Col xs={10} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <div className={styles.headerRight}>
                                 <div className={styles.navbarExpand}>
                                     <div className={styles.navbarNav}>
@@ -306,7 +308,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                     {/* <span className={styles.userServiceArea}>{formatPhoneNumber(mobileNo)}</span> */}
                                                 </div>
                                                 <div className={`${styles.webmenuDropDownArrow} ${styles.dropdownArrow}`}>
-                                                    <Dropdown menu={{ items: userSettingMenu }}>
+                                                    <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
                                                         <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
                                                             <Space>
                                                                 <DownOutlined />

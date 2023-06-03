@@ -198,7 +198,7 @@ const ListPinCodeMasterBase = (props) => {
 
     const loadPinCodeDataList = () => {
         // && (filterString?.tehsilCode || filterString?.cityCode)
-        if (userId && (filterString?.pincode || (filterString?.countryCode && filterString?.stateCode && filterString?.districtCode ))) {
+        if (userId && (filterString?.pincode || (filterString?.countryCode && filterString?.stateCode && filterString?.districtCode))) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         } else {
@@ -299,10 +299,8 @@ const ListPinCodeMasterBase = (props) => {
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
 
-        const tehsilCategory = typeData?.find((category) => category.key === record?.pinCategory)?.value;
-        record && setFormData({ ...record, tehsilCategory });
-
-        record && setFormData(record);
+        const pinCategoryName = typeData?.find((category) => category.key === record?.pinCategory)?.value;
+        record && setFormData({ ...record, pinCategoryName: pinCategoryName });
         setIsFormVisible(true);
     };
 
@@ -348,12 +346,12 @@ const ListPinCodeMasterBase = (props) => {
 
     const onFinish = (values) => {
         let data = { ...values };
-        // let data = { ...values, localityCode: Math.floor(Math.random() * 899999 + 100000) };
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             loadPinCodeDataList();
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });

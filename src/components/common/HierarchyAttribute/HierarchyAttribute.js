@@ -192,9 +192,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         setRefershData(!RefershData);
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
-    };
     const onSearchHandle = (value) => {
         setFilterString(value);
     };
@@ -353,7 +350,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
                                                 </Select>
                                             </Col>
                                             <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                                {detailData?.hierarchyAttributeType && <Search placeholder="Search" className={styles.headerSearchField} allowClear onSearch={onSearchHandle} onChange={onChangeHandle} />}
+                                                {detailData?.hierarchyAttributeType && <Search placeholder="Search" className={styles.headerSearchField} allowClear onSearch={onSearchHandle} />}
                                             </Col>
                                         </Row>
                                     </Col>

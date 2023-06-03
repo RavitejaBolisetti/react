@@ -170,7 +170,7 @@
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical {
     border-inline-end: none;
     overflow-y: overlay;
-    max-height: 70vh;
+    max-height: 71vh;
     padding: 0px 14px;
 }
 
@@ -232,9 +232,9 @@
     border-width: 0px;
 }
 
-:global .ant-input-affix-wrapper>input.ant-input {
+/* :global .ant-input-affix-wrapper>input.ant-input {
     line-height: 0;
-}
+} */
 
 .logoContainer input::placeholder {
     color: #8e8585;
@@ -329,7 +329,7 @@
 
 .logoContainer {
     padding: 0px 14px;
-    margin-bottom: 12px;
+    margin-bottom: 2px;
 }
 
 .logoContainerCollapsed {

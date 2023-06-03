@@ -147,10 +147,10 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
 
             form.resetFields();
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-                setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
             } else {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });

@@ -127,13 +127,13 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         form.setFieldsValue({
             controlId: formData?.controlId,
             controlDescription: formData?.controlDescription,
-            controlGroup:formData?.controlGroup,
+            controlGroup: formData?.controlGroup,
             toDate: formData?.toDate ? dayjs(formData?.toDate, 'DD-MM-YYYY') : null,
             fromDate: formData?.fromDate ? dayjs(formData?.fromDate, 'DD-MM-YYYY') : null,
             fromNumber: formData?.fromNumber,
             toNumber: formData?.toNumber,
-            booleanValue : formData?.booleanValue,
-            textValue : formData?.textValue
+            booleanValue: formData?.booleanValue,
+            textValue: formData?.textValue,
         });
         const data = configData.find((i) => i.id === record.id);
         if (data) {
@@ -361,7 +361,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     };
     return (
         <>
-            <Row gutter={20}>
+                    <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
@@ -374,11 +374,12 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                                                 placeholder="Search"
                                                 style={{
                                                     width: 300,
+                                                    marginLeft: '10px',
                                                 }}
                                                 allowClear
                                                 className={styles.headerSelectField}
                                                 onSearch={onSearchHandle}
-                                                onChange={onChangeHandle}
+                                                // onChange={onChangeHandle}
                                             />
                                         </Col>
                                     </div>
