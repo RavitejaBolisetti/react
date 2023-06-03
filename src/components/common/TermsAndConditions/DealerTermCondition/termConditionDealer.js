@@ -25,6 +25,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ListDataTable } from 'utils/ListDataTable';
 import { tableColumn } from './tableColumn';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
+import { CustomEditor } from 'components/common/CustomEditor';
 
 // import { AdvancedSearch } from './AdvancedSearch';
 
@@ -177,7 +178,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
     // }, [termConditionData]);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && refershData) {
             fetchTermCondition({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -200,6 +201,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
+        console.log('buttonAction', buttonAction);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
@@ -230,7 +232,6 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
         const recordId = selectedRecord?.id || '';
         const data = { ...values, productName: productName, documentTypeName: documentName, language: languageName, version: '1.0', id: recordId };
         console.log('data', data);
-        // return;
         const onSuccess = (res) => {
             listShowLoading(false);
             form.resetFields();
@@ -255,7 +256,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
         };
 
         const requestData = {
-            data: [data],
+            data: data,
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -457,6 +458,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
         setDocumentName,
         languageName,
         setLanguageName,
+        CustomEditor,
     };
 
     const title = 'Term & Condition';
@@ -489,7 +491,6 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
                     <ListDataTable handleAdd={handleAdd} isLoading={isLoading} {...tableProps} />
                 </Col>
             </Row>
-            {/* <AdvancedSearch {...advanceFilterProps} /> */}
             <AddEditForm {...formProps} />
         </>
     );
