@@ -149,7 +149,9 @@ export const ListLessorCompanyMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        let data = { customerId: '673a6f88-6a5f-4e0b-9208-7b09819a5398', customerLessorCompanyDetails: [{ ...values }] };
+        const recordId = formData?.id || '';
+
+        let data = { customerId: '673a6f88-6a5f-4e0b-9208-7b09819a5398', customerLessorCompanyDetails: [{ ...values, id: recordId }] };
 
         const onSuccess = (res) => {
             form.resetFields();
