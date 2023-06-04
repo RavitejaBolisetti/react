@@ -493,6 +493,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
         handleReferesh,
         handleButtonClick,
         title,
+        showAddButton: DealerTermsConditionsData?.length > 0 ? true : false,
     };
 
     return (

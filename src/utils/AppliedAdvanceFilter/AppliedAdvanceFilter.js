@@ -12,7 +12,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator } = props;
+    const { advanceFilter = false, title, showAddButton = true, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -56,12 +56,16 @@ export default function AppliedAdvanceFilter(props) {
                         </Row>
                     </Col>
 
-                    <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                            Add
-                        </Button>
-                    </Col>
+                    {showAddButton && (
+                        <>
+                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                    Add
+                                </Button>
+                            </Col>
+                        </>
+                    )}
                 </Row>
                 {advanceFilter && filterString?.advanceFilter && (
                     <Row gutter={20}>
