@@ -54,7 +54,9 @@ export const AdvancedSearchFrom = (props) => {
                     <Form.Item label="State" initialValue={filterString?.stateCode} rules={[validateRequiredInputField('State')]} name="stateCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('stateCode')}>
                             {filteredStateData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>
@@ -66,7 +68,9 @@ export const AdvancedSearchFrom = (props) => {
                     <Form.Item label="District" initialValue={filterString?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('districtCode')}>
                             {filteredDistrictData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>
@@ -77,7 +81,9 @@ export const AdvancedSearchFrom = (props) => {
                     <Form.Item label="City" initialValue={filterString?.cityCode} name="cityCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('cityCode')}>
                             {filteredCityData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>
@@ -89,7 +95,9 @@ export const AdvancedSearchFrom = (props) => {
                     <Form.Item label="Tehsil" initialValue={filterString?.tehsilCode} name="tehsilCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('tehsilCode')}>
                             {filteredTehsilData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>
