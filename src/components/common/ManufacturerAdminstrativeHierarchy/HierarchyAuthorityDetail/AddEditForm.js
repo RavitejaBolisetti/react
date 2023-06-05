@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Input, Form, Col, Row, Button, Select, DatePicker, Typography } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
-import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField, duplicateValidator } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], recordId: formRecordId, tokenNumber = [], errorMessage,isUpdating, changeHistoryVisible, historyData = [], authTypeDropdown = [], authorityVisible },
+            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], recordId: formRecordId, tokenNumber = [], errorMessage, isUpdating, changeHistoryVisible, historyData = [], authTypeDropdown = [], authorityVisible },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -44,7 +44,7 @@ const mapStateToProps = (state) => {
         authorityVisible,
         attributeData: attributeData?.filter((i) => i),
         errorMessage: errorMessage?.length ? errorMessage[0] : errorMessage,
-        isUpdating
+        isUpdating,
     };
     return returnValue;
 };
@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const AuthorityFormMin = ({isUpdating, isMainForm,setTokenValidationData,  handleFormValueChange, tokenValidationData, errorTokenValidate, tokenValidate, errorMessage, setTokenValidate, setEmployeeName = undefined, employeeName = '', recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction }) => {
+const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, handleFormValueChange, record, tokenValidationData, errorTokenValidate, tokenValidate, errorMessage, setTokenValidate, setEmployeeName = undefined, employeeName = '', recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction }) => {
     const disableAddBtn = { disabled: isBtnDisabled || !tokenNumber?.employeeName };
 
     const onFinishFailed = (err) => {
@@ -77,8 +77,7 @@ const AuthorityFormMin = ({isUpdating, isMainForm,setTokenValidationData,  handl
     };
     const errorAction = (message) => {
         // errorTokenValidate(message);
-        errorTokenValidate({message, isUpdating: isEditing});
-
+        errorTokenValidate({ message, isUpdating: isEditing });
     };
 
     const onSearchHandle = (recordId) => (data) => {
@@ -87,12 +86,13 @@ const AuthorityFormMin = ({isUpdating, isMainForm,setTokenValidationData,  handl
     };
 
     const onChangeHandle = (recordId) => (e) => {
-        if(!isMainForm) {setTokenValidationData({})};
+        if (!isMainForm) {
+            setTokenValidationData({});
+        }
         setTokenValidate({ tokenVisible: !!e.target.value });
         if (tokenNumber?.employeeName || errorMessage) {
             // errorTokenValidate('');
-            errorTokenValidate({errorMessage: '', isUpdating: isEditing});
-
+            errorTokenValidate({ errorMessage: '', isUpdating: isEditing });
         }
 
         // form.setFieldsValue({
@@ -109,37 +109,29 @@ const AuthorityFormMin = ({isUpdating, isMainForm,setTokenValidationData,  handl
     }, [userId]);
 
     return (
-        <Form
-            autoComplete="off"
-            form={form}
-            id="myForm"
-            onFinish={onFinish}
-            layout="vertical"
-            onFieldsChange={handleFormValueChange}
-            onFinishFailed={onFinishFailed}
-        >
+        <Form autoComplete="off" form={form} id="myForm" onFinish={onFinish} layout="vertical" onFieldsChange={handleFormValueChange} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type')]}>
+                    <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type'), { validator: (rule, value) => duplicateValidator(value, 'authorityTypeCode', documentTypesList, record?.authorityTypeCode) }]}>
                         <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" options={apiData} disabled={isBtnDisabled} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Token" name={'authorityEmployeeTokenNo'} rules={[validateRequiredInputField('Token Required'), validationFieldLetterAndNumber('Token Required')]}>
+                    <Form.Item label="Token" name={'authorityEmployeeTokenNo'} rules={[validateRequiredInputField('Token Required'), validationFieldLetterAndNumber('Token Required'), { validator: (rule, value) => duplicateValidator(value, 'authorityEmployeeTokenNo', documentTypesList, record?.authorityEmployeeTokenNo) }]}>
                         <Search disabled={isBtnDisabled} className={style.searchField} allowClear onChange={onChangeHandle(recordId)} onSearch={onSearchHandle(recordId)} placeholder={preparePlaceholderText('Token')} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Text type="danger">{!(isUpdating && isMainForm) && errorMessage }</Text>
+                    <Text type="danger">{!(isUpdating && isMainForm) && errorMessage}</Text>
                 </Col>
             </Row>
-            {!viewMode && !(isUpdating && isMainForm) &&  ( tokenValidationData?.employeeName || (isMainForm && tokenNumber?.employeeName && !tokenValidationData?.employeeName)) && (
+            {!viewMode && !(isUpdating && isMainForm) && (tokenValidationData?.employeeName || (isMainForm && tokenNumber?.employeeName && !tokenValidationData?.employeeName)) && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         {/* <Form.Item hidden name="employeeName" initialValue={ tokenNumber?.employeeName }>
                             <Input />
                         </Form.Item> */}
-                            <Text type="primary">Employee Name : {!isMainForm ? tokenValidationData?.employeeName : tokenNumber?.employeeName} </Text>
+                        <Text type="primary">Employee Name : {!isMainForm ? tokenValidationData?.employeeName : tokenNumber?.employeeName} </Text>
                     </Col>
 
                     <Col xs={0} sm={0} md={0} lg={0} xl={0}>
@@ -149,19 +141,19 @@ const AuthorityFormMin = ({isUpdating, isMainForm,setTokenValidationData,  handl
                     </Col>
 
                     <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                        <Form.Item hidden label="" name="isModified" initialValue={form.getFieldValue("id") ? true : false}>
+                        <Form.Item hidden label="" name="isModified" initialValue={form.getFieldValue('id') ? true : false}>
                             <Input />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Effective From" name="effectiveFrom" rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs()}>
-                            <DatePicker disabledDate={(date) => date < dayjs().format("YYYY-MM-DD")} format="YYYY-MM-DD" className={style.datepicker} />
+                            <DatePicker disabledDate={(date) => date < dayjs().format('YYYY-MM-DD')} format="YYYY-MM-DD" className={style.datepicker} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Effective To" name="effectiveTo" rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs()}>
-                            <DatePicker disabledDate={(date) => date < dayjs().format("YYYY-MM-DD")} format="YYYY-MM-DD" className={style.datepicker} />
+                            <DatePicker disabledDate={(date) => date < dayjs().format('YYYY-MM-DD')} format="YYYY-MM-DD" className={style.datepicker} />
                         </Form.Item>
                     </Col>
                 </Row>

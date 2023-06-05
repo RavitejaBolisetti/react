@@ -712,6 +712,27 @@
     width: 100%;
 }
 
+.accordianContainer :global .ant-input-search >.ant-input-group >.ant-input-group-addon:last-child {
+    background: white;
+    border: 1px solid #d9d9d9;
+    border-left: none;
+}
+
+.accordianContainer :global .ant-btn-default:disabled {
+    cursor: not-allowed;
+    border-color: #d9d9d9;
+    border-left: none;
+    color: rgba(0, 0, 0, 0.25) !important;
+    background: rgba(0, 0, 0, 0.04) !important;
+    box-shadow: none;
+}
+
+.accordianContainer :global .ant-input-group-wrapper-disabled .ant-input-group-addon {
+    color: rgba(0, 0, 0, 0.25) !important;
+    background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+
 .viewCardSize :global .ant-card-body .ant-space .ant-space-item p,
 .viewCardSize :global .ant-card-body .ant-space .ant-space-item span {
     font-weight: 400;

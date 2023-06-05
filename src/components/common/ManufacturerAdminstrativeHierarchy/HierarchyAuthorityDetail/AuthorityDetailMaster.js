@@ -48,12 +48,12 @@ const AuthorityDetailMain = ({tokenNumber, handleFormValueChange, errorTokenVali
     return (
         <>
         <Divider/>
-            {!viewMode && <AddEditForm isMainForm={true} handleFormValueChange={handleFormValueChange} onFinish={onActionFormFinish} tokenValidate={tokenValidate} setTokenValidate={setTokenValidate} form={actionForm} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setDocumentTypesList={setDocumentTypesList} />}
+            {!viewMode && <AddEditForm isMainForm={true} handleFormValueChange={handleFormValueChange} onFinish={onActionFormFinish} tokenValidate={tokenValidate} setTokenValidate={setTokenValidate} form={actionForm} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} />}
             <Divider/>
 
             {documentTypesList?.length > 0 &&
                 documentTypesList?.map((record) => {
-                    return <AuthorityDetailCardItem handleFormValueChange={handleFormValueChange} record={record} formActionType={formActionType} setTokenValidate={setTokenValidate} viewMode={viewMode} form={actionForm} onFinish={onActionFormFinish} setDocumentTypesList={setDocumentTypesList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} documentTypesList={documentTypesList} />;
+                    return <AuthorityDetailCardItem handleFormValueChange={handleFormValueChange} record={record} formActionType={formActionType} setTokenValidate={setTokenValidate} viewMode={viewMode} form={actionForm} onFinish={onActionFormFinish} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} documentTypesList={documentTypesList} />;
                 })}
         </>
     );

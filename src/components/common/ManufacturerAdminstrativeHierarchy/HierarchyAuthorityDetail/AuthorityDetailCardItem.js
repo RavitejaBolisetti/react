@@ -42,12 +42,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AuthorityCardItemMain = (props) => {
-    const {isUpdating,  viewMode, onFinish, setDocumentTypesList, forceUpdate, setIsBtnDisabled, isBtnDisabled, record, handleFormValueChange } = props;
+    const {isUpdating,  viewMode, onFinish, setDocumentTypesList, documentTypesList, forceUpdate, setIsBtnDisabled, isBtnDisabled, record, handleFormValueChange } = props;
     const { employeeName, setEmployeeName, tokenValidate, setTokenValidate, errorTokenValidate, tokenNumber, errorMessage, showGlobalNotification } = props;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
     const [tokenValidationData, setTokenValidationData] = useState({});
-
+console.log('documentTypesList',documentTypesList)
     useEffect(() => {
         if (record) {
             setTokenValidationData({ ...record });
@@ -57,7 +57,7 @@ const AuthorityCardItemMain = (props) => {
 
     useEffect(() => {
         if (errorMessage || tokenNumber?.employeeName) {
-            setTokenValidationData({ errorMessage, ...tokenNumber });
+            setTokenValidationData({ ...record, errorMessage, ...tokenNumber });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [errorMessage, tokenNumber]);
@@ -130,45 +130,41 @@ const AuthorityCardItemMain = (props) => {
             <Card className={styles.viewCardSize}>
                 <Row align="middle">
                     <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
-                        {/* <Row> */}
+                   
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                             <Text type="secondary">Authority : {record?.authorityTypeCode}</Text>
                         </Col>
-                        {/* </Row> */}
 
-                        {/* <Row> */}
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Text strong>{record?.employeeName + ' | ' + record?.authorityEmployeeTokenNo}</Text>
                         </Col>
-                        {/* </Row> */}
 
-                        {/* <Row> */}
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Text type="secondary">From - {dayjs(record?.effectiveFrom).format('DD-MM-YYYY')}</Text>
                             <Divider type="vertical" />
                             <Text type="secondary">To - {dayjs(record?.effectiveTo)?.format('DD-MM-YYYY')}</Text>
                         </Col>
-                        {/* </Row> */}
+
                     </Col>
                     {!viewMode && (
                         <Col xs={colRight} sm={colRight} md={colRight} lg={colRight} xl={colRight} xxl={colRight}>
                             <Row justify="end">
                                 {!isEditing ? (
-                                    <>
-                                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                                    <div>
+                                        {/* <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}> */}
                                             <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(record)} />
-                                        </Col>
+                                        {/* </Col> */}
                                         {!record?.id && (
-                                            <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                                            // <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                                                 <Button disabled={isBtnDisabled} onClick={() => handleDelete(record)} type="link" icon={<FiTrash />}></Button>
-                                            </Col>
+                                            // </Col>
                                         )}
 
                                         {/* <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} style={{ float: 'right', display: 'flex' }}>
                                             <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(record)} />
                                             {!record?.id && <Button onClick={() => handleDelete(record)} type="link" icon={<FiTrash />}></Button>}
                                         </Col> */}
-                                    </>
+                                    </div>
                                 ) : (
                                     <>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -191,7 +187,7 @@ const AuthorityCardItemMain = (props) => {
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <AddEditForm handleFormValueChange={handleFormValueChange} tokenValidationData={tokenValidationData} setTokenValidationData={setTokenValidationData} tokenValidate={tokenValidate} setEmployeeName={setEmployeeName} setTokenValidate={setTokenValidate} employeeName={employeeName} record={record} recordId={recordId} onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} isEditing={isEditing} />
+                        <AddEditForm handleFormValueChange={handleFormValueChange} tokenValidationData={tokenValidationData} setTokenValidationData={setTokenValidationData} tokenValidate={tokenValidate} setEmployeeName={setEmployeeName} setTokenValidate={setTokenValidate} employeeName={employeeName} record={record} recordId={recordId} onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} isEditing={isEditing} />
                     </Fragment>
                 )}
             </Card>
