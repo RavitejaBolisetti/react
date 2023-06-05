@@ -235,6 +235,7 @@ const ListPinCodeMasterBase = (props) => {
                 a.href = url;
                 a.download = 'pincode-' + convertDate(undefined, 'YYYY-MM-DD_HH:mm:ss') + '.csv';
                 a.click();
+                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: 'Your download should start automatically in a few seconds' });
             });
         });
     };
