@@ -1072,14 +1072,16 @@
 
 .tableIcons {
     border: none !important;
+    /* color: #ff3e5b !important; */
     padding: 0px;
     box-shadow: transparent !important;
     width: 18px !important;
 }
 
+/* .tableIcons:hover,
 .tableIcons:hover svg {
     color: #ff3e5b !important;
-}
+} */
 
 .searchContainer {
     background-color: #f4f4f4;

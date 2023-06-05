@@ -17,6 +17,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import DataTable from '../../../utils/dataTable/DataTable';
 import { escapeRegExp } from 'utils/escapeRegExp';
+import { ListDataTable } from 'utils/ListDataTable';
+import { tableColumn } from './tableColumn';
 
 const { Option } = Select;
 const { Search } = Input;
@@ -78,7 +80,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
 
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [filterString, setFilterString] = useState('');
@@ -87,10 +88,21 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [showDataLoading, setShowDataLoading] = useState(false);
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+    const [page, setPage] = useState(1);
+
+    const ADD_ACTION = formActionType?.ADD;
+    const EDIT_ACTION = formActionType?.EDIT;
+    const VIEW_ACTION = formActionType?.VIEW;
 
     const onSuccessAction = (res) => {
         RefershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
+    const title = 'Hierarchy Attribute';
     useEffect(() => {
         if (userId) {
             if (!isDataLoaded) {
@@ -158,31 +170,38 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     const onError = (message) => {
         showGlobalNotification({ icon: 'error', message: 'Error', description: message, className: styles.error, placement: 'bottomRight' });
     };
+    const handleAdd = () => handleButtonClick({ buttonAction: formActionType?.ADD });
+    // const handleAdd = () => {
+    //     setFormActionType('add');
+    //     setIsFormVisible(true);
+    //     setIsViewModeVisible(false);
 
-    const handleAdd = () => {
-        setFormActionType('add');
-        setIsFormVisible(true);
-        setIsViewModeVisible(false);
-
-        setEditRow({
-            duplicateAllowedAtAttributerLevelInd: true,
-            duplicateAllowedAtOtherParent: true,
-            isChildAllowed: true,
-            status: true,
-        });
-        setcodeIsReadOnly(false);
-    };
+    //     setEditRow({
+    //         duplicateAllowedAtAttributerLevelInd: true,
+    //         duplicateAllowedAtOtherParent: true,
+    //         isChildAllowed: true,
+    //         status: true,
+    //     });
+    //     setcodeIsReadOnly(false);
+    // };
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
-    const edit = (record, type) => {
-        setFormActionType(type);
+    const handleButtonClick = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        // setFormData([]);
+
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+
+        // setFormActionType(buttonAction);
         setIsFormVisible(true);
         setEditRow(record);
+
         setFormBtnDisable(false);
         setIsViewModeVisible(false);
 
-        if (type === 'view') {
+        if (buttonAction === 'view') {
             setIsReadOnly(true);
             setIsViewModeVisible(true);
         }
@@ -196,72 +215,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     const onSearchHandle = (value) => {
         setFilterString(value);
     };
-
-    const tableColumn = [
-        tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'srl',
-            width: '6%',
-            sorter: false,
-            render: (_t, _r, i) => i + 1,
-        }),
-        tblPrepareColumns({
-            title: 'Code',
-            dataIndex: 'hierarchyAttribueCode',
-            width: '10%',
-        }),
-        tblPrepareColumns({
-            title: 'Name',
-            dataIndex: 'hierarchyAttribueName',
-            width: '20%',
-        }),
-        tblPrepareColumns({
-            title: 'Duplicate Allowed?',
-            dataIndex: 'duplicateAllowedAtAttributerLevelInd',
-            width: '14%',
-            render: (text, record) => <>{text ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
-        }),
-        tblPrepareColumns({
-            title: 'Duplicate Allowed under different Parent?',
-            dataIndex: 'duplicateAllowedAtOtherParent',
-            width: '20%',
-            render: (text, record) => <>{text ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
-        }),
-        tblPrepareColumns({
-            title: 'Child Allowed?',
-            dataIndex: 'isChildAllowed',
-            width: '10%',
-            render: (text, record) => <>{text ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
-        }),
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'status',
-            width: '10%',
-            render: (text, record) => <>{text ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
-        }),
-        tblPrepareColumns({
-            title: 'Action',
-            dataIndex: 'action',
-            width: '10%',
-            sorter: false,
-            render: (text, record, index) => {
-                return (
-                    <Space>
-                        {
-                            <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => edit(record, 'view')}>
-                                <FiEye />
-                            </Button>
-                        }
-                        {
-                            <Button className={styles.tableIcons} danger ghost aria-label="fa-edit" onClick={() => edit(record, 'edit')}>
-                                <FiEdit />
-                            </Button>
-                        }
-                    </Space>
-                );
-            },
-        }),
-    ];
 
     const onFinish = (values) => {
         form.validateFields();
@@ -300,9 +253,21 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     };
 
     const tableProps = {
-        isLoading: isDataLoading,
+        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
         tableData: searchData,
-        tableColumn: tableColumn,
+        setPage,
+        noDataMessage:
+            selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
+                <span className={styles.descriptionText}>
+                    No records found. Please add new parameter <br />
+                    using below button
+                </span>
+            ) : !selectedHierarchy ? (
+                <span className={styles.descriptionText}>Please select hierarchy type to view records.</span>
+            ) : (
+                <span className={styles.descriptionText}> No records found.</span>
+            ),
+        showAddButton: false,
     };
 
     const formProps = {
@@ -327,6 +292,8 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         setFormBtnDisable,
         formBtnDisable,
         isLoadingOnSave,
+        formActionType,
+        setFormActionType,
     };
 
     return (
@@ -374,47 +341,23 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
             <>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <ConfigProvider
-                            renderEmpty={() => (
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: '20%',
-                                    }}
-                                    description={
-                                        selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
-                                            <span className={styles.descriptionText}>
-                                                No records found. Please add new parameter <br />
-                                                using below button
-                                            </span>
-                                        ) : !selectedHierarchy ? (
-                                            <span className={styles.descriptionText}>Please select hierarchy type to view records.</span>
-                                        ) : (
-                                            <span className={styles.descriptionText}> No records found.</span>
-                                        )
-                                    }
-                                >
-                                    {selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                    Add Attribute
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    ) : (
-                                        ''
-                                    )}
-                                </Empty>
-                            )}
-                        >
-                            <div className={styles.tableProduct}>
-                                <DataTable {...tableProps} />
-                            </div>
-                        </ConfigProvider>
+                        {selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
+                            <Row>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                        Add Attribute
+                                    </Button>
+                                </Col>
+                            </Row>
+                        ) : (
+                            ''
+                        )}
                     </Col>
                 </Row>
             </>
+            <div className={styles.tableProduct}>
+                <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd} addTitle={title} />
+            </div>
             <AddEditForm {...formProps} />
         </>
     );

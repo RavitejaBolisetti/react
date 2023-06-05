@@ -8,7 +8,7 @@ import { ViewHierarchyAttribute } from './ViewHierarchyAttribute';
 
 import style from 'components/common/Common.module.css';
 
-const AddEditFormMain = ({ isViewModeVisible, codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave, onCloseAction }) => {
+const AddEditFormMain = ({ isViewModeVisible, formActionType, setFormActionType, codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave, onCloseAction }) => {
     const [form] = Form.useForm();
     const disabledProps = { disabled: isReadOnly };
     const codeDisabledProp = { disabled: codeIsReadOnly };
@@ -68,7 +68,7 @@ const AddEditFormMain = ({ isViewModeVisible, codeIsReadOnly, editRow, setEditRo
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
-                                    <Input maxLength={6} placeholder={preparePlaceholderText('code')} {...codeDisabledProp} />
+                                    <Input maxLength={6} placeholder={preparePlaceholderText('code')} disabled={formActionType?.editMode} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
@@ -110,7 +110,7 @@ const AddEditFormMain = ({ isViewModeVisible, codeIsReadOnly, editRow, setEditRo
                 )}
                 <Row gutter={20} className={style.formFooter}>
                     <Col xs={24} sm={6} md={6} lg={6} xl={6} className={style.footerBtnLeft}>
-                        <Button danger onClick={()=> onCloseAction()}>
+                        <Button danger onClick={() => onCloseAction()}>
                             {formActionType === 'view' ? 'Close' : 'Cancel'}
                         </Button>
                     </Col>
