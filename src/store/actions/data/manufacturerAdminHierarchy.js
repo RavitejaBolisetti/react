@@ -67,9 +67,10 @@ const receiveAuthorityTypeData = (data) => ({
 
 const manufacturerAdminHierarchyDataActions = {};
 
-manufacturerAdminHierarchyDataActions.errorTokenValidate = (message) => ({
+manufacturerAdminHierarchyDataActions.errorTokenValidate = ({message, isUpdating}) => ({
     type: ON_ERROR_TOKEN_VALIDATION,
     data: message,
+    isUpdating: isUpdating,
 });
 
 manufacturerAdminHierarchyDataActions.cardBtnDisableAction = (value) => ({

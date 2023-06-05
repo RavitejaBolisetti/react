@@ -7,6 +7,21 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 
+const mapStateToProps = (state) => {
+    const {
+        data: {
+            ManufacturerAdminHierarchy: { authorityVisible, tokenNumber = [], errorMessage,isUpdating },
+        },
+    } = state;
+
+    let returnValue = {
+        authorityVisible,
+        tokenNumber,
+        errorMessage,
+        isUpdating,
+    };
+    return returnValue;
+};
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
@@ -17,13 +32,13 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const AuthorityDetailMain = ({ handleFormValueChange, errorTokenValidate, viewMode, documentTypesList, setDocumentTypesList, formActionType, tokenValidate, setTokenValidate, forceUpdate }) => {
+const AuthorityDetailMain = ({tokenNumber, handleFormValueChange, errorTokenValidate, viewMode, documentTypesList, setDocumentTypesList, formActionType, tokenValidate, setTokenValidate, forceUpdate }) => {
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [actionForm] = Form.useForm();
 
     const onActionFormFinish = (val) => {
         // const { key } = val.authorityTypeCode;
-        setDocumentTypesList((prev) => [...prev, { ...val, effectiveFrom: dayjs(val?.effectiveFrom).format('YYYY-MM-DD'), effectiveTo: dayjs(val?.effectiveTo).format('YYYY-MM-DD'), isModified: val?.isModified ?? false }]);
+        setDocumentTypesList((prev) => [...prev, { ...val, effectiveFrom: dayjs(val?.effectiveFrom).format('YYYY-MM-DD'), effectiveTo: dayjs(val?.effectiveTo).format('YYYY-MM-DD'), isModified: val?.isModified ?? false, employeeName: tokenNumber?.employeeName }]);
         // setDocumentTypesList((prev) => [...prev, { id: val?.id, authorityEmployeeTokenNo: val?.authorityEmployeeTokenNo, authorityTypeCode: authorityTypeCode, employeeName: val?.employeeName, effectiveFrom: moment(val?.effectiveFrom).format('YYYY-MM-DD'), effectiveTo: moment(val?.effectiveTo).format('YYYY-MM-DD'), isModified: val?.isModified ?? false}]);
         actionForm.resetFields();
         errorTokenValidate('');
@@ -43,6 +58,6 @@ const AuthorityDetailMain = ({ handleFormValueChange, errorTokenValidate, viewMo
         </>
     );
 };
-const AuthorityDetailMaster = connect(null, mapDispatchToProps)(AuthorityDetailMain);
+const AuthorityDetailMaster = connect(mapStateToProps, mapDispatchToProps)(AuthorityDetailMain);
 
 export default AuthorityDetailMaster;
