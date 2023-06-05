@@ -40,7 +40,9 @@ export const AdvancedSearchFrom = (props) => {
                     <Form.Item label="Division Name" name="divisionCode" rules={[validateRequiredSelectField('Division')]}>
                         <Select placeholder="Select" {...selectProps}>
                             {divisionData?.map((item) => (
-                                <Option value={item?.code}>{item?.divisionName}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>

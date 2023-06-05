@@ -299,15 +299,13 @@ export const ListStateMasterBase = (props) => {
     const removeFilter = (key) => {
         const { [key]: names, ...rest } = filterString;
         advanceFilterForm.setFieldsValue({ [key]: undefined });
-        
+
         if (!rest?.countryCode && !rest?.keyword) {
             setFilterString();
         } else {
             setFilterString({ ...rest });
         }
     };
-
-    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
     const title = 'State Name';
     const advanceFilterResultProps = {
@@ -332,7 +330,7 @@ export const ListStateMasterBase = (props) => {
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={isLoading} {...tableProps} handleAdd={handleAdd} addTitle={title} />
+                    <ListDataTable isLoading={isLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={title} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

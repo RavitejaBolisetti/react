@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Switch, Select } from 'antd';
 
-import { validateRequiredInputField, validationFieldLetter,validateLettersWithWhitespaces } from 'utils/validation';
+import { validateRequiredInputField, validationFieldLetter, validateLettersWithWhitespaces } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -20,7 +20,7 @@ const AddEditFormMain = (props) => {
     const { isDivisionDataLoaded, divisionData } = props;
     const { isDepartmentDataLoaded, departmentData } = props;
 
-    const [filteredDepartmentData, setFilteredDepartmentData] = useState(departmentData?.filter((i) => i?.divisionCode === formData?.divisionCode));
+    const [filteredDepartmentData, setFilteredDepartmentData] = useState(departmentData?.filter((i) => i?.parentKey === formData?.divisionCode));
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -32,7 +32,7 @@ const AddEditFormMain = (props) => {
 
     const handleDivisionChange = (division) => {
         form.setFieldValue('departmentCode', undefined);
-        setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === division));
+        setFilteredDepartmentData(departmentData?.filter((i) => i?.parentKey === division));
     };
 
     const viewProps = {
@@ -60,7 +60,9 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.divisionCode} label="Division Name" name="divisionCode" placeholder={preparePlaceholderSelect('division name')} rules={[validateRequiredInputField('Division Name')]}>
                                 <Select className={styles.headerSelectField} showSearch loading={!isDivisionDataLoaded} placeholder="Select" allowClear onChange={handleDivisionChange}>
                                     {divisionData?.map((item) => (
-                                        <Option value={item?.code}>{item?.divisionName}</Option>
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.value}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>
@@ -69,7 +71,9 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.departmentCode} label="Department Name" name="departmentCode" placeholder={preparePlaceholderSelect('department name')} rules={[validateRequiredInputField('department name')]}>
                                 <Select className={styles.headerSelectField} showSearch loading={!isDepartmentDataLoaded} placeholder="Select" allowClear>
                                     {filteredDepartmentData?.map((item) => (
-                                        <Option value={item?.departmentCode}>{item?.departmentName}</Option>
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.value}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>

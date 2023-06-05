@@ -20,11 +20,11 @@ const AddEditFormMain = (props) => {
     const { buttonData, setButtonData, handleButtonClick } = props;
 
     const { stateData, districtData } = props;
-    const [filteredStateData, setFilteredStateData] = useState(stateData?.filter((i) => i?.countryCode === defaultCountry));
-    const [filteredDistrictData, setFilteredDistrictData] = useState(districtData?.filter((i) => i?.stateCode === formData?.stateCode));
+    const [filteredStateData, setFilteredStateData] = useState(stateData?.filter((i) => i?.parentKey === defaultCountry));
+    const [filteredDistrictData, setFilteredDistrictData] = useState(districtData?.filter((i) => i?.parentKey === formData?.stateCode));
 
     useEffect(() => {
-        setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === formData?.stateCode));
+        setFilteredDistrictData(districtData?.filter((i) => i?.parentKey === formData?.stateCode));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData?.stateCode]);
 
@@ -50,8 +50,7 @@ const AddEditFormMain = (props) => {
 
         const stateCode = stateData?.find((i) => i?.code === state)?.code;
         stateCode && form.setFieldValue('stateCodeDisplay', stateCode);
-
-        setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === state));
+        setFilteredDistrictData(districtData?.filter((i) => i?.parentKey === state));
     };
 
     const handleDistrictChange = (district) => {
@@ -105,8 +104,8 @@ const AddEditFormMain = (props) => {
                             <Form.Item label="State Name" initialValue={formData?.stateCode} name="stateCode" rules={[validateRequiredSelectField('State Name')]}>
                                 <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps} onChange={handleStateChange}>
                                     {filteredStateData?.map((item) => (
-                                        <Option key={item?.code} value={item?.code}>
-                                            {item?.name}
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.value}
                                         </Option>
                                     ))}
                                 </Select>
@@ -118,8 +117,8 @@ const AddEditFormMain = (props) => {
                             <Form.Item label="District Name" initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District Name')]}>
                                 <Select placeholder={preparePlaceholderSelect('District Name')} {...selectProps} onChange={handleDistrictChange}>
                                     {filteredDistrictData?.map((item) => (
-                                        <Option key={item?.code} value={item?.code}>
-                                            {item?.name}
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.value}
                                         </Option>
                                     ))}
                                 </Select>

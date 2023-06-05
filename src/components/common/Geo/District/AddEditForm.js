@@ -90,7 +90,7 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" {...stateFieldValidation}>
                                 <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps} onChange={handleStateChange}>
                                     {stateData?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
+                                        <Option value={item?.key}>{item?.value}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>

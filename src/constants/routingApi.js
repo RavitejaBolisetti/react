@@ -23,6 +23,7 @@ export const BASE_URL_GEO_GRAPHY_DISTRICT = BASE_URL + 'geography/districts';
 export const BASE_URL_GEO_GRAPHY_TEHSIL = BASE_URL + 'geography/tehsils';
 export const BASE_URL_GEO_GRAPHY_CITY = BASE_URL + 'geography/cities';
 export const BASE_URL_GEO_GRAPHY_PINCODE = BASE_URL + 'geography/pincodes';
+export const BASE_URL_GEO_GRAPHY_PINCODE_REPORT = BASE_URL + 'geography/pincodes/report';
 export const BASE_URL_GEO_GRAPHY_PINCODE_DETAILS = BASE_URL_GEO_GRAPHY_PINCODE + '/details';
 
 export const BASE_URL_DEALER_MANPOWER = BASE_URL + 'dealer';

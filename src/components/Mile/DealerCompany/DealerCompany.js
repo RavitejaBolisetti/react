@@ -29,14 +29,13 @@ const mapStateToProps = (state) => {
                 DealerParentGroupSearch: { isLoaded: isParentGroupSearchDataLoaded = false, isLoading: isParentGroupSearchLoading = false, data: parentGroupSearchData = [] },
                 DealerParent: { isLoaded: isDealerParentDataLoaded = false, isLoading: isDealerParentDataLoading = false, data: dealerParentData = [] },
             },
-                PincodeDetails: { isLoaded: isPincodeDetailsLoaded = false, isLoading: isPincodeDetailsLoading = false, detailData: pincodeDetailsData = [] },
+            PincodeDetails: { isLoaded: isPincodeDetailsLoaded = false, isLoading: isPincodeDetailsLoading = false, detailData: pincodeDetailsData = [] },
         },
     } = state;
 
-    console.log(state,"GLOBAL")
+    console.log(state, 'GLOBAL');
 
     const moduleTitle = 'Dealer Company';
-    
 
     let returnValue = {
         userId,
@@ -55,7 +54,6 @@ const mapStateToProps = (state) => {
         isPincodeDetailsLoading,
         pincodeDetailsData,
 
-
         isLoading,
         moduleTitle,
     };
@@ -72,7 +70,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDealerParentList: dealerParentDataActions.fetchList,
             listDealerParentShowLoading: dealerParentDataActions.listShowLoading,
 
-
             fetchPincodeDetailsList: geoPincodeDetailsActions.fetchDetail,
             listPincodeDetailsShowLoading: geoPincodeDetailsActions.listShowLoading,
 
@@ -85,11 +82,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-
-
 export const DealerCompanyBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification ,detailData} = props;
-    const {parentGroupSearchData,fetchParentGroupSearchList,listParentGroupSearchShowLoading,isParentGroupSearchDataLoaded} = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, detailData } = props;
+    const { parentGroupSearchData, fetchParentGroupSearchList, listParentGroupSearchShowLoading, isParentGroupSearchDataLoaded } = props;
     const { pincodeDetailsData, fetchPincodeDetailsList, listPincodeDetailsShowLoading, isPincodeDetailsLoaded } = props;
     const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading } = props;
 
@@ -115,22 +110,24 @@ export const DealerCompanyBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-
-    console.log(parentGroupSearchData, 'DATATAAT')
+    console.log(parentGroupSearchData, 'DATATAAT');
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
-    {console.log(formData,'FORMDATA');}
-    {console.log(refershData,'refershData');}
+    {
+        console.log(formData, 'FORMDATA');
+    }
+    {
+        console.log(refershData, 'refershData');
+    }
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-
 
     useEffect(() => {
         if (userId && !isDataLoaded) {
@@ -212,7 +209,6 @@ export const DealerCompanyBase = (props) => {
     const onFinish = (values) => {
         const recordId = formData?.parentId || '';
         let data = { ...values, parentId: recordId };
-
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -314,7 +310,7 @@ export const DealerCompanyBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />
