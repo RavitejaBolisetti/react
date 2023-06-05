@@ -12,7 +12,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
 
         tblPrepareColumns({
             title: 'Product Hierarchy',
-            dataIndex: 'productCode',
+            dataIndex: 'productcode',
             width: '15%',
         }),
 
@@ -40,12 +40,12 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
         tblPrepareColumns({
             title: 'Effective From',
-            dataIndex: 'effectiveFrom',
+            dataIndex: 'effectivefrom',
             width: '15%',
         }),
         tblPrepareColumns({
             title: 'Effective To',
-            dataIndex: 'effectiveTo',
+            dataIndex: 'effectiveto',
             width: '15%',
         }),
         // tblPrepareColumns({

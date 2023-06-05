@@ -7,7 +7,7 @@ import { TfiReload } from 'react-icons/tfi';
 import { notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { convertDate } from 'utils/formatDateTime';
 import DataTable from 'utils/dataTable/DataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
