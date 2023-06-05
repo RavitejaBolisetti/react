@@ -222,7 +222,11 @@ export const ListCityMasterBase = (props) => {
         if (key === 'countryCode') {
             setFilterString(undefined);
         } else if (key === 'stateCode') {
-            setFilterString(undefined);
+            const { stateCode, districtCode, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'districtCode') {
+            const { districtCode, ...rest } = filterString;
+            setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
             advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
