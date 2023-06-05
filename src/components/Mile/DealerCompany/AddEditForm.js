@@ -49,7 +49,7 @@ const AddEditFormMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    console.log(dealerParentData,'dealerParentDatadealerParentDatadealerParentDatadealerParentDatadealerParentData')
+    console.log(dealerParentData, 'dealerParentDatadealerParentDatadealerParentDatadealerParentDatadealerParentData');
 
     let groupValue = null;
     let parentGroupId = null;
@@ -61,7 +61,7 @@ const AddEditFormMain = (props) => {
             form.setFieldValue('parentId', parentGroupId);
         } else {
             dealerParentData?.map((item) => {
-                if (item?.id === values) {
+                if (item?.code === values) {
                     groupValue = item?.name;
                     parentGroupId = item?.id;
                     form.setFieldValue('dealerParentName', groupValue);
@@ -86,13 +86,20 @@ const AddEditFormMain = (props) => {
         console.log('🚀 ~ file: AddEditForm.js:84 ~ handleOnSelect ~ selectedPinCode:', selectedPinCode);
         if (selectedPinCode) {
             form.setFieldsValue({
-                state: selectedPinCode?.stateName,
-                city: selectedPinCode?.cityName,
-                tehsil: selectedPinCode?.tehsilName,
-                district: selectedPinCode?.districtName,
-                locality: selectedPinCode?.localityName,
+                stateCode: selectedPinCode?.stateCode,
+                cityCode: selectedPinCode?.cityCode,
+                tehsilCode: selectedPinCode?.tehsilCode,
+                districtCode: selectedPinCode?.districtCode,
+                // locality: selectedPinCode?.localityName,
+
+                stateName: selectedPinCode?.stateName,
+                cityName: selectedPinCode?.cityName,
+                tehsilName: selectedPinCode?.tehsilName,
+                districtName: selectedPinCode?.districtName,
+                // locality: selectedPinCode?.localityName,
             });
         }
+
     };
     const handleOnSearch = (value) => {
         if (value.length > 5) {
@@ -147,7 +154,7 @@ const AddEditFormMain = (props) => {
                                     disabled={editMode}
                                 >
                                     {dealerParentData?.map((item) => {
-                                        return <Option value={item?.id}>{item?.code}</Option>;
+                                        return <Option value={item?.code}>{item?.code}</Option>;
                                     })}
                                 </Select>
                             </Form.Item>
@@ -167,7 +174,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.companyCode} label="Company Code" name="companyCode" rules={[validateRequiredInputField('Company Code'), [{ validator: searchValidator }]]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Company Code')} maxLength={6} disabled={editMode}/>
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Company Code')} maxLength={6} disabled={editMode} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
@@ -194,62 +201,81 @@ const AddEditFormMain = (props) => {
                     </Row>
 
                     <Row gutter={16}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        {/* <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={pincodeDetails[0]?.locality} label="Locality" name="locality">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Locality')} disabled />
                             </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={pincodeDetails[0]?.city} label="City" name="city">
+                        </Col> */}
+                        <Col xs={0} sm={0} md={0} lg={0} xl={0}>
+                            <Form.Item initialValue={pincodeDetails[0]?.cityCode} label="City" name="cityCode">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('City')} disabled />
                             </Form.Item>
                         </Col>
-                        
-                    </Row>
-                    <Row gutter={16}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={pincodeDetails[0]?.tehsil} label="Tehsil" name="tehsil">
+                        <Col xs={0} sm={0} md={0} lg={0} xl={0}>
+                            <Form.Item initialValue={pincodeDetails[0]?.tehsilCode} label="Tehsil" name="tehsilCode">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Tehsil')} disabled />
                             </Form.Item>
                         </Col>
+
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={pincodeDetails[0]?.district} label="District" name="district">
+                            <Form.Item initialValue={pincodeDetails[0]?.cityCode} label="City" name="cityName">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('City')} disabled />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={pincodeDetails[0]?.tehsilCode} label="Tehsil" name="tehsilName">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Tehsil')} disabled />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col xs={0} sm={0} md={0} lg={0} xl={0}>
+                            <Form.Item initialValue={pincodeDetails[0]?.districtCode} label="District" name="districtCode">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('District')} disabled />
                             </Form.Item>
                         </Col>
-                        
-                    </Row>
-                    <Row gutter={16}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={pincodeDetails[0]?.state} label="State" name="state">
+                        <Col xs={0} sm={0} md={0} lg={0} xl={0}>
+                            <Form.Item initialValue={pincodeDetails[0]?.stateCode} label="State" name="stateCode">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('State')} disabled />
                             </Form.Item>
                         </Col>
+
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={pincodeDetails[0]?.districtCode} label="District" name="districtName">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('District')} disabled />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={pincodeDetails[0]?.stateCode} label="State" name="stateName">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State')} disabled />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.companyTin} label="TIN" name="companyTin" rules={[validateRequiredInputField('TIN'), validateTin('TIN')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('TIN')} />
                             </Form.Item>
                         </Col>
-                    </Row>
-                    <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.companyTan} label="TAN" name="companyTan" rules={[validateRequiredInputField('TAN'), validateTan('TAN')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('TAN')} />
                             </Form.Item>
                         </Col>
+                    </Row>
+                    <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.companyPan} label="PAN" name="companyPan" rules={[validateRequiredInputField('PAN'), validatePanField('PAN')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('PAN')} />
                             </Form.Item>
                         </Col>
-                    </Row>
-                    <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
                         </Col>
                     </Row>
+                    {/* <Row gutter={16}></Row> */}
                 </>
             )}
 
