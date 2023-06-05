@@ -14,7 +14,7 @@ import { escapeRegExp } from 'utils/escapeRegExp';
 import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
 import { tncDocumentTypeDataActions } from 'store/actions/data/termsConditions/tncDocumentType';
 import { tncLanguage } from 'store/actions/data/termsConditions/tncLanguage';
-import { tncFetchDealerListActions } from 'store/actions/data/termsConditions/tncFetchDealerListActions';
+// import { tncFetchDealerListActions } from 'store/actions/data/termsConditions/tncFetchDealerListActions';
 import { tncDealerSaveActions } from 'store/actions/data/termsConditions/tncDealerSave';
 
 import { AddEditForm } from './AddEditForm';
@@ -40,7 +40,7 @@ const mapStateToProps = (state) => {
                 ProductHierarchyData: { isLoaded: isDataLoaded = false, data: productHierarchyList, isLoading, isLoadingOnSave, isFormDataLoaded },
                 DocumentTypeData: { isLoaded: isDocumentTypeDataLoaded = false, data: documentTypeList },
                 LanguageData: { isLoaded: islanguageDataLoaded = false, data: languageList },
-                FetchTermsConditionsList: { isLoaded: isTermConditionDataLoaded = false, data: termsConditionsList },
+                // FetchTermsConditionsList: { isLoaded: isTermConditionDataLoaded = false, data: termsConditionsList },
                 DealerTermsConditions: { isLoaded: DealerTermsConditionsDataLoaded = false, data: DealerTermsConditionsData },
             },
         },
@@ -66,8 +66,8 @@ const mapStateToProps = (state) => {
         isLoadingOnSave,
         isFormDataLoaded,
         moduleTitle,
-        isTermConditionDataLoaded,
-        termsConditionsList,
+        // isTermConditionDataLoaded,
+        // termsConditionsList,
         DealerTermsConditionsData,
         DealerTermsConditionsDataLoaded,
     };
@@ -78,7 +78,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: tncFetchDealerListActions.fetchList,
+            // fetchList: tncFetchDealerListActions.fetchList,
             fetchProductList: tncProductHierarchyDataActions.fetchList,
             resetData: tncProductHierarchyDataActions.reset,
             listShowLoading: tncProductHierarchyDataActions.listShowLoading,
@@ -95,7 +95,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const initialTableData = [];
-const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTermsConditionsDataLoaded, DealerTermsConditionsData, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, isTermConditionDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, listShowLoading, productHierarchyList, documentTypeList, languageList, fetchList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTermsConditionsDataLoaded, DealerTermsConditionsData, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, listShowLoading, productHierarchyList, documentTypeList, languageList, fetchList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -173,12 +173,12 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [islanguageDataLoaded, userId]);
 
-    useEffect(() => {
-        if (!isTermConditionDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isTermConditionDataLoaded, userId]);
+    // useEffect(() => {
+    //     if (!isTermConditionDataLoaded && userId) {
+    //         fetchList({ setIsLoading: listShowLoading, userId });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isTermConditionDataLoaded, userId]);
 
     // useEffect(() => {
     //     setSearchdata(termConditionData);
@@ -234,7 +234,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
 
     const onFinish = (values, e) => {
         const recordId = formData?.id || '';
-        const newVersion = Number(values?.version) + 0.1;
+        const newVersion = values.version ? Number(values?.version) + 0.1 : 1.0;
         console.log('typeof', typeof termsAndCondition);
         const termConsitionText = termsAndCondition.replace(/[&\/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
         const data = { ...values, productName: productName, documentTypeName: documentName, language: languageName, version: String(newVersion), id: recordId, termsConditions: termConsitionText };
@@ -376,13 +376,11 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, DealerTe
         advanceFilterForm.resetFields();
     };
 
-    const handleFilterChange =
-        (name, type = 'value') =>
-        (value) => {
-            if (name === 'countryCode') {
-                advanceFilterForm.setFieldsValue({ stateCode: undefined });
-            }
-        };
+    const handleFilterChange = (name, type = 'value') => (value) => {
+        if (name === 'countryCode') {
+            advanceFilterForm.setFieldsValue({ stateCode: undefined });
+        }
+    };
 
     const handleResetFilter = () => {
         setFilterString();

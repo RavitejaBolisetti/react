@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input, Form, Col, Row, Button, Select, DatePicker } from 'antd';
 
 import { validateRequiredInputField } from 'utils/validation';
@@ -10,30 +10,25 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 
-// import { CKEditor } from '@ckeditor/ckeditor5-react';
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
-// import { CKEditor } from 'ckeditor4-react';
-
-import { CustomEditor } from 'components/common/CustomEditor';
-
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { editMode, isViewModeVisible } = undefined, onFinish, onFinishFailed, footerEdit, setIsFormVisible, onSaveShowLoading } = props;
-
-    const { buttonData, setButtonData, handleButtonClick } = props;
+    const { CustomEditor } = props;
+    const { buttonData, setButtonData, handleButtonClick, formActionType, effectiveFrom, effectiveTo, seteffectiveFrom, seteffectiveTo } = props;
     const { productName, setProductName } = props;
     const { documentName, setDocumentName } = props;
     const { languageName, setLanguageName } = props;
+    const { termsAndCondition, setTermsAndCondition } = props;
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState();
 
-    const [termsAndCondition, setTermsAndCondition] = useState(undefined);
-    const onChange = (e) => {
+    const onChangeCkEditor = (e) => {
         setTermsAndCondition(e.editor.getData());
     };
-
+    useEffect(() => {
+        form.resetFields();
+    }, [effectiveFrom, effectiveTo]);
     const { TextArea } = Input;
 
     const handleProductHierarchySelect = (label, value) => {
@@ -68,27 +63,23 @@ const AddEditFormMain = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
+        saveButtonName: 'Add T&C',
     };
-
-    const onClose = () => {
-        setIsFormVisible(false);
-        form.resetFields();
-    };
-
+    const dateFormat = 'YYYY/MM/DD';
     return (
-        <Form autoComplete="off" form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} onFieldsChange={handleFormFieldChange}>
             {!isViewModeVisible ? (
                 <>
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={'Initial'} label="Document Category" name="documentCategory">
-                                <Input maxLength={10} placeholder={preparePlaceholderText('Document Category')} />
+                            <Form.Item initialValue={formActionType?.editMode || formActionType?.viewMode ? 'Revised' : 'Initial'} label="Document Category" name="documentCategory">
+                                <Input disabled={true} maxLength={10} placeholder={preparePlaceholderText('Document Category')} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={formData?.productCode} label="Product Hierarchy" name="productCode">
-                                <Select onSelect={handleProductHierarchySelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
+                                <Select disabled={formActionType?.viewMode} onSelect={handleProductHierarchySelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {productHierarchyList?.map((item) => (
                                         <Option value={item.prodctCode}>{item.prodctLongName}</Option>
                                     ))}
@@ -99,7 +90,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={formData?.documentTypeCode} label="Document Type" name="documentTypeCode">
-                                <Select onSelect={handleDocumentTypeSelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
+                                <Select disabled={formActionType?.viewMode} onSelect={handleDocumentTypeSelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {documentTypeList?.map((item) => (
                                         <Option value={item.documentCode}>{item.documentCode}</Option>
                                     ))}
@@ -109,7 +100,7 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={formData?.languageCode} label="Language" name="languageCode">
-                                <Select onSelect={handleLanguageSelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
+                                <Select disabled={formActionType?.viewMode} onSelect={handleLanguageSelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {languageList?.map((item) => (
                                         <Option value={item.value}>{item.value}</Option>
                                     ))}
@@ -117,29 +108,39 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
+                    {(formActionType?.viewMode || formActionType?.editMode) && (
+                        <Row gutter={20}>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                <Form.Item initialValue={formData?.version} label="Version" name="version">
+                                    <Input disabled={true} placeholder={preparePlaceholderText('Version')} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    )}
+
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item initialValue={formData?.termConditionDescription} label="Terms & Conditions" name="termsConditions">
-                                <CustomEditor onChange={onChange} />
+                            <Form.Item disabled={formActionType?.viewMode} initialValue={formData?.termConditionDescription} label="Terms & Conditions" name="termsConditions">
+                                <CustomEditor onChange={onChangeCkEditor} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             {termsAndCondition}
                             <Form.Item name="description" initialValue={termsAndCondition}>
-                                <Input value />
+                                <Input disabled={formActionType?.viewMode} value />
                             </Form.Item>
                         </Col>
                     </Row>
 
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item label="Effective From" name="effectiveFrom" rules={[validateRequiredInputField('date')]}>
-                                <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} selectsStart startDate={startDate} endDate={endDate} maxDate={endDate} />
+                            <Form.Item initialValue={effectiveFrom} label="Effective From" name="effectiveFrom" rules={[validateRequiredInputField('date')]}>
+                                <DatePicker format={dateFormat} disabled={formActionType?.viewMode} style={{ width: '100%' }} selected={startDate} onChange={(date) => setStartDate(date)} selectsStart startDate={startDate} endDate={endDate} maxDate={endDate} />
                             </Form.Item>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item label="Effective To" name="effectiveTo">
-                                <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} />
+                            <Form.Item initialValue={effectiveTo} label="Effective To" name="effectiveTo">
+                                <DatePicker format={dateFormat} disabled={formActionType?.viewMode} style={{ width: '100%' }} selected={endDate} onChange={(date) => setEndDate(date)} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -147,7 +148,7 @@ const AddEditFormMain = (props) => {
             ) : (
                 <ViewTermConditionList {...viewProps} />
             )}
-            <Row gutter={20} className={style.formFooter}>
+            {/* <Row gutter={20} className={style.formFooter}>
                 <Col xs={24} sm={6} md={6} lg={6} xl={6} className={style.footerBtnLeft}>
                     <Button danger onClick={onClose}>
                         {!footerEdit ? 'Cancel' : 'Close'}
@@ -160,8 +161,8 @@ const AddEditFormMain = (props) => {
                         </Button>
                     }
                 </Col>
-            </Row>
-            {/* <DrawerFormButton {...buttonProps} /> */}
+            </Row> */}
+            <DrawerFormButton {...buttonProps} />
         </Form>
     );
 };
