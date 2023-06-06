@@ -107,7 +107,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     useEffect(() => {
         if (userId) {
             if (!isDataLoaded) {
-                hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '',onSuccessAction });
+                hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '', onSuccessAction });
                 forceUpdate(generateRandomNumber());
             }
             if (detailData?.hierarchyAttribute) {
@@ -221,7 +221,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
 
         setTimeout(() => {
             setShowDataLoading(true);
-            hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy,onSuccessAction });
+            hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy, onSuccessAction });
         }, 2000);
 
         const onError = (message) => {
