@@ -38,9 +38,6 @@ const mapStateToProps = (state) => {
         dealerParentData,
         isPinCodeDataLoaded,
         pincodeData,
-        // isPincodeDetailsLoaded,
-        // isPincodeDetailsLoading,
-        // pincodeData,
         isLoading,
         moduleTitle,
     };
@@ -102,9 +99,6 @@ export const DealerCompanyBase = (props) => {
         if (userId && !isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
         }
-        // if (userId && !isPincodeDetailsLoaded) {
-        //     fetchPincodeDetail({ setIsLoading: listPincodeDetailsShowLoading, userId, onErrorAction });
-        // }
         if (userId && !isDealerParentDataLoaded) {
             fetchDealerParentList({ setIsLoading: listDealerParentShowLoading, userId });
         }

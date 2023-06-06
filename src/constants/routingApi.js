@@ -72,9 +72,7 @@ export const BASE_URL_DEALER_HIERARCHY = BASE_URL + 'dealerhierarchy';
 export const BASE_URL_DEALER_HIERARCHY_SAVE = BASE_URL + 'dealerhierarchy';
 
 export const BASE_URL_DEALER_PARENT = BASE_URL + 'dealer/parents';
-export const BASE_URL_DEALER_PARENT_SAVE = BASE_URL + 'dealer/parents';
 export const BASE_URL_DEALER_COMAPANY = BASE_URL + 'dealer/company';
-export const BASE_URL_DEALER_COMAPANY_SAVE = BASE_URL + 'dealer/company';
 export const BASE_URL_DEALER_PARENT_GROUP_SEARCH = BASE_URL + 'dealer/search/parentgroups';
 export const BASE_URL_DEALER_PARENT_TITLE = BASE_URL + 'configurableparametertypes';
 

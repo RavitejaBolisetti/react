@@ -56,16 +56,11 @@ const AddEditFormMain = (props) => {
     };
 
     const onErrorAction = () => {};
-    const onSuccessAction = () => {
-        // form.setFieldsValue({
-        //     stateName: pincodeDetailsData?.state[0].stateName,
-        //     name: pincodeDetailsData?.city[0].name,
-        //     tehsilName: pincodeDetailsData?.tehsil[0].tehsilName,
-        //     districtName: pincodeDetailsData?.district[0].name,
-        // });
-    };
+    const onSuccessAction = () => {};
 
     const handleOnSelect = (key, option) => {
+        //console.log(key,'KEY')
+        console.log(option,'OPTION')
         const selectedPinCode = pincodeData?.find((i) => i.id === option?.key);
         if (selectedPinCode) {
             form.setFieldsValue({
@@ -179,7 +174,7 @@ const AddEditFormMain = (props) => {
                                 validateTrigger={['onFinish']}
                             >
                                 <AutoComplete className={styles.inputBox} options={options} onSelect={handleOnSelect} onSearch={handleOnSearch}>
-                                    <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" />
+                                    <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" maxLength={6} />
                                 </AutoComplete>
                             </Form.Item>
                         </Col>
