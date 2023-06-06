@@ -61,6 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeFetchDetailList: hierarchyAttributeMasterDataActions.fetchDetail,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
+            resetData: hierarchyAttributeMasterDataActions.reset,
 
             showGlobalNotification,
         },
@@ -68,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData, showGlobalNotification, isDataLoading, isLoadingOnSave }) => {
+export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataLoaded, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData, showGlobalNotification, isDataLoading, isLoadingOnSave }) => {
     const [form] = Form.useForm();
     const [rowdata, setRowsData] = useState([]);
     const [editRow, setEditRow] = useState({});
@@ -103,11 +104,16 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         setShowDataLoading(false);
         RefershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
+    const onErrorAction = (message) => {
+        resetData();
+        showGlobalNotification({ message });
+        setShowDataLoading(false);
+    };
     const title = 'Hierarchy Attribute';
     useEffect(() => {
         if (userId) {
             if (!isDataLoaded) {
-                hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '', onSuccessAction });
+                hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '', onSuccessAction, onErrorAction });
                 forceUpdate(generateRandomNumber());
             }
             if (detailData?.hierarchyAttribute) {
@@ -144,7 +150,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         if (!selectedHierarchy || !RefershData) return;
         setRefershData((prev) => !prev);
         setShowDataLoading(true);
-        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy, onSuccessAction });
+        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy, onSuccessAction, onErrorAction });
 
         if (filterString) {
             const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
@@ -221,7 +227,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
 
         setTimeout(() => {
             setShowDataLoading(true);
-            hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy, onSuccessAction });
+            hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy, onSuccessAction, onErrorAction });
         }, 2000);
 
         const onError = (message) => {
@@ -237,7 +243,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
 
     const handleChange = (attributeType) => {
         setShowDataLoading(true);
-        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: attributeType, onSuccessAction });
+        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: attributeType, onSuccessAction, onErrorAction });
         setSelectedHierarchy(attributeType);
     };
 
@@ -254,9 +260,9 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
             ) : !selectedHierarchy ? (
                 <span className={styles.descriptionText}>Please select hierarchy type to view records.</span>
             ) : (
-                <span className={styles.descriptionText}> No records found.</span>
+                ''
             ),
-        showAddButton: false,
+        showAddButton: selectedHierarchy ? true : false,
     };
 
     const formProps = {
@@ -311,12 +317,12 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
                                                 </Select>
                                             </Col>
                                             <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                                {detailData?.hierarchyAttributeType && <Search placeholder="Search" className={styles.headerSearchField} allowClear onChange={onChangeHandle} onSearch={onSearchHandle} />}
+                                                {searchData?.length > 0 && <Search placeholder="Search" className={styles.headerSearchField} allowClear onChange={onChangeHandle} onSearch={onSearchHandle} />}
                                             </Col>
                                         </Row>
                                     </Col>
 
-                                    {detailData?.hierarchyAttributeType && (
+                                    {searchData?.length > 0 && (
                                         <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                             <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
@@ -331,24 +337,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
                 </Col>
             </Row>
 
-            <>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        {selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
-                            <Row>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                        Add Attribute
-                                    </Button>
-                                </Col>
-                            </Row>
-                        ) : (
-                            ''
-                        )}
-                    </Col>
-                </Row>
-            </>
-            {console.log('showDataLoading', showDataLoading)}
             <div className={styles.tableProduct}>
                 <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd} addTitle={title} />
             </div>
