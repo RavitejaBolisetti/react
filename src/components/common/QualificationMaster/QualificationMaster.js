@@ -15,7 +15,6 @@ import { qualificationDataActions } from 'store/actions/data/qualificationMaster
 import { AddEditForm } from './AddEditForm';
 import { tableColumn } from './tableColumn';
 
-
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
@@ -28,6 +27,8 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
+
+    console.log('data', data);
 
     const moduleTitle = 'Qualification Master';
 
@@ -91,7 +92,6 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
     useEffect(() => {
         if (userId && !isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded]);
@@ -99,7 +99,6 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
     useEffect(() => {
         if (userId && refershData) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
