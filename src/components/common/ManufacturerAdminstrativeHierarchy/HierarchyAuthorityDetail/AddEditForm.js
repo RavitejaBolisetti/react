@@ -112,12 +112,16 @@ const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, hand
         <Form autoComplete="off" form={form} id="myForm" onFinish={onFinish} layout="vertical" onFieldsChange={handleFormValueChange} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type'), { validator: (rule, value) => duplicateValidator(value, 'authorityTypeCode', documentTypesList, record?.authorityTypeCode) }]}>
+                    <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type'),
+                    //  { validator: (rule, value) => duplicateValidator(value, 'authorityTypeCode', documentTypesList, record?.authorityTypeCode) }
+                     ]}>
                         <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" options={apiData} disabled={isBtnDisabled} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Token" name={'authorityEmployeeTokenNo'} rules={[validateRequiredInputField('Token Required'), validationFieldLetterAndNumber('Token Required'), { validator: (rule, value) => duplicateValidator(value, 'authorityEmployeeTokenNo', documentTypesList, record?.authorityEmployeeTokenNo) }]}>
+                    <Form.Item label="Token" name={'authorityEmployeeTokenNo'} rules={[validateRequiredInputField('Token Required'), validationFieldLetterAndNumber('Token Required'),
+                    //  { validator: (rule, value) => duplicateValidator(value, 'authorityEmployeeTokenNo', documentTypesList, record?.authorityEmployeeTokenNo) }
+                     ]}>
                         <Search disabled={isBtnDisabled} allowClear onChange={onChangeHandle(recordId)} onSearch={onSearchHandle(recordId)} placeholder={preparePlaceholderText('Token')} />
                     </Form.Item>
                 </Col>
@@ -128,9 +132,6 @@ const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, hand
             {!viewMode && !(isUpdating && isMainForm) && (tokenValidationData?.employeeName || (isMainForm && tokenNumber?.employeeName && !tokenValidationData?.employeeName)) && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        {/* <Form.Item hidden name="employeeName" initialValue={ tokenNumber?.employeeName }>
-                            <Input />
-                        </Form.Item> */}
                         <Text type="primary">Employee Name : {!isMainForm ? tokenValidationData?.employeeName : tokenNumber?.employeeName} </Text>
                     </Col>
 

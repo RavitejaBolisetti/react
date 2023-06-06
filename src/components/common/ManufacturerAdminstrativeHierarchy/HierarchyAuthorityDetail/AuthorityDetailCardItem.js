@@ -90,8 +90,11 @@ console.log('documentTypesList',documentTypesList)
             .then((data) => {
                 setDocumentTypesList((prev) => {
                     const updatedData = [...prev];
-                    const index = updatedData.findIndex((el) => el?.authorityEmployeeTokenNo === record?.authorityEmployeeTokenNo);
+                    console.log('updatedData',updatedData)
+                    const index = updatedData?.findIndex((el) => el?.authorityEmployeeTokenNo === record?.authorityEmployeeTokenNo);
+                    console.log('index',index)
                     updatedData.splice(index, 1, { ...data, employeeName: tokenNumber?.employeeName|| tokenValidationData?.employeeName });
+                    console.log('updatedData',updatedData)
                     return updatedData;
                 });
             })
