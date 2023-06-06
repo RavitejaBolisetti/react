@@ -7,24 +7,13 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 
-const { Search, TextArea } = Input;
+const { TextArea } = Input;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, listShowLoading, userId, fetchPincodeDetailsList, dealerParentData } = props;
     const { buttonData, setButtonData, handleButtonClick, pincodeData, fetchPincodeDetail } = props;
 
-    let pincodeObj = [
-        {
-            city: null,
-            tehsil: null,
-            district: null,
-            state: null,
-        },
-    ];
-
-    // const [pincodeDetails, setPincodeDetails] = useState({ ...pincodeObj });
-    // const [pincodeShow, setPincodeShow] = useState(false);
     const [options, setOptions] = useState(false);
 
     useEffect(() => {
@@ -39,8 +28,6 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pincodeData]);
 
-    // console.log('pincodeData', pincodeData, options);
-
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -48,8 +35,6 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
-
-   // console.log(dealerParentData,'dealerParentDatadealerParentDatadealerParentDatadealerParentDatadealerParentData')
 
     let groupValue = null;
     let parentGroupId = null;
@@ -82,7 +67,6 @@ const AddEditFormMain = (props) => {
 
     const handleOnSelect = (key, option) => {
         const selectedPinCode = pincodeData?.find((i) => i.id === option?.key);
-        // console.log('🚀 ~ file: AddEditForm.js:84 ~ handleOnSelect ~ selectedPinCode:', selectedPinCode);
         if (selectedPinCode) {
             form.setFieldsValue({
                 stateCode: selectedPinCode?.stateCode,
