@@ -260,7 +260,10 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
             ) : !selectedHierarchy ? (
                 <span className={styles.descriptionText}>Please select hierarchy type to view records.</span>
             ) : (
-                ''
+                <span className={styles.descriptionText}>
+                    No records found. Please add new parameter <br />
+                    using below button
+                </span>
             ),
         showAddButton: selectedHierarchy ? true : false,
     };
