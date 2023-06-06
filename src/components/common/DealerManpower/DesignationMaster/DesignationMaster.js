@@ -355,8 +355,7 @@ export const DesignationMasterBase = (props) => {
 
     const removeFilter = (key) => {
         if (key === 'code') {
-            const { code, departmentCode, roleCode, ...rest } = filterString;
-            setFilterString({ ...rest });
+           setFilterString(undefined)
         } else if (key === 'departmentCode') {
             const { departmentCode, roleCode, ...rest } = filterString;
             setFilterString({ ...rest });
