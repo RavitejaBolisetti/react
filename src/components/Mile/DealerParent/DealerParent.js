@@ -23,6 +23,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+    console.log(state,'statestatestate')
+
     const moduleTitle = 'Group Name';
 
     let returnValue = {
