@@ -320,7 +320,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
                                         <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                             <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Attribute
+                                                Add
                                             </Button>
                                         </Col>
                                     )}
@@ -331,24 +331,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
                 </Col>
             </Row>
 
-            <>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        {selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
-                            <Row>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                        Add Attribute
-                                    </Button>
-                                </Col>
-                            </Row>
-                        ) : (
-                            ''
-                        )}
-                    </Col>
-                </Row>
-            </>
-            {console.log('showDataLoading', showDataLoading)}
             <div className={styles.tableProduct}>
                 <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd} addTitle={title} />
             </div>
