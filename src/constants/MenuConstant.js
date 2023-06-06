@@ -85,7 +85,19 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'ADMN',
     },
+    [getMenyKey('COMN-08.05')]: {
+        key: 'COMN-08.05',
+        link: routing.ROUTING_MILE_DEALER_HIERARCHY_DEALER_PARENT,
+        icon: undefined,
+        parentMenuId: 'COMN-08',
+    },
 
+    [getMenyKey('COMN-08.06')]: {
+        key: 'COMN-08.06',
+        link: routing.ROUTING_MILE_DEALER_HIERARCHY_DEALER_COMPANY,
+        icon: undefined,
+        parentMenuId: 'COMN-08',
+    },
     // [getMenyKey('COMN-07.01')]: {
     //     key: 'COMN-07.01',
     //     link: routing.ROUTING_COMMON_GEO,

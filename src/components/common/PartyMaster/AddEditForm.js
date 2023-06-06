@@ -64,6 +64,7 @@ const AddEditFormMain = (props) => {
 
     useEffect(() => {
         setOptions();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible]);
 
     const handleFormValueChange = () => {

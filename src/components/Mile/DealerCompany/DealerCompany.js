@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Dealer Company';
+    const moduleTitle = 'Dealer Parent Company';
     let returnValue = {
         userId,
         isDataLoaded,
@@ -120,7 +120,7 @@ export const DealerCompanyBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyCode) || filterFunction(keyword)(item?.companyName) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyName) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -223,7 +223,7 @@ export const DealerCompanyBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Company'),
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Parent Company'),
         tableData: searchData,
         buttonData,
         setButtonData,
@@ -244,7 +244,7 @@ export const DealerCompanyBase = (props) => {
         setPage,
     };
 
-    const title = 'Company Code';
+    const title = 'Company Name';
 
     const advanceFilterResultProps = {
         advanceFilter: false,
