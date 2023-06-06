@@ -23,9 +23,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log(state, 'GLOBAL');
-
-    const moduleTitle = 'Dealer Parent';
+    const moduleTitle = 'Group Name';
 
     let returnValue = {
         userId,
@@ -161,14 +159,7 @@ export const DealerParentBase = (props) => {
     };
 
     const onFinish = (values) => {
-        // let validation = data?.some((item) => item.code === values.code);
-
-        // if (validation) {
-        //     showGlobalNotification({ notificationType: 'error', title: 'DUPLICATE', message: 'Duplicate Parent Group Code Found', placement: 'bottomRight' });
-        // }
-        // else {
-
-        let data = { ...values, title: values.title.key };
+        let data = { ...values };
 
         const onSuccess = (res) => {
             form.resetFields();
