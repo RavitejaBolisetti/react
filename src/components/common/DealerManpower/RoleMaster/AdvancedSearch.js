@@ -31,7 +31,7 @@ export const AdvancedSearchFrom = (props) => {
     const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
     const handleDivisionChange = (division) => {
         handleFilterChange('divisionCode');
-        setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === division));
+        setFilteredDepartmentData(departmentData?.filter((i) => i?.parentKey === division));
     };
 
     const onFinishFailed = () => {
@@ -51,7 +51,9 @@ export const AdvancedSearchFrom = (props) => {
                     <Form.Item initialValue={filterString?.divisionCode} label="Division Name" name="divisionCode" rules={[validateRequiredSelectField('Division')]}>
                         <Select className={styles.headerSelectField} showSearch loading={!isDivisionDataLoaded} placeholder="Select" allowClear onChange={handleDivisionChange}>
                             {divisionData?.map((item) => (
-                                <Option value={item?.code}>{item?.divisionName}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>
@@ -61,7 +63,9 @@ export const AdvancedSearchFrom = (props) => {
                     <Form.Item initialValue={filterString?.departmentCode} label="Department Name" name="departmentCode">
                         <Select className={styles.headerSelectField} {...selectProps} showSearch loading={!isDepartmentDataLoaded} placeholder="Select" allowClear onChange={handleFilterChange('departmentCode')}>
                             {filteredDepartmentData?.map((item) => (
-                                <Option value={item?.departmentCode}>{item?.departmentName}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>
@@ -71,7 +75,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={filterString?.keyword} label="Role Name" name="keyword" rules={[{ validator: searchValidator }]}>
-                        <Input style={{ width: '100%' }} className={styles.inputBox} maxLength={50} placeholder="Search" />
+                        <Input maxLength={50} placeholder="Search" allowClear />
                     </Form.Item>
                 </Col>
             </Row>

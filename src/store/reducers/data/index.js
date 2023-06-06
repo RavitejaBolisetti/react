@@ -18,6 +18,7 @@ import { DealerManpower } from './dealerManpower';
 import { PartyMaster } from './partyMaster';
 import { DealerHierarchy } from './dealer';
 import { PincodeDetails } from './pincodeDetails';
+import { LessorCompanyMaster } from './lessorCompanyMaster';
 
 export const data = combineReducers({
     Menu,
@@ -38,5 +39,6 @@ export const data = combineReducers({
     DealerManpower,
     PartyMaster,
     DealerHierarchy,
-    PincodeDetails
+    PincodeDetails,
+    LessorCompanyMaster,
 });

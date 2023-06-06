@@ -8,6 +8,7 @@ export const CONFIG_PARAM_EDIT_DATA_LOADED = 'CONFIG_PARAM_EDIT_DATA_LOADED';
 export const CONFIG_PARAM_EDIT_SHOW_LOADING = 'CONFIG_PARAM_EDIT_SHOW_LOADING';
 export const CONFIG_PARAM_DATA_LOADED = 'CONFIG_PARAM_DATA_LOADED';
 export const CONFIG_PARAM_EDIT_DATA_SHOW_LOADING = 'CONFIG_PARAM_EDIT_DATA_SHOW_LOADING';
+export const CONFIG_PARAM_EDIT_SHOW_LOADING_ON_SAVE = 'CONFIG_PARAM_EDIT_SHOW_LOADING_ON_SAVE'
 
 const receiveParametersData = (data, parameterType) => ({
     type: CONFIG_PARAM_DATA_LOADED,
@@ -28,8 +29,13 @@ const baseURLType = BASE_URL_CONFIG_PARAM_EDIT_TYPE;
 // const baseURLType = BASE_URL_CONFIG_PARAM_EDIT;
 const baseURLPath = BASE_URL_CONFIG_PARAM_EDIT;
 
+configParamEditActions.saveFormShowLoading = (isLoading) => ({
+    type: CONFIG_PARAM_EDIT_SHOW_LOADING_ON_SAVE,
+    isLoading,
+});
+
 configParamEditActions.listShowLoading = (isLoading) => ({
-    type: CONFIG_PARAM_EDIT_DATA_SHOW_LOADING,
+    type: CONFIG_PARAM_EDIT_SHOW_LOADING_ON_SAVE,
     isLoading,
 });
 

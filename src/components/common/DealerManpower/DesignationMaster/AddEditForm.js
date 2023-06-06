@@ -15,8 +15,8 @@ const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
 
     const { buttonData, setButtonData, handleButtonClick, divisionData, departmentData, roleData } = props;
-    const [filteredDepartmentData, setFilteredDepartmentData] = useState(departmentData?.filter((i) => i?.divisionCode === formData?.divisionCode));
-    const [filteredRoleData, setFilteredRoletData] = useState(roleData?.filter((i) => i?.departmentCode === formData?.departmentCode));
+    const [filteredDepartmentData, setFilteredDepartmentData] = useState(departmentData?.filter((i) => i?.parentKey === formData?.divisionCode));
+    const [filteredRoleData, setFilteredRoletData] = useState(roleData?.filter((i) => i?.parentKey === formData?.departmentCode));
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -30,11 +30,11 @@ const AddEditFormMain = (props) => {
         form.setFieldValue('departmentCode', undefined);
         form.setFieldValue('roleCode', undefined);
         setFilteredRoletData(undefined);
-        setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === division));
+        setFilteredDepartmentData(departmentData?.filter((i) => i?.parentKey === division));
     };
     const handleDepartmentChange = (department) => {
         form.setFieldValue('roleCode', undefined);
-        setFilteredRoletData(roleData?.filter((i) => i?.departmentCode === department));
+        setFilteredRoletData(roleData?.filter((i) => i?.parentKey === department));
     };
 
     const viewProps = {
@@ -68,7 +68,9 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.divisionCode} label="Division Name" name="divisionCode" rules={[validateRequiredSelectField('Division Name')]}>
                                 <Select {...selectProps} placeholder={preparePlaceholderSelect('Division Name')} allowClear onChange={handleDivisionChange}>
                                     {divisionData?.map((item) => (
-                                        <Option value={item?.code}>{item?.divisionName}</Option>
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.value}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>
@@ -77,7 +79,9 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.departmentCode} label="Department Name" name="departmentCode" rules={[validateRequiredSelectField('Department Name')]}>
                                 <Select {...selectProps} placeholder={preparePlaceholderSelect('Department Name')} allowClear onChange={handleDepartmentChange}>
                                     {filteredDepartmentData?.map((item) => (
-                                        <Option value={item?.departmentCode}>{item?.departmentName}</Option>
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.value}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>
@@ -88,7 +92,9 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.roleCode} label="Role Name" name="roleCode" rules={[validateRequiredSelectField('Role Name')]}>
                                 <Select {...selectProps} placeholder={preparePlaceholderSelect('Role Description')} allowClear>
                                     {filteredRoleData?.map((item) => (
-                                        <Option value={item?.roleCode}>{item?.roleDescription}</Option>
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.value}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>
