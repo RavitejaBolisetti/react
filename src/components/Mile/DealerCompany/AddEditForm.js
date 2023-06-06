@@ -23,23 +23,23 @@ const AddEditFormMain = (props) => {
         },
     ];
 
-    const [pincodeDetails, setPincodeDetails] = useState({ ...pincodeObj });
-    const [pincodeShow, setPincodeShow] = useState(false);
+    // const [pincodeDetails, setPincodeDetails] = useState({ ...pincodeObj });
+    // const [pincodeShow, setPincodeShow] = useState(false);
     const [options, setOptions] = useState(false);
 
     useEffect(() => {
         const pinOption = pincodeData?.map((item) => ({
-            label: item?.pinCode + ' - ' + item?.localityName + ' -',
+            label: item?.pinCode + ' - ' + item?.cityName + ' - ' + item?.tehsilName + ' - ' + item?.districtName + ' - ' + item?.stateName,
             value: item?.pinCode,
             key: item?.id,
         }));
-        console.log(pinOption, 'pinOption');
+        // console.log(pinOption, 'pinOption');
         setOptions(pinOption);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pincodeData]);
 
-    console.log('pincodeData', pincodeData, options);
+    // console.log('pincodeData', pincodeData, options);
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -49,12 +49,9 @@ const AddEditFormMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    console.log(dealerParentData, 'dealerParentDatadealerParentDatadealerParentDatadealerParentDatadealerParentData');
-
     let groupValue = null;
     let parentGroupId = null;
     const parentName = (values) => {
-        console.log(values, 'values');
         if (values === undefined) {
             groupValue = null;
             form.setFieldValue('dealerParentName', groupValue);
@@ -83,7 +80,7 @@ const AddEditFormMain = (props) => {
 
     const handleOnSelect = (key, option) => {
         const selectedPinCode = pincodeData?.find((i) => i.id === option?.key);
-        console.log('🚀 ~ file: AddEditForm.js:84 ~ handleOnSelect ~ selectedPinCode:', selectedPinCode);
+        // console.log('🚀 ~ file: AddEditForm.js:84 ~ handleOnSelect ~ selectedPinCode:', selectedPinCode);
         if (selectedPinCode) {
             form.setFieldsValue({
                 stateCode: selectedPinCode?.stateCode,
@@ -102,6 +99,7 @@ const AddEditFormMain = (props) => {
 
     };
     const handleOnSearch = (value) => {
+        console.log(value,'valueConsole');
         if (value.length > 5) {
             setOptions();
             const extraParams = [
@@ -112,7 +110,6 @@ const AddEditFormMain = (props) => {
             ];
             fetchPincodeDetail({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
-        
     };
 
     const viewProps = {
@@ -165,7 +162,6 @@ const AddEditFormMain = (props) => {
                                 <Input disabled className={styles.inputBox} placeholder={preparePlaceholderText('Group Name')} />
                             </Form.Item>
                         </Col>
-                        {console.log(parentGroupId, 'parentGroupId')}
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
                             <Form.Item label="Parent Id" name="parentId" initialValue={formData?.parentId}>
                                 <Input />
@@ -194,7 +190,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]} 
-                                validateTrigger={['onSearch']}
+                                validateTrigger={['onFinish']}
                             >
                                 <AutoComplete className={styles.inputBox} options={options} onSelect={handleOnSelect} onSearch={handleOnSearch}>
                                     <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" />
