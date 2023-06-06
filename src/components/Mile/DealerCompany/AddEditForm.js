@@ -219,12 +219,12 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={pincodeDetails[0]?.cityCode} label="City" name="cityName">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('City')} disabled />
+                                <Input className={styles.inputBox} placeholder='City' disabled />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={pincodeDetails[0]?.tehsilCode} label="Tehsil" name="tehsilName">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Tehsil')} disabled />
+                                <Input className={styles.inputBox} placeholder='Tehsil' disabled />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -242,12 +242,12 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={pincodeDetails[0]?.districtCode} label="District" name="districtName">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('District')} disabled />
+                                <Input className={styles.inputBox} placeholder='District' disabled />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={pincodeDetails[0]?.stateCode} label="State" name="stateName">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State')} disabled />
+                                <Input className={styles.inputBox} placeholder='State' disabled />
                             </Form.Item>
                         </Col>
                     </Row>
