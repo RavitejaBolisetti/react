@@ -47,7 +47,7 @@ const AuthorityCardItemMain = (props) => {
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
     const [tokenValidationData, setTokenValidationData] = useState({});
-console.log('documentTypesList',documentTypesList)
+
     useEffect(() => {
         if (record) {
             setTokenValidationData({ ...record });
@@ -76,25 +76,18 @@ console.log('documentTypesList',documentTypesList)
     };
 
     const onUpdate = () => {
-        // if(!tokenNumber?.employeeName){
-        //     return showGlobalNotification({ notificationType: 'success', title: 'Warning', message: 'Validate token to proceed' });
-        // }
         const tokenNo = form.getFieldValue('authorityEmployeeTokenNo');
         if (record?.authorityEmployeeTokenNo !== tokenNo && !tokenNumber?.employeeName) {
             // return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
             return showGlobalNotification({ notificationType: 'warning', title: 'Warning', message: 'Validate token to proceed' });
         }
 
-        // whether check token on updation or not?
         form.validateFields()
             .then((data) => {
                 setDocumentTypesList((prev) => {
                     const updatedData = [...prev];
-                    console.log('updatedData',updatedData)
                     const index = updatedData?.findIndex((el) => el?.authorityEmployeeTokenNo === record?.authorityEmployeeTokenNo);
-                    console.log('index',index)
-                    updatedData.splice(index, 1, { ...data, employeeName: tokenNumber?.employeeName|| tokenValidationData?.employeeName });
-                    console.log('updatedData',updatedData)
+                    updatedData?.splice(index, 1, { ...data, employeeName: tokenNumber?.employeeName|| tokenValidationData?.employeeName });
                     return updatedData;
                 });
             })

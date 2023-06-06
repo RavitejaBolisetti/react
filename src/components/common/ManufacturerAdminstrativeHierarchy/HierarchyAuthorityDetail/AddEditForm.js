@@ -107,6 +107,8 @@ const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, hand
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
+    
+    const fieldNames = { label: 'value', value: 'key' };
 
     return (
         <Form autoComplete="off" form={form} id="myForm" onFinish={onFinish} layout="vertical" onFieldsChange={handleFormValueChange} onFinishFailed={onFinishFailed}>
@@ -115,7 +117,7 @@ const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, hand
                     <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type'),
                     //  { validator: (rule, value) => duplicateValidator(value, 'authorityTypeCode', documentTypesList, record?.authorityTypeCode) }
                      ]}>
-                        <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" options={apiData} disabled={isBtnDisabled} />
+                        <Select labelInValue getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" fieldNames={fieldNames} options={apiData} disabled={isBtnDisabled} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -159,7 +161,7 @@ const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, hand
                     </Col>
                 </Row>
             )}
-            {console.log('authorityVisible', authorityVisible)}
+
             {!isEditing && authorityVisible && (
                 <Button {...disableAddBtn} icon={<PlusOutlined />} type="primary" danger htmlType="submit" onClick={() => cardBtnDisableAction(true)}>
                     Add

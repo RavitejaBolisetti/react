@@ -49,7 +49,6 @@ const AuthorityDetailMain = ({tokenNumber, handleFormValueChange, errorTokenVali
         <>
         <Divider/>
             {!viewMode && <AddEditForm isMainForm={true} handleFormValueChange={handleFormValueChange} onFinish={onActionFormFinish} tokenValidate={tokenValidate} setTokenValidate={setTokenValidate} form={actionForm} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} />}
-            <Divider/>
 
             {documentTypesList?.length > 0 &&
                 documentTypesList?.map((record) => {
