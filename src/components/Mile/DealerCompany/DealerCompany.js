@@ -12,7 +12,6 @@ import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
 import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
-import { geoPincodeDetailsActions } from 'store/actions/data/pincodeDetails';
 
 const mapStateToProps = (state) => {
     const {
@@ -51,13 +50,13 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchDealerParentList: dealerParentDataActions.fetchList,
             listDealerParentShowLoading: dealerParentDataActions.listShowLoading,
-            
+
             fetchList: dealerCompanyDataActions.fetchList,
             saveData: dealerCompanyDataActions.saveData,
             listShowLoading: dealerCompanyDataActions.listShowLoading,
 
             fetchPincodeDetail: geoPincodeDataActions.fetchList,
-            pinCodeShowLoading :  geoPincodeDataActions.listShowLoading,
+            pinCodeShowLoading: geoPincodeDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -65,7 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DealerCompanyBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification,isPinCodeLoading, pinCodeShowLoading} = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isPinCodeLoading, pinCodeShowLoading } = props;
     const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail } = props;
 
     const [form] = Form.useForm();
@@ -120,7 +119,7 @@ export const DealerCompanyBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyCode) || filterFunction(keyword)(item?.companyName) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyName) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {

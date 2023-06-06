@@ -23,8 +23,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log(state,'statestatestate')
-
     const moduleTitle = 'Group Name';
 
     let returnValue = {
@@ -113,7 +111,7 @@ export const DealerParentBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {

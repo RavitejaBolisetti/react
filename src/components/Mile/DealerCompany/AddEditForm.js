@@ -12,18 +12,17 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, listShowLoading, userId, dealerParentData } = props;
-    const { buttonData, setButtonData, handleButtonClick, pincodeData, fetchPincodeDetail,isPinCodeLoading,forceUpdate,pinCodeShowLoading } = props;
+    const { buttonData, setButtonData, handleButtonClick, pincodeData, fetchPincodeDetail, isPinCodeLoading, forceUpdate, pinCodeShowLoading } = props;
 
     const [options, setOptions] = useState(false);
 
     useEffect(() => {
         const pinOption = pincodeData?.map((item) => ({
-            label: item?.pinCode + ' - ' + (item?.localityName ? item?.localityName + '-' : '') + item?.cityName + ' - ' + item?.tehsilName + ' - ' + item?.districtName + ' - ' + item?.stateName,
+            label: item?.pinCode + ' - ' + (item?.localityName ? item?.localityName + '-' : '') + (item?.cityName ? item?.cityName + '-' : '') + (item?.tehsilName ? item?.tehsilName + '-' : '') + (item?.districtName ? item?.districtName + '-' : '') + item?.stateName,
             value: item?.id,
             key: item?.id,
         }));
         setOptions(pinOption);
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pincodeData]);
 
@@ -58,10 +57,7 @@ const AddEditFormMain = (props) => {
     const onSuccessAction = () => {};
 
     const handleOnSelect = (key) => {
-        console.log(key,'key')
-        console.log(pincodeData,'1')
         const selectedPinCode = pincodeData?.find((i) => i.id === key);
-        console.log(selectedPinCode,'selectedPinCodeselectedPinCode')
         if (selectedPinCode) {
             form.setFieldsValue({
                 pinCode: selectedPinCode?.pinCode,
@@ -138,7 +134,7 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" className={styles.formContainer} layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
                 <ViewDetail {...viewProps} />
             ) : (
@@ -202,13 +198,13 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col> */}
 
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
-                                    <AutoComplete className={styles.searchField} options={options} onSelect={handleOnSelect} onFocus={handleOnfocus}>
-                                        <Input.Search onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} type="text" allowClear />
-                                    </AutoComplete>
-                                </Form.Item>
-                            </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
+                                <AutoComplete className={styles.searchField} options={options} onSelect={handleOnSelect} onFocus={handleOnfocus}>
+                                    <Input.Search onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} type="text" allowClear />
+                                </AutoComplete>
+                            </Form.Item>
+                        </Col>
                     </Row>
 
                     <Row gutter={16}>
@@ -230,15 +226,14 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.cityName} label="City" name="cityName">
-                                <Input className={styles.inputBox} placeholder='City' disabled />
+                                <Input className={styles.inputBox} placeholder="City" disabled />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.tehsilName} label="Tehsil" name="tehsilName">
-                                <Input className={styles.inputBox} placeholder='Tehsil' disabled />
+                                <Input className={styles.inputBox} placeholder="Tehsil" disabled />
                             </Form.Item>
                         </Col>
-                        
                     </Row>
                     <Row gutter={16}>
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
@@ -254,12 +249,12 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.districtName} label="District" name="districtName">
-                                <Input className={styles.inputBox} placeholder='District' disabled />
+                                <Input className={styles.inputBox} placeholder="District" disabled />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.stateName} label="State" name="stateName">
-                                <Input className={styles.inputBox} placeholder='State' disabled />
+                                <Input className={styles.inputBox} placeholder="State" disabled />
                             </Form.Item>
                         </Col>
                     </Row>
