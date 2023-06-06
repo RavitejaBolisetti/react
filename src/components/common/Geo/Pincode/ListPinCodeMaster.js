@@ -532,6 +532,13 @@ const ListPinCodeMasterBase = (props) => {
         }
     };
 
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 5) {
+            listFilterForm.validateFields(['code']);
+        }
+    };
+
+
     const removeFilter = (key) => {
         if (key === 'countryCode') {
             setFilterString(undefined);
@@ -572,6 +579,8 @@ const ListPinCodeMasterBase = (props) => {
         removeFilter,
         handleResetFilter,
         onSearchHandle,
+        handleClearInSearch,
+
         setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,

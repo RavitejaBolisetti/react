@@ -159,7 +159,7 @@ export const ListCityMasterBase = (props) => {
                 const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
                 const state = filterString?.stateCode;
                 const district = filterString?.districtCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -244,6 +244,12 @@ export const ListCityMasterBase = (props) => {
         if (value?.trim()?.length >= 3) {
             setFilterString({ ...filterString, advanceFilter: true, keyword: value });
             listFilterForm.setFieldsValue({ code: undefined });
+        }
+    };
+
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
         }
     };
 
@@ -398,6 +404,7 @@ export const ListCityMasterBase = (props) => {
         removeFilter,
         handleResetFilter,
         onSearchHandle,
+        handleClearInSearch,
         setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,

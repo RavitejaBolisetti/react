@@ -146,7 +146,7 @@ export const ListStateMasterBase = (props) => {
             if (filterString) {
                 const keyword = filterString?.keyword;
                 const countryCode = filterString?.countryCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (countryCode ? filterFunction(countryCode)(item?.countryCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -185,6 +185,12 @@ export const ListStateMasterBase = (props) => {
         if (value?.trim()?.length >= 3) {
             setFilterString({ ...filterString, advanceFilter: true, keyword: value });
             listFilterForm.setFieldsValue({ code: undefined });
+        }
+    };
+
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
         }
     };
 
@@ -318,6 +324,7 @@ export const ListStateMasterBase = (props) => {
         removeFilter,
         handleResetFilter,
         onSearchHandle,
+        handleClearInSearch,
         setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,

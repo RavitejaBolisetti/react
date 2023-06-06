@@ -169,7 +169,7 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description'), validateAlphanumericWithSpaceHyphenPeriod('short description')]}>
+                        <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description')]}>
                             <Input className={styles.inputBox} placeholder={preparePlaceholderText('short description')} maxLength={50} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
@@ -177,7 +177,7 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description'), validateAlphanumericWithSpaceHyphenPeriod('long description')]}>
+                        <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description')]}>
                             <TextArea rows={1} placeholder={preparePlaceholderText('long description')} showCount maxLength={100} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>

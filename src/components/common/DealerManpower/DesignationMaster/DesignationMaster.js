@@ -33,7 +33,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-
     const moduleTitle = 'Designation Master';
 
     let returnValue = {
@@ -148,7 +147,7 @@ export const DesignationMasterBase = (props) => {
                 const department = filterString?.departmentCode;
                 const role = filterString?.roleCode;
 
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.designationDescription) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.designationCode) || filterFunction(keyword)(item?.designationDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true) && (role ? filterFunction(role)(item?.roleCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -212,6 +211,13 @@ export const DesignationMasterBase = (props) => {
             listFilterForm.setFieldsValue({ code: undefined });
         }
     };
+
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
+        }
+    };
+
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
@@ -346,11 +352,9 @@ export const DesignationMasterBase = (props) => {
         handleResetFilter,
     };
 
-
-
     const removeFilter = (key) => {
         if (key === 'code') {
-           setFilterString(undefined)
+            setFilterString(undefined);
         } else if (key === 'departmentCode') {
             const { departmentCode, roleCode, ...rest } = filterString;
             setFilterString({ ...rest });
@@ -379,6 +383,8 @@ export const DesignationMasterBase = (props) => {
         removeFilter,
         handleResetFilter,
         onSearchHandle,
+        handleClearInSearch,
+
         setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,

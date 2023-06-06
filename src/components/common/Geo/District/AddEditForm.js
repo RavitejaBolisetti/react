@@ -20,7 +20,7 @@ const AddEditFormMain = (props) => {
     };
 
     if (stateData && formData?.stateCode) {
-        if (stateData.find((attribute) => attribute.code === formData?.stateCode)) {
+        if (stateData.find((attribute) => attribute.key === formData?.stateCode)) {
             stateFieldValidation.initialValue = formData?.stateCode;
         } else {
             const Attribute = unFilteredStateData.find((attribute) => attribute.id === formData?.attributeKey);
