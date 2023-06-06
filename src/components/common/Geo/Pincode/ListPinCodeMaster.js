@@ -261,7 +261,7 @@ const ListPinCodeMasterBase = (props) => {
                 const keyword = filterString?.pincode ? filterString?.pincode : filterString?.keyword;
                 const state = filterString?.stateCode;
                 const district = filterString?.districtCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.pincode) || filterFunction(keyword)(item?.pinCategory) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.pincode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             }
@@ -379,7 +379,9 @@ const ListPinCodeMasterBase = (props) => {
         };
 
     const onFinish = (values) => {
-        let data = { ...values };
+        const recordId = formData?.id || '';
+
+        let data = { ...values, id: recordId };
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -551,7 +553,8 @@ const ListPinCodeMasterBase = (props) => {
             const { [key]: names, ...rest } = filterString;
             advanceFilterForm.setFieldsValue({ keyword: undefined, pincode: undefined });
             if (!filterString?.countryCode && !filterString?.stateCode && !filterString?.districtCode && !filterString?.tehsilCode) {
-                setFilterString();
+                resetData();
+                setFilterString(undefined);
             } else {
                 setFilterString({ ...rest });
             }

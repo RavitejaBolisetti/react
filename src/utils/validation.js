@@ -142,7 +142,7 @@ export const searchValidatorPincode = (_, value) => {
     if (!value || pattern.test(value)) {
         return Promise.resolve();
     }
-    return Promise.reject(new Error('Please enter atleast 6 character to search'));
+    return Promise.reject(new Error('Please enter 6 digit numeric value to search'));
 };
 export const validateTan = (fieldName) => ({
     pattern: /^[A-Z]{4}\d{5}[A-Z]{1}$/,

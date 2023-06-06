@@ -138,7 +138,7 @@ export const ListDistrictBase = (props) => {
             if (filterString) {
                 const keyword = filterString?.keyword;
                 const state = filterString?.stateCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.districtCode) || filterFunction(keyword)(item?.name) || filterFunction(keyword)(item?.code) : true) && (state ? filterFunction(state)(item?.stateCode) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {

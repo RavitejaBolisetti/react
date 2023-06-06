@@ -113,7 +113,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.locationCode) || filterFunction(keyword)(item?.locationDescription) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.locationDescription) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {

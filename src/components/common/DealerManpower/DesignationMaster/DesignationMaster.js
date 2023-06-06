@@ -33,7 +33,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('departmentData', departmentData);
 
     const moduleTitle = 'Designation Master';
 
@@ -149,7 +148,7 @@ export const DesignationMasterBase = (props) => {
                 const department = filterString?.departmentCode;
                 const role = filterString?.roleCode;
 
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.designationCode) || filterFunction(keyword)(item?.designationDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true) && (role ? filterFunction(role)(item?.roleCode) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.designationDescription) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -347,11 +346,7 @@ export const DesignationMasterBase = (props) => {
         handleResetFilter,
     };
 
-    // const removeFilter = (key) => {
-    //     advanceFilterForm.resetFields();
-    //     const { [key]: names, ...rest } = filterString;
-    //     setFilterString({ ...rest });
-    // };
+
 
     const removeFilter = (key) => {
         if (key === 'code') {

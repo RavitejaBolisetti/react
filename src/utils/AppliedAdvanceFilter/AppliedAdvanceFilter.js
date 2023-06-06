@@ -35,7 +35,7 @@ export default function AppliedAdvanceFilter(props) {
                                         ]}
                                         validateTrigger={['onSearch']}
                                     >
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={handleClearInSearch} onPressEnter={false} />
+                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={handleClearInSearch} />
                                     </Form.Item>
                                 </Form>
                             </Col>
