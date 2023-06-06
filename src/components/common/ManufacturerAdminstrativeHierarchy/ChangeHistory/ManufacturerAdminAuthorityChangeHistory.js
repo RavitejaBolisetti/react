@@ -88,7 +88,7 @@ const ManufacturerAdminAuthorityChangeHistoryMain = ({ fetchAuthorityChangeHisto
     ];
 
     const tableProps = {
-        isLoading,
+        isLoading : !isHistoryLoaded,
         tableColumn,
         tableData: changeHistoryData,
     };

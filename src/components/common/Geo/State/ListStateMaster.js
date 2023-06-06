@@ -146,7 +146,7 @@ export const ListStateMasterBase = (props) => {
             if (filterString) {
                 const keyword = filterString?.keyword;
                 const countryCode = filterString?.countryCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (countryCode ? filterFunction(countryCode)(item?.countryCode) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -198,6 +198,7 @@ export const ListStateMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -255,7 +256,6 @@ export const ListStateMasterBase = (props) => {
         isCountryLoading,
         countryData,
         defaultCountry,
-
         data,
         handleFilterChange,
         filterString,
@@ -272,12 +272,10 @@ export const ListStateMasterBase = (props) => {
         setFormActionType,
         onFinish,
         onFinishFailed,
-
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
         tableData: searchData,
-
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
@@ -301,15 +299,13 @@ export const ListStateMasterBase = (props) => {
     const removeFilter = (key) => {
         const { [key]: names, ...rest } = filterString;
         advanceFilterForm.setFieldsValue({ [key]: undefined });
-        
+
         if (!rest?.countryCode && !rest?.keyword) {
             setFilterString();
         } else {
             setFilterString({ ...rest });
         }
     };
-
-    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
     const title = 'State Name';
     const advanceFilterResultProps = {
@@ -334,7 +330,7 @@ export const ListStateMasterBase = (props) => {
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={isLoading} {...tableProps} handleAdd={handleAdd} addTitle={title} />
+                    <ListDataTable isLoading={isLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={title} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

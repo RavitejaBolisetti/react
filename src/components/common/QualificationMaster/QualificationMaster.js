@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Col, Row, Input, Form } from 'antd';
-import { notification } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
@@ -12,12 +11,9 @@ import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { filterFunction } from 'utils/filterFunction';
-import { escapeRegExp } from 'utils/escapeRegExp';
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
 import { AddEditForm } from './AddEditForm';
 import { tableColumn } from './tableColumn';
-
-import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
 
@@ -31,6 +27,8 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
+
+    console.log('data', data);
 
     const moduleTitle = 'Qualification Master';
 
@@ -133,6 +131,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
     };
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
+
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
         tableData: searchData,
@@ -147,10 +146,10 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
 
             form.resetFields();
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-                setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
             } else {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -254,7 +253,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />

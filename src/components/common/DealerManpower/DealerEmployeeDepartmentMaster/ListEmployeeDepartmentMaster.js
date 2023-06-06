@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             DealerManpower: {
-                DealerDivisionMaster: { isLoaded: isDivisionDataLoaded = false, isLoading: isDivisionLoading, data: divisionData },
+                DealerDivisionMaster: { isFilteredListLoaded: isDivisionDataLoaded = false, isLoading: isDivisionLoading, filteredListData: divisionData },
                 DealerEmployeeDepartmentMaster: { isLoaded: isDataLoaded = false, isLoading, data },
             },
         },
@@ -48,7 +48,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchDivisionList: dealerManpowerDivisionMasterDataActions.fetchList,
+            fetchDivisionLovList: dealerManpowerDivisionMasterDataActions.fetchFilteredList,
             listDivisionShowLoading: dealerManpowerDivisionMasterDataActions.listShowLoading,
 
             fetchList: dealerManpowerEmployeeDepartmentDataActions.fetchList,
@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ListEmployeeDepartmentMasterBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, resetData } = props;
-    const { isDivisionDataLoaded, listDivisionShowLoading, fetchDivisionList, isDivisionLoading, divisionData } = props;
+    const { isDivisionDataLoaded, listDivisionShowLoading, fetchDivisionLovList, isDivisionLoading, divisionData } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -102,7 +102,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         }
 
         if (userId && !isDivisionDataLoaded) {
-            fetchDivisionList({ setIsLoading: listDivisionShowLoading, userId });
+            fetchDivisionLovList({ setIsLoading: listDivisionShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded, isDivisionDataLoaded]);
@@ -120,7 +120,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                 const keyword = filterString?.keyword;
                 const division = filterString?.divisionCode;
 
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.departmentCode) || filterFunction(keyword)(item?.departmentName) : true) && (division ? filterFunction(division)(item?.divisionCode) : true));
+                const filterDataItem = data?.filter((item) => (keyword ?  filterFunction(keyword)(item?.departmentName) : true));
 
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
@@ -151,7 +151,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
             key: 'divisionCode',
             title: 'Division',
             value: filterString?.divisionCode,
-            name: divisionData?.find((i) => i?.code === filterString?.divisionCode)?.divisionName,
+            name: divisionData?.find((i) => i?.key === filterString?.divisionCode)?.value,
             canRemove: true,
         },
         {
@@ -175,6 +175,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -237,7 +238,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         tableData: searchData,
 
         isDivisionLoading,
-        divisionData:divisionData?.filter((i) => i.status),
+        divisionData,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -318,7 +319,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

@@ -16,7 +16,7 @@ const { TextArea } = Input;
 const AddEditFormMain = (props) => {
     const { typeData, configData, parameterType, setParameterType, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, form,setClosePanels, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible, setisViewModeVisible } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, isLoadingOnSave } = props;
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -144,13 +144,13 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
                     {!footerEdit && showSaveBtn && (
-                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
+                        <Button loading={isLoadingOnSave} disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
                             Save
                         </Button>
                     )}
 
                     {!formData?.id && (
-                        <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
+                        <Button loading={isLoadingOnSave} htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
                             Save & Add New
                         </Button>
                     )}

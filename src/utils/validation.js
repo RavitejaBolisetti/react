@@ -120,7 +120,6 @@ export const duplicateProductValidator = (value, dataList) => {
                 status = true;
                 return Promise.reject('Duplicate found');
             }
-
             if (!status) {
                 return Promise.resolve('');
             }
@@ -130,6 +129,7 @@ export const duplicateProductValidator = (value, dataList) => {
     }
     return Promise.resolve('');
 };
+
 export const searchValidator = (_, value) => {
     if (!value || (value && value.trim().length >= 3)) {
         return Promise.resolve();
@@ -142,5 +142,13 @@ export const searchValidatorPincode = (_, value) => {
     if (!value || pattern.test(value)) {
         return Promise.resolve();
     }
-    return Promise.reject(new Error('Please enter atleast 6 character to search'));
+    return Promise.reject(new Error('Please enter 6 digit numeric value to search'));
 };
+export const validateTan = (fieldName) => ({
+    pattern: /^[A-Z]{4}\d{5}[A-Z]{1}$/,
+    message: 'Please enter valid ' + fieldName,
+});
+export const validateTin = (fieldName) => ({
+    pattern: /[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}/,
+    message: 'Please enter valid ' + fieldName,
+});

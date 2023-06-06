@@ -21,7 +21,6 @@ import style from 'components/common/DrawerAndTable.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { ROUTING_USER_MANAGEMENT_DEALER, ROUTING_USER_MANAGEMENT_MANUFACTURER } from 'constants/routing';
 import { AddEditForm } from '../UserManagementManufacturer/AddEditForm';
-import { dealerData } from '../DealerHierarchy/test';
 
 const { Search } = Input;
 
@@ -186,10 +185,6 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, qualificationData]);
-    useEffect(() => {
-        console.log('This is the Dealer Data::::=>', dealerData);
-    }, [dealerData]);
-
     const tableDetails = [];
     tableDetails.push(
         tblPrepareColumns({

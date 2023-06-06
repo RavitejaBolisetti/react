@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Empty, ConfigProvider } from 'antd';
 import { bindActionCreators } from 'redux';
 
+import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { partyMasterDataActions } from 'store/actions/data/partyMaster';
+
+import { ListDataTable } from 'utils/ListDataTable';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -27,10 +31,13 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { isLoaded: isPartyDataLoaded = false, isPartyDataLoading, data: configData = [], paramdata: typeData = [] },
             PartyMaster: { isLoaded: isDataLoaded = false, isLoading, data, detailData },
+            Geo: {
+                Pincode: { isLoaded: isPinCodeDataLoaded = false, data: pincodeData },
+            },
         },
     } = state;
 
-    const moduleTitle = 'Party Master List';
+    const moduleTitle = 'Party Master';
 
     let returnValue = {
         userId,
@@ -39,9 +46,11 @@ const mapStateToProps = (state) => {
         configData,
         typeData,
         isDataLoaded,
+        isPinCodeDataLoaded,
         data,
         detailData,
         isLoading,
+        pincodeData,
         moduleTitle,
     };
     return returnValue;
@@ -58,6 +67,8 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: partyMasterDataActions.saveData,
             listShowLoading: partyMasterDataActions.listShowLoading,
             showGlobalNotification,
+
+            fetchPincodeDetail: geoPincodeDataActions.fetchList,
         },
         dispatch
     ),
@@ -66,8 +77,10 @@ const mapDispatchToProps = (dispatch) => ({
 export const ListPartyMasterBase = (props) => {
     const { data, detailData, saveData, fetchList, fetchDetail, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { typeData, configFetchList, configListShowLoading } = props;
+    const { isPincodeDataLoaded, fetchPincodeDetail, pincodeData } = props;
 
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
@@ -84,6 +97,8 @@ export const ListPartyMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [recordData, setRecordData] = useState();
+
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -133,6 +148,7 @@ export const ListPartyMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
+        forceUpdate()
         if (buttonAction === EDIT_ACTION || buttonAction === VIEW_ACTION) {
             fetchDetail({ setIsLoading: listShowLoading, userId, partyCode: `${record?.partyCode}` });
             setRecordData(record);
@@ -141,14 +157,6 @@ export const ListPartyMasterBase = (props) => {
         setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
 
         setIsFormVisible(true);
-    };
-
-    const onSearchHandle = (value) => {
-        setFilterString({ ...filterString, keyword: value });
-    };
-
-    const onChangeHandle = (e) => {
-        setFilterString({ ...filterString, keyword: e.target.value });
     };
 
     const onFinish = (values) => {
@@ -161,6 +169,7 @@ export const ListPartyMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -192,8 +201,25 @@ export const ListPartyMasterBase = (props) => {
 
     const onCloseAction = () => {
         form.resetFields();
+        console.log("kbjkvbjkk")
+
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
+        // forceUpdate();
+    };
+
+    const onSearchHandle = (value) => {
+        if (value?.trim()?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: false, keyword: value });
+        }
+    };
+
+    const handleClearInSearch = (e) => {
+        if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
     };
 
     const formProps = {
@@ -216,6 +242,11 @@ export const ListPartyMasterBase = (props) => {
         setFormData,
         detailData,
 
+        fetchPincodeDetail,
+        pincodeData,
+
+        forceUpdate,
+
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
@@ -230,75 +261,28 @@ export const ListPartyMasterBase = (props) => {
         tableData: searchData,
         setPage,
     };
+
+    const title = 'Party Name';
+
+    const advanceFilterResultProps = {
+        advanceFilter: false,
+        filterString,
+        from: listFilterForm,
+
+        onSearchHandle,
+        handleClearInSearch,
+        handleReferesh,
+        handleButtonClick,
+        title,
+    };
+
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
-                                        Party List
-                                    </Col>
-
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
-                                    </Col>
-                                </Row>
-                            </Col>
-
-                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add Party
-                                </Button>
-                            </Col>
-                        </Row>
-                    </div>
-                </Col>
-            </Row>
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() =>
-                            isDataLoaded && (
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        !searchData?.length ? (
-                                            <span>
-                                                No records found. Please add new parameter <br />
-                                                using below button
-                                            </span>
-                                        ) : (
-                                            <span> No records found.</span>
-                                        )
-                                    }
-                                >
-                                    {!searchData?.length ? (
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                    Add Party
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    ) : (
-                                        ''
-                                    )}
-                                </Empty>
-                            )
-                        }
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={showDataLoading} {...tableProps} />
-                        </div>
-                    </ConfigProvider>
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />

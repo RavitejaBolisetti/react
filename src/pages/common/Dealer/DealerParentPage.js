@@ -1,23 +1,20 @@
 import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import { Dealer } from 'components/common/DealerHierarchy';
-
-const DealerHierarchyBase = (props) => {
-    const pageTitle = 'Dealer Hierarchy';
+import { DealerParent } from 'components/Mile';
+const DealerParentBase = (props) => {
+    const pageTitle = 'Dealer Parent';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
-        showChangeHisoty: true,
-        visibleChangeHistory: false,
     };
 
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <Dealer />
+            <DealerParent />
         </>
     );
 };
 
-export const DealerHierarchyPage = withLayoutMaster(DealerHierarchyBase);
+export const DealerParentPage = withLayoutMaster(DealerParentBase);

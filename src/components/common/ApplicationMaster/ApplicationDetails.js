@@ -30,7 +30,7 @@ const ApplicationDetails = ({setCanFormSave, form, onFinishFailed = () => {}, pa
             return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
         }
 
-
+        setCanFormSave(true);
         setparentAppCode(value);
     };
 

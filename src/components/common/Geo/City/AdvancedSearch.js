@@ -54,7 +54,9 @@ export const AdvancedSearchFrom = (props) => {
                     <Form.Item label="State" initialValue={filterString?.stateCode} name="stateCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('stateCode')}>
                             {filteredStateData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>
@@ -66,7 +68,9 @@ export const AdvancedSearchFrom = (props) => {
                     <Form.Item label="District" initialValue={filterString?.districtCode} name="districtCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('districtCode')}>
                             {filteredDistrictData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>

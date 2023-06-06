@@ -39,8 +39,12 @@ body::-webkit-scrollbar:hover {
   background-color: #FFF;
 }
 
+:global .ant-select-tree-list-holder:hover::-webkit-scrollbar {
+  width: 8px !important;
+}
+
 :global .ant-select-tree-list-holder::-webkit-scrollbar-thumb {
-  background-color: #342C2C;
+  background-color: rgba(52, 44, 44, 0.34);
   border-radius: 10px;
 }
 

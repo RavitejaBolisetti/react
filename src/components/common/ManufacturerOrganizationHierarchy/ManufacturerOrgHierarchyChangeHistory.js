@@ -88,7 +88,7 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
     ];
     
     const tableProps = {
-        isLoading,
+        isLoading : !isHistoryLoaded,
         tableColumn,
         tableData: changeHistoryData,
     };
