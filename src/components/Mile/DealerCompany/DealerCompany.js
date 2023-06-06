@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Dealer Company';
+    const moduleTitle = 'Dealer Parent Company';
     let returnValue = {
         userId,
         isDataLoaded,
@@ -222,7 +222,7 @@ export const DealerCompanyBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Company'),
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Parent Company'),
         tableData: searchData,
         buttonData,
         setButtonData,
@@ -243,7 +243,7 @@ export const DealerCompanyBase = (props) => {
         setPage,
     };
 
-    const title = 'Company Code';
+    const title = 'Company Name';
 
     const advanceFilterResultProps = {
         advanceFilter: false,

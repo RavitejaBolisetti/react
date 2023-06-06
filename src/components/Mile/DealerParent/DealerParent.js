@@ -215,7 +215,7 @@ export const DealerParentBase = (props) => {
         dealerParentData: data,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Parent'),
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Parent Group'),
         tableData: searchData,
         buttonData,
         setButtonData,
@@ -230,7 +230,7 @@ export const DealerParentBase = (props) => {
         setPage,
     };
 
-    const title = 'Dealer Parent';
+    const title = 'Group Name';
 
     const advanceFilterResultProps = {
         advanceFilter: false,

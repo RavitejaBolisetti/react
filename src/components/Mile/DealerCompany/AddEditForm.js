@@ -12,7 +12,7 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, listShowLoading, userId, dealerParentData } = props;
-    const { buttonData, setButtonData, handleButtonClick, pincodeData, fetchPincodeDetail, isPinCodeLoading, forceUpdate, pinCodeShowLoading } = props;
+    const { isVisible, buttonData, setButtonData, handleButtonClick, pincodeData, fetchPincodeDetail, isPinCodeLoading, forceUpdate, pinCodeShowLoading } = props;
 
     const [options, setOptions] = useState(false);
 
@@ -25,6 +25,11 @@ const AddEditFormMain = (props) => {
         setOptions(pinOption);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pincodeData]);
+
+    useEffect(() => {
+        setOptions();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isVisible]);
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -93,10 +98,10 @@ const AddEditFormMain = (props) => {
         setOptions();
         form.setFieldsValue({
             pinCode: undefined,
-            state: undefined,
-            city: undefined,
-            tehsil: undefined,
-            district: undefined,
+            stateName: undefined,
+            cityName: undefined,
+            tehsilName: undefined,
+            districtName: undefined,
             locality: undefined,
         });
     };
@@ -188,16 +193,6 @@ const AddEditFormMain = (props) => {
                         </Col>
                     </Row>
                     <Row gutter={16}>
-                        {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]} 
-                                validateTrigger={['onFinish']}
-                            >
-                                <AutoComplete className={styles.inputBox} options={options} onSelect={handleOnSelect} onSearch={handleOnSearch}>
-                                    <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" maxLength={6} />
-                                </AutoComplete>
-                            </Form.Item>
-                        </Col> */}
-
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
                                 <AutoComplete className={styles.searchField} options={options} onSelect={handleOnSelect} onFocus={handleOnfocus}>
