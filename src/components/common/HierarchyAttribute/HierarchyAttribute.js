@@ -15,8 +15,10 @@ import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarch
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
-import DataTable from '../../../utils/dataTable/DataTable';
 import { escapeRegExp } from 'utils/escapeRegExp';
+import { ListDataTable } from 'utils/ListDataTable';
+import { tableColumn } from './tableColumn';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Option } = Select;
 const { Search } = Input;
@@ -58,6 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeFetchDetailList: hierarchyAttributeMasterDataActions.fetchDetail,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
+            resetData: hierarchyAttributeMasterDataActions.reset,
 
             showGlobalNotification,
         },
@@ -65,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData, showGlobalNotification, isDataLoading, isLoadingOnSave }) => {
+export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataLoaded, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData, showGlobalNotification, isDataLoading, isLoadingOnSave }) => {
     const [form] = Form.useForm();
     const [rowdata, setRowsData] = useState([]);
     const [editRow, setEditRow] = useState({});
@@ -77,7 +80,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
 
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [filterString, setFilterString] = useState('');
@@ -86,14 +88,31 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [showDataLoading, setShowDataLoading] = useState(false);
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+    const [page, setPage] = useState(1);
+
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const onSuccessAction = (res) => {
+        setShowDataLoading(false);
         RefershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
+    const onErrorAction = (message) => {
+        resetData();
+        showGlobalNotification({ message });
+        setShowDataLoading(false);
+    };
+    const title = 'Hierarchy Attribute';
     useEffect(() => {
         if (userId) {
             if (!isDataLoaded) {
-                hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '' });
+                hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '', onSuccessAction, onErrorAction });
                 forceUpdate(generateRandomNumber());
             }
             if (detailData?.hierarchyAttribute) {
@@ -109,10 +128,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         if (userId) {
             if (!selectedHierarchy) {
                 setSearchdata([]);
-            } else if (RefershData) {
-                setRefershData((prev) => !prev);
-                hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy, onSuccessAction });
-                setSearchdata(detailData?.hierarchyAttribute);
             } else if (detailData?.hierarchyAttribute) {
                 if (filterString) {
                     const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
@@ -133,7 +148,8 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     useEffect(() => {
         if (!selectedHierarchy || !RefershData) return;
         setRefershData((prev) => !prev);
-        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy, onSuccessAction });
+        setShowDataLoading(true);
+        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy, onSuccessAction, onErrorAction });
 
         if (filterString) {
             const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
@@ -154,34 +170,25 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         setIsFormVisible(true);
     };
 
-    const onError = (message) => {
-        showGlobalNotification({ icon: 'error', message: 'Error', description: message, className: styles.error, placement: 'bottomRight' });
-    };
+    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
-    const handleAdd = () => {
-        setFormActionType('add');
-        setIsFormVisible(true);
-        setIsViewModeVisible(false);
-
-        setEditRow({
-            duplicateAllowedAtAttributerLevelInd: true,
-            duplicateAllowedAtOtherParent: true,
-            isChildAllowed: true,
-            status: true,
-        });
-        setcodeIsReadOnly(false);
-    };
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
-    const edit = (record, type) => {
-        setFormActionType(type);
+    const handleButtonClick = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        console.log('buttonAction', buttonAction);
+
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+
         setIsFormVisible(true);
         setEditRow(record);
+
         setFormBtnDisable(false);
         setIsViewModeVisible(false);
 
-        if (type === 'view') {
+        if (buttonAction === 'view') {
             setIsReadOnly(true);
             setIsViewModeVisible(true);
         }
@@ -195,72 +202,9 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     const onSearchHandle = (value) => {
         setFilterString(value);
     };
-
-    const tableColumn = [
-        tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'srl',
-            width: '6%',
-            sorter: false,
-            render: (_t, _r, i) => i + 1,
-        }),
-        tblPrepareColumns({
-            title: 'Code',
-            dataIndex: 'hierarchyAttribueCode',
-            width: '10%',
-        }),
-        tblPrepareColumns({
-            title: 'Name',
-            dataIndex: 'hierarchyAttribueName',
-            width: '20%',
-        }),
-        tblPrepareColumns({
-            title: 'Duplicate Allowed?',
-            dataIndex: 'duplicateAllowedAtAttributerLevelInd',
-            width: '14%',
-            render: (text, record) => <>{text ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
-        }),
-        tblPrepareColumns({
-            title: 'Duplicate Allowed under different Parent?',
-            dataIndex: 'duplicateAllowedAtOtherParent',
-            width: '20%',
-            render: (text, record) => <>{text ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
-        }),
-        tblPrepareColumns({
-            title: 'Child Allowed?',
-            dataIndex: 'isChildAllowed',
-            width: '10%',
-            render: (text, record) => <>{text ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
-        }),
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'status',
-            width: '10%',
-            render: (text, record) => <>{text ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
-        }),
-        tblPrepareColumns({
-            title: 'Action',
-            dataIndex: 'action',
-            width: '10%',
-            sorter: false,
-            render: (text, record, index) => {
-                return (
-                    <Space>
-                        {
-                            <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => edit(record, 'view')}>
-                                <FiEye />
-                            </Button>
-                        }
-                        {
-                            <Button className={styles.tableIcons} danger ghost aria-label="fa-edit" onClick={() => edit(record, 'edit')}>
-                                <FiEdit />
-                            </Button>
-                        }
-                    </Space>
-                );
-            },
-        }),
-    ];
+    const onChangeHandle = () => {
+        setFilterString('');
+    };
 
     const onFinish = (values) => {
         form.validateFields();
@@ -268,18 +212,21 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         const onSuccess = (res) => {
             form.resetFields();
             setFormBtnDisable(false);
-            if (saveclick === true) {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'topRight' });
-            } else {
+            if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
+                setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            } else {
+                setIsFormVisible(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             }
+
             forceUpdate();
         };
 
         setTimeout(() => {
-            hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
+            setShowDataLoading(true);
+            hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy, onSuccessAction, onErrorAction });
         }, 2000);
 
         const onError = (message) => {
@@ -294,14 +241,30 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     };
 
     const handleChange = (attributeType) => {
-        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: attributeType });
+        setShowDataLoading(true);
+        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: attributeType, onSuccessAction, onErrorAction });
         setSelectedHierarchy(attributeType);
     };
 
     const tableProps = {
-        isLoading: isDataLoading,
+        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
         tableData: searchData,
-        tableColumn: tableColumn,
+        setPage,
+        noDataMessage:
+            selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
+                <span className={styles.descriptionText}>
+                    No records found. Please add new parameter <br />
+                    using below button
+                </span>
+            ) : !selectedHierarchy ? (
+                <span className={styles.descriptionText}>Please select hierarchy type to view records.</span>
+            ) : (
+                <span className={styles.descriptionText}>
+                    No records found. Please add new parameter <br />
+                    using below button
+                </span>
+            ),
+        showAddButton: selectedHierarchy ? true : false,
     };
 
     const formProps = {
@@ -326,6 +289,12 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         setFormBtnDisable,
         formBtnDisable,
         isLoadingOnSave,
+        formActionType,
+        setFormActionType,
+        buttonData,
+        setButtonData,
+        handleButtonClick,
+        form,
     };
 
     return (
@@ -350,16 +319,16 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
                                                 </Select>
                                             </Col>
                                             <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                                {detailData?.hierarchyAttributeType && <Search placeholder="Search" className={styles.headerSearchField} allowClear onSearch={onSearchHandle} />}
+                                                {searchData?.length > 0 && <Search placeholder="Search" className={styles.headerSearchField} allowClear onChange={onChangeHandle} onSearch={onSearchHandle} />}
                                             </Col>
                                         </Row>
                                     </Col>
 
-                                    {detailData?.hierarchyAttributeType && (
+                                    {searchData?.length > 0 && (
                                         <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                             <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Attribute
+                                                Add
                                             </Button>
                                         </Col>
                                     )}
@@ -370,50 +339,9 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
                 </Col>
             </Row>
 
-            <>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <ConfigProvider
-                            renderEmpty={() => (
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: '20%',
-                                    }}
-                                    description={
-                                        selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
-                                            <span className={styles.descriptionText}>
-                                                No records found. Please add new parameter <br />
-                                                using below button
-                                            </span>
-                                        ) : !selectedHierarchy ? (
-                                            <span className={styles.descriptionText}>Please select hierarchy type to view records.</span>
-                                        ) : (
-                                            <span className={styles.descriptionText}> No records found.</span>
-                                        )
-                                    }
-                                >
-                                    {selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                    Add Attribute
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    ) : (
-                                        ''
-                                    )}
-                                </Empty>
-                            )}
-                        >
-                            <div className={styles.tableProduct}>
-                                <DataTable {...tableProps} />
-                            </div>
-                        </ConfigProvider>
-                    </Col>
-                </Row>
-            </>
+            <div className={styles.tableProduct}>
+                <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd} addTitle={title} />
+            </div>
             <AddEditForm {...formProps} />
         </>
     );
