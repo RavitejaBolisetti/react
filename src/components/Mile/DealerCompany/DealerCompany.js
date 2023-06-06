@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
                 DealerParent: { isLoaded: isDealerParentDataLoaded = false, isLoading: isDealerParentDataLoading = false, data: dealerParentData = [] },
             },
             Geo: {
-                Pincode: { isLoaded: isPinCodeDataLoaded = false, data: pincodeData },
+                Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
             },
         },
     } = state;
@@ -40,6 +40,7 @@ const mapStateToProps = (state) => {
         pincodeData,
         isLoading,
         moduleTitle,
+        isPinCodeLoading,
     };
     return returnValue;
 };
@@ -50,12 +51,13 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchDealerParentList: dealerParentDataActions.fetchList,
             listDealerParentShowLoading: dealerParentDataActions.listShowLoading,
-            listPincodeDetailsShowLoading: geoPincodeDetailsActions.listShowLoading,
+            
             fetchList: dealerCompanyDataActions.fetchList,
             saveData: dealerCompanyDataActions.saveData,
             listShowLoading: dealerCompanyDataActions.listShowLoading,
 
             fetchPincodeDetail: geoPincodeDataActions.fetchList,
+            pinCodeShowLoading :  geoPincodeDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -63,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DealerCompanyBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification,isPinCodeLoading, pinCodeShowLoading} = props;
     const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail } = props;
 
     const [form] = Form.useForm();
@@ -79,6 +81,7 @@ export const DealerCompanyBase = (props) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -230,6 +233,9 @@ export const DealerCompanyBase = (props) => {
         pincodeData,
         fetchPincodeDetail,
         dealerParentData,
+        isPinCodeLoading,
+        forceUpdate,
+        pinCodeShowLoading,
     };
 
     const tableProps = {

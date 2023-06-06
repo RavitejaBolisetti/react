@@ -11,18 +11,17 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, listShowLoading, userId, fetchPincodeDetailsList, dealerParentData } = props;
-    const { buttonData, setButtonData, handleButtonClick, pincodeData, fetchPincodeDetail } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, listShowLoading, userId, dealerParentData } = props;
+    const { buttonData, setButtonData, handleButtonClick, pincodeData, fetchPincodeDetail,isPinCodeLoading,forceUpdate,pinCodeShowLoading } = props;
 
     const [options, setOptions] = useState(false);
 
     useEffect(() => {
         const pinOption = pincodeData?.map((item) => ({
-            label: item?.pinCode + ' - ' + item?.cityName + ' - ' + item?.tehsilName + ' - ' + item?.districtName + ' - ' + item?.stateName,
+            label: item?.pinCode + ' - ' + (item?.localityName ? item?.localityName + '-' : '') + item?.cityName + ' - ' + item?.tehsilName + ' - ' + item?.districtName + ' - ' + item?.stateName,
             value: item?.pinCode,
             key: item?.id,
         }));
-        // console.log(pinOption, 'pinOption');
         setOptions(pinOption);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,29 +57,30 @@ const AddEditFormMain = (props) => {
     const onErrorAction = () => {};
     const onSuccessAction = () => {};
 
-    const handleOnSelect = (key, option) => {
-        //console.log(key,'KEY')
-        console.log(option,'OPTION')
-        const selectedPinCode = pincodeData?.find((i) => i.id === option?.key);
+    const handleOnSelect = (key) => {
+        console.log(key,'key')
+        console.log(pincodeData,'1')
+        const selectedPinCode = pincodeData?.find((i) => i.id === key);
+        console.log(selectedPinCode,'selectedPinCodeselectedPinCode')
         if (selectedPinCode) {
             form.setFieldsValue({
+                pinCode: selectedPinCode?.pinCode,
+
                 stateCode: selectedPinCode?.stateCode,
                 cityCode: selectedPinCode?.cityCode,
                 tehsilCode: selectedPinCode?.tehsilCode,
                 districtCode: selectedPinCode?.districtCode,
-                // locality: selectedPinCode?.localityName,
 
                 stateName: selectedPinCode?.stateName,
                 cityName: selectedPinCode?.cityName,
                 tehsilName: selectedPinCode?.tehsilName,
                 districtName: selectedPinCode?.districtName,
-                // locality: selectedPinCode?.localityName,
             });
+            forceUpdate();
         }
-
     };
+
     const handleOnSearch = (value) => {
-        console.log(value,'valueConsole');
         if (value.length > 5) {
             setOptions();
             const extraParams = [
@@ -89,8 +89,31 @@ const AddEditFormMain = (props) => {
                     value: value,
                 },
             ];
-            fetchPincodeDetail({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchPincodeDetail({ setIsLoading: pinCodeShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
+    };
+
+    const handleOnClear = () => {
+        setOptions();
+        form.setFieldsValue({
+            pinCode: undefined,
+            state: undefined,
+            city: undefined,
+            tehsil: undefined,
+            district: undefined,
+            locality: undefined,
+        });
+    };
+
+    const handleOnfocus = (e) => {
+        setOptions();
+        const extraParams = [
+            {
+                key: 'pincode',
+                value: e.target.value,
+            },
+        ];
+        fetchPincodeDetail({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
 
     const viewProps = {
@@ -169,7 +192,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                     </Row>
                     <Row gutter={16}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]} 
                                 validateTrigger={['onFinish']}
                             >
@@ -177,8 +200,22 @@ const AddEditFormMain = (props) => {
                                     <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" maxLength={6} />
                                 </AutoComplete>
                             </Form.Item>
-                        </Col>
-                        
+                        </Col> */}
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
+                                    <AutoComplete className={styles.inputBox} options={options} onSelect={handleOnSelect} onFocus={handleOnfocus}>
+                                        <Input.Search onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} type="text" allowClear />
+                                    </AutoComplete>
+                                </Form.Item>
+                            </Col>
+
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
+                                    <AutoComplete className={styles.searchField} options={options} onSelect={handleOnSelect} onFocus={handleOnfocus}>
+                                        <Input.Search onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} type="text" allowClear />
+                                    </AutoComplete>
+                                </Form.Item>
+                            </Col>
                     </Row>
 
                     <Row gutter={16}>
