@@ -38,20 +38,20 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete='off' form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
                 <ViewDetail {...viewProps} />
             ) : (
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.companyCode} label="Company Code" name="companyCode" rules={[validateRequiredInputField('company code'),]}>
+                            <Form.Item initialValue={formData?.companyCode} label="Company Code" name="companyCode" rules={[validateRequiredInputField('company code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('company code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Company Name" initialValue={formData?.companyDescription} rules={[validateRequiredInputField('company name')]} name="companyDescription">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('company name')} maxLength={250}  />
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('company name')} maxLength={250} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                     </Row>

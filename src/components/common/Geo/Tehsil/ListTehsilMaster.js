@@ -210,7 +210,7 @@ export const ListTehsilBase = (props) => {
                 const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
                 const state = filterString?.stateCode;
                 const district = filterString?.districtCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -396,6 +396,12 @@ export const ListTehsilBase = (props) => {
         }
     };
 
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
+        }
+    };
+
     const removeFilter = (key) => {
         if (key === 'countryCode') {
             setFilterString(undefined);
@@ -428,6 +434,7 @@ export const ListTehsilBase = (props) => {
         removeFilter,
         handleResetFilter,
         onSearchHandle,
+        handleClearInSearch,
         setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,

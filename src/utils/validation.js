@@ -73,6 +73,11 @@ export const validateOnlyPositiveNumber = (fieldName, lowercase = true) => ({
     message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
+export const validateNumberOnly = (fieldName, lowercase = true) => ({
+    pattern: /^\d+$/,
+    message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
+});
+
 export const validateGSTIN = (fieldName, lowercase = true) => ({
     pattern: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
     message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),

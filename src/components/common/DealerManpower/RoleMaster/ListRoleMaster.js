@@ -141,7 +141,7 @@ export const ListRoleMasterBase = (props) => {
                 const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
                 const division = filterString?.divisionCode;
                 const department = filterString?.departmentCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.roleDescription) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.roleCode) || filterFunction(keyword)(item?.roleDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -211,6 +211,14 @@ export const ListRoleMasterBase = (props) => {
         if (value?.trim()?.length >= 3) {
             setFilterString({ ...filterString, advanceFilter: true, keyword: value });
             listFilterForm.setFieldsValue({ code: undefined });
+        }
+    };
+
+  
+
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
         }
     };
 
@@ -369,6 +377,7 @@ export const ListRoleMasterBase = (props) => {
         removeFilter,
         handleResetFilter,
         onSearchHandle,
+        handleClearInSearch,
         setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,

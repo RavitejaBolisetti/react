@@ -753,9 +753,17 @@
     align-items: center;
 }
 
-.searchField {
+.searchContainer .searchField {
     vertical-align: middle;
     margin: 0 8px;
+}
+
+.formContainer .searchField {
+    vertical-align: middle;
+}
+
+.formContainer :global .ant-input-suffix {
+    margin-inline-end: 5px;
 }
 
 .headerSearchField {
@@ -970,6 +978,14 @@
 }
 
 /* Crticality group allowed timing css*/
+
+.subTitle {
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+}
+
 
 .allowedTimingAlignment {
     padding: 20px 0 !important;
