@@ -207,46 +207,46 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col> */}
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                            <Form.Item initialValue={pincodeDetails[0]?.cityCode} label="City" name="cityCode">
+                            <Form.Item initialValue={formData?.cityCode} label="City" name="cityCode">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('City')} disabled />
                             </Form.Item>
                         </Col>
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                            <Form.Item initialValue={pincodeDetails[0]?.tehsilCode} label="Tehsil" name="tehsilCode">
+                            <Form.Item initialValue={formData?.tehsilCode} label="Tehsil" name="tehsilCode">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Tehsil')} disabled />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={pincodeDetails[0]?.cityCode} label="City" name="cityName">
+                            <Form.Item initialValue={formData?.cityName} label="City" name="cityName">
                                 <Input className={styles.inputBox} placeholder='City' disabled />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={pincodeDetails[0]?.tehsilCode} label="Tehsil" name="tehsilName">
+                            <Form.Item initialValue={formData?.tehsilName} label="Tehsil" name="tehsilName">
                                 <Input className={styles.inputBox} placeholder='Tehsil' disabled />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                            <Form.Item initialValue={pincodeDetails[0]?.districtCode} label="District" name="districtCode">
+                            <Form.Item initialValue={formData?.districtCode} label="District" name="districtCode">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('District')} disabled />
                             </Form.Item>
                         </Col>
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                            <Form.Item initialValue={pincodeDetails[0]?.stateCode} label="State" name="stateCode">
+                            <Form.Item initialValue={formData?.stateCode} label="State" name="stateCode">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('State')} disabled />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={pincodeDetails[0]?.districtCode} label="District" name="districtName">
+                            <Form.Item initialValue={formData?.districtName} label="District" name="districtName">
                                 <Input className={styles.inputBox} placeholder='District' disabled />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={pincodeDetails[0]?.stateCode} label="State" name="stateName">
+                            <Form.Item initialValue={formData?.stateName} label="State" name="stateName">
                                 <Input className={styles.inputBox} placeholder='State' disabled />
                             </Form.Item>
                         </Col>
