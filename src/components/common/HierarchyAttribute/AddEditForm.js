@@ -5,53 +5,26 @@ import { validateAlphanumericWithSpace, validateRequiredInputField, validationFi
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { withDrawer } from 'components/withDrawer';
 import { ViewHierarchyAttribute } from './ViewHierarchyAttribute';
+import { DrawerFormButton } from 'components/common/Button';
 
 import style from 'components/common/Common.module.css';
 
-const AddEditFormMain = ({ isViewModeVisible, formActionType, setFormActionType, codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave, onCloseAction }) => {
-    const [form] = Form.useForm();
-    const disabledProps = { disabled: isReadOnly };
-    const codeDisabledProp = { disabled: codeIsReadOnly };
-
-    useEffect(() => {
-        form.resetFields();
-        form.setFieldValue(editRow);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [editRow]);
-
-    // const onClose = () => {
-    //     setShowDrawer(false);
-
-    //     form.resetFields();
-    //     setIsReadOnly(false);
-    //     setFormBtnDisable(false);
-    // };
-    const handlesaveandnew = () => {
-        setTimeout(() => {
-            form.resetFields();
-            setEditRow({
-                duplicateAllowedAtAttributerLevelInd: true,
-                duplicateAllowedAtOtherParent: true,
-                isChildAllowed: true,
-                status: true,
-            });
-        }, 1000);
-        setsaveclick(false);
-        setsaveandnewclick(true);
-    };
-    const handesave = () => {
-        setsaveclick(true);
-        setsaveandnewclick(false);
-    };
-
+const AddEditFormMain = ({ isViewModeVisible, form, buttonData, setButtonData, handleButtonClick, formActionType, setFormActionType, codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave, onCloseAction }) => {
     const handleFormSubmitBtn = () => {
-        setFormBtnDisable(true);
+        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const viewProps = {
         isVisible: isViewModeVisible,
         editRow,
         style,
+    };
+    const buttonProps = {
+        formData: editRow,
+        onCloseAction,
+        buttonData,
+        setButtonData,
+        handleButtonClick,
     };
 
     return (
@@ -68,7 +41,7 @@ const AddEditFormMain = ({ isViewModeVisible, formActionType, setFormActionType,
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
-                                    <Input maxLength={6} placeholder={preparePlaceholderText('code')} disabled={formActionType?.editMode} />
+                                    <Input disabled={formActionType?.editMode} maxLength={6} placeholder={preparePlaceholderText('code')} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
@@ -79,25 +52,25 @@ const AddEditFormMain = ({ isViewModeVisible, formActionType, setFormActionType,
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={editRow?.duplicateAllowedAtAttributerLevelInd} label="Duplicate Allowed?" name="duplicateAllowedAtAttributerLevelInd">
-                                    <Switch defaultChecked={editRow?.duplicateAllowedAtAttributerLevelInd} checkedChildren="Active" unCheckedChildren="Inactive" {...disabledProps} />
+                                <Form.Item initialValue={formActionType?.addMode ? false : editRow?.duplicateAllowedAtAttributerLevelInd} label="Duplicate Allowed?" name="duplicateAllowedAtAttributerLevelInd">
+                                    <Switch defaultChecked={formActionType?.addMode ? false : editRow?.duplicateAllowedAtAttributerLevelInd} checkedChildren="Active" unCheckedChildren="Inactive" />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={editRow?.duplicateAllowedAtOtherParent} label="Duplicate Allowed under different Parent?" name="duplicateAllowedAtOtherParent">
-                                    <Switch defaultChecked={editRow?.duplicateAllowedAtOtherParent} checkedChildren="Active" unCheckedChildren="Inactive" {...disabledProps} />
+                                <Form.Item initialValue={formActionType?.addMode ? false : editRow?.duplicateAllowedAtOtherParent} label="Duplicate Allowed under different Parent?" name="duplicateAllowedAtOtherParent">
+                                    <Switch defaultChecked={formActionType?.addMode ? false : editRow?.duplicateAllowedAtOtherParent} checkedChildren="Active" unCheckedChildren="Inactive" />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={editRow?.isChildAllowed} label="Child Allowed?" name="isChildAllowed">
-                                    <Switch defaultChecked={editRow?.isChildAllowed} checkedChildren="Active" unCheckedChildren="Inactive" {...disabledProps} />
+                                <Form.Item initialValue={formActionType?.addMode ? false : editRow?.isChildAllowed} label="Child Allowed?" name="isChildAllowed">
+                                    <Switch defaultChecked={formActionType?.addMode ? false : editRow?.isChildAllowed} checkedChildren="Active" unCheckedChildren="Inactive" />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={editRow?.status} label="Status" name="status">
-                                    <Switch defaultChecked={editRow?.status} checkedChildren="Active" unCheckedChildren="Inactive" {...disabledProps} />
+                                <Form.Item initialValue={formActionType?.addMode ? false : editRow?.status} label="Status" name="status">
+                                    <Switch defaultChecked={formActionType?.addMode ? false : editRow?.status} checkedChildren="Active" unCheckedChildren="Inactive" />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -108,33 +81,7 @@ const AddEditFormMain = ({ isViewModeVisible, formActionType, setFormActionType,
                 ) : (
                     <ViewHierarchyAttribute {...viewProps} />
                 )}
-                <Row gutter={20} className={style.formFooter}>
-                    <Col xs={24} sm={6} md={6} lg={6} xl={6} className={style.footerBtnLeft}>
-                        <Button danger onClick={() => onCloseAction()}>
-                            {formActionType === 'view' ? 'Close' : 'Cancel'}
-                        </Button>
-                    </Col>
-                    <Col xs={24} sm={18} md={18} lg={18} xl={18} className={style.footerBtnRight}>
-                        {formActionType === 'view' ? (
-                            <Button onClick={handleEditView} type="primary">
-                                Edit
-                            </Button>
-                        ) : (
-                            <>
-                                <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handesave} form="myForm" key="submit" htmlType="submit" type="primary">
-                                    Save
-                                </Button>
-                                {formActionType === 'add' ? (
-                                    <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handlesaveandnew} form="myForm" key="submit2" htmlType="submit" type="primary">
-                                        Save & Add New
-                                    </Button>
-                                ) : (
-                                    ''
-                                )}
-                            </>
-                        )}
-                    </Col>
-                </Row>
+                <DrawerFormButton {...buttonProps} />
             </Form>
         </Space>
     );
