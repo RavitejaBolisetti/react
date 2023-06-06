@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch) => ({
 const SessionTimeoutMain = ({ doLogout, showGlobalNotification, userId }) => {
     const navigate = useNavigate();
 
-    const timeout = 12000_000;
+    const timeout = 1200_000;
     const promptBeforeIdle = 30_000;
 
     const [isModalOpen, setIsModalOpen] = useState(false);

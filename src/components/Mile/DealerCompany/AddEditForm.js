@@ -49,6 +49,8 @@ const AddEditFormMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
+   // console.log(dealerParentData,'dealerParentDatadealerParentDatadealerParentDatadealerParentDatadealerParentData')
+
     let groupValue = null;
     let parentGroupId = null;
     const parentName = (values) => {
@@ -197,6 +199,7 @@ const AddEditFormMain = (props) => {
                                 </AutoComplete>
                             </Form.Item>
                         </Col>
+                        
                     </Row>
 
                     <Row gutter={16}>
@@ -226,6 +229,7 @@ const AddEditFormMain = (props) => {
                                 <Input className={styles.inputBox} placeholder='Tehsil' disabled />
                             </Form.Item>
                         </Col>
+                        
                     </Row>
                     <Row gutter={16}>
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
