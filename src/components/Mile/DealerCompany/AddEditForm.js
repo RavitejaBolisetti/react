@@ -19,7 +19,7 @@ const AddEditFormMain = (props) => {
     useEffect(() => {
         const pinOption = pincodeData?.map((item) => ({
             label: item?.pinCode + ' - ' + (item?.localityName ? item?.localityName + '-' : '') + item?.cityName + ' - ' + item?.tehsilName + ' - ' + item?.districtName + ' - ' + item?.stateName,
-            value: item?.pinCode,
+            value: item?.id,
             key: item?.id,
         }));
         setOptions(pinOption);
