@@ -1,5 +1,5 @@
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_LESSOR_COMPANY_MASTER as baseURL } from 'constants/routingApi';
+import { BASE_URL_PARTY_MASTER as baseURL } from 'constants/routingApi';
 
 const PREFIX = 'PARTY_MASTER_';
 const moduleName = 'Party Master';
@@ -23,4 +23,3 @@ export const partyMasterDataActions = dataActions({
     SAVE_DATA_ACTION_CONSTANT,
     RESET_DATA_ACTION_CONSTANT,
 });
-
