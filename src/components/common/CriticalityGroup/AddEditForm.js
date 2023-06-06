@@ -15,7 +15,7 @@ import style from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
     const { formActionType, setIsFormVisible, forceUpdate, showGlobalNotification, onFinish, onFinishFailed, form, formData, setFormData, defaultBtnVisiblity, criticalityGroupData, timeData, setTimeData } = props;
-    const { deletedTime, setDeletedTime, buttonData, setButtonData, handleButtonClick } = props;
+    const { isLoadingOnSave, deletedTime, setDeletedTime, buttonData, setButtonData, handleButtonClick } = props;
 
     const [TimesegmentLengthTracker, setTimesegmentLengthTracker] = useState(generateRandomNumber());
     const [isAddTimeVisible, setIsAddTimeVisible] = useState(false);
@@ -124,7 +124,7 @@ const AddEditFormMain = (props) => {
                 ) : (
                     <ViewCriticalityGroup {...viewProps} {...cardProps} />
                 )}
-                <DrawerFormButton {...buttonProps} />
+                <DrawerFormButton {...buttonProps} isLoadingOnSave={isLoadingOnSave} />
             </Form>
 
             <AllowedTimingList {...listProps} />

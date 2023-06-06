@@ -5,7 +5,12 @@ import { doLogout, unAuthenticateUser } from '../../actions/auth';
 import { LANGUAGE_EN } from 'language/en';
 
 export const dataActions = (params) => {
-    const { baseURL: inBaseURL, RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT } = params;
+    const { baseURL: inBaseURL, RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT } = params;
+
+    const saveFormShowLoading = (isLoading) => ({
+        type: SAVE_FORM_DATA_LOADING_CONSTANT,
+        isLoading,
+    });
 
     const listShowLoading = (isLoading) => ({
         type: RECEIVE_DATA_LOADING_ACTION_CONSTANT,
@@ -42,7 +47,7 @@ export const dataActions = (params) => {
             setIsLoading(true);
 
             const onError = (message) => {
-                onErrorAction(message);
+                onErrorAction && onErrorAction(message);
             };
 
             const onSuccess = (res) => {
@@ -154,6 +159,7 @@ export const dataActions = (params) => {
 
         saveData: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
             const { setIsLoading, onError, data, userId, onSuccess, method = 'post' } = params;
+            // console.log('setIsLoading',setIsLoading)
             setIsLoading(true);
 
             const onSuccessAction = (res) => {
@@ -299,6 +305,9 @@ export const dataActions = (params) => {
         },
         listShowLoading: (isLoading) => (dispatch) => {
             dispatch(listShowLoading(isLoading));
+        },
+        saveFormShowLoading: (isLoading) => (dispatch) => {
+            dispatch(saveFormShowLoading(isLoading));
         },
     };
     return innerDataActions;

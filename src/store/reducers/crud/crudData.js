@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { showLoadingCF } from 'store/reducers/utils/reducerCF/showLoadingCF';
+import { showLoadingSaveCF } from 'store/reducers/utils/reducerCF/showLoadingSaveCF';
 
 export const initialState = {
     isLoaded: false,
@@ -12,6 +13,7 @@ export const initialState = {
     detailData: [],
     extraParam: [],
     filter: undefined,
+    isLoadingOnSave: false,
 };
 
 const recieveDataCF = (state, action) => ({
@@ -52,11 +54,13 @@ const resetDataCF = (state, action) => ({
 });
 
 export const crudDataReducer =
-    ({ RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, SAVE_DATA_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, myInitialState = initialState }) =>
+    (RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, SAVE_DATA_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT, myInitialState = initialState) =>
     (state = myInitialState, action) => {
         switch (action.type) {
             case RECEIVE_DATA_LOADING_ACTION_CONSTANT:
                 return showLoadingCF(state, action);
+            case SAVE_FORM_DATA_LOADING_CONSTANT:
+                return showLoadingSaveCF(state, action);
             case RECEIVE_DATA_ACTION_CONSTANT:
                 return recieveDataCF(state, action);
             case RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT:

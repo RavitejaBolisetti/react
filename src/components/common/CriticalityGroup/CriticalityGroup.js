@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            CriticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [] },
+            CriticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [], isLoadingOnSave },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -36,6 +36,7 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isLoading,
         criticalityGroupData,
+        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -46,6 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: criticalityDataActions.fetchList,
             saveData: criticalityDataActions.saveData,
+            saveFormShowLoading: criticalityDataActions.saveFormShowLoading,
             listShowLoading: criticalityDataActions.listShowLoading,
             showGlobalNotification,
         },
@@ -54,11 +56,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CriticalityGroupMain = (props) => {
-    const { moduleTitle, fetchList, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification } = props;
-
+    const { saveFormShowLoading, isLoadingOnSave, moduleTitle, fetchList, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
-
+console.log("isLoadingOnSave",isLoadingOnSave)
     const [refershData, setRefershData] = useState(false);
     const [formData, setFormData] = useState({});
     const [forceFormReset, setForceFormReset] = useState(false);
@@ -130,6 +131,7 @@ export const CriticalityGroupMain = (props) => {
     }, [refershData]);
 
     const onFinish = (values) => {
+        saveFormShowLoading(true)
         const modifiedDeletedTime = deletedTime.concat(timeData);
 
         const modifiedTimeData = modifiedDeletedTime?.map((element) => {
@@ -140,7 +142,6 @@ export const CriticalityGroupMain = (props) => {
         const data = { ...values, id: recordId, allowedTimings: modifiedTimeData || [] };
         setDeletedTime([]);
         const onSuccess = (res) => {
-            setShowDataLoading(true);
             form.resetFields();
             setForceFormReset(generateRandomNumber());
             setTimeData([]);
@@ -165,7 +166,7 @@ export const CriticalityGroupMain = (props) => {
         const requestData = {
             data: [data],
             method: 'post',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
@@ -250,6 +251,7 @@ export const CriticalityGroupMain = (props) => {
         setTimeData,
         deletedTime,
         setDeletedTime,
+        isLoadingOnSave,
     };
 
     const handleClearInSearch = (e) => {
