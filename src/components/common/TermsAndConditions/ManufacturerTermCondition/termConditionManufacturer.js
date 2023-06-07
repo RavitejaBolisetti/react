@@ -208,13 +208,15 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         form.resetFields();
         setFormData([]);
 
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, isViewModeVisible : buttonAction === VIEW_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: false, cancelBtn: true });
-
+        if(buttonAction === "view"){
+            setIsViewModeVisible(true);
+        }
         record && setFormData(record);
-        if (record?.effectiveFrom && record?.effectiveTo && (formActionType?.editMode || formActionType?.viewMode)) {
-            const effectiveFromDateData = moment(record?.effectiveFrom);
-            const effectiveToDateData = moment(record?.effectiveTo);
+        if (record?.effectivefrom && record?.effectiveto && (formActionType?.editMode || formActionType?.viewMode)) {
+            const effectiveFromDateData = moment(record?.effectivefrom).format('YYYY/MM/DD');
+            const effectiveToDateData = moment(record?.effectiveto).format('YYYY/MM/DD');
 
             seteffectiveFrom(effectiveFromDateData);
             seteffectiveTo(effectiveToDateData);
@@ -235,11 +237,14 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const onFinish = (values, e) => {
         const recordId = formData?.id || '';
         const newVersion = values.version ? Number(values?.version) + 0.1 : 1.0;
-        console.log('typeof', typeof termsAndCondition);
+        let toDate = (values?.effectiveto).format('YYYY-MM-DD');
+        let fromDate = (values?.effectivefrom).format('YYYY-MM-DD');
+        //console.log(fromDate);
+        //console.log('typeof', typeof termsAndCondition);
         const termConsitionText = termsAndCondition.replace(/[&\/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
-        const data = { ...values, productName: productName, documentTypeName: documentName, language: languageName, version: String(newVersion), id: recordId, termsConditions: termConsitionText };
-        console.log('data', data, termConsitionText);
-        return;
+        const data = { ...values, version: String(newVersion), termsconditiondescription: termConsitionText, effectivefrom:fromDate, effectiveto:toDate };
+        //console.log('data', data, termConsitionText);
+        //return;
         const onSuccess = (res) => {
             listShowLoading(false);
             form.resetFields();
@@ -255,7 +260,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         };
 
         setTimeout(() => {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchTermCondition({ setIsLoading: listShowLoading, userId });
         }, 2000);
 
         const onError = (message) => {
@@ -462,6 +467,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setProductName,
         documentName,
         setDocumentName,
+        setTermsAndCondition,
         languageName,
         setLanguageName,
         CustomEditor,
