@@ -59,6 +59,20 @@ export const MenuConstant = {
         parentMenuId: 'COMN-03',
     },
 
+    [getMenyKey('COMN-03.04')]: {
+        key: 'COMN-03.04',
+        link: routing.ROUTING_COMMON_TERM_CONDITION_MANUFACTURER,
+        icon: undefined,
+        parentMenuId: 'COMN-03',
+    },
+
+    [getMenyKey('COMN-03.05')]: {
+        key: 'COMN-03.05',
+        link: routing.ROUTING_COMMON_TERM_CONDITION_DEALER,
+        icon: undefined,
+        parentMenuId: 'COMN-03',
+    },
+
     [getMenyKey('PMA')]: {
         key: 'PMA',
         link: routing.ROUTING_COMMON_PRODUCT_MASTER,
