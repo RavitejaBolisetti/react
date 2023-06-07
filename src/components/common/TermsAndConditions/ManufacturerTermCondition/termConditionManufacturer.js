@@ -49,7 +49,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    // console.log('Redux state:', state);
+    console.log('Redux state:', state);
 
     const moduleTitle = 'Term & Condition';
 
