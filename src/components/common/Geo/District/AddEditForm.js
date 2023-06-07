@@ -20,7 +20,7 @@ const AddEditFormMain = (props) => {
     };
 
     if (stateData && formData?.stateCode) {
-        if (stateData.find((attribute) => attribute.code === formData?.stateCode)) {
+        if (stateData.find((attribute) => attribute.key === formData?.stateCode)) {
             stateFieldValidation.initialValue = formData?.stateCode;
         } else {
             const Attribute = unFilteredStateData.find((attribute) => attribute.id === formData?.attributeKey);
@@ -90,7 +90,7 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" {...stateFieldValidation}>
                                 <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps} onChange={handleStateChange}>
                                     {stateData?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
+                                        <Option value={item?.key}>{item?.value}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>

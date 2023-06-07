@@ -19,6 +19,7 @@ import { PartyMaster } from './partyMaster';
 import { TermCondition } from './termsConditions';
 import { DealerHierarchy } from './dealer';
 import { PincodeDetails } from './pincodeDetails';
+import { LessorCompanyMaster } from './lessorCompanyMaster';
 
 export const data = combineReducers({
     Menu,
@@ -41,4 +42,5 @@ export const data = combineReducers({
     TermCondition,
     DealerHierarchy,
     PincodeDetails,
+    LessorCompanyMaster,
 });

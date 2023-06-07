@@ -2,10 +2,6 @@
     float: left;
 }
 
-.modalContainer :global .ant-input {
-    width: 88%;
+.modalContainer :global .ant-input-suffix {
+    margin-inline-end: 6px
 }
-
-@media screen and (max-width: 1199px) {}
-
-@media screen and (max-width: 767px) {}
