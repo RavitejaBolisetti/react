@@ -12,11 +12,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             dataIndex: 'partyCode',
             width: '15%',
         }),
-        tblPrepareColumns({
-            title: 'Party Category',
-            dataIndex: 'partyCategory',
-            width: '15%',
-        }),
 
         tblPrepareColumns({
             title: 'Party Name',
@@ -24,6 +19,11 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '20%',
         }),
 
+        tblPrepareColumns({
+            title: 'Party Category',
+            dataIndex: 'partyCategory',
+            width: '15%',
+        }),
         tblActionColumn({ handleButtonClick, styles })
     );
 

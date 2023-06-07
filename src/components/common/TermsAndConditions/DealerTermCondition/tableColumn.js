@@ -3,8 +3,9 @@ import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'ant
 import { FiEdit, FiEye } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { convertDate } from 'utils/formatDateTime';
 
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, page, pageSize) => {
     const tableColumn = [];
 
     tableColumn.push(
@@ -19,18 +20,18 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Document Type',
             dataIndex: 'documentTypeCode',
-            width: '20%',
+            width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Language',
-            dataIndex: 'languageCode',
+            dataIndex: 'language',
             width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Description',
-            dataIndex: 'documentDescription',
+            dataIndex: 'termConditionDescription',
             width: '15%',
         }),
         tblPrepareColumns({
@@ -42,11 +43,13 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Effective From',
             dataIndex: 'effectiveFrom',
             width: '15%',
+            render: (text) => convertDate(text),
         }),
         tblPrepareColumns({
             title: 'Effective To',
             dataIndex: 'effectiveTo',
             width: '15%',
+            render: (text) => convertDate(text),
         }),
         // tblPrepareColumns({
         //     title: 'MFG T&C',
@@ -66,8 +69,22 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         //     },
         // }),
         tblPrepareColumns({
+            title: 'MFG T&C',
+            width: '10%',
+            sorter: false,
+            render: (text, record, index) => {
+                return (
+                    <Space>
+                        <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleManufacturerButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
+                            <FiEye />
+                        </Button>
+                    </Space>
+                );
+            },
+        }),
+        tblPrepareColumns({
             title: 'View',
-            width: '15%',
+            width: '10%',
             sorter: false,
             render: (text, record, index) => {
                 return (

@@ -753,9 +753,17 @@
     align-items: center;
 }
 
-.searchField {
+.searchContainer .searchField {
     vertical-align: middle;
     margin: 0 8px;
+}
+
+.formContainer .searchField {
+    vertical-align: middle;
+}
+
+.formContainer :global .ant-input-suffix {
+    margin-inline-end: 5px;
 }
 
 .headerSearchField {
@@ -971,6 +979,14 @@
 
 /* Crticality group allowed timing css*/
 
+.subTitle {
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+}
+
+
 .allowedTimingAlignment {
     padding: 20px 0 !important;
     font-size: 16px;
@@ -1072,10 +1088,16 @@
 
 .tableIcons {
     border: none !important;
+    /* color: #ff3e5b !important; */
     padding: 0px;
     box-shadow: transparent !important;
     width: 18px !important;
 }
+
+/* .tableIcons:hover,
+.tableIcons:hover svg {
+    color: #ff3e5b !important;
+} */
 
 .searchContainer {
     background-color: #f4f4f4;
@@ -1274,7 +1296,8 @@
 }
 
 .advanceFilterTop {
-    margin-top: 10px;
+    margin-top: 18px;
+    margin-bottom: -8px;
     padding-top: 8px;
     border-top: solid 1px #e6e6e6;
 }
@@ -1314,9 +1337,13 @@
 }
 
 .advanceFilterTop .advanceFilterItem span {
-    vertical-align: middle;
+    vertical-align: text-bottom;
     margin-left: 4px;
     cursor: pointer;
+}
+
+.advanceFilterTop .advanceFilterItem span svg {
+    vertical-align: middle;
 }
 
 .advanceFilterTop .clearBtn {
@@ -1420,60 +1447,6 @@
 .advanceTimingContainer :global .ant-card-bordered {
     border: 1px solid #B5B5B6;
     background-color: #B5B5B6;
-}
-
-.advanceFilterTop {
-    margin-top: 18px;
-    margin-bottom: -8px;
-    padding-top: 8px;
-    border-top: solid 1px #e6e6e6;
-}
-
-.advanceFilterContainer {
-    display: flex;
-    flex-flow: wrap;
-    /* margin: 0 0 0 8px; */
-    /* align-items: center; */
-}
-
-.advanceFilterClear {
-    display: flex;
-    align-items: center;
-    flex-direction: row-reverse;
-    margin-bottom: -2px;
-}
-
-.advanceFilterTop .advanceFilterTitle {
-    padding: 10px 0px;
-    margin-right: 10px;
-    width: 160px;
-}
-
-/* .advanceFilterTop .advanceFilterItem:first-child {
-    margin-left: -40px;
-} */
-
-.advanceFilterTop .advanceFilterItem {
-    height: 30px;
-    border-radius: 20px;
-    margin-top: 6px;
-    padding: 4px 10px;
-    border: solid 1px #ff3e5b;
-    color: #ff3e5b;
-    line-height: 18px;
-    margin-right: 12px;
-}
-
-.advanceFilterTop .advanceFilterItem span {
-    vertical-align: middle;
-    margin-left: 4px;
-    cursor: pointer;
-}
-
-.advanceFilterTop .clearBtn {
-    float: right !important;
-    height: 30px !important;
-    line-height: 16px;
 }
 
 @media (max-width: 768px) {

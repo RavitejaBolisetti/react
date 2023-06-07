@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider } from 'antd';
+import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 
-import { geoPincodeDetailsActions } from 'store/actions/data/pincodeDetails';
+import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 
@@ -15,15 +15,8 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
-import { PlusOutlined } from '@ant-design/icons';
-import { TfiReload } from 'react-icons/tfi';
-
-import styles from 'components/common/Common.module.css';
-
-const { Search } = Input;
 
 const mapStateToProps = (state) => {
     const {
@@ -31,7 +24,9 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { isLoaded: isPartyDataLoaded = false, isPartyDataLoading, data: configData = [], paramdata: typeData = [] },
             PartyMaster: { isLoaded: isDataLoaded = false, isLoading, data, detailData },
-            PincodeDetails: { isLoaded: isPincodeDataLoaded = false, isLoadingPincodeList, detailData: pincodeData },
+            Geo: {
+                Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
+            },
         },
     } = state;
 
@@ -44,11 +39,11 @@ const mapStateToProps = (state) => {
         configData,
         typeData,
         isDataLoaded,
-        isPincodeDataLoaded,
+        isPinCodeDataLoaded,
+        isPinCodeLoading,
         data,
         detailData,
         isLoading,
-        isLoadingPincodeList,
         pincodeData,
         moduleTitle,
     };
@@ -59,7 +54,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchPincodeDetail: geoPincodeDetailsActions.fetchDetail,
             configFetchList: configParamEditActions.fetchList,
             configListShowLoading: configParamEditActions.listShowLoading,
             fetchList: partyMasterDataActions.fetchList,
@@ -67,6 +61,9 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: partyMasterDataActions.saveData,
             listShowLoading: partyMasterDataActions.listShowLoading,
             showGlobalNotification,
+
+            listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
+            fetchPincodeDetail: geoPincodeDataActions.fetchList,
         },
         dispatch
     ),
@@ -75,7 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const ListPartyMasterBase = (props) => {
     const { data, detailData, saveData, fetchList, fetchDetail, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { typeData, configFetchList, configListShowLoading } = props;
-    const { isPincodeDataLoaded, fetchPincodeDetail, isLoadingPincodeList, pincodeData } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -95,6 +92,8 @@ export const ListPartyMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [recordData, setRecordData] = useState();
+
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -125,7 +124,7 @@ export const ListPartyMasterBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.partyCode) || filterFunction(keyword)(item?.partyName) || filterFunction(keyword)(item?.partyCategory) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.partyName) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -144,6 +143,7 @@ export const ListPartyMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
+        forceUpdate();
         if (buttonAction === EDIT_ACTION || buttonAction === VIEW_ACTION) {
             fetchDetail({ setIsLoading: listShowLoading, userId, partyCode: `${record?.partyCode}` });
             setRecordData(record);
@@ -153,8 +153,6 @@ export const ListPartyMasterBase = (props) => {
 
         setIsFormVisible(true);
     };
-
-    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
     const onFinish = (values) => {
         let data = { ...values, creditLimit: parseFloat(values?.creditLimit) };
@@ -236,9 +234,12 @@ export const ListPartyMasterBase = (props) => {
         setFormData,
         detailData,
 
+        listPinCodeShowLoading,
         fetchPincodeDetail,
-        isLoadingPincodeList,
+        isPinCodeLoading,
         pincodeData,
+
+        forceUpdate,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -271,81 +272,11 @@ export const ListPartyMasterBase = (props) => {
 
     return (
         <>
-            {/* <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
-                                        Party Name
-                                    </Col>
-
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
-                                    </Col>
-                                </Row>
-                            </Col>
-
-                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add
-                                </Button>
-                            </Col>
-                        </Row>
-                    </div>
-                </Col>
-            </Row>
-
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() =>
-                            isDataLoaded && (
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        !searchData?.length ? (
-                                            <span>
-                                                No records found. Please add new parameter <br />
-                                                using below button
-                                            </span>
-                                        ) : (
-                                            <span> No records found.</span>
-                                        )
-                                    }
-                                >
-                                    {!searchData?.length ? (
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                    Add Party
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    ) : (
-                                        ''
-                                    )}
-                                </Empty>
-                            )
-                        }
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={showDataLoading} {...tableProps} />
-                        </div>
-                    </ConfigProvider>
-                </Col>
-            </Row>
-            <AddEditForm {...formProps} /> */}
-
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
+
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />

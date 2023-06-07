@@ -9,6 +9,9 @@ import { ViewTermConditionList } from './ViewTermConditionList';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
+import { convertDate } from 'utils/formatDateTime';
+import { convertCalenderDate } from 'utils/formatDateTime';
+import { ChangeHistory } from './changeHistoryForm';
 
 const { Option } = Select;
 
@@ -16,10 +19,11 @@ const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { editMode, isViewModeVisible } = undefined, onFinish, onFinishFailed, footerEdit, setIsFormVisible, onSaveShowLoading } = props;
     const { CustomEditor } = props;
     const { buttonData, setButtonData, handleButtonClick, formActionType, effectiveFrom, effectiveTo, seteffectiveFrom, seteffectiveTo } = props;
-    const { productName, setProductName } = props;
+    const { productName, setProductName, CustomEditorLoad, setCustomEditorLoad } = props;
     const { documentName, setDocumentName } = props;
     const { languageName, setLanguageName } = props;
     const { termsAndCondition, setTermsAndCondition } = props;
+    const { tableChangeHistoryProps } = props;
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState();
 
@@ -28,6 +32,7 @@ const AddEditFormMain = (props) => {
     };
     useEffect(() => {
         form.resetFields();
+        setCustomEditorLoad(Math.random());
     }, [effectiveFrom, effectiveTo]);
     const { TextArea } = Input;
 
@@ -65,10 +70,13 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
         saveButtonName: 'Add T&C',
     };
-    const dateFormat = 'YYYY/MM/DD';
+
+    const dateInitialValue = { initialValue: convertCalenderDate(formData?.includedOn, 'YYYY/MM/DD') };
+
+    // const dateFormat = 'YYYY/MM/DD';
     return (
         <Form autoComplete="off" form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} onFieldsChange={handleFormFieldChange}>
-            {!isViewModeVisible ? (
+            {!formActionType?.viewMode && !formActionType.changeHistoryMode ? (
                 <>
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -102,7 +110,7 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.languageCode} label="Language" name="languageCode">
                                 <Select disabled={formActionType?.viewMode} onSelect={handleLanguageSelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {languageList?.map((item) => (
-                                        <Option value={item.value}>{item.value}</Option>
+                                        <Option value={item.key}>{item.value}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>
@@ -120,8 +128,8 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item disabled={formActionType?.viewMode} initialValue={formData?.termConditionDescription} label="Terms & Conditions" name="termsConditions">
-                                <CustomEditor onChange={onChangeCkEditor} />
+                            <Form.Item disabled={formActionType?.viewMode} initialValue={formData?.termConditionDescription} label="Terms & Conditions" name="termConditionDescription">
+                                {CustomEditorLoad && <CustomEditor onChange={onChangeCkEditor} />}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -134,17 +142,19 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={effectiveFrom} label="Effective From" name="effectiveFrom" rules={[validateRequiredInputField('date')]}>
-                                <DatePicker format={dateFormat} disabled={formActionType?.viewMode} style={{ width: '100%' }} selected={startDate} onChange={(date) => setStartDate(date)} selectsStart startDate={startDate} endDate={endDate} maxDate={endDate} />
+                            <Form.Item {...dateInitialValue} label="Effective From" name="effectiveFrom" rules={[validateRequiredInputField('date')]}>
+                                <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} style={{ width: '100%' }} selected={startDate} onChange={(date) => setStartDate(date)} selectsStart startDate={startDate} endDate={endDate} maxDate={endDate} />
                             </Form.Item>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={effectiveTo} label="Effective To" name="effectiveTo">
-                                <DatePicker format={dateFormat} disabled={formActionType?.viewMode} style={{ width: '100%' }} selected={endDate} onChange={(date) => setEndDate(date)} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} />
+                            <Form.Item {...dateInitialValue} label="Effective To" name="effectiveTo">
+                                <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} style={{ width: '100%' }} selected={endDate} onChange={(date) => setEndDate(date)} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} />
                             </Form.Item>
                         </Col>
                     </Row>
                 </>
+            ) : formActionType.changeHistoryMode ? (
+                <ChangeHistory {...tableChangeHistoryProps} />
             ) : (
                 <ViewTermConditionList {...viewProps} />
             )}

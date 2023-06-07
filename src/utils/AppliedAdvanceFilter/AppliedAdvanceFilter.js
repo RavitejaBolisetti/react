@@ -2,17 +2,17 @@ import { Button, Row, Col, Form, Input } from 'antd';
 import { searchValidator } from 'utils/validation';
 import { RxCross2 } from 'react-icons/rx';
 import { FilterIcon } from 'Icons';
-// import styles from './AppliedAdvanceFilter.module.css';
 import styles from 'components/common/Common.module.css';
 
 import { TfiReload } from 'react-icons/tfi';
+import { BsDownload } from 'react-icons/bs';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { advanceFilter = false, title, showAddButton = true, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator } = props;
+    const { showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -35,7 +35,7 @@ export default function AppliedAdvanceFilter(props) {
                                         ]}
                                         validateTrigger={['onSearch']}
                                     >
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={handleClearInSearch} onPressEnter={false} />
+                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={handleClearInSearch} />
                                     </Form.Item>
                                 </Form>
                             </Col>
@@ -55,16 +55,26 @@ export default function AppliedAdvanceFilter(props) {
                             )}
                         </Row>
                     </Col>
+                    {(showChangeHistoryButton || showAddButton) && (
+                        <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                            {showChangeHistoryButton && (
+                                <>
+                                    <Button onClick={showChangeHistoryList} className={styles.actionbtn} type="primary" danger>
+                                        Change History
+                                    </Button>
+                                </>
+                            )}
 
-                    {showAddButton && (
-                        <>
-                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add
+                            {advanceFilter && filterString?.advanceFilter && downloadReport && (
+                                <Button icon={<BsDownload />} className={styles.refreshBtn} onClick={handleDownloadReport} danger>
+                                    Download
                                 </Button>
-                            </Col>
-                        </>
+                            )}
+                            <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                Add
+                            </Button>
+                        </Col>
                     )}
                 </Row>
                 {advanceFilter && filterString?.advanceFilter && (

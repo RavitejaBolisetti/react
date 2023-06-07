@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: configData = [], paramdata: typeData = [] },
+            ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: configData = [], paramdata: typeData = [], isLoadingOnSave },
         },
     } = state;
 
@@ -48,6 +48,7 @@ const mapStateToProps = (state) => {
         typeData,
         isLoading,
         moduleTitle,
+        isLoadingOnSave,
         configData: configDataFinal,
     };
     return returnValue;
@@ -59,6 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: configParamEditActions.fetchList,
             saveData: configParamEditActions.saveData,
+            saveFormShowLoading: configParamEditActions.saveFormShowLoading,
             fetchDataList: configParamEditActions.fetchDataList,
             listShowLoading: configParamEditActions.listShowLoading,
             showGlobalNotification,
@@ -66,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+export const ConfigurableParameterEditingBase = ({saveFormShowLoading,isLoadingOnSave, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const defaultParametarType = CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -309,7 +311,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
 
         const requestData = {
             data: [data],
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
@@ -358,6 +360,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
+        isLoadingOnSave,
     };
     return (
         <>
