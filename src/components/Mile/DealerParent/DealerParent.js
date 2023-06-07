@@ -151,10 +151,8 @@ export const DealerParentBase = (props) => {
     };
 
     const handleClearInSearch = (e) => {
-        if (e?.target?.value === '') {
-            setFilterString();
-            listFilterForm.resetFields();
-            setShowDataLoading(false);
+        if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
         }
     };
 
