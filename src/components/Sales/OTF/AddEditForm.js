@@ -9,6 +9,8 @@ import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react
 import styles from 'components/common/Common.module.css';
 
 import FormProgressBar from './FormProgressBar';
+import { VehicleDetailsMasterMain } from './VehicleDetails';
+// import {VehicleDetailsMaster} from './VehicleDetails/';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -121,22 +123,13 @@ const AddEditFormMain = (props) => {
     };
 
     const renderElement = () => {
-        if (toggleButton?.individual) {
-            if (leftTimeline?.AccountRelated) {
-            } else if (leftTimeline?.CustomerDetails) {
-            } else if (leftTimeline?.Address) {
-            } else if (leftTimeline?.Contacts) {
-            } else if (leftTimeline?.IndividualProfile) {
-            } else if (leftTimeline?.FamilyDetails) {
-            }
-        } else {
-            if (leftTimeline?.CustomerDetails) {
-            } else if (leftTimeline?.CustomerProfile) {
-            } else if (leftTimeline?.AccountRelated) {
-            } else if (leftTimeline?.Contacts) {
-            } else if (leftTimeline?.Address) {
-            } else if (leftTimeline?.IndividualProfile) {
-            }
+        if (leftTimeline?.AccountRelated) {
+        } else if (leftTimeline?.CustomerDetails) {
+            return <VehicleDetailsMasterMain />;
+        } else if (leftTimeline?.Address) {
+        } else if (leftTimeline?.Contacts) {
+        } else if (leftTimeline?.IndividualProfile) {
+        } else if (leftTimeline?.FamilyDetails) {
         }
     };
 
@@ -177,7 +170,6 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                             {renderElement()}
-
                             {/* <CommonFooterButton {...commonfooterProps} /> */}
                         </Col>
                     </Row>
