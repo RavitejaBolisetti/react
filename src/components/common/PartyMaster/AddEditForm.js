@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select } from 'antd';
+import { Col, Input, Form, Row, Select, AutoComplete } from 'antd';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber, validatePincodeField, validateAlphanumericWithSpace, validateMobileNoField, validatePanField, validateGSTIN, validationNumber, validateOnlyPositiveNumber, valueBetween0to100, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validateRequiredInputField, validatePincodeField, validateMobileNoField, validatePanField, validateGSTIN, validateNumberOnly, valueBetween0to100, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -9,45 +9,43 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 
 import styles from 'components/common/Common.module.css';
-import { AddressAddEdit } from 'utils/AddressAddEditForm';
 
 const { Option } = Select;
-const { Search } = Input;
+
+const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { form, formData, recordData, detailData, listShowLoading, userId, fetchDetail, setFormData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
 
-    const { typeData } = props;
+    const { typeData, forceUpdate, isVisible } = props;
 
     const { buttonData, setButtonData, handleButtonClick } = props;
 
-    const { fetchPincodeDetail, isLoadingPincodeList, pincodeData } = props;
+    const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail } = props;
 
-    const [addressSelectForm] = Form.useForm();
+    const [options, setOptions] = useState(false);
 
-    const [isAddressSelectVisible, setIsAddressSelectVisible] = useState(false);
-    const [pinFormData, setPinFormData] = useState();
+    const disabledProps = { disabled: editMode && formData?.partyCategory === 'Principal' ? true : false };
 
-    const [filteredStateData, setFilteredStateData] = useState(pincodeData?.state);
-
-    const [filteredDistrictData, setFilteredDistrictData] = useState(pincodeData?.district);
-    const [filteredCityData, setFilteredCityData] = useState(pincodeData?.city);
-    const [filteredTehsilData, setFilteredTehsilData] = useState(pincodeData?.tehsil);
-
-    const onErrorAction = () => {};
-
-    const onSuccessAction = () => {
-        form.setFieldsValue({
-            state: pincodeData?.state[0].stateName,
-            city: pincodeData?.city[0].name,
-            tehsil: pincodeData?.tehsil[0].tehsilName,
-            district: pincodeData?.district[0].name,
-        });
+    const onErrorAction = (res) => {
+        // console.log('error');
     };
+
+    const onSuccessAction = () => {};
+
+    useEffect(() => {
+        const pinOption = pincodeData?.map((item) => ({
+            label: item?.pinCode + ' - ' + (item?.localityName ? item?.localityName + '-' : '') + item?.cityName + ' -' + item?.districtName + ' -' + item?.stateName,
+            value: item?.id,
+            key: item?.id,
+        }));
+        setOptions(pinOption);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pincodeData]);
 
     useEffect(() => {
         if (editMode || viewMode) {
-            fetchDetail({ setIsLoading: listShowLoading, userId, partyCode: `${recordData?.partyCode}` });
+            fetchDetail({ setIsLoading: listShowLoading, userId, partyCode: `${recordData?.partyCode}`, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -64,6 +62,11 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [detailData]);
 
+    useEffect(() => {
+        setOptions();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isVisible]);
+
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -72,16 +75,55 @@ const AddEditFormMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    const handleOnSearch = (value) => {
-        addressSelectForm.resetFields();
-
-        form.validateFields(['pinCode'])
-            .then(() => {
-                fetchPincodeDetail({ setIsLoading: listShowLoading, userId, code: `${value}`, onSuccessAction, onErrorAction });
-            })
-            .catch((err) => {
-                console.log('err', err);
+    const handleOnSelect = (key, option) => {
+        const selectedPinCode = pincodeData?.find((i) => i.id === key);
+        if (selectedPinCode) {
+            form.setFieldsValue({
+                pinCode: selectedPinCode?.pinCode,
+                state: selectedPinCode?.stateName,
+                city: selectedPinCode?.cityName,
+                tehsil: selectedPinCode?.tehsilName,
+                district: selectedPinCode?.districtName,
+                locality: selectedPinCode?.localityName,
             });
+            forceUpdate();
+        }
+    };
+
+    const handleOnSearch = (value) => {
+        if (value.length > 5) {
+            setOptions();
+            const extraParams = [
+                {
+                    key: 'pincode',
+                    value: value,
+                },
+            ];
+            fetchPincodeDetail({ setIsLoading: listPinCodeShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        }
+    };
+
+    const handleOnClear = () => {
+        setOptions();
+        form.setFieldsValue({
+            pinCode: undefined,
+            state: undefined,
+            city: undefined,
+            tehsil: undefined,
+            district: undefined,
+            locality: undefined,
+        });
+    };
+
+    const handleOnfocus = (e) => {
+        setOptions();
+        const extraParams = [
+            {
+                key: 'pincode',
+                value: e.target.value,
+            },
+        ];
+        fetchPincodeDetail({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
 
     const viewProps = {
@@ -98,20 +140,6 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
-    const addressAddEditFormProps = {
-        isVisible: isAddressSelectVisible,
-        onCloseAction: () => {
-            setIsAddressSelectVisible(false);
-            addressSelectForm.resetFields();
-        },
-        titleOverride: 'Address',
-        form,
-        addressSelectForm,
-        formData,
-        pinFormData,
-        pincodeData,
-        setIsAddressSelectVisible,
-    };
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: true,
@@ -121,7 +149,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" className={styles.formContainer} autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 {viewMode ? (
                     <ViewDetail {...viewProps} />
                 ) : (
@@ -129,7 +157,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={16}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Form.Item initialValue={formData?.partyCategory} disabled label="Party Category" name="partyCategory" placeholder={preparePlaceholderSelect('party category')} rules={[validateRequiredInputField('party category')]}>
-                                    <Select disabled={editMode && formData?.partyCategory === 'Principal' ? true : false} className={styles.headerSelectField} showSearch loading={!(typeData?.PTY_CAT?.length !== 0)} placeholder="Select" allowClear>
+                                    <Select {...disabledProps} className={styles.headerSelectField} loading={!(typeData?.PTY_CAT?.length !== 0)} placeholder="Select" {...selectProps}>
                                         {typeData?.PTY_CAT?.map((item) => (
                                             <Option value={item?.value}>{item?.value}</Option>
                                         ))}
@@ -137,128 +165,136 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item label="Party Code" initialValue={formData?.partyCode} rules={[validateRequiredInputField('party code'), validateAlphanumericWithSpace('party code')]} name="partyCode">
+                                <Form.Item label="Party Code" initialValue={formData?.partyCode} rules={[validateRequiredInputField('party code')]} name="partyCode">
                                     <Input className={styles.inputBox} placeholder={preparePlaceholderText('party code')} maxLength={6} disabled={editMode ? true : false} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={16}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item initialValue={formData?.partyName} label="Party Name" name="partyName" rules={[validateRequiredInputField('party name'), validateAlphanumericWithSpace('party name')]}>
-                                    <Input disabled={editMode && formData?.partyCategory === 'Principal' ? true : false} className={styles.inputBox} placeholder={preparePlaceholderText('party name')} />
+                                <Form.Item initialValue={formData?.partyName} label="Party Name" name="partyName" rules={[validateRequiredInputField('party name')]}>
+                                    <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('party name')} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item label="Contact Person Name" initialValue={formData?.contactPersonName} rules={[validateRequiredInputField('contact person name'), validateAlphanumericWithSpace('contact person name')]} name="contactPersonName">
-                                    <Input disabled={editMode && formData?.partyCategory === 'Principal' ? true : false} className={styles.inputBox} placeholder={preparePlaceholderText('contact person name')} maxLength={50} />
+                                <Form.Item label="Contact Person Name" initialValue={formData?.contactPersonName} rules={[validateRequiredInputField('contact person name')]} name="contactPersonName">
+                                    <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('contact person name')} maxLength={50} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={16}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item initialValue={formData?.designation} label="Designation" name="designation" rules={[validateRequiredInputField('designation'), validationFieldLetterAndNumber('designation')]}>
-                                    <Input disabled={editMode && formData?.partyCategory === 'Principal' ? true : false} className={styles.inputBox} placeholder={preparePlaceholderText('designation')} maxLength={50} />
+                                <Form.Item initialValue={formData?.designation} label="Designation" name="designation" rules={[validateRequiredInputField('designation')]}>
+                                    <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('designation')} maxLength={50} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]} name="mobileNumber">
-                                    <Input disabled={editMode && formData?.partyCategory === 'Principal' ? true : false} className={styles.inputBox} placeholder={preparePlaceholderText('mobile number')} maxLength={10} />
+                                    <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('mobile number')} maxLength={10} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <p className={styles.allowedTimingAlignment}>Party Address and Contact Details</p>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitle}>
+                                Party Address and Contact Details
                             </Col>
                         </Row>
                         <Row gutter={16}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={formData?.address} label="Address" name="address" rules={[validateRequiredInputField('address')]}>
-                                    <Input disabled={editMode && formData?.partyCategory === 'Principal' ? true : false} className={styles.inputBox} placeholder={preparePlaceholderText('address')} maxLength={50} />
+                                    <TextArea rows={2} {...disabledProps} placeholder={preparePlaceholderText('Address')} showCount maxLength={255} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={16}>
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('pin code'), validatePincodeField('pin code')]}>
-                                    <Search disabled={editMode && formData?.partyCategory === 'Principal' ? true : false} className={styles.inputBox} onSearch={handleOnSearch} placeholder={preparePlaceholderText('pin code')} maxLength={6} />
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
+                                    <AutoComplete {...disabledProps} className={styles.searchField} options={options} onSelect={handleOnSelect} onFocus={handleOnfocus}>
+                                        <Input.Search onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} type="text" allowClear />
+                                    </AutoComplete>
                                 </Form.Item>
                             </Col>
+                        </Row>
+                        <Row gutter={16}>
+                            {/* <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <Form.Item label="Locality" initialValue={formData?.locality} rules={[validateRequiredInputField('locality name')]} name="locality">
+                                    <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('locality name')} maxLength={50} />
+                                </Form.Item>
+                            </Col> */}
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Form.Item label="City" initialValue={formData?.city} rules={[validateRequiredInputField('city')]} name="city">
                                     <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('city')} maxLength={50} />
                                 </Form.Item>
                             </Col>
-                        </Row>
-                        <Row gutter={16}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item initialValue={formData?.tehsil} label="Tehsil" name="tehsil" rules={[validateRequiredInputField('tehsil'), validateAlphanumericWithSpace('tehsil')]}>
+                                <Form.Item initialValue={formData?.tehsil} label="Tehsil" name="tehsil" rules={[validateRequiredInputField('tehsil')]}>
                                     <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('tehsil')} maxLength={6} />
                                 </Form.Item>
                             </Col>
+                        </Row>
+                        <Row gutter={16}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item label="District" initialValue={formData?.district} rules={[validateRequiredInputField('district'), validateAlphanumericWithSpace('district')]} name="district">
+                                <Form.Item label="District" initialValue={formData?.district} rules={[validateRequiredInputField('district')]} name="district">
                                     <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('district')} maxLength={50} />
                                 </Form.Item>
                             </Col>
-                        </Row>
-                        <Row gutter={16}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item initialValue={formData?.state} label="State" name="state" rules={[validateRequiredInputField('state'), validateAlphanumericWithSpace('state')]}>
+                                <Form.Item initialValue={formData?.state} label="State" name="state" rules={[validateRequiredInputField('state')]}>
                                     <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('state')} maxLength={50} />
                                 </Form.Item>
                             </Col>
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber1} rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]} name="mobileNumber1">
-                                    <Input disabled={editMode && formData?.partyCategory === 'Principal' ? true : false} className={styles.inputBox} placeholder={preparePlaceholderText('mobile number')} maxLength={10} />
-                                </Form.Item>
-                            </Col>
                         </Row>
                         <Row gutter={16}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber1} rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]} name="mobileNumber1">
+                                    <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('mobile number')} maxLength={10} />
+                                </Form.Item>
+                            </Col>
+
+                            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Form.Item label="Alternate Mobile Number" initialValue={formData?.alternateMobileNumber} rules={[validateRequiredInputField('alternate mobile number'), validateMobileNoField('alternate mobile number')]} name="alternateMobileNumber">
-                                    <Input disabled={editMode && formData?.partyCategory === 'Principal' ? true : false} className={styles.inputBox} placeholder={preparePlaceholderText('alternate mobile number')} maxLength={10} />
+                                    <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('alternate mobile number')} maxLength={10} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <p className={styles.allowedTimingAlignment}>Other Details</p>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitle}>
+                                Other Details
                             </Col>
                         </Row>
                         <Row gutter={16}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Form.Item initialValue={formData?.gstInNumber} label="GSTIN number" name="gstInNumber" rules={[validateRequiredInputField('GSTIN number'), validateGSTIN('GSTIN number')]}>
-                                    <Input disabled={editMode && formData?.partyCategory === 'Principal' ? true : false} className={styles.inputBox} placeholder={preparePlaceholderText('GSTIN number')} maxLength={15} />
+                                    <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('GSTIN number')} maxLength={15} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Form.Item label="PAN" initialValue={formData?.panNumber} rules={[validateRequiredInputField('PAN'), validatePanField('PAN')]} name="panNumber">
-                                    <Input disabled={editMode && formData?.partyCategory === 'Principal' ? true : false} className={styles.inputBox} placeholder={preparePlaceholderText('PAN')} maxLength={50} />
+                                    <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('PAN')} maxLength={10} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={16}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item initialValue={formData?.partsDiscount} label="Parts Discount(%)" name="partsDiscount" rules={[validateRequiredInputField('part discount'), validateOnlyPositiveNumber('part discount'), { validator: (value) => valueBetween0to100(value, 'part discount') }]}>
-                                    <Input disabled={editMode && formData?.partyCategory === 'Principal' ? true : false} className={styles.inputBox} placeholder={preparePlaceholderText('part discount')} maxLength={3} />
+                                <Form.Item initialValue={formData?.partsDiscount} label="Parts Discount(%)" name="partsDiscount" rules={[validateRequiredInputField('part discount'), validateNumberOnly('part discount'), { validator: (value) => valueBetween0to100(value, 'part discount') }]}>
+                                    <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('part discount')} maxLength={3} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Form.Item label="Credit Limit" initialValue={formData?.creditLimit} rules={[validateRequiredInputField('credit limit'), validateNumberWithTwoDecimalPlaces('credit limit')]} name="creditLimit">
-                                    <Input disabled={editMode && formData?.partyCategory === 'Principal' ? true : false} className={styles.inputBox} placeholder={preparePlaceholderText('credit limit')} maxLength={50} />
+                                    <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('credit limit')} maxLength={15} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={16}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item label="Credit Days" initialValue={formData?.creditDays} rules={[validateRequiredInputField('credit days'), validationNumber('credit days')]} name="creditDays">
-                                    <Input disabled={editMode && formData?.partyCategory === 'Principal' ? true : false} className={styles.inputBox} placeholder={preparePlaceholderText('credit days')} maxLength={50} />
+                                <Form.Item label="Credit Days" initialValue={formData?.creditDays} rules={[validateRequiredInputField('credit days'), validateNumberOnly('credit days')]} name="creditDays">
+                                    <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('credit days')} maxLength={4} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item label="Remarks" initialValue={formData?.remarks} rules={[validateRequiredInputField('remarks'), validateAlphanumericWithSpace('remarks')]} name="remarks">
-                                    <Input disabled={editMode && formData?.partyCategory === 'Principal' ? true : false} className={styles.inputBox} placeholder={preparePlaceholderText('remarks')} maxLength={50} />
+                                <Form.Item label="Remarks" initialValue={formData?.remarks} rules={[validateRequiredInputField('remarks')]} name="remarks">
+                                    <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('remarks')} maxLength={50} />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -267,7 +303,7 @@ const AddEditFormMain = (props) => {
 
                 <DrawerFormButton {...buttonProps} />
             </Form>
-            <AddressAddEdit {...addressAddEditFormProps} />
+            {/* <AddressAddEdit {...addressAddEditFormProps} /> */}
         </>
     );
 };

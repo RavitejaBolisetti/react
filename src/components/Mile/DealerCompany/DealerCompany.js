@@ -1,24 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
-
 import { dealerCompanyDataActions } from 'store/actions/data/dealer/dealerCompany';
-
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
 import { showGlobalNotification } from 'store/actions/notification';
-
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
-
 import { ListDataTable } from 'utils/ListDataTable';
-import { dealerParentGroupSearchDataActions } from 'store/actions/data/dealer/dealerParentGroupSearch';
 import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
-import { geoPincodeDetailsActions } from 'store/actions/data/pincodeDetails';
+import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
 
 const mapStateToProps = (state) => {
     const {
@@ -26,38 +19,27 @@ const mapStateToProps = (state) => {
         data: {
             DealerHierarchy: {
                 DealerCompany: { isLoaded: isDataLoaded = false, isLoading, data = [] },
-                DealerParentGroupSearch: { isLoaded: isParentGroupSearchDataLoaded = false, isLoading: isParentGroupSearchLoading = false, data: parentGroupSearchData = [] },
                 DealerParent: { isLoaded: isDealerParentDataLoaded = false, isLoading: isDealerParentDataLoading = false, data: dealerParentData = [] },
             },
-                PincodeDetails: { isLoaded: isPincodeDetailsLoaded = false, isLoading: isPincodeDetailsLoading = false, detailData: pincodeDetailsData = [] },
+            Geo: {
+                Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
+            },
         },
     } = state;
 
-    console.log(state,"GLOBAL")
-
-    const moduleTitle = 'Dealer Company';
-    
-
+    const moduleTitle = 'Dealer Parent Company';
     let returnValue = {
         userId,
         isDataLoaded,
         data,
-
-        isParentGroupSearchDataLoaded,
-        isParentGroupSearchLoading,
-        parentGroupSearchData,
-
         isDealerParentDataLoaded,
         isDealerParentDataLoading,
         dealerParentData,
-
-        isPincodeDetailsLoaded,
-        isPincodeDetailsLoading,
-        pincodeDetailsData,
-
-
+        isPinCodeDataLoaded,
+        pincodeData,
         isLoading,
         moduleTitle,
+        isPinCodeLoading,
     };
     return returnValue;
 };
@@ -66,90 +48,65 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchParentGroupSearchList: dealerParentGroupSearchDataActions.fetchList,
-            listParentGroupSearchShowLoading: dealerParentGroupSearchDataActions.listShowLoading,
-
             fetchDealerParentList: dealerParentDataActions.fetchList,
             listDealerParentShowLoading: dealerParentDataActions.listShowLoading,
-
-
-            fetchPincodeDetailsList: geoPincodeDetailsActions.fetchDetail,
-            listPincodeDetailsShowLoading: geoPincodeDetailsActions.listShowLoading,
 
             fetchList: dealerCompanyDataActions.fetchList,
             saveData: dealerCompanyDataActions.saveData,
             listShowLoading: dealerCompanyDataActions.listShowLoading,
+
+            fetchPincodeDetail: geoPincodeDataActions.fetchList,
+            pinCodeShowLoading: geoPincodeDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-
-
 export const DealerCompanyBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification ,detailData} = props;
-    const {parentGroupSearchData,fetchParentGroupSearchList,listParentGroupSearchShowLoading,isParentGroupSearchDataLoaded} = props;
-    const { pincodeDetailsData, fetchPincodeDetailsList, listPincodeDetailsShowLoading, isPincodeDetailsLoaded } = props;
-    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isPinCodeLoading, pinCodeShowLoading } = props;
+    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
-
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
     const [page, setPage] = useState(1);
-
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
-
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-
-
-    console.log(parentGroupSearchData, 'DATATAAT')
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
-    {console.log(formData,'FORMDATA');}
-    {console.log(refershData,'refershData');}
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
 
-
     useEffect(() => {
         if (userId && !isDataLoaded) {
-            // console.log(extraParams,"PARAMS")
-
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
-        }
-        if (userId && !isParentGroupSearchDataLoaded) {
-            fetchParentGroupSearchList({ setIsLoading: listParentGroupSearchShowLoading, userId });
-        }
-        if (userId && !isPincodeDetailsLoaded) {
-            fetchPincodeDetailsList({ setIsLoading: listPincodeDetailsShowLoading, userId, onErrorAction });
         }
         if (userId && !isDealerParentDataLoaded) {
             fetchDealerParentList({ setIsLoading: listDealerParentShowLoading, userId });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded, isParentGroupSearchDataLoaded, isDealerParentDataLoaded]);
+    }, [userId, isDataLoaded, isDealerParentDataLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {
@@ -162,7 +119,7 @@ export const DealerCompanyBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyCode) || filterFunction(keyword)(item?.companyName) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyName) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -210,9 +167,8 @@ export const DealerCompanyBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.parentId || '';
+        const recordId = formData?.parentId || form.getFieldValue('parentId');
         let data = { ...values, parentId: recordId };
-
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -248,7 +204,7 @@ export const DealerCompanyBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        return;
     };
 
     const onCloseAction = () => {
@@ -264,26 +220,21 @@ export const DealerCompanyBase = (props) => {
         setFormActionType,
         onFinish,
         onFinishFailed,
-
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Company'),
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Parent Company'),
         tableData: searchData,
-
-        ADD_ACTION,
-        EDIT_ACTION,
-        VIEW_ACTION,
         buttonData,
-
         setButtonData,
         handleButtonClick,
         handleResetFilter,
-
-        parentGroupSearchData,
-        pincodeDetailsData,
         listShowLoading,
-        fetchPincodeDetailsList,
+        pincodeData,
+        fetchPincodeDetail,
         dealerParentData,
+        isPinCodeLoading,
+        forceUpdate,
+        pinCodeShowLoading,
     };
 
     const tableProps = {
@@ -292,7 +243,7 @@ export const DealerCompanyBase = (props) => {
         setPage,
     };
 
-    const title = 'Dealer Company';
+    const title = 'Company Name';
 
     const advanceFilterResultProps = {
         advanceFilter: false,

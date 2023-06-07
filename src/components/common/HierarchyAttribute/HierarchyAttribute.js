@@ -36,8 +36,6 @@ const mapStateToProps = (state) => {
 
     const moduleTitle = 'Hierarchy Attribute Master';
 
-    console.log('detailData', detailData);
-
     let returnValue = {
         collapsed,
         userId,
@@ -213,6 +211,8 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         const onSuccess = (res) => {
             form.resetFields();
             setFormBtnDisable(false);
+            setShowDataLoading(true);
+
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
@@ -226,9 +226,8 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         };
 
         setTimeout(() => {
-            setShowDataLoading(true);
             hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy, onSuccessAction, onErrorAction });
-        }, 2000);
+        }, 1000);
 
         const onError = (message) => {
             showGlobalNotification({ message, placement: 'bottomRight' });

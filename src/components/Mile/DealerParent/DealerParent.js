@@ -23,9 +23,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log(state, 'GLOBAL');
-
-    const moduleTitle = 'Dealer Parent';
+    const moduleTitle = 'Group Name';
 
     let returnValue = {
         userId,
@@ -113,7 +111,7 @@ export const DealerParentBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -161,14 +159,7 @@ export const DealerParentBase = (props) => {
     };
 
     const onFinish = (values) => {
-        // let validation = data?.some((item) => item.code === values.code);
-
-        // if (validation) {
-        //     showGlobalNotification({ notificationType: 'error', title: 'DUPLICATE', message: 'Duplicate Parent Group Code Found', placement: 'bottomRight' });
-        // }
-        // else {
-
-        let data = { ...values, title: values.title.key };
+        let data = { ...values };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -176,7 +167,7 @@ export const DealerParentBase = (props) => {
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
-          
+
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
@@ -224,7 +215,7 @@ export const DealerParentBase = (props) => {
         dealerParentData: data,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Parent'),
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Parent Group'),
         tableData: searchData,
         buttonData,
         setButtonData,
@@ -239,7 +230,7 @@ export const DealerParentBase = (props) => {
         setPage,
     };
 
-    const title = 'Dealer Parent';
+    const title = 'Group Name';
 
     const advanceFilterResultProps = {
         advanceFilter: false,
@@ -261,7 +252,7 @@ export const DealerParentBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} scroll={1200} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} scroll={1200} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />

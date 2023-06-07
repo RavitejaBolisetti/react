@@ -14,6 +14,7 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
                 <Descriptions {...viewProps}>
                 <Descriptions.Item label="Group Code">{formData?.code}</Descriptions.Item>
                     <Descriptions.Item label="Group Name">{formData?.name}</Descriptions.Item>
+                    <Descriptions.Item label="Title">{formData?.title}</Descriptions.Item>
                     <Descriptions.Item label="Owner Name">{formData?.ownerName}</Descriptions.Item>
                     <Descriptions.Item label="Contact Number">{formData?.mobileNumber}</Descriptions.Item>
                     <Descriptions.Item label="Email ID">{formData?.emailId}</Descriptions.Item>

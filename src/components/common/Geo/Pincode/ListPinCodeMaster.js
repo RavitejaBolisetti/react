@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
+import { convertDate } from 'utils/formatDateTime';
 import { tableColumn } from './tableColumn';
+
+import { BASE_URL_GEO_GRAPHY_PINCODE_REPORT } from 'constants/routingApi';
+
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { ListDataTable } from 'utils/ListDataTable';
@@ -29,15 +33,15 @@ import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
-        auth: { userId },
+        auth: { userId, token },
         data: {
             ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
             Geo: {
                 Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData = [] },
-                State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
-                District: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, data: districtData },
-                Tehsil: { isLoaded: isTehsilDataLoaded = false, isLoading: isTehsilLoading, data: tehsilData },
-                City: { isLoaded: isCityDataLoaded = false, isLoading: isCityLoading, data: cityData },
+                State: { isFilteredListLoaded: isStateDataLoaded = false, isLoading: isStateLoading, filteredListData: stateData },
+                District: { isFilteredListLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, filteredListData: districtData },
+                Tehsil: { isFilteredListLoaded: isTehsilDataLoaded = false, isLoading: isTehsilLoading, filteredListData: tehsilData },
+                City: { isFilteredListLoaded: isCityDataLoaded = false, isLoading: isCityLoading, filteredListData: cityData },
                 Pincode: { isLoaded: isDataLoaded = false, isLoading, data },
             },
         },
@@ -61,20 +65,21 @@ const mapStateToProps = (state) => {
         isDistrictLoading,
         isStateLoading,
         isDistrictDataLoaded,
-        districtData: districtData?.filter((i) => i.status),
+        districtData,
         isTehsilDataLoaded,
         isTehsilLoading,
-        tehsilData: tehsilData?.filter((i) => i.status),
+        tehsilData,
         isCityDataLoaded,
         isCityLoading,
-        cityData: cityData?.filter((i) => i.status),
+        cityData,
         data,
-        stateData: stateData?.filter((i) => i.status),
+        stateData,
         isDataLoaded,
         isConfigDataLoaded,
         isConfigLoading,
         typeData: typeData && typeData[PARAM_MASTER.PIN_CATG.id],
         moduleTitle,
+        token,
     };
     return returnValue;
 };
@@ -87,16 +92,17 @@ const mapDispatchToProps = (dispatch) => ({
             listConfigShowLoading: configParamEditActions.listShowLoading,
             fetchCountryList: geoCountryDataActions.fetchList,
             listCountryShowLoading: geoCountryDataActions.listShowLoading,
-            fetchStateList: geoStateDataActions.fetchList,
+            fetchStateLovList: geoStateDataActions.fetchFilteredList,
             listStateShowLoading: geoStateDataActions.listShowLoading,
-            fetchDistrictList: geoDistrictDataActions.fetchList,
+            fetchDistrictLovList: geoDistrictDataActions.fetchFilteredList,
             listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
-            fetchTehsilList: geoTehsilDataActions.fetchList,
+            fetchTehsilLovList: geoTehsilDataActions.fetchFilteredList,
             listTehsilShowLoading: geoTehsilDataActions.listShowLoading,
-            fetchCityList: geoCityDataActions.fetchList,
+            fetchCityLovList: geoCityDataActions.fetchFilteredList,
             listCityShowLoading: geoCityDataActions.listShowLoading,
             fetchList: geoPincodeDataActions.fetchList,
             listShowLoading: geoPincodeDataActions.listShowLoading,
+            exportToExcel: geoPincodeDataActions.exportToExcel,
             saveData: geoPincodeDataActions.saveData,
             resetData: geoPincodeDataActions.reset,
             showGlobalNotification,
@@ -105,13 +111,13 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 const ListPinCodeMasterBase = (props) => {
-    const { data, saveData, fetchList, resetData, userId, isDataLoaded, isLoading, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, token, saveData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
 
-    const { isStateDataLoaded, isStateLoading, stateData, listStateShowLoading, fetchStateList } = props;
-    const { isDistrictDataLoaded, isDistrictLoading, districtData, listDistrictShowLoading, fetchDistrictList } = props;
-    const { isTehsilDataLoaded, isTehsilLoading, tehsilData, listTehsilShowLoading, fetchTehsilList } = props;
-    const { isCityDataLoaded, isCityLoading, cityData, listCityShowLoading, fetchCityList } = props;
+    const { isStateDataLoaded, isStateLoading, stateData, listStateShowLoading, fetchStateLovList } = props;
+    const { isDistrictDataLoaded, isDistrictLoading, districtData, listDistrictShowLoading, fetchDistrictLovList } = props;
+    const { isTehsilDataLoaded, isTehsilLoading, tehsilData, listTehsilShowLoading, fetchTehsilLovList } = props;
+    const { isCityDataLoaded, isCityLoading, cityData, listCityShowLoading, fetchCityLovList } = props;
     const { isConfigDataLoaded, isConfigLoading, typeData, listConfigShowLoading, fetchConfigList } = props;
 
     const [form] = Form.useForm();
@@ -174,19 +180,19 @@ const ListPinCodeMasterBase = (props) => {
             }
 
             if (!isStateDataLoaded && !isStateLoading) {
-                fetchStateList({ setIsLoading: listStateShowLoading, userId });
+                fetchStateLovList({ setIsLoading: listStateShowLoading, userId });
             }
 
             if (!isDistrictDataLoaded && !isDistrictLoading) {
-                fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId });
+                fetchDistrictLovList({ setIsLoading: listDistrictShowLoading, userId });
             }
 
             if (!isCityDataLoaded && !isCityLoading) {
-                fetchCityList({ setIsLoading: listCityShowLoading, userId });
+                fetchCityLovList({ setIsLoading: listCityShowLoading, userId });
             }
 
             if (!isTehsilDataLoaded && !isTehsilLoading) {
-                fetchTehsilList({ setIsLoading: listTehsilShowLoading, userId });
+                fetchTehsilLovList({ setIsLoading: listTehsilShowLoading, userId });
             }
 
             if (!isConfigDataLoaded && !isConfigLoading) {
@@ -206,6 +212,34 @@ const ListPinCodeMasterBase = (props) => {
         }
     };
 
+    const handleDownloadReport = () => {
+        // exportToExcel({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        // Need to remove this POC code after confirmation
+        const AuthStr = 'Bearer '.concat(token);
+        const headers = { Authorization: AuthStr, userId, accessToken: token, deviceType: 'W', deviceId: '' };
+
+        let sExtraParamsString = '?';
+        extraParams?.forEach((item, index) => {
+            sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+        });
+
+        sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+
+        fetch(BASE_URL_GEO_GRAPHY_PINCODE_REPORT + sExtraParamsString, {
+            method: 'GET',
+            headers: headers,
+        }).then((response) => {
+            response.blob().then((blob) => {
+                let url = window.URL.createObjectURL(blob);
+                let a = document.createElement('a');
+                a.href = url;
+                a.download = 'pincode-' + convertDate(undefined, 'YYYY-MM-DD_HH:mm:ss') + '.csv';
+                a.click();
+                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: 'Your download should start automatically in a few seconds' });
+            });
+        });
+    };
+
     useEffect(() => {
         if (refershData) {
             loadPinCodeDataList();
@@ -216,7 +250,7 @@ const ListPinCodeMasterBase = (props) => {
     useEffect(() => {
         if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
             setFilterString({ countryCode: defaultCountry });
-            setFilteredStateData(stateData?.filter((i) => i?.countryCode === defaultCountry));
+            setFilteredStateData(stateData?.filter((i) => i?.parentKey === defaultCountry));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataCountryLoaded, isStateDataLoaded]);
@@ -227,7 +261,7 @@ const ListPinCodeMasterBase = (props) => {
                 const keyword = filterString?.pincode ? filterString?.pincode : filterString?.keyword;
                 const state = filterString?.stateCode;
                 const district = filterString?.districtCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.pincode) || filterFunction(keyword)(item?.pinCategory) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.pincode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             }
@@ -251,28 +285,28 @@ const ListPinCodeMasterBase = (props) => {
             key: 'stateCode',
             title: 'State',
             value: filterString?.stateCode,
-            name: filteredStateData?.find((i) => i?.code === filterString?.stateCode)?.name,
+            name: filteredStateData?.find((i) => i?.key === filterString?.stateCode)?.value,
             canRemove: false,
         },
         {
             key: 'districtCode',
             title: 'District',
             value: filterString?.districtCode,
-            name: filteredDistrictData?.find((i) => i?.code === filterString?.districtCode)?.name,
+            name: filteredDistrictData?.find((i) => i?.key === filterString?.districtCode)?.value,
             canRemove: false,
         },
         {
             key: 'tehsilCode',
             title: 'Tehsil',
             value: filterString?.tehsilCode,
-            name: filteredTehsilData?.find((i) => i?.code === filterString?.tehsilCode)?.name,
+            name: filteredTehsilData?.find((i) => i?.key === filterString?.tehsilCode)?.value,
             canRemove: false,
         },
         {
             key: 'cityCode',
             title: 'City',
             value: filterString?.cityCode,
-            name: filteredCityData?.find((i) => i?.code === filterString?.cityCode)?.name,
+            name: filteredCityData?.find((i) => i?.key === filterString?.cityCode)?.value,
             canRemove: false,
         },
         {
@@ -314,7 +348,7 @@ const ListPinCodeMasterBase = (props) => {
             const filterValue = type === 'text' ? value.target.value : value;
 
             if (name === 'countryCode') {
-                setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
+                setFilteredStateData(stateData?.filter((i) => i?.parentKey === filterValue));
                 advanceFilterForm.setFieldsValue({ stateCode: undefined });
                 advanceFilterForm.setFieldsValue({ districtCode: undefined });
                 advanceFilterForm.setFieldsValue({ cityCode: undefined });
@@ -322,15 +356,15 @@ const ListPinCodeMasterBase = (props) => {
             }
 
             if (name === 'stateCode') {
-                setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
+                setFilteredDistrictData(districtData?.filter((i) => i?.parentKey === filterValue));
                 advanceFilterForm.setFieldsValue({ districtCode: undefined });
                 advanceFilterForm.setFieldsValue({ cityCode: undefined });
                 advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
             }
 
             if (name === 'districtCode') {
-                setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
-                setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
+                setFilteredCityData(cityData?.filter((i) => i?.parentKey === filterValue));
+                setFilteredTehsilData(tehsilData?.filter((i) => i?.parentKey === filterValue));
                 advanceFilterForm.setFieldsValue({ cityCode: undefined });
                 advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
             }
@@ -345,8 +379,9 @@ const ListPinCodeMasterBase = (props) => {
         };
 
     const onFinish = (values) => {
-        let data = { ...values };
-        // let data = { ...values, localityCode: Math.floor(Math.random() * 899999 + 100000) };
+        const recordId = formData?.id || '';
+
+        let data = { ...values, id: recordId };
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -360,7 +395,6 @@ const ListPinCodeMasterBase = (props) => {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             }
-            setButtonData({ ...defaultBtnVisiblity, formBtnActive: false });
         };
 
         const onError = (message) => {
@@ -441,15 +475,6 @@ const ListPinCodeMasterBase = (props) => {
 
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
-
-        // !filterString?.stateCode && setFilteredStateData(undefined);
-        !filterString?.districtCode && setFilteredDistrictData(undefined);
-        !filterString?.cityCode && setFilteredCityData(undefined);
-        !filterString?.tehsilCode && setFilteredTehsilData(undefined);
-
-        filterString?.tehsilCode && setTehsilCodeValue();
-        filterString?.cityCode && setCityCodeValue();
-
         advanceFilterForm.resetFields();
     };
 
@@ -507,6 +532,13 @@ const ListPinCodeMasterBase = (props) => {
         }
     };
 
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 5) {
+            listFilterForm.validateFields(['code']);
+        }
+    };
+
+
     const removeFilter = (key) => {
         if (key === 'countryCode') {
             setFilterString(undefined);
@@ -527,16 +559,14 @@ const ListPinCodeMasterBase = (props) => {
         } else if (key === 'pincode') {
             const { [key]: names, ...rest } = filterString;
             advanceFilterForm.setFieldsValue({ keyword: undefined, pincode: undefined });
-
             if (!filterString?.countryCode && !filterString?.stateCode && !filterString?.districtCode && !filterString?.tehsilCode) {
-                setFilterString();
+                resetData();
+                setFilterString(undefined);
             } else {
                 setFilterString({ ...rest });
             }
         }
     };
-
-    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
     const title = 'Pincode';
     const advanceFilterResultProps = {
@@ -549,6 +579,8 @@ const ListPinCodeMasterBase = (props) => {
         removeFilter,
         handleResetFilter,
         onSearchHandle,
+        handleClearInSearch,
+
         setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,
@@ -556,6 +588,8 @@ const ListPinCodeMasterBase = (props) => {
         setFilterString,
         title,
         validator: searchValidatorPincode,
+        downloadReport: true,
+        handleDownloadReport,
     };
     return (
         <>
@@ -563,7 +597,7 @@ const ListPinCodeMasterBase = (props) => {
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.tableProduct}>
-                        <ListDataTable isLoading={showDataLoading} scroll={1800} {...tableProps} handleAdd={handleAdd} addTitle={title} />
+                        <ListDataTable isLoading={showDataLoading} scroll={1800} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={title} />
                     </div>
                 </Col>
             </Row>
