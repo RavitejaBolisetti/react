@@ -9,7 +9,7 @@ import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react
 import styles from 'components/common/Common.module.css';
 
 import FormProgressBar from './FormProgressBar';
-import { VehicleDetailsMasterMain } from './VehicleDetails';
+import { VehicleDetailsMaster } from './VehicleDetails';
 // import {VehicleDetailsMaster} from './VehicleDetails/';
 
 const { Option } = Select;
@@ -125,7 +125,7 @@ const AddEditFormMain = (props) => {
     const renderElement = () => {
         if (leftTimeline?.AccountRelated) {
         } else if (leftTimeline?.CustomerDetails) {
-            return <VehicleDetailsMasterMain />;
+            return <VehicleDetailsMaster />;
         } else if (leftTimeline?.Address) {
         } else if (leftTimeline?.Contacts) {
         } else if (leftTimeline?.IndividualProfile) {

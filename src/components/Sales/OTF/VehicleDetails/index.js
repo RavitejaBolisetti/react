@@ -1,3 +1,3 @@
-import { VehicleDetailsMasterMain } from './VehicleDetailsMaster';
+import { VehicleDetailsMaster } from './VehicleDetailsMaster';
 
-export { VehicleDetailsMasterMain };
+export { VehicleDetailsMaster };
