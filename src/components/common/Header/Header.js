@@ -224,53 +224,47 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     return (
         <>
             {!isLoading ? (
-                <div className={styles.headerContainer}>
-                    <Row gutter={0} className={styles.columnInterchange}>
-                        <Col xs={14} sm={isDashboard ? 9 : 16} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
-                            <div className={styles.headerLeft}>
-                                <Space>
-                                    {/* <div className={styles.userAvatar}>
-                                        <Avatar shape="square" size="large" className={styles.userAvatarInside}>
-                                            {dealerAvatar}
-                                        </Avatar>
-                                    </div> */}
-                                    <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} style={{ paddingLeft: '10px' }} onClick={handleCollapse}>
-                                        <img width={20} src={IMG_ICON} alt="" className={styles.brandImage} /> <Icon component={MenuArrow} />
-                                    </div>
-                                    <div className={styles.userText}>
-                                        <div className={styles.dealerName}>{dealerName}</div>
-                                        <div className={styles.dealerInfo}>
-                                            <span className={styles.dealerLocation}>{dealerLocation}</span>
-                                            {userType === 'DLR' && (
-                                                <Dropdown className={styles.dropdownIcon} menu={{ items: locationMenuOption }}>
-                                                    <DownOutlined />
-                                                </Dropdown>
-                                            )}{' '}
-                                            {userType === 'DLR' && (
-                                                <>
-                                                    <span className={styles.seprator}>|</span>
-                                                    <span className={styles.dealerLocation}>FY2023</span>
-                                                    <Dropdown className={styles.dropdownIcon} menu={{ items: fyMenuOption }} /*trigger={['click']}*/>
+                <>
+                    <div className={styles.headerContainer}>
+                        <Row gutter={0}>
+                            <Col xs={14} sm={isDashboard ? 9 : 16} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
+                                <div className={styles.headerLeft}>
+                                    <Space>
+                                        <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} style={{ paddingLeft: '10px' }} onClick={handleCollapse}>
+                                            <img width={20} src={IMG_ICON} alt="" className={styles.brandImage} /> <Icon component={MenuArrow} />
+                                        </div>
+                                        <div className={styles.userText}>
+                                            <div className={styles.dealerName}>{dealerName}</div>
+                                            <div className={styles.dealerInfo}>
+                                                <span className={styles.dealerLocation}>{dealerLocation}</span>
+                                                {userType === 'DLR' && (
+                                                    <Dropdown className={styles.dropdownIcon} menu={{ items: locationMenuOption }}>
                                                         <DownOutlined />
                                                     </Dropdown>
-                                                </>
-                                            )}
+                                                )}{' '}
+                                                {userType === 'DLR' && (
+                                                    <>
+                                                        <span className={styles.seprator}>|</span>
+                                                        <span className={styles.dealerLocation}>FY2023</span>
+                                                        <Dropdown className={styles.dropdownIcon} menu={{ items: fyMenuOption }} /*trigger={['click']}*/>
+                                                            <DownOutlined />
+                                                        </Dropdown>
+                                                    </>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
-                                </Space>
-                            </div>
-                        </Col>
-
-                        {pagePath === routing.ROUTING_DASHBOARD && (
-                            <Col xs={0} sm={0} md={7} lg={7} xl={7} xxl={7}>
-                                <div className={styles.headerRight} style={{ width: '100%' }}>
-                                    <Search data-testid="search" allowClear placeholder="Search by Doc ID" onSearch={onSearch} />
+                                    </Space>
                                 </div>
                             </Col>
-                        )}
-                        <Col xs={10} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <div className={styles.headerRight}>
-                                <div className={styles.navbarExpand}>
+                            {pagePath === routing.ROUTING_DASHBOARD && (
+                                <Col xs={0} sm={0} md={7} lg={7} xl={7} xxl={7}>
+                                    <div className={styles.headerRight} style={{ width: '100%' }}>
+                                        <Search data-testid="search" allowClear placeholder="Search by Doc ID" onSearch={onSearch} />
+                                    </div>
+                                </Col>
+                            )}
+                            <Col xs={10} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                <div className={styles.headerRight}>
                                     <div className={styles.navbarNav}>
                                         <div className={`${styles.floatLeft}`}>
                                             <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
@@ -279,13 +273,9 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                 </Badge>
                                             </Link>
                                         </div>
-
                                         <div className={`${styles.floatLeft}`}>
                                             <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
                                                 <Icon component={HeadPhoneIcon} />
-                                                {/* <span className={styles.helpLineText}>
-                                                    OneStop <br></br> Help Desk
-                                                </span> */}
                                             </Link>
                                         </div>
                                         <div className={styles.welcomeUser}>
@@ -305,7 +295,6 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                 <div className={styles.userText}>
                                                     <div className={styles.userName}>{addToolTip(fullName)(fullName)}</div>
                                                     <span className={styles.userRoleName}>Super Admin</span>
-                                                    {/* <span className={styles.userServiceArea}>{formatPhoneNumber(mobileNo)}</span> */}
                                                 </div>
                                                 <div className={`${styles.webmenuDropDownArrow} ${styles.dropdownArrow}`}>
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
@@ -320,10 +309,10 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
+                            </Col>
+                        </Row>
+                    </div>
+                </>
             ) : (
                 <HeaderSkeleton />
             )}

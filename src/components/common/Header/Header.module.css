@@ -6,17 +6,24 @@
     height: 64px;
 }
 
+.headerContainer {
+    height: 60px;
+    padding: 16px 20px 0 24px;
+    /* border: 1px solid red; */
+}
+
 .headerLeft {
-    padding-left: 32px;
+    /* padding-left: 0px; */
+    margin-top: -8px;
 }
 
-.headerLeft :global .ant-space {
+/* .headerLeft :global .ant-space {
     gap: 0px !important;
-}
+} */
 
-.userAvatar {
+/* .userAvatar {
     padding-top: 12px;
-}
+} */
 
 .userAvatarSkeleton {
     padding-top: 0px;
@@ -30,7 +37,7 @@
 
 .userText {
     float: right;
-    padding-top: 16px;
+    /* padding-top: 16px; */
     color: #0b0b0c;
     line-height: 20px;
     font-size: 14px;
@@ -135,18 +142,20 @@
     line-height: 20px;
 }
 
-.dropdownArrow .navLink :global .ant-space .ant-space-item:last-child {
+/* .dropdownArrow .navLink :global .ant-space .ant-space-item:last-child {
     padding-top: 10px;
-}
+} */
 
 :global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content>a:hover {
     text-decoration: none;
 }
 
 .headerRight {
-    float: right;
-    padding-right: 20px;
-    padding-top: 18px;
+    /* float: right; */
+    /* padding-right: 20px; */
+    /* padding-top: 18px; */
+    display: flex;
+    justify-content: end;
 }
 
 .headerRight :global .ant-input-group {
@@ -194,10 +203,10 @@
     list-style: none;
 }
 
-.navbarExpand {
+/* .navbarExpand {
     flex-flow: row nowrap;
     justify-content: flex-start;
-}
+} */
 
 .navLink :global .ant-badge .ant-badge-count {
     color: #fff;
@@ -232,7 +241,7 @@
 
 .welcomeUser {
     padding-left: 10px;
-    margin-top: -20px;
+    margin-top: -6px;
 }
 
 .welcomeUser .userAvatar .userAvatarInside {
