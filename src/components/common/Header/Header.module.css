@@ -10,6 +10,10 @@
     padding-left: 32px;
 }
 
+.headerLeft :global .ant-space {
+    gap: 0px !important;
+}
+
 .userAvatar {
     padding-top: 12px;
 }
