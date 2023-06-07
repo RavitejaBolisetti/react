@@ -33,7 +33,7 @@ const AddEditFormMain = (props) => {
     const [keyAccountFormValues, setkeyAccountFormValues] = useState();
     const [authorityFormValues, setauthorityFormValues] = useState();
     const [done, setDone] = useState();
-    
+
     useEffect(() => {
         setFinalFormData({ ...FinalFormData, customerForm: customerFormValues, keyAccountForm: keyAccountFormValues, authorityForm: authorityFormValues });
     }, [done]);
@@ -141,7 +141,6 @@ const AddEditFormMain = (props) => {
                                         <div className={styles.alignUser}>
                                             <FaRegUserCircle className={styles.userCircle} />
                                             <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                {' '}
                                                 Customer Information
                                             </Text>
                                         </div>
@@ -151,18 +150,23 @@ const AddEditFormMain = (props) => {
                                     <Form autoComplete="off" layout="vertical" form={customerForm}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
+                                                <Form.Item label="Vehicle Usage Type" name="usageType" data-testid="usageType" rules={[validateRequiredSelectField('vehicle usage Type')]}>
                                                     <Select placeholder="Select" disabled={false} loading={false} allowClear>
-                                                        <Option value="customerType">customerType</Option>
+                                                        <Option value="usageType">usageType</Option>
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                        </Row>
-                                        <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Corporate Code" name="corporateCode" data-testid="corporateCode">
+                                                <Form.Item label="Model" name="model" data-testid="model">
                                                     <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                                        <Option value="corporateCode">customerType</Option>
+                                                        <Option value="model">customerType</Option>
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item label="Vehicle Variant" name="vehicleVariant" data-testid="vehicleVariant">
+                                                    <Select disabled={false} loading={false} placeholder="Select" allowClear>
+                                                        <Option value="vehicleVariant">vehicleVariant</Option>
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
@@ -170,27 +174,77 @@ const AddEditFormMain = (props) => {
 
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Usage/Application Categorization" name="usageCategorization" data-testid="usageCategorization">
+                                                <Form.Item label="Available Stock" name="availableStock" data-testid="availableStock">
                                                     <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                                        <Option value="usageCategorization">usageCategorization</Option>
+                                                        <Option value="availableStock">availableStock</Option>
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Usage/Application Sub-category" name="usageCategorizationcategory" data-testid="customerType">
+                                                <Form.Item label="Vehicle Allocated Status" name="vehicleAllocatedStatus" data-testid="vehicleAllocatedStatus">
                                                     <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                                        <Option value="Usage/Application Sub-category">Usage/Application Sub-category</Option>
+                                                        <Option value="vehicleAllocatedStatus">vehicleAllocatedStatus</Option>
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Customer Category" name="CustomerCategory" data-testid="CustomerCategory">
-                                                    <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                                        <Option value="CustomerCategory">CustomerCategory</Option>
-                                                    </Select>
+                                                <Form.Item label="PO Number" name="poNumber">
+                                                    <Input placeholder={preparePlaceholderText('PO Number')} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item label="PO Date" name="poDate">
+                                                    <Input placeholder={preparePlaceholderText('PO Date')} />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item label="PO Status" name="poStatus">
+                                                    <Input placeholder={preparePlaceholderText('PO Status')} />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item label="SO Number" name="soNumber">
+                                                    <Input placeholder={preparePlaceholderText('SO Number')}/>
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item label="SO Status" name="soStatus">
+                                                    <Input placeholder={preparePlaceholderText('SO Status')} />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item label="VIN Number" name="vinNumber">
+                                                    <Input placeholder={preparePlaceholderText('VIN number')} />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item label="Discount Amount" name="discountAmount">
+                                                    <Input placeholder={preparePlaceholderText('Discount Amount')}/>
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item label="Vehicle Selling Price" name="vehicleSellingPrice">
+                                                    <Input placeholder={preparePlaceholderText('Vehicle Selling Price')} />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item label="Charge Amount" name="chargeAmount">
+                                                    <Input placeholder={preparePlaceholderText('Charge Amount')} />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item label="OTF Amount" name="otfAmount">
+                                                    <Input placeholder={preparePlaceholderText('OTF Amount')}/>
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        
                                     </Form>
                                 </Panel>
                             </Collapse>
@@ -303,7 +357,7 @@ const AddEditFormMain = (props) => {
                                         </Row>
                                     </Form>
                                 </Panel>
-                            </Collapse>
+                            </Collapse> */}
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Button danger onClick={onCloseAction}>
