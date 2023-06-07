@@ -10,7 +10,7 @@ import styles from 'components/common/Common.module.css';
 
 import FormProgressBar from './FormProgressBar';
 import { VehicleDetailsMaster } from './VehicleDetails';
-// import {VehicleDetailsMaster} from './VehicleDetails/';
+import { CustomerDetailsMaster } from './CustomerDetails';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -127,6 +127,7 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.CustomerDetails) {
             return <VehicleDetailsMaster />;
         } else if (leftTimeline?.Address) {
+            return <CustomerDetailsMaster />;
         } else if (leftTimeline?.Contacts) {
         } else if (leftTimeline?.IndividualProfile) {
         } else if (leftTimeline?.FamilyDetails) {
