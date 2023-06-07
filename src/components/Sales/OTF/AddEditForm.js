@@ -1,289 +1,190 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Switch, Select, AutoComplete } from 'antd';
-import { validateRequiredInputField, searchValidator, validatePanField, validateTan, validateTin, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { ViewDetail } from './ViewDetail';
+import { Col, Input, Form, Row, Select, Button, Collapse, Avatar, Card, Timeline, Progress, Space } from 'antd';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
-import { DrawerFormButton } from 'components/common/Button';
+
+import { FaChevronDown } from 'react-icons/fa';
+
+import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 
-const { TextArea } = Input;
+import FormProgressBar from './FormProgressBar';
+
 const { Option } = Select;
-
+const { TextArea } = Input;
+const { Panel } = Collapse;
+const { Meta } = Card;
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, listShowLoading, userId, dealerParentData } = props;
-    const { isVisible, buttonData, setButtonData, handleButtonClick, pincodeData, fetchPincodeDetail, isPinCodeLoading, forceUpdate, pinCodeShowLoading } = props;
+    const { saveclick, onCloseAction, productHierarchyData, DealerSearchvalue, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
+    const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setIsViewModeVisible, setClosePanels, AccessMacid, setAccessMacid, setShowSaveBtn, hanndleEditData } = props;
+    const { toggleButton, settoggleButton } = props;
+    const [leftTimeline, setleftTimeline] = useState({
+        AccountRelated: false,
+        Address: false,
+        Contacts: false,
+        CustomerDetails: true,
+        FamilyDetails: false,
+        IndividualProfile: false,
+        CustomerProfile: false,
+    });
+    const [Macid, setMacid] = useState();
 
-    const [options, setOptions] = useState(false);
-
-    useEffect(() => {
-        const pinOption = pincodeData?.map((item) => ({
-            label: item?.pinCode + ' - ' + (item?.localityName ? item?.localityName + '-' : '') + (item?.cityName ? item?.cityName + '-' : '') + (item?.tehsilName ? item?.tehsilName + '-' : '') + (item?.districtName ? item?.districtName + '-' : '') + item?.stateName,
-            value: item?.id,
-            key: item?.id,
-        }));
-        setOptions(pinOption);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pincodeData]);
-
-    useEffect(() => {
-        setOptions();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isVisible]);
+    const [openAccordian, setOpenAccordian] = useState(1);
+    const [disableadd, setdisableadd] = useState(false);
 
     const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
+        setFormBtnActive(true);
     };
 
     const handleFormFieldChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
+        setFormBtnActive(true);
     };
 
-    let groupValue = null;
-    let parentGroupId = null;
-    const parentName = (values) => {
-        if (values === undefined) {
-            groupValue = null;
-            form.setFieldValue('dealerParentName', groupValue);
-            form.setFieldValue('parentId', parentGroupId);
-        } else {
-            dealerParentData?.map((item) => {
-                if (item?.code === values) {
-                    groupValue = item?.name;
-                    parentGroupId = item?.id;
-                    form.setFieldValue('dealerParentName', groupValue);
-                    form.setFieldValue('parentId', parentGroupId);
-                }
-            });
-        }
-    };
-
-    const onErrorAction = () => {};
-    const onSuccessAction = () => {};
-
-    const handleOnSelect = (key) => {
-        const selectedPinCode = pincodeData?.find((i) => i.id === key);
-        if (selectedPinCode) {
-            form.setFieldsValue({
-                pinCode: selectedPinCode?.pinCode,
-
-                stateCode: selectedPinCode?.stateCode,
-                cityCode: selectedPinCode?.cityCode,
-                tehsilCode: selectedPinCode?.tehsilCode,
-                districtCode: selectedPinCode?.districtCode,
-
-                stateName: selectedPinCode?.stateName,
-                cityName: selectedPinCode?.cityName,
-                tehsilName: selectedPinCode?.tehsilName,
-                districtName: selectedPinCode?.districtName,
-            });
-            forceUpdate();
-        }
-    };
-
-    const handleOnSearch = (value) => {
-        if (value.length > 5) {
-            setOptions();
-            const extraParams = [
-                {
-                    key: 'pincode',
-                    value: value,
-                },
-            ];
-            fetchPincodeDetail({ setIsLoading: pinCodeShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        }
-    };
-
-    const handleOnClear = () => {
-        setOptions();
-        form.setFieldsValue({
-            pinCode: undefined,
-            stateName: undefined,
-            cityName: undefined,
-            tehsilName: undefined,
-            districtName: undefined,
-            locality: undefined,
+    const handleDelete = (event, key) => {
+        console.log('key', key);
+        const newAccessid = AccessMacid.filter((el) => {
+            return el?.key != key;
         });
+        setAccessMacid(newAccessid);
+    };
+    const handleAddMacid = (event, key) => {
+        form.validateFields();
+        form.resetFields();
+        const CardData = {
+            macid: Macid,
+            key: AccessMacid?.length,
+        };
+        setAccessMacid([...AccessMacid, CardData]);
+        console.log('This is the macID : ', CardData);
+    };
+    const onChangeCollapse = (collapse) => {
+        console.log('collapse: :', collapse);
+    };
+    const Checkduplicate = (value) => {
+        const index = AccessMacid?.findIndex((el) => el?.macid === value);
+
+        if (index !== -1) {
+            setdisableadd(true);
+            return Promise.reject('Their are duplicate Macid');
+        } else {
+            setdisableadd(false);
+
+            return Promise.resolve('');
+        }
+    };
+    useEffect(() => {
+        console.log('We are getting dealer data: :', DealerData);
+    }, [DealerData]);
+
+    const handleCollapse = (key) => {
+        setOpenAccordian((prev) => (prev === key ? '' : key));
+    };
+    const TimelineProps = {
+        leftTimeline,
+        setleftTimeline,
+        toggleButton,
+        settoggleButton,
     };
 
-    const handleOnfocus = (e) => {
-        setOptions();
-        const extraParams = [
-            {
-                key: 'pincode',
-                value: e.target.value,
-            },
-        ];
-        fetchPincodeDetail({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+    const CustomerProfileMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
     };
 
-    const viewProps = {
-        isVisible: viewMode,
-        formData,
+    const CustomerDetailsMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
+        setIsViewModeVisible,
+    };
+    const CustomerAccountMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
+        setIsViewModeVisible,
+    };
+    const IndividualProfileMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
+    };
+    const IndividualAccountRelatedMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
+    };
+    const commonfooterProps = {
+        onCloseAction,
+        isViewModeVisible,
+        styles,
+    };
+    const individualAddressMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
         styles,
     };
 
-    const buttonProps = {
-        formData,
-        onCloseAction,
-        buttonData,
-        setButtonData,
-        handleButtonClick,
-    };
-
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        className: styles.headerSelectField,
+    const renderElement = () => {
+        if (toggleButton?.individual) {
+            if (leftTimeline?.AccountRelated) {
+            } else if (leftTimeline?.CustomerDetails) {
+            } else if (leftTimeline?.Address) {
+            } else if (leftTimeline?.Contacts) {
+            } else if (leftTimeline?.IndividualProfile) {
+            } else if (leftTimeline?.FamilyDetails) {
+            }
+        } else {
+            if (leftTimeline?.CustomerDetails) {
+            } else if (leftTimeline?.CustomerProfile) {
+            } else if (leftTimeline?.AccountRelated) {
+            } else if (leftTimeline?.Contacts) {
+            } else if (leftTimeline?.Address) {
+            } else if (leftTimeline?.IndividualProfile) {
+            }
+        }
     };
 
     return (
-        <Form autoComplete="off" className={styles.formContainer} layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            {viewMode ? (
-                <ViewDetail {...viewProps} />
-            ) : (
-                <>
-                    <Row gutter={16}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.parentCode} label="Group Code" rules={[validateRequiredSelectField('Group Code')]} name="parentCode">
-                                <Select
-                                    placeholder={preparePlaceholderSelect('Group Code')}
-                                    style={{
-                                        width: '100%',
-                                    }}
-                                    {...selectProps}
-                                    onChange={parentName}
-                                    disabled={editMode}
-                                >
-                                    {dealerParentData?.map((item) => {
-                                        return <Option value={item?.code}>{item?.code}</Option>;
-                                    })}
-                                </Select>
-                            </Form.Item>
+        <>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.customerMasterDrawer}>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.timelineBg}>
+                            <Row>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                    <Collapse bordered={true} defaultActiveKey={['1']} expandIcon={({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />}>
+                                        <Panel
+                                            header={
+                                                <>
+                                                    <Avatar size={40}>USER</Avatar>
+                                                    <Space direction="vertical">
+                                                        <span>John Michael</span>
+                                                        <span>C200615396</span>
+                                                    </Space>
+                                                </>
+                                            }
+                                            key="1"
+                                        >
+                                            <p>
+                                                Customer Type: <span>Corporate</span>
+                                            </p>
+                                            <p>
+                                                Mobile No.: <span>9893473843</span>
+                                            </p>
+                                        </Panel>
+                                    </Collapse>
+                                </Col>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                    <FormProgressBar {...TimelineProps} />
+                                </Col>
+                            </Row>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Group Name" initialValue={groupValue ? groupValue : formData?.dealerParentName} name="dealerParentName">
-                                <Input disabled className={styles.inputBox} placeholder={preparePlaceholderText('Group Name')} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                            <Form.Item label="Parent Id" name="parentId" initialValue={formData?.parentId}>
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.companyCode} label="Company Code" name="companyCode" rules={[validateRequiredInputField('Company Code'), [{ validator: searchValidator }]]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Company Code')} maxLength={6} disabled={editMode} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.companyName} label="Company Name" name="companyName" rules={[validateRequiredInputField('Company Name')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Company Name')} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.address} label="Company Address" name="address" rules={[validateRequiredInputField('Company Address')]}>
-                                <TextArea rows={2} placeholder={preparePlaceholderText('Company Address')} showCount maxLength={255} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
-                                <AutoComplete className={styles.searchField} options={options} onSelect={handleOnSelect} onFocus={handleOnfocus}>
-                                    <Input.Search onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} type="text" allowClear />
-                                </AutoComplete>
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                        <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
+                            {renderElement()}
 
-                    <Row gutter={16}>
-                        {/* <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={pincodeDetails[0]?.locality} label="Locality" name="locality">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Locality')} disabled />
-                            </Form.Item>
-                        </Col> */}
-                        <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                            <Form.Item initialValue={formData?.cityCode} label="City" name="cityCode">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('City')} disabled />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                            <Form.Item initialValue={formData?.tehsilCode} label="Tehsil" name="tehsilCode">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Tehsil')} disabled />
-                            </Form.Item>
-                        </Col>
-
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.cityName} label="City" name="cityName">
-                                <Input className={styles.inputBox} placeholder="City" disabled />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.tehsilName} label="Tehsil" name="tehsilName">
-                                <Input className={styles.inputBox} placeholder="Tehsil" disabled />
-                            </Form.Item>
+                            {/* <CommonFooterButton {...commonfooterProps} /> */}
                         </Col>
                     </Row>
-                    <Row gutter={16}>
-                        <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                            <Form.Item initialValue={formData?.districtCode} label="District" name="districtCode">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('District')} disabled />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={0} sm={0} md={0} lg={0} xl={0}>
-                            <Form.Item initialValue={formData?.stateCode} label="State" name="stateCode">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State')} disabled />
-                            </Form.Item>
-                        </Col>
-
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.districtName} label="District" name="districtName">
-                                <Input className={styles.inputBox} placeholder="District" disabled />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.stateName} label="State" name="stateName">
-                                <Input className={styles.inputBox} placeholder="State" disabled />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.companyTin} label="TIN" name="companyTin" rules={[validateRequiredInputField('TIN'), validateTin('TIN')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('TIN')} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.companyTan} label="TAN" name="companyTan" rules={[validateRequiredInputField('TAN'), validateTan('TAN')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('TAN')} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.companyPan} label="PAN" name="companyPan" rules={[validateRequiredInputField('PAN'), validatePanField('PAN')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('PAN')} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
-                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    {/* <Row gutter={16}></Row> */}
-                </>
-            )}
-
-            <DrawerFormButton {...buttonProps} />
-        </Form>
+                </Col>
+            </Row>
+        </>
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, {});
+export const AddEditForm = withDrawer(AddEditFormMain, { width: 1200 });
