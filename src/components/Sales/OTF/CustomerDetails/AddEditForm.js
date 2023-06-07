@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Typography } from 'antd';
+import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Checkbox } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -33,6 +33,7 @@ const AddEditFormMain = (props) => {
     const [keyAccountFormValues, setkeyAccountFormValues] = useState();
     const [authorityFormValues, setauthorityFormValues] = useState();
     const [done, setDone] = useState();
+    const [ isBookingCustomer, setIsBookingCustomer ] = useState(false);
 
     useEffect(() => {
         setFinalFormData({ ...FinalFormData, customerForm: customerFormValues, keyAccountForm: keyAccountFormValues, authorityForm: authorityFormValues });
@@ -109,6 +110,10 @@ const AddEditFormMain = (props) => {
     const onFinishAuthorityDetails = (values) => {
         setFinalFormData({ ...FinalFormData, authorityForm: values });
     };
+    const sameAsBookingCustomer = (e) => {
+        console.log(`checked = ${e.target.checked}`);
+        setIsBookingCustomer(e.target.checked);
+    }
     const viewProps = {
         activeKey,
         setactiveKey,
@@ -281,38 +286,43 @@ const AddEditFormMain = (props) => {
                                     }
                                     key="2"
                                 >
-                                    <Form autoComplete="off" layout="vertical" form={keyAccountForm}>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Account Code" name="accountCode">
-                                                    <Input disabled />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Account Name" name="accountName">
-                                                    <Input disabled />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Account Segment" name="accountSegment">
-                                                    <Input disabled />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
+                                    <Checkbox onChange={sameAsBookingCustomer}>Same As Booking Customer</Checkbox>
+                                    {
+                                        !isBookingCustomer ?
+                                        <Form autoComplete="off" layout="vertical" form={keyAccountForm}>
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                    <Form.Item label="Account Code" name="accountCode">
+                                                        <Input disabled />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                    <Form.Item label="Account Name" name="accountName">
+                                                        <Input disabled />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                    <Form.Item label="Account Segment" name="accountSegment">
+                                                        <Input disabled />
+                                                    </Form.Item>
+                                                </Col>
+                                            </Row>
 
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Account Client Name" name="accountClientName">
-                                                    <Input disabled />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Account Mapping Date" name="accountMappingDate">
-                                                    <Input disabled />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                    </Form>
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                    <Form.Item label="Account Client Name" name="accountClientName">
+                                                        <Input disabled />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                    <Form.Item label="Account Mapping Date" name="accountMappingDate">
+                                                        <Input disabled />
+                                                    </Form.Item>
+                                                </Col>
+                                            </Row>
+                                        </Form>
+                                        : <></>                                            
+                                    }
                                 </Panel>
                             </Collapse>
 
