@@ -11,6 +11,8 @@ import styles from 'components/common/Common.module.css';
 import FormProgressBar from './FormProgressBar';
 import { CustomerDetailsMaster } from './CustomerDetails';
 import { Otfbuttons } from 'components/common/Button';
+import { VehicleDetailsMaster } from './VehicleDetails';
+import { FinananceDetailsMaster } from './FinananceDetails';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -106,7 +108,7 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.customerDetails) {
             return <CustomerDetailsMaster />;
         } else if (leftTimeline?.vehicleDetails) {
-            return;
+            return <VehicleDetailsMaster/>;
         } else if (leftTimeline?.schemeDetails) {
             return;
         } else if (leftTimeline?.insuranceDetails) {
@@ -117,6 +119,8 @@ const AddEditFormMain = (props) => {
             return;
         } else if (leftTimeline.loyaltyScheme) {
             return;
+        } else if (leftTimeline?.fiananceDetails) {
+            return <FinananceDetailsMaster />;
         }
     };
 
