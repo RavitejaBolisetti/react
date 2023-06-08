@@ -11,6 +11,7 @@ import styles from 'components/common/Common.module.css';
 import FormProgressBar from './FormProgressBar';
 import { VehicleDetailsMaster } from './VehicleDetails';
 import { CustomerDetailsMaster } from './CustomerDetails';
+import { ExchangeVehiclesMaster } from './ExchangeVehicles';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -24,6 +25,7 @@ const AddEditFormMain = (props) => {
         AccountRelated: false,
         Address: false,
         Contacts: false,
+        ExchangeVehicle: false,
         CustomerDetails: true,
         FamilyDetails: false,
         IndividualProfile: false,
@@ -116,7 +118,7 @@ const AddEditFormMain = (props) => {
         isViewModeVisible,
         styles,
     };
-    const individualAddressMasterProps = {
+    const exchangeVehicleMasterProps = {
         onCloseAction,
         isViewModeVisible,
         styles,
@@ -131,6 +133,8 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.Contacts) {
         } else if (leftTimeline?.IndividualProfile) {
         } else if (leftTimeline?.FamilyDetails) {
+        } else if (leftTimeline.ExchangeVehicle) {
+            return <ExchangeVehiclesMaster/>;
         }
     };
 

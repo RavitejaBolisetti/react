@@ -9,31 +9,35 @@ const FormProgressBar = (props) => {
     const onHandle = (key) => {
         switch (key) {
             case 'details': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: true, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false });
+                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: true, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false, ExchangeVehicle: false });
                 break;
             }
             case 'profile': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: true, CustomerProfile: false });
+                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: true, CustomerProfile: false, ExchangeVehicle: false });
                 break;
             }
             case 'address': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: true, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false });
+                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: true, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false, ExchangeVehicle: false });
                 break;
             }
             case 'contact': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: true, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false });
+                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: true, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false, ExchangeVehicle: false });
                 break;
             }
             case 'account': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: true, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false });
+                setleftTimeline({ ...leftTimeline, AccountRelated: true, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false, ExchangeVehicle: false });
                 break;
             }
             case 'family': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: true, IndividualProfile: false, CustomerProfile: false });
+                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: true, IndividualProfile: false, CustomerProfile: false, ExchangeVehicle: false });
                 break;
             }
             case 'CustomerProfile': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: true });
+                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: true, ExchangeVehicle: false });
+                break;
+            }
+            case 'ExchangeVehicle': {
+                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false, ExchangeVehicle: true });
                 break;
             }
         }
@@ -113,6 +117,17 @@ const FormProgressBar = (props) => {
                         <>
                             <Button onClick={() => onHandle('account')} type="link" danger>
                                 Account Related
+                            </Button>
+                            <Progress percent={100} size="small" />
+                        </>
+                    ),
+                },
+                {
+                    dot: <FaCheckCircle  />,
+                    children: (
+                        <>
+                            <Button onClick={() => onHandle('ExchangeVehicle')} type="link" danger >
+                                Exchange Vehicle
                             </Button>
                             <Progress percent={100} size="small" />
                         </>
