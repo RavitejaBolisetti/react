@@ -10,6 +10,7 @@ import styles from 'components/common/Common.module.css';
 
 import FormProgressBar from './FormProgressBar';
 import { CustomerDetailsMaster } from './CustomerDetails';
+import { Otfbuttons } from 'components/common/Button';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -30,12 +31,29 @@ const AddEditFormMain = (props) => {
         referrals: false,
         loyaltyScheme: false,
     });
+    const [buttonData, setbuttonData] = useState({
+        closeBtn: true,
+        editBtn: true,
+        cancelBtn: true,
+        allotbtn: true,
+        invoiceBtn: true,
+        transferBtn: true,
+        nextBtn: true,
+    });
+    const handleButtonClick = ({ buttonAction, record }) => {
+        console.log('buttonAction', buttonAction);
+    };
+    const otfButtonProps = {
+        buttonData,
+        setbuttonData,
+        onCloseAction,
+        handleButtonClick,
+    };
     const [Macid, setMacid] = useState();
 
     const [openAccordian, setOpenAccordian] = useState(1);
     const [disableadd, setdisableadd] = useState(false);
 
-    
     const handleDelete = (event, key) => {
         console.log('key', key);
         const newAccessid = AccessMacid.filter((el) => {
@@ -139,11 +157,11 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                             {renderElement()}
-                            {/* <CommonFooterButton {...commonfooterProps} /> */}
                         </Col>
                     </Row>
                 </Col>
             </Row>
+            <Otfbuttons {...otfButtonProps} />
         </>
     );
 };
