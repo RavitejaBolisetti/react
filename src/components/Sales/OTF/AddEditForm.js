@@ -2,19 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Button, Collapse, Avatar, Card, Timeline, Progress, Space } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
-
 import { FaChevronDown } from 'react-icons/fa';
-
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
-
 import FormProgressBar from './FormProgressBar';
 import { CustomerDetailsMaster } from './CustomerDetails';
-
+import { SchemeDetailsMaster } from './SchemeDetails';
+import { InsuranceDetailsMaster } from './InsuranceDetails';
 const { Option } = Select;
 const { TextArea } = Input;
 const { Panel } = Collapse;
 const { Meta } = Card;
+
+
 const AddEditFormMain = (props) => {
     const { saveclick, onCloseAction, productHierarchyData, DealerSearchvalue, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
     const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setIsViewModeVisible, setClosePanels, AccessMacid, setAccessMacid, setShowSaveBtn, hanndleEditData } = props;
@@ -90,9 +90,9 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.vehicleDetails) {
             return;
         } else if (leftTimeline?.schemeDetails) {
-            return;
+            return <SchemeDetailsMaster />
         } else if (leftTimeline?.insuranceDetails) {
-            return;
+            return <InsuranceDetailsMaster />
         } else if (leftTimeline?.exchangeVehicle) {
             return;
         } else if (leftTimeline.referrals) {
