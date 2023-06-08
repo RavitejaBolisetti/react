@@ -9,10 +9,7 @@ import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react
 import styles from 'components/common/Common.module.css';
 
 import FormProgressBar from './FormProgressBar';
-import { VehicleDetailsMaster } from './VehicleDetails';
 import { CustomerDetailsMaster } from './CustomerDetails';
-import { ExchangeVehiclesMaster } from './ExchangeVehicles';
-import { SchemeDetailsMaster } from './SchemeDetails';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -23,28 +20,22 @@ const AddEditFormMain = (props) => {
     const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setIsViewModeVisible, setClosePanels, AccessMacid, setAccessMacid, setShowSaveBtn, hanndleEditData } = props;
     const { toggleButton, settoggleButton } = props;
     const [leftTimeline, setleftTimeline] = useState({
-        AccountRelated: false,
-        Address: false,
-        Contacts: false,
-        ExchangeVehicle: false,
-        CustomerDetails: true,
-        FamilyDetails: false,
-        IndividualProfile: false,
-        CustomerProfile: false,
+        otfDetails: true,
+        customerDetails: false,
+        vehicleDetails: false,
+        fiananceDetails: false,
+        schemeDetails: false,
+        insuranceDetails: false,
+        exchangeVehicle: false,
+        referrals: false,
+        loyaltyScheme: false,
     });
     const [Macid, setMacid] = useState();
 
     const [openAccordian, setOpenAccordian] = useState(1);
     const [disableadd, setdisableadd] = useState(false);
 
-    const handleFormValueChange = () => {
-        setFormBtnActive(true);
-    };
-
-    const handleFormFieldChange = () => {
-        setFormBtnActive(true);
-    };
-
+    
     const handleDelete = (event, key) => {
         console.log('key', key);
         const newAccessid = AccessMacid.filter((el) => {
@@ -91,52 +82,23 @@ const AddEditFormMain = (props) => {
         settoggleButton,
     };
 
-    const CustomerProfileMasterProps = {
-        onCloseAction,
-        isViewModeVisible,
-    };
-
-    const CustomerDetailsMasterProps = {
-        onCloseAction,
-        isViewModeVisible,
-        setIsViewModeVisible,
-    };
-    const CustomerAccountMasterProps = {
-        onCloseAction,
-        isViewModeVisible,
-        setIsViewModeVisible,
-    };
-    const IndividualProfileMasterProps = {
-        onCloseAction,
-        isViewModeVisible,
-    };
-    const IndividualAccountRelatedMasterProps = {
-        onCloseAction,
-        isViewModeVisible,
-    };
-    const commonfooterProps = {
-        onCloseAction,
-        isViewModeVisible,
-        styles,
-    };
-    const exchangeVehicleMasterProps = {
-        onCloseAction,
-        isViewModeVisible,
-        styles,
-    };
-
     const renderElement = () => {
-        if (leftTimeline?.AccountRelated) {
-        } else if (leftTimeline?.CustomerDetails) {
-            return <VehicleDetailsMaster />;
-        } else if (leftTimeline?.Address) {
+        if (leftTimeline?.otfDetails) {
             return <CustomerDetailsMaster />;
-        } else if (leftTimeline?.Contacts) {
-            return <SchemeDetailsMaster />;
-        } else if (leftTimeline?.IndividualProfile) {
-        } else if (leftTimeline?.FamilyDetails) {
-        } else if (leftTimeline.ExchangeVehicle) {
-            return <ExchangeVehiclesMaster/>;
+        } else if (leftTimeline?.customerDetails) {
+            return <CustomerDetailsMaster />;
+        } else if (leftTimeline?.vehicleDetails) {
+            return;
+        } else if (leftTimeline?.schemeDetails) {
+            return;
+        } else if (leftTimeline?.insuranceDetails) {
+            return;
+        } else if (leftTimeline?.exchangeVehicle) {
+            return;
+        } else if (leftTimeline.referrals) {
+            return;
+        } else if (leftTimeline.loyaltyScheme) {
+            return;
         }
     };
 

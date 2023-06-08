@@ -3,41 +3,52 @@ import { Timeline, Progress, Button } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
-
 const FormProgressBar = (props) => {
     const { leftTimeline, setleftTimeline, toggleButton, settoggleButton } = props;
     const onHandle = (key) => {
         switch (key) {
-            case 'details': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: true, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false, ExchangeVehicle: false });
+            case 'otfDetails': {
+                setleftTimeline({ ...leftTimeline, otfDetails: true, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false });
                 break;
             }
-            case 'profile': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: true, CustomerProfile: false, ExchangeVehicle: false });
+            case 'customerDetails': {
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: true, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false });
+
                 break;
             }
-            case 'address': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: true, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false, ExchangeVehicle: false });
+            case 'vehicleDetails': {
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: true, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false });
+
                 break;
             }
-            case 'contact': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: true, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false, ExchangeVehicle: false });
+            case 'schemeDetails': {
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: true, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false });
+
                 break;
             }
-            case 'account': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: true, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false, ExchangeVehicle: false });
+            case 'insuranceDetails': {
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: true, exchangeVehicle: false, referrals: false, loyaltyScheme: false });
+
                 break;
             }
-            case 'family': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: true, IndividualProfile: false, CustomerProfile: false, ExchangeVehicle: false });
+            case 'financeDetails': {
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: true, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false });
+
                 break;
             }
-            case 'CustomerProfile': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: true, ExchangeVehicle: false });
+            case 'exchangeVehicles': {
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: true, referrals: false, loyaltyScheme: false });
+
                 break;
             }
-            case 'ExchangeVehicle': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false, ExchangeVehicle: true });
+            case 'referrals': {
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: true, loyaltyScheme: false });
+
+                break;
+            }
+            case 'loyaltyScheme': {
+                setleftTimeline({ ...leftTimeline, otfDetails: true, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: true });
+
                 break;
             }
         }
@@ -49,30 +60,30 @@ const FormProgressBar = (props) => {
                     dot: <BsRecordCircleFill color="#ff3e5b" />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('details')} type="link" danger style={{ color: '#ff3e5b' }}>
-                                Customer Details
+                            <Button onClick={() => onHandle('otfDetails')} type="link" danger style={{ color: '#ff3e5b' }}>
+                                Otf Details
                             </Button>
                             <Progress percent={60} size="small" />
                         </>
                     ),
                 },
-                toggleButton?.company && {
+                {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('CustomerProfile')} type="link" danger>
-                                Company Profile
+                            <Button onClick={() => onHandle('customerDetails')} type="link" danger>
+                                Customer Details
                             </Button>
                             <Progress percent={100} size="small" />
                         </>
                     ),
                 },
-                toggleButton?.individual && {
+                 {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('profile')} type="link" danger>
-                                Individual Profile
+                            <Button onClick={() => onHandle('vehicleDetails')} type="link" danger>
+                                Vehicle Details
                             </Button>
                             <Progress percent={100} size="small" />
                         </>
@@ -82,8 +93,8 @@ const FormProgressBar = (props) => {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('address')} type="link" danger>
-                                Address
+                            <Button onClick={() => onHandle('schemeDetails')} type="link" danger>
+                                Scheme Details
                             </Button>
                             <Progress percent={100} size="small" />
                         </>
@@ -93,19 +104,8 @@ const FormProgressBar = (props) => {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('contact')} type="link" danger>
-                                Contact
-                            </Button>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
-                },
-                toggleButton?.individual && {
-                    dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('family')} type="link" danger>
-                                Family Details
+                            <Button onClick={() => onHandle('insuranceDetails')} type="link" danger>
+                                Insurance Details
                             </Button>
                             <Progress percent={100} size="small" />
                         </>
@@ -115,28 +115,45 @@ const FormProgressBar = (props) => {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('account')} type="link" danger>
-                                Account Related
+                            <Button onClick={() => onHandle('financeDetails')} type="link" danger>
+                                Finance Details
                             </Button>
                             <Progress percent={100} size="small" />
                         </>
                     ),
                 },
                 {
-                    dot: <FaCheckCircle  />,
+                    dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('ExchangeVehicle')} type="link" danger >
+                            <Button onClick={() => onHandle('exchangeVehicles')} type="link" danger>
                                 Exchange Vehicle
                             </Button>
                             <Progress percent={100} size="small" />
                         </>
                     ),
                 },
-
                 {
                     dot: <FaCheckCircle />,
-                    label: 'Thank You',
+                    children: (
+                        <>
+                            <Button onClick={() => onHandle('referrals')} type="link" danger>
+                                Referrals
+                            </Button>
+                            <Progress percent={100} size="small" />
+                        </>
+                    ),
+                },
+                {
+                    dot: <FaCheckCircle />,
+                    children: (
+                        <>
+                            <Button onClick={() => onHandle('loyaltyScheme')} type="link" danger>
+                                Loyalty Scheme
+                            </Button>
+                            <Progress percent={100} size="small" />
+                        </>
+                    ),
                 },
             ]}
         />
