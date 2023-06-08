@@ -1,3 +1,3 @@
-import CustomerDetailsMaster from './CustomerDetailsMaster';
+import { CustomerDetailsMaster } from './CustomerDetailsMaster';
 
 export { CustomerDetailsMaster };

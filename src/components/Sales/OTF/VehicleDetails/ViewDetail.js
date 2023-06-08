@@ -15,12 +15,22 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-    const customerForm = {
-        customerType: 'uttar pradesh',
-        corporateCode: 'ssss',
-        CustomerCategory: '12312',
-        usageCategorization: 'Delhi',
-        usageCategorizationcategory: true,
+    const vehicleForm = {
+        vehicleUsageType: 'uttar pradesh',
+        vehicleModel: 'ssss',
+        model: '12312',
+        stock: 'Delhi',
+        allotedStatus: true,
+        PONumber: '123122737328',
+        PODate: '12/06/2023',
+        POStatus: 'Status',
+        SONumber: '653728438213',
+        SOStatus: 'Status',
+        VINNumber: 'MAFCL723849203VIN',
+        discountAmount: '24500',
+        sellingPrice: '2454324',
+        chargeAmount: '222',
+        otfAmount: '12640',
     };
     const AuthorityForm = {
         companyName: 'uttar pradesh',
@@ -54,20 +64,29 @@ const ViewDetailMain = (props) => {
                     <Panel
                         header={
                             <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    Customer Information
+                                    Vehicle Information
                                 </Text>
                             </div>
                         }
                         key="1"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Customer Type">{customerForm?.customerType}</Descriptions.Item>
-                            <Descriptions.Item label="corporate Code">{customerForm?.corporateCode}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Category">{customerForm?.CustomerCategory}</Descriptions.Item>
-                            <Descriptions.Item label="Usage Categorization">{customerForm?.usageCategorization}</Descriptions.Item>
-                            <Descriptions.Item label="usage Categorization Category">{customerForm?.usageCategorizationcategory ? 'Active' : 'Inactive'}</Descriptions.Item>
+                            <Descriptions.Item label="Vehicle Usage Type ">{vehicleForm?.vehicleUsageType}</Descriptions.Item>
+                            <Descriptions.Item label="Vehicle Model">{vehicleForm?.vehicleModel}</Descriptions.Item>
+                            <Descriptions.Item label="Model">{vehicleForm?.model}</Descriptions.Item>
+                            <Descriptions.Item label="Available Stock">{vehicleForm?.stock}</Descriptions.Item>
+                            <Descriptions.Item label="Vehicle Allocated Status">{vehicleForm?.allotedStatus}</Descriptions.Item>
+                            <Descriptions.Item label="PO Number">{vehicleForm?.PONumber}</Descriptions.Item>
+                            <Descriptions.Item label="PO Date">{vehicleForm?.PODate}</Descriptions.Item>
+                            <Descriptions.Item label="PO Status">{vehicleForm?.POStatus}</Descriptions.Item>
+                            <Descriptions.Item label="SO Number">{vehicleForm?.SONumber}</Descriptions.Item>
+                            <Descriptions.Item label="SO Status">{vehicleForm?.SOStatus}</Descriptions.Item>
+                            <Descriptions.Item label="VIN Number">{vehicleForm?.VINNumber}</Descriptions.Item>
+                            <Descriptions.Item label="Discount Amount">{vehicleForm?.discountAmount}</Descriptions.Item>
+                            <Descriptions.Item label="Vehicle Selling Price">{vehicleForm?.sellingPrice}</Descriptions.Item>
+                            <Descriptions.Item label="Charge Amount">{vehicleForm?.chargeAmount}</Descriptions.Item>
+                            <Descriptions.Item label="OTF Amount">{vehicleForm?.otfAmount}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>
@@ -105,38 +124,6 @@ const ViewDetailMain = (props) => {
                     </Panel>
                 </Collapse>
 
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(3)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(3)}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {' '}
-                                    Authority Details
-                                </Text>
-                            </div>
-                        }
-                        key="3"
-                    >
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Company Name">{AuthorityForm?.companyName}</Descriptions.Item>
-                            <Descriptions.Item label="Person Name">{AuthorityForm?.personName}</Descriptions.Item>
-                            <Descriptions.Item label="Postion">{AuthorityForm?.postion}</Descriptions.Item>
-                            <Descriptions.Item label="Remarks">{AuthorityForm?.remarks}</Descriptions.Item>
-                        </Descriptions>
-                    </Panel>
-                </Collapse>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                         <Button danger onClick={onCloseAction}>
