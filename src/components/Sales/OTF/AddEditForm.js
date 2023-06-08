@@ -12,6 +12,7 @@ import FormProgressBar from './FormProgressBar';
 import { VehicleDetailsMaster } from './VehicleDetails';
 import { CustomerDetailsMaster } from './CustomerDetails';
 import { ExchangeVehiclesMaster } from './ExchangeVehicles';
+import { SchemeDetailsMaster } from './SchemeDetails';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -131,6 +132,7 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.Address) {
             return <CustomerDetailsMaster />;
         } else if (leftTimeline?.Contacts) {
+            return <SchemeDetailsMaster />;
         } else if (leftTimeline?.IndividualProfile) {
         } else if (leftTimeline?.FamilyDetails) {
         } else if (leftTimeline.ExchangeVehicle) {
