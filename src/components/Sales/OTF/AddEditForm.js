@@ -9,6 +9,10 @@ import FormProgressBar from './FormProgressBar';
 import { CustomerDetailsMaster } from './CustomerDetails';
 import { SchemeDetailsMaster } from './SchemeDetails';
 import { InsuranceDetailsMaster } from './InsuranceDetails';
+import { Otfbuttons } from 'components/common/Button';
+import { VehicleDetailsMaster } from './VehicleDetails';
+import { FinananceDetailsMaster } from './FinananceDetails';
+
 const { Option } = Select;
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -30,12 +34,29 @@ const AddEditFormMain = (props) => {
         referrals: false,
         loyaltyScheme: false,
     });
+    const [buttonData, setbuttonData] = useState({
+        closeBtn: true,
+        editBtn: true,
+        cancelBtn: true,
+        allotbtn: true,
+        invoiceBtn: true,
+        transferBtn: true,
+        nextBtn: true,
+    });
+    const handleButtonClick = ({ buttonAction, record }) => {
+        console.log('buttonAction', buttonAction);
+    };
+    const otfButtonProps = {
+        buttonData,
+        setbuttonData,
+        onCloseAction,
+        handleButtonClick,
+    };
     const [Macid, setMacid] = useState();
 
     const [openAccordian, setOpenAccordian] = useState(1);
     const [disableadd, setdisableadd] = useState(false);
 
-    
     const handleDelete = (event, key) => {
         console.log('key', key);
         const newAccessid = AccessMacid.filter((el) => {
@@ -88,7 +109,7 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.customerDetails) {
             return <CustomerDetailsMaster />;
         } else if (leftTimeline?.vehicleDetails) {
-            return;
+            return <VehicleDetailsMaster/>;
         } else if (leftTimeline?.schemeDetails) {
             return <SchemeDetailsMaster />
         } else if (leftTimeline?.insuranceDetails) {
@@ -99,6 +120,8 @@ const AddEditFormMain = (props) => {
             return;
         } else if (leftTimeline.loyaltyScheme) {
             return;
+        } else if (leftTimeline?.fiananceDetails) {
+            return <FinananceDetailsMaster />;
         }
     };
 
@@ -139,11 +162,11 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                             {renderElement()}
-                            {/* <CommonFooterButton {...commonfooterProps} /> */}
                         </Col>
                     </Row>
                 </Col>
             </Row>
+            <Otfbuttons {...otfButtonProps} />
         </>
     );
 };
