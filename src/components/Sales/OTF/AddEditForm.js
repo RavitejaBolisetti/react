@@ -11,6 +11,9 @@ import styles from 'components/common/Common.module.css';
 import FormProgressBar from './FormProgressBar';
 import { CustomerDetailsMaster } from './CustomerDetails';
 import { VehicleDetailsMaster } from './VehicleDetails';
+import { LoyaltySchemeMaster } from './LoyaltyScheme';
+import { ReferralsMaster } from './Referrals';
+import { ExchangeVehiclesMaster } from './ExchangeVehicles';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -95,11 +98,11 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.insuranceDetails) {
             return;
         } else if (leftTimeline?.exchangeVehicle) {
-            return;
+            return <ExchangeVehiclesMaster/>;
         } else if (leftTimeline.referrals) {
-            return;
+            return <ReferralsMaster/>;
         } else if (leftTimeline.loyaltyScheme) {
-            return;
+            return <LoyaltySchemeMaster/>;
         }
     };
 

@@ -50,13 +50,13 @@ const ViewDetailMain = (props) => {
                         <Divider />
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Customer ID">{customerForm?.customerId}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Name">{customerForm?.customerType}</Descriptions.Item>
-                            <Descriptions.Item label="customerName">{customerForm?.customerName}</Descriptions.Item>
-                            <Descriptions.Item label="Model Group">{customerForm?.email}</Descriptions.Item>
-                            <Descriptions.Item label="Variant">{customerForm?.mobile}</Descriptions.Item>
-                            <Descriptions.Item label="Old Reg. Number">{customerForm?.regNumber}</Descriptions.Item>
-                            <Descriptions.Item label="Old Chassis Number">{customerForm?.chassisNumber}</Descriptions.Item>
-                            <Descriptions.Item label="Date of Birth">{customerForm?.dob}</Descriptions.Item>
+                            <Descriptions.Item label="Customer Type">{customerForm?.customerType}</Descriptions.Item>
+                            <Descriptions.Item label="Customer Name">{customerForm?.customerName}</Descriptions.Item>
+                            <Descriptions.Item label="Email ID">{customerForm?.email}</Descriptions.Item>
+                            <Descriptions.Item label="Mobile Number">{customerForm?.mobile}</Descriptions.Item>
+                            <Descriptions.Item label="Reg. Number">{customerForm?.regNumber}</Descriptions.Item>
+                            <Descriptions.Item label="Chessis Number">{customerForm?.chassisNumber}</Descriptions.Item>
+                            <Descriptions.Item label="D.O.B">{customerForm?.dob}</Descriptions.Item>
                         </Descriptions>
                     </div>
                 </Card>
