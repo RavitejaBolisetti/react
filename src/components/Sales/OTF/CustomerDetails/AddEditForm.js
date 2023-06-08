@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Checkbox } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
-import { withDrawer } from 'components/withDrawer';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { FaRegPlusSquare, FaPlus, FaRegUserCircle } from 'react-icons/fa';
-import { IoTrashOutline } from 'react-icons/io5';
-import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
 
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
@@ -17,7 +12,6 @@ const { Text, Link } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
 const { Panel } = Collapse;
-const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible } = props;
@@ -44,9 +38,6 @@ const AddEditFormMain = (props) => {
 
     const [activeKey, setactiveKey] = useState([1]);
 
-    const [handleActive, sethandleActive] = useState();
-    const handleFormValueChange = () => {};
-    const handleFormFieldChange = () => {};
     const handleEdit = () => {
         setIsViewModeVisible(false);
     };
@@ -78,11 +69,7 @@ const AddEditFormMain = (props) => {
                 setactiveKey([1]);
             });
     };
-    const onFinishFailed = () => {
-        customerForm.validateFields();
-        keyAccountForm.validateFields();
-        authorityForm.validateFields();
-    };
+
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
