@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Button, Collapse, Avatar, Card, Timeline, Progress, Space } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
-
 import { FaChevronDown } from 'react-icons/fa';
-
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
-
 import FormProgressBar from './FormProgressBar';
 import { CustomerDetailsMaster } from './CustomerDetails';
+import { SchemeDetailsMaster } from './SchemeDetails';
+import { InsuranceDetailsMaster } from './InsuranceDetails';
+import { Otfbuttons } from 'components/common/Button';
 import { VehicleDetailsMaster } from './VehicleDetails';
+import { FinananceDetailsMaster } from './FinananceDetails';
 import { LoyaltySchemeMaster } from './LoyaltyScheme';
 import { ReferralsMaster } from './Referrals';
 import { ExchangeVehiclesMaster } from './ExchangeVehicles';
@@ -19,6 +20,8 @@ const { Option } = Select;
 const { TextArea } = Input;
 const { Panel } = Collapse;
 const { Meta } = Card;
+
+
 const AddEditFormMain = (props) => {
     const { saveclick, onCloseAction, productHierarchyData, DealerSearchvalue, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
     const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setIsViewModeVisible, setClosePanels, AccessMacid, setAccessMacid, setShowSaveBtn, hanndleEditData } = props;
@@ -34,12 +37,30 @@ const AddEditFormMain = (props) => {
         referrals: false,
         loyaltyScheme: false,
     });
+    const [buttonData, setbuttonData] = useState({
+        closeBtn: true,
+        editBtn: true,
+        cancelBtn: true,
+        allotbtn: true,
+        invoiceBtn: true,
+        transferBtn: true,
+        nextBtn: true,
+    });
+    const handleButtonClick = ({ buttonAction, record }) => {
+        console.log('buttonAction', buttonAction);
+    };
+    const otfButtonProps = {
+        buttonData,
+        setbuttonData,
+        onCloseAction,
+        handleButtonClick,
+    };
     const [Macid, setMacid] = useState();
 
     const [openAccordian, setOpenAccordian] = useState(1);
     const [disableadd, setdisableadd] = useState(false);
 
-    
+
     const handleDelete = (event, key) => {
         console.log('key', key);
         const newAccessid = AccessMacid.filter((el) => {
@@ -94,15 +115,17 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.vehicleDetails) {
             return <VehicleDetailsMaster/>;
         } else if (leftTimeline?.schemeDetails) {
-            return;
+            return <SchemeDetailsMaster />
         } else if (leftTimeline?.insuranceDetails) {
-            return;
+            return <InsuranceDetailsMaster />
         } else if (leftTimeline?.exchangeVehicle) {
             return <ExchangeVehiclesMaster/>;
         } else if (leftTimeline.referrals) {
             return <ReferralsMaster/>;
         } else if (leftTimeline.loyaltyScheme) {
             return <LoyaltySchemeMaster/>;
+        } else if (leftTimeline?.fiananceDetails) {
+            return <FinananceDetailsMaster />;
         }
     };
 
@@ -143,11 +166,11 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                             {renderElement()}
-                            {/* <CommonFooterButton {...commonfooterProps} /> */}
                         </Col>
                     </Row>
                 </Col>
             </Row>
+            <Otfbuttons {...otfButtonProps} />
         </>
     );
 };

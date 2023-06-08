@@ -1,130 +1,217 @@
-import React, { useState, useRef, useEffect } from 'react';
-
-import { Col, Checkbox, Divider, Row, Button, Form, Input, Radio, Select, Space, Typography } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
-
-// import styles from '../../../Common.module.css';
-
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validationFieldLetteNumberandPeriod, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
-
+import React, { useState, useEffect } from 'react';
+import { Col, Input, Form, Row, Select, DatePicker, Space, Collapse, Typography } from 'antd';
+import { validateRequiredInputField,validateRequiredSelectField} from 'utils/validation';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import styles from 'components/common/Common.module.css';
+import { ViewDetail } from './ViewDetails';
+const { Text } = Typography;
 const { Option } = Select;
-const { Search } = Input;
-let index = 0;
 const { TextArea } = Input;
+const { Panel } = Collapse;
 
-// const addressType = [
-//     { key: 'office', name: 'Office' },
-//     { key: 'residence', name: 'Residence' },
-//     { key: 'permanent', name: 'Permanent' },
-//     { key: 'other', name: 'Other' },
-// ];
+const AddEditFormMain = (props) => {
+    const { onCloseAction, isViewModeVisible, setIsViewModeVisible } = props;
+    const [customerForm] = Form.useForm();
+    const [keyAccountForm] = Form.useForm();
+    const [authorityForm] = Form.useForm();
+    const [FinalFormData, setFinalFormData] = useState({
+        customerForm: [],
+        keyAccountForm: [],
+        authorityForm: [],
+    });
+    const [customerFormValues, setcustomerForm] = useState();
+    const [keyAccountFormValues, setkeyAccountFormValues] = useState();
+    const [authorityFormValues, setauthorityFormValues] = useState();
+    const [done, setDone] = useState();
 
-const AddEditForm = (props) => {
-    const { isReadOnly = false, onFinish, form, onCloseAction, isViewModeVisible, styles } = props;
+    useEffect(() => {
+        setFinalFormData({ ...FinalFormData, customerForm: customerFormValues, keyAccountForm: keyAccountFormValues, authorityForm: authorityFormValues });
+    }, [done]);
+    useEffect(() => {
+        console.log('FinalFormData', FinalFormData);
+    }, [FinalFormData]);
 
-    const disabledProps = { disabled: isReadOnly };
-    const [items, setItems] = useState(['Type Data', 'Type Data1']);
-    const [name, setName] = useState('');
-    const [isOther, setIsOther] = useState(false);
+    const [activeKey, setactiveKey] = useState([1]);
 
-    const inputRef = useRef(null);
-    const onNameChange = (event) => {
-        setName(event.target.value);
+    const handleEdit = () => {
+        setIsViewModeVisible(false);
+    };
+    const onFinish = () => {
+        const customerFormValues = customerForm.getFieldsValue();
+        const keyAccountFormValues = keyAccountForm.getFieldsValue();
+
+        const authorityFormValues = authorityForm.getFieldsValue();
+
+        console.log('customerFormValues', customerFormValues, 'keyAccountFormValues', keyAccountFormValues, 'authorityFormValues', authorityFormValues);
+
+        customerForm
+            .validateFields()
+            .then(() => {
+                authorityForm
+                    .validateFields()
+                    .then(() => {
+                        setcustomerForm(customerFormValues);
+                        setauthorityFormValues(authorityFormValues);
+                        setkeyAccountFormValues(keyAccountFormValues);
+                        setDone(!done);
+                    })
+                    .catch(() => {
+                        console.log('error');
+                        setactiveKey([3]);
+                    });
+            })
+            .catch(() => {
+                setactiveKey([1]);
+            });
     };
 
-    const addItem = (e) => {
-        e.preventDefault();
-        setItems([...items, name || `New item ${index++}`]);
-        setName('');
-        setTimeout(() => {
-            inputRef.current?.focus();
-        }, 0);
+    const onChange = (values) => {
+        const isPresent = activeKey.includes(values);
+
+        if (isPresent) {
+            const newActivekeys = [];
+
+            activeKey.filter((item) => {
+                if (item != values) {
+                    newActivekeys.push(item);
+                }
+            });
+            setactiveKey(newActivekeys);
+        } else {
+            setactiveKey([...activeKey, values]);
+        }
+        console.log('values', values);
     };
 
-    const handleReset = () => {
-        form.resetFields();
+    // const onFinishCustomerInformation = (values) => {
+    //     setFinalFormData({ ...FinalFormData, customerForm: values });
+    // };
+    // const onFinshkeyAccount = (values) => {
+    //     setFinalFormData({ ...FinalFormData, keyAccountForm: values });
+    // };
+    // const onFinishAuthorityDetails = (values) => {
+    //     setFinalFormData({ ...FinalFormData, authorityForm: values });
+    // };
+    // const sameAsBookingCustomer = (e) => {
+    //     console.log(`checked = ${e.target.checked}`);
+    //     setIsBookingCustomer(e.target.checked);
+    // };
+
+    const schemeType = [{code:'hey'},{code:'bud'}]
+
+    const viewProps = {
+        activeKey,
+        setactiveKey,
+        onChange,
+        styles,
+        onCloseAction,
+        handleEdit,
     };
 
-    const handleOther = (key) => {
-        setIsOther(key === 4);
-    };
     return (
         <>
-            <Form form={form} id="myAdd" onFinish={onFinish} autoComplete="off" layout="vertical">
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Scheme Type" name="schemeType" rules={[validateRequiredSelectField('Scheme Type')]}>
-                            <Select
-                                onChange={handleOther}
-                                placeholder={preparePlaceholderSelect('scheme Type')}
-                                dropdownRender={(menu) => (
-                                    <>
-                                        {menu}
-                                        <Space
-                                            style={{
-                                                padding: '0 8px 4px',
-                                            }}
-                                        ></Space>
-                                    </>
-                                )}
-                                options={items.map((item) => ({
-                                    label: item,
-                                    value: item,
-                                }))}
-                            />
-                        </Form.Item>
-                    </Col>
+            {!isViewModeVisible ? (
+                // <Row gutter={20}>
+                //     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                //         <Space style={{ display: 'flex' }} size="middle" direction="vertical">
+                //             <Collapse
+                //                 expandIcon={() => {
+                //                     if (activeKey.includes(1)) {
+                //                         return <MinusOutlined className={styles.iconsColor} />;
+                //                     } else {
+                //                         return <PlusOutlined className={styles.iconsColor} />;
+                //                     }
+                //                 }}
+                //                 activeKey={activeKey}
+                //                 onChange={() => onChange(1)}
+                //                 expandIconPosition="end"
+                //             >
+                //                 <Panel
+                //                     header={
+                //                         <div className={styles.alignUser}>
+                //                             {/* <FaRegUserCircle className={styles.userCircle} /> */}
+                //                             <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                //                                 Scheme
+                //                             </Text>
+                //                         </div>
+                //                     }
+                //                     key="1"
+                //                 >
+                //                     <Form autoComplete="off" layout="vertical" form={customerForm}>
+                //                         <Row gutter={20}>
+                //                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                //                                 <Form.Item initialValue={''} label="Scheme Type" name="1" rules={[validateRequiredSelectField('Scheme Type')]}>
+                //                                     <Select
+                //                                         placeholder={preparePlaceholderSelect('Scheme Type')}
+                //                                         style={{
+                //                                             width: '100%',
+                //                                         }}
+                //                                         // onChange={parentName}
+                //                                         // disabled={editMode}
+                //                                     >
+                //                                         {schemeType?.map((item) => {
+                //                                             return <Option value={item?.code}>{item?.code}</Option>;
+                //                                         })}
+                //                                     </Select>
+                //                                 </Form.Item>
+                //                             </Col>
+                //                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                //                                 <Form.Item initialValue={''} label="Scheme Category" name="2" rules={[validateRequiredInputField('Scheme Category')]}>
+                //                                     <Input className={styles.inputBox} placeholder={preparePlaceholderText('Scheme Category')} />
+                //                                 </Form.Item>
+                //                             </Col>
+                //                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                //                                 <Form.Item initialValue={''} label="Amount" name="3" rules={[validateRequiredInputField('Amount')]}>
+                //                                     <Input className={styles.inputBox} placeholder={preparePlaceholderText('Amount')} />
+                //                                 </Form.Item>
+                //                             </Col>
+                //                         </Row>
+                //                         <Row gutter={20}>
+                //                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                //                                 <Form.Item initialValue={''} label="Valid From" name="4" rules={[validateRequiredInputField('Valid From')]}>
+                //                                     <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} style={{width:'100%'}} />
+                //                                 </Form.Item>
+                //                             </Col>
+                //                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                //                                 <Form.Item initialValue={''} label="Valid To" name="5" rules={[validateRequiredInputField('Valid To')]}>
+                //                                     <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} style={{width:'100%'}} />
+                //                                 </Form.Item>
+                //                             </Col>
+                //                         </Row>
 
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Scheme Catagory" name="schemecatagory" rules={[validateRequiredInputField('scheme catagory')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('scheme catagory')} />
-                        </Form.Item>
-                    </Col>
+                //                         <Row gutter={20}>
+                //                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                //                                 <Form.Item initialValue={''} label="Description" name="6" rules={[validateRequiredInputField('Description')]}>
+                //                                     <TextArea className={styles.inputBox} placeholder={preparePlaceholderText('Description')} />
+                //                                 </Form.Item>
+                //                             </Col>
+                //                         </Row>
+                //                     </Form>
+                //                 </Panel>
+                //             </Collapse>
 
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Scheme Amount" name="schemeamount">
-                            <Input maxLength={50} placeholder={preparePlaceholderText('scheme amount')} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Valid From" name="validfrom" rules={[validateRequiredSelectField('date')]}>
-                            <Input suffix={<SearchOutlined />} placeholder="Search" />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Valid To" name="validto" rules={[validateRequiredSelectField('date')]}>
-                            <Input suffix={<SearchOutlined />} placeholder="Search" />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item label="Description" name="description">
-                            <TextArea rows={2} maxLength={250} placeholder={preparePlaceholderText('description')} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <br></br>
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Space>
-                            <Button form="myAdd" key="submit" htmlType="submit" type="primary">
-                                Save
-                            </Button>
-                            <Button onClick={handleReset} ghost type="primary">
-                                Reset
-                            </Button>
-                        </Space>
-                    </Col>
-                </Row>
-            </Form>
+                //             {/* <Row gutter={20}>
+                //                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                //                     <Button danger onClick={onCloseAction}>
+                //                         Cancel
+                //                     </Button>
+                //                 </Col>
+                //                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                //                     <Button type="primary" onClick={onFinish} className={styles.floatRight}>
+                //                         Save & Proceed
+                //                     </Button>
+                //                 </Col>
+                //             </Row> */}
+                //         </Space>
+                //     </Col>
+                // </Row>
+                <ViewDetail {...viewProps} />
+            ) : (
+                <ViewDetail {...viewProps} />
+            )}
         </>
     );
 };
 
-export default AddEditForm;
+export const AddEditForm = AddEditFormMain;

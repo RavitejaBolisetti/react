@@ -12,6 +12,7 @@ import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
 import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { Otfbuttons } from 'components/common/Button';
 
 const mapStateToProps = (state) => {
     const {
@@ -237,6 +238,7 @@ export const OtfMasterBase = (props) => {
         isPinCodeLoading,
         forceUpdate,
         pinCodeShowLoading,
+        handleButtonClick,
     };
 
     const tableProps = {
