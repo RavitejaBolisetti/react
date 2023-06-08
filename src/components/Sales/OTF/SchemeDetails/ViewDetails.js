@@ -1,6 +1,6 @@
 import React from 'react';
 import { Descriptions } from 'antd';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Typography } from 'antd';
+import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Typography, Divider } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FaRegPlusSquare, FaPlus, FaRegUserCircle } from 'react-icons/fa';
 
@@ -24,42 +24,42 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
-            <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(1)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(1)}
-                    expandIconPosition="end"
+        <Space direction="vertical" size="middle" className={styles.accordianContainer}>
+            <Collapse
+                expandIcon={() => {
+                    if (activeKey.includes(1)) {
+                        return <MinusOutlined className={styles.iconsColor} />;
+                    } else {
+                        return <PlusOutlined className={styles.iconsColor} />;
+                    }
+                }}
+                activeKey={activeKey}
+                onChange={() => onChange(1)}
+                expandIconPosition="end"
+            >
+                <Panel
+                    header={
+                        <div className={styles.alignUser}>
+                            {/* <FaRegUserCircle className={styles.userCircle} /> */}
+                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                Scheme
+                            </Text>
+                        </div>
+                    }
+                    key="1"
                 >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                {/* <FaRegUserCircle className={styles.userCircle} /> */}
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    Scheme
-                                </Text>
-                            </div>
-                        }
-                        key="1"
-                    >
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Scheme Type">{schemeForm?.schemeType}</Descriptions.Item>
-                            <Descriptions.Item label="Scheme Category">{schemeForm?.schemeCategory}</Descriptions.Item>
-                            <Descriptions.Item label="Amount">{schemeForm?.amount}</Descriptions.Item>
-                            <Descriptions.Item label="Valid From">{schemeForm?.validFrom}</Descriptions.Item>
-                            <Descriptions.Item label="Valid To">{schemeForm?.validTo}</Descriptions.Item>
-                        </Descriptions>
-                    </Panel>
-                </Collapse>
+                    <Divider />
+                    <Descriptions {...viewProps}>
+                        <Descriptions.Item label="Scheme Type">{schemeForm?.schemeType}</Descriptions.Item>
+                        <Descriptions.Item label="Scheme Category">{schemeForm?.schemeCategory}</Descriptions.Item>
+                        <Descriptions.Item label="Amount">{schemeForm?.amount}</Descriptions.Item>
+                        <Descriptions.Item label="Valid From">{schemeForm?.validFrom}</Descriptions.Item>
+                        <Descriptions.Item label="Valid To">{schemeForm?.validTo}</Descriptions.Item>
+                    </Descriptions>
+                </Panel>
+            </Collapse>
 
-                {/* <Row gutter={20}>
+            {/* <Row gutter={20}>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                         <Button danger onClick={onCloseAction}>
                             Cancel
@@ -71,8 +71,7 @@ const ViewDetailMain = (props) => {
                         </Button>
                     </Col>
                 </Row> */}
-            </Space>
-        </div>
+        </Space>
     );
 };
 
