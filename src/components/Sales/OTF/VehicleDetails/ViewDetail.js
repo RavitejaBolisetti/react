@@ -2,8 +2,11 @@ import React from 'react';
 import { Descriptions } from 'antd';
 import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Typography, Divider } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { FaRegPlusSquare, FaPlus, FaRegUserCircle } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
+import style from 'utils/PasswordStrengthMeter/PasswordStrengthMeter.module.css';
+import { addToolTip } from 'utils/customMenuLink';
 
 const { Panel } = Collapse;
 const { Text, Link } = Typography;
@@ -41,6 +44,8 @@ const ViewDetailMain = (props) => {
         description: 'Delhi',
     };
 
+    const text = 'Color - RED Seating Capacity - 7 Fuel - Diesel Variant - XUV 500 Name - XUV';
+
     return (
         <Space direction="vertical" size="middle" className={styles.accordianContainer}>
             <Collapse
@@ -69,7 +74,10 @@ const ViewDetailMain = (props) => {
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Vehicle Usage Type ">{vehicleForm?.vehicleUsageType}</Descriptions.Item>
                         <Descriptions.Item label="Vehicle Model">{vehicleForm?.vehicleModel}</Descriptions.Item>
-                        <Descriptions.Item label="Model">{vehicleForm?.model}</Descriptions.Item>
+                        <Descriptions.Item label="Model">
+                            {vehicleForm?.model}
+                            {addToolTip(text, 'bottom', '#20232C', style.infoTooltipDesign)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                        </Descriptions.Item>
                         <Descriptions.Item label="Available Stock">{vehicleForm?.stock}</Descriptions.Item>
                         <Descriptions.Item label="Vehicle Allocated Status">{vehicleForm?.allotedStatus}</Descriptions.Item>
                         <Descriptions.Item label="PO Number">{vehicleForm?.PONumber}</Descriptions.Item>
