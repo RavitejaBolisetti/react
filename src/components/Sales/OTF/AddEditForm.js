@@ -11,6 +11,7 @@ import styles from 'components/common/Common.module.css';
 import FormProgressBar from './FormProgressBar';
 import { CustomerDetailsMaster } from './CustomerDetails';
 import { VehicleDetailsMaster } from './VehicleDetails';
+import { FinananceDetailsMaster } from './FinananceDetails';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -36,7 +37,6 @@ const AddEditFormMain = (props) => {
     const [openAccordian, setOpenAccordian] = useState(1);
     const [disableadd, setdisableadd] = useState(false);
 
-    
     const handleDelete = (event, key) => {
         console.log('key', key);
         const newAccessid = AccessMacid.filter((el) => {
@@ -100,6 +100,8 @@ const AddEditFormMain = (props) => {
             return;
         } else if (leftTimeline.loyaltyScheme) {
             return;
+        } else if (leftTimeline?.fiananceDetails) {
+            return <FinananceDetailsMaster />;
         }
     };
 
