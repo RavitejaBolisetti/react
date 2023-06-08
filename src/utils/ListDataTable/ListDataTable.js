@@ -10,6 +10,7 @@ export default function ListDataTable({
     handleAdd,
     addTitle = 'Group',
     scroll = 'auto',
+    showAddButton = true,
     noDataMessage = (
         <>
             No records found. Please add new parameter <br />
@@ -28,13 +29,13 @@ export default function ListDataTable({
                         }}
                         description={!tableData?.length ? <span>{noDataMessage}</span> : <span> No records found.</span>}
                     >
-                        {!tableData?.length ? (
-                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                {`Add`}
-                            </Button>
-                        ) : (
-                            ''
-                        )}
+                        {!tableData?.length
+                            ? showAddButton && (
+                                  <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                      {`Add`}
+                                  </Button>
+                              )
+                            : ''}
                     </Empty>
                 )}
             >

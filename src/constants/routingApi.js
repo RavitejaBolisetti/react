@@ -23,6 +23,7 @@ export const BASE_URL_GEO_GRAPHY_DISTRICT = BASE_URL + 'geography/districts';
 export const BASE_URL_GEO_GRAPHY_TEHSIL = BASE_URL + 'geography/tehsils';
 export const BASE_URL_GEO_GRAPHY_CITY = BASE_URL + 'geography/cities';
 export const BASE_URL_GEO_GRAPHY_PINCODE = BASE_URL + 'geography/pincodes';
+export const BASE_URL_GEO_GRAPHY_PINCODE_REPORT = BASE_URL + 'geography/pincodes/report';
 export const BASE_URL_GEO_GRAPHY_PINCODE_DETAILS = BASE_URL_GEO_GRAPHY_PINCODE + '/details';
 
 export const BASE_URL_DEALER_MANPOWER = BASE_URL + 'dealer';
@@ -36,6 +37,7 @@ export const BASE_URL_ROLE = BASE_URL_DEALER_MANPOWER + '/roles';
 
 export const BASE_URL_CUSTOMER_MASTER = BASE_URL + 'customers';
 export const BASE_URL_PARTY_MASTER = BASE_URL_CUSTOMER_MASTER + '/partymaster';
+export const BASE_URL_LESSOR_COMPANY_MASTER = BASE_URL_CUSTOMER_MASTER + '/lessorcompany';
 
 export const BASE_URL_GEO_GRAPHY_CHANGE_HISTORY = BASE_URL + 'geochangehistory';
 export const BASE_URL_ROLE_MANAGEMENT = BASE_URL + 'application/roles';
@@ -70,9 +72,7 @@ export const BASE_URL_DEALER_HIERARCHY = BASE_URL + 'dealerhierarchy';
 export const BASE_URL_DEALER_HIERARCHY_SAVE = BASE_URL + 'dealerhierarchy';
 
 export const BASE_URL_DEALER_PARENT = BASE_URL + 'dealer/parents';
-export const BASE_URL_DEALER_PARENT_SAVE = BASE_URL + 'dealer/parents';
 export const BASE_URL_DEALER_COMAPANY = BASE_URL + 'dealer/company';
-export const BASE_URL_DEALER_COMAPANY_SAVE = BASE_URL + 'dealer/company';
 export const BASE_URL_DEALER_PARENT_GROUP_SEARCH = BASE_URL + 'dealer/search/parentgroups';
 export const BASE_URL_DEALER_PARENT_TITLE = BASE_URL + 'configurableparametertypes';
 
@@ -91,8 +91,9 @@ export const BASE_URL_USER_MANAGEMENT_DEALER = BASE_URL + 'users/dealer';
 export const BASE_URL_USER_MANAGEMENT_MANUFACTURER = BASE_URL + 'users/manufacturer';
 
 export const BASE_URL_TERM_CONDITION_PRODUCT_HIERARCHY = BASE_URL + 'product';
-export const BASE_URL_TERM_CONDITION_DOCUMENT_TYPE = BASE_URL + 'appmst/documenttypes?code=tns&type=DOCUMENT';
-export const BASE_URL_TERM_CONDITION_LANGUAGE = BASE_URL + 'configurableparametertypes?parameterType=MOTHER_TOUNGE';
+//export const BASE_URL_TERM_CONDITION_DOCUMENT_TYPE = BASE_URL + 'appmst/documenttypes?code=tns&type=DOCUMENT';
+export const BASE_URL_TERM_CONDITION_DOCUMENT_TYPE = BASE_URL + 'appmst/documenttypes?code=TERMS_CONDITIONS&type=MODULE';
+export const BASE_URL_TERM_CONDITION_LANGUAGE = BASE_URL + 'configurableparametertypes?parametertype=TERMS_CONDITIONS_LNG';
 export const BASE_URL_TERM_CONDITION_DEALER = BASE_URL + 'appmst/termconditiondealer';
-export const BASE_URL_TERM_CONDITION_MANUFACTURER = BASE_URL + 'appmst/tncmanufracturer';
-export const BASE_URL_TERM_CONDITION_CHANGE_HISTORY = BASE_URL + 'appmst/termconditiondealerhistory';
+//export const BASE_URL_TERM_CONDITION_MANUFACTURER = BASE_URL + 'dealer/tncmanufracturer';
+export const BASE_URL_TERM_CONDITION_MANUFACTURER = BASE_URL +  'appmst/tncmanufracturer';

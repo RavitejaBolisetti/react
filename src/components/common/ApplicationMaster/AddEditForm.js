@@ -12,7 +12,46 @@ import { accordianExpandIcon } from './../../../utils/accordianExpandIcon';
 
 const { Panel } = Collapse;
 
-const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotification, setparentAppCode, parentAppCode, applicationForm, forceUpdate, setFinalFormdata, finalFormdata, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, isVisible, setisVisible, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave, criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading, isFieldDisable,onCloseAction, applicationDetailsData, isBtnDisabled, setIsBtnDisabled }) => {
+const AddEditFormMain = ({
+    setSelectedTreeKey,
+    selectedTreeKey,
+    showGlobalNotification,
+    setparentAppCode,
+    parentAppCode,
+    applicationForm,
+    forceUpdate,
+    setFinalFormdata,
+    finalFormdata,
+    setFormBtnDisable,
+    onFinish,
+    onFinishFailed,
+    form,
+    handleAdd,
+    setForceFormReset,
+    isVisible,
+    setisVisible,
+    isChecked,
+    setIsChecked,
+    formActionType,
+    isReadOnly,
+    formData,
+    setFormData,
+    isDataAttributeLoaded,
+    attributeData,
+    setFieldValue,
+    handleSelectTreeClick,
+    isLoadingOnSave,
+    criticalityGroupData,
+    configurableParamData,
+    actions,
+    menuData,
+    isApplicatinoOnSaveLoading,
+    isFieldDisable,
+    onCloseAction,
+    applicationDetailsData,
+    isBtnDisabled,
+    setIsBtnDisabled,
+}) => {
     const [openAccordian, setOpenAccordian] = useState('');
     const [isRestrictedLocation, setIsRestrictedLocation] = useState(false);
     const [isDocumentToGenerate, setIsDocumentToGenerate] = useState(true);
@@ -29,7 +68,7 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
 
     useEffect(() => {
         setOpenAccordian(null);
-    },[isRestrictedLocation, isDocumentToGenerate])
+    }, [isRestrictedLocation, isDocumentToGenerate]);
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
@@ -74,7 +113,7 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
                     {isRestrictedLocation && (
                         <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
                             <Panel header={'Accessible Dealer Location'} key="3">
-                                <AccessibleDealerLocations setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setCanFormSave={setCanFormSave}/>
+                                <AccessibleDealerLocations setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setCanFormSave={setCanFormSave} />
                             </Panel>
                         </Collapse>
                     )}
@@ -86,9 +125,8 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
                         Cancel
                     </Button>
                 </Col>
-{console.log("isApplicatinoOnSaveLoading", isApplicatinoOnSaveLoading)}
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnRight}>
-                    <Button disabled={!canFormSave} loading={isApplicatinoOnSaveLoading} htmlType="submit" danger form="myForm" key="saveBtm" type="primary">
+                    <Button disabled={isApplicatinoOnSaveLoading || !canFormSave} loading={isApplicatinoOnSaveLoading} htmlType="submit" danger form="myForm" key="saveBtm" type="primary">
                         Save
                     </Button>
                 </Col>

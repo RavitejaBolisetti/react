@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
+import { validateRequiredSelectField } from 'utils/validation';
 import { withModal } from 'components/withModal';
 import { searchValidator } from 'utils/validation';
 import styles from 'components/common/Common.module.css';
@@ -39,19 +39,23 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="Division Name" name="code" initialValue={filterString?.code} rules={[validateRequiredSelectField('Division Name')]}>
-                        <Select className={styles.headerSelectField} showSearch loading={!isDivisionDataLoaded} onChange={handleFilterChange('code')} placeholder="Select" allowClear >
+                        <Select className={styles.headerSelectField} showSearch loading={!isDivisionDataLoaded} onChange={handleFilterChange('code')} placeholder="Select" allowClear>
                             {divisionData?.map((item) => (
-                                <Option value={item?.code}>{item?.divisionName}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Department Name" initialValue={filterString?.departmentCode}  name="departmentCode">
+                    <Form.Item label="Department Name" initialValue={filterString?.departmentCode} name="departmentCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('departmentCode')}>
                             {filteredDepartmentData?.map((item) => (
-                                <Option value={item?.departmentCode}>{item?.departmentName}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>
@@ -63,7 +67,9 @@ export const AdvancedSearchFrom = (props) => {
                     <Form.Item label="Role Name" initialValue={filterString?.roleCode} name="roleCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('roleCode')}>
                             {filteredRoleData?.map((item) => (
-                                <Option value={item?.roleCode}>{item?.roleDescription}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>

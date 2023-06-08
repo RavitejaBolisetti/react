@@ -59,6 +59,20 @@ export const MenuConstant = {
         parentMenuId: 'COMN-03',
     },
 
+    [getMenyKey('COMN-03.04')]: {
+        key: 'COMN-03.04',
+        link: routing.ROUTING_COMMON_TERM_CONDITION_MANUFACTURER,
+        icon: undefined,
+        parentMenuId: 'COMN-03',
+    },
+
+    [getMenyKey('COMN-03.05')]: {
+        key: 'COMN-03.05',
+        link: routing.ROUTING_COMMON_TERM_CONDITION_DEALER,
+        icon: undefined,
+        parentMenuId: 'COMN-03',
+    },
+
     [getMenyKey('PMA')]: {
         key: 'PMA',
         link: routing.ROUTING_COMMON_PRODUCT_MASTER,
@@ -79,6 +93,19 @@ export const MenuConstant = {
         parentMenuId: 'ADMN',
     },
 
+    [getMenyKey('COMN-08.05')]: {
+        key: 'COMN-08.05',
+        link: routing.ROUTING_MILE_DEALER_HIERARCHY_DEALER_PARENT,
+        icon: undefined,
+        parentMenuId: 'COMN-08',
+    },
+
+    [getMenyKey('COMN-08.06')]: {
+        key: 'COMN-08.06',
+        link: routing.ROUTING_MILE_DEALER_HIERARCHY_DEALER_COMPANY,
+        icon: undefined,
+        parentMenuId: 'COMN-08',
+    },
     // [getMenyKey('COMN-07.01')]: {
     //     key: 'COMN-07.01',
     //     link: routing.ROUTING_COMMON_GEO,
@@ -140,6 +167,13 @@ export const MenuConstant = {
         link: routing.ROUTING_COMMON_PARTY_MASTER,
         icon: undefined,
         parentMenuId: 'COMN-10',
+    },
+
+    [getMenyKey('COMN-10.03')]: {
+        key: 'COMN-10.03',
+        link: routing.ROUTING_COMMON_LESSOR_COMPANY_MASTER,
+        icon: undefined,
+        parentMenuId: 'COMN-10.a',
     },
 
     [getMenyKey('MILE-01.04')]: {

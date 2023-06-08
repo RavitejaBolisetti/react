@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
@@ -77,21 +77,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
             title: 'Long Description',
             dataIndex: 'prodctLongDiscription',
         }),
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'status',
-            filters: [
-                {
-                    text: 'Active',
-                    value: 'Active',
-                },
-                {
-                    text: 'Inactive',
-                    value: 'Inactive',
-                },
-            ],
-            render: (text) => (text === 'Y' ? 'Active' : 'In Active'),
-        }),
+        tblStatusColumn({ styles, width: '15%' }),
     ];
 
     const tableProps = {

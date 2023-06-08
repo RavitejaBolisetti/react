@@ -19,10 +19,10 @@ const AddEditFormMain = (props) => {
 
     const { buttonData, setButtonData, handleButtonClick } = props;
 
-    const [filteredStateData, setFilteredStateData] = useState(stateData?.filter((i) => i?.countryCode === defaultCountry));
-    const [filteredDistrictData, setFilteredDistrictData] = useState(districtData?.filter((i) => i?.stateCode === formData?.stateCode));
-    const [filteredCityData, setFilteredCityData] = useState(cityData?.filter((i) => i?.districtCode === formData?.districtCode));
-    const [filteredTehsilData, setFilteredTehsilData] = useState(tehsilData?.filter((i) => i?.districtCode === formData?.districtCode));
+    const [filteredStateData, setFilteredStateData] = useState(stateData?.filter((i) => i?.parentKey === defaultCountry));
+    const [filteredDistrictData, setFilteredDistrictData] = useState(districtData?.filter((i) => i?.parentKey === formData?.stateCode));
+    const [filteredCityData, setFilteredCityData] = useState(cityData?.filter((i) => i?.parentKey === formData?.districtCode));
+    const [filteredTehsilData, setFilteredTehsilData] = useState(tehsilData?.filter((i) => i?.parentKey === formData?.districtCode));
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -49,7 +49,7 @@ const AddEditFormMain = (props) => {
         form.setFieldValue('cityCode', undefined);
         form.setFieldValue('tehsilCode', undefined);
 
-        setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === state));
+        setFilteredDistrictData(districtData?.filter((i) => i?.parentKey === state));
 
         setFilteredCityData([]);
         setFilteredTehsilData([]);
@@ -58,8 +58,8 @@ const AddEditFormMain = (props) => {
     const handleDistrictChange = (district) => {
         form.setFieldValue('cityCode', undefined);
         form.setFieldValue('tehsilCode', undefined);
-        setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === district));
-        setFilteredCityData(cityData?.filter((i) => i?.districtCode === district));
+        setFilteredTehsilData(tehsilData?.filter((i) => i?.parentKey === district));
+        setFilteredCityData(cityData?.filter((i) => i?.parentKey === district));
     };
 
     const viewProps = {
@@ -87,7 +87,6 @@ const AddEditFormMain = (props) => {
                 <ViewDetail {...viewProps} />
             ) : (
                 <>
-                    {/* {JSON.stringify(formData)} */}
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
@@ -102,7 +101,9 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.stateCode} label="State" name="stateCode" rules={[validateRequiredSelectField('State')]}>
                                 <Select placeholder={preparePlaceholderSelect('State')} {...selectProps} onChange={handleStateChange}>
                                     {filteredStateData?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.value}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>
@@ -114,8 +115,8 @@ const AddEditFormMain = (props) => {
                             <Form.Item label="District" initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
                                 <Select placeholder={preparePlaceholderSelect('District')} {...selectProps} onChange={handleDistrictChange}>
                                     {filteredDistrictData?.map((item) => (
-                                        <Option key={item?.code} value={item?.code}>
-                                            {item?.name}
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.value}
                                         </Option>
                                     ))}
                                 </Select>
@@ -124,7 +125,11 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="City" initialValue={formData?.cityCode} name="cityCode" rules={[validateRequiredSelectField('City')]}>
                                 <Select placeholder={preparePlaceholderSelect('City')} {...selectProps}>
-                                    {filteredCityData?.map((item) => console.log(item?.code, typeof item?.code) || <Option value={item?.code}>{item?.name}</Option>)}
+                                    {filteredCityData?.map((item) => (
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.value}
+                                        </Option>
+                                    ))}
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -135,7 +140,9 @@ const AddEditFormMain = (props) => {
                             <Form.Item label="Tehsil" initialValue={formData?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
                                 <Select {...selectProps} placeholder={preparePlaceholderSelect('Tehsil')}>
                                     {filteredTehsilData?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.value}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
 
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
@@ -75,11 +75,7 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
             title: 'Hierarchy Code',
             dataIndex: 'hierarchyCode',
         }),
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'status',
-            render: (text) => (text ? 'Active' : 'In Active'),
-        }),
+        tblStatusColumn({ styles, width: '15%' }),
     ];
 
     const tableProps = {
