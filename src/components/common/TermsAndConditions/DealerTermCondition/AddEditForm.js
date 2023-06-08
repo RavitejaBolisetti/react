@@ -11,7 +11,7 @@ import { DrawerFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 import { convertDate } from 'utils/formatDateTime';
 import { convertCalenderDate } from 'utils/formatDateTime';
-import { ChangeHistory } from './changeHistoryForm';
+import dayjs from 'dayjs';
 
 const { Option } = Select;
 
@@ -24,7 +24,7 @@ const AddEditFormMain = (props) => {
     const { languageName, setLanguageName } = props;
     const { termsAndCondition, setTermsAndCondition } = props;
     const { tableChangeHistoryProps } = props;
-    const [startDate, setStartDate] = useState(new Date());
+    // const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState();
 
     const onChangeCkEditor = (e) => {
@@ -71,12 +71,19 @@ const AddEditFormMain = (props) => {
         saveButtonName: 'Add T&C',
     };
 
-    const dateInitialValue = { initialValue: convertCalenderDate(formData?.includedOn, 'YYYY/MM/DD') };
+    const handleDateChange = (value) => {
+        // console.log('Start Date', e);
+        console.log('value', value);
+        return value && value < dayjs().endOf(value);
+    };
+
+    const fromDateInitialValue = { initialValue: convertCalenderDate(formData?.effectiveFrom, 'YYYY/MM/DD') };
+    const toDateInitialValue = { initialValue: convertCalenderDate(formData?.effectiveTo, 'YYYY/MM/DD') };
 
     // const dateFormat = 'YYYY/MM/DD';
     return (
         <Form autoComplete="off" form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} onFieldsChange={handleFormFieldChange}>
-            {!formActionType?.viewMode && !formActionType.changeHistoryMode ? (
+            {!formActionType?.viewMode ? (
                 <>
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -132,29 +139,27 @@ const AddEditFormMain = (props) => {
                                 {CustomEditorLoad && <CustomEditor onChange={onChangeCkEditor} />}
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             {termsAndCondition}
                             <Form.Item name="description" initialValue={termsAndCondition}>
                                 <Input disabled={formActionType?.viewMode} value />
                             </Form.Item>
-                        </Col>
+                        </Col> */}
                     </Row>
 
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item {...dateInitialValue} label="Effective From" name="effectiveFrom" rules={[validateRequiredInputField('date')]}>
-                                <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} style={{ width: '100%' }} selected={startDate} onChange={(date) => setStartDate(date)} selectsStart startDate={startDate} endDate={endDate} maxDate={endDate} />
+                            <Form.Item {...fromDateInitialValue} label="Effective From" name="effectiveFrom" rules={[validateRequiredInputField('date')]}>
+                                <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} style={{ width: '100%' }} onChange={handleDateChange} />
                             </Form.Item>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item {...dateInitialValue} label="Effective To" name="effectiveTo">
-                                <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} style={{ width: '100%' }} selected={endDate} onChange={(date) => setEndDate(date)} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} />
+                            <Form.Item {...toDateInitialValue} label="Effective To" name="effectiveTo">
+                                <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} style={{ width: '100%' }} disabledDate={handleDateChange} />
                             </Form.Item>
                         </Col>
                     </Row>
                 </>
-            ) : formActionType.changeHistoryMode ? (
-                <ChangeHistory {...tableChangeHistoryProps} />
             ) : (
                 <ViewTermConditionList {...viewProps} />
             )}

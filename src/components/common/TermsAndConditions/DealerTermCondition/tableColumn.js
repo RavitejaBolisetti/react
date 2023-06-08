@@ -26,7 +26,7 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
         tblPrepareColumns({
             title: 'Language',
             dataIndex: 'language',
-            width: '15%',
+            width: '10%',
         }),
 
         tblPrepareColumns({
@@ -37,7 +37,7 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
         tblPrepareColumns({
             title: 'Version',
             dataIndex: 'version',
-            width: '15%',
+            width: '5%',
         }),
         tblPrepareColumns({
             title: 'Effective From',
@@ -70,21 +70,23 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
         // }),
         tblPrepareColumns({
             title: 'MFG T&C',
-            width: '10%',
+            width: '5%',
             sorter: false,
             render: (text, record, index) => {
                 return (
                     <Space>
-                        <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleManufacturerButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
-                            <FiEye />
-                        </Button>
+                        {record?.manufracturerTnCId !== 'NA' ? (
+                            <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleManufacturerButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
+                                <FiEye />
+                            </Button>
+                        ) : null}
                     </Space>
                 );
             },
         }),
         tblPrepareColumns({
             title: 'View',
-            width: '10%',
+            width: '5%',
             sorter: false,
             render: (text, record, index) => {
                 return (
