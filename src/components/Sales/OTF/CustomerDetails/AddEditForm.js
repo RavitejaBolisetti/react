@@ -35,7 +35,6 @@ function AddEditForm() {
         } else {
             setactiveKey([...activeKey, values]);
         }
-        console.log('values', values);
     };
 
     return (
