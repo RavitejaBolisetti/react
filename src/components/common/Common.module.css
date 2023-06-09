@@ -1449,6 +1449,208 @@
     background-color: #B5B5B6;
 }
 
+/* Customer Master / OTF Details Drawer */
+
+.drawerBodyLeft {
+    /* padding: 20px; */
+    background: #F2F2F2;
+    /* position: sticky;
+    height: 100vh;
+    top: 60px !important; */
+}
+
+.drawerBodyRight {
+    padding: 20px;
+    height: calc(100vh - 60px);
+    max-height: calc(100vh - 60px);
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.drawerBodyLeft :global .ant-collapse {
+    background: #e6e6e6;
+    border: 1px solid #b5b5b6;
+    margin: 20px;
+}
+
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
+    padding: 20px;
+}
+
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content {
+    border-top: none;
+}
+
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+    background: #e6e6e6;
+    border-radius: 0 0 8px 8px;
+    padding: 20px;
+    padding-top: 0 !important;
+}
+
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box p {
+    padding-left: 0 !important;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #545454;
+}
+
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box p span {
+    float: right !important;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #0b0b0c;
+}
+
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box p:first-child {
+    padding-top: 20px !important;
+    border-top: 1px solid #b5b5b6;
+}
+
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
+    position: absolute;
+    right: 0;
+    top: 26px;
+    padding-inline-end: 14px;
+    color: #ff3e5b;
+}
+
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-avatar-circle {
+    vertical-align: sub;
+}
+
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space-vertical {
+    padding-left: 10px;
+    display: inline-block;
+}
+
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item:first-child {
+    color: #ff3e5b;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 26px;
+}
+
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item:last-child {
+    color: #0b0b0c;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+.drawerBodyLeft :global .ant-timeline {
+    padding: 9px 15px 0 27px;
+    height: 68.8vh;
+    overflow-y: auto;
+}
+
+.drawerBodyLeft :global .ant-timeline::-webkit-scrollbar-track {
+    background-color: #f4f4f4;
+}
+
+.drawerBodyLeft :global .ant-timeline::-webkit-scrollbar {
+    background-color: #f4f4f4;
+    width: 5px;
+}
+
+.drawerBodyLeft :global .ant-timeline::-webkit-scrollbar-thumb {
+    background-color: rgba(52, 44, 44, 0.34);
+    border-radius: 10px;
+    /* border: 2px solid ; */
+}
+
+.drawerBodyLeft :global .ant-timeline .ant-timeline-item {
+    padding-bottom: 10px;
+}
+
+.drawerBodyLeft :global .ant-timeline .ant-timeline-item .ant-timeline-item-content p {
+    padding-left: 0 !important;
+    padding-bottom: 10px;
+    font-size: 14px;
+    color: #0b0b0c;
+    font-weight: 400;
+    line-height: 22px;
+    cursor: pointer;
+}
+
+.drawerBodyLeft :global .ant-timeline .ant-timeline-item .ant-timeline-item-content p:hover {
+    color: #ff3e5b;
+}
+
+.drawerBodyLeft :global .ant-timeline .ant-timeline-item-last .ant-timeline-item-content {
+    color: #70c922;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+}
+
+.drawerBodyLeft :global .ant-progress .ant-progress-bg {
+    background-color: #ff3e5b;
+}
+
+.drawerBodyLeft :global .ant-timeline .ant-timeline-item-tail {
+    background: #70c922 !important;
+}
+
+.drawerBodyLeft :global .ant-timeline .ant-timeline-item-head-custom {
+    background-color: transparent;
+    font-size: 24px;
+    color: #70c922;
+}
+
+.drawerBodyLeft :global .ant-progress.ant-progress-status-success .ant-progress-bg {
+    background-color: #70c922 !important;
+}
+
+.drawerBodyLeft :global .ant-progress:not(.ant-progress-status-success) .ant-progress-text {
+    color: #ff3e5b !important;
+    font-size: 14px;
+    font-weight: 700;
+    margin-inline-start: 4px;
+}
+
+.drawerBodyRight::-webkit-scrollbar-track {
+    background-color: #ffffff;
+}
+
+.drawerBodyRight::-webkit-scrollbar {
+    width: 5px;
+    background-color: #ffffff;
+}
+
+.drawerBodyRight::-webkit-scrollbar-thumb {
+    background-color: rgba(52, 44, 44, 0.34);
+    border-radius: 10px;
+}
+
+.drawerBodyRight :global .ant-btn-dangerous {
+    margin-left: 10px;
+}
+
+.userCircle {
+    color: #ff3e5b !important;
+
+    margin-top: 3px !important;
+
+    margin-left: 3px !important;
+
+    height: 24px !important;
+
+    width: 24px !important;
+}
+
+.alignUser {
+    display: flex;
+    align-items: center;
+
+}
+
+.iconsColor {
+    color: #ff3e5b;
+}
+
 @media (max-width: 768px) {
     /* For mobile phones: */
     /* .contentHeaderBackground{text-align: center;} */

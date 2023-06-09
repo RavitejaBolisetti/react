@@ -12,37 +12,37 @@ const FormProgressBar = (props) => {
                 break;
             }
             case 'customerDetails': {
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: true, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false,addOnDetails: false });
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: true, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: false });
 
                 break;
             }
             case 'vehicleDetails': {
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: true, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false ,addOnDetails: false});
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: true, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: false });
 
                 break;
             }
             case 'schemeDetails': {
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: true, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false ,addOnDetails: false});
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: true, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: false });
 
                 break;
             }
             case 'insuranceDetails': {
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: true, exchangeVehicle: false, referrals: false, loyaltyScheme: false,addOnDetails: false });
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: true, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: false });
 
                 break;
             }
             case 'financeDetails': {
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: true, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false,addOnDetails: false });
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: true, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: false });
 
                 break;
             }
             case 'exchangeVehicles': {
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: true, referrals: false, loyaltyScheme: false,addOnDetails: false });
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: true, referrals: false, loyaltyScheme: false, addOnDetails: false });
 
                 break;
             }
             case 'referrals': {
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: true, loyaltyScheme: false,addOnDetails: false });
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: true, loyaltyScheme: false, addOnDetails: false });
 
                 break;
             }
@@ -64,9 +64,7 @@ const FormProgressBar = (props) => {
                     dot: <BsRecordCircleFill color="#ff3e5b" />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('otfDetails')} type="link" danger style={{ color: '#ff3e5b' }}>
-                                Otf Details
-                            </Button>
+                            <p onClick={() => onHandle('otfDetails')}>Otf Details</p>
                             <Progress percent={60} size="small" />
                         </>
                     ),
@@ -75,20 +73,7 @@ const FormProgressBar = (props) => {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('customerDetails')} type="link" danger>
-                                Customer Details
-                            </Button>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
-                },
-                 {
-                    dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('vehicleDetails')} type="link" danger>
-                                Vehicle Details
-                            </Button>
+                            <p onClick={() => onHandle('customerDetails')}>Customer Details</p>
                             <Progress percent={100} size="small" />
                         </>
                     ),
@@ -97,9 +82,7 @@ const FormProgressBar = (props) => {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('schemeDetails')} type="link" danger>
-                                Scheme Details
-                            </Button>
+                            <p onClick={() => onHandle('vehicleDetails')}>Vehicle Details</p>
                             <Progress percent={100} size="small" />
                         </>
                     ),
@@ -108,9 +91,7 @@ const FormProgressBar = (props) => {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('insuranceDetails')} type="link" danger>
-                                Insurance Details
-                            </Button>
+                            <p onClick={() => onHandle('schemeDetails')}>Scheme Details</p>
                             <Progress percent={100} size="small" />
                         </>
                     ),
@@ -119,9 +100,7 @@ const FormProgressBar = (props) => {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('financeDetails')} type="link" danger>
-                                Finance Details
-                            </Button>
+                            <p onClick={() => onHandle('insuranceDetails')}>Insurance Details</p>
                             <Progress percent={100} size="small" />
                         </>
                     ),
@@ -130,9 +109,7 @@ const FormProgressBar = (props) => {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('exchangeVehicles')} type="link" danger>
-                                Exchange Vehicle
-                            </Button>
+                            <p onClick={() => onHandle('financeDetails')}>Finance Details</p>
                             <Progress percent={100} size="small" />
                         </>
                     ),
@@ -141,9 +118,7 @@ const FormProgressBar = (props) => {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('referrals')} type="link" danger>
-                                Referrals
-                            </Button>
+                            <p onClick={() => onHandle('exchangeVehicles')}>Exchange Vehicle</p>
                             <Progress percent={100} size="small" />
                         </>
                     ),
@@ -152,9 +127,7 @@ const FormProgressBar = (props) => {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('loyaltyScheme')} type="link" danger>
-                                Loyalty Scheme
-                            </Button>
+                            <p onClick={() => onHandle('referrals')}>Referrals</p>
                             <Progress percent={100} size="small" />
                         </>
                     ),
@@ -163,9 +136,16 @@ const FormProgressBar = (props) => {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle('addOnDetails')} type="link" danger>
-                                Add-On Details
-                            </Button>
+                            <p onClick={() => onHandle('loyaltyScheme')}>Loyalty Scheme</p>
+                            <Progress percent={100} size="small" />
+                        </>
+                    ),
+                },
+                {
+                    dot: <FaCheckCircle />,
+                    children: (
+                        <>
+                            <p onClick={() => onHandle('addOnDetails')}>Add-On Details</p>
                             <Progress percent={10} size="small" />
                         </>
                     ),

@@ -13,51 +13,37 @@ const otfDrawerButtons = ({ buttonData, id = { edit: 'edit', allot: 'allot', inv
                     </Button>
                 )}
             </Col>
-            <Col xs={24} sm={20} md={20} lg={20} xl={20}>
-                <Row gutter={20}>
-                    <Col xs={24} sm={4} md={4} lg={4} xl={4}>
-                        {buttonData?.editBtn && (
-                            <Button type="primary" form={id?.edit} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.EDIT, record: formData })}>
-                                Edit
-                            </Button>
-                        )}
-                    </Col>
-                    <Col xs={24} sm={4} md={4} lg={4} xl={4}>
-                        {buttonData?.cancelBtn && (
-                            <Button type="primary" onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.CANCEL, record: formData })}>
-                                Cancel
-                            </Button>
-                        )}
-                    </Col>
-                    <Col xs={24} sm={4} md={4} lg={4} xl={4}>
-                        {buttonData?.allotbtn && (
-                            <Button type="primary" form={id?.allot} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.ALLOT, record: formData })}>
-                                Allot
-                            </Button>
-                        )}
-                    </Col>
-                    <Col xs={24} sm={4} md={4} lg={4} xl={4}>
-                        {buttonData?.invoiceBtn && (
-                            <Button type="primary" form={id?.invoice} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.INVOICE, record: formData })}>
-                                Invoice
-                            </Button>
-                        )}
-                    </Col>
-                    <Col xs={24} sm={4} md={4} lg={4} xl={4}>
-                        {buttonData?.transferBtn && (
-                            <Button type="primary" form={id?.Transfer} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.TRANSFER, record: formData })}>
-                                Transfer
-                            </Button>
-                        )}
-                    </Col>
-                    <Col xs={24} sm={4} md={4} lg={4} xl={4}>
-                        {buttonData?.nextBtn && (
-                            <Button type="primary" form={id?.Next} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.NEXT, record: formData })}>
-                                Next
-                            </Button>
-                        )}
-                    </Col>
-                </Row>
+            <Col xs={24} sm={20} md={20} lg={20} xl={20} className={styles.footerBtnRight}>
+                {buttonData?.editBtn && (
+                    <Button type="primary" form={id?.edit} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.EDIT, record: formData })}>
+                        Edit
+                    </Button>
+                )}
+                {buttonData?.cancelBtn && (
+                    <Button type="primary" onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.CANCEL, record: formData })}>
+                        Cancel
+                    </Button>
+                )}
+                {buttonData?.allotbtn && (
+                    <Button type="primary" form={id?.allot} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.ALLOT, record: formData })}>
+                        Allot
+                    </Button>
+                )}
+                {buttonData?.invoiceBtn && (
+                    <Button type="primary" form={id?.invoice} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.INVOICE, record: formData })}>
+                        Invoice
+                    </Button>
+                )}
+                {buttonData?.transferBtn && (
+                    <Button type="primary" form={id?.Transfer} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.TRANSFER, record: formData })}>
+                        Transfer
+                    </Button>
+                )}
+                {buttonData?.nextBtn && (
+                    <Button type="primary" form={id?.Next} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.NEXT, record: formData })}>
+                        Next
+                    </Button>
+                )}
             </Col>
         </Row>
     );
