@@ -7,6 +7,7 @@ import { FaChevronDown } from 'react-icons/fa';
 
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
+import { OTF_FORM_ACTION_TYPE } from 'constants/otfActionType';
 
 import FormProgressBar from './FormProgressBar';
 import { CustomerDetailsMaster } from './CustomerDetails';
@@ -14,14 +15,17 @@ import { Otfbuttons } from 'components/common/Button';
 import { VehicleDetailsMaster } from './VehicleDetails';
 import { FinananceDetailsMaster } from './FinananceDetails';
 
-const { Option } = Select;
-const { TextArea } = Input;
 const { Panel } = Collapse;
-const { Meta } = Card;
 const AddEditFormMain = (props) => {
-    const { saveclick, onCloseAction, productHierarchyData, DealerSearchvalue, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
-    const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setIsViewModeVisible, setClosePanels, AccessMacid, setAccessMacid, setShowSaveBtn, hanndleEditData } = props;
-    const { toggleButton, settoggleButton } = props;
+    const { onCloseAction, isViewModeVisible } = props;
+
+    const EDIT_ACTION = OTF_FORM_ACTION_TYPE?.EDIT;
+    const CANCEL_ACTION = OTF_FORM_ACTION_TYPE?.CANCEL;
+    const ALLOT_ACTION = OTF_FORM_ACTION_TYPE?.ALLOT;
+    const INVOICE_ACTION = OTF_FORM_ACTION_TYPE?.INVOICE;
+    const TRANSFER_ACTION = OTF_FORM_ACTION_TYPE?.TRANSFER;
+    const NEXT_ACTION = OTF_FORM_ACTION_TYPE?.NEXT;
+
     const [leftTimeline, setleftTimeline] = useState({
         otfDetails: true,
         customerDetails: false,
@@ -42,64 +46,31 @@ const AddEditFormMain = (props) => {
         transferBtn: true,
         nextBtn: true,
     });
-    const handleButtonClick = ({ buttonAction, record }) => {
-        console.log('buttonAction', buttonAction);
+    const handleOtfButtonClick = ({ buttonAction, record }) => {
+        if (buttonAction == EDIT_ACTION) {
+            console.log('edit');
+        } else if (buttonAction == CANCEL_ACTION) {
+            console.log('cancel');
+        } else if (buttonAction == ALLOT_ACTION) {
+            console.log('allot');
+        } else if (buttonAction == INVOICE_ACTION) {
+            console.log('rinvoice');
+        } else if (buttonAction == TRANSFER_ACTION) {
+            console.log('transfer');
+        } else if (buttonAction == NEXT_ACTION) {
+            console.log('next');
+        }
     };
     const otfButtonProps = {
         buttonData,
         setbuttonData,
         onCloseAction,
-        handleButtonClick,
+        handleButtonClick: handleOtfButtonClick,
     };
-    const [Macid, setMacid] = useState();
 
-    const [openAccordian, setOpenAccordian] = useState(1);
-    const [disableadd, setdisableadd] = useState(false);
-
-    const handleDelete = (event, key) => {
-        console.log('key', key);
-        const newAccessid = AccessMacid.filter((el) => {
-            return el?.key != key;
-        });
-        setAccessMacid(newAccessid);
-    };
-    const handleAddMacid = (event, key) => {
-        form.validateFields();
-        form.resetFields();
-        const CardData = {
-            macid: Macid,
-            key: AccessMacid?.length,
-        };
-        setAccessMacid([...AccessMacid, CardData]);
-        console.log('This is the macID : ', CardData);
-    };
-    const onChangeCollapse = (collapse) => {
-        console.log('collapse: :', collapse);
-    };
-    const Checkduplicate = (value) => {
-        const index = AccessMacid?.findIndex((el) => el?.macid === value);
-
-        if (index !== -1) {
-            setdisableadd(true);
-            return Promise.reject('Their are duplicate Macid');
-        } else {
-            setdisableadd(false);
-
-            return Promise.resolve('');
-        }
-    };
-    useEffect(() => {
-        console.log('We are getting dealer data: :', DealerData);
-    }, [DealerData]);
-
-    const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
-    };
     const TimelineProps = {
         leftTimeline,
         setleftTimeline,
-        toggleButton,
-        settoggleButton,
     };
 
     const renderElement = () => {
@@ -108,7 +79,7 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.customerDetails) {
             return <CustomerDetailsMaster />;
         } else if (leftTimeline?.vehicleDetails) {
-            return <VehicleDetailsMaster/>;
+            return <VehicleDetailsMaster />;
         } else if (leftTimeline?.schemeDetails) {
             return;
         } else if (leftTimeline?.insuranceDetails) {
@@ -161,13 +132,13 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                             {renderElement()}
+                            <Otfbuttons {...otfButtonProps} />
                         </Col>
                     </Row>
                 </Col>
             </Row>
-            <Otfbuttons {...otfButtonProps} />
         </>
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, { width: 1200 });
+export const AddEditForm = withDrawer(AddEditFormMain, { width: 1200, footer: null });

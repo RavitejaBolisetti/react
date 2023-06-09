@@ -269,7 +269,7 @@ export const OtfMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={false} {...tableProps} />
+                    <ListDataTable handleAdd={handleButtonClick} isLoading={false} {...tableProps} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />
