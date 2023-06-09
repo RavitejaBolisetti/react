@@ -2,18 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Button, Collapse, Avatar, Card, Timeline, Progress, Space } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
-
 import { FaChevronDown } from 'react-icons/fa';
-
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 import { OTF_FORM_ACTION_TYPE } from 'constants/otfActionType';
 
 import FormProgressBar from './FormProgressBar';
 import { CustomerDetailsMaster } from './CustomerDetails';
+import { SchemeDetailsMaster } from './SchemeDetails';
+import { InsuranceDetailsMaster } from './InsuranceDetails';
 import { Otfbuttons } from 'components/common/Button';
 import { VehicleDetailsMaster } from './VehicleDetails';
 import { FinananceDetailsMaster } from './FinananceDetails';
+import { LoyaltySchemeMaster } from './LoyaltyScheme';
+import { ReferralsMaster } from './Referrals';
+import { ExchangeVehiclesMaster } from './ExchangeVehicles';
+import { AddOnDetailsMaster } from './AddOnDetails';
 
 const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
@@ -36,6 +40,7 @@ const AddEditFormMain = (props) => {
         exchangeVehicle: false,
         referrals: false,
         loyaltyScheme: false,
+        addOnDetails: false,
     });
     const [buttonData, setbuttonData] = useState({
         closeBtn: true,
@@ -81,17 +86,20 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.vehicleDetails) {
             return <VehicleDetailsMaster />;
         } else if (leftTimeline?.schemeDetails) {
-            return;
+            return <SchemeDetailsMaster />
         } else if (leftTimeline?.insuranceDetails) {
-            return;
+            return <InsuranceDetailsMaster />
         } else if (leftTimeline?.exchangeVehicle) {
-            return;
+            return <ExchangeVehiclesMaster/>;
         } else if (leftTimeline.referrals) {
-            return;
+            return <ReferralsMaster/>;
         } else if (leftTimeline.loyaltyScheme) {
-            return;
+            return <LoyaltySchemeMaster/>;
         } else if (leftTimeline?.fiananceDetails) {
             return <FinananceDetailsMaster />;
+        }
+        else if (leftTimeline?.addOnDetails) {
+            return <AddOnDetailsMaster />;
         }
     };
 

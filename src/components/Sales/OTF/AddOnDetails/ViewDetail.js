@@ -3,6 +3,7 @@ import { Descriptions } from 'antd';
 import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Typography } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FaRegPlusSquare, FaPlus, FaRegUserCircle } from 'react-icons/fa';
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text, Link } = Typography;
@@ -37,14 +38,14 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Collapse
                     expandIcon={() => {
-                        if (activeKey.includes(1)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
+                        if (activeKey?.includes(1)) {
+                            return <MinusOutlined className={styles?.iconsColor} />;
                         } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
+                            return <PlusOutlined className={styles?.iconsColor} />;
                         }
                     }}
                     activeKey={activeKey}
@@ -53,8 +54,8 @@ const ViewDetailMain = (props) => {
                 >
                     <Panel
                         header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
+                            <div className={styles?.alignUser}>
+                                <FaRegUserCircle className={styles?.userCircle} />
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     Customer Information
                                 </Text>
@@ -74,10 +75,10 @@ const ViewDetailMain = (props) => {
 
                 <Collapse
                     expandIcon={() => {
-                        if (activeKey.includes(2)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
+                        if (activeKey?.includes(2)) {
+                            return <MinusOutlined className={styles?.iconsColor} />;
                         } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
+                            return <PlusOutlined className={styles?.iconsColor} />;
                         }
                     }}
                     activeKey={activeKey}
@@ -86,8 +87,8 @@ const ViewDetailMain = (props) => {
                 >
                     <Panel
                         header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
+                            <div className={styles?.alignUser}>
+                                <FaRegUserCircle className={styles?.userCircle} />
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     Key Account Details
                                 </Text>
@@ -107,10 +108,10 @@ const ViewDetailMain = (props) => {
 
                 <Collapse
                     expandIcon={() => {
-                        if (activeKey.includes(3)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
+                        if (activeKey?.includes(3)) {
+                            return <MinusOutlined className={styles?.iconsColor} />;
                         } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
+                            return <PlusOutlined className={styles?.iconsColor} />;
                         }
                     }}
                     activeKey={activeKey}
@@ -119,8 +120,8 @@ const ViewDetailMain = (props) => {
                 >
                     <Panel
                         header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
+                            <div className={styles?.alignUser}>
+                                <FaRegUserCircle className={styles?.userCircle} />
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     {' '}
                                     Authority Details
@@ -144,13 +145,13 @@ const ViewDetailMain = (props) => {
                         </Button>
                     </Col>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                        <Button type="primary" onClick={handleEdit} className={styles.floatRight}>
+                        <Button type="primary" onClick={handleEdit} className={styles?.floatRight}>
                             Edit
                         </Button>
                     </Col>
                 </Row>
             </Space>
-        </div>
+        
     );
 };
 
