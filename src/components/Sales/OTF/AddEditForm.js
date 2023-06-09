@@ -15,6 +15,7 @@ import { FinananceDetailsMaster } from './FinananceDetails';
 import { LoyaltySchemeMaster } from './LoyaltyScheme';
 import { ReferralsMaster } from './Referrals';
 import { ExchangeVehiclesMaster } from './ExchangeVehicles';
+import { AddOnDetailsMaster } from './AddOnDetails';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -36,6 +37,7 @@ const AddEditFormMain = (props) => {
         exchangeVehicle: false,
         referrals: false,
         loyaltyScheme: false,
+        addOnDetails: false,
     });
     const [buttonData, setbuttonData] = useState({
         closeBtn: true,
@@ -126,6 +128,9 @@ const AddEditFormMain = (props) => {
             return <LoyaltySchemeMaster/>;
         } else if (leftTimeline?.fiananceDetails) {
             return <FinananceDetailsMaster />;
+        }
+        else if (leftTimeline?.addOnDetails) {
+            return <AddOnDetailsMaster />;
         }
     };
 

@@ -38,30 +38,38 @@ const ViewDetailMain = (props) => {
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Card style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
-                    <h3>Finance Information</h3>
-                    <Divider />
-                    <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Financier">{customerForm?.financier}</Descriptions.Item>
-                        <Descriptions.Item label="Branch">{customerForm?.branch}</Descriptions.Item>
-                        <Descriptions.Item label="File Number">{customerForm?.filenumber}</Descriptions.Item>
-                        <Descriptions.Item label="Loan Amount">{customerForm?.loanamoount}</Descriptions.Item>
-                        <Descriptions.Item label="EMI">{customerForm?.emi}</Descriptions.Item>
-                        <Descriptions.Item label="Finance Done">{customerForm?.financedone}</Descriptions.Item>
-                        <Descriptions.Item label="D.O. Recived">{customerForm?.dorecived}</Descriptions.Item>
-                        <Descriptions.Item label="D.O. Number">{customerForm?.donumber}</Descriptions.Item>
-                        <Descriptions.Item label="D.O. Date">{customerForm?.dodate}</Descriptions.Item>
-                        <Descriptions.Item label="Finance Arranged By">{customerForm?.arrangedby}</Descriptions.Item>
-                    </Descriptions>
+                    <div className={styles.alignUser}>
+                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                            Finance Information
+                        </Text>
+                        <Divider />
+                        <Descriptions {...viewProps}>
+                            <Descriptions.Item label="Financier">{customerForm?.financier}</Descriptions.Item>
+                            <Descriptions.Item label="Branch">{customerForm?.branch}</Descriptions.Item>
+                            <Descriptions.Item label="File Number">{customerForm?.filenumber}</Descriptions.Item>
+                            <Descriptions.Item label="Loan Amount">{customerForm?.loanamoount}</Descriptions.Item>
+                            <Descriptions.Item label="EMI">{customerForm?.emi}</Descriptions.Item>
+                            <Descriptions.Item label="Finance Done">{customerForm?.financedone}</Descriptions.Item>
+                            <Descriptions.Item label="D.O. Recived">{customerForm?.dorecived}</Descriptions.Item>
+                            <Descriptions.Item label="D.O. Number">{customerForm?.donumber}</Descriptions.Item>
+                            <Descriptions.Item label="D.O. Date">{customerForm?.dodate}</Descriptions.Item>
+                            <Descriptions.Item label="Finance Arranged By">{customerForm?.arrangedby}</Descriptions.Item>
+                        </Descriptions>
+                    </div>
                 </Card>
                 <Card style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
-                <h3>Invoice/Delivery Information</h3>
-                    <Divider />
-                    <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Delivery Type">{AuthorityForm?.delivery}</Descriptions.Item>
-                        <Descriptions.Item label="Invoice/Delivery No">{AuthorityForm?.deliverynumber}</Descriptions.Item>
-                        <Descriptions.Item label="Invoice/Delivery Date">{AuthorityForm?.deliverydate1}</Descriptions.Item>
-                        <Descriptions.Item label="Invoice/Delivery Status">{AuthorityForm?.deliverystatus}</Descriptions.Item>
-                    </Descriptions>
+                    <div className={styles.alignUser}>
+                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                            Invoice/Delivery Information
+                        </Text>
+                        <Divider />
+                        <Descriptions {...viewProps}>
+                            <Descriptions.Item label="Delivery Type">{AuthorityForm?.delivery}</Descriptions.Item>
+                            <Descriptions.Item label="Invoice/Delivery No">{AuthorityForm?.deliverynumber}</Descriptions.Item>
+                            <Descriptions.Item label="Invoice/Delivery Date">{AuthorityForm?.deliverydate1}</Descriptions.Item>
+                            <Descriptions.Item label="Invoice/Delivery Status">{AuthorityForm?.deliverystatus}</Descriptions.Item>
+                        </Descriptions>
+                    </div>
                 </Card>
 
                 {/* <Row gutter={20}>
