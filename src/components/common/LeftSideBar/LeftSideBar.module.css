@@ -153,18 +153,23 @@
 }
 
 :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar {
-    width: 5px;
+    width: 8px;
     background-color: #ffffff;
 }
 
 :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb {
     background-color: rgba(52, 44, 44, 0.34);
     border-radius: 10px;
+    border: 2px solid #ffffff;
 }
 
-:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar:hover {
-    width: 8px !important;
+:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb:hover {
+    border: 2px solid #bab7b7;
 }
+
+/* :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar:hover {
+    width: 8px !important;
+} */
 
 :global .ant-menu-light.ant-menu-root.ant-menu-inline,
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical {

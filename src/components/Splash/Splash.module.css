@@ -4,11 +4,16 @@ body {
 }
 
 body::-webkit-scrollbar-track {
-  background-color: #D9D9D9;
+  /* background-color: #D9D9D9; */
+  background-color: #FFFFFF;
 }
 
+/* body::-webkit-scrollbar-track:hover::-webkit-scrollbar-thumb {
+  border: 2px solid #342C2C;
+} */
+
 body::-webkit-scrollbar {
-  width: 5px;
+  width: 10px;
   height: 5px;
   background-color: #D9D9D9;
 }
@@ -16,15 +21,20 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar-thumb {
   background-color: #342C2C;
   border-radius: 10px;
+  border: 2px solid #FFFFFF;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  border: 2px solid #342C2C;
 }
 
 /* html:hover::-webkit-scrollbar {
   width: 8px !important;
 } */
 
-body::-webkit-scrollbar:hover {
+/* body::-webkit-scrollbar:hover {
   width: 8px !important;
-}
+} */
 
 :global .ant-select-tree-list-holder {
   overflow-y: scroll !important;
