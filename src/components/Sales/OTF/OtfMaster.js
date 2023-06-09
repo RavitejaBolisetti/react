@@ -243,7 +243,7 @@ export const OtfMasterBase = (props) => {
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
-        tableData: searchData,
+        tableData: [{}],
         setPage,
     };
 
