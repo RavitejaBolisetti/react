@@ -29,7 +29,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ListDataTable } from 'utils/ListDataTable';
 import { tableColumn } from './tableColumn';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-import { CustomEditor } from 'components/common/CustomEditor';
 import moment from 'moment';
 
 const { Search } = Input;
@@ -141,7 +140,7 @@ const TncDealer = ({
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [data, setData] = useState(initialTableData);
-    const [drawer, setDrawer] = useState(false);
+    // const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
 
@@ -157,7 +156,7 @@ const TncDealer = ({
     const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
     const [saveBtn, setSaveBtn] = useState(false);
     const [saveclick, setsaveclick] = useState();
-    const [saveandnewclick, setsaveandnewclick] = useState();
+    // const [saveandnewclick, setsaveandnewclick] = useState();
     const [successAlert, setSuccessAlert] = useState(false);
     const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -217,18 +216,6 @@ const TncDealer = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [islanguageDataLoaded, userId]);
 
-    // useEffect(() => {
-    //     if (!isTermConditionDataLoaded && userId) {
-    //         fetchList({ setIsLoading: listShowLoading, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [isTermConditionDataLoaded, userId]);
-
-    // useEffect(() => {
-    //     setSearchdata(termConditionData);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [termConditionData]);
-
     useEffect(() => {
         if (userId && refershData) {
             fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
@@ -240,7 +227,7 @@ const TncDealer = ({
     useEffect(() => {
         if (DealerTermsConditionsDataLoaded && DealerTermsConditionsData) {
             if (filterString) {
-                const filterDataItem = DealerTermsConditionsData?.filter((item) => filterFunction(filterString)(item?.documentTypeCode) || filterFunction(filterString)(item?.productCode));
+                const filterDataItem = DealerTermsConditionsData?.filter((item) => filterFunction(filterString)(item?.documentTypeCode) || filterFunction(filterString)(item?.productName) || filterFunction(filterString)(item?.language));
                 setSearchdata(filterDataItem);
             } else {
                 setSearchdata(DealerTermsConditionsData);
@@ -320,7 +307,7 @@ const TncDealer = ({
         const newVersion = (values.version ? Number(values?.version) + 0.1 : 1.0).toFixed(1);
         // console.log('typeof', typeof termsAndCondition);
         const termConditionText = termsAndCondition.replace(/[&\/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
-        const data = { ...values, productName: productName, documentTypeName: documentName, language: languageName, version: String(newVersion), id: recordId, termConditionDescription: termConditionText };
+        const data = { ...values, version: String(newVersion), id: recordId, termConditionDescription: termConditionText };
         // console.log('data', data, termConditionText);
         // return;
         const onSuccess = (res) => {
@@ -328,13 +315,15 @@ const TncDealer = ({
             form.resetFields();
             setSelectedRecord({});
             setSuccessAlert(true);
-            if (saveclick === true) {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            } else {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            }
+            setIsFormVisible(false);
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            // if (saveclick === true) {
+            //     setIsFormVisible(false);
+            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            // } else {
+            //     setIsFormVisible(true);
+            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            // }
         };
 
         setTimeout(() => {
@@ -362,79 +351,6 @@ const TncDealer = ({
         form.validateFields().then((values) => {});
     };
 
-    // const handleAdd = () => {
-    //     setFormActionType('add');
-    //     setIsFormVisible(true);
-    //     setSaveAndSaveNew(true);
-    //     setSaveBtn(true);
-    //     setFooterEdit(false);
-    //     setIsViewModeVisible(false);
-    //     setSelectedRecord([]);
-    //     setIsReadOnly(false);
-    //     setsaveclick(false);
-    //     setsaveandnewclick(true);
-    //     setcodeIsReadOnly(false);
-    // };
-
-    const handleUpdate = (record) => {
-        setFormActionType('update');
-        setSaveAndSaveNew(false);
-        setIsFormVisible(true);
-        setIsViewModeVisible(false);
-
-        setFooterEdit(false);
-        setSaveBtn(true);
-        setSelectedRecord(record);
-
-        setFormData(record);
-
-        form.setFieldsValue({
-            qualificationCode: record.qualificationCode,
-            qualificationName: record.qualificationName,
-            status: record.status,
-        });
-
-        setIsReadOnly(false);
-        setcodeIsReadOnly(true);
-    };
-
-    const handleUpdate2 = () => {
-        setFormActionType('update');
-        setIsFormVisible(true);
-        setIsViewModeVisible(false);
-
-        setSaveAndSaveNew(false);
-        setFooterEdit(false);
-        setSaveBtn(true);
-
-        form.setFieldsValue({
-            qualificationCode: selectedRecord.qualificationCode,
-            qualificationName: selectedRecord.qualificationName,
-            status: selectedRecord.status,
-        });
-        setsaveclick(true);
-        setIsReadOnly(false);
-        setcodeIsReadOnly(true);
-    };
-
-    const handleView = (record) => {
-        setFormActionType('view');
-        setIsViewModeVisible(true);
-        setSelectedRecord(record);
-        setSaveAndSaveNew(false);
-        setFooterEdit(true);
-        setSaveBtn(false);
-
-        form.setFieldsValue({
-            qualificationCode: record.qualificationCode,
-            qualificationName: record.qualificationName,
-            status: record.status,
-        });
-        setIsFormVisible(true);
-        setIsReadOnly(true);
-        setcodeIsReadOnly(true);
-    };
-
     const handleReferesh = (e) => {
         setRefershData(!refershData);
     };
@@ -447,24 +363,24 @@ const TncDealer = ({
         setFilterString(value);
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
-    };
+    // const onChangeHandle = (e) => {
+    //     setFilterString(e.target.value);
+    // };
 
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
 
-    const onAdvanceSearchCloseAction = () => {
-        setAdvanceSearchVisible(false);
-        advanceFilterForm.resetFields();
-    };
+    // const onAdvanceSearchCloseAction = () => {
+    //     setAdvanceSearchVisible(false);
+    //     advanceFilterForm.resetFields();
+    // };
 
-    const handleFilterChange = (name, type = 'value') => (value) => {
-        if (name === 'countryCode') {
-            advanceFilterForm.setFieldsValue({ stateCode: undefined });
-        }
-    };
+    // const handleFilterChange = (name, type = 'value') => (value) => {
+    //     if (name === 'countryCode') {
+    //         advanceFilterForm.setFieldsValue({ stateCode: undefined });
+    //     }
+    // };
 
     const handleResetFilter = () => {
         setFilterString();
@@ -479,25 +395,20 @@ const TncDealer = ({
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const advanceFilterProps = {
-        isVisible: isAdvanceSearchVisible,
-        onCloseAction: onAdvanceSearchCloseAction,
-        setAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
-        // isDataCountryLoaded,
-        // isCountryLoading,
-        // countryData,
-        // defaultCountry,
-
-        data,
-        handleFilterChange,
-        filterString,
-        setFilterString,
-        advanceFilterForm,
-        resetData,
-        handleResetFilter,
-    };
+    // const advanceFilterProps = {
+    //     isVisible: isAdvanceSearchVisible,
+    //     onCloseAction: onAdvanceSearchCloseAction,
+    //     setAdvanceSearchVisible,
+    //     icon: <FilterIcon size={20} />,
+    //     titleOverride: 'Advance Filters',
+    //     data,
+    //     handleFilterChange,
+    //     filterString,
+    //     setFilterString,
+    //     advanceFilterForm,
+    //     resetData,
+    //     handleResetFilter,
+    // };
 
     const formProps = {
         isVisible: isFormVisible,
@@ -505,8 +416,6 @@ const TncDealer = ({
         codeIsReadOnly,
         saveclick,
         setsaveclick,
-        setsaveandnewclick,
-        saveandnewclick,
         setIsFormVisible,
         onCloseAction,
         titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
@@ -528,7 +437,6 @@ const TncDealer = ({
         setFormData,
         setForceFormReset,
         footerEdit,
-        handleUpdate2,
         isLoadingOnSave,
         setIsViewModeVisible,
         productHierarchyList,
@@ -549,7 +457,6 @@ const TncDealer = ({
         setDocumentName,
         languageName,
         setLanguageName,
-        CustomEditor,
         termsAndCondition,
         setTermsAndCondition,
         effectiveFrom,
@@ -575,7 +482,6 @@ const TncDealer = ({
         setIsHistoryVisible(true);
         extraParams['0']['value'] = '1ebc0d34-409b-44f3-a7e3-ffb70f1cc888';
         changeHistoryData({ setIsLoading: listShowLoading, userId, extraParams });
-        console.log('ChangeHistoryTermsConditionsDataChangeHistoryTermsConditionsData', ChangeHistoryTermsConditionsData);
     };
 
     const advanceFilterResultProps = {

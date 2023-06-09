@@ -16,7 +16,8 @@ import { tncDocumentTypeDataActions } from 'store/actions/data/termsConditions/t
 import { tncLanguage } from 'store/actions/data/termsConditions/tncLanguage';
 // import { tncFetchDealerListActions } from 'store/actions/data/termsConditions/tncFetchDealerListActions';
 import { termConditionManufacturerActions } from 'store/actions/data/termsConditions/termsConditionsManufacturerAction';
-
+import { changeHistoryDataActions } from 'store/actions/data/termsConditions/changeHistoryAction';
+import { ChangeHistory } from './changeHistoryForm';
 import { AddEditForm } from './AddEditForm';
 
 import styles from 'components/common/Common.module.css';
@@ -25,7 +26,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ListDataTable } from 'utils/ListDataTable';
 import { tableColumn } from './tableColumn';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-import { CustomEditor } from 'components/common/CustomEditor';
 import moment from 'moment';
 
 const { Search } = Input;
@@ -42,6 +42,7 @@ const mapStateToProps = (state) => {
                 LanguageData: { isLoaded: islanguageDataLoaded = false, data: languageList },
                 // FetchTermsConditionsList: { isLoaded: isTermConditionDataLoaded = false, data: termsConditionsList },
                 ManufacturerTermsConditions: { isLoaded: ManufacturerTermsConditionsDataLoaded = false, data: ManufacturerTermsConditionsData },
+                ChangeHistoryTermsConditions: { isLoaded: ChangeHistoryTermsConditionsDataLoaded = false, data: ChangeHistoryTermsConditionsData },
             },
         },
         common: {
@@ -70,6 +71,8 @@ const mapStateToProps = (state) => {
         // termsConditionsList,
         ManufacturerTermsConditionsData,
         ManufacturerTermsConditionsDataLoaded,
+        ChangeHistoryTermsConditionsData,
+        ChangeHistoryTermsConditionsDataLoaded,
     };
     return returnValue;
 };
@@ -88,6 +91,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchTermCondition: termConditionManufacturerActions.fetchList,
             saveData: termConditionManufacturerActions.saveData,
+            changeHistoryData: changeHistoryDataActions.fetchList,
             showGlobalNotification,
         },
         dispatch
@@ -95,7 +99,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const initialTableData = [];
-const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, ManufacturerTermsConditionsDataLoaded, ManufacturerTermsConditionsData, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, listShowLoading, productHierarchyList, documentTypeList, languageList, fetchList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, ManufacturerTermsConditionsDataLoaded, ManufacturerTermsConditionsData, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, changeHistoryData, ChangeHistoryTermsConditionsData, ChangeHistoryTermsConditionsDataLoaded, listShowLoading, productHierarchyList, documentTypeList, languageList, fetchList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -133,6 +137,8 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const [termsAndCondition, setTermsAndCondition] = useState(undefined);
     const [effectiveFrom, seteffectiveFrom] = useState('');
     const [effectiveTo, seteffectiveTo] = useState('');
+    const [isHistoryVisible, setIsHistoryVisible] = useState(false);
+    const [searchDataChangeHistory, setSearchdataChangeHistory] = useState();
 
     const [page, setPage] = useState(1);
 
@@ -195,7 +201,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     useEffect(() => {
         if (ManufacturerTermsConditionsDataLoaded && ManufacturerTermsConditionsData) {
             if (filterString) {
-                const filterDataItem = ManufacturerTermsConditionsData?.filter((item) => filterFunction(filterString)(item?.documentTypeCode) || filterFunction(filterString)(item?.productCode));
+                const filterDataItem = ManufacturerTermsConditionsData?.filter((item) => filterFunction(filterString)(item?.documentTypeCode) || filterFunction(filterString)(item?.productName) || filterFunction(filterString)(item?.languageDesc));
                 setSearchdata(filterDataItem);
             } else {
                 setSearchdata(ManufacturerTermsConditionsData);
@@ -204,13 +210,19 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, ManufacturerTermsConditionsDataLoaded, ManufacturerTermsConditionsData]);
 
+    useEffect(() => {
+        if (ChangeHistoryTermsConditionsDataLoaded && ChangeHistoryTermsConditionsData) {
+            setSearchdataChangeHistory(ChangeHistoryTermsConditionsData);
+        }
+    }, [ChangeHistoryTermsConditionsDataLoaded, ChangeHistoryTermsConditionsData]);
+
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
 
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, isViewModeVisible : buttonAction === VIEW_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, isViewModeVisible: buttonAction === VIEW_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: false, cancelBtn: true });
-        if(buttonAction === "view"){
+        if (buttonAction === 'view') {
             setIsViewModeVisible(true);
         }
         record && setFormData(record);
@@ -242,7 +254,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         //console.log(fromDate);
         //console.log('typeof', typeof termsAndCondition);
         const termConsitionText = termsAndCondition.replace(/[&\/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
-        const data = { ...values, version: String(newVersion), termsconditiondescription: termConsitionText, effectivefrom:fromDate, effectiveto:toDate };
+        const data = { ...values, version: String(newVersion), termsconditiondescription: termConsitionText, effectivefrom: fromDate, effectiveto: toDate };
         //console.log('data', data, termConsitionText);
         //return;
         const onSuccess = (res) => {
@@ -470,7 +482,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setTermsAndCondition,
         languageName,
         setLanguageName,
-        CustomEditor,
         termsAndCondition,
         effectiveFrom,
         effectiveTo,
@@ -487,6 +498,23 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         }
     };
 
+    const extraParams = [
+        {
+            key: 'id',
+            title: 'id',
+            value: '',
+            name: 'id',
+        },
+    ];
+    const showChangeHistoryList = () => {
+        // setFormActionType({ changeHistoryMode: true });
+        setButtonData({ cancelBtn: true });
+        // setIsFormVisible(true);
+        setIsHistoryVisible(true);
+        extraParams['0']['value'] = '1ebc0d34-409b-44f3-a7e3-ffb70f1cc888';
+        changeHistoryData({ setIsLoading: listShowLoading, userId, extraParams });
+    };
+
     const advanceFilterResultProps = {
         advanceFilter: false,
         filterString,
@@ -498,6 +526,17 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         handleButtonClick,
         title,
         showAddButton: ManufacturerTermsConditionsData?.length > 0 ? true : false,
+        showChangeHistoryButton: ManufacturerTermsConditionsData?.length > 0 ? true : false,
+        showChangeHistoryList,
+    };
+    const changeHistoryClose = () => {
+        setIsHistoryVisible(false);
+    };
+
+    const changeHistoryProps = {
+        isVisible: isHistoryVisible,
+        ChangeHistoryTermsConditionsData,
+        onCloseAction: changeHistoryClose,
     };
 
     return (
@@ -509,6 +548,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
                     <ListDataTable handleAdd={handleAdd} isLoading={isLoading} {...tableProps} />
                 </Col>
             </Row>
+            <ChangeHistory {...changeHistoryProps} />
             <AddEditForm {...formProps} />
         </>
     );

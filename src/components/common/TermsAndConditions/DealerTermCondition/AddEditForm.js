@@ -4,11 +4,11 @@ import { Input, Form, Col, Row, Button, Select, DatePicker } from 'antd';
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import style from 'components/common/Common.module.css';
 import { ViewTermConditionList } from './ViewTermConditionList';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
+import { CustomEditor } from 'components/common/CustomEditor';
 import { convertDate } from 'utils/formatDateTime';
 import { convertCalenderDate } from 'utils/formatDateTime';
 import dayjs from 'dayjs';
@@ -17,23 +17,22 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { editMode, isViewModeVisible } = undefined, onFinish, onFinishFailed, footerEdit, setIsFormVisible, onSaveShowLoading } = props;
-    const { CustomEditor } = props;
     const { buttonData, setButtonData, handleButtonClick, formActionType, effectiveFrom, effectiveTo, seteffectiveFrom, seteffectiveTo } = props;
     const { productName, setProductName, CustomEditorLoad, setCustomEditorLoad } = props;
     const { documentName, setDocumentName } = props;
     const { languageName, setLanguageName } = props;
     const { termsAndCondition, setTermsAndCondition } = props;
-    const { tableChangeHistoryProps } = props;
-    // const [startDate, setStartDate] = useState(new Date());
+    // const { tableChangeHistoryProps } = props;
+    const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState();
 
     const onChangeCkEditor = (e) => {
         setTermsAndCondition(e.editor.getData());
     };
-    useEffect(() => {
-        form.resetFields();
-        setCustomEditorLoad(Math.random());
-    }, [effectiveFrom, effectiveTo]);
+    // useEffect(() => {
+    //     form.resetFields();
+    //     setCustomEditorLoad(Math.random());
+    // }, [effectiveFrom, effectiveTo]);
     const { TextArea } = Input;
 
     const handleProductHierarchySelect = (label, value) => {
@@ -48,9 +47,9 @@ const AddEditFormMain = (props) => {
         setLanguageName(value.children);
     };
 
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
+    // const handleFormValueChange = () => {
+    //     setButtonData({ ...buttonData, formBtnActive: true });
+    // };
 
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -68,17 +67,31 @@ const AddEditFormMain = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
-        saveButtonName: 'Add T&C',
+        saveButtonName: formActionType?.editMode ? 'Revise T&C' : 'Add T&C',
     };
 
-    const handleDateChange = (value) => {
-        // console.log('Start Date', e);
-        console.log('value', value);
-        return value && value < dayjs().endOf(value);
+    const handleFromDateChange = (value) => {
+        setStartDate(value);
     };
 
+    const handleToDateChange = (value) => {
+        setEndDate(value);
+    };
+
+    const disableFromDate = (value) => {
+        return value > endDate;
+        // value < dayjs().endOf('day')
+    };
+
+    const disableToDate = (value) => {
+        return value < startDate;
+    };
+
+    const customEditorProps = {
+        data: formData?.termConditionDescription ? formData?.termConditionDescription : '',
+    };
     const fromDateInitialValue = { initialValue: convertCalenderDate(formData?.effectiveFrom, 'YYYY/MM/DD') };
-    const toDateInitialValue = { initialValue: convertCalenderDate(formData?.effectiveTo, 'YYYY/MM/DD') };
+    const toDateInitialValue = { initialValue: convertCalenderDate(formData?.effectiveTo ? formData?.effectiveTo : '2050/12/31', 'YYYY/MM/DD') };
 
     // const dateFormat = 'YYYY/MM/DD';
     return (
@@ -136,7 +149,8 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item disabled={formActionType?.viewMode} initialValue={formData?.termConditionDescription} label="Terms & Conditions" name="termConditionDescription">
-                                {CustomEditorLoad && <CustomEditor onChange={onChangeCkEditor} />}
+                                <CustomEditor {...customEditorProps} />
+                                {/* onChange={(event, editor) => { const data = editor.getData(), setContent(data)}} */}
                             </Form.Item>
                         </Col>
                         {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -150,12 +164,12 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item {...fromDateInitialValue} label="Effective From" name="effectiveFrom" rules={[validateRequiredInputField('date')]}>
-                                <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} style={{ width: '100%' }} onChange={handleDateChange} />
+                                <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} style={{ width: '100%' }} onChange={handleFromDateChange} disabledDate={disableFromDate} />
                             </Form.Item>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item {...toDateInitialValue} label="Effective To" name="effectiveTo">
-                                <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} style={{ width: '100%' }} disabledDate={handleDateChange} />
+                                <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} style={{ width: '100%' }} onChange={handleToDateChange} disabledDate={disableToDate} />
                             </Form.Item>
                         </Col>
                     </Row>

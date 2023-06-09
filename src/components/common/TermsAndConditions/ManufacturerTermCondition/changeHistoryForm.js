@@ -1,16 +1,27 @@
-import { tblPrepareColumns, tblSerialNumberColumn, tblStatusColumn, tblActionColumn } from 'utils/tableCloumn';
-import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
-import { FiEdit, FiEye } from 'react-icons/fi';
-import styles from 'components/common/Common.module.css';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { convertDate } from 'utils/formatDateTime';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, page, pageSize) => {
+import { Input, Form, Col, Row, Button, Select, DatePicker } from 'antd';
+
+import { tblPrepareColumns, tblSerialNumberColumn, tblStatusColumn, tblActionColumn } from 'utils/tableCloumn';
+
+import { withDrawer } from 'components/withDrawer';
+import { ListDataTable } from 'utils/ListDataTable';
+import { DrawerFormButton } from 'components/common/Button';
+import styles from 'components/common/Common.module.css';
+import { convertDate } from 'utils/formatDateTime';
+import { convertCalenderDate } from 'utils/formatDateTime';
+
+const { Option } = Select;
+
+const ChangeHistoryMain = (props) => {
+    const { tableChangeHistoryProps, ChangeHistoryTermsConditionsData } = props;
+
+    const [page, setPage] = useState(1);
     const tableColumn = [];
 
     tableColumn.push(
-        tblSerialNumberColumn({ page, pageSize, width: '5%' }),
-
         tblPrepareColumns({
             title: 'Product Hierarchy',
             dataIndex: 'productName',
@@ -25,19 +36,19 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
 
         tblPrepareColumns({
             title: 'Language',
-            dataIndex: 'language',
-            width: '10%',
+            dataIndex: 'languageDesc',
+            width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Description',
-            dataIndex: 'termConditionDescription',
+            dataIndex: 'termsconditiondescription',
             width: '15%',
         }),
         tblPrepareColumns({
             title: 'Version',
             dataIndex: 'version',
-            width: '5%',
+            width: '15%',
         }),
         tblPrepareColumns({
             title: 'Effective From',
@@ -50,7 +61,7 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
             dataIndex: 'effectiveTo',
             width: '15%',
             render: (text) => convertDate(text),
-        }),
+        })
         // tblPrepareColumns({
         //     title: 'MFG T&C',
         //     width: '15%',
@@ -68,39 +79,25 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
         //         );
         //     },
         // }),
-        tblPrepareColumns({
-            title: 'MFG T&C',
-            width: '5%',
-            sorter: false,
-            render: (text, record, index) => {
-                return (
-                    <Space>
-                        {record?.manufracturerTnCId !== 'NA' ? (
-                            <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleManufacturerButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
-                                <FiEye />
-                            </Button>
-                        ) : null}
-                    </Space>
-                );
-            },
-        }),
-        tblPrepareColumns({
-            title: 'View',
-            width: '5%',
-            sorter: false,
-            render: (text, record, index) => {
-                return (
-                    <Space>
-                        <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
-                            <FiEye />
-                        </Button>
-                    </Space>
-                );
-            },
-        })
 
         // tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%' })
     );
 
-    return tableColumn;
+    const tableProps = {
+        tableColumn,
+        tableData: ChangeHistoryTermsConditionsData,
+        setPage,
+    };
+    console.log('ChangeHistoryTermsConditionsData', ChangeHistoryTermsConditionsData);
+    return (
+        <>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <ListDataTable {...tableProps} />
+                </Col>
+            </Row>
+        </>
+    );
 };
+
+export const ChangeHistory = withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' });
