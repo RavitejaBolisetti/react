@@ -14,13 +14,10 @@ const { Panel } = Collapse;
 function AddEditForm(props) {
     const [activeKey, setactiveKey] = useState([1]);
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible } = props;
-    const viewProps = {
-        bordered: false,
-        colon: false,
-        layout: 'vertical',
-        column: { xxl: 3, xl: 3, lg: 3, md: 3, sm: 3, xs: 3 },
+  
+    const handleEdit = () => {
+        setIsViewModeVisible(false);
     };
-
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
@@ -36,6 +33,15 @@ function AddEditForm(props) {
         } else {
             setactiveKey([...activeKey, values]);
         }
+    };
+
+    const viewProps = {
+        activeKey,
+        setactiveKey,
+        onChange,
+        styles,
+        onCloseAction,
+        handleEdit,
     };
 
     return (
