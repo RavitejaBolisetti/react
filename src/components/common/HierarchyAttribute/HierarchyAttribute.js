@@ -319,12 +319,12 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
                                                 </Select>
                                             </Col>
                                             <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                                {searchData?.length > 0 && <Search placeholder="Search" className={styles.headerSearchField} allowClear onChange={onChangeHandle} onSearch={onSearchHandle} />}
+                                                {detailData?.hierarchyAttribute?.length > 0 && <Search placeholder="Search" className={styles.headerSearchField} allowClear onChange={onChangeHandle} onSearch={onSearchHandle} />}
                                             </Col>
                                         </Row>
                                     </Col>
 
-                                    {searchData?.length > 0 && (
+                                    {detailData?.hierarchyAttribute?.length > 0 && (
                                         <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                             <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
