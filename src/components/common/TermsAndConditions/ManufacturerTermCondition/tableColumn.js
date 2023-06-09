@@ -1,9 +1,10 @@
 import { tblPrepareColumns, tblSerialNumberColumn, tblStatusColumn, tblActionColumn } from 'utils/tableCloumn';
 import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
 import { FiEdit, FiEye } from 'react-icons/fi';
-import moment from "moment";
+import moment from 'moment';
 import styles from 'components/common/Common.module.css';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { convertDate } from 'utils/formatDateTime';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
@@ -43,17 +44,13 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Effective From',
             dataIndex: 'effectivefrom',
             width: '13%',
-            render: (dom) => {
-                return <span>{moment(dom).format('DD-MM-YYYY')}</span>;
-              }
+            render: (text) => convertDate(text),
         }),
         tblPrepareColumns({
             title: 'Effective To',
             dataIndex: 'effectiveto',
             width: '13%',
-            render: (dom) => {
-                return <span>{moment(dom).format('DD-MM-YYYY')}</span>;
-              }
+            render: (text) => convertDate(text),
         }),
         // tblPrepareColumns({
         //     title: 'MFG T&C',

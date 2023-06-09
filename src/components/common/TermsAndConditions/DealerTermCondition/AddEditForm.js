@@ -79,8 +79,8 @@ const AddEditFormMain = (props) => {
     };
 
     const disableFromDate = (value) => {
-        console.log('Day', dayjs().endOf('day'));
-        return value < new Date();
+        var d = new Date();
+        return value < d.setDate(d.getDate() - 1);
         // value > endDate;
     };
 
