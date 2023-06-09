@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
 import styles from '../ChangeHistory/ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
@@ -77,18 +77,11 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
             title: 'Long Description',
             dataIndex: 'longDescript',
         }),
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'status',
-            render: (text) => {
-                console.log('record', text, typeof text);
-                return JSON.parse(text) ? 'Active' : 'InActive';
-            },
-        }),
+        tblStatusColumn({ styles, width: '15%' }),
     ];
-    
+
     const tableProps = {
-        isLoading,
+        isLoading: !isHistoryLoaded,
         tableColumn,
         tableData: changeHistoryData,
     };

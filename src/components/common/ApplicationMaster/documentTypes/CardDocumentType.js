@@ -8,7 +8,7 @@ import DocumentTypesForm from './DocumentTypesForm';
 const { Text } = Typography;
 
 const CardDocumentType = (prop) => {
-    const { id,status, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode, setfinalFormdata, forceUpdate, setIsBtnDisabled, isBtnDisabled } = prop;
+    const { id,status, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode, setfinalFormdata, forceUpdate, setIsBtnDisabled, isBtnDisabled, onFieldsChange } = prop;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
@@ -125,7 +125,7 @@ const CardDocumentType = (prop) => {
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <DocumentTypesForm termAndConRequired={termAndConRequired} digitalSignatureRequired={digitalSignatureRequired} documentTypeDescription={documentTypeDescription} documentTypeCode={documentTypeCode} form={form} isEditing={isEditing} />
+                        <DocumentTypesForm termAndConRequired={termAndConRequired} digitalSignatureRequired={digitalSignatureRequired} documentTypeDescription={documentTypeDescription} documentTypeCode={documentTypeCode} form={form} isEditing={isEditing} onFieldsChange={onFieldsChange} />
                     </Fragment>
                 )}
             </Card>

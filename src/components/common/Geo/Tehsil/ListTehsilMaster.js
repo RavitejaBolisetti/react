@@ -27,8 +27,8 @@ const mapStateToProps = (state) => {
         data: {
             Geo: {
                 Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData = [] },
-                State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading = false, data: stateData = [] },
-                District: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading = false, data: districtData = [] },
+                State: { isFilteredListLoaded: isStateDataLoaded = false, isLoading: isStateLoading, filteredListData: stateData },
+                District: { isFilteredListLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, filteredListData: districtData },
                 Tehsil: { isLoaded: isDataLoaded = false, isLoading, data = [] },
             },
             ConfigurableParameterEditing: { isLoaded: isTehsilCategoryDataLoaded = false, isTehsilCategoryDataLoading, paramdata: tehsilCategoryData = [] },
@@ -71,9 +71,9 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchCountryList: geoCountryDataActions.fetchList,
             listCountryShowLoading: geoCountryDataActions.listShowLoading,
-            fetchStateList: geoStateDataActions.fetchList,
+            fetchStateLovList: geoStateDataActions.fetchFilteredList,
             listStateShowLoading: geoStateDataActions.listShowLoading,
-            fetchDistrictList: geoDistrictDataActions.fetchList,
+            fetchDistrictLovList: geoDistrictDataActions.fetchFilteredList,
             listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
             fetchTehsilCategoryList: configParamEditActions.fetchList,
             listTehsilCategoryShowLoading: configParamEditActions.listShowLoading,
@@ -88,12 +88,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListTehsilBase = (props) => {
-    const { data, saveData, fetchList, userId, resetData, isDataLoaded, isLoading, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, userId, resetData, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
     const { isTehsilCategoryDataLoaded, isTehsilCategoryDataLoading, tehsilCategoryData, listTehsilCategoryShowLoading, fetchTehsilCategoryList } = props;
 
-    const { isStateDataLoaded, stateData, listStateShowLoading, fetchStateList } = props;
-    const { isDistrictDataLoaded, districtData, listDistrictShowLoading, fetchDistrictList } = props;
+    const { isStateDataLoaded, stateData, listStateShowLoading, fetchStateLovList } = props;
+    const { isDistrictDataLoaded, districtData, listDistrictShowLoading, fetchDistrictLovList } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -135,10 +135,10 @@ export const ListTehsilBase = (props) => {
                 fetchCountryList({ setIsLoading: listCountryShowLoading, userId });
             }
             if (!isStateDataLoaded) {
-                fetchStateList({ setIsLoading: listStateShowLoading, userId });
+                fetchStateLovList({ setIsLoading: listStateShowLoading, userId });
             }
             if (!isDistrictDataLoaded) {
-                fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId });
+                fetchDistrictLovList({ setIsLoading: listDistrictShowLoading, userId });
             }
             if (!isDataLoaded) {
                 fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
@@ -161,7 +161,7 @@ export const ListTehsilBase = (props) => {
     }, [defaultCountry]);
     useEffect(() => {
         if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
-            setFilteredStateData(stateData?.filter((i) => i?.countryCode === defaultCountry));
+            setFilteredStateData(stateData?.filter((i) => i?.parentKey === defaultCountry));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataCountryLoaded, isStateDataLoaded]);
@@ -178,14 +178,14 @@ export const ListTehsilBase = (props) => {
             key: 'stateCode',
             title: 'State',
             value: filterString?.stateCode,
-            name: filteredStateData?.find((i) => i?.code === filterString?.stateCode)?.name,
+            name: filteredStateData?.find((i) => i?.key === filterString?.stateCode)?.value,
             canRemove: true,
         },
         {
             key: 'districtCode',
             title: 'District',
             value: filterString?.districtCode,
-            name: filteredDistrictData?.find((i) => i?.code === filterString?.districtCode)?.name,
+            name: filteredDistrictData?.find((i) => i?.key === filterString?.districtCode)?.value,
             canRemove: true,
         },
         {
@@ -244,14 +244,14 @@ export const ListTehsilBase = (props) => {
             const filterValue = type === 'text' ? value.target.value : value;
 
             if (name === 'countryCode') {
-                setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
+                setFilteredStateData(stateData?.filter((i) => i?.parentKey === filterValue));
                 advanceFilterForm.setFieldsValue({ stateCode: undefined });
                 advanceFilterForm.setFieldsValue({ districtCode: undefined });
                 advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
             }
 
             if (name === 'stateCode') {
-                setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
+                setFilteredDistrictData(districtData?.filter((i) => i?.parentKey === filterValue));
                 advanceFilterForm.setFieldsValue({ districtCode: undefined });
                 advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
             }
@@ -275,6 +275,7 @@ export const ListTehsilBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -354,7 +355,6 @@ export const ListTehsilBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
-        setFilteredDistrictData(undefined);
     };
 
     const handleResetFilter = () => {
@@ -396,6 +396,12 @@ export const ListTehsilBase = (props) => {
         }
     };
 
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
+        }
+    };
+
     const removeFilter = (key) => {
         if (key === 'countryCode') {
             setFilterString(undefined);
@@ -428,6 +434,7 @@ export const ListTehsilBase = (props) => {
         removeFilter,
         handleResetFilter,
         onSearchHandle,
+        handleClearInSearch,
         setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,
@@ -439,7 +446,7 @@ export const ListTehsilBase = (props) => {
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

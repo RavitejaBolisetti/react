@@ -5,7 +5,7 @@ import CardApplicationAction from './CardApplicationAction';
 import ApplicationActionsForm from './ApplicationActionsForms';
 
 
-const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata, actions }) => {
+const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata, actions, setCanFormSave }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [actionForm] = Form.useForm();
@@ -16,14 +16,17 @@ const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isR
         setFinalFormdata({ ...finalFormdata, applicationAction: [...finalFormdata.applicationAction, { actionName: label, status: val?.status, id: val?.id, actionMasterId: value, actionId: actionId }] });
         actionForm.resetFields();
     };
+    const onFieldsChange = () => {
+        setCanFormSave(true)
+    }
 
     return (
         <Fragment>
             <Divider />
-            <ApplicationActionsForm finalFormdata={finalFormdata} form={actionForm} onFinish={onActionFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} actions={actions} />
+            <ApplicationActionsForm finalFormdata={finalFormdata} form={actionForm} onFinish={onActionFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} actions={actions} onFieldsChange={onFieldsChange}/>
             {finalFormdata?.applicationAction?.length > 0 &&
                 finalFormdata?.applicationAction?.map((action) => {
-                    return <CardApplicationAction {...action} form={actionForm} onFinish={onActionFormFinish} setFinalFormdata={setFinalFormdata} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} actions={actions} />;
+                    return <CardApplicationAction {...action} form={actionForm} onFinish={onActionFormFinish} setFinalFormdata={setFinalFormdata} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} actions={actions} onFieldsChange={onFieldsChange}/>;
                 })}
         </Fragment>
     );

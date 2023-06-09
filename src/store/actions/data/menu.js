@@ -14,10 +14,6 @@ const receiveData = (data) => ({
     data,
 });
 
-export const clearData = () => ({
-    type: MENU_DATA_CLEAR,
-});
-
 const menuDataActions = {};
 
 const baseURLPath = BASE_URL_MENU;
@@ -30,6 +26,10 @@ menuDataActions.listShowLoading = (isLoading) => ({
 menuDataActions.setFilter = (filter) => ({
     type: MENU_DATA_FILTER,
     filter,
+});
+
+menuDataActions.resetData = () => ({
+    type: MENU_DATA_CLEAR,
 });
 
 menuDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {

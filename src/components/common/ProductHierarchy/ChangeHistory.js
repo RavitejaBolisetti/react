@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 
 import { convertDateTime } from 'utils/formatDateTime';
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
+
 import { withDrawer } from 'components/withDrawer';
 
 import { DataTable } from 'utils/dataTable';
@@ -16,7 +17,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible: isVisible },
+            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible: isVisible, organizationId = '' },
         },
     } = state;
 
@@ -26,6 +27,7 @@ const mapStateToProps = (state) => {
         isHistoryLoaded,
         isVisible,
         changeHistoryData,
+        organizationId,
     };
     return returnValue;
 };
@@ -42,14 +44,14 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
+const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, isHistoryLoading, changeHistoryData, organizationId }) => {
     useEffect(() => {
-        if (!isHistoryLoaded) {
-            fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
+        if (organizationId) {
+            fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId, manufactureOrgId: organizationId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isHistoryLoaded]);
-    
+    }, [organizationId]);
+
     const tableColumn = [
         tblPrepareColumns({
             title: 'Changed/Modified Date ',
@@ -80,25 +82,12 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
             title: 'Long Description',
             dataIndex: 'prodctLongDiscription',
         }),
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'status',
-            // filters: [
-            //     {
-            //         text: 'Active',
-            //         value: 'Active',
-            //     },
-            //     {
-            //         text: 'Inactive',
-            //         value: 'Inactive',
-            //     },
-            // ],
-            render: (text) => (text === 'Y' ? 'Active' : 'In Active'),
-        }),
+
+        tblStatusColumn({ styles, width: '15%' }),
     ];
 
     const tableProps = {
-        isLoading,
+        isLoading: isHistoryLoading,
         tableColumn,
         tableData: changeHistoryData,
     };

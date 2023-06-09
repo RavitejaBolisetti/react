@@ -1,7 +1,34 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
-import { ProductHierarchyPage, UserManagementPage, UserManagementManufacturerPage, ProductMasterPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage, DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DesignationMasterPage, DealerEmployeeDepartmentPage, RoleMasterPage } from 'pages/common';
+import {
+    ProductHierarchyPage,
+    UserManagementPage,
+    UserManagementManufacturerPage,
+    ProductMasterPage,
+    HierarchyAttributeMasterPage,
+    ManufacturerAdministrativeHierarchyPage,
+    ManufacturerOrgHierarchyPage,
+    ConfigurableParameterEditingPage,
+    QualificationMasterPage,
+    ApplicationMasterPage,
+    CriticalityGroupPage,
+    RoleManagementPage,
+    StatePage,
+    DistrictPage,
+    CityPage,
+    TehsilPage,
+    PinCodePage,
+    DealerLocationTypePage,
+    DealerDivisionMasterPage,
+    BayTypeMasterPage,
+    DesignationMasterPage,
+    DealerEmployeeDepartmentPage,
+    RoleMasterPage,
+    DealerParentPage,
+    PartyMasterPage,
+    LessorCompanyMasterPage,
+} from 'pages/common';
 
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
@@ -13,7 +40,7 @@ import { EmbeddedReportPage } from 'pages/report/EmbeddedReport/EmbeddedReportPa
 import { URLFilterReportPage } from 'pages/report/URLFilterReport/URLFilterReportPage';
 
 import { CMSPage } from 'pages/cms';
-import { PartyMasterPage } from 'pages/common/PartyMaster';
+import { DealerCompanyPage } from 'pages/common/Dealer';
 
 export const AuthenticatedUserPage = () => {
     return (
@@ -41,6 +68,8 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_BAY_TYPE_MASTER} element={<BayTypeMasterPage />} />
             <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_DESIGNATION_MASTER} element={<DesignationMasterPage />} />
             <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_ROLE_MASTER} element={<RoleMasterPage />} />
+            <Route path={routing.ROUTING_MILE_DEALER_HIERARCHY_DEALER_PARENT} element={<DealerParentPage />} />
+            <Route path={routing.ROUTING_MILE_DEALER_HIERARCHY_DEALER_COMPANY} element={<DealerCompanyPage />} />
 
             <Route path={routing.ROUTING_COMMON_PRODUCT_MASTER} element={<ProductMasterPage />} />
             <Route path={routing.ROUTING_COMMON_APPLICATION_MASTER} element={<ApplicationMasterPage />} />
@@ -49,17 +78,15 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_ROLE_MANAGEMENT} element={<RoleManagementPage />} />
 
             <Route path={routing.ROUTING_COMMON_PARTY_MASTER} element={<PartyMasterPage />} />
-
-            <Route path={routing.ROUTING_COMMON_DEALER_HIERARCHY} element={<DealerHierarchyPage />} />
+            <Route path={routing.ROUTING_COMMON_LESSOR_COMPANY_MASTER} element={<LessorCompanyMasterPage />} />
             <Route path={routing.ROUTING_USER_PROFILE} element={<ProfilePage />} exact />
             <Route path={routing.ROUTING_COMMON_ROLE_MANAGEMENT} element={<RoleManagementPage />} />
-    
 
             <Route path={routing.ROUTING_REPORT_BI_REPORT} element={<BiReportPage />} exact />
             <Route path={routing.ROUTING_REPORT_PAGINATED_REPORT} element={<PaginatedReportPage />} exact />
             <Route path={routing.ROUTING_REPORT_EMBEDDED_REPORT} element={<EmbeddedReportPage />} exact />
             <Route path={routing.ROUTING_REPORT_URL_FILTER_REPORT} element={<URLFilterReportPage />} exact />
-            
+
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
             <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
             <Route path={routing.ROUTING_USER_TRAINING} element={<TrainingPage />} exact />

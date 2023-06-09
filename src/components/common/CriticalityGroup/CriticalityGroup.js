@@ -10,6 +10,7 @@ import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { filterFunction } from 'utils/filterFunction';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
+import { ContentHeader } from 'utils/ContentHeader';
 import { tableColumn } from './tableColumn';
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
@@ -19,7 +20,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            CriticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [] },
+            CriticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [], isLoadingOnSave },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -35,6 +36,7 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isLoading,
         criticalityGroupData,
+        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -45,6 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: criticalityDataActions.fetchList,
             saveData: criticalityDataActions.saveData,
+            saveFormShowLoading: criticalityDataActions.saveFormShowLoading,
             listShowLoading: criticalityDataActions.listShowLoading,
             showGlobalNotification,
         },
@@ -53,11 +56,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CriticalityGroupMain = (props) => {
-    const { moduleTitle, fetchList, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification } = props;
-
+    const { saveFormShowLoading, isLoadingOnSave, moduleTitle, fetchList, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
-
+console.log("isLoadingOnSave",isLoadingOnSave)
     const [refershData, setRefershData] = useState(false);
     const [formData, setFormData] = useState({});
     const [forceFormReset, setForceFormReset] = useState(false);
@@ -129,6 +131,7 @@ export const CriticalityGroupMain = (props) => {
     }, [refershData]);
 
     const onFinish = (values) => {
+        saveFormShowLoading(true)
         const modifiedDeletedTime = deletedTime.concat(timeData);
 
         const modifiedTimeData = modifiedDeletedTime?.map((element) => {
@@ -139,10 +142,13 @@ export const CriticalityGroupMain = (props) => {
         const data = { ...values, id: recordId, allowedTimings: modifiedTimeData || [] };
         setDeletedTime([]);
         const onSuccess = (res) => {
-            setShowDataLoading(true);
             form.resetFields();
             setForceFormReset(generateRandomNumber());
             setTimeData([]);
+
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 setButtonData({ saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
@@ -153,10 +159,6 @@ export const CriticalityGroupMain = (props) => {
             }
         };
 
-        setTimeout(() => {
-            fetchList({ setIsLoading: listShowLoading, userId });
-        }, 2000);
-
         const onError = (message) => {
             showGlobalNotification({ message, placement: 'bottomRight' });
         };
@@ -164,7 +166,7 @@ export const CriticalityGroupMain = (props) => {
         const requestData = {
             data: [data],
             method: 'post',
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
@@ -249,6 +251,7 @@ export const CriticalityGroupMain = (props) => {
         setTimeData,
         deletedTime,
         setDeletedTime,
+        isLoadingOnSave,
     };
 
     const handleClearInSearch = (e) => {
@@ -279,10 +282,12 @@ export const CriticalityGroupMain = (props) => {
         title,
     };
 
+    const ContentHeaderProps = { isAdvanceFilter: true, isTogglePresent: false, isDefaultContentHeader: false, advanceFilterResultProps };
+
     return (
         <>
-            <AppliedAdvanceFilter {...advanceFilterResultProps} />
-
+            {/* <AppliedAdvanceFilter {...advanceFilterResultProps} /> */}
+            <ContentHeader {...ContentHeaderProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={'Group'} {...tableProps} />

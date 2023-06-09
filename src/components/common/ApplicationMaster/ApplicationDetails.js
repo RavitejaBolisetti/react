@@ -11,7 +11,7 @@ const { Option } = Select;
 const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING
 
 
-const ApplicationDetails = ({ form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setparentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification }) => {
+const ApplicationDetails = ({setCanFormSave, form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setparentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification }) => {
     useEffect(() => {
         form.setFieldsValue({ ...finalFormdata?.applicationDetails });
         setparentAppCode(finalFormdata?.applicationDetails.parentApplicationId);
@@ -30,9 +30,13 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, parentAppCode, is
             return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
         }
 
-
+        setCanFormSave(true);
         setparentAppCode(value);
     };
+
+    const onFieldsChange = () => {
+        setCanFormSave(true)
+    }
 
     const treeSelectFieldProps = {
         treeFieldNames: fieldNames,
@@ -46,7 +50,7 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, parentAppCode, is
 
     return (
         <Fragment>
-            <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form form={form} id="myForm" onFieldsChange={onFieldsChange} autoComplete="off" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('application ID'), validationFieldLetteNumberandPeriod('application ID')]}>

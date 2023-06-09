@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField, searchValidatorPincode } from 'utils/validation';
 import { withModal } from 'components/withModal';
 import { searchValidator } from 'utils/validation';
 
@@ -35,6 +35,7 @@ export const AdvancedSearchFrom = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
+    
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
@@ -54,7 +55,9 @@ export const AdvancedSearchFrom = (props) => {
                     <Form.Item label="State" initialValue={filterString?.stateCode} rules={[validateRequiredInputField('State')]} name="stateCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('stateCode')}>
                             {filteredStateData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>
@@ -66,17 +69,21 @@ export const AdvancedSearchFrom = (props) => {
                     <Form.Item label="District" initialValue={filterString?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('districtCode')}>
                             {filteredDistrictData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="City" initialValue={filterString?.cityCode} name="cityCode" rules={[!tehsilCodeValue ? validateRequiredSelectField('City') : '']}>
+                    <Form.Item label="City" initialValue={filterString?.cityCode} name="cityCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('cityCode')}>
                             {filteredCityData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>
@@ -85,17 +92,28 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Tehsil" initialValue={filterString?.tehsilCode} name="tehsilCode" rules={[!cityCodeValue ? validateRequiredSelectField('Tehsil') : '']}>
+                    <Form.Item label="Tehsil" initialValue={filterString?.tehsilCode} name="tehsilCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('tehsilCode')}>
                             {filteredTehsilData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
+                                <Option key={item?.key} value={item?.key}>
+                                    {item?.value}
+                                </Option>
                             ))}
                         </Select>
                     </Form.Item>
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="PIN Code" initialValue={filterString?.pincode} name="pincode">
+                    <Form.Item
+                        label="PIN Code"
+                        initialValue={filterString?.pincode}
+                        rules={[
+                            {
+                                validator: searchValidatorPincode,
+                            },
+                        ]}
+                        name="pincode"
+                    >
                         <Input placeholder="Search" maxLength={6} allowClear />
                     </Form.Item>
                 </Col>

@@ -59,7 +59,9 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.divisionCode} label="Division Name" name="divisionCode" rules={[validateRequiredSelectField('Division Name')]}>
                                 <Select {...selectProps} placeholder={preparePlaceholderSelect('Division')} loading={isDivisionLoading} onChange={handleDivisionChange}>
                                     {divisionData?.map((item) => (
-                                        <Option value={item?.code}>{item?.divisionName}</Option>
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.value}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>

@@ -30,6 +30,7 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'Dealer Location Type Master';
+    console.log('data', data);
 
     let returnValue = {
         userId,
@@ -112,7 +113,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.locationCode) || filterFunction(keyword)(item?.locationDescription) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.locationDescription) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -168,6 +169,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
+            setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -256,7 +258,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />

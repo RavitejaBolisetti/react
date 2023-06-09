@@ -1,4 +1,4 @@
-import { tblPrepareColumns, tblSerialNumberColumn, tblStatusColumn, tblActionColumn } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblSerialNumberColumn, tblActionColumn } from 'utils/tableCloumn';
 
 import styles from 'components/common/Common.module.css';
 
@@ -12,11 +12,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             dataIndex: 'partyCode',
             width: '15%',
         }),
-        tblPrepareColumns({
-            title: 'Party Category',
-            dataIndex: 'partyCategory',
-            width: '15%',
-        }),
 
         tblPrepareColumns({
             title: 'Party Name',
@@ -24,6 +19,11 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '20%',
         }),
 
+        tblPrepareColumns({
+            title: 'Party Category',
+            dataIndex: 'partyCategory',
+            width: '15%',
+        }),
         tblActionColumn({ handleButtonClick, styles })
     );
 

@@ -13,6 +13,7 @@ const ViewConfigDetailsMain = ({ formData, styles, parameterType }) => {
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
+                    
                     <Descriptions.Item label="Control ID">{formData?.controlId}</Descriptions.Item>
                     <Descriptions.Item label="Control Description">{formData?.controlDescription}</Descriptions.Item>
                     <Descriptions.Item label="Control Group">{formData?.controlGroup}</Descriptions.Item>
@@ -31,7 +32,7 @@ const ViewConfigDetailsMain = ({ formData, styles, parameterType }) => {
                             <Descriptions.Item label="To Date">{formData?.toDate}</Descriptions.Item>
                         </>
                     ) : parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY ? (
-                        <Descriptions.Item label="Configurable Parameter Values">{formData?.booleanValue}</Descriptions.Item>
+                        <Descriptions.Item label="Configurable Parameter Values">{formData?.booleanValue? 'Yes' : 'No'}</Descriptions.Item>
                     ) : null}
                 </Descriptions>
             </>

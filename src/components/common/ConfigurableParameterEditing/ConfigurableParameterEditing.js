@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: configData = [], paramdata: typeData = [] },
+            ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: configData = [], paramdata: typeData = [], isLoadingOnSave },
         },
     } = state;
 
@@ -48,6 +48,7 @@ const mapStateToProps = (state) => {
         typeData,
         isLoading,
         moduleTitle,
+        isLoadingOnSave,
         configData: configDataFinal,
     };
     return returnValue;
@@ -59,6 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: configParamEditActions.fetchList,
             saveData: configParamEditActions.saveData,
+            saveFormShowLoading: configParamEditActions.saveFormShowLoading,
             fetchDataList: configParamEditActions.fetchDataList,
             listShowLoading: configParamEditActions.listShowLoading,
             showGlobalNotification,
@@ -66,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+export const ConfigurableParameterEditingBase = ({saveFormShowLoading,isLoadingOnSave, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const defaultParametarType = CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -120,31 +122,35 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     }, [filterString, isDataLoaded, configData, userId]);
 
     const handleEditBtn = (record) => {
+        setFormActionType('update');
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
-        setFormActionType('update');
         setFooterEdit(false);
-        setIsReadOnly(false);
         form.setFieldsValue({
+            controlId: formData?.controlId,
+            controlDescription: formData?.controlDescription,
+            controlGroup: formData?.controlGroup,
             toDate: formData?.toDate ? dayjs(formData?.toDate, 'DD-MM-YYYY') : null,
             fromDate: formData?.fromDate ? dayjs(formData?.fromDate, 'DD-MM-YYYY') : null,
+            fromNumber: formData?.fromNumber,
+            toNumber: formData?.toNumber,
+            booleanValue: formData?.booleanValue,
+            textValue: formData?.textValue,
         });
         const data = configData.find((i) => i.id === record.id);
-        console.log('data', data);
         if (data) {
             data && setFormData(data);
-            console.log('formData', formData);
 
             setParameterType(data?.configurableParameterType.toString() || defaultParametarType);
-            console.log('parameterType', parameterType);
             setIsFormVisible(true);
         }
+        setIsReadOnly(false);
+        console.log('formData', formData);
     };
 
     const handleView = (record) => {
         setFormActionType('view');
         setIsViewModeVisible(true);
-
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
         const data = configData.find((i) => i.id === record.id);
@@ -260,6 +266,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     };
 
     const handleAdd = () => {
+        form.resetFields();
         setFormActionType('add');
         setShowSaveAndAddNewBtn(true);
         setIsViewModeVisible(false);
@@ -280,8 +287,9 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     };
 
     const onFinish = (values) => {
+        console.log(parameterType, 'gdhcgdw');
         const recordId = formData?.id || '';
-        let data = { ...values, id: recordId, isActive: true, fromDate: values?.fromDate?.format('YYYY-MM-DD'), toDate: values?.toDate?.format('YYYY-MM-DD') };
+        let data = { ...values, id: recordId, isActive: true, configurableParameterType: parameterType, fromDate: values?.fromDate?.format('YYYY-MM-DD'), toDate: values?.toDate?.format('YYYY-MM-DD') };
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -303,7 +311,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
 
         const requestData = {
             data: [data],
-            setIsLoading: listShowLoading,
+            setIsLoading: saveFormShowLoading,
             userId,
             onError,
             onSuccess,
@@ -332,7 +340,13 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setFooterEdit,
         typeData,
         isVisible: isFormVisible,
-        onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false), form.resetFields()),
+        onCloseAction: () => {
+            setIsFormVisible(false);
+            setFormBtnActive(false);
+            form.resetFields();
+            setFormData([]);
+            console.log('hello');
+        },
         titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,
@@ -346,10 +360,11 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
+        isLoadingOnSave,
     };
     return (
         <>
-            <Row gutter={20}>
+                    <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
@@ -362,11 +377,12 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                                                 placeholder="Search"
                                                 style={{
                                                     width: 300,
+                                                    marginLeft: '10px',
                                                 }}
                                                 allowClear
                                                 className={styles.headerSelectField}
                                                 onSearch={onSearchHandle}
-                                                onChange={onChangeHandle}
+                                                // onChange={onChangeHandle}
                                             />
                                         </Col>
                                     </div>
@@ -378,7 +394,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
                                     <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
-                                        Add Group
+                                        Add
                                     </Button>
                                 </Col>
                             ) : (
@@ -412,7 +428,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Group
+                                                Add
                                             </Button>
                                         </Col>
                                     </Row>

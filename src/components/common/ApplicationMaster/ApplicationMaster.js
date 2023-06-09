@@ -17,6 +17,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { LANGUAGE_EN } from 'language/en';
 
 import styles from 'components/common/Common.module.css';
+import { ContentHeader } from 'utils/ContentHeader';
 
 const { Search } = Input;
 
@@ -117,10 +118,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, menuType]);
 
-    useEffect(() => {
-        setSearchValue(menuData);
-    }, [menuData]);
-
     const handleAdd = (type) => {
         setisVisible(true);
         setFormActionType(type);
@@ -141,6 +138,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
 
     const onSuccess = (res) => {
         form.resetFields();
+        applicationForm.resetFields();
         setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
         if (res?.data) {
             const { accessibleLocation, applicationAction, documentType, ...rest } = res?.data[0];
@@ -285,26 +283,14 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const rightCol = menuData?.length > 0 ? 8 : 24;
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const ContentHeaderProps = { isAdvanceFilter: false, isTogglePresent: true, isDefaultContentHeader: false, toggleFirst: 'Web', toggleSecond: 'Mobile', styles, onChange, onFinish, validateTriggervalue: ['onSearch'], menuType, title: '', handleTypeClick };
     return (
         <>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={styles.borderBottomCorner}>
                     <Spin spinning={isLoading}>
-                        <div className={styles.contentHeaderBackground}>
-                            <Row gutter={20}>
-                                <Col xs={16} sm={16} md={16} lg={16} xl={16} className={styles.searchAndLabelAlign}>
-                                    <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                        <Button className={styles.marR5} type={menuType === 'W' ? 'primary' : 'link'} danger onClick={() => handleTypeClick('W')}>
-                                            Web
-                                        </Button>
-                                        <Button type={menuType === 'M' ? 'primary' : 'link'} danger onClick={() => handleTypeClick('M')}>
-                                            Mobile
-                                        </Button>
-                                    </div>
-                                    <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
-                                </Col>
-                            </Row>
-                        </div>
+                        <ContentHeader {...ContentHeaderProps} />
+
                         <div className={styles.content}>
                             {menuData?.length <= 0 ? (
                                 <div className={styles.emptyContainer}>
