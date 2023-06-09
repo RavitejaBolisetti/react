@@ -21,7 +21,6 @@ export const ROUTING_COMMON_GEO_CITY = ROUTING_COMMON_GEO.concat('city');
 export const ROUTING_COMMON_GEO_TEHSIL = ROUTING_COMMON_GEO.concat('tehsil');
 export const ROUTING_COMMON_GEO_PINCODE = ROUTING_COMMON_GEO.concat('pincode');
 
-export const ROUTING_COMMON_PRODUCT_MASTER = ROUTING_COMMON.concat('product-master');
 export const ROUTING_COMMON_PRODUCT_HIERARCHY = ROUTING_COMMON.concat('product-hierarchy');
 export const ROUTING_COMMON_APPLICATION_MASTER = ROUTING_COMMON.concat('application-master');
 export const ROUTING_COMMON_CRITICALITY_GROUP = ROUTING_COMMON.concat('criticality-group');

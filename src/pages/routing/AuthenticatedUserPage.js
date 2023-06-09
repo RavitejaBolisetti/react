@@ -5,7 +5,6 @@ import {
     ProductHierarchyPage,
     UserManagementPage,
     UserManagementManufacturerPage,
-    ProductMasterPage,
     HierarchyAttributeMasterPage,
     ManufacturerAdministrativeHierarchyPage,
     ManufacturerOrgHierarchyPage,
@@ -74,7 +73,6 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_MILE_DEALER_HIERARCHY_DEALER_PARENT} element={<DealerParentPage />} />
             <Route path={routing.ROUTING_MILE_DEALER_HIERARCHY_DEALER_COMPANY} element={<DealerCompanyPage />} />
 
-            <Route path={routing.ROUTING_COMMON_PRODUCT_MASTER} element={<ProductMasterPage />} />
             <Route path={routing.ROUTING_COMMON_APPLICATION_MASTER} element={<ApplicationMasterPage />} />
             <Route path={routing.ROUTING_COMMON_QUALIFICATION_MASTER} element={<QualificationMasterPage />} />
             <Route path={routing.ROUTING_COMMON_CRITICALITY_GROUP} element={<CriticalityGroupPage />} />

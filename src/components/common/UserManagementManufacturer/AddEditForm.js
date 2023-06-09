@@ -1,34 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
+import { Col, Form, Row, Button, Space, Card, Collapse } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
-import { IoTrashOutline } from 'react-icons/io5';
-import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
+import { AiOutlinePlusSquare } from 'react-icons/ai';
 
 import styles from 'components/common/Common.module.css';
 import style4 from './UserManagementManufacturer.module.css';
-// import style3 from './UserManagement.module.css';
-
 import AssignUserRolesMunfacturer from './AssignUserRolesMunfacturer';
 import AssignProducts from './AssignProducts';
 import AdministrativeHierarchyAccess from './AdministrativeHierarchyAccess';
 
-// import AssignUserRole from './AssignUserRole';
-// import BranchMapping from './BranchMapping';
-// import ProductMapping from './ProductMapping';
 import { ViewUserManagementDealer } from './ViewUserManagementDealer';
 
-const { Option } = Select;
-const { TextArea } = Input;
 const { Panel } = Collapse;
-const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 const AddEditFormMain = (props) => {
-    const { saveclick, onCloseAction, productHierarchyData, DealerSearchvalue, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
+    const { onCloseAction, productHierarchyData, DealerSearchvalue, onFinishFailed, onFinish, form, formData, DealerData } = props;
     const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setClosePanels } = props;
-    const [Macid, setMacid] = useState();
     const [AccessMacid, setAccessMacid] = useState([]);
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -41,30 +27,10 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-    const handleDelete = (event, key) => {
-        console.log('key', key);
-        const newAccessid = AccessMacid.filter((el) => {
-            return el?.key != key;
-        });
-        setAccessMacid(newAccessid);
-    };
-    const handleAddMacid = (event, key) => {
-        form.validateFields();
-        form.resetFields();
-        const CardData = {
-            macid: Macid,
-            key: AccessMacid?.length,
-        };
-        setAccessMacid([...AccessMacid, CardData]);
-        console.log('This is the macID : ', CardData);
-    };
     const onChangeCollapse = (collapse) => {
-        console.log('collapse: :', collapse);
+        // console.log('collapse: :', collapse);
     };
-    useEffect(() => {
-        console.log('We are getting dealer data: :', DealerData);
-    }, [DealerData]);
-
+    
     const viewProps = {
         isVisible: isViewModeVisible,
         setClosePanels,

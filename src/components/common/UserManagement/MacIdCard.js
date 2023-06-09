@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse } from 'antd';
-import styles from 'components/common/Common.module.css';
+import React from 'react';
+import { Col, Row, Button, Space, Card } from 'antd';
 import style from './UserManagement.module.css';
-import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineClose } from 'react-icons/ai';
 
 const MacIdCard = ({ AccessMacid, handleDelete, isViewModeVisible }) => {
     return (

@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Tree, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Checkbox } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
-import style from 'components/common/DrawerAndTable.module.css';
-const { Option } = Select;
+import { Col,   Row, Tree,   Space, } from 'antd';
+
 
 const ProductMapping = ({ ProductMappingData, productHierarchyData }) => {
-    const [checked, setchecked] = useState([]);
     const [expandedKeys, setExpandedKeys] = useState(['0-0-0', '0-0-1']);
     const [checkedKeys, setCheckedKeys] = useState(['0-0-0']);
     const [selectedKeys, setSelectedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
     const onExpand = (expandedKeysValue) => {
-        console.log('onExpand', expandedKeysValue);
         // if not set autoExpandParent to false, if children expanded, parent can not collapse.
         // or, you can remove all expanded children keys.
         setExpandedKeys(expandedKeysValue);
@@ -21,18 +17,18 @@ const ProductMapping = ({ ProductMappingData, productHierarchyData }) => {
         console.log('onCheck', checkedKeysValue);
         setCheckedKeys(checkedKeysValue);
     };
+    
     const onSelect = (selectedKeysValue, info) => {
         console.log('onSelect', info);
         setSelectedKeys(selectedKeysValue);
     };
+
     useEffect(() => {
         console.log('BranchMappingData', ProductMappingData);
+        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ProductMappingData]);
-    const onChanges = (values) => {
-        console.log(values);
-    };
 
-    const handleSelectAdd = () => {};
     return (
         <Space
             direction="vertical"

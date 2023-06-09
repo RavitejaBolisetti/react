@@ -1,8 +1,6 @@
 import React from 'react';
 import CommonCard from './CommonCard';
-import { Col, Input, Form, Descriptions, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse } from 'antd';
-import styles from 'components/common/Common.module.css';
-import style from './UserManagement.module.css';
+import { Col, Input, Form, Descriptions, Row,  Button,   Space,  Collapse } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import MacIdCard from './MacIdCard';
 import AssignUserRole from './AssignUserRole';

@@ -1,4 +1,3 @@
-import { ProductMasterPage } from './ProductMaster/ProductMasterPage';
 import { RoleManagementPage } from './RoleManagement/RoleManagementPage';
 import { ProductHierarchyPage } from './ProductHierarchy';
 import { CriticalityGroupPage } from './CriticalityGroup';
@@ -20,7 +19,6 @@ import { DealerCompanyPage, DealerParentPage } from './Dealer';
 import { LessorCompanyMasterPage } from './LessorCompanyMaster';
 
 export {
-    ProductMasterPage,
     ProductHierarchyPage,
     ManufacturerAdministrativeHierarchyPage,
     ManufacturerOrgHierarchyPage,
