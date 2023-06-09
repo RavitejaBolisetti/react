@@ -11,6 +11,7 @@ import { DrawerFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 import { CustomEditor } from 'components/common/CustomEditor';
 import { convertCalenderDate } from 'utils/formatDateTime';
+import dayjs from 'dayjs';
 
 const { Option } = Select;
 
@@ -79,8 +80,8 @@ const AddEditFormMain = (props) => {
     };
 
     const disableFromDate = (value) => {
-        return value > endDate;
-        //  value < dayjs().endOf('day')
+        return value < dayjs().endOf('day');
+        // value > endDate;
     };
 
     const disableToDate = (value) => {

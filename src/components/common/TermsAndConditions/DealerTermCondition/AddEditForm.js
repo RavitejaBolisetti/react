@@ -79,8 +79,9 @@ const AddEditFormMain = (props) => {
     };
 
     const disableFromDate = (value) => {
-        return value > endDate;
-        // value < dayjs().endOf('day')
+        console.log('Day', dayjs().endOf('day'));
+        return value < new Date();
+        // value > endDate;
     };
 
     const disableToDate = (value) => {
@@ -91,7 +92,7 @@ const AddEditFormMain = (props) => {
         data: formData?.termConditionDescription ? formData?.termConditionDescription : '',
     };
     const fromDateInitialValue = { initialValue: convertCalenderDate(formData?.effectiveFrom, 'YYYY/MM/DD') };
-    const toDateInitialValue = { initialValue: convertCalenderDate(formData?.effectiveTo ? formData?.effectiveTo : '2050/12/31', 'YYYY/MM/DD') };
+    const toDateInitialValue = { initialValue: convertCalenderDate(formData?.effectiveTo ? formData?.effectiveTo : new Date('December 31, 9999'), 'YYYY/MM/DD') };
 
     // const dateFormat = 'YYYY/MM/DD';
     return (
@@ -169,7 +170,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item {...toDateInitialValue} label="Effective To" name="effectiveTo">
-                                <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} style={{ width: '100%' }} onChange={handleToDateChange} disabledDate={disableToDate} />
+                                <DatePicker format="YYYY-MM-DD" disabled style={{ width: '100%' }} onChange={handleToDateChange} disabledDate={disableToDate} />
                             </Form.Item>
                         </Col>
                     </Row>
