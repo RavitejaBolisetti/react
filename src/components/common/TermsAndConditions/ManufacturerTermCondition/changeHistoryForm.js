@@ -1,22 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { useState } from 'react';
 
-import { Input, Form, Col, Row, Button, Select, DatePicker } from 'antd';
+import { Col, Row } from 'antd';
 
-import { tblPrepareColumns, tblSerialNumberColumn, tblStatusColumn, tblActionColumn } from 'utils/tableCloumn';
+import { tblPrepareColumns } from 'utils/tableCloumn';
 
 import { withDrawer } from 'components/withDrawer';
 import { ListDataTable } from 'utils/ListDataTable';
-import { DrawerFormButton } from 'components/common/Button';
-import styles from 'components/common/Common.module.css';
 import { convertDate } from 'utils/formatDateTime';
-import { convertCalenderDate } from 'utils/formatDateTime';
-
-const { Option } = Select;
 
 const ChangeHistoryMain = (props) => {
-    const { tableChangeHistoryProps, ChangeHistoryTermsConditionsData } = props;
+    const { ChangeHistoryTermsConditionsData } = props;
 
     const [page, setPage] = useState(1);
     const tableColumn = [];

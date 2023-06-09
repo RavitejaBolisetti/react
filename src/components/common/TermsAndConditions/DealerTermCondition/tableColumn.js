@@ -1,6 +1,6 @@
-import { tblPrepareColumns, tblSerialNumberColumn, tblStatusColumn, tblActionColumn } from 'utils/tableCloumn';
-import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
-import { FiEdit, FiEye } from 'react-icons/fi';
+import { tblPrepareColumns, tblSerialNumberColumn } from 'utils/tableCloumn';
+import { Button, Space } from 'antd';
+import { FiEye } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { convertDate } from 'utils/formatDateTime';
@@ -51,23 +51,6 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
             width: '15%',
             render: (text) => convertDate(text),
         }),
-        // tblPrepareColumns({
-        //     title: 'MFG T&C',
-        //     width: '15%',
-        //     sorter: false,
-        //     render: (text, record, index) => {
-        //         return (
-        //             <Space>
-        //                 {
-        //                     <Button className={styles.tableIcons} danger ghost aria-label="ai-view">
-        //                         {/* onClick={() => handleView(record)} */}
-        //                         <ViewEyeIcon />
-        //                     </Button>
-        //                 }
-        //             </Space>
-        //         );
-        //     },
-        // }),
         tblPrepareColumns({
             title: 'MFG T&C',
             width: '5%',

@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
-import { EditIcon, ViewEyeIcon } from 'Icons';
-import { TfiReload } from 'react-icons/tfi';
+import { Col, Row, Input, Form } from 'antd';
 import { notification } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-
-import { convertDate } from 'utils/formatDateTime';
-import DataTable from 'utils/dataTable/DataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
-import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { tncDocumentTypeDataActions } from 'store/actions/data/termsConditions/tncDocumentType';
 import { tncLanguage } from 'store/actions/data/termsConditions/tncLanguage';
-// import { tncFetchDealerListActions } from 'store/actions/data/termsConditions/tncFetchDealerListActions';
 import { tncDealerSaveActions } from 'store/actions/data/termsConditions/tncDealerSave';
 import { termConditionManufacturerActions } from 'store/actions/data/termsConditions/termsConditionsManufacturerAction';
 import { changeHistoryDataActions } from 'store/actions/data/termsConditions/changeHistoryAction';
@@ -23,17 +15,10 @@ import { ChangeHistory } from './changeHistoryForm';
 
 import { AddEditForm } from './AddEditForm';
 
-import styles from 'components/common/Common.module.css';
-import { FilterIcon } from 'Icons';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ListDataTable } from 'utils/ListDataTable';
 import { tableColumn } from './tableColumn';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-import moment from 'moment';
-
-const { Search } = Input;
-
-const { termConditionData } = [];
 
 const mapStateToProps = (state) => {
     const {
@@ -130,11 +115,9 @@ const TncDealer = ({
     languageList,
     showGlobalNotification,
     isLoading,
-    isFormDataLoaded,
     isLoadingOnSave,
     ManufacturerData,
     manufacturerTncLoaded,
-    onSaveShowLoading,
 }) => {
     const [form] = Form.useForm();
     const [formActionType, setFormActionType] = useState('');
@@ -148,7 +131,6 @@ const TncDealer = ({
     const [searchData, setSearchdata] = useState();
     const [searchDataChangeHistory, setSearchdataChangeHistory] = useState();
     const [refershData, setRefershData] = useState(false);
-    const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [filterString, setFilterString] = useState();
     const [footerEdit, setFooterEdit] = useState(false);
@@ -161,7 +143,6 @@ const TncDealer = ({
     const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [advanceFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
@@ -190,38 +171,31 @@ const TncDealer = ({
     useEffect(() => {
         form.resetFields();
         form.setFieldValue(formData);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
             fetchTermCondition({ setIsLoading: listShowLoading, userId });
-            // changeHistoryData({ setIsLoading: listShowLoading, userId });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
     useEffect(() => {
         if (!isDocumentTypeDataLoaded && userId) {
             fetchDocumentTypeList({ setIsLoading: listShowLoading, userId });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDocumentTypeDataLoaded, userId]);
 
     useEffect(() => {
         if (!islanguageDataLoaded && userId) {
             fetchLanguageList({ setIsLoading: listShowLoading, userId });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [islanguageDataLoaded, userId]);
 
     useEffect(() => {
         if (userId && refershData) {
             fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            // changeHistoryData({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData, userId]);
 
     useEffect(() => {
@@ -233,7 +207,6 @@ const TncDealer = ({
                 setSearchdata(DealerTermsConditionsData);
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, DealerTermsConditionsDataLoaded, DealerTermsConditionsData]);
 
     useEffect(() => {
@@ -257,17 +230,6 @@ const TncDealer = ({
 
         record && setFormData(record);
         setIsFormVisible(true);
-        // if (record?.effectiveFrom && record?.effectiveTo && (formActionType?.editMode || formActionType?.viewMode)) {
-        //     const effectiveFromDateData = moment(record?.effectiveFrom);
-        //     const effectiveToDateData = moment(record?.effectiveTo);
-
-        //     seteffectiveFrom(effectiveFromDateData);
-        //     seteffectiveTo(effectiveToDateData);
-        // }
-
-        // setTimeout(() => {
-        //     setIsFormVisible(true);
-        // }, 300);
     };
     const extraParams = [
         {
@@ -296,20 +258,12 @@ const TncDealer = ({
         setPage,
     };
 
-    // const tableChangeHistoryProps = {
-    //     tableColumn: tableColumn(handleButtonClick, handleManufacturerButtonClick, page?.current, page?.pageSize),
-    //     tableData: searchDataChangeHistory,
-    //     setPage,
-    // };
-
     const onFinish = (values, e) => {
         const recordId = formData?.id || '';
         const newVersion = (values.version ? Number(values?.version) + 0.1 : 1.0).toFixed(1);
         // console.log('typeof', typeof termsAndCondition);
         const termConditionText = termsAndCondition.replace(/[&\/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
         const data = { ...values, version: String(newVersion), id: recordId, termConditionDescription: termConditionText };
-        // console.log('data', data, termConditionText);
-        // return;
         const onSuccess = (res) => {
             listShowLoading(false);
             form.resetFields();
@@ -317,13 +271,6 @@ const TncDealer = ({
             setSuccessAlert(true);
             setIsFormVisible(false);
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            // if (saveclick === true) {
-            //     setIsFormVisible(false);
-            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            // } else {
-            //     setIsFormVisible(true);
-            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            // }
         };
 
         setTimeout(() => {
@@ -355,38 +302,12 @@ const TncDealer = ({
         setRefershData(!refershData);
     };
 
-    const onChange = (sorter, filters) => {
-        form.resetFields();
-    };
-
     const onSearchHandle = (value) => {
         setFilterString(value);
     };
 
-    // const onChangeHandle = (e) => {
-    //     setFilterString(e.target.value);
-    // };
-
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
-    };
-
-    // const onAdvanceSearchCloseAction = () => {
-    //     setAdvanceSearchVisible(false);
-    //     advanceFilterForm.resetFields();
-    // };
-
-    // const handleFilterChange = (name, type = 'value') => (value) => {
-    //     if (name === 'countryCode') {
-    //         advanceFilterForm.setFieldsValue({ stateCode: undefined });
-    //     }
-    // };
-
-    const handleResetFilter = () => {
-        setFilterString();
-        resetData();
-        advanceFilterForm.resetFields();
-        setShowDataLoading(false);
     };
 
     const onCloseAction = () => {
@@ -394,21 +315,6 @@ const TncDealer = ({
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
-
-    // const advanceFilterProps = {
-    //     isVisible: isAdvanceSearchVisible,
-    //     onCloseAction: onAdvanceSearchCloseAction,
-    //     setAdvanceSearchVisible,
-    //     icon: <FilterIcon size={20} />,
-    //     titleOverride: 'Advance Filters',
-    //     data,
-    //     handleFilterChange,
-    //     filterString,
-    //     setFilterString,
-    //     advanceFilterForm,
-    //     resetData,
-    //     handleResetFilter,
-    // };
 
     const formProps = {
         isVisible: isFormVisible,
@@ -476,9 +382,7 @@ const TncDealer = ({
         }
     };
     const showChangeHistoryList = () => {
-        // setFormActionType({ changeHistoryMode: true });
         setButtonData({ cancelBtn: true });
-        // setIsFormVisible(true);
         setIsHistoryVisible(true);
         extraParams['0']['value'] = '1ebc0d34-409b-44f3-a7e3-ffb70f1cc888';
         changeHistoryData({ setIsLoading: listShowLoading, userId, extraParams });
