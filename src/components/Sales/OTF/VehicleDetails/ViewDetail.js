@@ -140,11 +140,11 @@ const ViewDetailMain = (props) => {
                         >
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Tax/Charges Type ">{vehicleForm?.vehicleUsageType}</Descriptions.Item>
-                                <Descriptions.Item label="Tax/Charges Code">{vehicleForm?.vehicleModel}</Descriptions.Item>
-                                <Descriptions.Item label="Rate">{vehicleForm?.model}</Descriptions.Item>
-                                <Descriptions.Item label="Rate Type">{vehicleForm?.stock}</Descriptions.Item>
-                                <Descriptions.Item label="Charges Description">{vehicleForm?.allotedStatus}</Descriptions.Item>
+                                <Descriptions.Item label="Tax/Charges Type ">{taxChargesForm?.type}</Descriptions.Item>
+                                <Descriptions.Item label="Tax/Charges Code">{taxChargesForm?.code}</Descriptions.Item>
+                                <Descriptions.Item label="Rate">{taxChargesForm?.rate}</Descriptions.Item>
+                                <Descriptions.Item label="Rate Type">{taxChargesForm?.rateType}</Descriptions.Item>
+                                <Descriptions.Item label="Charges Description">{taxChargesForm?.description}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
@@ -172,11 +172,11 @@ const ViewDetailMain = (props) => {
                         >
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Tax/Charges Type ">{vehicleForm?.type}</Descriptions.Item>
-                                <Descriptions.Item label="Tax/Charges Code">{vehicleForm?.code}</Descriptions.Item>
-                                <Descriptions.Item label="Rate">{vehicleForm?.rate}</Descriptions.Item>
-                                <Descriptions.Item label="Rate Type">{vehicleForm?.rateType}</Descriptions.Item>
-                                <Descriptions.Item label="Charges Description">{vehicleForm?.description}</Descriptions.Item>
+                                <Descriptions.Item label="Tax/Charges Type ">{taxChargesForm?.type}</Descriptions.Item>
+                                <Descriptions.Item label="Tax/Charges Code">{taxChargesForm?.code}</Descriptions.Item>
+                                <Descriptions.Item label="Rate">{taxChargesForm?.rate}</Descriptions.Item>
+                                <Descriptions.Item label="Rate Type">{taxChargesForm?.rateType}</Descriptions.Item>
+                                <Descriptions.Item label="Charges Description">{taxChargesForm?.description}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
@@ -204,11 +204,11 @@ const ViewDetailMain = (props) => {
                         >
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Tax/Charges Type ">{vehicleForm?.type}</Descriptions.Item>
-                                <Descriptions.Item label="Tax/Charges Code">{vehicleForm?.code}</Descriptions.Item>
-                                <Descriptions.Item label="Rate">{vehicleForm?.rate}</Descriptions.Item>
-                                <Descriptions.Item label="Rate Type">{vehicleForm?.rateType}</Descriptions.Item>
-                                <Descriptions.Item label="Charges Description">{vehicleForm?.description}</Descriptions.Item>
+                                <Descriptions.Item label="Tax/Charges Type ">{taxChargesForm?.type}</Descriptions.Item>
+                                <Descriptions.Item label="Tax/Charges Code">{taxChargesForm?.code}</Descriptions.Item>
+                                <Descriptions.Item label="Rate">{taxChargesForm?.rate}</Descriptions.Item>
+                                <Descriptions.Item label="Rate Type">{taxChargesForm?.rateType}</Descriptions.Item>
+                                <Descriptions.Item label="Charges Description">{taxChargesForm?.description}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
@@ -236,11 +236,11 @@ const ViewDetailMain = (props) => {
                         >
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Tax/Charges Type ">{vehicleForm?.type}</Descriptions.Item>
-                                <Descriptions.Item label="Tax/Charges Code">{vehicleForm?.code}</Descriptions.Item>
-                                <Descriptions.Item label="Rate">{vehicleForm?.rate}</Descriptions.Item>
-                                <Descriptions.Item label="Rate Type">{vehicleForm?.rateType}</Descriptions.Item>
-                                <Descriptions.Item label="Charges Description">{vehicleForm?.description}</Descriptions.Item>
+                                <Descriptions.Item label="Tax/Charges Type ">{taxChargesForm?.type}</Descriptions.Item>
+                                <Descriptions.Item label="Tax/Charges Code">{taxChargesForm?.code}</Descriptions.Item>
+                                <Descriptions.Item label="Rate">{taxChargesForm?.rate}</Descriptions.Item>
+                                <Descriptions.Item label="Rate Type">{taxChargesForm?.rateType}</Descriptions.Item>
+                                <Descriptions.Item label="Charges Description">{taxChargesForm?.description}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
