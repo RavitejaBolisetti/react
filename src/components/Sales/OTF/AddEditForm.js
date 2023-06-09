@@ -21,7 +21,7 @@ import { AddOnDetailsMaster } from './AddOnDetails';
 
 const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible } = props;
+    const { onCloseAction, isViewModeVisible, formActionType } = props;
 
     const EDIT_ACTION = OTF_FORM_ACTION_TYPE?.EDIT;
     const CANCEL_ACTION = OTF_FORM_ACTION_TYPE?.CANCEL;
@@ -78,27 +78,36 @@ const AddEditFormMain = (props) => {
         setleftTimeline,
     };
 
+    const RenderElementCommonProps = {
+        formActionType,
+        buttonData,
+        setbuttonData,
+        leftTimeline,
+        setleftTimeline,
+        isViewModeVisible,
+    };
+
     const renderElement = () => {
         if (leftTimeline?.otfDetails) {
-            return <CustomerDetailsMaster />;
+            return <CustomerDetailsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.customerDetails) {
-            return <CustomerDetailsMaster />;
+            return <CustomerDetailsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.vehicleDetails) {
-            return <VehicleDetailsMaster />;
+            return <VehicleDetailsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.schemeDetails) {
-            return <SchemeDetailsMaster />;
+            return <SchemeDetailsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.insuranceDetails) {
-            return <InsuranceDetailsMaster />;
+            return <InsuranceDetailsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.exchangeVehicle) {
-            return <ExchangeVehiclesMaster />;
+            return <ExchangeVehiclesMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline.referrals) {
-            return <ReferralsMaster />;
+            return <ReferralsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline.loyaltyScheme) {
-            return <LoyaltySchemeMaster />;
+            return <LoyaltySchemeMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.fiananceDetails) {
-            return <FinananceDetailsMaster />;
+            return <FinananceDetailsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.addOnDetails) {
-            return <AddOnDetailsMaster />;
+            return <AddOnDetailsMaster {...RenderElementCommonProps} />;
         }
     };
 

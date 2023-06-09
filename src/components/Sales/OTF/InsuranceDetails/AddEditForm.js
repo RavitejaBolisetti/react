@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Select, DatePicker, Space, Collapse, Typography } from 'antd';
+import { Col, Input, Form, Row, Select, DatePicker, Space, Collapse, Typography, Card } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
-const { Text } = Typography;
-const { Option } = Select;
-const { TextArea } = Input;
-const { Panel } = Collapse;
+// const { Text } = Typography;
+// const { Option } = Select;
+// const { TextArea } = Input;
+// const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible, setIsViewModeVisible } = props;
+    const { onCloseAction, isViewModeVisible, setIsViewModeVisible,formActionType } = props;
     const [customerForm] = Form.useForm();
     const [keyAccountForm] = Form.useForm();
     const [authorityForm] = Form.useForm();
@@ -98,8 +97,6 @@ const AddEditFormMain = (props) => {
     //     setIsBookingCustomer(e.target.checked);
     // };
 
-    const schemeType = [{ code: 'hey' }, { code: 'bud' }];
-
     const viewProps = {
         activeKey,
         setactiveKey,
@@ -111,83 +108,46 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            {!isViewModeVisible ? (
-                // <Row gutter={20}>
-                //     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                //         <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                //             <Collapse
-                //                 expandIcon={() => {
-                //                     if (activeKey.includes(1)) {
-                //                         return <MinusOutlined className={styles.iconsColor} />;
-                //                     } else {
-                //                         return <PlusOutlined className={styles.iconsColor} />;
-                //                     }
-                //                 }}
-                //                 activeKey={activeKey}
-                //                 onChange={() => onChange(1)}
-                //                 expandIconPosition="end"
-                //             >
-                //                 <Panel
-                //                     header={
-                //                         <div className={styles.alignUser}>
-                //                             {/* <FaRegUserCircle className={styles.userCircle} /> */}
-                //                             <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                //                                 Scheme
-                //                             </Text>
-                //                         </div>
-                //                     }
-                //                     key="1"
-                //                 >
-                //                     <Form autoComplete="off" layout="vertical" form={customerForm}>
-                //                         <Row gutter={20}>
-                //                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                //                                 <Form.Item initialValue={''} label="Insurance Company" name="2" rules={[validateRequiredInputField('Insurance Company')]}>
-                //                                     <Input className={styles.inputBox} placeholder={preparePlaceholderText('Insurance Company')} />
-                //                                 </Form.Item>
-                //                             </Col>
-                //                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                //                                 <Form.Item initialValue={''} label="Insurance Cover Note" name="2" rules={[validateRequiredInputField('Insurance Cover Note')]}>
-                //                                     <Input className={styles.inputBox} placeholder={preparePlaceholderText('Insurance Cover Note')} />
-                //                                 </Form.Item>
-                //                             </Col>
-                //                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                //                                 <Form.Item initialValue={''} label="Insurance Amount" name="3" rules={[validateRequiredInputField('Insurance Amount')]}>
-                //                                     <Input className={styles.inputBox} placeholder={preparePlaceholderText('Insurance Amount')} />
-                //                                 </Form.Item>
-                //                             </Col>
-                //                         </Row>
-                //                         <Row gutter={20}>
-                //                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                //                                 <Form.Item initialValue={''} label="Date" name="4" rules={[validateRequiredInputField('Date')]}>
-                //                                     <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Date')} onChange={onChange} style={{ width: '100%' }} />
-                //                                 </Form.Item>
-                //                             </Col>
-                //                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                //                                 <Form.Item initialValue={''} label="Registration Number" name="3" rules={[validateRequiredInputField('Registration Number')]}>
-                //                                     <Input className={styles.inputBox} placeholder={preparePlaceholderText('Registration Number')} />
-                //                                 </Form.Item>
-                //                             </Col>
-                //                         </Row>
-                //                     </Form>
-                //                 </Panel>
-                //             </Collapse>
-
-                //             {/* <Row gutter={20}>
-                //                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                //                     <Button danger onClick={onCloseAction}>
-                //                         Cancel
-                //                     </Button>
-                //                 </Col>
-                //                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                //                     <Button type="primary" onClick={onFinish} className={styles.floatRight}>
-                //                         Save & Proceed
-                //                     </Button>
-                //                 </Col>
-                //             </Row> */}
-                //         </Space>
-                //     </Col>
-                // </Row>
-                <ViewDetail {...viewProps} />
+            {!formActionType?.viewMode ? (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Space style={{ display: 'flex' }} size="middle" direction="vertical">
+                            <Card style={{ backgroundColor: '#f2f2f2' }}>
+                                <Form autoComplete="off" layout="vertical" form={customerForm}>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item initialValue={''} label="Insurance Company" name="2" rules={[validateRequiredInputField('Insurance Company')]}>
+                                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Insurance Company')} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item initialValue={''} label="Insurance Cover Note" name="2" rules={[validateRequiredInputField('Insurance Cover Note')]}>
+                                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Insurance Cover Note')} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item initialValue={''} label="Insurance Amount" name="3" rules={[validateRequiredInputField('Insurance Amount')]}>
+                                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Insurance Amount')} />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item initialValue={''} label="Date" name="4" rules={[validateRequiredInputField('Date')]}>
+                                                <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Date')} onChange={onChange} style={{ width: '100%' }} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item initialValue={''} label="Registration Number" name="3" rules={[validateRequiredInputField('Registration Number')]}>
+                                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Registration Number')} />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            </Card>
+                        </Space>
+                    </Col>
+                </Row>
             ) : (
                 <ViewDetail {...viewProps} />
             )}

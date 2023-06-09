@@ -13,7 +13,7 @@ const FinananceDetailsMaster = (props) => {
         <div className={styles.drawerCustomerMaster}>
             <h2>Finance Details</h2>
 
-            <AddEditForm />
+            <AddEditForm {...props} />
         </div>
     );
 };
