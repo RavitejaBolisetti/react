@@ -1,42 +1,24 @@
 import { React, useEffect, useState } from 'react';
 
-import { Col, Input, Collapse, Row, Button, Space, Spin, Form, Select, Upload, message, Checkbox, Progress, Typography, Divider } from 'antd';
-import { FaUserCircle } from 'react-icons/fa';
+import { Col, Input, Collapse, Row, Button, Space, Form, Select, Upload, message, Checkbox, Divider } from 'antd';
 
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
+import { validateRequiredInputField } from 'utils/validation';
 import style from 'components/common/Common.module.css';
 import styles from 'components/Auth/Auth.module.css';
 
-import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { MEMBERSHIP_TYPE } from './MembershipType';
 import Svg from 'assets/images/Filter.svg';
 import { BiUserCircle } from 'react-icons/bi';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetails';
 
-const { TextArea } = Input;
 const { Panel } = Collapse;
 const { Option } = Select;
 const { Dragger } = Upload;
-const { Text } = Typography;
-
-// const onChange = (e) => {
-//     console.log(`checked = ${e.target.checked}`);
-// };
-const apiKey = 'vipDealerInd';
-const handleCheckboxChange = (event) => {
-    const isChecked = event.target.checked;
-    console.log('API Key:', apiKey);
-    console.log('Checkbox value:', isChecked);
-};
-
-const { Search } = Input;
 
 const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeVisible, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable }) => {
-    const [openAccordian, setOpenAccordian] = useState('');
-    const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [companyInfoform] = Form.useForm();
     const [uploadCustomerForm] = Form.useForm();
     const [done, setDone] = useState();
@@ -52,16 +34,8 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
 
     useEffect(() => {
         setFinalFormData({ ...FinalFormData, companyInfoform: companyInfoValues, uploadCustomerForm: uploadCustomerFormValues });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [done]);
-    useEffect(() => {
-        console.log('FinalFormData', FinalFormData);
-    }, [FinalFormData]);
-    const onClose = () => {
-        setisVisible(false);
-        setFormBtnDisable(false);
-        forceUpdate();
-        setIsBtnDisabled(false);
-    };
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -70,7 +44,7 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
             const newActivekeys = [];
 
             activeKey.filter((item) => {
-                if (item != values) {
+                if (item !== values) {
                     newActivekeys.push(item);
                 }
             });
@@ -123,10 +97,6 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
             });
     };
 
-    const onFinishFailed = () => {
-        companyInfoform.validateFields();
-        uploadCustomerForm.validateFields();
-    };
 
     const viewProps = {
         activeKey,

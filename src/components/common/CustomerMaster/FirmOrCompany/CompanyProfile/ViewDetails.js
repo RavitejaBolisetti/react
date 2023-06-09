@@ -1,14 +1,14 @@
 import React from 'react';
 import { Descriptions } from 'antd';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Typography } from 'antd';
+import { Space, Collapse, Typography } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { FaRegPlusSquare, FaPlus, FaRegUserCircle } from 'react-icons/fa';
+import { FaRegUserCircle } from 'react-icons/fa';
 
 const { Panel } = Collapse;
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, setactiveKey, onChange, style, parameterType } = props;
+    const { activeKey, onChange, style } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -22,15 +22,12 @@ const ViewDetailMain = (props) => {
         panNumber: 'LPKPS8930R',
         gstinNumber: '2222',
         membershipType: 'Gold',
-
     };
     const SocialForm = {
         m1mmfsl: 'MMFSL',
         facebookId: 'simran@facebook.com',
         twitterId: 'simran@twitter.com',
-        
     };
-    
 
     return (
         <div className={`${style.viewContainer} ${style.hierarchyRightContaners}`}>
@@ -64,9 +61,8 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Parent Firm/Company Code">{CompanyForm?.companyCode}</Descriptions.Item>
                             <Descriptions.Item label="Parent Firm/Company Name">{CompanyForm?.ParentcompanyName}</Descriptions.Item>
                             <Descriptions.Item label="PAN">{CompanyForm?.panNumber}</Descriptions.Item>
-                            <Descriptions.Item label="GSTIN">{CompanyForm?.gstinNumber }</Descriptions.Item>
-                            <Descriptions.Item label="Membership Type">{CompanyForm?.membershipType }</Descriptions.Item>
-
+                            <Descriptions.Item label="GSTIN">{CompanyForm?.gstinNumber}</Descriptions.Item>
+                            <Descriptions.Item label="Membership Type">{CompanyForm?.membershipType}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>
@@ -99,12 +95,9 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="M1-MMFSL">{SocialForm?.m1mmfsl}</Descriptions.Item>
                             <Descriptions.Item label="Facebook Link">{SocialForm?.facebookId}</Descriptions.Item>
                             <Descriptions.Item label="Twitter Link">{SocialForm?.twitterId}</Descriptions.Item>
-                            
                         </Descriptions>
                     </Panel>
                 </Collapse>
-
-            
             </Space>
         </div>
     );
