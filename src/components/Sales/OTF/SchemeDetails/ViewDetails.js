@@ -24,6 +24,7 @@ const ViewDetailMain = (props) => {
     };
 
     return (
+        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
         <Space direction="vertical" size="middle" className={styles.accordianContainer}>
             <Collapse
                 expandIcon={() => {
@@ -72,6 +73,7 @@ const ViewDetailMain = (props) => {
                     </Col>
                 </Row> */}
         </Space>
+        </div>
     );
 };
 
