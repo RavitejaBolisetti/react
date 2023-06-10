@@ -146,15 +146,12 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const [isFormVisible, setIsFormVisible] = useState(false);
     const navigate = useNavigate();
 
-    const [data, setData] = useState(initialTableData);
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [forceFormReset, setForceFormReset] = useState(false);
     const [searchData, setSearchdata] = useState();
     const [refershData, setRefershData] = useState(false);
-    const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [filterString, setFilterString] = useState();
     const [footerEdit, setFooterEdit] = useState(false);
@@ -163,16 +160,13 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const [saveBtn, setSaveBtn] = useState(false);
     const [saveclick, setsaveclick] = useState();
     const [saveandnewclick, setsaveandnewclick] = useState();
-    const [successAlert, setSuccessAlert] = useState(false);
     const [error, setError] = useState(false);
-    const [valid, setValid] = useState(false);
     const [DealerSearchvalue, setDealerSearchvalue] = useState();
     const [DealerSelected, setDealerSelected] = useState();
     const [disabled, setdisabled] = useState(true);
     const [DealerData, setDealerData] = useState();
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
-    const [closePanels, setClosePanels] = React.useState([]);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [AccessMacid, setAccessMacid] = useState([]);
     const [finalFormdata, setfinalFormdata] = useState({
@@ -212,7 +206,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
             hierarchyAttributeFetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        // setdisabled(true);
     }, [isDataLoaded, userId]);
 
     useEffect(() => {
@@ -225,7 +218,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     useEffect(() => {
         console.log('DealerSelected', DealerSelected);
 
-        if (DealerSelected?.length > 0 && DealerSelected != undefined) {
+        if (DealerSelected?.length > 0 && DealerSelected !== undefined) {
             setdisabled(false);
             setDealerData({});
             setError(false);
@@ -297,14 +290,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     );
 
     const tableDetailData = [
-        // {
-        //     employeeCode: 'B6G433',
-        //     dealerName: 'Mahindra',
-        //     userName: 'John Doe',
-        //     designation: 'Chief Sales Officer',
-        //     mobileNumber: '9664321226',
-        //     emailID: 'john.doe@mahindra.com',
-        // },
         {
             employeeCode: DealerData?.employeeCode,
             dealerName: DealerSelected,
@@ -394,13 +379,13 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         isLoading: isLoading,
         tableData: initialTableData,
         tableColumn: tableColumn,
+        onChange: onChange,
     };
 
     const onSuccess = (res) => {
         listShowLoading(false);
         form.resetFields();
         setSelectedRecord({});
-        setSuccessAlert(true);
         if (saveclick === true) {
             setDrawer(false);
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -518,9 +503,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         setIsReadOnly(false);
         setShowSaveBtn(true);
     };
-    const handleReferesh = (e) => {
-        setRefershData(!refershData);
-    };
 
     const onChange = (sorter, filters) => {
         form.resetFields();
@@ -537,17 +519,12 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         }
         if (value === 'B6G431') {
             setError(true);
-            setValid(false);
         } else if (value === 'B6G433') {
             setError(false);
-            setValid(true);
         }
         setFilterString(value);
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
-    };
     const handleChange = (selectedvalue) => {
         setdisabled(false);
         setDealerSelected(selectedvalue);
@@ -558,12 +535,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         }
         setDealerSearchvalue(event.target.value);
     };
-    const filterFunction = (filterString) => (title) => {
-        return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
-    };
 
     const formProps = {
-        setClosePanels,
         saveclick,
         DealerSearchvalue,
         setsaveclick,
@@ -584,7 +557,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         form,
         handleAdd,
         drawer,
-        data,
         setDrawer,
         isChecked,
         formData,
@@ -611,7 +583,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
 
     return (
         <>
-            {contextAlertNotification}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
@@ -700,35 +671,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                 </Col>
             </Row>
 
-            {/* <DrawerUtil
-                saveclick={saveclick}
-                setsaveclick={setsaveclick}
-                setsaveandnewclick={setsaveandnewclick}
-                saveandnewclick={saveandnewclick}
-                isLoadingOnSave={isLoadingOnSave}
-                formBtnDisable={formBtnDisable}
-                saveAndSaveNew={saveAndSaveNew}
-                saveBtn={saveBtn}
-                setFormBtnDisable={setFormBtnDisable}
-                onFinishFailed={onFinishFailed}
-                onFinish={onFinish}
-                form={form}
-                handleAdd={handleAdd}
-                open={drawer}
-                data={data}
-                setDrawer={setDrawer}
-                isChecked={isChecked}
-                formData={formData}
-                setIsChecked={setIsChecked}
-                formActionType={formActionType}
-                isReadOnly={isReadOnly}
-                setFormData={setFormData}
-                setForceFormReset={setForceFormReset}
-                footerEdit={footerEdit}
-                handleUpdate2={handleUpdate2}
-                DealerData={DealerData}
-                tableDetailData={tableDetailData}
-            /> */}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
@@ -742,7 +684,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                             ></Empty>
                         )}
                     >
-                        <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
+                        <DataTable {...tableProps} />
                     </ConfigProvider>
                 </Col>
             </Row>
