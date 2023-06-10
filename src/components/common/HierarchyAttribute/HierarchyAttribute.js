@@ -68,10 +68,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataLoaded, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData, showGlobalNotification, isDataLoading, isLoadingOnSave }) => {
     const [form] = Form.useForm();
-    const [rowdata, setRowsData] = useState([]);
     const [editRow, setEditRow] = useState({});
     const [searchData, setSearchdata] = useState('');
-    const [ForceReset, setForceReset] = useState();
     const [selectedHierarchy, setSelectedHierarchy] = useState('');
     const [RefershData, setRefershData] = useState(false);
 
@@ -113,7 +111,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
             }
             if (detailData?.hierarchyAttribute) {
                 forceUpdate(generateRandomNumber());
-                setRowsData(detailData?.hierarchyAttribute);
             }
         }
 
@@ -140,7 +137,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         form.resetFields();
         setEditRow({});
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ForceReset]);
+    }, [forceUpdate]);
 
     useEffect(() => {
         if (!selectedHierarchy || !RefershData) return;
@@ -156,7 +153,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ForceReset, RefershData]);
+    }, [forceUpdate, RefershData]);
 
     const handleEditView = () => {
         setFormActionType('edit');
