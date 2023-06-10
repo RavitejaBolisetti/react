@@ -1,5 +1,5 @@
 import React from 'react';
-import { Descriptions, Card, Row, Col } from 'antd';
+import { Descriptions, Card, Space } from 'antd';
 
 const ViewDetailBase = (props) => {
     const {
@@ -22,36 +22,27 @@ const ViewDetailBase = (props) => {
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <>
-            {/* div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`} */}
-            <Card>
+        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+            <Space style={{ display: 'flex' }} direction="vertical" size="middle">
+                <Card style={{backgroundColor:'#f2f2f2'}}>
                 <Descriptions {...viewProps}>
-                    <Row gutter={20}>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Descriptions.Item label="M&M Customer">{formData?.mnmCustomer}</Descriptions.Item>
-                        </Col>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Descriptions.Item label="Customer ID">{formData?.customerCode}</Descriptions.Item>
-                        </Col>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Descriptions.Item label="Customer Name">{formData?.familyMembername}</Descriptions.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={20}>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Descriptions.Item label="Relationship">{formData?.relationship}</Descriptions.Item>
-                        </Col>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Descriptions.Item label="Date of Birth">{formData?.dateOfBirth}</Descriptions.Item>
-                        </Col>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Descriptions.Item label="Age">{formData?.relationAge}</Descriptions.Item>
-                        </Col>
-                    </Row>
+                    <Descriptions.Item label="M&M Customer">{formData?.mnmCustomer}</Descriptions.Item>
+
+                    <Descriptions.Item label="Customer ID">{formData?.customerCode}</Descriptions.Item>
+
+                    <Descriptions.Item label="Customer Name">{formData?.familyMembername}</Descriptions.Item>
+
+                    <Descriptions.Item label="Relationship">{formData?.relationship}</Descriptions.Item>
+
+                    <Descriptions.Item label="Date of Birth">{formData?.dateOfBirth}</Descriptions.Item>
+
+                    <Descriptions.Item label="Age">{formData?.relationAge}</Descriptions.Item>
+
                     <Descriptions.Item label="Remark">{formData?.remarks}</Descriptions.Item>
                 </Descriptions>
-            </Card>
-        </>
+                </Card>
+            </Space>
+        </div>
     );
 };
 
