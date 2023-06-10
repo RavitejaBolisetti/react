@@ -38,8 +38,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('Redux state:', state);
-
     const moduleTitle = 'Term & Condition';
 
     let returnValue = {
@@ -55,8 +53,6 @@ const mapStateToProps = (state) => {
         isLoadingOnSave,
         isFormDataLoaded,
         moduleTitle,
-        // isTermConditionDataLoaded,
-        // termsConditionsList,
         ManufacturerTermsConditionsData,
         ManufacturerTermsConditionsDataLoaded,
         ChangeHistoryTermsConditionsData,
@@ -69,9 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            // fetchList: tncFetchDealerListActions.fetchList,
             fetchProductList: tncProductHierarchyDataActions.fetchList,
-            resetData: tncProductHierarchyDataActions.reset,
             listShowLoading: tncProductHierarchyDataActions.listShowLoading,
 
             fetchDocumentTypeList: tncDocumentTypeDataActions.fetchList,
@@ -87,7 +81,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const initialTableData = [];
-const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, ManufacturerTermsConditionsDataLoaded, ManufacturerTermsConditionsData, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, changeHistoryData, ChangeHistoryTermsConditionsData, ChangeHistoryTermsConditionsDataLoaded, listShowLoading, productHierarchyList, documentTypeList, languageList, fetchList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, ManufacturerTermsConditionsDataLoaded, ManufacturerTermsConditionsData, isDataLoaded, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, changeHistoryData, ChangeHistoryTermsConditionsData, ChangeHistoryTermsConditionsDataLoaded, listShowLoading, productHierarchyList, documentTypeList, languageList, fetchList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -144,23 +138,12 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
+            fetchDocumentTypeList({ setIsLoading: listShowLoading, userId });
+            fetchLanguageList({ setIsLoading: listShowLoading, userId });
             fetchTermCondition({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
-
-    useEffect(() => {
-        if (!isDocumentTypeDataLoaded && userId) {
-            fetchDocumentTypeList({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDocumentTypeDataLoaded, userId]);
-
-    useEffect(() => {
-        if (!islanguageDataLoaded && userId) {
-            fetchLanguageList({ setIsLoading: listShowLoading, userId });
-        }
-    }, [islanguageDataLoaded, userId]);
 
     useEffect(() => {
         if (userId && refershData) {

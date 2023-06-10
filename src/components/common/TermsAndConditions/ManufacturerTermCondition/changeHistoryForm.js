@@ -54,24 +54,7 @@ const ChangeHistoryMain = (props) => {
             dataIndex: 'effectiveTo',
             width: '15%',
             render: (text) => convertDate(text),
-        })
-        // tblPrepareColumns({
-        //     title: 'MFG T&C',
-        //     width: '15%',
-        //     sorter: false,
-        //     render: (text, record, index) => {
-        //         return (
-        //             <Space>
-        //                 {
-        //                     <Button className={styles.tableIcons} danger ghost aria-label="ai-view">
-        //                         {/* onClick={() => handleView(record)} */}
-        //                         <ViewEyeIcon />
-        //                     </Button>
-        //                 }
-        //             </Space>
-        //         );
-        //     },
-        // }),
+        })        
 
         // tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%' })
     );

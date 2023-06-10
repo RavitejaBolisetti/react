@@ -9,10 +9,8 @@ const ViewTermConditionListMain = ({ formData, styles }) => {
         layout: 'vertical',
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
-    console.log('Selected:', formData);
     return (
-        //className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}
-        <div >
+        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Product Hierarchy">{formData?.productCode ? formData?.productCode : formData?.productcode}</Descriptions.Item>

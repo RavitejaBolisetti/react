@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Col, Row, Input, Form } from 'antd';
-import { notification } from 'antd';
+import { Col, Row, Form } from 'antd';
 import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
@@ -91,37 +90,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const initialTableData = [];
-const TncDealer = ({
-    moduleTitle,
-    saveData,
-    userId,
-    fetchTermCondition,
-    ChangeHistoryTermsConditionsData,
-    DealerTermsConditionsDataLoaded,
-    ChangeHistoryTermsConditionsDataLoaded,
-    DealerTermsConditionsData,
-    changeHistoryData,
-    isDataLoaded,
-    resetData,
-    isDocumentTypeDataLoaded,
-    islanguageDataLoaded,
-    fetchProductList,
-    fetchDocumentTypeList,
-    fetchLanguageList,
-    fetchManufacturerTermConditionDetail,
-    listShowLoading,
-    productHierarchyList,
-    documentTypeList,
-    languageList,
-    showGlobalNotification,
-    isLoading,
-    isLoadingOnSave,
-    ManufacturerData,
-    manufacturerTncLoaded,
-}) => {
+const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHistoryTermsConditionsData, DealerTermsConditionsDataLoaded, ChangeHistoryTermsConditionsDataLoaded, DealerTermsConditionsData, changeHistoryData, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, fetchManufacturerTermConditionDetail, listShowLoading, productHierarchyList, documentTypeList, languageList, showGlobalNotification, isLoading, isLoadingOnSave, ManufacturerData, manufacturerTncLoaded }) => {
     const [form] = Form.useForm();
     const [formActionType, setFormActionType] = useState('');
-    const [isReadOnly, setIsReadOnly] = useState(false);
     const [data, setData] = useState(initialTableData);
     // const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
@@ -133,17 +104,13 @@ const TncDealer = ({
     const [refershData, setRefershData] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [filterString, setFilterString] = useState();
-    const [footerEdit, setFooterEdit] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState(null);
-    const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
     const [saveBtn, setSaveBtn] = useState(false);
     const [saveclick, setsaveclick] = useState();
     // const [saveandnewclick, setsaveandnewclick] = useState();
     const [successAlert, setSuccessAlert] = useState(false);
-    const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [advanceFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -176,21 +143,11 @@ const TncDealer = ({
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
+            fetchDocumentTypeList({ setIsLoading: listShowLoading, userId });
+            fetchLanguageList({ setIsLoading: listShowLoading, userId });
             fetchTermCondition({ setIsLoading: listShowLoading, userId });
         }
     }, [isDataLoaded, userId]);
-
-    useEffect(() => {
-        if (!isDocumentTypeDataLoaded && userId) {
-            fetchDocumentTypeList({ setIsLoading: listShowLoading, userId });
-        }
-    }, [isDocumentTypeDataLoaded, userId]);
-
-    useEffect(() => {
-        if (!islanguageDataLoaded && userId) {
-            fetchLanguageList({ setIsLoading: listShowLoading, userId });
-        }
-    }, [islanguageDataLoaded, userId]);
 
     useEffect(() => {
         if (userId && refershData) {
@@ -319,7 +276,6 @@ const TncDealer = ({
     const formProps = {
         isVisible: isFormVisible,
         isViewModeVisible,
-        codeIsReadOnly,
         saveclick,
         setsaveclick,
         setIsFormVisible,
@@ -327,7 +283,6 @@ const TncDealer = ({
         titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
         selectedRecord,
         formBtnDisable,
-        saveAndSaveNew,
         saveBtn,
         setFormBtnDisable,
         onFinishFailed,
@@ -339,10 +294,8 @@ const TncDealer = ({
         formData,
         setIsChecked,
         formActionType,
-        isReadOnly,
         setFormData,
         setForceFormReset,
-        footerEdit,
         isLoadingOnSave,
         setIsViewModeVisible,
         productHierarchyList,
