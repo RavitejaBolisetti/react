@@ -84,7 +84,6 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    const [data, setData] = useState(initialTableData);
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
@@ -466,7 +465,6 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
         form,
         handleAdd,
         drawer,
-        data,
         setDrawer,
         isChecked,
         formData,
