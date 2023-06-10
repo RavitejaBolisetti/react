@@ -2,15 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Empty, ConfigProvider, Col, Form, Row, Input, Space } from 'antd';
-
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { showGlobalNotification } from 'store/actions/notification';
 import { EditIcon, ViewEyeIcon } from 'Icons';
-
 import { AddEditForm } from './AddEditForm';
 import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
-
 import styles from 'components/common/Common.module.css';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { tblPrepareColumns } from 'utils/tableCloumn';
@@ -58,7 +55,6 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: rolemanagementDataActions.saveData,
             listShowLoading: rolemanagementDataActions.listShowLoading,
             onSaveShowLoading: rolemanagementDataActions.onSaveShowLoading,
-
             showGlobalNotification,
         },
         dispatch
@@ -71,7 +67,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     const [filterString, setFilterString] = useState();
     const [searchData, setSearchdata] = useState(RoleManagementData);
     const [refreshData, setRefreshData] = useState(false);
-
     const [footerEdit, setFooterEdit] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
@@ -247,22 +242,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         setIsFormVisible(true);
         setIsReadOnly(false);
     };
-
-    // const handleUpdate = (record) => {
-    //     setFormActionType('update');
-    //     setOpenDrawer(true);
-    //     setFooterEdit(false);
-    //     setShowSaveAndAddNewBtn(false);
-    //     setSaveBtn(true);
-    //     setRowData(record);
-
-    //     form.setFieldsValue({
-    //         roleId: record.roleId,
-    //         roleName: record.roleName,
-    //         roleDesceription: record.roleDesceription,
-    //         activeIndicator: record.activeIndicator,
-    //     });
-    // };
 
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);

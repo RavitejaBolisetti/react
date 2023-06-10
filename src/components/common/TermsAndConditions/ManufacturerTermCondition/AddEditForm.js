@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Input, Form, Select, DatePicker } from 'antd';
-
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-
 import { ViewTermConditionList } from './ViewTermConditionList';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -14,15 +12,16 @@ import { convertCalenderDate } from 'utils/formatDateTime';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { editMode, viewMode, isViewModeVisible } = undefined, onFinish, onFinishFailed } = props;
+    const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { isViewModeVisible } = undefined, onFinish, onFinishFailed } = props;
     const { buttonData, setButtonData, handleButtonClick, formActionType, effectiveFrom, effectiveTo } = props;
-    const { productName, setProductName, setLanguageName, setDocumentName, termsAndCondition, setTermsAndCondition } = props;
+    const { setProductName, setLanguageName, setDocumentName, termsAndCondition } = props;
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState();
 
     useEffect(() => {
         form.resetFields();
-    }, [effectiveFrom, effectiveTo]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [effectiveFrom, effectiveTo, form]);
 
     const handleProductHierarchySelect = (label, value) => {
         setProductName(value.children);
