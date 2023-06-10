@@ -39,7 +39,7 @@ const AddEditFormMain = (props) => {
 
     const handleDelete = (event, key) => {
         const newAccessid = AccessMacid.filter((el) => {
-            return el?.key != key;
+            return el?.key !== key;
         });
         setAccessMacid(newAccessid);
     };
@@ -125,7 +125,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                           <MacIdCard AccessMacid={AccessMacid} handleDelete={handleDelete} isViewModeVisible={isViewModeVisible} />
+                            <MacIdCard AccessMacid={AccessMacid} handleDelete={handleDelete} isViewModeVisible={isViewModeVisible} />
                         </Col>
                     </Row>
 
@@ -164,14 +164,13 @@ const AddEditFormMain = (props) => {
                                     </Panel>
                                 </Collapse>
                             </Space>
-                          
                         </Col>
                     </Row>
                 </Space>
             ) : (
                 <ViewUserManagementDealer {...viewProps} />
             )}
-          
+
             <Row gutter={20} className={styles.formFooter}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
                     <Button danger onClick={onCloseAction}>

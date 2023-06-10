@@ -53,26 +53,6 @@ const AssignUserRole = ({ userRoleOptions, DealerSearchvalue, finalFormdata, set
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    {/* <Select
-                        showSearch
-                        placeholder="Select a person"
-                        optionFilterProp="children"
-                        filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
-                        options={[
-                            {
-                                value: 'jack',
-                                label: 'Jack',
-                            },
-                            {
-                                value: 'lucy',
-                                label: 'Lucy',
-                            },
-                            {
-                                value: 'tom',
-                                label: 'Tom',
-                            },
-                        ]}
-                    /> */}
                     <Select
                         mode="multiple"
                         style={{
