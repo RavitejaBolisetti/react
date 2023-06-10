@@ -14,9 +14,6 @@ const { Option } = Select;
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { isViewModeVisible } = undefined, onFinish, onFinishFailed } = props;
     const { buttonData, setButtonData, handleButtonClick, formActionType } = props;
-    const { setProductName } = props;
-    const { setDocumentName } = props;
-    const { setLanguageName } = props;
     const [startDate, setStartDate] = useState(new Date());
 
     const handleFormFieldChange = () => {

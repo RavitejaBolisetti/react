@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Row, Col, Input, Form, Space } from 'antd';
-
 import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { withDrawer } from 'components/withDrawer';

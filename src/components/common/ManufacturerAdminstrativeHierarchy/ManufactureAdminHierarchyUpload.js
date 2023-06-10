@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Row, Col, Typography, Upload, message } from 'antd';
+import { Button, Form, Row, Col, Upload, message } from 'antd';
 import { connect } from 'react-redux';
 import { withDrawer } from 'components/withDrawer';
 import { bindActionCreators } from 'redux';

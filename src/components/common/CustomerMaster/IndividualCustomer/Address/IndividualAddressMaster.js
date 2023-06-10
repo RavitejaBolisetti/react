@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
-
-import { Col, Collapse, Form, Select, Space, Typography, Button } from 'antd';
-import { UserOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
-
-import { FaUserCircle, FaRegUserCircle } from 'react-icons/fa';
-
-import { accordianExpandIcon, expandIcon } from 'utils/accordianExpandIcon';
-
+import { Collapse, Form, Space, Typography, Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { FaRegUserCircle } from 'react-icons/fa';
+import { expandIcon } from 'utils/accordianExpandIcon';
 import styles from 'components/common/Common.module.css';
-
-import { ViewIndividualAddressDetails } from './ViewIndividualAddressDetails';
-
 import ViewAddressList from './ViewAddressList';
 import AddEditForm from './AddEditForm';
 
 const { Panel } = Collapse;
-
 const { Text } = Typography;
 
 const formData = [
@@ -36,7 +28,6 @@ const formData = [
 ];
 
 const IndividualAddressMasterBase = (props) => {
-    const { isViewModeVisible } = props;
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
