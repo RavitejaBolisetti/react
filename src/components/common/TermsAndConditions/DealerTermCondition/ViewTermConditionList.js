@@ -17,9 +17,9 @@ const ViewTermConditionListMain = ({ formData, styles }) => {
                     <Descriptions.Item label="Product Hierarchy">{formData?.productCode ? formData?.productCode : formData?.productcode}</Descriptions.Item>
                     <Descriptions.Item label="Document Type">{formData?.documentTypeCode}</Descriptions.Item>
                     <Descriptions.Item label="Language">{formData?.language ? formData?.language : formData?.languageDesc}</Descriptions.Item>
-                    <Descriptions.Item label="Terms & Conditions">{formData?.termConditionDescription ? formData?.termConditionDescription : formData?.termsconditiondescription}</Descriptions.Item>
                     <Descriptions.Item label="Effective From">{formData?.effectiveFrom ? convertDate(formData?.effectiveFrom) : convertDate(formData?.effectivefrom)}</Descriptions.Item>
                     <Descriptions.Item label="Effective To">{formData?.effectiveTo ? convertDate(formData?.effectiveTo) : convertDate(formData?.effectiveto)}</Descriptions.Item>
+                    <Descriptions.Item label="Terms & Conditions">{formData?.termConditionDescription ? formData?.termConditionDescription : formData?.termsconditiondescription}</Descriptions.Item>
                     <Descriptions.Item label="Version">{formData?.version}</Descriptions.Item>
                 </Descriptions>
             </>

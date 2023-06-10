@@ -85,7 +85,7 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={formData?.productcode} label="Product Hierarchy" name="productcode">
-                                <Select disabled={formActionType?.viewMode} onSelect={handleProductHierarchySelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
+                                <Select disabled={formActionType?.viewMode} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {productHierarchyList?.map((item) => (
                                         <Option value={item.prodctCode}>{item.prodctLongName}</Option>
                                     ))}
@@ -96,7 +96,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={formData?.documentTypeCode} label="Document Type" name="documentTypeCode">
-                                <Select disabled={formActionType?.viewMode} onSelect={handleDocumentTypeSelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
+                                <Select disabled={formActionType?.viewMode} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {documentTypeList?.map((item) => (
                                         <Option value={item.documentCode}>{item.documentCode}</Option>
                                     ))}
@@ -106,7 +106,7 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={formData?.languageDesc} label="Language" name="languageCode">
-                                <Select disabled={formActionType?.viewMode} onSelect={handleLanguageSelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
+                                <Select disabled={formActionType?.viewMode} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {languageList?.map((item) => (
                                         <Option value={item.key}>{item.value}</Option>
                                     ))}
@@ -125,18 +125,6 @@ const AddEditFormMain = (props) => {
                     )}
 
                     <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item disabled={formActionType?.viewMode} label="Terms & Conditions" initialValue={formData?.termConditionDescription}>
-                                <CustomEditor data={formData?.termsconditiondescription} />
-                            </Form.Item>
-                        </Col>
-
-                        <Form.Item name="termConditionDescription" initialValue={termsAndCondition}>
-                            <Input disabled={formActionType?.viewMode} type="hidden" />
-                        </Form.Item>
-                    </Row>
-
-                    <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item {...fromDateInitialValue} label="Effective From" name="effectivefrom" rules={[validateRequiredInputField('date')]}>
                                 <DatePicker disabled={formActionType?.viewMode} style={{ width: '100%' }} selected={startDate} onChange={handleFromDateChange} disabledDate={disableFromDate} />
@@ -148,11 +136,22 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
+
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item disabled={formActionType?.viewMode} label="Terms & Conditions" initialValue={formData?.termConditionDescription}>
+                                <CustomEditor data={formData?.termsconditiondescription} />
+                            </Form.Item>
+                        </Col>
+                        <Form.Item name="termConditionDescription" initialValue={termsAndCondition}>
+                            <Input disabled={formActionType?.viewMode} type="hidden" />
+                        </Form.Item>
+                        {/* </Col> */}
+                    </Row>
                 </>
             ) : (
                 <ViewTermConditionList {...viewProps} />
             )}
-
             <DrawerFormButton {...buttonProps} />
         </Form>
     );

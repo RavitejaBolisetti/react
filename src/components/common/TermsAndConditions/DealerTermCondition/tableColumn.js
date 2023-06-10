@@ -51,7 +51,6 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
             width: '15%',
             render: (text) => convertDate(text),
         }),
-
         tblPrepareColumns({
             title: 'MFG T&C',
             width: '5%',
