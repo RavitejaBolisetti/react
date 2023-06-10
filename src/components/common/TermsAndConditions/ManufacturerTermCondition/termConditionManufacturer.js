@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
-import { notification } from 'antd';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
@@ -15,7 +14,6 @@ import { changeHistoryDataActions } from 'store/actions/data/termsConditions/cha
 import { ChangeHistory } from './changeHistoryForm';
 import { AddEditForm } from './AddEditForm';
 
-import { FilterIcon } from 'Icons';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ListDataTable } from 'utils/ListDataTable';
 import { tableColumn } from './tableColumn';
@@ -86,8 +84,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
-    const [isReadOnly, setIsReadOnly] = useState(false);
-    const [data, setData] = useState(initialTableData);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
 
@@ -96,14 +92,9 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const [refershData, setRefershData] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [filterString, setFilterString] = useState();
-    const [footerEdit, setFooterEdit] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState(null);
-    const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
-    const [saveBtn, setSaveBtn] = useState(false);
     const [saveclick, setsaveclick] = useState();
     const [saveandnewclick, setsaveandnewclick] = useState();
-    const [successAlert, setSuccessAlert] = useState(false);
-    const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -117,7 +108,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const [effectiveFrom, seteffectiveFrom] = useState('');
     const [effectiveTo, seteffectiveTo] = useState('');
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
-    const [searchDataChangeHistory, setSearchdataChangeHistory] = useState();
 
     const [page, setPage] = useState(1);
 
@@ -164,11 +154,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         }
     }, [filterString, ManufacturerTermsConditionsDataLoaded, ManufacturerTermsConditionsData]);
 
-    useEffect(() => {
-        if (ChangeHistoryTermsConditionsDataLoaded && ChangeHistoryTermsConditionsData) {
-            setSearchdataChangeHistory(ChangeHistoryTermsConditionsData);
-        }
-    }, [ChangeHistoryTermsConditionsDataLoaded, ChangeHistoryTermsConditionsData]);
+   
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
@@ -212,7 +198,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
             listShowLoading(false);
             form.resetFields();
             setSelectedRecord({});
-            setSuccessAlert(true);
             if (saveclick === true) {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -221,7 +206,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             }
         };
-
         setTimeout(() => {
             fetchTermCondition({ setIsLoading: listShowLoading, userId });
         }, 2000);
@@ -261,7 +245,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const formProps = {
         isVisible: isFormVisible,
         isViewModeVisible,
-        codeIsReadOnly,
         saveclick,
         setsaveclick,
         setsaveandnewclick,
@@ -271,22 +254,17 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
         selectedRecord,
         formBtnDisable,
-        saveAndSaveNew,
-        saveBtn,
         setFormBtnDisable,
         onFinishFailed,
         onFinish,
         form,
         handleAdd,
-        data,
         isChecked,
         formData,
         setIsChecked,
         formActionType,
-        isReadOnly,
         setFormData,
         setForceFormReset,
-        footerEdit,
         isLoadingOnSave,
         setIsViewModeVisible,
         productHierarchyList,

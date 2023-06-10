@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
 import { EditIcon, ViewEyeIcon } from 'Icons';
-import { TfiReload } from 'react-icons/tfi';
 import { IoBanOutline } from 'react-icons/io5';
 import { notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -12,14 +11,13 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 import DataTable from 'utils/dataTable/DataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
-// import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
 import { userManagementManufacturerDataActions } from 'store/actions/data/UserManagementManufacturer';
 import DrawerUtil from './DrawerUtil';
 
 import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
-import { Link, useNavigate } from 'react-router-dom';
-import { ROUTING_USER_MANAGEMENT_DEALER, ROUTING_USER_MANAGEMENT_MANUFACTURER } from 'constants/routing';
+import { useNavigate } from 'react-router-dom';
+import { ROUTING_USER_MANAGEMENT_DEALER } from 'constants/routing';
 import { AddEditForm } from '../UserManagementManufacturer/AddEditForm';
 
 const { Search } = Input;
@@ -29,7 +27,6 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             UserManagementManufacturer: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, isFormDataLoaded, data: UserManagementManufacturerData = [] },
-            // QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [], isLoading, isLoadingOnSave, isFormDataLoaded, },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -66,8 +63,6 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const initialTableData = [{ employeeName: 'Prateek Kumar', contactMobileNumber: '+919896100046', contactEmail: 'prks-feb@2023' }];
-
 const savePayload = {
     employeeRoles: [
         {
@@ -98,15 +93,12 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
 
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
-    const [data, setData] = useState(initialTableData);
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [forceFormReset, setForceFormReset] = useState(false);
     const [searchData, setSearchdata] = useState();
     const [refershData, setRefershData] = useState(false);
-    const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [filterString, setFilterString] = useState();
     const [footerEdit, setFooterEdit] = useState(false);
@@ -115,19 +107,14 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
     const [saveBtn, setSaveBtn] = useState(false);
     const [saveclick, setsaveclick] = useState();
     const [saveandnewclick, setsaveandnewclick] = useState();
-    const [successAlert, setSuccessAlert] = useState(false);
     const [error, setError] = useState(false);
-    const [valid, setValid] = useState(false);
 
     const navigate = useNavigate();
     const [DealerSearchvalue, setDealerSearchvalue] = useState();
-    const [DealerSelected, setDealerSelected] = useState();
-    const [disabled, setdisabled] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [DealerData, setDealerData] = useState(UserManagementManufacturerData);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
-    const [closePanels, setClosePanels] = React.useState([]);
 
     useEffect(() => {
         form.resetFields();
@@ -144,15 +131,10 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
         if (DealerSearchvalue?.length > 0) {
             fetchManufacturerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue });
         }
-        // if (DealerSelected?.length < 0 || DealerSelected === undefined) {
-        //    // setdisabled(true);
-        //     setDealerData();
-        // }
-    }, [DealerSearchvalue, DealerSelected]);
+    }, [DealerSearchvalue]);
 
     useEffect(() => {
         setDealerData(UserManagementManufacturerData);
-        console.log('UserManagementManufacturerData : ', UserManagementManufacturerData);
     }, [UserManagementManufacturerData]);
 
     useEffect(() => {
@@ -228,17 +210,7 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
     );
 
     const tableDetailData = [
-        // {
-        //     tokenNo: "B6G433",
-        //     userName: "John Doe",
-        //     designation: "Chief Sales Officer",
-        //     mobileNumber: "9664321226",
-        //     emailID: "john.doe@mahindra.com",
-        // },
-
         {
-            // employeeCode: DealerData?.employeeCode,
-            // dealerName: DealerSelected,
             userName: DealerData?.employeeName,
             designation: DealerData?.designation,
             mobileNumber: DealerData?.contactMobileNumber,
@@ -327,7 +299,7 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
     );
     const tableProps = {
         isLoading: isLoading,
-        tableData: initialTableData,
+        tableData: searchData,
         tableColumn: tableColumn,
     };
 
@@ -339,8 +311,6 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
             onSaveShowLoading(false);
             form.resetFields();
             setSelectedRecord({});
-            setSuccessAlert(true);
-            // fetchList({ setIsLoading: listShowLoading, userId });
             if (saveclick === true) {
                 setDrawer(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -453,10 +423,6 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
         setIsReadOnly(true);
     };
 
-    const handleReferesh = (e) => {
-        setRefershData(!refershData);
-    };
-
     const onChange = (sorter, filters) => {
         form.resetFields();
     };
@@ -466,17 +432,12 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
         setDealerSearchvalue(value);
         if (value === 'B6G433') {
             setError(true);
-            setValid(false);
         } else if (value === 'B6G433') {
             setError(false);
-            setValid(true);
         }
         setFilterString(value);
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
-    };
     const ChangeSearchHandler = () => {};
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
@@ -489,7 +450,6 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
         saveandnewclick,
         isViewModeVisible,
         isVisible: isFormVisible,
-        setClosePanels,
         isLoadingOnSave,
         formBtnDisable,
         isFormBtnActive,
@@ -502,7 +462,6 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
         form,
         handleAdd,
         drawer,
-        data,
         setDrawer,
         isChecked,
         formData,
@@ -524,52 +483,11 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
 
     return (
         <>
-            {contextAlertNotification}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
-                        {/* <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Row gutter={20}>
-                                    <div className={style.searchAndLabelAlign}>
-                                        <Col xs={9} sm={9} md={9} lg={9} xl={9} className={style.subheading}>
-                                            <div className={style.userManagement}>
-                                                <Button className={style.actionbtn} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER)}>
-                                                    Manufacturer
-                                                </Button>
-                                                <Button className={style.dealerBtn} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_DEALER)}>
-                                                    Dealer
-                                                </Button>
-                                            </div>
-                                        </Col>
-                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                            <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                }}
-                                                allowClear
-                                                onSearch={onSearchHandle}
-                                            />
-                                        </Col>
-                                    </div>
-                                </Row>
-                            </Col>
-                            {qualificationData?.length ? (
-                                <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} className={style.refreshBtn} onClick={handleReferesh} danger></Button>
-
-                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                        Add Qua
-                                    </Button>
-                                </Col>
-                            ) : (
-                                ''
-                            )}
-                        </Row> */}
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={5} lg={5} xl={5}>
-                                {/* <div className={style.}> */}
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                     <Button className={styles.marR5} type="primary" danger>
                                         Manufacturer
@@ -580,26 +498,10 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.padT5}>
-                                <Search placeholder="Search" value={DealerSearchvalue} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} disabled={disabled} className={styles.headerSearchField} />
+                                <Search placeholder="Search" value={DealerSearchvalue} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} disabled={false} className={styles.headerSearchField} />
                             </Col>
                         </Row>
                         {Object.keys(DealerData).length > 0 ? (
-                            // <Row gutter={20}>
-                            //     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            //         <div className={style.successDisplay}>
-                            //             <Row gutter={20}>
-                            //                 <Col xs={20} sm={20} md={20} lg={20} xl={20}>
-                            //                     <DataTable tableColumn={tableDetails} {...tableDetailProps} />
-                            //                 </Col>
-                            //                 <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                            //                     <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                            //                         Manage Access
-                            //                     </Button>
-                            //                 </Col>
-                            //             </Row>
-                            //         </div>
-                            //     </Col>
-                            // </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <div className={styles.dataDisplay}>
@@ -655,38 +557,6 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
                         ) : (
                             ''
                         )}
-                        {/* {error && (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className={style.errorDisplay}>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.subheading}>
-                                                <IoBanOutline />
-                                                <span>User token number "B6G431" does not exist. Try again with valid token number.</span>
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                </Col>
-                            </Row>
-                        )}
-                        {valid && (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className={style.successDisplay}>
-                                        <Row gutter={20}>
-                                            <Col xs={20} sm={20} md={20} lg={20} xl={20} className={style.subheading}>
-                                                <DataTable tableColumn={tableDetails} {...tableDetailProps} />
-                                            </Col>
-                                            <Col xs={4} sm={4} md={4} lg={4} xl={4} className={style.subheading}>
-                                                <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                    Manage Access
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                </Col>
-                            </Row>
-                        )} */}
                     </div>
                 </Col>
             </Row>
