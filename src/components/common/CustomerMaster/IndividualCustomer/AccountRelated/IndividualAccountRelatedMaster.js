@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 
-import { Col, Collapse, Form, Select, Row, Button, Space, Typography } from 'antd';
+import { Row, Col, Collapse, Form, Select, Button, Space, Typography } from 'antd';
+
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { FaRegUserCircle } from 'react-icons/fa';
+
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from '../../FirmOrCompany/AccountRelated/ViewAccountDetails';
 
-import style from '../../../Common.module.css';
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
-
 const { Text } = Typography;
 
 const AccountRelatedBase = (props) => {
-    const [form] = Form.useForm();
     const { onCloseAction, isViewModeVisible } = props;
 
     const [openAccordian, setOpenAccordian] = useState([1]);
@@ -37,7 +36,7 @@ const AccountRelatedBase = (props) => {
                                 <div className={styles.alignUser}>
                                     <FaRegUserCircle className={styles.userCircle} />
                                     <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        Indivisual Account
+                                        Individual Account
                                     </Text>
                                 </div>
                             }
@@ -55,7 +54,6 @@ const AccountRelatedBase = (props) => {
                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                             <Button type="primary" className={styles.floatRight}>
                                 Save & Proceed
-                                {/* onClick={onFinish} */}
                             </Button>
                         </Col>
                     </Row>
