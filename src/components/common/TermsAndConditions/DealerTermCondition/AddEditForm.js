@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Form, Col, Row, Button, Select, DatePicker } from 'antd';
+import { Input, Form, Col, Row, Select, DatePicker } from 'antd';
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ViewTermConditionList } from './ViewTermConditionList';
@@ -18,18 +18,6 @@ const AddEditFormMain = (props) => {
     const { setDocumentName } = props;
     const { setLanguageName } = props;
     const [startDate, setStartDate] = useState(new Date());
-
-    const handleProductHierarchySelect = (label, value) => {
-        setProductName(value.children);
-    };
-
-    const handleDocumentTypeSelect = (label, value) => {
-        setDocumentName(value.children);
-    };
-
-    const handleLanguageSelect = (label, value) => {
-        setLanguageName(value.children);
-    };
 
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -68,9 +56,6 @@ const AddEditFormMain = (props) => {
         return value < startDate;
     };
 
-    const customEditorProps = {
-        data: formData?.termConditionDescription ? formData?.termConditionDescription : '',
-    };
     const fromDateInitialValue = { initialValue: convertCalenderDate(formData?.effectiveFrom, 'YYYY/MM/DD') };
     const toDateInitialValue = { initialValue: convertCalenderDate(formData?.effectiveTo ? formData?.effectiveTo : new Date('December 31, 9999'), 'YYYY/MM/DD') };
 

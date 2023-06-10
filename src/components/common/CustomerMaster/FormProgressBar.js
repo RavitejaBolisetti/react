@@ -35,6 +35,11 @@ const FormProgressBar = (props) => {
                 setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: true });
                 break;
             }
+            default: {
+                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: true, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false });
+
+
+            }
         }
     };
     return (
