@@ -99,7 +99,7 @@ export const validatInstagramProfileUrl = (fieldName) =>({
 })
 
 export const validatFacebookProfileUrl = (fieldName) =>({
-    pattern: /(?:http:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-]*)/,
+    pattern: /(?:http:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w-]*\/)*([\w-]*)/,
     message: 'Please enter valid url ' + fieldName,
 })
 
