@@ -15,7 +15,6 @@ import { BiUser } from 'react-icons/bi';
 
 import { ROUTING_LOGIN } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
