@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
-import { RxCross2 } from 'react-icons/rx';
 import { bindActionCreators } from 'redux';
+
+import { Col, Form, Row } from 'antd';
 
 import { dealerManpowerDivisionMasterDataActions } from 'store/actions/data/dealerManpower/dealerDivisionMaster';
 import { dealerManpowerEmployeeDepartmentDataActions } from 'store/actions/data/dealerManpower/dealerEmployeeDepartmentMaster';
@@ -15,19 +15,11 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { filterFunction } from 'utils/filterFunction';
-import { searchValidator } from 'utils/validation';
 import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
-import { PlusOutlined } from '@ant-design/icons';
 import { FilterIcon } from 'Icons';
-import { TfiReload } from 'react-icons/tfi';
-
-import styles from 'components/common/Common.module.css';
-
-const { Search } = Input;
-const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
@@ -213,8 +205,6 @@ export const ListRoleMasterBase = (props) => {
             listFilterForm.setFieldsValue({ code: undefined });
         }
     };
-
-  
 
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {

@@ -1,17 +1,8 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { Collapse, Space, Typography, Form } from 'antd';
+import { Form } from 'antd';
 import { AddEditForm } from './AddEditForm';
 
-const { Panel } = Collapse;
-const { Text } = Typography;
-
 const FamilyDetailsBase = () => {
-    const [openAccordian, setOpenAccordian] = useState('');
-
-    const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
-    };
-
     const [form] = Form.useForm();
 
     const type = [
@@ -24,13 +15,11 @@ const FamilyDetailsBase = () => {
     const selectRef = useRef();
 
     const onChange = useCallback((item) => {
-        selectRef.current.blur(); //whenever a user triggers value change, we call `blur()` on `Select`
+        selectRef.current.blur();
         setValue(item);
     }, []);
 
-    const onFamilyFinish = (values) => {
-        console.log(values, 'valuesvaluesvalues');
-    };
+    const onFamilyFinish = (values) => {};
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
@@ -54,4 +43,4 @@ const FamilyDetailsBase = () => {
     );
 };
 
-export const FamilyDetails= FamilyDetailsBase;
+export const FamilyDetails = FamilyDetailsBase;
