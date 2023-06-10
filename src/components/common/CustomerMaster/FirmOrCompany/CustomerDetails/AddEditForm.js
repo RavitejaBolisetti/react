@@ -4,7 +4,6 @@ import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewCompanyCustomerDetails';
 
@@ -45,7 +44,6 @@ const AddEditFormMain = (props) => {
     const onFinish = () => {
         const customerFormValues = customerForm.getFieldsValue();
         const keyAccountFormValues = keyAccountForm.getFieldsValue();
-
         const authorityFormValues = authorityForm.getFieldsValue();
         customerForm
             .validateFields()
