@@ -14,7 +14,7 @@ const { Option } = Select;
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { isViewModeVisible } = undefined, onFinish, onFinishFailed } = props;
     const { buttonData, setButtonData, handleButtonClick, formActionType, effectiveFrom, effectiveTo } = props;
-    const { setProductName, setLanguageName, setDocumentName, termsAndCondition } = props;
+    const { termsAndCondition } = props;
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState();
 
@@ -22,18 +22,6 @@ const AddEditFormMain = (props) => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [effectiveFrom, effectiveTo, form]);
-
-    const handleProductHierarchySelect = (label, value) => {
-        setProductName(value.children);
-    };
-
-    const handleDocumentTypeSelect = (label, value) => {
-        setDocumentName(value.children);
-    };
-
-    const handleLanguageSelect = (label, value) => {
-        setLanguageName(value.children);
-    };
 
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });

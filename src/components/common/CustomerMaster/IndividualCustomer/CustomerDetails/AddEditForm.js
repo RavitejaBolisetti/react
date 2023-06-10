@@ -62,11 +62,7 @@ const AddEditFormMain = (props) => {
             });
     };
 
-    // const onFinishFailed = () => {
-    //     customerForm.validateFields();
-    //     keyAccountForm.validateFields();
-    //     authorityForm.validateFields();
-    // };
+
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
