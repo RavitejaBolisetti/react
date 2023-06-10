@@ -316,7 +316,6 @@ const AddEditFormMain = (props) => {
                                                 </Form.Item>
                                             </Col>
                                         </Row>
-
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Rate Type" name="rateType">
@@ -341,37 +340,34 @@ const AddEditFormMain = (props) => {
                                                 </Button>
                                             </Col>
                                         </Row>
-
-                                        {addFormData?.length > 0 &&
-                                            addFormData?.map((action) => {
-                                                <Collapse
-                                                    expandIcon={() => {
-                                                        if (activeKey.includes(4)) {
-                                                            return <MinusOutlined className={styles.iconsColor} />;
-                                                        } else {
-                                                            return <PlusOutlined className={styles.iconsColor} />;
-                                                        }
-                                                    }}
-                                                    activeKey={activeKey}
-                                                    onChange={() => onChange(4)}
-                                                    expandIconPosition="end"
-                                                >
-                                                    <Panel
-                                                        header={
-                                                            <div className={styles.alignUser}>
-                                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                                        Sales Tax
-                                                                    </Text>
-                                                                </Col>
-                                                            </div>
-                                                        }
-                                                        key="2"
-                                                    >
-                                                        <h2>simran</h2>
-                                                    </Panel>
-                                                </Collapse>;
-                                            })}
+                                        <Collapse
+                                            expandIcon={() => {
+                                                if (activeKey.includes(4)) {
+                                                    return <MinusOutlined className={styles.iconsColor} />;
+                                                } else {
+                                                    return <PlusOutlined className={styles.iconsColor} />;
+                                                }
+                                            }}
+                                            activeKey={activeKey}
+                                            onChange={() => onChange(4)}
+                                            expandIconPosition="end"
+                                        >
+                                            <Panel
+                                                header={
+                                                    <div className={styles.alignUser}>
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                                                Sales Tax
+                                                            </Text>
+                                                        </Col>
+                                                    </div>
+                                                }
+                                                key="2"
+                                            >
+                                                
+                                            </Panel>
+                                        </Collapse>
+                                        ;
                                     </Form>
                                 </Panel>
                             </Collapse>
