@@ -9,17 +9,9 @@ import { validateRequiredInputField,  validateRequiredSelectField, validateAlpha
 
 let index = 0;
 
-const addressType = [
-    { key: 'office', name: 'Office' },
-    { key: 'residence', name: 'Residence' },
-    { key: 'permanent', name: 'Permanent' },
-    { key: 'other', name: 'Other' },
-];
-
 const AddEditForm = (props) => {
     const { isReadOnly = false, onFinish, form } = props;
 
-    const disabledProps = { disabled: isReadOnly };
     const [items, setItems] = useState(['Office', 'Residence', 'Permanent', 'Other']);
     const [name, setName] = useState('');
     const [isOther, setIsOther] = useState(false);
@@ -29,14 +21,6 @@ const AddEditForm = (props) => {
         setName(event.target.value);
     };
 
-    const addItem = (e) => {
-        e.preventDefault();
-        setItems([...items, name || `New item ${index++}`]);
-        setName('');
-        setTimeout(() => {
-            inputRef.current?.focus();
-        }, 0);
-    };
 
     const handleReset = () => {
         form.resetFields();

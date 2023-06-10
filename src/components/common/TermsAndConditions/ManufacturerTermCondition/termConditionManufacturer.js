@@ -1,36 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
-import { EditIcon, ViewEyeIcon } from 'Icons';
-import { TfiReload } from 'react-icons/tfi';
+import { Row, Col, Form } from 'antd';
 import { notification } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 
-import { tblPrepareColumns } from 'utils/tableCloumn';
-import DataTable from 'utils/dataTable/DataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
 import { tncDocumentTypeDataActions } from 'store/actions/data/termsConditions/tncDocumentType';
 import { tncLanguage } from 'store/actions/data/termsConditions/tncLanguage';
-// import { tncFetchDealerListActions } from 'store/actions/data/termsConditions/tncFetchDealerListActions';
+
 import { termConditionManufacturerActions } from 'store/actions/data/termsConditions/termsConditionsManufacturerAction';
 import { changeHistoryDataActions } from 'store/actions/data/termsConditions/changeHistoryAction';
 import { ChangeHistory } from './changeHistoryForm';
 import { AddEditForm } from './AddEditForm';
 
-import styles from 'components/common/Common.module.css';
 import { FilterIcon } from 'Icons';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ListDataTable } from 'utils/ListDataTable';
 import { tableColumn } from './tableColumn';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import moment from 'moment';
-
-const { Search } = Input;
-
-const { termConditionData } = [];
 
 const mapStateToProps = (state) => {
     const {
@@ -40,7 +30,6 @@ const mapStateToProps = (state) => {
                 ProductHierarchyData: { isLoaded: isDataLoaded = false, data: productHierarchyList, isLoading, isLoadingOnSave, isFormDataLoaded },
                 DocumentTypeData: { isLoaded: isDocumentTypeDataLoaded = false, data: documentTypeList },
                 LanguageData: { isLoaded: islanguageDataLoaded = false, data: languageList },
-                // FetchTermsConditionsList: { isLoaded: isTermConditionDataLoaded = false, data: termsConditionsList },
                 ManufacturerTermsConditions: { isLoaded: ManufacturerTermsConditionsDataLoaded = false, data: ManufacturerTermsConditionsData },
                 ChangeHistoryTermsConditions: { isLoaded: ChangeHistoryTermsConditionsDataLoaded = false, data: ChangeHistoryTermsConditionsData },
             },
@@ -49,8 +38,6 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
-
-    console.log('Redux state:', state);
 
     const moduleTitle = 'Term & Condition';
 
@@ -67,8 +54,6 @@ const mapStateToProps = (state) => {
         isLoadingOnSave,
         isFormDataLoaded,
         moduleTitle,
-        // isTermConditionDataLoaded,
-        // termsConditionsList,
         ManufacturerTermsConditionsData,
         ManufacturerTermsConditionsDataLoaded,
         ChangeHistoryTermsConditionsData,
@@ -81,7 +66,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            // fetchList: tncFetchDealerListActions.fetchList,
             fetchProductList: tncProductHierarchyDataActions.fetchList,
             resetData: tncProductHierarchyDataActions.reset,
             listShowLoading: tncProductHierarchyDataActions.listShowLoading,
@@ -105,14 +89,12 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [data, setData] = useState(initialTableData);
-    const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
 
     const [forceFormReset, setForceFormReset] = useState(false);
     const [searchData, setSearchdata] = useState();
     const [refershData, setRefershData] = useState(false);
-    const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [filterString, setFilterString] = useState();
     const [footerEdit, setFooterEdit] = useState(false);
@@ -125,8 +107,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [advanceFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -179,18 +159,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [islanguageDataLoaded, userId]);
 
-    // useEffect(() => {
-    //     if (!isTermConditionDataLoaded && userId) {
-    //         fetchList({ setIsLoading: listShowLoading, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [isTermConditionDataLoaded, userId]);
-
-    // useEffect(() => {
-    //     setSearchdata(termConditionData);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [termConditionData]);
-
+    
     useEffect(() => {
         if (userId && refershData) {
             fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
@@ -251,12 +220,10 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         const newVersion = values.version ? Number(values?.version) + 0.1 : 1.0;
         let toDate = (values?.effectiveto).format('YYYY-MM-DD');
         let fromDate = (values?.effectivefrom).format('YYYY-MM-DD');
-        //console.log(fromDate);
-        //console.log('typeof', typeof termsAndCondition);
+
         const termConsitionText = termsAndCondition.replace(/[&\/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
         const data = { ...values, version: String(newVersion), termsconditiondescription: termConsitionText, effectivefrom: fromDate, effectiveto: toDate };
-        //console.log('data', data, termConsitionText);
-        //return;
+      
         const onSuccess = (res) => {
             listShowLoading(false);
             form.resetFields();
@@ -295,143 +262,21 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         form.validateFields().then((values) => {});
     };
 
-    // const handleAdd = () => {
-    //     setFormActionType('add');
-    //     setIsFormVisible(true);
-    //     setSaveAndSaveNew(true);
-    //     setSaveBtn(true);
-    //     setFooterEdit(false);
-    //     setIsViewModeVisible(false);
-    //     setSelectedRecord([]);
-    //     setIsReadOnly(false);
-    //     setsaveclick(false);
-    //     setsaveandnewclick(true);
-    //     setcodeIsReadOnly(false);
-    // };
-
-    const handleUpdate = (record) => {
-        setFormActionType('update');
-        setSaveAndSaveNew(false);
-        setIsFormVisible(true);
-        setIsViewModeVisible(false);
-
-        setFooterEdit(false);
-        setSaveBtn(true);
-        setSelectedRecord(record);
-
-        setFormData(record);
-
-        form.setFieldsValue({
-            qualificationCode: record.qualificationCode,
-            qualificationName: record.qualificationName,
-            status: record.status,
-        });
-
-        setIsReadOnly(false);
-        setcodeIsReadOnly(true);
-    };
-
-    const handleUpdate2 = () => {
-        setFormActionType('update');
-        setIsFormVisible(true);
-        setIsViewModeVisible(false);
-
-        setSaveAndSaveNew(false);
-        setFooterEdit(false);
-        setSaveBtn(true);
-
-        form.setFieldsValue({
-            qualificationCode: selectedRecord.qualificationCode,
-            qualificationName: selectedRecord.qualificationName,
-            status: selectedRecord.status,
-        });
-        setsaveclick(true);
-        setIsReadOnly(false);
-        setcodeIsReadOnly(true);
-    };
-
-    const handleView = (record) => {
-        setFormActionType('view');
-        setIsViewModeVisible(true);
-        setSelectedRecord(record);
-        setSaveAndSaveNew(false);
-        setFooterEdit(true);
-        setSaveBtn(false);
-
-        form.setFieldsValue({
-            qualificationCode: record.qualificationCode,
-            qualificationName: record.qualificationName,
-            status: record.status,
-        });
-        setIsFormVisible(true);
-        setIsReadOnly(true);
-        setcodeIsReadOnly(true);
-    };
 
     const handleReferesh = (e) => {
         setRefershData(!refershData);
     };
-
-    const onChange = (sorter, filters) => {
-        form.resetFields();
-    };
+ 
 
     const onSearchHandle = (value) => {
         setFilterString(value);
-    };
-
-    const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
     };
 
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
 
-    const onAdvanceSearchCloseAction = () => {
-        setAdvanceSearchVisible(false);
-        advanceFilterForm.resetFields();
-    };
-
-    const handleFilterChange = (name, type = 'value') => (value) => {
-        if (name === 'countryCode') {
-            advanceFilterForm.setFieldsValue({ stateCode: undefined });
-        }
-    };
-
-    const handleResetFilter = () => {
-        setFilterString();
-        resetData();
-        advanceFilterForm.resetFields();
-        setShowDataLoading(false);
-    };
-
-    const onCloseAction = () => {
-        form.resetFields();
-        setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
-    };
-
-    const advanceFilterProps = {
-        isVisible: isAdvanceSearchVisible,
-        onCloseAction: onAdvanceSearchCloseAction,
-        setAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
-        // isDataCountryLoaded,
-        // isCountryLoading,
-        // countryData,
-        // defaultCountry,
-
-        data,
-        handleFilterChange,
-        filterString,
-        setFilterString,
-        advanceFilterForm,
-        resetData,
-        handleResetFilter,
-    };
-
+   
     const formProps = {
         isVisible: isFormVisible,
         isViewModeVisible,
@@ -461,7 +306,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setFormData,
         setForceFormReset,
         footerEdit,
-        handleUpdate2,
         isLoadingOnSave,
         setIsViewModeVisible,
         productHierarchyList,
@@ -506,10 +350,9 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
             name: 'id',
         },
     ];
+
     const showChangeHistoryList = () => {
-        // setFormActionType({ changeHistoryMode: true });
         setButtonData({ cancelBtn: true });
-        // setIsFormVisible(true);
         setIsHistoryVisible(true);
         extraParams['0']['value'] = '1ebc0d34-409b-44f3-a7e3-ffb70f1cc888';
         changeHistoryData({ setIsLoading: listShowLoading, userId, extraParams });
@@ -529,6 +372,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         showChangeHistoryButton: ManufacturerTermsConditionsData?.length > 0 ? true : false,
         showChangeHistoryList,
     };
+    
     const changeHistoryClose = () => {
         setIsHistoryVisible(false);
     };

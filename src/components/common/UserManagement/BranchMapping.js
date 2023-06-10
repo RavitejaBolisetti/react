@@ -1,18 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Checkbox } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
-import style from 'components/common/DrawerAndTable.module.css';
-const { Option } = Select;
+import React from 'react';
+import { Col, Row, Space, Checkbox } from 'antd';
+
 const BranchMapping = ({ BranchMappingData, finalFormdata, setfinalFormdata }) => {
-    const [checked, setchecked] = useState([]);
-    useEffect(() => {
-        console.log('BranchMappingData', BranchMappingData);
-    }, [BranchMappingData]);
     const onChanges = (values) => {
         console.log(values);
     };
-
-    const handleSelectAdd = () => {};
+    
     return (
         <Space
             direction="vertical"
