@@ -3,7 +3,7 @@ import { Descriptions } from 'antd';
 import { CheckSquareOutlined, CloseOutlined } from '@ant-design/icons';
 
 const ViewDetailBase = (props) => {
-    const { styles, parameterType } = props;
+    const { styles } = props;
     const viewProps = {
         bordered: false,
         colon: false,

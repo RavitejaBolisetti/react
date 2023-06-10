@@ -155,7 +155,7 @@
     /* padding-right: 20px; */
     /* padding-top: 18px; */
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .headerRight :global .ant-input-group {

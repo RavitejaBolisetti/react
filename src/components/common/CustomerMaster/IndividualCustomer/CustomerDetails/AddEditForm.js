@@ -1,23 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Typography } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
-import { withDrawer } from 'components/withDrawer';
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { FaRegPlusSquare, FaPlus, FaRegUserCircle } from 'react-icons/fa';
-import { IoTrashOutline } from 'react-icons/io5';
-import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
+import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography } from 'antd';
+import { validateRequiredSelectField } from 'utils/validation';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { FaRegUserCircle } from 'react-icons/fa';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
-
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewIndivisualCustomerDetails';
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 const { Option } = Select;
-const { TextArea } = Input;
 const { Panel } = Collapse;
-const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 const AddEditFormMain = (props) => {
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible } = props;
     const [customerForm] = Form.useForm();
@@ -32,18 +24,15 @@ const AddEditFormMain = (props) => {
     const [keyAccountFormValues, setkeyAccountFormValues] = useState();
     const [authorityFormValues, setauthorityFormValues] = useState();
     const [done, setDone] = useState();
+
     useEffect(() => {
         setFinalFormData({ ...FinalFormData, customerForm: customerFormValues, keyAccountForm: keyAccountFormValues, authorityForm: authorityFormValues });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [done]);
-    useEffect(() => {
-        console.log('FinalFormData', FinalFormData);
-    }, [FinalFormData]);
+    
 
     const [activeKey, setactiveKey] = useState([1]);
 
-    const [handleActive, sethandleActive] = useState();
-    const handleFormValueChange = () => {};
-    const handleFormFieldChange = () => {};
     const handleEdit = () => {
         setIsViewModeVisible(false);
     };
@@ -75,6 +64,7 @@ const AddEditFormMain = (props) => {
                 setactiveKey([1]);
             });
     };
+
     const onFinishFailed = () => {
         customerForm.validateFields();
         keyAccountForm.validateFields();
@@ -87,7 +77,7 @@ const AddEditFormMain = (props) => {
             const newActivekeys = [];
 
             activeKey.filter((item) => {
-                if (item != values) {
+                if (item !== values) {
                     newActivekeys.push(item);
                 }
             });
@@ -95,18 +85,8 @@ const AddEditFormMain = (props) => {
         } else {
             setactiveKey([...activeKey, values]);
         }
-        console.log('values', values);
     };
 
-    const onFinishCustomerInformation = (values) => {
-        setFinalFormData({ ...FinalFormData, customerForm: values });
-    };
-    const onFinshkeyAccount = (values) => {
-        setFinalFormData({ ...FinalFormData, keyAccountForm: values });
-    };
-    const onFinishAuthorityDetails = (values) => {
-        setFinalFormData({ ...FinalFormData, authorityForm: values });
-    };
     const viewProps = {
         activeKey,
         setactiveKey,

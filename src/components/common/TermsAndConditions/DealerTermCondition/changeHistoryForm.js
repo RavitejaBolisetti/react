@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-
-import { Col, Row } from 'antd';
+import { Row, Col } from 'antd';
 
 import { tblPrepareColumns } from 'utils/tableCloumn';
 
@@ -55,16 +54,14 @@ const ChangeHistoryMain = (props) => {
             width: '15%',
             render: (text) => convertDate(text),
         })
-
-        // tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%' })
     );
 
     const tableProps = {
         tableColumn,
         tableData: ChangeHistoryTermsConditionsData,
         setPage,
+        page,
     };
-    console.log('ChangeHistoryTermsConditionsData', ChangeHistoryTermsConditionsData);
     return (
         <>
             <Row gutter={20}>

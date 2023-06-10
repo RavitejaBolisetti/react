@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
 
-import { Col, Collapse, Form, Row, Button, Select, Space, Typography } from 'antd';
+import { Col, Collapse, Row, Button, Space, Typography } from 'antd';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewAccountDetails';
 
-import style from '../../../Common.module.css';
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
-
 const { Text } = Typography;
 
 const AccountRelatedBase = (props) => {
-    const [form] = Form.useForm();
     const { onCloseAction, isViewModeVisible } = props;
 
     const [openAccordian, setOpenAccordian] = useState([1]);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Col,   Row, Tree,   Space, } from 'antd';
 
 
@@ -8,26 +8,16 @@ const ProductMapping = ({ ProductMappingData, productHierarchyData }) => {
     const [selectedKeys, setSelectedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
     const onExpand = (expandedKeysValue) => {
-        // if not set autoExpandParent to false, if children expanded, parent can not collapse.
-        // or, you can remove all expanded children keys.
         setExpandedKeys(expandedKeysValue);
         setAutoExpandParent(false);
     };
     const onCheck = (checkedKeysValue) => {
-        console.log('onCheck', checkedKeysValue);
         setCheckedKeys(checkedKeysValue);
     };
     
     const onSelect = (selectedKeysValue, info) => {
-        console.log('onSelect', info);
         setSelectedKeys(selectedKeysValue);
     };
-
-    useEffect(() => {
-        console.log('BranchMappingData', ProductMappingData);
-        
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ProductMappingData]);
 
     return (
         <Space

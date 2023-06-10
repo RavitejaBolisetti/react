@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
-
-import { Col, Row } from 'antd';
-
+import React from 'react';
+import { Row, Col } from 'antd';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-
 import { withDrawer } from 'components/withDrawer';
 import { ListDataTable } from 'utils/ListDataTable';
-import { convertDate } from 'utils/formatDateTime';
 
+import { convertDate } from 'utils/formatDateTime';
 const ChangeHistoryMain = (props) => {
     const { ChangeHistoryTermsConditionsData } = props;
 
-    const [page, setPage] = useState(1);
     const tableColumn = [];
 
     tableColumn.push(
@@ -62,7 +58,6 @@ const ChangeHistoryMain = (props) => {
     const tableProps = {
         tableColumn,
         tableData: ChangeHistoryTermsConditionsData,
-        setPage,
     };
     console.log('ChangeHistoryTermsConditionsData', ChangeHistoryTermsConditionsData);
     return (

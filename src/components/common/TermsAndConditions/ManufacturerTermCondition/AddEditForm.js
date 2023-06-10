@@ -117,18 +117,6 @@ const AddEditFormMain = (props) => {
                     )}
 
                     <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item disabled={formActionType?.viewMode} label="Terms & Conditions" initialValue={formData?.termConditionDescription}>
-                                <CustomEditor data={formData?.termsconditiondescription} />
-                            </Form.Item>
-                        </Col>
-                        <Form.Item name="termConditionDescription" initialValue={termsAndCondition}>
-                            <Input disabled={formActionType?.viewMode} type="hidden" />
-                        </Form.Item>
-                        {/* </Col> */}
-                    </Row>
-
-                    <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item {...fromDateInitialValue} label="Effective From" name="effectivefrom" rules={[validateRequiredInputField('date')]}>
                                 <DatePicker disabled={formActionType?.viewMode} style={{ width: '100%' }} selected={startDate} onChange={handleFromDateChange} disabledDate={disableFromDate} />
@@ -139,6 +127,18 @@ const AddEditFormMain = (props) => {
                                 <DatePicker disabled style={{ width: '100%' }} onChange={handleToDateChange} disabledDate={disableToDate} />
                             </Form.Item>
                         </Col>
+                    </Row>
+
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item disabled={formActionType?.viewMode} label="Terms & Conditions" initialValue={formData?.termConditionDescription}>
+                                <CustomEditor data={formData?.termsconditiondescription} />
+                            </Form.Item>
+                        </Col>
+                        <Form.Item name="termConditionDescription" initialValue={termsAndCondition}>
+                            <Input disabled={formActionType?.viewMode} type="hidden" />
+                        </Form.Item>
+                        {/* </Col> */}
                     </Row>
                 </>
             ) : (

@@ -1,6 +1,4 @@
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, Switch, DatePicker, Divider, Checkbox } from 'antd';
-import { useState } from 'react';
-import { accordianExpandIcon } from 'utils/accordianExpandIcon';
+import { Button, Form, Typography, Upload, message, Row, Col, Select, Input, Divider, Checkbox } from 'antd';
 import Svg from 'assets/images/Filter.svg';
 
 import style from '../../../Common.module.css';
@@ -10,10 +8,7 @@ import { validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubePr
 
 import { contactPurpose, title, gender } from 'constants/modules/CustomerMaster/individualProfile';
 
-
-const { Panel } = Collapse;
 const { Option } = Select;
-const { Text } = Typography;
 const { Dragger } = Upload;
 
 const uploadProps = {
@@ -22,20 +17,14 @@ const uploadProps = {
     action: '',
     onChange(info) {
         const { status } = info.file;
-        //   if (status !== 'uploading') {
-        //     console.log(info.file, info.fileList);
-        //   }
+
         if (status === 'done') {
             message.success(`${info.file.name} file uploaded successfully.`);
         } else if (status === 'error') {
             message.error(`${info.file.name} file upload failed.`);
         }
     },
-    // onDrop(e) {
-    //   console.log('Dropped files', e.dataTransfer.files);
-    // },
 };
-
 
 const AddEditForm = (props) => {
     const { isReadOnly = false, onFinish, form } = props;
@@ -94,7 +83,7 @@ const AddEditForm = (props) => {
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Form.Item label="Mobile Number" name="contactMobileNumber">
-                            <Input className={style.inputBox} suffix={<Button >Send OTP</Button>} placeholder={preparePlaceholderText('mobile number')} {...disabledProps} />
+                            <Input className={style.inputBox} suffix={<Button>Send OTP</Button>} placeholder={preparePlaceholderText('mobile number')} {...disabledProps} />
                         </Form.Item>
                     </Col>
 

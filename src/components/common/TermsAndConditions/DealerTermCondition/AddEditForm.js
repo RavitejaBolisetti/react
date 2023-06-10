@@ -115,21 +115,6 @@ const AddEditFormMain = (props) => {
                     )}
 
                     <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item disabled={formActionType?.viewMode} initialValue={formData?.termConditionDescription} label="Terms & Conditions" name="termConditionDescription">
-                                <CustomEditor {...customEditorProps} />
-                                {/* onChange={(event, editor) => { const data = editor.getData(), setContent(data)}} */}
-                            </Form.Item>
-                        </Col>
-                        {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            {termsAndCondition}
-                            <Form.Item name="description" initialValue={termsAndCondition}>
-                                <Input disabled={formActionType?.viewMode} value />
-                            </Form.Item>
-                        </Col> */}
-                    </Row>
-
-                    <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item {...fromDateInitialValue} label="Effective From" name="effectiveFrom" rules={[validateRequiredInputField('date')]}>
                                 <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} style={{ width: '100%' }} onChange={handleFromDateChange} disabledDate={disableFromDate} />
@@ -140,6 +125,21 @@ const AddEditFormMain = (props) => {
                                 <DatePicker format="YYYY-MM-DD" disabled style={{ width: '100%' }} onChange={handleToDateChange} disabledDate={disableToDate} />
                             </Form.Item>
                         </Col>
+                    </Row>
+
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item disabled={formActionType?.viewMode} initialValue={formData?.termConditionDescription} label="Terms & Conditions" name="termConditionDescription">
+                                <CustomEditor onReady={formData?.termConditionDescription} data={formData?.termConditionDescription} />
+                                {/* onChange={(event, editor) => { const data = editor.getData(), setContent(data)}} */}
+                            </Form.Item>
+                        </Col>
+                        {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            {termsAndCondition}
+                            <Form.Item name="description" initialValue={termsAndCondition}>
+                                <Input disabled={formActionType?.viewMode} value />
+                            </Form.Item>
+                        </Col> */}
                     </Row>
                 </>
             ) : (

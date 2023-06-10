@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 
-import { Col, Collapse, Form, Select, Space, Typography, Button } from 'antd';
-import { UserOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import {  Collapse, Form,  Space, Typography, Button } from 'antd';
+import {  PlusOutlined } from '@ant-design/icons';
 
-import { FaUserCircle, FaRegUserCircle } from 'react-icons/fa';
+import {  FaRegUserCircle } from 'react-icons/fa';
 
-import { accordianExpandIcon, expandIcon } from 'utils/accordianExpandIcon';
+import {  expandIcon } from 'utils/accordianExpandIcon';
 import AddEditForm from './AddEditForm';
 import styles from 'components/common/Common.module.css';
-import { ViewDetail } from './ViewContactDetails';
 import ViewContactList from './ViewContactList';
 
 const { Panel } = Collapse;
@@ -25,7 +24,6 @@ const CompanyContactMain = ({ isViewModeVisible }) => {
     };
 
     const onFinish = (value) => {
-        console.log('on finish value ', value);
         setContactData((prev) => {
             let formData = [...prev];
             if (formData?.length <= 1) {
@@ -43,7 +41,6 @@ const CompanyContactMain = ({ isViewModeVisible }) => {
     };
 
     const addContactHandeler = (e) => {
-        // e.preventDefault();
         e.stopPropagation();
         form.resetFields();
         console.log('clicked');

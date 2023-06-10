@@ -1,22 +1,16 @@
 import React, { useState } from 'react';
 
-import { Col, Collapse, Form, Select, Space, Typography, Button } from 'antd';
-import { UserOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
-
-import { FaUserCircle, FaRegUserCircle } from 'react-icons/fa';
-
-import { accordianExpandIcon, expandIcon } from 'utils/accordianExpandIcon';
+import { Collapse, Form, Space, Typography, Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { FaRegUserCircle } from 'react-icons/fa';
+import { expandIcon } from 'utils/accordianExpandIcon';
 
 import styles from 'components/common/Common.module.css';
-
 
 import ViewAddressList from './ViewAddressList';
 import AddEditForm from './AddEditForm';
 
-
-
 const { Panel } = Collapse;
-
 const { Text } = Typography;
 
 const formData = {
@@ -33,9 +27,6 @@ const formData = {
     contactmobilenumber: 'Male',
     defaultaddress: true,
 };
-
-
-
 
 const CompanyAddressMasterBase = () => {
     const [form] = Form.useForm();
@@ -54,12 +45,11 @@ const CompanyAddressMasterBase = () => {
     };
 
     const addContactHandeler = (e) => {
-        // e.preventDefault();
         e.stopPropagation();
         form.resetFields();
         console.log('clicked');
         setShowAddEditForm(true);
-        setOpenAccordian('1')
+        setOpenAccordian('1');
     };
 
     const formProps = {
@@ -68,7 +58,7 @@ const CompanyAddressMasterBase = () => {
         setContactData,
         formData,
         onFinish,
-        form
+        form,
     };
 
     return (

@@ -1,77 +1,21 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider, Select } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
-import { ROUTING_USER_MANAGEMENT_MANUFACTURER } from 'constants/routing';
-
-import { EditIcon, ViewEyeIcon } from 'Icons';
-import { TfiReload } from 'react-icons/tfi';
 import { IoBanOutline } from 'react-icons/io5';
-import { notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import DataTable from 'utils/dataTable/DataTable';
-import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
-import { userManagementDataActions } from 'store/actions/data/userManagement';
-import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 
 import { AddEditForm } from './AddEditForm';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 
 import styles from 'components/common/Common.module.css';
-// import style from 'components/common/DrawerAndTable.module.css';
 
 const { Search } = Input;
 const { Option } = Select;
-
-const mapStateToProps = (state) => {
-    const {
-        auth: { userId },
-        data: {
-            UserManagement: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, isFormDataLoaded, data: UserManagementDealerData = [] },
-            ProductHierarchy: { isLoading: isprodLoading, isLoaded: isProdDataLoaded = false, data: productHierarchyData = [], skudata: skuData = [], changeHistoryVisible },
-            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
-        },
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
-    } = state;
-
-    let returnValue = {
-        collapsed,
-        userId,
-        isDataLoaded,
-        isLoading,
-        UserManagementDealerData,
-        productHierarchyData,
-        attributeData,
-        isLoadingOnSave,
-        isFormDataLoaded,
-    };
-    return returnValue;
-};
-
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    ...bindActionCreators(
-        {
-            listShowLoading: userManagementDataActions.listShowLoading,
-            fetchDealerDetails: userManagementDataActions.fetchDealerDetails,
-            fetchManufacturerDetails: userManagementDataActions.fetchManufacturerDetails,
-            saveDealerDetails: userManagementDataActions.saveDealerDetails,
-            saveManufacturerDetails: userManagementDataActions.saveManufacturerDetails,
-            fetchList: productHierarchyDataActions.fetchList,
-            hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
-            showGlobalNotification,
-        },
-        dispatch
-    ),
-});
 
 const initialTableData = [{ srNo: '1', employeecode: 'SH1121', dealername: 'Dealer 1', username: 'DeepakPalariya', useroles: 'dummy', hierarchyMapping: 'dummy', productsMapping: 'dummy' }];
 const dealersData = ['Dealer 1', 'Dealer 2', 'Dealer 3', 'Dealer 4', 'Dealer 5', 'Dealer 6 '];
@@ -184,40 +128,30 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     const FetchError = (message) => {
         setError(true);
         setDealerData({});
-        console.log('I am fetching Error');
     };
 
-    useEffect(() => {
-        console.log('This is the Final Form data : ', finalFormdata);
-    }, [finalFormdata]);
     useEffect(() => {
         form.resetFields();
         form.setFieldValue(formData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
-    useEffect(() => {
-        console.log('This is the dealer Data :: ', DealerData);
-    }, [DealerData]);
+ 
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId });
             hierarchyAttributeFetchList({ setIsLoading: listShowLoading, userId });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         // setdisabled(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
     useEffect(() => {
         setSearchdata(qualificationData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        console.log('productHierarchyData', productHierarchyData);
-        console.log('attributeData', attributeData);
     }, [productHierarchyData, attributeData, qualificationData]);
 
     useEffect(() => {
-        console.log('DealerSelected', DealerSelected);
-
         if (DealerSelected?.length > 0 && DealerSelected != undefined) {
             setdisabled(false);
             setDealerData({});
@@ -290,14 +224,7 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     );
 
     const tableDetailData = [
-        // {
-        //     employeeCode: 'B6G433',
-        //     dealerName: 'Mahindra',
-        //     userName: 'John Doe',
-        //     designation: 'Chief Sales Officer',
-        //     mobileNumber: '9664321226',
-        //     emailID: 'john.doe@mahindra.com',
-        // },
+      
         {
             employeeCode: DealerData?.employeeCode,
             dealerName: DealerSelected,
@@ -308,10 +235,6 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
         },
     ];
 
-    const tableDetailProps = {
-        tableColumn: tableDetails,
-        tableData: tableDetailData,
-    };
 
     const tableColumn = [];
     tableColumn.push(
