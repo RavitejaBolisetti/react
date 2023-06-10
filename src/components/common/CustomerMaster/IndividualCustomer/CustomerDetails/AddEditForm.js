@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
-
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewIndivisualCustomerDetails';
 const { Text } = Typography;

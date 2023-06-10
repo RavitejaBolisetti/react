@@ -1,22 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { useState } from 'react';
+import { Row, Col } from 'antd';
 
-import { Input, Form, Col, Row, Button, Select, DatePicker } from 'antd';
-
-import { tblPrepareColumns, tblSerialNumberColumn, tblStatusColumn, tblActionColumn } from 'utils/tableCloumn';
+import { tblPrepareColumns } from 'utils/tableCloumn';
 
 import { withDrawer } from 'components/withDrawer';
 import { ListDataTable } from 'utils/ListDataTable';
-import { DrawerFormButton } from 'components/common/Button';
-import styles from 'components/common/Common.module.css';
 import { convertDate } from 'utils/formatDateTime';
-import { convertCalenderDate } from 'utils/formatDateTime';
-
-const { Option } = Select;
 
 const ChangeHistoryMain = (props) => {
-    const { tableChangeHistoryProps, ChangeHistoryTermsConditionsData } = props;
+    const { ChangeHistoryTermsConditionsData } = props;
 
     const [page, setPage] = useState(1);
     const tableColumn = [];
@@ -62,33 +54,14 @@ const ChangeHistoryMain = (props) => {
             width: '15%',
             render: (text) => convertDate(text),
         })
-        // tblPrepareColumns({
-        //     title: 'MFG T&C',
-        //     width: '15%',
-        //     sorter: false,
-        //     render: (text, record, index) => {
-        //         return (
-        //             <Space>
-        //                 {
-        //                     <Button className={styles.tableIcons} danger ghost aria-label="ai-view">
-        //                         {/* onClick={() => handleView(record)} */}
-        //                         <ViewEyeIcon />
-        //                     </Button>
-        //                 }
-        //             </Space>
-        //         );
-        //     },
-        // }),
-
-        // tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%' })
     );
 
     const tableProps = {
         tableColumn,
         tableData: ChangeHistoryTermsConditionsData,
         setPage,
+        page,
     };
-    console.log('ChangeHistoryTermsConditionsData', ChangeHistoryTermsConditionsData);
     return (
         <>
             <Row gutter={20}>
