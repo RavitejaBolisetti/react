@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-export const ConfigurableParameterEditingBase = ({saveFormShowLoading,isLoadingOnSave, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadingOnSave, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const defaultParametarType = CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -87,7 +87,6 @@ export const ConfigurableParameterEditingBase = ({saveFormShowLoading,isLoadingO
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
-    const [closePanels, setClosePanels] = React.useState([]);
 
     const [parameterType, setParameterType] = useState(defaultParametarType);
 
@@ -282,10 +281,6 @@ export const ConfigurableParameterEditingBase = ({saveFormShowLoading,isLoadingO
         setFilterString(value);
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
-    };
-
     const onFinish = (values) => {
         console.log(parameterType, 'gdhcgdw');
         const recordId = formData?.id || '';
@@ -355,7 +350,6 @@ export const ConfigurableParameterEditingBase = ({saveFormShowLoading,isLoadingO
         configData,
         parameterType,
         setParameterType,
-        setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
@@ -364,7 +358,7 @@ export const ConfigurableParameterEditingBase = ({saveFormShowLoading,isLoadingO
     };
     return (
         <>
-                    <Row gutter={20}>
+            <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
@@ -382,7 +376,6 @@ export const ConfigurableParameterEditingBase = ({saveFormShowLoading,isLoadingO
                                                 allowClear
                                                 className={styles.headerSelectField}
                                                 onSearch={onSearchHandle}
-                                                // onChange={onChangeHandle}
                                             />
                                         </Col>
                                     </div>

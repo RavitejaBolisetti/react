@@ -11,7 +11,6 @@ import { handleErrorModal } from 'utils/responseModal';
 import { doLogoutAPI } from 'store/actions/auth';
 import { ROUTING_LOGIN } from 'constants/routing';
 import { useNavigate } from 'react-router-dom';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from './ChangePassword.module.css';
 
 import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';

@@ -19,7 +19,6 @@ import { LANGUAGE_EN } from 'language/en';
 import styles from 'components/common/Common.module.css';
 import { ContentHeader } from 'utils/ContentHeader';
 
-const { Search } = Input;
 
 const mapStateToProps = (state) => {
     const {
@@ -90,7 +89,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [isVisible, setisVisible] = useState(false);
 
-    const [isActive, setIsActive] = useState(false);
     const [menuType, setMenuType] = useState('W');
     const [searchValue, setSearchValue] = useState('');
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -131,7 +129,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const handleTypeClick = (type) => {
         setSelectedTreeKey([]);
 
-        setIsActive((current) => !current);
         setMenuType(type);
     };
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
