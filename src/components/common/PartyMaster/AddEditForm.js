@@ -193,7 +193,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={16}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={formData?.address} label="Address" name="address" rules={[validateRequiredInputField('address')]}>
-                                    <TextArea rows={2} {...disabledProps} placeholder={preparePlaceholderText('Address')} showCount maxLength={255} />
+                                    <TextArea rows={2} {...disabledProps} placeholder={preparePlaceholderText('Address')} showCount maxLength={100} />
                                 </Form.Item>
                             </Col>
                         </Row>
