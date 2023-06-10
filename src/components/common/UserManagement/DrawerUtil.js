@@ -147,7 +147,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
                                         title="Sales Executive"
                                         extra={
                                             <>
-                                                <a href="#">Application Access</a>
+                                                <a href="#" >Application Access</a>
                                                 <a href="#">
                                                     <IoTrashOutline />
                                                 </a>
