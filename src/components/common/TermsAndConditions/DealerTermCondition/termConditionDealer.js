@@ -210,7 +210,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
 
     const onFinish = (values, e) => {
         const recordId = formData?.id || '';
-        const newVersion = (values.version ? Number(values?.version) + 0.1 : 1.0).toFixed(1);
+        const newVersion = (values.version ? Number(values?.version) + 1.0 : 1.0).toFixed(1);
         const termConditionText = termsAndCondition.replace(/[&\/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
         const data = { ...values, version: String(newVersion), id: recordId, termConditionDescription: termConditionText };
 
@@ -250,8 +250,6 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const handleReferesh = (e) => {
         setRefershData(!refershData);
     };
-
-    
 
     const onSearchHandle = (value) => {
         setFilterString(value);

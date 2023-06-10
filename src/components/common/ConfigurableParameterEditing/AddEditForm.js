@@ -2,11 +2,9 @@ import React from 'react';
 import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
-
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { ViewConfigDetails } from './ViewConfigDetails';
-
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
