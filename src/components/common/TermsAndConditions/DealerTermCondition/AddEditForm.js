@@ -53,9 +53,6 @@ const AddEditFormMain = (props) => {
         return value < startDate;
     };
 
-    const customEditorProps = {
-        data: formData?.termConditionDescription ? formData?.termConditionDescription : '',
-    };
     const fromDateInitialValue = { initialValue: convertCalenderDate(formData?.effectiveFrom, 'YYYY/MM/DD') };
     const toDateInitialValue = { initialValue: convertCalenderDate(formData?.effectiveTo ? formData?.effectiveTo : new Date('December 31, 9999'), 'YYYY/MM/DD') };
 
