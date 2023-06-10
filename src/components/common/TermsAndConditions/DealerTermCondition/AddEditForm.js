@@ -116,15 +116,6 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    {(formActionType?.viewMode || formActionType?.editMode) && (
-                        <Row gutter={20}>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={formData?.version} label="Version" name="version">
-                                    <Input disabled={true} placeholder={preparePlaceholderText('Version')} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                    )}
 
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -147,6 +138,15 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
+                    {(formActionType?.viewMode || formActionType?.editMode) && (
+                        <Row gutter={20}>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                <Form.Item initialValue={formData?.version} label="Version" name="version">
+                                    <Input disabled={true} placeholder={preparePlaceholderText('Version')} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    )}
                 </>
             ) : (
                 <ViewTermConditionList {...viewProps} />
