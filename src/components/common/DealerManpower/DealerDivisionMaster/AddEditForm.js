@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Input, Form, Row, Switch } from 'antd';
 
-import { validateRequiredInputField, validationFieldLetter, validateLettersWithWhitespaces } from 'utils/validation';
+import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -36,10 +36,9 @@ const AddEditFormMain = (props) => {
         setButtonData,
         handleButtonClick,
     };
-    
 
     return (
-        <Form layout="vertical" autoComplete='off' form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
                 <ViewDetail {...viewProps} />
             ) : (

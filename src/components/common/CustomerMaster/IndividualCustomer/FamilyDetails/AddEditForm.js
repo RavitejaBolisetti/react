@@ -11,17 +11,15 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { form, type, value, onChange, selectRef, onFamilyFinish, onFinishFailed } = props;
-
     const [activeKey, setactiveKey] = useState([1]);
 
     const onCollapseChange = (values) => {
         const isPresent = activeKey.includes(values);
-
         if (isPresent) {
             const newActivekeys = [];
-
-            activeKey.filter((item) => {
-                if (item != values) {
+        // eslint-disable-next-line array-callback-return
+        activeKey.filter((item) => {
+                if (item !== values) {
                     newActivekeys.push(item);
                 }
             });
@@ -29,7 +27,6 @@ const AddEditFormMain = (props) => {
         } else {
             setactiveKey([...activeKey, values]);
         }
-        console.log('values', values);
     };
 
     return (
@@ -110,9 +107,6 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    {/* <Button className={styles.button} type="primary" htmlType="submit">
-                Login
-            </Button> */}
                 </Form>
             </Panel>
         </Collapse>
