@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
 import { Input, Form, Col, Row, Switch, Select } from 'antd';
-
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validationFieldLetteNumberandPeriod, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
@@ -15,6 +14,7 @@ const ApplicationDetails = ({setCanFormSave, form, onFinishFailed = () => {}, pa
     useEffect(() => {
         form.setFieldsValue({ ...finalFormdata?.applicationDetails });
         setparentAppCode(finalFormdata?.applicationDetails.parentApplicationId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [form, finalFormdata?.applicationDetails, finalFormdata?.applicationDetails?.parentApplicationId, setSelectedTreeKey]);
 
     const handleChangeLocations = (value) => {

@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
 };
 
 export const TermConditionPageBase = (props) => {
-    const pageTitle = 'Terms & Conditions - Dealer Branch';
+    const pageTitle = 'Terms & Conditions - Dealer Location';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

@@ -1,17 +1,13 @@
 import React, { useState, useRef } from 'react';
-
 import { Col, Checkbox, Row, Button, Form, Input, Select, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
 
 const AddEditForm = (props) => {
     const { onFinish, form } = props;
-
-    const [items, setItems] = useState(['Office', 'Residence', 'Permanent', 'Other']);
+    const items = ['Office', 'Residence', 'Permanent', 'Other']
     const [name, setName] = useState('');
-
     const inputRef = useRef(null);
     const onNameChange = (event) => {
         setName(event.target.value);

@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, Switch, DatePicker, Divider, Checkbox } from 'antd';
-
+import { Button,Form, Typography, message, Row, Col, Space, Select, Input, Divider, Checkbox } from 'antd';
 import style from '../../../Common.module.css';
 import { validateRequiredInputField, validateRequiredSelectField, validateMobileNoField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -9,9 +8,7 @@ import UploadUtils from './UploadUtils';
 import { contactPurpose, title, gender } from 'constants/modules/CustomerMaster/individualProfile';
 import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
 import { BiLockAlt } from 'react-icons/bi';
-
 const { Option } = Select;
-const { Text } = Typography;
 
 const uploadProps = {
     name: 'file',
@@ -22,18 +19,13 @@ const uploadProps = {
     uploadBtnName: 'Upload File',
     onChange(info) {
         const { status } = info.file;
-        //   if (status !== 'uploading') {
-        //     console.log(info.file, info.fileList);
-        //   }
         if (status === 'done') {
             message.success(`${info.file.name} file uploaded successfully.`);
         } else if (status === 'error') {
             message.error(`${info.file.name} file upload failed.`);
         }
     },
-    // onDrop(e) {
-    //   console.log('Dropped files', e.dataTransfer.files);
-    // },
+
 };
 
 const AddEditForm = (props) => {

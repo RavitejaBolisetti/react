@@ -12,7 +12,6 @@ import { doLogoutAPI } from 'store/actions/auth';
 import { ROUTING_LOGIN } from 'constants/routing';
 import { useNavigate } from 'react-router-dom';
 import styles from './ChangePassword.module.css';
-
 import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
 
 const mapStateToProps = (state) => {
@@ -50,7 +49,6 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState({ oldPassword: false, newPassword: false, confirmNewPassword: false });
     const [tooltipVisible, setTooltipVisible] = useState(false);
-
     const oldPasswordInput = useRef(null);
     const newPasswordInput = useRef(null);
     const confirmPasswordInput = useRef(null);

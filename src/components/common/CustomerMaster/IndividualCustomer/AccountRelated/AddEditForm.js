@@ -1,28 +1,11 @@
 import { React } from 'react';
-
-import { Row, Col, Form, Input, Checkbox, Space, Button } from 'antd';
-
+import { Row, Col, Form, Input, Checkbox } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-
-import { ViewDetail } from '../../FirmOrCompany/AccountRelated/ViewAccountDetails';
-
-import styles from 'components/common/Common.module.css';
-
 const { TextArea } = Input;
-const { Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible } = props;
 
     const [form] = Form.useForm();
-    
-    const handleReset = () => {
-        form.resetFields();
-    };
-
-    const viewProps = {
-        styles,
-    };
 
     return (
         <>
