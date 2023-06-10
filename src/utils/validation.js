@@ -111,7 +111,7 @@ export const validatYoutubeProfileUrl = (fieldName) =>({
 // pat1: /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})?$/,
 
 export const validattwitterProfileUrl = (fieldName) =>({
-    pattern: /^https?:\/\/(www\.)?twitter\.com\/(#!\/)?([^\/]+)(\/\w+)*$/,
+    pattern: /^https?:\/\/(www\.)?twitter\.com\/(#!\/)?([^/]+)(\/\w+)*$/,
     message: 'Please enter valid url ' + fieldName,
 })
 // pattern: /^http:\/\/)?(www\.)?twitter\.com\/(\w+)/,

@@ -359,6 +359,11 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
             },
         })
     );
+
+    const onChange = (sorter, filters) => {
+        form.resetFields();
+    };
+
     const tableProps = {
         isLoading: isLoading,
         tableData: initialTableData,
@@ -483,10 +488,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         setFooterEdit(false);
         setIsReadOnly(false);
         setShowSaveBtn(true);
-    };
-
-    const onChange = (sorter, filters) => {
-        form.resetFields();
     };
 
     const onSearchHandle = (value) => {
