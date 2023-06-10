@@ -74,6 +74,7 @@ const AddEditFormMain = (props) => {
         if (isPresent) {
             const newActivekeys = [];
 
+            // eslint-disable-next-line array-callback-return
             activeKey.filter((item) => {
                 if (item !== values) {
                     newActivekeys.push(item);
@@ -84,6 +85,10 @@ const AddEditFormMain = (props) => {
             setactiveKey([...activeKey, values]);
         }
     };
+
+    const onFinishFailed = () =>{
+        return;
+    }
 
     const viewProps = {
         activeKey,

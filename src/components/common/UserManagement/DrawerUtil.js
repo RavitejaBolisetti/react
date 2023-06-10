@@ -9,7 +9,7 @@ const { Panel } = Collapse;
 const { Option } = Select;
 
 const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, DealerData, tableDetailData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
-    console.log('isLoadingOnSave', isLoadingOnSave);
+    
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Manage User Access';
