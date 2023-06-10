@@ -1,9 +1,6 @@
 import React from 'react';
-import { Drawer, Input, Form, Col, Row, Switch, Button, Card, Collapse, Select } from 'antd';
+import { Drawer, Form, Col, Row, Button, Card, Collapse, Select } from 'antd';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
 import { IoTrashOutline } from 'react-icons/io5';
 
 import style from 'components/common/DrawerAndTable.module.css';
@@ -13,8 +10,7 @@ const { Panel } = Collapse;
 const { Option } = Select;
 
 const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
-    const disabledProps = { disabled: isReadOnly };
-    console.log("isLoadingOnSave", isLoadingOnSave)
+
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Manage User Access';
@@ -51,13 +47,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                             </Button>
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.saveBtn}>
-                            {/* {saveAndSaveNew ? (
-                                <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                    Save & Add New
-                                </Button>
-                            ) : (
-                                ''
-                            )} */}
+                           
                             {saveBtn ? (
                                 <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
                                     Save

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Col, Form, Row, Button, Space, Card, Collapse } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
@@ -15,20 +15,18 @@ const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
     const { onCloseAction, productHierarchyData, DealerSearchvalue, onFinishFailed, onFinish, form, formData, DealerData } = props;
     const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setClosePanels } = props;
-    const [AccessMacid, setAccessMacid] = useState([]);
+
     const handleFormValueChange = () => {
         setFormBtnActive(true);
     };
-    useEffect(() => {
-        console.log('This is the Access Macid : ', AccessMacid);
-    }, [AccessMacid]);
+
 
     const handleFormFieldChange = () => {
         setFormBtnActive(true);
     };
 
     const onChangeCollapse = (collapse) => {
-        // console.log('collapse: :', collapse);
+
     };
     
     const viewProps = {
@@ -50,9 +48,6 @@ const AddEditFormMain = (props) => {
                 >
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            {/* <Card>
-                            <Meta title="Sandeep Lad" description="Token No.: B6G433" />
-                        </Card> */}
                             <Card className={style4.usermanagementCard}>
                                 <Row gutter={20}>
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -79,55 +74,6 @@ const AddEditFormMain = (props) => {
                             </Card>
                         </Col>
                     </Row>
-                    {/* <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item label="MAC ID" name="macid" rules={[validateRequiredInputField('MAC id'), validationFieldLetterAndNumber('MAC id')]}>
-                            <Input onChange={(event) => setMacid(event.target.value)} maxLength={6} placeholder={preparePlaceholderText('MAC id')} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Button onClick={(event, key) => handleAddMacid(event, key)} form="myForm" key="Add" type="primary">
-                            Add
-                        </Button>
-                    </Col>
-                </Row> */}
-                    {/* <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Space
-                            direction="vertical"
-                            size="middle"
-                            style={{
-                                display: 'flex',                                
-                            }}
-                        >
-                            {AccessMacid?.map((el) => {
-                                return (
-                                    <Card className={style.usermanagementCard}>
-                                        <Row gutter={20} className={style.alignUsermanagementCard}>
-                                            <Col xs={20} sm={20} md={20} lg={20} xl={20} xxl={20}>
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                        <span>Mac Id</span>
-                                                    </Col>
-                                                </Row>
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                        <span>{el?.macid}</span>
-                                                    </Col>
-                                                </Row>
-                                            </Col>
-                                            <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                                <Button className={style.crossButton} type="danger" onClick={(event) => handleDelete(event, el?.key)}>
-                                                    <AiOutlineClose />
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    </Card>
-                                );
-                            })}
-                        </Space>
-                    </Col>
-                </Row> */}
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -152,78 +98,19 @@ const AddEditFormMain = (props) => {
                                 <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
                                     <Panel header="Assign User Roles" key="1">
                                         <AssignUserRolesMunfacturer userRoleOptions={DealerData?.employeeRoles} DealerSearchvalue={DealerSearchvalue} />
-                                        {/* <AssignUserRole  /> */}
                                     </Panel>
                                 </Collapse>
                                 <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
                                     <Panel header="Administrative Hierarchy Access" key="2">
                                         <AdministrativeHierarchyAccess BranchMappingData={DealerData?.branches} />
-                                        {/* <BranchMapping BranchMappingData={DealerData?.branches} /> */}
                                     </Panel>
                                 </Collapse>
                                 <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
                                     <Panel header="Assign Products" key="3">
                                         <AssignProducts ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} />
-                                        {/* <ProductMapping ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} /> */}
                                     </Panel>
                                 </Collapse>
                             </Space>
-                            {/* <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
-                            <Panel header="Assign User Roles*" key="1">
-                                <Form.Item name="userRole" label="User Role">
-                                    <Select placeholder={'Select User Role'} showSearch allowClear>
-                                        {attributeData?.map((item) => (
-                                            <Option value={item}>{item}</Option>
-                                        ))}
-                                    </Select>
-                                </Form.Item>
-                                <Card
-                                    title="Manager"
-                                    extra={
-                                        <>
-                                            <a href="#">Application Access</a>
-                                            <a href="#">
-                                                <IoTrashOutline />
-                                            </a>
-                                        </>
-                                    }
-                                >
-                                    Role ID: B6G433
-                                </Card>
-                                <Card
-                                    title="Sales Executive"
-                                    extra={
-                                        <>
-                                            <a href="#">Application Access</a>
-                                            <a href="#">
-                                                <IoTrashOutline />
-                                            </a>
-                                        </>
-                                    }
-                                >
-                                    Role ID: B6G433
-                                </Card>
-                                <Card
-                                    title="Financial Executive"
-                                    extra={
-                                        <>
-                                            <a href="#">Application Access</a>
-                                            <a href="#">
-                                                <IoTrashOutline />
-                                            </a>
-                                        </>
-                                    }
-                                >
-                                    Role ID: B6G433
-                                </Card>
-                            </Panel>
-                            <Panel header="Administrative Hierarchy Mapping*" key="2">
-                                <p>This is panel contents 2</p>
-                            </Panel>
-                            <Panel header="Product Mapping*" key="3">
-                                <p>This is panel contents 3</p>
-                            </Panel>
-                        </Collapse> */}
                         </Col>
                     </Row>
                 </Space>
