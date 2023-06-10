@@ -33,7 +33,7 @@ const FamilyDetailsBase = () => {
 
     return (
         <>
-            <h2>Customer Details</h2>
+            <h2>Family Details</h2>
             <AddEditForm {...formProps} />
         </>
     );
