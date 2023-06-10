@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button, Collapse, Avatar, Card, Timeline, Progress, Space } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
+import React, { useState } from 'react';
+import { Col, Row, Collapse, Avatar, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { FaChevronDown } from 'react-icons/fa';
-import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 import { OTF_FORM_ACTION_TYPE } from 'constants/otfActionType';
 
@@ -52,17 +50,17 @@ const AddEditFormMain = (props) => {
         nextBtn: true,
     });
     const handleOtfButtonClick = ({ buttonAction, record }) => {
-        if (buttonAction == EDIT_ACTION) {
+        if (buttonAction === EDIT_ACTION) {
             console.log('edit');
-        } else if (buttonAction == CANCEL_ACTION) {
+        } else if (buttonAction === CANCEL_ACTION) {
             console.log('cancel');
-        } else if (buttonAction == ALLOT_ACTION) {
+        } else if (buttonAction === ALLOT_ACTION) {
             console.log('allot');
-        } else if (buttonAction == INVOICE_ACTION) {
+        } else if (buttonAction === INVOICE_ACTION) {
             console.log('rinvoice');
-        } else if (buttonAction == TRANSFER_ACTION) {
+        } else if (buttonAction === TRANSFER_ACTION) {
             console.log('transfer');
-        } else if (buttonAction == NEXT_ACTION) {
+        } else if (buttonAction === NEXT_ACTION) {
             console.log('next');
         }
     };

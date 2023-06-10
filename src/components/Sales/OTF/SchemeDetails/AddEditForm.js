@@ -11,59 +11,14 @@ const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, formActionType } = props;
+    const { onCloseAction, setIsViewModeVisible, formActionType } = props;
     const [customerForm] = Form.useForm();
-    const [keyAccountForm] = Form.useForm();
-    const [authorityForm] = Form.useForm();
-    const [FinalFormData, setFinalFormData] = useState({
-        customerForm: [],
-        keyAccountForm: [],
-        authorityForm: [],
-    });
-    const [customerFormValues, setcustomerForm] = useState();
-    const [keyAccountFormValues, setkeyAccountFormValues] = useState();
-    const [authorityFormValues, setauthorityFormValues] = useState();
-    const [done, setDone] = useState();
 
-    useEffect(() => {
-        setFinalFormData({ ...FinalFormData, customerForm: customerFormValues, keyAccountForm: keyAccountFormValues, authorityForm: authorityFormValues });
-    }, [done]);
-    useEffect(() => {
-        console.log('FinalFormData', FinalFormData);
-    }, [FinalFormData]);
 
     const [activeKey, setactiveKey] = useState([1]);
 
     const handleEdit = () => {
         setIsViewModeVisible(false);
-    };
-    const onFinish = () => {
-        const customerFormValues = customerForm.getFieldsValue();
-        const keyAccountFormValues = keyAccountForm.getFieldsValue();
-
-        const authorityFormValues = authorityForm.getFieldsValue();
-
-        console.log('customerFormValues', customerFormValues, 'keyAccountFormValues', keyAccountFormValues, 'authorityFormValues', authorityFormValues);
-
-        customerForm
-            .validateFields()
-            .then(() => {
-                authorityForm
-                    .validateFields()
-                    .then(() => {
-                        setcustomerForm(customerFormValues);
-                        setauthorityFormValues(authorityFormValues);
-                        setkeyAccountFormValues(keyAccountFormValues);
-                        setDone(!done);
-                    })
-                    .catch(() => {
-                        console.log('error');
-                        setactiveKey([3]);
-                    });
-            })
-            .catch(() => {
-                setactiveKey([1]);
-            });
     };
 
     const onChange = (values) => {
@@ -72,8 +27,8 @@ const AddEditFormMain = (props) => {
         if (isPresent) {
             const newActivekeys = [];
 
-            activeKey.filter((item) => {
-                if (item != values) {
+            activeKey.forEach((item) => {
+                if (item !== values) {
                     newActivekeys.push(item);
                 }
             });
@@ -81,22 +36,8 @@ const AddEditFormMain = (props) => {
         } else {
             setactiveKey([...activeKey, values]);
         }
-        console.log('values', values);
-    };
 
-    // const onFinishCustomerInformation = (values) => {
-    //     setFinalFormData({ ...FinalFormData, customerForm: values });
-    // };
-    // const onFinshkeyAccount = (values) => {
-    //     setFinalFormData({ ...FinalFormData, keyAccountForm: values });
-    // };
-    // const onFinishAuthorityDetails = (values) => {
-    //     setFinalFormData({ ...FinalFormData, authorityForm: values });
-    // };
-    // const sameAsBookingCustomer = (e) => {
-    //     console.log(`checked = ${e.target.checked}`);
-    //     setIsBookingCustomer(e.target.checked);
-    // };
+    };
 
     const schemeType = [{code:'hey'},{code:'bud'}]
 
@@ -130,7 +71,6 @@ const AddEditFormMain = (props) => {
                                 <Panel
                                     header={
                                         <div className={styles.alignUser}>
-                                            {/* <FaRegUserCircle className={styles.userCircle} /> */}
                                             <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                                 Scheme
                                             </Text>
@@ -147,8 +87,6 @@ const AddEditFormMain = (props) => {
                                                         style={{
                                                             width: '100%',
                                                         }}
-                                                        // onChange={parentName}
-                                                        // disabled={editMode}
                                                     >
                                                         {schemeType?.map((item) => {
                                                             return <Option value={item?.code}>{item?.code}</Option>;
@@ -190,19 +128,6 @@ const AddEditFormMain = (props) => {
                                     </Form>
                                 </Panel>
                             </Collapse>
-
-                            {/* <Row gutter={20}>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Button danger onClick={onCloseAction}>
-                                        Cancel
-                                    </Button>
-                                </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Button type="primary" onClick={onFinish} className={styles.floatRight}>
-                                        Save & Proceed
-                                    </Button>
-                                </Col>
-                            </Row> */}
                         </Space>
                     </Col>
                 </Row>      

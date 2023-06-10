@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
 
-import { Col, Input, Form, Row, Checkbox, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Typography, Descriptions } from 'antd';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { Col, Input, Form, Row, Checkbox, Space, Collapse, Typography } from 'antd';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
-import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
+import { validateRequiredInputField } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
 
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 const { Panel } = Collapse;
 
 const AddEditForm = (props) => {
-    const { buttonData, setButtonData, formActionType, setIsFormVisible, onFinish, onFinishFailed, form, formData } = props;
+    const { formActionType, onFinish, onFinishFailed, form, formData } = props;
     const [activeKey, setactiveKey] = useState([1]);
-    console.log('formActionType?.viewMode', formActionType?.viewMode);
 
     const viewProps = {
         bordered: false,
@@ -34,8 +33,8 @@ const AddEditForm = (props) => {
         if (isPresent) {
             const newActivekeys = [];
 
-            activeKey.filter((item) => {
-                if (item != values) {
+            activeKey.forEach((item) => {
+                if (item !== values) {
                     newActivekeys.push(item);
                 }
             });

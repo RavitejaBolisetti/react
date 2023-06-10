@@ -1,14 +1,11 @@
 import React from 'react';
 import { Descriptions } from 'antd';
-import { Col, Input, Form, Row, Select, Button, InputNumber, Divider, DatePicker, Space, Card, Collapse, Typography } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { FaRegPlusSquare, FaPlus, FaRegUserCircle } from 'react-icons/fa';
+import { Divider, Space, Card, Typography } from 'antd';
 
-const { Panel } = Collapse;
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, setactiveKey, onChange, styles, parameterType, handleEdit, onCloseAction } = props;
+    const { styles } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -71,19 +68,6 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </div>
                 </Card>
-
-                {/* <Row gutter={20}>
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                        <Button danger onClick={onCloseAction}>
-                            Cancel
-                        </Button>
-                    </Col>
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                        <Button type="primary" onClick={handleEdit} className={styles.floatRight}>
-                            Edit
-                        </Button>
-                    </Col>
-                </Row> */}
             </Space>
         </div>
     );

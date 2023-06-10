@@ -1,10 +1,6 @@
 import React from 'react';
 import { Descriptions } from 'antd';
-import { Col, Row, Space, Collapse, Typography } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-
-const { Panel } = Collapse;
-const { Text, Link } = Typography;
+import { Col, Row, Card } from 'antd';
 
 const ViewDetailMain = (props) => {
     const viewProps = {

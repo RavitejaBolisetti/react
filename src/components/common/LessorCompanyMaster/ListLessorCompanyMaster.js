@@ -101,6 +101,7 @@ export const ListLessorCompanyMasterBase = (props) => {
         if (detailData?.length) {
             setSearchdata(detailData);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [detailData]);
 
     useEffect(() => {

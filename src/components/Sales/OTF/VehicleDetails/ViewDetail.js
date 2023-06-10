@@ -1,18 +1,16 @@
 import React from 'react';
 import { Descriptions } from 'antd';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Typography, Divider } from 'antd';
+import { Space, Collapse, Typography, Divider } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { FaRegPlusSquare, FaPlus, FaRegUserCircle } from 'react-icons/fa';
-import styles from 'components/common/Common.module.css';
 import style from 'utils/PasswordStrengthMeter/PasswordStrengthMeter.module.css';
 import { addToolTip } from 'utils/customMenuLink';
 
 const { Panel } = Collapse;
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, setactiveKey, onChange, styles, parameterType, handleEdit, onCloseAction } = props;
+    const { activeKey, onChange, styles } = props;
     const viewProps = {
         bordered: false,
         colon: false,

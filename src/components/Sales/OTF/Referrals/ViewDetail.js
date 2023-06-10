@@ -1,14 +1,11 @@
 import React from 'react';
 import { Descriptions } from 'antd';
-import { Col, Input, Form, Row, Select, Button, InputNumber, Divider, DatePicker, Space, Card, Collapse, Typography } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { FaRegPlusSquare, FaPlus, FaRegUserCircle } from 'react-icons/fa';
+import { Divider, Space, Card, Typography } from 'antd';
 
-const { Panel } = Collapse;
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, setactiveKey, onChange, styles, parameterType, handleEdit, onCloseAction } = props;
+    const { styles } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -25,20 +22,7 @@ const ViewDetailMain = (props) => {
         chassisNumber: 'MAFCL213214547',
         dob: '04/03/1998',
     };
-    // const AuthorityForm = {
-    //     companyName: 'uttar pradesh',
-    //     personName: 'ssss',
-    //     postion: '12312',
-    //     remarks: 'Delhi',
-    // };
-    // const keyAccountForm = {
-    //     accountClientName: 'uttar pradesh',
-    //     accountCode: 'ssss',
-    //     accountMappingDate: '12312',
-    //     accountName: 'Delhi',
-    //     accountSegment: true,
-    // };
-
+    
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">

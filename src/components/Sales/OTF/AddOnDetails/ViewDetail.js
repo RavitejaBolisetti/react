@@ -1,30 +1,15 @@
 import React from 'react';
-import { Descriptions } from 'antd';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Typography } from 'antd';
+import { Space, Collapse, Typography } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { FaRegPlusSquare, FaPlus, FaRegUserCircle } from 'react-icons/fa';
-import styles from 'components/common/Common.module.css';
 
 import AccessoriesInformationCard from './ViewDetails/AccessoriesInformationCard';
 
 const { Panel } = Collapse;
-const { Text, Link } = Typography;
+const { Text} = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, setActiveKey, onChange, styles, parameterType, handleEdit, onCloseAction } = props;
-    const viewProps = {
-        bordered: false,
-        colon: false,
-        layout: 'vertical',
-        column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
-    };
-    const customerForm = {
-        customerType: 'uttar pradesh',
-        corporateCode: 'ssss',
-        CustomerCategory: '12312',
-        usageCategorization: 'Delhi',
-        usageCategorizationcategory: true,
-    };
+    const { activeKey, onChange, styles } = props;
+
     const addonAccessoriesAccessories = [{ accessoriesName: 'Shield' }, { accessoriesName: 'RSA' }, { accessoriesName: 'AMC' }, { accessoriesName: 'FMS' }];
 
     return (
@@ -44,7 +29,6 @@ const ViewDetailMain = (props) => {
                 <Panel
                     header={
                         <div className={styles?.alignUser}>
-                            {/* <FaRegUserCircle className={styles?.userCircle} /> */}
                             <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                 Customer Information
                             </Text>
@@ -72,7 +56,6 @@ const ViewDetailMain = (props) => {
                     <Panel
                         header={
                             <div className={styles?.alignUser}>
-                                {/* <FaRegUserCircle className={styles?.userCircle} /> */}
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     {accessories.accessoriesName }
                                 </Text>

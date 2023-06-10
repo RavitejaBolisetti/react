@@ -6,7 +6,7 @@ import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
     const [activeKey, setactiveKey] = useState([1]);
@@ -24,8 +24,8 @@ const ViewDetailMain = (props) => {
         if (isPresent) {
             const newActivekeys = [];
 
-            activeKey.filter((item) => {
-                if (item != values) {
+            activeKey.forEach((item) => {
+                if (item !== values) {
                     newActivekeys.push(item);
                 }
             });

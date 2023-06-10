@@ -45,24 +45,6 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    ...bindActionCreators(
-        {
-            fetchDealerParentList: dealerParentDataActions.fetchList,
-            listDealerParentShowLoading: dealerParentDataActions.listShowLoading,
-
-            fetchList: dealerCompanyDataActions.fetchList,
-            saveData: dealerCompanyDataActions.saveData,
-            listShowLoading: dealerCompanyDataActions.listShowLoading,
-
-            fetchPincodeDetail: geoPincodeDataActions.fetchList,
-            pinCodeShowLoading: geoPincodeDataActions.listShowLoading,
-            showGlobalNotification,
-        },
-        dispatch
-    ),
-});
 
 export const OtfMasterBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isPinCodeLoading, pinCodeShowLoading } = props;
@@ -238,7 +220,6 @@ export const OtfMasterBase = (props) => {
         isPinCodeLoading,
         forceUpdate,
         pinCodeShowLoading,
-        handleButtonClick,
     };
 
     const tableProps = {
