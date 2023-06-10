@@ -154,8 +154,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         }
     }, [filterString, ManufacturerTermsConditionsDataLoaded, ManufacturerTermsConditionsData]);
 
-   
-
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
@@ -187,7 +185,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     };
 
     const onFinish = (values, e) => {
-        const newVersion = values.version ? Number(values?.version) + 0.1 : 1.0;
+        const newVersion = values.version ? Number(values?.version) + 1.0 : 1.0;
         let toDate = (values?.effectiveto).format('YYYY-MM-DD');
         let fromDate = (values?.effectivefrom).format('YYYY-MM-DD');
 
