@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Form, Col, Row, Button, Select, DatePicker } from 'antd';
+import { Input, Form, Col, Row, Select, DatePicker } from 'antd';
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ViewTermConditionList } from './ViewTermConditionList';
@@ -14,22 +14,7 @@ const { Option } = Select;
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { isViewModeVisible } = undefined, onFinish, onFinishFailed } = props;
     const { buttonData, setButtonData, handleButtonClick, formActionType } = props;
-    const { setProductName } = props;
-    const { setDocumentName } = props;
-    const { setLanguageName } = props;
     const [startDate, setStartDate] = useState(new Date());
-
-    const handleProductHierarchySelect = (label, value) => {
-        setProductName(value.children);
-    };
-
-    const handleDocumentTypeSelect = (label, value) => {
-        setDocumentName(value.children);
-    };
-
-    const handleLanguageSelect = (label, value) => {
-        setLanguageName(value.children);
-    };
 
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
