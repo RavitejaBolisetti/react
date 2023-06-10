@@ -21,10 +21,12 @@ const { Panel } = Collapse;
 const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible, setIsViewModeVisible } = props;
+    const { onCloseAction, isViewModeVisible, formActionType, setIsViewModeVisible } = props;
     const [form] = Form.useForm();
     const [customerForm] = Form.useForm();
     const [keyAccountForm] = Form.useForm();
+    const [isReadOnly, setIsReadOnly] = useState(false);
+    const [addButton, setAddButton] = useState(true);
     const [authorityForm] = Form.useForm();
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [openAccordian, setOpenAccordian] = useState();
@@ -34,6 +36,7 @@ const AddEditFormMain = (props) => {
         authorityForm: [],
     });
     const [customerFormValues, setcustomerForm] = useState();
+    const [collapseView, setCollapseView] = useState(false);
     const [keyAccountFormValues, setkeyAccountFormValues] = useState();
     const [authorityFormValues, setauthorityFormValues] = useState();
     const [done, setDone] = useState();
@@ -56,6 +59,7 @@ const AddEditFormMain = (props) => {
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
+        setIsReadOnly(false);
     };
     const addContactHandeler = (e) => {
         // e.preventDefault();
@@ -64,7 +68,17 @@ const AddEditFormMain = (props) => {
         console.log('clicked');
         setShowAddEditForm(true);
         setOpenAccordian('2');
+        setIsReadOnly(true);
     };
+
+    const onHandleAddChange = () => {
+        setCollapseView(true);
+    };
+
+    const onHandleResetButton = () => {
+        keyAccountForm.resetFields();
+    };
+
     const onFinish = () => {
         setShowAddEditForm(false);
 
@@ -138,7 +152,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            {!isViewModeVisible ? (
+            {!formActionType?.viewMode ? (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space size="middle" direction="vertical" className={styles.accordianContainer}>
@@ -269,12 +283,15 @@ const AddEditFormMain = (props) => {
                                 <Panel
                                     header={
                                         <div className={styles.alignUser}>
-                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                Tax & Charges Information
-                                            </Text>
-                                            <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
-                                                Add
-                                            </Button>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                                    Tax & Charges Information
+                                                </Text>
+
+                                                <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
+                                                    Add
+                                                </Button>
+                                            </Col>
                                         </div>
                                     }
                                     key="2"
@@ -307,28 +324,40 @@ const AddEditFormMain = (props) => {
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                 <Form.Item label="Charge Description" name="description">
-                                                    <TextArea rows={4} placeholder={preparePlaceholderText('description')} showCount maxLength={100} />
+                                                    <TextArea placeholder={preparePlaceholderText('description')} showCount maxLength={100} autoSize={{ minRows: 2, maxRows: 5 }} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                                <Button type="primary" onClick={onHandleAddChange}>
+                                                    Add
+                                                </Button>
+                                                <Button danger onClick={onHandleResetButton}>
+                                                    Reset
+                                                </Button>
+                                            </Col>
+                                        </Row>
+
+                                        <Collapse
+                                            expandIcon={() => {
+                                                if (activeKey.includes(4)) {
+                                                    return <MinusOutlined className={styles.iconsColor} />;
+                                                } else {
+                                                    return <PlusOutlined className={styles.iconsColor} />;
+                                                }
+                                            }}
+                                            activeKey={activeKey}
+                                            onChange={() => onChange(4)}
+                                            expandIconPosition="end"
+                                        >
+                                            
+                                        </Collapse>
                                     </Form>
                                 </Panel>
                             </Collapse>
-
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Button danger onClick={onCloseAction}>
-                                        Cancel
-                                    </Button>
-                                </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Button type="primary" onClick={onFinish} className={styles.floatRight}>
-                                        Save & Proceed
-                                    </Button>
-                                </Col>
-                            </Row>
                         </Space>
                     </Col>
                 </Row>
