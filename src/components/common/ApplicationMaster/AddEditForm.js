@@ -64,6 +64,8 @@ const AddEditFormMain = ({
         return () => {
             setIsBtnDisabled(false);
         };
+        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [finalFormdata?.applicationDetails?.accessableIndicator, finalFormdata?.applicationDetails?.documentNumRequired]);
 
     useEffect(() => {
