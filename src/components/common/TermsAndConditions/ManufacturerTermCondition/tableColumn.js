@@ -28,17 +28,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
 
         tblPrepareColumns({
-            title: 'Description',
-            dataIndex: 'termsconditiondescription',
-            width: '25%',
-            render: (dataIndex) => dataIndex.substring(0, 25) + (dataIndex.length > 25 ? '...' : ''),
-        }),
-        tblPrepareColumns({
-            title: 'Version',
-            dataIndex: 'version',
-            width: '2%',
-        }),
-        tblPrepareColumns({
             title: 'Effective From',
             dataIndex: 'effectivefrom',
             width: '13%',
@@ -49,6 +38,18 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             dataIndex: 'effectiveto',
             width: '13%',
             render: (text) => convertDate(text),
+        }),
+
+        tblPrepareColumns({
+            title: 'Description',
+            dataIndex: 'termsconditiondescription',
+            width: '25%',
+            render: (dataIndex) => dataIndex.substring(0, 25) + (dataIndex.length > 25 ? '...' : ''),
+        }),
+        tblPrepareColumns({
+            title: 'Version',
+            dataIndex: 'version',
+            width: '2%',
         }),
 
         tblPrepareColumns({

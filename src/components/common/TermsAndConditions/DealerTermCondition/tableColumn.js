@@ -30,16 +30,6 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
         }),
 
         tblPrepareColumns({
-            title: 'Description',
-            dataIndex: 'termConditionDescription',
-            width: '15%',
-        }),
-        tblPrepareColumns({
-            title: 'Version',
-            dataIndex: 'version',
-            width: '5%',
-        }),
-        tblPrepareColumns({
             title: 'Effective From',
             dataIndex: 'effectiveFrom',
             width: '15%',
@@ -50,6 +40,17 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
             dataIndex: 'effectiveTo',
             width: '15%',
             render: (text) => convertDate(text),
+        }),
+        tblPrepareColumns({
+            title: 'Description',
+            dataIndex: 'termConditionDescription',
+            width: '15%',
+            render: (dataIndex) => dataIndex.substring(0, 25) + (dataIndex.length > 25 ? '...' : ''),
+        }),
+        tblPrepareColumns({
+            title: 'Version',
+            dataIndex: 'version',
+            width: '5%',
         }),
         tblPrepareColumns({
             title: 'MFG T&C',
