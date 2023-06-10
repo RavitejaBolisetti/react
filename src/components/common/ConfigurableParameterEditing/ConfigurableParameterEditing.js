@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider } from 'antd';
-
 import dayjs from 'dayjs';
-
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
@@ -14,12 +11,10 @@ import { filterFunction } from 'utils/filterFunction';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
-
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
-
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
@@ -72,14 +67,11 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
     const [form] = Form.useForm();
     const defaultParametarType = CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
-
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
-
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
-
     const [footerEdit, setFooterEdit] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
@@ -87,7 +79,6 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
-
     const [parameterType, setParameterType] = useState(defaultParametarType);
 
     const loadDependendData = () => {
@@ -269,7 +260,6 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         setFormActionType('add');
         setShowSaveAndAddNewBtn(true);
         setIsViewModeVisible(false);
-
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);

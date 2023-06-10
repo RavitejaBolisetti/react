@@ -1,22 +1,17 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider, Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { ROUTING_USER_MANAGEMENT_MANUFACTURER } from 'constants/routing';
-
 import { IoBanOutline } from 'react-icons/io5';
-import { notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import DataTable from 'utils/dataTable/DataTable';
 import { showGlobalNotification } from 'store/actions/notification';
-import { escapeRegExp } from 'utils/escapeRegExp';
 import { userManagementDataActions } from 'store/actions/data/userManagement';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
-
 import { AddEditForm } from './AddEditForm';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
@@ -30,9 +25,9 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            UserManagement: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, isFormDataLoaded, data: UserManagementDealerData = [] },
-            ProductHierarchy: { isLoading: isprodLoading, isLoaded: isProdDataLoaded = false, data: productHierarchyData = [] },
-            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
+            UserManagement: { isLoaded: isDataLoaded = false, isLoading, isFormDataLoaded, data: UserManagementDealerData = [] },
+            ProductHierarchy: { data: productHierarchyData = [] },
+            HierarchyAttributeMaster: { data: attributeData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -50,7 +45,6 @@ const mapStateToProps = (state) => {
         productHierarchyData,
         moduleTitle,
         attributeData,
-        isLoadingOnSave,
         isFormDataLoaded,
     };
     return returnValue;
@@ -141,19 +135,14 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
-    const [isLoadingOnSave, setisLoadingOnSave] = useState();
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const navigate = useNavigate();
-
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
     const [forceFormReset, setForceFormReset] = useState(false);
-    const [searchData, setSearchdata] = useState();
-    const [refershData, setRefershData] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
-    const [filterString, setFilterString] = useState();
     const [footerEdit, setFooterEdit] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
@@ -185,7 +174,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         console.log('UserManagementDealerData : ', UserManagementDealerData);
         setDealerData(UserManagementDealerData);
         if (Object.entries(UserManagementDealerData)?.length > 0) {
-            setSearchdata([UserManagementDealerData]);
+           // setSearchdata([UserManagementDealerData]);
         }
     }, [UserManagementDealerData]);
     useEffect(() => {
@@ -209,7 +198,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     }, [isDataLoaded, userId]);
 
     useEffect(() => {
-        setSearchdata(qualificationData);
+        //setSearchdata(qualificationData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
         console.log('productHierarchyData', productHierarchyData);
         console.log('attributeData', attributeData);
@@ -231,12 +220,12 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         }
     }, [DealerSearchvalue, DealerSelected]);
 
-    useEffect(() => {
-        if (userId) {
-            // fetchList({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refershData, userId]);
+    // useEffect(() => {
+    //     if (userId) {
+    //         // fetchList({ setIsLoading: listShowLoading, userId });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [refershData, userId]);
 
     const tableDetails = [];
 
@@ -299,11 +288,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
             emailid: DealerData?.employeeEmail,
         },
     ];
-
-    const tableDetailProps = {
-        tableColumn: tableDetails,
-        tableData: tableDetailData,
-    };
 
     const tableColumn = [];
     tableColumn.push(
@@ -405,9 +389,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     };
 
     const onFinish = (values, e) => {
-        console.log('The On Finish Function Called : ');
-        const recordId = selectedRecord?.id || '';
-        const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
 
         const requestData = {
             data: savePayload,
@@ -522,7 +503,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         } else if (value === 'B6G433') {
             setError(false);
         }
-        setFilterString(value);
+        // setFilterString(value);
     };
 
     const handleChange = (selectedvalue) => {
@@ -545,7 +526,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         isVisible: isFormVisible,
         isViewModeVisible,
         setIsViewModeVisible,
-        isLoadingOnSave,
         formBtnDisable,
         isFormBtnActive,
         setFormBtnActive,
