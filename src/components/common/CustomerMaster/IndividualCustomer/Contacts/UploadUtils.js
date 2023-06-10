@@ -1,17 +1,13 @@
 import React from 'react';
-import { Button, Typography, Upload, message, Row, Col, Space } from 'antd';
+import { Button, Typography, Upload, Row, Col, Space } from 'antd';
 import Svg from 'assets/images/Filter.svg';
 import styles from '../../../Common.module.css';
-
 const { Dragger } = Upload;
 const { Text } = Typography;
 
-
-
 const UploadUtils = (props) => {
-    const {uploadTitle, uploadDescription, uploadBtnName, name, multiple, action, onChange} = props;
- 
-
+    const {uploadTitle, uploadDescription, uploadBtnName } = props;
+    
     return (
         <Row gutter={20} justify="center" style={{marginBotton: '40px'}} className={styles.uploadContainer}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>

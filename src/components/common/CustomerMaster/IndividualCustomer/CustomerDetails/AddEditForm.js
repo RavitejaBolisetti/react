@@ -39,10 +39,7 @@ const AddEditFormMain = (props) => {
     const onFinish = () => {
         const customerFormValues = customerForm.getFieldsValue();
         const keyAccountFormValues = keyAccountForm.getFieldsValue();
-
         const authorityFormValues = authorityForm.getFieldsValue();
-
-        console.log('customerFormValues', customerFormValues, 'keyAccountFormValues', keyAccountFormValues, 'authorityFormValues', authorityFormValues);
 
         customerForm
             .validateFields()
@@ -65,11 +62,11 @@ const AddEditFormMain = (props) => {
             });
     };
 
-    const onFinishFailed = () => {
-        customerForm.validateFields();
-        keyAccountForm.validateFields();
-        authorityForm.validateFields();
-    };
+    // const onFinishFailed = () => {
+    //     customerForm.validateFields();
+    //     keyAccountForm.validateFields();
+    //     authorityForm.validateFields();
+    // };
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 

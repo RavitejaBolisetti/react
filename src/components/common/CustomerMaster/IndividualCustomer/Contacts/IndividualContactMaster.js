@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-
-import { Col, Collapse, Form, Select, Space, Typography, Button, Row, Divider } from 'antd';
-import { UserOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
-
-import { FaUserCircle, FaRegUserCircle } from 'react-icons/fa';
-
-import { accordianExpandIcon, expandIcon } from 'utils/accordianExpandIcon';
+import { Col, Collapse, Form, Space, Typography, Button, Row, Divider } from 'antd';
+import { PlusOutlined} from '@ant-design/icons';
+import { FaRegUserCircle } from 'react-icons/fa';
+import { expandIcon } from 'utils/accordianExpandIcon';
 import AddEditForm from './AddEditForm';
 import styles from 'components/common/Common.module.css';
-import { ViewDetail } from './ViewContactDetails';
 import ViewContactList from './ViewContactList';
 
 const { Panel } = Collapse;
@@ -26,10 +22,6 @@ const IndividualContactMain = ({ isViewModeVisible }) => {
     };
 
     const onFinish = (value) => {
-        // adding new item
-        //also update logic go here
-        console.log('on finish value ', value);
-
         form.validatefields()
             .then((data) => console.log('data', data))
             .catch((error) => console.error(error));
