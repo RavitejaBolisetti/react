@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListStateMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, isLoading, listShowLoading, resetData, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded,  listShowLoading, resetData, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, countryShowLoading } = props;
 
     const [form] = Form.useForm();
@@ -337,7 +337,7 @@ export const ListStateMasterBase = (props) => {
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={isLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={title} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={title} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

@@ -15,9 +15,7 @@ const FamilyDetailsBase = () => {
         setValue(item);
     }, []);
 
-    const onFamilyFinish = (values) => {
-        
-    };
+    const onFamilyFinish = (values) => {};
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
@@ -41,4 +39,4 @@ const FamilyDetailsBase = () => {
     );
 };
 
-export const FamilyDetails= FamilyDetailsBase;
+export const FamilyDetails = FamilyDetailsBase;
