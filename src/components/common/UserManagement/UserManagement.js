@@ -2,11 +2,9 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider, Select } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ROUTING_USER_MANAGEMENT_MANUFACTURER } from 'constants/routing';
 
-import { EditIcon, ViewEyeIcon } from 'Icons';
-import { TfiReload } from 'react-icons/tfi';
 import { IoBanOutline } from 'react-icons/io5';
 import { notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -19,13 +17,11 @@ import { userManagementDataActions } from 'store/actions/data/userManagement';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 
-import DrawerUtil from './DrawerUtil';
 import { AddEditForm } from './AddEditForm';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 
 import styles from 'components/common/Common.module.css';
-// import style from 'components/common/DrawerAndTable.module.css';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -35,7 +31,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             UserManagement: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, isFormDataLoaded, data: UserManagementDealerData = [] },
-            ProductHierarchy: { isLoading: isprodLoading, isLoaded: isProdDataLoaded = false, data: productHierarchyData = [], skudata: skuData = [], changeHistoryVisible },
+            ProductHierarchy: { isLoading: isprodLoading, isLoaded: isProdDataLoaded = false, data: productHierarchyData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {

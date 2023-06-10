@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Col, Row, Button, Space } from 'antd';
 
 import moment from 'moment';
@@ -13,7 +12,7 @@ import styles from 'components/common/Common.module.css';
 
 const AllowedTimingCard = (props) => {
     const { id } = props;
-    const { deletedTime, setDeletedTime, buttonData, setButtonData, formActionType, setIsAddTimeVisible, timeData, setTimeData, timeSlotFrom, timeSlotTo, showGlobalNotification } = props;
+    const { deletedTime, setDeletedTime, buttonData, setButtonData, formActionType, setIsAddTimeVisible, setTimeData, timeSlotFrom, timeSlotTo, showGlobalNotification } = props;
 
     const handleDeleteAction = (val) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: LANGUAGE_EN.GENERAL.ALLOWED_TIMING_DELETED.MESSAGE, placement: 'bottomRight' });

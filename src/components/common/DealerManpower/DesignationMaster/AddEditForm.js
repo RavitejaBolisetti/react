@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Switch, Select, Checkbox } from 'antd';
 
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter, validateLettersWithWhitespaces } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -171,10 +171,6 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-
-                    {/* <Upload {...props}>
-                        <Button icon={<UploadOutlined />}>Upload Job Description</Button>
-                    </Upload> */}
                 </>
             )}
 

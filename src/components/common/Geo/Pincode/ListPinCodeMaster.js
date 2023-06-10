@@ -259,8 +259,6 @@ const ListPinCodeMasterBase = (props) => {
         if (!showDataLoading && data && userId) {
             if (filterString?.length > 0) {
                 const keyword = filterString?.pincode ? filterString?.pincode : filterString?.keyword;
-                const state = filterString?.stateCode;
-                const district = filterString?.districtCode;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.pincode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);

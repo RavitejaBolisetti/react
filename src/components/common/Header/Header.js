@@ -294,7 +294,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                 </div>
                                                 <div className={styles.userText}>
                                                     <div className={styles.userName}>{addToolTip(fullName)(fullName)}</div>
-                                                    <span className={styles.userRoleName}>Super Admin</span>
+                                                    <span className={styles.userRoleName}>{userType === 'DLR' ? 'Admin' : 'Super Admin'}</span>
                                                 </div>
                                                 <div className={`${styles.webmenuDropDownArrow} ${styles.dropdownArrow}`}>
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>

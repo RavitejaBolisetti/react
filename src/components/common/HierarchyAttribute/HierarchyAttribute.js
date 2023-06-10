@@ -5,15 +5,14 @@ import { bindActionCreators } from 'redux';
 import { TfiReload } from 'react-icons/tfi';
 import { PlusOutlined } from '@ant-design/icons';
 
-import { Button, Col, Form, Row, Select, Space, Input, notification, ConfigProvider, Empty, Tag } from 'antd';
+import { Button, Col, Form, Row, Select, Input } from 'antd';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
-import { FiEdit, FiEye } from 'react-icons/fi';
 
 import styles from 'components/common/Common.module.css';
 
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
-import { tblPrepareColumns } from 'utils/tableCloumn';
 import { showGlobalNotification } from 'store/actions/notification';
+
 import { AddEditForm } from './AddEditForm';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -74,16 +73,13 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
     const [searchData, setSearchdata] = useState('');
     const [ForceReset, setForceReset] = useState();
     const [selectedHierarchy, setSelectedHierarchy] = useState('');
-    const [saveclick, setsaveclick] = useState();
     const [RefershData, setRefershData] = useState(false);
 
-    const [saveandnewclick, setsaveandnewclick] = useState();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [filterString, setFilterString] = useState('');
 
-    const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -102,6 +98,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         setShowDataLoading(false);
         RefershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
+    
     const onErrorAction = (message) => {
         resetData();
         showGlobalNotification({ message });
@@ -177,7 +174,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
     };
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
-        console.log('buttonAction', buttonAction);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
@@ -273,8 +269,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         isViewModeVisible,
         codeIsReadOnly,
         tableData: detailData?.hierarchyAttribute,
-        setsaveclick,
-        setsaveandnewclick,
+
         onCloseAction: () => (setIsFormVisible(false), setFormBtnDisable(false), form.resetFields()),
         titleOverride: (isViewModeVisible ? 'View ' : editRow?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         selectedHierarchy,
@@ -282,7 +277,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         onFinish,
         setEditRow,
         editRow,
-        saveandnewclick,
         formActionType,
         handleEditView,
         isReadOnly,
@@ -290,7 +284,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         setFormBtnDisable,
         formBtnDisable,
         isLoadingOnSave,
-        formActionType,
         setFormActionType,
         buttonData,
         setButtonData,
@@ -300,7 +293,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
 
     return (
         <>
-            {contextAlertNotification}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>

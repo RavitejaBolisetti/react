@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 export const ListCityMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, resetData, isLoading, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, userId, resetData, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
 
     const { isStateDataLoaded, stateData, listStateShowLoading, fetchStateLovList } = props;
@@ -308,8 +308,7 @@ export const ListCityMasterBase = (props) => {
 
         saveData(requestData);
     };
-    const handleadd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
-
+    
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };

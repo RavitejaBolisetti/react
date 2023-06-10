@@ -27,7 +27,7 @@ const AddEditFormMain = (props) => {
         if (attributeData.find((attribute) => attribute.id === formData?.attributeKey)) {
             attributeHierarchyFieldValidation.initialValue = formData?.attributeKey;
         } else {
-            const Attribute = unFilteredAttributeData.find((attribute) => attribute.id === formData?.attributeKey);
+            const Attribute = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.attributeKey);
             if (Attribute) {
                 attributeHierarchyFieldValidation.initialValue = Attribute?.hierarchyAttribueName;
                 attributeHierarchyFieldValidation.rules.push({ type: 'number', message: Attribute?.hierarchyAttribueName + ' is not active anymore. Please select a different attribute. ' });

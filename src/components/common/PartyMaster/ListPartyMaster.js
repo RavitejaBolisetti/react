@@ -155,7 +155,7 @@ export const ListPartyMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        let data = { ...values, creditLimit: parseFloat(values?.creditLimit) };
+        let data = { ...values };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -211,6 +211,8 @@ export const ListPartyMasterBase = (props) => {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
+        } else if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
         }
     };
 
