@@ -2,15 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Input, Form, Collapse, Col, Row, Switch, Select, Button } from 'antd';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 import { withDrawer } from 'components/withDrawer';
-
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import TreeSelectField from '../TreeSelectField';
-import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
-
 import ProductAttributeMaster from './ProductAttribute/ProductAttributeMaster';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpaceHyphenPeriod } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
@@ -18,13 +14,12 @@ const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, unFilteredAttributeData, formActionType, isReadOnly = false, formData, fieldNames, isDataAttributeLoaded, attributeData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute, skuAttributes, treeSelectProps } = props;
-    const { isFormBtnActive, setFormBtnActive } = props;
+    const { onCloseAction, handleAttributeChange, unFilteredAttributeData, formActionType, isReadOnly = false, formData, fieldNames, isDataAttributeLoaded, attributeData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute } = props;
+    const { isFormBtnActive, setFormBtnActive,setNotification } = props;
     const { form, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
-    const { selectedTreeKey, flatternData, setSelectedTreeSelectKey, selectedTreeSelectKey, handleSelectTreeClick, treeProdFieldNames, productHierarchyData } = props;
+    const { selectedTreeKey, flatternData, setSelectedTreeSelectKey, selectedTreeSelectKey, handleSelectTreeClick, productHierarchyData } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
-
     const [actionForm] = Form.useForm();
     const [openAccordian, setOpenAccordian] = useState(1);
     const [isAddBtnDisabled, setAddBtnDisabled] = useState(false);
@@ -43,7 +38,7 @@ const AddEditFormMain = (props) => {
         if (attributeData.find((attribute) => attribute.id === formData?.attributeKey)) {
             attributeHierarchyFieldValidation.initialValue = formData?.attributeKey;
         } else {
-            const Attribute = unFilteredAttributeData.find((attribute) => attribute.id === formData?.attributeKey);
+            const Attribute = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.attributeKey);
             if (Attribute) {
                 attributeHierarchyFieldValidation.initialValue = Attribute?.hierarchyAttribueName;
                 attributeHierarchyFieldValidation.rules.push({ type: 'number', message: Attribute?.hierarchyAttribueName + ' is not active anymore. Please select a different attribute. ' });
@@ -138,6 +133,18 @@ const AddEditFormMain = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
+
+    useState( 
+        () =>{
+            if(selectedTreeData?.subProdct?.length > 0  && formActionType === FROM_ACTION_TYPE.EDIT){
+                setNotification(true);
+            }
+            else{
+                setNotification(false);
+            }
+        }
+    ,[selectedTreeData] )
+   
     return (
         <>
             <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinishFailed={onFinishFailed}>
@@ -181,12 +188,13 @@ const AddEditFormMain = (props) => {
                             <TextArea rows={1} placeholder={preparePlaceholderText('long description')} showCount maxLength={100} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
-
+                    {/* { selectedTreeData.subProdct.length > 0  && formActionType === FROM_ACTION_TYPE.EDIT ? null :   */}
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                         <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} label="Status" name="active">
-                            <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
+                            <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false}  {...disabledProps} />
                         </Form.Item>
                     </Col>
+                    {/* // } */}
                 </Row>
                 {showProductAttribute && (
                     <Row gutter={20}>
