@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Form, Row, Input, Empty } from 'antd';
+import { Button, Col, Form, Row, Input } from 'antd';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { FaHistory } from 'react-icons/fa';
 import TreeSelectField from 'components/common/TreeSelectField';

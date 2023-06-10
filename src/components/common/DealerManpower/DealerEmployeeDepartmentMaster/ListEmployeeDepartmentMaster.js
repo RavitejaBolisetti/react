@@ -120,7 +120,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                 const keyword = filterString?.keyword;
                 const division = filterString?.divisionCode;
 
-                const filterDataItem = data?.filter((item) => (keyword ?  filterFunction(keyword)(item?.departmentName) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.departmentCode) || filterFunction(keyword)(item?.departmentName) : true) && (division ? filterFunction(division)(item?.divisionCode) : true));
 
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
@@ -238,7 +238,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         tableData: searchData,
 
         isDivisionLoading,
-        divisionData,
+        divisionData:divisionData?.filter((i) => i.status),
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -276,6 +276,13 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         }
     };
 
+
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
+        }
+    };
+
     const removeFilter = (key) => {
         const { [key]: names, ...rest } = filterString;
         if (key === 'divisionCode') {
@@ -306,6 +313,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         removeFilter,
         handleResetFilter,
         onSearchHandle,
+        handleClearInSearch,
         setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,

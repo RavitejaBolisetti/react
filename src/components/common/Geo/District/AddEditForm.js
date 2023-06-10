@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Input, Form, Row, Select, Switch } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validateLettersWithWhitespaces } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
@@ -20,7 +20,7 @@ const AddEditFormMain = (props) => {
     };
 
     if (stateData && formData?.stateCode) {
-        if (stateData.find((attribute) => attribute.code === formData?.stateCode)) {
+        if (stateData.find((attribute) => attribute.key === formData?.stateCode)) {
             stateFieldValidation.initialValue = formData?.stateCode;
         } else {
             const Attribute = unFilteredStateData.find((attribute) => attribute.id === formData?.attributeKey);

@@ -65,15 +65,15 @@ const mapStateToProps = (state) => {
         isDistrictLoading,
         isStateLoading,
         isDistrictDataLoaded,
-        districtData,
+        districtData: districtData?.filter((i) => i.status),
         isTehsilDataLoaded,
         isTehsilLoading,
-        tehsilData,
+        tehsilData: tehsilData?.filter((i) => i.status),
         isCityDataLoaded,
         isCityLoading,
-        cityData,
+        cityData: cityData?.filter((i) => i.status),
         data,
-        stateData,
+        stateData: stateData?.filter((i) => i.status),
         isDataLoaded,
         isConfigDataLoaded,
         isConfigLoading,
@@ -259,8 +259,6 @@ const ListPinCodeMasterBase = (props) => {
         if (!showDataLoading && data && userId) {
             if (filterString?.length > 0) {
                 const keyword = filterString?.pincode ? filterString?.pincode : filterString?.keyword;
-                const state = filterString?.stateCode;
-                const district = filterString?.districtCode;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.pincode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
@@ -532,6 +530,13 @@ const ListPinCodeMasterBase = (props) => {
         }
     };
 
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 5) {
+            listFilterForm.validateFields(['code']);
+        }
+    };
+
+
     const removeFilter = (key) => {
         if (key === 'countryCode') {
             setFilterString(undefined);
@@ -572,6 +577,8 @@ const ListPinCodeMasterBase = (props) => {
         removeFilter,
         handleResetFilter,
         onSearchHandle,
+        handleClearInSearch,
+
         setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,

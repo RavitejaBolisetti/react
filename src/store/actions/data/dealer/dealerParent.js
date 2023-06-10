@@ -1,5 +1,5 @@
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_QUALIFICATION_MASTER as baseURL } from 'constants/routingApi';
+import { BASE_URL_DEALER_PARENT as baseURL } from 'constants/routingApi';
 
 const PREFIX = 'DEALER_PARENT_';
 const moduleName = 'Dealer Parent';

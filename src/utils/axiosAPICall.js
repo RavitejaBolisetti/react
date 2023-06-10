@@ -30,7 +30,7 @@ const baseAPICall = (params) => {
         };
     }
 
-    const unAuthorizedTtitle = LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.TITLE;
+    // const unAuthorizedTtitle = LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.TITLE;
     const unAuthorizedMessage = LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE;
 
     const handleErrorMessage = ({ onError, displayErrorTitle, errorTitle, errorMessage }) => {

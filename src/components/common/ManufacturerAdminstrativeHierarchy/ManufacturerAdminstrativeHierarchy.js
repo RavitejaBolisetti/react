@@ -78,7 +78,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ManufacturerAdminstrativeHierarchyMain = (props) => {
-    const { moduleTitle, viewTitle, isDetailLoaded, detailData, changeHistoryAuthorityModelOpen, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, fetchDetail, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, uploadModelOpen, authTypeDataLoaded, cardBtnDisableAction } = props;
+    const { moduleTitle, viewTitle, detailData, changeHistoryAuthorityModelOpen, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, fetchDetail, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, uploadModelOpen, authTypeDataLoaded, cardBtnDisableAction } = props;
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -189,7 +189,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const handleSelectTreeClick = (value) => {
         if (value === selectedTreeKey[0]) {
             return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
-
         }
         setSelectedTreeSelectKey(value);
     };
@@ -209,10 +208,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setIsFormVisible(true);
         setFormActionType(type);
         setFormBtnActive(false);
-    };
-
-    const handleAttributeChange = (value) => {
-        const selectedAttribute = attributeData?.find((i) => i.id === value);
     };
 
     const handleResetBtn = () => {
@@ -255,9 +250,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        // form.validateFields().then((values) => {});
-    };
+    const onFinishFailed = (errorInfo) => {};
 
     const myProps = {
         isTreeViewVisible,
@@ -288,7 +281,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         attributeData,
         fieldNames,
         setSelectedTreeSelectKey,
-        handleAttributeChange,
         isVisible: isFormVisible,
         onCloseAction: () => setIsFormVisible(false),
         handleResetBtn,
@@ -325,7 +317,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
-    const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING
+    const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
     const historyOptions = [
         {

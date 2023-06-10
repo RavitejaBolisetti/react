@@ -1,5 +1,4 @@
 import { tblPrepareColumns, tblSerialNumberColumn, tblStatusColumn, tblApprovalStatusColumn, tblActionColumn } from 'utils/tableCloumn';
-import { Checkbox } from 'antd';
 
 import styles from 'components/common/Common.module.css';
 
@@ -47,17 +46,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             dataIndex: 'stateName',
             width: '200px',
         }),
-
-        // tblPrepareColumns({
-        //     title: 'Detail',
-        //     width: '300px',
-        //     render: (text, record) => {
-        //         let $sDetail = 'Country:' + record?.countryName;
-        //         $sDetail += 'District:' + record?.districtName;
-
-        //         return $sDetail;
-        //     },
-        // }),
 
         tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%' })
     );

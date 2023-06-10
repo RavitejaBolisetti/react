@@ -107,7 +107,7 @@ rolemanagementDataActions.saveData = withAuthToken((params) => ({ token, accessT
     axiosAPICall(apiCallParams);
 });
 rolemanagementDataActions.fetchMenuList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, errorAction, data, userId, type } = params;
+    const { setIsLoading, errorAction, data, userId } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 

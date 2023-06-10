@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider } from 'antd';
+import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
@@ -15,15 +15,8 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
-import { PlusOutlined } from '@ant-design/icons';
-import { TfiReload } from 'react-icons/tfi';
-
-import styles from 'components/common/Common.module.css';
-
-const { Search } = Input;
 
 const mapStateToProps = (state) => {
     const {
@@ -32,7 +25,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { isLoaded: isPartyDataLoaded = false, isPartyDataLoading, data: configData = [], paramdata: typeData = [] },
             PartyMaster: { isLoaded: isDataLoaded = false, isLoading, data, detailData },
             Geo: {
-                Pincode: { isLoaded: isPinCodeDataLoaded = false, data: pincodeData },
+                Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
             },
         },
     } = state;
@@ -47,6 +40,7 @@ const mapStateToProps = (state) => {
         typeData,
         isDataLoaded,
         isPinCodeDataLoaded,
+        isPinCodeLoading,
         data,
         detailData,
         isLoading,
@@ -68,6 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: partyMasterDataActions.listShowLoading,
             showGlobalNotification,
 
+            listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
             fetchPincodeDetail: geoPincodeDataActions.fetchList,
         },
         dispatch
@@ -77,7 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const ListPartyMasterBase = (props) => {
     const { data, detailData, saveData, fetchList, fetchDetail, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { typeData, configFetchList, configListShowLoading } = props;
-    const { isPincodeDataLoaded, fetchPincodeDetail, pincodeData } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -129,7 +124,7 @@ export const ListPartyMasterBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.partyCode) || filterFunction(keyword)(item?.partyName) || filterFunction(keyword)(item?.partyCategory) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.partyName) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -148,7 +143,7 @@ export const ListPartyMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-        forceUpdate()
+        forceUpdate();
         if (buttonAction === EDIT_ACTION || buttonAction === VIEW_ACTION) {
             fetchDetail({ setIsLoading: listShowLoading, userId, partyCode: `${record?.partyCode}` });
             setRecordData(record);
@@ -160,7 +155,7 @@ export const ListPartyMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        let data = { ...values, creditLimit: parseFloat(values?.creditLimit) };
+        let data = { ...values };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -201,11 +196,8 @@ export const ListPartyMasterBase = (props) => {
 
     const onCloseAction = () => {
         form.resetFields();
-        console.log("kbjkvbjkk")
-
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
-        // forceUpdate();
     };
 
     const onSearchHandle = (value) => {
@@ -219,6 +211,8 @@ export const ListPartyMasterBase = (props) => {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
+        } else if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
         }
     };
 
@@ -242,7 +236,9 @@ export const ListPartyMasterBase = (props) => {
         setFormData,
         detailData,
 
+        listPinCodeShowLoading,
         fetchPincodeDetail,
+        isPinCodeLoading,
         pincodeData,
 
         forceUpdate,

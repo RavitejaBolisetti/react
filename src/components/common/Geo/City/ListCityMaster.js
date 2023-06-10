@@ -48,10 +48,10 @@ const mapStateToProps = (state) => {
         defaultCountry,
         isStateDataLoaded,
         isStateLoading,
-        stateData,
+        stateData: stateData?.filter((i) => i.status),
         isDistrictDataLoaded,
         isDistrictLoading,
-        districtData,
+        districtData: districtData?.filter((i) => i.status),
         isDataLoaded,
         isLoading,
         data,
@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 export const ListCityMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, resetData, isLoading, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, userId, resetData, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
 
     const { isStateDataLoaded, stateData, listStateShowLoading, fetchStateLovList } = props;
@@ -159,7 +159,7 @@ export const ListCityMasterBase = (props) => {
                 const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
                 const state = filterString?.stateCode;
                 const district = filterString?.districtCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -247,6 +247,12 @@ export const ListCityMasterBase = (props) => {
         }
     };
 
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
+        }
+    };
+
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
@@ -302,8 +308,7 @@ export const ListCityMasterBase = (props) => {
 
         saveData(requestData);
     };
-    const handleadd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
-
+    
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
@@ -398,6 +403,7 @@ export const ListCityMasterBase = (props) => {
         removeFilter,
         handleResetFilter,
         onSearchHandle,
+        handleClearInSearch,
         setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,

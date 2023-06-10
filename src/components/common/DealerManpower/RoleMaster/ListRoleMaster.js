@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
-import { RxCross2 } from 'react-icons/rx';
 import { bindActionCreators } from 'redux';
+
+import { Col, Form, Row } from 'antd';
 
 import { dealerManpowerDivisionMasterDataActions } from 'store/actions/data/dealerManpower/dealerDivisionMaster';
 import { dealerManpowerEmployeeDepartmentDataActions } from 'store/actions/data/dealerManpower/dealerEmployeeDepartmentMaster';
@@ -15,19 +15,11 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { filterFunction } from 'utils/filterFunction';
-import { searchValidator } from 'utils/validation';
 import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
-import { PlusOutlined } from '@ant-design/icons';
 import { FilterIcon } from 'Icons';
-import { TfiReload } from 'react-icons/tfi';
-
-import styles from 'components/common/Common.module.css';
-
-const { Search } = Input;
-const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
@@ -50,11 +42,11 @@ const mapStateToProps = (state) => {
 
         isDivisionDataLoaded,
         isDivisionLoading,
-        divisionData,
-
+        divisionData: divisionData?.filter((i) => i.status),
+        
         isDepartmentDataLoaded,
         isDepartmentLoading,
-        departmentData,
+        departmentData: departmentData?.filter((i) => i.status),
 
         isLoading,
         moduleTitle,
@@ -141,7 +133,7 @@ export const ListRoleMasterBase = (props) => {
                 const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
                 const division = filterString?.divisionCode;
                 const department = filterString?.departmentCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.roleDescription) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.roleCode) || filterFunction(keyword)(item?.roleDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -211,6 +203,12 @@ export const ListRoleMasterBase = (props) => {
         if (value?.trim()?.length >= 3) {
             setFilterString({ ...filterString, advanceFilter: true, keyword: value });
             listFilterForm.setFieldsValue({ code: undefined });
+        }
+    };
+
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
         }
     };
 
@@ -369,6 +367,7 @@ export const ListRoleMasterBase = (props) => {
         removeFilter,
         handleResetFilter,
         onSearchHandle,
+        handleClearInSearch,
         setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,

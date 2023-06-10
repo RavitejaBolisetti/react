@@ -16,7 +16,7 @@ export const ViewProductDetailMain = ({ form, setSKUAttributes, isAddBtnDisabled
     };
 
     const [view, setView] = useState(true);
-
+ 
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner} ${styles.viewProductDetail}`}>
             <Descriptions {...viewProps}>
