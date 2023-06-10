@@ -20,7 +20,6 @@ import * as IMAGES from 'assets';
 import { ROUTING_LOGIN } from 'constants/routing';
 import Footer from '../Footer';
 import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const mapStateToProps = (state) => {
     const {

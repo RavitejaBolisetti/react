@@ -2,11 +2,10 @@ import React from 'react';
 import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
-import { convertCalenderDate, convertDate } from 'utils/formatDateTime';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
-import { ViewConfigDetails } from './ViewConfigDetails'
+import { ViewConfigDetails } from './ViewConfigDetails';
 
 import styles from 'components/common/Common.module.css';
 
@@ -15,7 +14,7 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { typeData, configData, parameterType, setParameterType, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
-    const { footerEdit, form,setClosePanels, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible, setisViewModeVisible } = props;
+    const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, isLoadingOnSave } = props;
 
     const handleFormValueChange = () => {
@@ -34,18 +33,15 @@ const AddEditFormMain = (props) => {
     };
 
     const changeSelectOptionHandler = (event) => {
-        
         setParameterType(event);
     };
 
     const viewProps = {
         isVisible: isViewModeVisible,
-        setClosePanels,
         formData,
         styles,
-        parameterType
+        parameterType,
     };
-
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -74,7 +70,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item  label="Configurable Parameter Type"  rules={[validateRequiredSelectField('ConfigParamType')]}>
+                            <Form.Item label="Configurable Parameter Type" rules={[validateRequiredSelectField('ConfigParamType')]}>
                                 <Select defaultValue={parameterType} placeholder="Select Parameter Type" onChange={changeSelectOptionHandler} disabled={isReadOnly}>
                                     {typeData && typeData[PARAM_MASTER.CFG_PARAM_TYPE.id] && typeData[PARAM_MASTER.CFG_PARAM_TYPE.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)}
                                 </Select>
@@ -105,13 +101,13 @@ const AddEditFormMain = (props) => {
                             ) : parameterType && parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY ? (
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="From Date" name="fromDate"  rules={[validateRequiredInputField('Number')]}>
+                                        <Form.Item label="From Date" name="fromDate" rules={[validateRequiredInputField('Number')]}>
                                             <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="To Date" name="toDate"  rules={[validateRequiredInputField('Number')]}>
+                                        <Form.Item label="To Date" name="toDate" rules={[validateRequiredInputField('Number')]}>
                                             <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                         </Form.Item>
                                     </Col>

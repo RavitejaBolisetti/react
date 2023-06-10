@@ -9,8 +9,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
 
     tableColumn.push(
-        //tblSerialNumberColumn({ page, pageSize, width: '5%' }),
-
         tblPrepareColumns({
             title: 'Product Hierarchy',
             dataIndex: 'productName',
@@ -52,23 +50,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '13%',
             render: (text) => convertDate(text),
         }),
-        // tblPrepareColumns({
-        //     title: 'MFG T&C',
-        //     width: '15%',
-        //     sorter: false,
-        //     render: (text, record, index) => {
-        //         return (
-        //             <Space>
-        //                 {
-        //                     <Button className={styles.tableIcons} danger ghost aria-label="ai-view">
-        //                         {/* onClick={() => handleView(record)} */}
-        //                         <ViewEyeIcon />
-        //                     </Button>
-        //                 }
-        //             </Space>
-        //         );
-        //     },
-        // }),
+
         tblPrepareColumns({
             title: 'View',
             width: '5%',
@@ -83,8 +65,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
                 );
             },
         })
-
-        // tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%' })
     );
 
     return tableColumn;

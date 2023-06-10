@@ -81,8 +81,6 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
                 );
             },
         })
-
-        // tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%' })
     );
 
     return tableColumn;

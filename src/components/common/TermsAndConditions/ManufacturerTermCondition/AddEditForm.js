@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Form, Col, Row, Select, DatePicker } from 'antd';
-
+import { Row, Col, Input, Form, Select, DatePicker } from 'antd';
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-
 import { ViewTermConditionList } from './ViewTermConditionList';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -15,16 +13,27 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { isViewModeVisible } = undefined, onFinish, onFinishFailed } = props;
-    // const dateInitialValue = { initialValue: convertCalenderDate(formData?.includedOn, 'YYYY/MM/DD') };
     const { buttonData, setButtonData, handleButtonClick, formActionType, effectiveFrom, effectiveTo } = props;
-    const { termsAndCondition, setTermsAndCondition } = props;
-    //const [ termConditionDescription , setTermConditionDescription ] = useState("");
+    const { setProductName, setLanguageName, setDocumentName, termsAndCondition } = props;
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState();
 
     useEffect(() => {
         form.resetFields();
-    }, [effectiveFrom, effectiveTo]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [effectiveFrom, effectiveTo, form]);
+
+    const handleProductHierarchySelect = (label, value) => {
+        setProductName(value.children);
+    };
+
+    const handleDocumentTypeSelect = (label, value) => {
+        setDocumentName(value.children);
+    };
+
+    const handleLanguageSelect = (label, value) => {
+        setLanguageName(value.children);
+    };
 
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -55,7 +64,6 @@ const AddEditFormMain = (props) => {
     const disableFromDate = (value) => {
         var d = new Date();
         return value < d.setDate(d.getDate() - 1);
-        // value > endDate;
     };
 
     const disableToDate = (value) => {

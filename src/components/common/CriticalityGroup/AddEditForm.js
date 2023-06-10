@@ -14,7 +14,7 @@ import AllowedTimingList from './AllowedTimings/AllowedTimingList';
 import style from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
-    const { formActionType, setIsFormVisible, forceUpdate, showGlobalNotification, onFinish, onFinishFailed, form, formData, setFormData, defaultBtnVisiblity, criticalityGroupData, timeData, setTimeData } = props;
+    const { formActionType, setIsFormVisible, forceUpdate, showGlobalNotification, onFinish, onFinishFailed, form, formData, setFormData, defaultBtnVisiblity, timeData, setTimeData } = props;
     const { isLoadingOnSave, deletedTime, setDeletedTime, buttonData, setButtonData, handleButtonClick } = props;
 
     const [TimesegmentLengthTracker, setTimesegmentLengthTracker] = useState(generateRandomNumber());

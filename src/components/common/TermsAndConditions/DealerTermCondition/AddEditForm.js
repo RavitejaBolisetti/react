@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { Input, Form, Col, Row, Select, DatePicker } from 'antd';
-
+import { Input, Form, Col, Row, Button, Select, DatePicker } from 'antd';
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-
 import { ViewTermConditionList } from './ViewTermConditionList';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -16,8 +14,22 @@ const { Option } = Select;
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { isViewModeVisible } = undefined, onFinish, onFinishFailed } = props;
     const { buttonData, setButtonData, handleButtonClick, formActionType } = props;
+    const { setProductName } = props;
+    const { setDocumentName } = props;
+    const { setLanguageName } = props;
     const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState();
+
+    const handleProductHierarchySelect = (label, value) => {
+        setProductName(value.children);
+    };
+
+    const handleDocumentTypeSelect = (label, value) => {
+        setDocumentName(value.children);
+    };
+
+    const handleLanguageSelect = (label, value) => {
+        setLanguageName(value.children);
+    };
 
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -43,7 +55,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleToDateChange = (value) => {
-        setEndDate(value);
+        //setEndDate(value);
     };
 
     const disableFromDate = (value) => {
@@ -134,12 +146,6 @@ const AddEditFormMain = (props) => {
                                 {/* onChange={(event, editor) => { const data = editor.getData(), setContent(data)}} */}
                             </Form.Item>
                         </Col>
-                        {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            {termsAndCondition}
-                            <Form.Item name="description" initialValue={termsAndCondition}>
-                                <Input disabled={formActionType?.viewMode} value />
-                            </Form.Item>
-                        </Col> */}
                     </Row>
                 </>
             ) : (

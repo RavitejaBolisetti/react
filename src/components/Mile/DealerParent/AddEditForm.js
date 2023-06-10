@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Input, Form, Row, Switch, Select } from 'antd';
-import { validateRequiredInputField, validateMobileNoField, validateEmailField, validateRequiredSelectField, validationFieldLetterAndNumber, validateLettersWithWhitespaces } from 'utils/validation';
+import { validateRequiredInputField, validateMobileNoField, validateEmailField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';

@@ -1,34 +1,26 @@
-import React, { useState, useRef, } from 'react';
+import React, { useState, useRef } from 'react';
 
-import { Col, Checkbox,  Row, Button, Form, Input,  Select, Space } from 'antd';
+import { Col, Checkbox, Row, Button, Form, Input, Select, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
-
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField,  validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
-
-let index = 0;
+import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onFinish, form } = props;
+    const { onFinish, form } = props;
 
     const [items, setItems] = useState(['Office', 'Residence', 'Permanent', 'Other']);
     const [name, setName] = useState('');
-    const [isOther, setIsOther] = useState(false);
 
     const inputRef = useRef(null);
     const onNameChange = (event) => {
         setName(event.target.value);
     };
 
-
     const handleReset = () => {
         form.resetFields();
     };
 
-    const handleOther = (key) => {
-        setIsOther(key === 4);
-    };
     return (
         <>
             <Form form={form} id="myAdd" onFinish={onFinish} autoComplete="off" layout="vertical">
@@ -36,7 +28,6 @@ const AddEditForm = (props) => {
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type')]}>
                             <Select
-                                onChange={handleOther}
                                 placeholder={preparePlaceholderSelect('address Type')}
                                 dropdownRender={(menu) => (
                                     <>

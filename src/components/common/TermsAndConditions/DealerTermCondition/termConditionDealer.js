@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Col, Row, Form } from 'antd';
+import { Row, Col, Input, Form } from 'antd';
+import { notification } from 'antd';
+
 import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
@@ -27,7 +29,6 @@ const mapStateToProps = (state) => {
                 ProductHierarchyData: { isLoaded: isDataLoaded = false, data: productHierarchyList, isLoading, isLoadingOnSave, isFormDataLoaded },
                 DocumentTypeData: { isLoaded: isDocumentTypeDataLoaded = false, data: documentTypeList },
                 LanguageData: { isLoaded: islanguageDataLoaded = false, data: languageList },
-                // FetchTermsConditionsList: { isLoaded: isTermConditionDataLoaded = false, data: termsConditionsList },
                 DealerTermsConditions: { isLoaded: DealerTermsConditionsDataLoaded = false, data: DealerTermsConditionsData },
                 ManufacturerTermsConditions: { isLoaded: manufacturerTncLoaded = false, data: ManufacturerData },
                 ChangeHistoryTermsConditions: { isLoaded: ChangeHistoryTermsConditionsDataLoaded = false, data: ChangeHistoryTermsConditionsData },
@@ -55,8 +56,6 @@ const mapStateToProps = (state) => {
         isLoadingOnSave,
         isFormDataLoaded,
         moduleTitle,
-        // isTermConditionDataLoaded,
-        // termsConditionsList,
         DealerTermsConditionsData,
         DealerTermsConditionsDataLoaded,
         ChangeHistoryTermsConditionsData,
@@ -71,7 +70,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            // fetchList: tncFetchDealerListActions.fetchList,
             fetchProductList: tncProductHierarchyDataActions.fetchList,
             resetData: tncProductHierarchyDataActions.reset,
             listShowLoading: tncProductHierarchyDataActions.listShowLoading,
@@ -94,24 +92,17 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const [form] = Form.useForm();
     const [formActionType, setFormActionType] = useState('');
     const [data, setData] = useState(initialTableData);
-    // const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
 
     const [forceFormReset, setForceFormReset] = useState(false);
     const [searchData, setSearchdata] = useState();
-    const [searchDataChangeHistory, setSearchdataChangeHistory] = useState();
     const [refershData, setRefershData] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [filterString, setFilterString] = useState();
     const [selectedRecord, setSelectedRecord] = useState(null);
-    const [saveBtn, setSaveBtn] = useState(false);
-    const [saveclick, setsaveclick] = useState();
-    // const [saveandnewclick, setsaveandnewclick] = useState();
-    const [successAlert, setSuccessAlert] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [showDataLoading, setShowDataLoading] = useState(true);
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [listFilterForm] = Form.useForm();
@@ -122,13 +113,14 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const [effectiveFrom, seteffectiveFrom] = useState('');
     const [effectiveTo, seteffectiveTo] = useState('');
     const [CustomEditorLoad, setCustomEditorLoad] = useState(Math.random());
-
-    const [isHistoryVisible, setIsHistoryVisible] = useState(false);
+    const [showDataLoading, setShowDataLoading] = useState(true);
     const [page, setPage] = useState(1);
+    const [isHistoryVisible, setIsHistoryVisible] = useState(false);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
@@ -143,6 +135,13 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
+            fetchTermCondition({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, userId]);
+
+    useEffect(() => {
+        if (!isDocumentTypeDataLoaded && userId) {
             fetchDocumentTypeList({ setIsLoading: listShowLoading, userId });
             fetchLanguageList({ setIsLoading: listShowLoading, userId });
             fetchTermCondition({ setIsLoading: listShowLoading, userId });
@@ -165,12 +164,6 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
             }
         }
     }, [filterString, DealerTermsConditionsDataLoaded, DealerTermsConditionsData]);
-
-    useEffect(() => {
-        if (ChangeHistoryTermsConditionsDataLoaded && ChangeHistoryTermsConditionsData) {
-            setSearchdataChangeHistory(ChangeHistoryTermsConditionsData);
-        }
-    }, [ChangeHistoryTermsConditionsDataLoaded, ChangeHistoryTermsConditionsData]);
 
     useEffect(() => {
         if (manufacturerTncLoaded && ManufacturerData) {
@@ -218,14 +211,13 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const onFinish = (values, e) => {
         const recordId = formData?.id || '';
         const newVersion = (values.version ? Number(values?.version) + 0.1 : 1.0).toFixed(1);
-        // console.log('typeof', typeof termsAndCondition);
-        const termConditionText = values.termConditionDescription.editor.getData().replace(/[&\/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
+        const termConditionText = termsAndCondition.replace(/[&\/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
         const data = { ...values, version: String(newVersion), id: recordId, termConditionDescription: termConditionText };
+
         const onSuccess = (res) => {
             listShowLoading(false);
             form.resetFields();
             setSelectedRecord({});
-            setSuccessAlert(true);
             setIsFormVisible(false);
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
         };
@@ -259,6 +251,8 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         setRefershData(!refershData);
     };
 
+    
+
     const onSearchHandle = (value) => {
         setFilterString(value);
     };
@@ -276,14 +270,11 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const formProps = {
         isVisible: isFormVisible,
         isViewModeVisible,
-        saveclick,
-        setsaveclick,
         setIsFormVisible,
         onCloseAction,
         titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
         selectedRecord,
         formBtnDisable,
-        saveBtn,
         setFormBtnDisable,
         onFinishFailed,
         onFinish,
