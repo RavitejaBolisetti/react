@@ -4,7 +4,7 @@ import styles from './TreeView.module.css';
 
 const LeftPanel = (props) => {
     const { selectedTreeKey, treeData, fieldNames, handleTreeViewClick, isOpenInModal } = props;
-    const { isTreeViewVisible, handleTreeViewVisiblity } = props;
+    const { isTreeViewVisible } = props;
     const { searchValue, setSearchValue } = props;
 
     const [expandedKeys, setExpandedKeys] = useState([]);
