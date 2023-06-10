@@ -1,11 +1,10 @@
 import React from 'react';
 import { Timeline, Progress, Button } from 'antd';
-import { CaretRightOutlined } from '@ant-design/icons';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 
 const FormProgressBar = (props) => {
-    const { leftTimeline, setleftTimeline, toggleButton, settoggleButton } = props;
+    const { leftTimeline, setleftTimeline, toggleButton } = props;
     const onHandle = (key) => {
         switch (key) {
             case 'details': {
