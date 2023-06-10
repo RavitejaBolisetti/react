@@ -108,7 +108,7 @@ export const ListLessorCompanyMasterBase = (props) => {
         if (detailData?.length > 0 && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = detailData?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyCode) || filterFunction(keyword)(item?.companyDescription) : true));
+                const filterDataItem = detailData?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyDescription) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -140,12 +140,14 @@ export const ListLessorCompanyMasterBase = (props) => {
             setFilterString({ ...filterString, advanceFilter: false, keyword: value });
         }
     };
-
+   
     const handleClearInSearch = (e) => {
         if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
+        } else if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
         }
     };
 

@@ -12,7 +12,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { advanceFilter = false, handleDownloadReport = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false } = props;
+    const { showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -55,18 +55,27 @@ export default function AppliedAdvanceFilter(props) {
                             )}
                         </Row>
                     </Col>
+                    {(showChangeHistoryButton || showAddButton) && (
+                        <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                            {showChangeHistoryButton && (
+                                <>
+                                    <Button onClick={showChangeHistoryList} className={styles.actionbtn} type="primary" danger>
+                                        Change History
+                                    </Button>
+                                </>
+                            )}
 
-                    <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                        {advanceFilter && filterString?.advanceFilter && downloadReport && (
-                            <Button icon={<BsDownload />} className={styles.refreshBtn} onClick={handleDownloadReport} danger>
-                                Download
+                            {advanceFilter && filterString?.advanceFilter && downloadReport && (
+                                <Button icon={<BsDownload />} className={styles.refreshBtn} onClick={handleDownloadReport} danger>
+                                    Download
+                                </Button>
+                            )}
+                            <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                Add
                             </Button>
-                        )}
-                        <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                            Add
-                        </Button>
-                    </Col>
+                        </Col>
+                    )}
                 </Row>
                 {advanceFilter && filterString?.advanceFilter && (
                     <Row gutter={20}>

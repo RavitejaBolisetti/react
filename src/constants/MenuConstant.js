@@ -4,7 +4,7 @@ import { HiCurrencyRupee } from 'react-icons/hi';
 import { MdStars } from 'react-icons/md';
 import { TbReport } from 'react-icons/tb';
 import { HomeIcon, AdminIcon, CrmIcon, HrIcon, ServiceIcon, SparesIcon } from 'Icons';
-
+ 
 import { getMenyKey } from 'utils/menuKey';
 
 import * as routing from './routing';
@@ -59,18 +59,18 @@ export const MenuConstant = {
         parentMenuId: 'COMN-03',
     },
 
-    [getMenyKey('COMN-10.03')]: {
-        key: 'COMN-10.03',
-        link: routing.ROUTING_COMMON_LESSOR_COMPANY_MASTER,
+    [getMenyKey('COMN-03.04')]: {
+        key: 'COMN-03.04',
+        link: routing.ROUTING_COMMON_TERM_CONDITION_MANUFACTURER,
         icon: undefined,
-        parentMenuId: 'COMN-10.a',
+        parentMenuId: 'COMN-03',
     },
 
-    [getMenyKey('PMA')]: {
-        key: 'PMA',
-        link: routing.ROUTING_COMMON_PRODUCT_MASTER,
+    [getMenyKey('COMN-03.05')]: {
+        key: 'COMN-03.05',
+        link: routing.ROUTING_COMMON_TERM_CONDITION_DEALER,
         icon: undefined,
-        parentMenuId: 'FAV',
+        parentMenuId: 'COMN-03',
     },
 
     [getMenyKey('COMN')]: {
@@ -85,7 +85,7 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'ADMN',
     },
-    
+
     [getMenyKey('COMN-08.05')]: {
         key: 'COMN-08.05',
         link: routing.ROUTING_MILE_DEALER_HIERARCHY_DEALER_PARENT,
@@ -160,6 +160,13 @@ export const MenuConstant = {
         link: routing.ROUTING_COMMON_PARTY_MASTER,
         icon: undefined,
         parentMenuId: 'COMN-10',
+    },
+
+    [getMenyKey('COMN-10.03')]: {
+        key: 'COMN-10.03',
+        link: routing.ROUTING_COMMON_LESSOR_COMPANY_MASTER,
+        icon: undefined,
+        parentMenuId: 'COMN-10.a',
     },
 
     [getMenyKey('MILE-01.04')]: {

@@ -75,7 +75,7 @@ const AddEditFormMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    const handleOnSelect = (key, option) => {
+    const handleOnSelect = (key) => {
         const selectedPinCode = pincodeData?.find((i) => i.id === key);
         if (selectedPinCode) {
             form.setFieldsValue({
@@ -91,7 +91,9 @@ const AddEditFormMain = (props) => {
     };
 
     const handleOnSearch = (value) => {
-        if (value.length > 5) {
+        if (value.length <= 5) {
+            form.validateFields(['pinCode']);
+        } else if (value.length > 5) {
             setOptions();
             const extraParams = [
                 {
@@ -113,17 +115,6 @@ const AddEditFormMain = (props) => {
             district: undefined,
             locality: undefined,
         });
-    };
-
-    const handleOnfocus = (e) => {
-        setOptions();
-        const extraParams = [
-            {
-                key: 'pincode',
-                value: e.target.value,
-            },
-        ];
-        fetchPincodeDetail({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
 
     const viewProps = {
@@ -202,15 +193,15 @@ const AddEditFormMain = (props) => {
                         <Row gutter={16}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={formData?.address} label="Address" name="address" rules={[validateRequiredInputField('address')]}>
-                                    <TextArea rows={2} {...disabledProps} placeholder={preparePlaceholderText('Address')} showCount maxLength={255} />
+                                    <TextArea rows={2} {...disabledProps} placeholder={preparePlaceholderText('Address')} showCount maxLength={100} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={16}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
-                                    <AutoComplete {...disabledProps} className={styles.searchField} options={options} onSelect={handleOnSelect} onFocus={handleOnfocus}>
-                                        <Input.Search onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} type="text" allowClear />
+                                    <AutoComplete {...disabledProps} maxLength={6} className={styles.searchField} options={options} onSelect={handleOnSelect}>
+                                        <Input.Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} type="text" allowClear />
                                     </AutoComplete>
                                 </Form.Item>
                             </Col>

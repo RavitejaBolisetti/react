@@ -116,7 +116,7 @@ export const dataActions = (params) => {
         }),
 
         fetchDetail: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, code = '', onErrorAction = undefined, partyCode = '', parameterType = '', onSuccessAction = undefined, extraParams = undefined, id = '', type = '', customerId = '' } = params;
+            const { setIsLoading, data, code = '', onErrorAction = undefined, partyCode = '', parameterType = '', onSuccessAction = undefined, id = '', type = '', customerId = '' } = params;
             setIsLoading(true);
 
             const onError = (message) => {
@@ -132,12 +132,12 @@ export const dataActions = (params) => {
                 }
             };
 
-            let sExtraParamsString = '?';
-            extraParams?.forEach((item, index) => {
-                sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
-            });
+            // let sExtraParamsString = '?';
+            // extraParams?.forEach((item, index) => {
+            //     sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+            // });
 
-            sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+            // sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
 
             const apiCallParams = {
                 data,
@@ -185,7 +185,7 @@ export const dataActions = (params) => {
         }),
 
         exportToExcel: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, type = '', mytype = '', onSuccessAction = undefined, onErrorAction = undefined, extraParams = [] } = params;
+            const { setIsLoading, data, type = '', mytype = '', onErrorAction = undefined, extraParams = [] } = params;
             setIsLoading(true);
 
             const onError = (message) => {

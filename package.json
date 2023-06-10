@@ -2,7 +2,9 @@
     "name": "dms-ui-application",
     "version": "0.0.1",
     "private": true,
-    "dependencies": { 
+    "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^38.0.1",
+        "@ckeditor/ckeditor5-react": "^6.0.0",
         "@nastyox/rando.js": "^2.0.5",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",
@@ -10,6 +12,7 @@
         "antd": "^5.3.3",
         "axios": "^1.2.3",
         "bootstrap": "^4.6.0",
+        "ckeditor4-react": "^4.2.0",
         "encrypt-storage": "^2.12.14",
         "history": "^5.3.0",
         "jest": "^27.5.1",
@@ -23,7 +26,7 @@
         "react-dom": "^18.2.0",
         "react-google-recaptcha3": "^1.0.4",
         "react-helmet": "^6.1.0",
-        "react-icons": "^4.8.0",        
+        "react-icons": "^4.8.0",
         "react-idle-timer": "^5.6.2",
         "react-loading-skeleton": "^3.1.0",
         "react-redux": "^8.0.5",

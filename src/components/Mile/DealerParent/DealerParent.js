@@ -44,7 +44,9 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: dealerParentDataActions.fetchList,
             saveData: dealerParentDataActions.saveData,
             listShowLoading: dealerParentDataActions.listShowLoading,
+
             fetchTitleList: dealerParentTitleDataActions.fetchDetail,
+            
             showGlobalNotification,
         },
         dispatch
