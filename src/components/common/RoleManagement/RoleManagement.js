@@ -70,25 +70,17 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     const [footerEdit, setFooterEdit] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
-    const [closePanels, setClosePanels] = React.useState([]);
-    const [viewData, setViewData] = useState({});
-    const [successAlert, setSuccessAlert] = useState(false);
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
-    const [MenuAlteredData, setMenuAlteredData] = useState();
     const [RowData, setRowData] = useState();
     const [saveClick, setSaveClick] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [formData, setFormData] = useState([]);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
-    const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
 
-    useEffect(() => {
-        fetchRole({ setIsLoading: listShowLoading, userId, id: RowData?.id });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [RowData]);
+    
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -196,7 +188,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         const onSuccess = (res) => {
             form.resetFields();
             setSelectedRecord({});
-            setSuccessAlert(true);
             fetchList({ setIsLoading: listShowLoading, userId });
             if (showSaveAndAddNewBtn === true || recordId) {
                 setIsFormVisible(false);
@@ -258,7 +249,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         setShowSaveBtn(false);
         setFooterEdit(true);
         setFormData(record);
-        setViewData(record);
         setIsFormVisible(true);
         setIsViewModeVisible(true);
     };
@@ -327,11 +317,9 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     const formProps = {
         moduleTitle,
         setIsViewModeVisible,
-        setClosePanels,
         isViewModeVisible,
         RowData,
         RoleData,
-        MenuAlteredData,
         setSaveClick,
         form,
         setFormBtnDisable,
@@ -353,7 +341,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         handleEditData,
         isFormBtnActive,
         setFormBtnActive,
-        setSaveAndAddNewBtnClicked,
         onFinish,
         footerEdit,
     };
