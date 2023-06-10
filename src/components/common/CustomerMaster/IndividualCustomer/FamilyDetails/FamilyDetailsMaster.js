@@ -4,16 +4,12 @@ import { AddEditForm } from './AddEditForm';
 
 const FamilyDetailsBase = () => {
     const [form] = Form.useForm();
-
     const type = [
         { name: 'YES', value: 1 },
         { name: 'NO', value: 0 },
     ];
-
     const [value, setValue] = useState(true);
-
     const selectRef = useRef();
-
     const onChange = useCallback((item) => {
         selectRef.current.blur();
         setValue(item);
