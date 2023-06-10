@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Divider } from 'antd';
-import { validateRequiredSelectField } from 'utils/validation';
-import { accordianExpandIcon } from 'utils/accordianExpandIcon';
-import {  preparePlaceholderText } from 'utils/preparePlaceholder';
+import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Typography, Divider } from 'antd';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
+import { accordianExpandIcon, expandIcon } from 'utils/accordianExpandIcon';
+import { withDrawer } from 'components/withDrawer';
+import { PARAM_MASTER } from 'constants/paramMaster';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { FaRegPlusSquare, FaPlus, FaRegUserCircle } from 'react-icons/fa';
+import { IoTrashOutline } from 'react-icons/io5';
+import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
 
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
-const { Text } = Typography;
+const { Text, Link } = Typography;
 
 const { Option } = Select;
 const { TextArea } = Input;
 const { Panel } = Collapse;
+const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, isViewModeVisible, formActionType, setIsViewModeVisible } = props;
@@ -21,6 +28,7 @@ const AddEditFormMain = (props) => {
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [addButton, setAddButton] = useState(true);
     const [authorityForm] = Form.useForm();
+    const [addFormdata, setAddFormdata] = useState([]);
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [openAccordian, setOpenAccordian] = useState();
     const [FinalFormData, setFinalFormData] = useState({
@@ -36,12 +44,16 @@ const AddEditFormMain = (props) => {
 
     useEffect(() => {
         setFinalFormData({ ...FinalFormData, customerForm: customerFormValues, keyAccountForm: keyAccountFormValues, authorityForm: authorityFormValues });
-     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [done]);
-
+    useEffect(() => {
+        console.log('FinalFormData', FinalFormData);
+    }, [FinalFormData]);
 
     const [activeKey, setactiveKey] = useState([1]);
 
+    const [handleActive, sethandleActive] = useState();
+    const handleFormValueChange = () => {};
+    const handleFormFieldChange = () => {};
     const handleEdit = () => {
         setIsViewModeVisible(false);
     };
@@ -51,8 +63,10 @@ const AddEditFormMain = (props) => {
         setIsReadOnly(false);
     };
     const addContactHandeler = (e) => {
+        // e.preventDefault();
         e.stopPropagation();
         form.resetFields();
+        console.log('clicked');
         setShowAddEditForm(true);
         setOpenAccordian('2');
         setIsReadOnly(true);
@@ -71,7 +85,10 @@ const AddEditFormMain = (props) => {
 
         const customerFormValues = customerForm.getFieldsValue();
         const keyAccountFormValues = keyAccountForm.getFieldsValue();
+
         const authorityFormValues = authorityForm.getFieldsValue();
+
+        console.log('customerFormValues', customerFormValues, 'keyAccountFormValues', keyAccountFormValues, 'authorityFormValues', authorityFormValues);
 
         customerForm
             .validateFields()
@@ -93,15 +110,19 @@ const AddEditFormMain = (props) => {
                 setactiveKey([1]);
             });
     };
-
+    const onFinishFailed = () => {
+        customerForm.validateFields();
+        keyAccountForm.validateFields();
+        authorityForm.validateFields();
+    };
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
         if (isPresent) {
             const newActivekeys = [];
 
-            activeKey.forEach((item) => {
-                if (item !== values) {
+            activeKey.filter((item) => {
+                if (item != values) {
                     newActivekeys.push(item);
                 }
             });
@@ -109,8 +130,18 @@ const AddEditFormMain = (props) => {
         } else {
             setactiveKey([...activeKey, values]);
         }
+        console.log('values', values);
     };
 
+    const onFinishCustomerInformation = (values) => {
+        setFinalFormData({ ...FinalFormData, customerForm: values });
+    };
+    const onFinshkeyAccount = (values) => {
+        setFinalFormData({ ...FinalFormData, keyAccountForm: values });
+    };
+    const onFinishAuthorityDetails = (values) => {
+        setFinalFormData({ ...FinalFormData, authorityForm: values });
+    };
     const viewProps = {
         activeKey,
         setactiveKey,
@@ -311,20 +342,36 @@ const AddEditFormMain = (props) => {
                                             </Col>
                                         </Row>
 
-                                        <Collapse
-                                            expandIcon={() => {
-                                                if (activeKey.includes(4)) {
-                                                    return <MinusOutlined className={styles.iconsColor} />;
-                                                } else {
-                                                    return <PlusOutlined className={styles.iconsColor} />;
-                                                }
-                                            }}
-                                            activeKey={activeKey}
-                                            onChange={() => onChange(4)}
-                                            expandIconPosition="end"
-                                        >
-                                            
-                                        </Collapse>
+                                        {addFormData?.length > 0 &&
+                                            addFormData?.map((action) => {
+                                                <Collapse
+                                                    expandIcon={() => {
+                                                        if (activeKey.includes(4)) {
+                                                            return <MinusOutlined className={styles.iconsColor} />;
+                                                        } else {
+                                                            return <PlusOutlined className={styles.iconsColor} />;
+                                                        }
+                                                    }}
+                                                    activeKey={activeKey}
+                                                    onChange={() => onChange(4)}
+                                                    expandIconPosition="end"
+                                                >
+                                                    <Panel
+                                                        header={
+                                                            <div className={styles.alignUser}>
+                                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                                                        Sales Tax
+                                                                    </Text>
+                                                                </Col>
+                                                            </div>
+                                                        }
+                                                        key="2"
+                                                    >
+                                                        <h2>simran</h2>
+                                                    </Panel>
+                                                </Collapse>;
+                                            })}
                                     </Form>
                                 </Panel>
                             </Collapse>
