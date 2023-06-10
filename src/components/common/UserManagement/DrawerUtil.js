@@ -134,8 +134,8 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
                                         title="Manager"
                                         extra={
                                             <>
-                                                <a href="#">Application Access</a>
-                                                <a href="#">
+                                                <a href="/#">Application Access</a>
+                                                <a href="/#">
                                                     <IoTrashOutline />
                                                 </a>
                                             </>
@@ -147,8 +147,8 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
                                         title="Sales Executive"
                                         extra={
                                             <>
-                                                <a href="#" >Application Access</a>
-                                                <a href="#">
+                                                <a href="/#" >Application Access</a>
+                                                <a href="/#">
                                                     <IoTrashOutline />
                                                 </a>
                                             </>
@@ -160,8 +160,8 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
                                         title="Financial Executive"
                                         extra={
                                             <>
-                                                <a href="#">Application Access</a>
-                                                <a href="#">
+                                                <a href="/#">Application Access</a>
+                                                <a href="/#">
                                                     <IoTrashOutline />
                                                 </a>
                                             </>
