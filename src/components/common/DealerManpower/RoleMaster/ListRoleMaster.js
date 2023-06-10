@@ -42,11 +42,11 @@ const mapStateToProps = (state) => {
 
         isDivisionDataLoaded,
         isDivisionLoading,
-        divisionData,
-
+        divisionData: divisionData?.filter((i) => i.status),
+        
         isDepartmentDataLoaded,
         isDepartmentLoading,
-        departmentData,
+        departmentData: departmentData?.filter((i) => i.status),
 
         isLoading,
         moduleTitle,

@@ -23,7 +23,6 @@ const AddEditFormMain = (props) => {
     let attributeHierarchyFieldValidation = {
         rules: [validateRequiredSelectField('attribute level')],
     };
-
     if (attributeData && formData?.attributeKey) {
         if (attributeData.find((attribute) => attribute.id === formData?.attributeKey)) {
             attributeHierarchyFieldValidation.initialValue = formData?.attributeKey;
