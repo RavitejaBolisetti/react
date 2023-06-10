@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
+
 import { Collapse, Form, Space, Typography, Button } from 'antd';
+
 import { PlusOutlined } from '@ant-design/icons';
-import { FaRegUserCircle } from 'react-icons/fa';
+import {FaRegUserCircle } from 'react-icons/fa'
+
 import { expandIcon } from 'utils/accordianExpandIcon';
+
 import styles from 'components/common/Common.module.css';
+
 import ViewAddressList from './ViewAddressList';
 import AddEditForm from './AddEditForm';
 
@@ -38,16 +43,13 @@ const IndividualAddressMasterBase = (props) => {
     };
 
     const onFinish = (value) => {
-        console.log('on finish value ', value);
         setContactData((prev) => [...prev, { ...value }]);
         setShowAddEditForm(false);
     };
 
     const addContactHandeler = (e) => {
-        // e.preventDefault();
         e.stopPropagation();
         form.resetFields();
-        console.log('clicked');
         setShowAddEditForm(true);
         setOpenAccordian('1');
     };

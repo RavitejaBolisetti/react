@@ -1,11 +1,17 @@
 import React, { useState, useRef } from 'react';
-import { Col, Checkbox, Row, Button, Form, Input, Select, Space } from 'antd';
+
+import { Row, Col, Checkbox, Button, Form, Input, Select, Space } from 'antd';
+
 import { SearchOutlined } from '@ant-design/icons';
+
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
 
+let index = 0;
+
 const AddEditForm = (props) => {
-    const { onFinish, form} = props;
+    const { isReadOnly = false, onFinish, form } = props;
+
     const [items, setItems] = useState(['Office', 'Residence', 'Permanent', 'Other']);
     const [name, setName] = useState('');
 

@@ -1,13 +1,20 @@
 import { useState } from 'react';
-import { Button,Form, Typography, message, Row, Col, Space, Select, Input, Divider, Checkbox } from 'antd';
-import style from '../../../Common.module.css';
+
+import { Button, Form, message, Typography, Row, Col, Space, Select, Input, Divider, Checkbox } from 'antd';
+
+import { BiLockAlt } from 'react-icons/bi';
+
 import { validateRequiredInputField, validateRequiredSelectField, validateMobileNoField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
+
 import UploadUtils from './UploadUtils';
+
 import { contactPurpose, title, gender } from 'constants/modules/CustomerMaster/individualProfile';
 import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
-import { BiLockAlt } from 'react-icons/bi';
+
+import style from '../../../Common.module.css';
+
 const { Option } = Select;
 
 const uploadProps = {
@@ -25,7 +32,6 @@ const uploadProps = {
             message.error(`${info.file.name} file upload failed.`);
         }
     },
-
 };
 
 const AddEditForm = (props) => {
@@ -70,7 +76,7 @@ const AddEditForm = (props) => {
     return (
         <>
             <Form form={form} autoComplete="off" onFinish={onFinish} layout="vertical">
-                <Space  direction="vertical">
+                <Space direction="vertical">
                     <Row>
                         <Typography.Text strong>Add New Contact</Typography.Text>
                     </Row>
@@ -197,17 +203,17 @@ const AddEditForm = (props) => {
                         </Col>
                     </Row>
                     <Row justify="left">
-                    <Col xs={2} sm={2} md={2} lg={2} xl={2}>
-                        <Button htmlType="submit" type="primary">
-                            Save
-                        </Button>
-                    </Col>
-                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                        <Button onClick={handleResetForm} danger>
-                            Reset
-                        </Button>
-                    </Col>
-                </Row>
+                        <Col xs={2} sm={2} md={2} lg={2} xl={2}>
+                            <Button htmlType="submit" type="primary">
+                                Save
+                            </Button>
+                        </Col>
+                        <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                            <Button onClick={handleResetForm} danger>
+                                Reset
+                            </Button>
+                        </Col>
+                    </Row>
                 </Space>
             </Form>
         </>

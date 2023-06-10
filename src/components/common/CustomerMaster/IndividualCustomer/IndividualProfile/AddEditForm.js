@@ -39,9 +39,6 @@ const AddEditForm = (props) => {
     useEffect(() => {
         setFinalFormData({ ...FinalFormData, individualForm: individualFormValues, uploadCustomerForm: uploadCustomerFormValues });
     }, [done]);
-    useEffect(() => {
-        console.log('FinalFormData', FinalFormData);
-    }, [FinalFormData]);
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -49,8 +46,6 @@ const AddEditForm = (props) => {
         const individualFormValues = individualForm.getFieldsValue();
 
         const uploadCustomerFormValues = uploadCustomerForm.getFieldsValue();
-
-        console.log('individualFormValues', individualFormValues, 'uploadCustomerFormValues', uploadCustomerFormValues);
 
         individualForm
             .validateFields()
@@ -82,7 +77,7 @@ const AddEditForm = (props) => {
             const newActivekeys = [];
 
             activeKey.filter((item) => {
-                if (item != values) {
+                if (item !== values) {
                     newActivekeys.push(item);
                 }
             });
@@ -90,15 +85,8 @@ const AddEditForm = (props) => {
         } else {
             setactiveKey([...activeKey, values]);
         }
-        console.log('values', values);
     };
 
-    const onFinishCustomerInformation = (values) => {
-        setFinalFormData({ ...FinalFormData, individualForm: values });
-    };
-    const onFinishAuthorityDetails = (values) => {
-        setFinalFormData({ ...FinalFormData, uploadCustomerForm: values });
-    };
     const handleCancel = () => {
         setIsModalOpen(false);
         setmobileLoader(false);
@@ -178,7 +166,7 @@ const AddEditForm = (props) => {
                                     key="1"
                                 >
                                     <Divider />
-                                    <Form autoComplete="off" layout="vertical" form={individualForm}>
+                                    <Form autoComplete="off" layout="vertical" form={individualForm} onFinishFailed={onFinishFailed}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.uploadContainer}>
                                                 <Dragger {...uploadProps}>

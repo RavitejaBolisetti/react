@@ -6,7 +6,6 @@ import styles from '../../CustomertMaster.module.css';
 
 const MarkAsDefaultModalMain = (props) => {
     const { remaining, onCloseAction } = props;
-    const seconds = remaining > 1 ? 'seconds' : 'second';
     return (
         <>
             <Row>
