@@ -21,7 +21,7 @@ import { AddOnDetailsMaster } from './AddOnDetails';
 
 const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible } = props;
+    const { onCloseAction, isViewModeVisible, formActionType } = props;
 
     const EDIT_ACTION = OTF_FORM_ACTION_TYPE?.EDIT;
     const CANCEL_ACTION = OTF_FORM_ACTION_TYPE?.CANCEL;
@@ -78,71 +78,75 @@ const AddEditFormMain = (props) => {
         setleftTimeline,
     };
 
+    const RenderElementCommonProps = {
+        formActionType,
+        buttonData,
+        setbuttonData,
+        leftTimeline,
+        setleftTimeline,
+        isViewModeVisible,
+    };
+
     const renderElement = () => {
         if (leftTimeline?.otfDetails) {
-            return <CustomerDetailsMaster />;
+            return <CustomerDetailsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.customerDetails) {
-            return <CustomerDetailsMaster />;
+            return <CustomerDetailsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.vehicleDetails) {
-            return <VehicleDetailsMaster />;
+            return <VehicleDetailsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.schemeDetails) {
-            return <SchemeDetailsMaster />
+            return <SchemeDetailsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.insuranceDetails) {
-            return <InsuranceDetailsMaster />
+            return <InsuranceDetailsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.exchangeVehicle) {
-            return <ExchangeVehiclesMaster/>;
+            return <ExchangeVehiclesMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline.referrals) {
-            return <ReferralsMaster/>;
+            return <ReferralsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline.loyaltyScheme) {
-            return <LoyaltySchemeMaster/>;
+            return <LoyaltySchemeMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.fiananceDetails) {
-            return <FinananceDetailsMaster />;
-        }
-        else if (leftTimeline?.addOnDetails) {
-            return <AddOnDetailsMaster />;
+            return <FinananceDetailsMaster {...RenderElementCommonProps} />;
+        } else if (leftTimeline?.addOnDetails) {
+            return <AddOnDetailsMaster {...RenderElementCommonProps} />;
         }
     };
 
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.customerMasterDrawer}>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.timelineBg}>
-                            <Row>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Collapse bordered={true} defaultActiveKey={['1']} expandIcon={({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />}>
-                                        <Panel
-                                            header={
-                                                <>
-                                                    <Avatar size={40}>USER</Avatar>
-                                                    <Space direction="vertical">
-                                                        <span>John Michael</span>
-                                                        <span>C200615396</span>
-                                                    </Space>
-                                                </>
-                                            }
-                                            key="1"
-                                        >
-                                            <p>
-                                                Customer Type: <span>Corporate</span>
-                                            </p>
-                                            <p>
-                                                Mobile No.: <span>9893473843</span>
-                                            </p>
-                                        </Panel>
-                                    </Collapse>
-                                </Col>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <FormProgressBar {...TimelineProps} />
-                                </Col>
-                            </Row>
+            <Row gutter={0}>
+                <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
+                    <Row>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Collapse bordered={true} defaultActiveKey={['1']} expandIcon={({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />}>
+                                <Panel
+                                    header={
+                                        <>
+                                            <Avatar size={40}>USER</Avatar>
+                                            <Space direction="vertical">
+                                                <span>John Michael</span>
+                                                <span>C200615396</span>
+                                            </Space>
+                                        </>
+                                    }
+                                    key="1"
+                                >
+                                    <p>
+                                        Customer Type: <span>Corporate</span>
+                                    </p>
+                                    <p>
+                                        Mobile No.: <span>9893473843</span>
+                                    </p>
+                                </Panel>
+                            </Collapse>
                         </Col>
-                        <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
-                            {renderElement()}
-                            <Otfbuttons {...otfButtonProps} />
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <FormProgressBar {...TimelineProps} />
                         </Col>
                     </Row>
+                </Col>
+                <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18} className={styles.drawerBodyRight}>
+                    {renderElement()}
+                    <Otfbuttons {...otfButtonProps} />
                 </Col>
             </Row>
         </>
