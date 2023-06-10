@@ -2,14 +2,13 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Row, Col, Input, Form } from 'antd';
+import { Row, Col, Form } from 'antd';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { filterFunction } from 'utils/filterFunction';
 import { ListDataTable } from 'utils/ListDataTable';
-import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { ContentHeader } from 'utils/ContentHeader';
 import { tableColumn } from './tableColumn';
 
@@ -59,7 +58,7 @@ export const CriticalityGroupMain = (props) => {
     const { saveFormShowLoading, isLoadingOnSave, moduleTitle, fetchList, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
-console.log("isLoadingOnSave",isLoadingOnSave)
+    console.log('isLoadingOnSave', isLoadingOnSave);
     const [refershData, setRefershData] = useState(false);
     const [formData, setFormData] = useState({});
     const [forceFormReset, setForceFormReset] = useState(false);
@@ -131,7 +130,7 @@ console.log("isLoadingOnSave",isLoadingOnSave)
     }, [refershData]);
 
     const onFinish = (values) => {
-        saveFormShowLoading(true)
+        saveFormShowLoading(true);
         const modifiedDeletedTime = deletedTime.concat(timeData);
 
         const modifiedTimeData = modifiedDeletedTime?.map((element) => {
@@ -147,7 +146,7 @@ console.log("isLoadingOnSave",isLoadingOnSave)
             setTimeData([]);
 
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            
+
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
@@ -236,17 +235,13 @@ console.log("isLoadingOnSave",isLoadingOnSave)
         setFormData,
         isLoading,
         forceUpdate,
-
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
         buttonData,
-
         handleButtonClick,
-        buttonData,
         setButtonData,
         defaultBtnVisiblity,
-
         timeData,
         setTimeData,
         deletedTime,
@@ -286,7 +281,6 @@ console.log("isLoadingOnSave",isLoadingOnSave)
 
     return (
         <>
-            {/* <AppliedAdvanceFilter {...advanceFilterResultProps} /> */}
             <ContentHeader {...ContentHeaderProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
