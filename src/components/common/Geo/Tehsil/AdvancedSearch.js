@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
 import { validateRequiredInputField } from 'utils/validation';
 import { withModal } from 'components/withModal';
-
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
@@ -36,6 +35,7 @@ export const AdvancedSearchFrom = (props) => {
 
     useEffect(() => {
         handleResetFilter();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

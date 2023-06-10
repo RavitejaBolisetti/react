@@ -24,7 +24,3 @@ const ViewRoleManagementMain = ({formData,viewStyle}) => {
 };
 
 export const ViewRoleManagement = ViewRoleManagementMain;
-
-{
-    /* </div> */
-}
