@@ -10,7 +10,6 @@ const { Panel } = Collapse;
 const { Option } = Select;
 
 const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
-
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Manage User Access';
@@ -47,7 +46,6 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                             </Button>
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.saveBtn}>
-                           
                             {saveBtn ? (
                                 <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
                                     Save
@@ -71,10 +69,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Card>
-                            <Meta
-                                title="Sandeep Lad"
-                                description="Token No.: B6G433"
-                            />
+                            <Meta title="Sandeep Lad" description="Token No.: B6G433" />
                         </Card>
                     </Col>
                 </Row>
@@ -82,7 +77,9 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <div className={style.manageAccessHeader}>
-                            <p>Access Management<span>*</span></p>
+                            <p>
+                                Access Management<span>*</span>
+                            </p>
                         </div>
                     </Col>
                 </Row>
@@ -98,13 +95,37 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                                         ))}
                                     </Select>
                                 </Form.Item>
-                                <Card title="Manager" extra={<><a href="#">Application Access</a><a href="#"><IoTrashOutline /></a></>}>
+                                <Card
+                                    title="Manager"
+                                    extra={
+                                        <>
+                                            Application Access
+                                            <IoTrashOutline />
+                                        </>
+                                    }
+                                >
                                     Role ID: B6G433
                                 </Card>
-                                <Card title="Sales Executive" extra={<><a href="#">Application Access</a><a href="#"><IoTrashOutline /></a></>}>
+                                <Card
+                                    title="Sales Executive"
+                                    extra={
+                                        <>
+                                            Application Access
+                                            <IoTrashOutline />
+                                        </>
+                                    }
+                                >
                                     Role ID: B6G433
                                 </Card>
-                                <Card title="Financial Executive" extra={<><a href="#">Application Access</a><a href="#"><IoTrashOutline /></a></>}>
+                                <Card
+                                    title="Financial Executive"
+                                    extra={
+                                        <>
+                                            Application Access
+                                            <IoTrashOutline />
+                                        </>
+                                    }
+                                >
                                     Role ID: B6G433
                                 </Card>
                             </Panel>
@@ -117,7 +138,6 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                         </Collapse>
                     </Col>
                 </Row>
-
             </Form>
         </Drawer>
     );
