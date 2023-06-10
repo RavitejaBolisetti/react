@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Switch, DatePicker } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateLettersWithWhitespaces } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { convertCalenderDate } from 'utils/formatDateTime';
-
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;

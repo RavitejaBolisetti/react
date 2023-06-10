@@ -21,7 +21,6 @@ const { Dragger } = Upload;
 const AddEditForm = (props) => {
     const { onCloseAction, isViewModeVisible } = props;
     const { isReadOnly = false } = props;
-    const [openAccordian, setOpenAccordian] = useState([1]);
     const [individualForm] = Form.useForm();
     const [uploadCustomerForm] = Form.useForm();
     const [FinalFormData, setFinalFormData] = useState({

@@ -88,7 +88,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const [skuAttributes, setSKUAttributes] = useState([]);
-    const [closePanels, setClosePanels] = React.useState([]);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
@@ -102,7 +101,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const [searchValue, setSearchValue] = useState('');
 
     const [isChildAllowed, setIsChildAllowed] = useState(true);
-    const [selectedId, setSelectedId] = useState();
 
     const [showProductAttribute, setShowProductAttribute] = useState(false);
 
@@ -150,15 +148,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         manufacturerOrgHierarchyData?.map((i) => disableParent(i));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [manufacturerOrgHierarchyData]);
-
-    useEffect(() => {
-        if (selectedId && userId) {
-            setFormData([]);
-            setSelectedTreeData([]);
-            setSKUAttributes([]);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedId, userId]);
 
     useEffect(() => {
         if (userId) {
@@ -382,7 +371,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         attributeData,
         selectedTreeData,
         handleButtonClick,
-        setClosePanels,
+
         styles,
         viewTitle,
     };

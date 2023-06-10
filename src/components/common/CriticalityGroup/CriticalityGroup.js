@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import { Row, Col, Form } from 'antd';
-
 import { showGlobalNotification } from 'store/actions/notification';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
@@ -11,7 +9,6 @@ import { filterFunction } from 'utils/filterFunction';
 import { ListDataTable } from 'utils/ListDataTable';
 import { ContentHeader } from 'utils/ContentHeader';
 import { tableColumn } from './tableColumn';
-
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { AddEditForm } from './AddEditForm';
 
@@ -75,8 +72,6 @@ export const CriticalityGroupMain = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-
-    const [showDataLoading, setShowDataLoading] = useState(true);
     const [timeData, setTimeData] = useState([]);
     const [deletedTime, setDeletedTime] = useState([]);
 
@@ -91,7 +86,7 @@ export const CriticalityGroupMain = (props) => {
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
-        setShowDataLoading(false);
+        //setShowDataLoading(false);
     };
 
     useEffect(() => {
@@ -113,10 +108,10 @@ export const CriticalityGroupMain = (props) => {
                 const filterDataItem = criticalityGroupData?.filter((item) => (keyword ? filterFunction(keyword)(item?.criticalityGroupCode) || filterFunction(keyword)(item?.criticalityGroupName) : true));
 
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
-                setShowDataLoading(false);
+               // setShowDataLoading(false);
             } else {
                 setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
-                setShowDataLoading(false);
+               // setShowDataLoading(false);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -179,7 +174,7 @@ export const CriticalityGroupMain = (props) => {
     };
 
     const handleReferesh = () => {
-        setShowDataLoading(true);
+        //setShowDataLoading(true);
         setRefershData(!refershData);
     };
 
@@ -253,7 +248,7 @@ export const CriticalityGroupMain = (props) => {
         if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
-            setShowDataLoading(false);
+          //  setShowDataLoading(false);
         }
     };
 

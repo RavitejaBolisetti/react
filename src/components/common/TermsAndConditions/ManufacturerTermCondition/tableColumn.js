@@ -31,6 +31,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Description',
             dataIndex: 'termsconditiondescription',
             width: '25%',
+            render: (dataIndex) => dataIndex.substring(0, 25) + (dataIndex.length > 25 ? '...' : ''),
         }),
         tblPrepareColumns({
             title: 'Version',

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Input, Form, Select, DatePicker } from 'antd';
-
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-
 import { ViewTermConditionList } from './ViewTermConditionList';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -14,27 +12,16 @@ import { convertCalenderDate } from 'utils/formatDateTime';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { editMode, viewMode, isViewModeVisible } = undefined, onFinish, onFinishFailed } = props;
+    const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { isViewModeVisible } = undefined, onFinish, onFinishFailed } = props;
     const { buttonData, setButtonData, handleButtonClick, formActionType, effectiveFrom, effectiveTo } = props;
-    const { productName, setProductName, setLanguageName, setDocumentName, termsAndCondition, setTermsAndCondition } = props;
+    const { termsAndCondition } = props;
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState();
 
     useEffect(() => {
         form.resetFields();
-    }, [effectiveFrom, effectiveTo]);
-
-    const handleProductHierarchySelect = (label, value) => {
-        setProductName(value.children);
-    };
-
-    const handleDocumentTypeSelect = (label, value) => {
-        setDocumentName(value.children);
-    };
-
-    const handleLanguageSelect = (label, value) => {
-        setLanguageName(value.children);
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [effectiveFrom, effectiveTo, form]);
 
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -86,7 +73,7 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={formData?.productcode} label="Product Hierarchy" name="productcode">
-                                <Select disabled={formActionType?.viewMode} onSelect={handleProductHierarchySelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
+                                <Select disabled={formActionType?.viewMode} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {productHierarchyList?.map((item) => (
                                         <Option value={item.prodctCode}>{item.prodctLongName}</Option>
                                     ))}
@@ -97,7 +84,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={formData?.documentTypeCode} label="Document Type" name="documentTypeCode">
-                                <Select disabled={formActionType?.viewMode} onSelect={handleDocumentTypeSelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
+                                <Select disabled={formActionType?.viewMode} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {documentTypeList?.map((item) => (
                                         <Option value={item.documentCode}>{item.documentCode}</Option>
                                     ))}
@@ -107,34 +94,13 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={formData?.languageDesc} label="Language" name="languageCode">
-                                <Select disabled={formActionType?.viewMode} onSelect={handleLanguageSelect} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
+                                <Select disabled={formActionType?.viewMode} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {languageList?.map((item) => (
                                         <Option value={item.key}>{item.value}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>
                         </Col>
-                    </Row>
-                    {(formActionType?.viewMode || formActionType?.editMode) && (
-                        <Row gutter={20}>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={formData?.version} label="Version" name="version">
-                                    <Input disabled={true} placeholder={preparePlaceholderText('Version')} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                    )}
-
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item disabled={formActionType?.viewMode} label="Terms & Conditions" initialValue={formData?.termConditionDescription}>
-                                <CustomEditor data={formData?.termsconditiondescription} />
-                            </Form.Item>
-                        </Col>
-
-                        <Form.Item name="termConditionDescription" initialValue={termsAndCondition}>
-                            <Input disabled={formActionType?.viewMode} type="hidden" />
-                        </Form.Item>
                     </Row>
 
                     <Row gutter={20}>
@@ -149,11 +115,31 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
+
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item disabled={formActionType?.viewMode} label="Terms & Conditions" initialValue={formData?.termConditionDescription}>
+                                <CustomEditor data={formData?.termsconditiondescription} />
+                            </Form.Item>
+                        </Col>
+                        <Form.Item name="termConditionDescription" initialValue={termsAndCondition}>
+                            <Input disabled={formActionType?.viewMode} type="hidden" />
+                        </Form.Item>
+                        {/* </Col> */}
+                    </Row>
+                    {(formActionType?.viewMode || formActionType?.editMode) && (
+                        <Row gutter={20}>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                <Form.Item initialValue={formData?.version} label="Version" name="version">
+                                    <Input disabled={true} placeholder={preparePlaceholderText('Version')} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    )}
                 </>
             ) : (
                 <ViewTermConditionList {...viewProps} />
             )}
-
             <DrawerFormButton {...buttonProps} />
         </Form>
     );

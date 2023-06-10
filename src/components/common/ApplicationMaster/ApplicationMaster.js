@@ -1,24 +1,19 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Empty, Input, Spin } from 'antd';
+import { Button, Col, Form, Row, Empty,Spin } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-
 import { menuDataActions } from 'store/actions/data/menu';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { showGlobalNotification } from 'store/actions/notification';
-
 import LeftPanel from '../LeftPanel';
 import { AddEditForm } from './AddEditForm';
 import { HierarchyFormButton } from '../Button';
 import ViewApplicationDetailMain from './viewDeatils/ViewApplicationDetail';
-
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { LANGUAGE_EN } from 'language/en';
-
 import styles from 'components/common/Common.module.css';
 import { ContentHeader } from 'utils/ContentHeader';
-
 
 const mapStateToProps = (state) => {
     const {
@@ -52,19 +47,14 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchApplication: applicationMasterDataActions.fetchApplicationDetails,
             applicationDetailListShowLoading: applicationMasterDataActions.detailListShowLoading,
-
             fetchApplicationCriticality: applicationMasterDataActions.fetchApplicationCriticalityGroup,
             fetchApplicationAction: applicationMasterDataActions.fetchApplicationAction,
             fetchCriticalitiData: applicationMasterDataActions.fetchConfigurableParameterList,
-
             applicationMasterDataShowLoading: applicationMasterDataActions.listShowLoading,
-
             onSaveShowLoading: applicationMasterDataActions.onSaveShowLoading,
             saveApplicationDetails: applicationMasterDataActions.saveApplicationDetails,
-
             fetchList: applicationMasterDataActions.fetchMenuList,
             applicationListShowLoading: menuDataActions.applicationListShowLoading,
-
             showGlobalNotification,
         },
         dispatch
@@ -156,7 +146,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
 
     const onFinish = (values) => {
-        const { applicationDetails, applicationAction, documentType, accessibleLocation } = finalFormdata;
+        const { applicationAction, documentType, accessibleLocation } = finalFormdata;
 
         if (applicationAction?.length < 1) {
             return showGlobalNotification({ message: LANGUAGE_EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'application action') });

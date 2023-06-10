@@ -2,18 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
-
 import { dealerManpowerDesignationMasterDataActions } from 'store/actions/data/dealerManpower/designationMaster';
 import { dealerManpowerDivisionMasterDataActions } from 'store/actions/data/dealerManpower/dealerDivisionMaster';
 import { dealerManpowerEmployeeDepartmentDataActions } from 'store/actions/data/dealerManpower/dealerEmployeeDepartmentMaster';
 import { roleMasterDataActions } from 'store/actions/data/dealerManpower/roleMaster';
-
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { FilterIcon } from 'Icons';
-
 import { showGlobalNotification } from 'store/actions/notification';
-
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
@@ -68,7 +64,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchRoleLovList: roleMasterDataActions.fetchFilteredList,
             listRoleShowLoading: roleMasterDataActions.listShowLoading,
             resetData: dealerManpowerDesignationMasterDataActions.reset,
-
             showGlobalNotification,
         },
         dispatch
@@ -76,28 +71,22 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DesignationMasterBase = (props) => {
-    const { data, saveData, fetchRoleLovList, resetData, roleData, isDivisionLoading, isRoleDataLoaded, fetchList, fetchDepartmentLovList, isDepartmentDataLoaded, departmentData, divisionData, fetchDivisionLovList, listDivisionShowLoading, isDivisionDataLoaded, isDepartmentLoading, isRoleLoading, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
-
+    const { data, saveData, fetchRoleLovList, resetData, roleData, isDivisionLoading, isRoleDataLoaded, fetchList, fetchDepartmentLovList, isDepartmentDataLoaded, departmentData, divisionData, fetchDivisionLovList, listDivisionShowLoading, isDivisionDataLoaded, isDepartmentLoading, isRoleLoading, userId, isDataLoaded, listShowLoading, showGlobalNotification} = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
-
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
     const [page, setPage] = useState(1);
     const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
     const [filteredRoleData, setFilteredRoleData] = useState([]);
-
     const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [filterString, setFilterString] = useState({ advanceFilter: false });
-
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
@@ -146,7 +135,6 @@ export const DesignationMasterBase = (props) => {
                 const division = filterString?.code;
                 const department = filterString?.departmentCode;
                 const role = filterString?.roleCode;
-
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.designationCode) || filterFunction(keyword)(item?.designationDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true) && (role ? filterFunction(role)(item?.roleCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);

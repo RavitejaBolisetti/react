@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Input, Empty, Select } from 'antd';
+import { Button, Col, Form, Row, Input, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { FaHistory } from 'react-icons/fa';
@@ -20,10 +20,8 @@ import { ViewManufacturerOrgDetail } from './ViewManufacturerOrgDetails';
 import LeftPanel from '../LeftPanel';
 
 import styles from 'components/common/Common.module.css';
-import TreeSelectField from '../TreeSelectField';
 
 const { Search } = Input;
-const { Option } = Select;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -160,7 +158,6 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
         setSelectedTreeKey(keys);
     };
     const handleAttributeChange = (value) => {
-        const selectedAttribute = attributeData?.find((i) => i.id === value);
     };
 
     const handleSelectTreeClick = (value) => {

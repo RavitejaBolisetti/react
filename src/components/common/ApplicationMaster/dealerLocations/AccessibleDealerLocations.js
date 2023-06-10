@@ -1,16 +1,13 @@
 import React, { useReducer, useState, useEffect, useMemo, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
-
 import { Col, Row, Input, AutoComplete, Divider } from 'antd';
 import styles from './../../LeftSideBar/LeftSideBar.module.css';
-
 import LocationCard from './LocationCard';
 import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
 import { preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
 import { debounce } from 'utils/debounce';
-
 import { LANGUAGE_EN } from 'language/en';
 
 const locationDeleteTitle = LANGUAGE_EN.GENERAL.REMOVE_DEALER_LOCATION.TITLE;
@@ -40,7 +37,6 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
             locationDataLoding: applicationMasterDataActions.locationDataLoding,
-
             showGlobalNotification,
         },
         dispatch
@@ -90,6 +86,7 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
         } else {
             highlightFinalLocatonList(dealerLocations);
         }
+// eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dealerLocations, searchValue]);
 
     const handleSelect = (value) => {

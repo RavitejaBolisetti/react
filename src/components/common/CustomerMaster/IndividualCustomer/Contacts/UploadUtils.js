@@ -5,7 +5,6 @@ import { Button, Typography, Upload, Row, Col, Space } from 'antd';
 import Svg from 'assets/images/Filter.svg';
 
 import styles from '../../../Common.module.css';
-
 const { Dragger } = Upload;
 const { Text } = Typography;
 

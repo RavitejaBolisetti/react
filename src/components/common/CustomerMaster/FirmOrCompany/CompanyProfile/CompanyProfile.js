@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from 'react';
-
-import { withDrawer } from 'components/withDrawer';
-
+import React from 'react';
 import  AddEditForm  from './AddEditForm';
 
 const CompanyProfileBase = (props) => {

@@ -6,6 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
 
 let index = 0;
 
@@ -14,7 +15,6 @@ const AddEditForm = (props) => {
 
     const [items, setItems] = useState(['Office', 'Residence', 'Permanent', 'Other']);
     const [name, setName] = useState('');
-    const [isOther, setIsOther] = useState(false);
 
     const inputRef = useRef(null);
     const onNameChange = (event) => {
@@ -26,7 +26,7 @@ const AddEditForm = (props) => {
     };
 
     const handleOther = (key) => {
-        setIsOther(key === 4);
+       // setIsOther(key === 4);
     };
     return (
         <>

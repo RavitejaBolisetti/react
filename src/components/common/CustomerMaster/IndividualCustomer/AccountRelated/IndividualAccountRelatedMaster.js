@@ -4,10 +4,8 @@ import { Row, Col, Collapse, Button, Space, Typography } from 'antd';
 
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { FaRegUserCircle } from 'react-icons/fa';
-
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from '../../FirmOrCompany/AccountRelated/ViewAccountDetails';
-
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;

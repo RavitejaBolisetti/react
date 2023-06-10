@@ -26,10 +26,6 @@ const IndividualContactMain = ({ isViewModeVisible }) => {
     };
 
     const onFinish = (value) => {
-        // adding new item
-        //also update logic go here
-        console.log('on finish value ', value);
-
         form.validatefields()
             .then((data) => console.log('data', data))
             .catch((error) => console.error(error));

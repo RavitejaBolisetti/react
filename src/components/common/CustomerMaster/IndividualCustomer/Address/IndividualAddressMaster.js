@@ -13,7 +13,6 @@ import ViewAddressList from './ViewAddressList';
 import AddEditForm from './AddEditForm';
 
 const { Panel } = Collapse;
-
 const { Text } = Typography;
 
 const formData = [

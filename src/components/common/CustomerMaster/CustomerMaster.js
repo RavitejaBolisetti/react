@@ -3,15 +3,11 @@ import { connect } from 'react-redux';
 import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider, Select } from 'antd';
 import { IoBanOutline } from 'react-icons/io5';
 import { PlusOutlined } from '@ant-design/icons';
-
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import DataTable from 'utils/dataTable/DataTable';
-import { escapeRegExp } from 'utils/escapeRegExp';
-
 import { AddEditForm } from './AddEditForm';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
-
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
@@ -88,13 +84,11 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    const [data, setData] = useState(initialTableData);
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
     const [forceFormReset, setForceFormReset] = useState(false);
     const [searchData, setSearchdata] = useState();
-    const [refershData, setRefershData] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [filterString, setFilterString] = useState();
     const [footerEdit, setFooterEdit] = useState(false);
@@ -106,7 +100,6 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     const [error, setError] = useState(false);
     const [DealerSearchvalue, setDealerSearchvalue] = useState();
     const [DealerSelected, setDealerSelected] = useState();
-    const [disabled, setdisabled] = useState(true);
     const [DealerData, setDealerData] = useState();
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -157,12 +150,12 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
         }
     }, [DealerSearchvalue, DealerSelected]);
 
-    useEffect(() => {
-        if (userId) {
-            // fetchList({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refershData, userId]);
+    // useEffect(() => {
+    //     if (userId) {
+    //         // fetchList({ setIsLoading: listShowLoading, userId });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [refershData, userId]);
 
     const tableDetails = [];
 
@@ -325,9 +318,6 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     };
 
     const onFinish = (values, e) => {
-        console.log('The On Finish Function Called : ');
-        const recordId = selectedRecord?.id || '';
-        const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
 
         const requestData = {
             data: savePayload,
@@ -445,9 +435,6 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
         setFilterString(value);
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
-    };
     const handleChange = (selectedvalue) => {
         setDealerSelected(selectedvalue);
     };
@@ -478,7 +465,6 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
         form,
         handleAdd,
         drawer,
-        data,
         setDrawer,
         isChecked,
         formData,
