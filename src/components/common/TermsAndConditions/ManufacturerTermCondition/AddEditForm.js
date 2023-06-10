@@ -1,44 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Form, Col, Row, Button, Select, DatePicker } from 'antd';
+import { Row, Col, Input, Form, Select, DatePicker } from 'antd';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import style from 'components/common/Common.module.css';
 import { ViewTermConditionList } from './ViewTermConditionList';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 import { CustomEditor } from 'components/common/CustomEditor';
 import { convertCalenderDate } from 'utils/formatDateTime';
-import dayjs from 'dayjs';
 
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { editMode, viewMode, isViewModeVisible } = undefined, onFinish, onFinishFailed, footerEdit, setIsFormVisible, onSaveShowLoading } = props;
-    // const dateInitialValue = { initialValue: convertCalenderDate(formData?.includedOn, 'YYYY/MM/DD') };
-    const { buttonData, setButtonData, handleButtonClick, formActionType, effectiveFrom, effectiveTo, seteffectiveFrom, seteffectiveTo } = props;
-    const { productName, setProductName } = props;
-    const { documentName, setDocumentName } = props;
-    const { languageName, setLanguageName } = props;
-    const { termsAndCondition, setTermsAndCondition } = props;
-    //const [ termConditionDescription , setTermConditionDescription ] = useState("");
-    const [contentEditor, setContentEditor] = useState();
+    const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { editMode, viewMode, isViewModeVisible } = undefined, onFinish, onFinishFailed } = props;
+    const { buttonData, setButtonData, handleButtonClick, formActionType, effectiveFrom, effectiveTo } = props;
+    const { productName, setProductName, setLanguageName, setDocumentName, termsAndCondition, setTermsAndCondition } = props;
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState();
 
-    const onChangeCkEditor = (e, editor) => {
-        setTermsAndCondition(e.editor.getData());
-    };
     useEffect(() => {
         form.resetFields();
     }, [effectiveFrom, effectiveTo]);
-    const { TextArea } = Input;
 
     const handleProductHierarchySelect = (label, value) => {
         setProductName(value.children);
-        console.log(' productName ' + productName);
     };
 
     const handleDocumentTypeSelect = (label, value) => {
@@ -47,10 +34,6 @@ const AddEditFormMain = (props) => {
 
     const handleLanguageSelect = (label, value) => {
         setLanguageName(value.children);
-    };
-
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const handleFormFieldChange = () => {
@@ -82,16 +65,12 @@ const AddEditFormMain = (props) => {
     const disableFromDate = (value) => {
         var d = new Date();
         return value < d.setDate(d.getDate() - 1);
-        // value > endDate;
     };
 
     const disableToDate = (value) => {
         return value < startDate;
     };
 
-    const customEditorProps = {
-        data: formData?.termConditionDescription ? formData?.termConditionDescription : '',
-    };
     const fromDateInitialValue = { initialValue: convertCalenderDate(formData?.effectivefrom, 'YYYY/MM/DD') };
     const toDateInitialValue = { initialValue: convertCalenderDate(formData?.effectiveto ? formData?.effectiveto : new Date('December 31, 9999'), 'YYYY/MM/DD') };
     return (
@@ -152,26 +131,11 @@ const AddEditFormMain = (props) => {
                                 <CustomEditor data={formData?.termsconditiondescription} />
                             </Form.Item>
                         </Col>
-                        {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            {termsAndCondition}*/}
+
                         <Form.Item name="termConditionDescription" initialValue={termsAndCondition}>
                             <Input disabled={formActionType?.viewMode} type="hidden" />
                         </Form.Item>
-                        {/* </Col> */}
                     </Row>
-
-                    {/*<Row gutter={20}>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item  {...dateInitialValue} label="Effective From" name="effectivefrom" >
-                                <DatePicker format="YYYY/MM/DD" disabled={formActionType?.viewMode} style={{ width: '100%' }}  />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item {...dateInitialValue}  label="Effective To" name="effectiveto">
-                                <DatePicker format="YYYY/MM/DD" format={dateFormat} disabled={formActionType?.viewMode} style={{ width: '100%' }}  />
-                            </Form.Item>
-                        </Col>
-                        </Row> */}
 
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -189,20 +153,7 @@ const AddEditFormMain = (props) => {
             ) : (
                 <ViewTermConditionList {...viewProps} />
             )}
-            {/* <Row gutter={20} className={style.formFooter}>
-                <Col xs={24} sm={6} md={6} lg={6} xl={6} className={style.footerBtnLeft}>
-                    <Button danger onClick={onClose}>
-                        {!footerEdit ? 'Cancel' : 'Close'}
-                    </Button>
-                </Col>
-                <Col xs={24} sm={18} md={18} lg={18} xl={18} className={style.footerBtnRight}>
-                    {
-                        <Button form="myForm" key="submit" htmlType="submit" type="primary">
-                            Add T&C
-                        </Button>
-                    }
-                </Col>
-            </Row> */}
+
             <DrawerFormButton {...buttonProps} />
         </Form>
     );
