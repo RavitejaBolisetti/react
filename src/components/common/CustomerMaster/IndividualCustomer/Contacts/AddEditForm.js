@@ -1,17 +1,21 @@
 import { useState } from 'react';
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, Switch, DatePicker, Divider, Checkbox } from 'antd';
 
-import style from '../../../Common.module.css';
+import { Button, Form, message, Typography, Row, Col, Space, Select, Input, Divider, Checkbox } from 'antd';
+
+import { BiLockAlt } from 'react-icons/bi';
+
 import { validateRequiredInputField, validateRequiredSelectField, validateMobileNoField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
+
 import UploadUtils from './UploadUtils';
+
 import { contactPurpose, title, gender } from 'constants/modules/CustomerMaster/individualProfile';
 import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
-import { BiLockAlt } from 'react-icons/bi';
+
+import style from '../../../Common.module.css';
 
 const { Option } = Select;
-const { Text } = Typography;
 
 const uploadProps = {
     name: 'file',
@@ -22,18 +26,13 @@ const uploadProps = {
     uploadBtnName: 'Upload File',
     onChange(info) {
         const { status } = info.file;
-        //   if (status !== 'uploading') {
-        //     console.log(info.file, info.fileList);
-        //   }
+
         if (status === 'done') {
             message.success(`${info.file.name} file uploaded successfully.`);
         } else if (status === 'error') {
             message.error(`${info.file.name} file upload failed.`);
         }
     },
-    // onDrop(e) {
-    //   console.log('Dropped files', e.dataTransfer.files);
-    // },
 };
 
 const AddEditForm = (props) => {
@@ -78,7 +77,7 @@ const AddEditForm = (props) => {
     return (
         <>
             <Form form={form} autoComplete="off" onFinish={onFinish} layout="vertical">
-                <Space  direction="vertical">
+                <Space direction="vertical">
                     <Row>
                         <Typography.Text strong>Add New Contact</Typography.Text>
                     </Row>
@@ -205,17 +204,17 @@ const AddEditForm = (props) => {
                         </Col>
                     </Row>
                     <Row justify="left">
-                    <Col xs={2} sm={2} md={2} lg={2} xl={2}>
-                        <Button htmlType="submit" type="primary">
-                            Save
-                        </Button>
-                    </Col>
-                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                        <Button onClick={handleResetForm} danger>
-                            Reset
-                        </Button>
-                    </Col>
-                </Row>
+                        <Col xs={2} sm={2} md={2} lg={2} xl={2}>
+                            <Button htmlType="submit" type="primary">
+                                Save
+                            </Button>
+                        </Col>
+                        <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                            <Button onClick={handleResetForm} danger>
+                                Reset
+                            </Button>
+                        </Col>
+                    </Row>
                 </Space>
             </Form>
         </>

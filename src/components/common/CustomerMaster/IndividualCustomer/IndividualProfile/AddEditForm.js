@@ -8,13 +8,10 @@ import { gender, income, maritialStatus, memberShip, occupation, religion, title
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { BiLockAlt } from 'react-icons/bi';
 
-
 import styles from 'components/common/Common.module.css';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { ViewDetail } from './ViewIndividualProfileDetails';
 import { MarkAsDefaultModal } from './MarkAsDefaultModal';
-
-
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -35,7 +32,7 @@ const AddEditForm = (props) => {
     const [uploadCustomerFormValues, setUploadCustomerFormValues] = useState();
     const [done, setDone] = useState();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [mobileLoader,setmobileLoader]=useState(false);
+    const [mobileLoader, setmobileLoader] = useState(false);
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -43,9 +40,6 @@ const AddEditForm = (props) => {
     useEffect(() => {
         setFinalFormData({ ...FinalFormData, individualForm: individualFormValues, uploadCustomerForm: uploadCustomerFormValues });
     }, [done]);
-    useEffect(() => {
-        console.log('FinalFormData', FinalFormData);
-    }, [FinalFormData]);
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -53,8 +47,6 @@ const AddEditForm = (props) => {
         const individualFormValues = individualForm.getFieldsValue();
 
         const uploadCustomerFormValues = uploadCustomerForm.getFieldsValue();
-
-        console.log('individualFormValues', individualFormValues, 'uploadCustomerFormValues', uploadCustomerFormValues);
 
         individualForm
             .validateFields()
@@ -86,7 +78,7 @@ const AddEditForm = (props) => {
             const newActivekeys = [];
 
             activeKey.filter((item) => {
-                if (item != values) {
+                if (item !== values) {
                     newActivekeys.push(item);
                 }
             });
@@ -94,62 +86,43 @@ const AddEditForm = (props) => {
         } else {
             setactiveKey([...activeKey, values]);
         }
-        console.log('values', values);
     };
 
-    const onFinishCustomerInformation = (values) => {
-        setFinalFormData({ ...FinalFormData, individualForm: values });
-    };
-    const onFinishAuthorityDetails = (values) => {
-        setFinalFormData({ ...FinalFormData, uploadCustomerForm: values });
-    };
     const handleCancel = () => {
         setIsModalOpen(false);
         setmobileLoader(false);
     };
     const handleNumberValidation = (event) => {
         const Mno = event.target.value;
-       const regex =  new RegExp("^([5-9]){1}([0-9]){9}$/")
-        if (Mno?.length === 10 && regex.test(Mno) ) {
+        const regex = new RegExp('^([5-9]){1}([0-9]){9}$/');
+        if (Mno?.length === 10 && regex.test(Mno)) {
             setmobileLoader(true);
             setTimeout(() => {
                 setIsModalOpen(true);
             }, 1000);
-        }
-        else
-        {
+        } else {
             setmobileLoader(false);
-
         }
-    }   
-
-
+    };
 
     const uploadProps = {
         name: 'file',
         multiple: false,
         action: '',
-        progress: {strokeWidth:10},
-        success: {percent:100},
+        progress: { strokeWidth: 10 },
+        success: { percent: 100 },
 
         onChange(info) {
             const { status } = info.file;
-            //   if (status !== 'uploading') {
-            //     console.log(info.file, info.fileList);
-            //   }
+
             if (status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully.`);
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }
         },
-        // onDrop(e) {
-        //   console.log('Dropped files', e.dataTransfer.files);
-        // },
     };
-    const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
-    };
+
     const viewProps = {
         activeKey,
         onChange,
@@ -194,7 +167,7 @@ const AddEditForm = (props) => {
                                     key="1"
                                 >
                                     <Divider />
-                                    <Form autoComplete="off" layout="vertical" form={individualForm}>
+                                    <Form autoComplete="off" layout="vertical" form={individualForm} onFinishFailed={onFinishFailed}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.uploadContainer}>
                                                 <Dragger {...uploadProps}>

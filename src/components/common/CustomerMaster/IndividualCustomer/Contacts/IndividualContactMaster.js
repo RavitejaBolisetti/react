@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
-import { Col, Collapse, Form, Select, Space, Typography, Button, Row, Divider } from 'antd';
-import { UserOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { Row, Col, Collapse, Form, Space, Typography, Button, Divider } from 'antd';
 
-import { FaUserCircle, FaRegUserCircle } from 'react-icons/fa';
+import { PlusOutlined } from '@ant-design/icons';
+import { FaRegUserCircle } from 'react-icons/fa';
 
-import { accordianExpandIcon, expandIcon } from 'utils/accordianExpandIcon';
+import { expandIcon } from 'utils/accordianExpandIcon';
 import AddEditForm from './AddEditForm';
-import styles from 'components/common/Common.module.css';
-import { ViewDetail } from './ViewContactDetails';
 import ViewContactList from './ViewContactList';
+
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -74,13 +74,13 @@ const IndividualContactMain = ({ isViewModeVisible }) => {
     };
 
     return (
-        <Space  className={styles.accordianContainer} direction="vertical" size="middle" style={{ display: 'flex' }}>
+        <Space className={styles.accordianContainer} direction="vertical" size="middle" style={{ display: 'flex' }}>
             <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <h2>Contacts</h2>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <h2>Contacts</h2>
                 </Col>
             </Row>
-            <Divider/>
+            <Divider />
             <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
                 <Panel
                     header={

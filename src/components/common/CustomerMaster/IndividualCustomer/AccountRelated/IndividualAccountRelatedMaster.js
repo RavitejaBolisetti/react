@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Row, Col, Collapse, Form, Select, Button, Space, Typography } from 'antd';
+import { Row, Col, Collapse, Button, Space, Typography } from 'antd';
 
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { FaRegUserCircle } from 'react-icons/fa';
