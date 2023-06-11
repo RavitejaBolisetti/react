@@ -12,6 +12,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { filterFunction } from 'utils/filterFunction';
+import { btnVisiblity } from 'utils/btnVisiblity';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
 import { AddEditForm } from './AddEditForm';
@@ -121,7 +122,7 @@ export const BayTypeMasterBase = (props) => {
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         record && setFormData(record);
         setIsFormVisible(true);

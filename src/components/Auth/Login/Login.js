@@ -71,23 +71,7 @@ const Login = (props) => {
     const forceUpdate = React.useCallback(() => updateState({}), []);
 
     useEffect(() => {
-        ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {
-            // console.log(status, 'status');
-        });
-
-        return () => {
-            ReactRecaptcha3.destroy();
-            form.resetFields();
-            doCloseLoginError();
-        };
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [GOOGLE_CAPTCHA_SITE_KEY]);
-
-    useEffect(() => {
-        ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {
-            // console.log(status, 'status');
-        });
+        ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {});
 
         return () => {
             ReactRecaptcha3.destroy();

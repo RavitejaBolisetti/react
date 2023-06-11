@@ -4,6 +4,8 @@ import { Form, Row, Col } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { filterFunction } from 'utils/filterFunction';
+import { btnVisiblity } from 'utils/btnVisiblity';
+
 import { tableColumn } from './tableColumn';
 
 import { geoCountryDataActions } from 'store/actions/data/geo/country';
@@ -231,7 +233,7 @@ export const ListTehsilBase = (props) => {
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         const tehsilCategory = tehsilCategoryData?.find((category) => category.key === record?.tehsilCategoryCode)?.value;
         record && setFormData({ ...record, tehsilCategory });

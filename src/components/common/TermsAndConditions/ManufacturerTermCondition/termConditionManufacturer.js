@@ -13,6 +13,8 @@ import { ChangeHistory } from './changeHistoryForm';
 import { AddEditForm } from './AddEditForm';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ListDataTable } from 'utils/ListDataTable';
+import { btnVisiblity } from 'utils/btnVisiblity';
+
 import { tableColumn } from './tableColumn';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import moment from 'moment';
@@ -147,6 +149,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
                 setSearchdata(ManufacturerTermsConditionsData);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, ManufacturerTermsConditionsDataLoaded, ManufacturerTermsConditionsData]);
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
@@ -154,7 +157,8 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, isViewModeVisible: buttonAction === VIEW_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: false, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+
         if (buttonAction === 'view') {
             setIsViewModeVisible(true);
         }
@@ -235,6 +239,11 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
 
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setButtonData({ ...defaultBtnVisiblity });
+    };
     const formProps = {
         isVisible: isFormVisible,
         isViewModeVisible,
@@ -243,8 +252,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setsaveandnewclick,
         saveandnewclick,
         setIsFormVisible,
-        // eslint-disable-next-line no-sequences
-        onCloseAction: () => (setIsFormVisible(false), setFormBtnDisable(false), form.resetFields()),
+        onCloseAction,
         titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
         selectedRecord,
         formBtnDisable,

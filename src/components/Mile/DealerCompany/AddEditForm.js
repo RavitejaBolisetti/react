@@ -48,14 +48,13 @@ const AddEditFormMain = (props) => {
             form.setFieldValue('dealerParentName', groupValue);
             form.setFieldValue('parentId', parentGroupId);
         } else {
-            dealerParentData?.map((item) => {
-                if (item?.code === values) {
-                    groupValue = item?.name;
-                    parentGroupId = item?.id;
-                    form.setFieldValue('dealerParentName', groupValue);
-                    form.setFieldValue('parentId', parentGroupId);
-                }
-            });
+            const parentData = dealerParentData?.find((item) => item?.code === values);
+            if (parentData) {
+                groupValue = parentData?.name;
+                parentGroupId = parentData?.id;
+                form.setFieldValue('dealerParentName', groupValue);
+                form.setFieldValue('parentId', parentGroupId);
+            }
         }
     };
 
@@ -157,13 +156,11 @@ const AddEditFormMain = (props) => {
                                     onChange={parentName}
                                     disabled={editMode}
                                 >
-                                    {/* {dealerParentData?.map((item) => {
-                                        return <Option value={item?.code}>{item?.code}</Option>;
-                                    })} */}
-                                    
-                                    {dealerLovData?.map((item) => {
-                                        return <Option value={item?.key}>{item?.key}</Option>;
-                                    })}
+                                    {dealerLovData?.map((item) => (
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.key}
+                                        </Option>
+                                    ))}
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -208,11 +205,6 @@ const AddEditFormMain = (props) => {
                     </Row>
 
                     <Row gutter={16}>
-                        {/* <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={pincodeDetails[0]?.locality} label="Locality" name="locality">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Locality')} disabled />
-                            </Form.Item>
-                        </Col> */}
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
                             <Form.Item initialValue={formData?.cityCode} label="City" name="cityCode">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('City')} disabled />
@@ -282,7 +274,6 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    {/* <Row gutter={16}></Row> */}
                 </>
             )}
 

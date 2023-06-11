@@ -11,6 +11,7 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
 import { tableColumn } from './tableColumn';
+import { btnVisiblity } from 'utils/btnVisiblity';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -149,7 +150,7 @@ export const ListPartyMasterBase = (props) => {
             setRecordData(record);
         }
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         setIsFormVisible(true);
     };

@@ -16,6 +16,7 @@ import { ChangeHistory } from './changeHistoryForm';
 import { AddEditForm } from './AddEditForm';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { btnVisiblity } from 'utils/btnVisiblity';
 import { ListDataTable } from 'utils/ListDataTable';
 import { tableColumn } from './tableColumn';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
@@ -86,11 +87,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const initialTableData = [];
 const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHistoryTermsConditionsData, DealerTermsConditionsDataLoaded, ChangeHistoryTermsConditionsDataLoaded, DealerTermsConditionsData, changeHistoryData, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, fetchManufacturerTermConditionDetail, listShowLoading, productHierarchyList, documentTypeList, languageList, showGlobalNotification, isLoading, isLoadingOnSave, ManufacturerData, manufacturerTncLoaded }) => {
     const [form] = Form.useForm();
     const [formActionType, setFormActionType] = useState('');
-    const [data, setData] = useState(initialTableData);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
 
@@ -129,6 +128,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     useEffect(() => {
         form.resetFields();
         form.setFieldValue(formData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
 
     useEffect(() => {
@@ -145,12 +145,14 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
             fetchLanguageList({ setIsLoading: listShowLoading, userId });
             fetchTermCondition({ setIsLoading: listShowLoading, userId });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
     useEffect(() => {
         if (userId && refershData) {
             fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData, userId]);
 
     useEffect(() => {
@@ -162,12 +164,14 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
                 setSearchdata(DealerTermsConditionsData);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, DealerTermsConditionsDataLoaded, DealerTermsConditionsData]);
 
     useEffect(() => {
         if (manufacturerTncLoaded && ManufacturerData) {
             setFormData(ManufacturerData[0]);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [manufacturerTncLoaded, ManufacturerData]);
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
@@ -175,7 +179,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: false, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         record && setFormData(record);
         setIsFormVisible(true);
@@ -191,7 +195,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const handleManufacturerButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-        if (record?.manufracturerTnCId != 'NA' && record?.manufracturerTnCId != '') {
+        if (record?.manufracturerTnCId !== 'NA' && record?.manufracturerTnCId !== '') {
             setIsFormVisible(true);
             extraParams['0']['value'] = record?.manufracturerTnCId;
             fetchManufacturerTermConditionDetail({ setIsLoading: listShowLoading, userId, extraParams });
@@ -210,7 +214,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const onFinish = (values, e) => {
         const recordId = formData?.id || '';
         const newVersion = (values.version ? Number(values?.version) + 1.0 : 1.0).toFixed(1);
-        const termConditionText = termsAndCondition.replace(/[&\/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
+        const termConditionText = termsAndCondition.replace(/[&/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
         const data = { ...values, version: String(newVersion), id: recordId, termConditionDescription: termConditionText };
 
         const onSuccess = (res) => {
@@ -277,7 +281,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         onFinish,
         form,
         handleAdd,
-        data,
+        data: '',
         isChecked,
         formData,
         setIsChecked,
@@ -359,7 +363,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleAdd} isLoading={isLoading} {...tableProps} />
+                    <ListDataTable handleAdd={handleAdd} isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <ChangeHistory {...changeHistoryProps} />

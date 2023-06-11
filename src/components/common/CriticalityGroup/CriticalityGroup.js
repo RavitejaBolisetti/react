@@ -8,6 +8,7 @@ import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { filterFunction } from 'utils/filterFunction';
 import { ListDataTable } from 'utils/ListDataTable';
 import { ContentHeader } from 'utils/ContentHeader';
+import { btnVisiblity } from 'utils/btnVisiblity';
 import { tableColumn } from './tableColumn';
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { AddEditForm } from './AddEditForm';
@@ -195,7 +196,7 @@ export const CriticalityGroupMain = (props) => {
         }
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         record && setFormData(record);
         setIsFormVisible(true);

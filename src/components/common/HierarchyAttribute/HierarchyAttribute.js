@@ -16,6 +16,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { ListDataTable } from 'utils/ListDataTable';
+import { btnVisiblity } from 'utils/btnVisiblity';
+
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
@@ -96,7 +98,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         setShowDataLoading(false);
         RefershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
-    
+
     const onErrorAction = (message) => {
         resetData();
         showGlobalNotification({ message });
@@ -173,7 +175,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         form.resetFields();
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         setIsFormVisible(true);
         setEditRow(record);
@@ -261,13 +263,18 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         showAddButton: selectedHierarchy ? true : false,
     };
 
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setButtonData({ ...defaultBtnVisiblity });
+    };
+
     const formProps = {
         isVisible: isFormVisible,
         isViewModeVisible,
         codeIsReadOnly,
         tableData: detailData?.hierarchyAttribute,
-
-        onCloseAction: () => (setIsFormVisible(false), setFormBtnDisable(false), form.resetFields()),
+        onCloseAction,
         titleOverride: (isViewModeVisible ? 'View ' : editRow?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         selectedHierarchy,
         onFinishFailed,

@@ -16,8 +16,9 @@ import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { filterFunction } from 'utils/filterFunction';
-import { searchValidatorPincode } from 'utils/validation';
+import { btnVisiblity } from 'utils/btnVisiblity';
 
+import { searchValidatorPincode } from 'utils/validation';
 import { FilterIcon } from 'Icons';
 
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
@@ -329,7 +330,7 @@ const ListPinCodeMasterBase = (props) => {
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         const pinCategoryName = typeData?.find((category) => category.key === record?.pinCategory)?.value;
         record && setFormData({ ...record, pinCategoryName: pinCategoryName });
