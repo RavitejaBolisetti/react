@@ -1,9 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Checkbox } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { FaRegPlusSquare, FaPlus, FaRegUserCircle } from 'react-icons/fa';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
 
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
@@ -45,10 +40,8 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            {!isViewModeVisible ? (
-                
+            {!isViewModeVisible ? (                
                 <ViewDetail {...viewProps} />
-
             ) : (
                 <ViewDetail {...viewProps} />
             )}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, DatePicker, Space, Collapse, Typography } from 'antd';
 import { validateRequiredInputField,validateRequiredSelectField} from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
