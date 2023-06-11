@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
 import { EditIcon, ViewEyeIcon } from 'Icons';
 import { IoBanOutline } from 'react-icons/io5';
-import { notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { tblPrepareColumns } from 'utils/tableCloumn';
@@ -12,7 +11,6 @@ import DataTable from 'utils/dataTable/DataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { userManagementManufacturerDataActions } from 'store/actions/data/UserManagementManufacturer';
-import DrawerUtil from './DrawerUtil';
 
 import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
@@ -98,7 +96,6 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
     const [forceFormReset, setForceFormReset] = useState(false);
     const [searchData, setSearchdata] = useState();
-    const [refershData, setRefershData] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [filterString, setFilterString] = useState();
     const [footerEdit, setFooterEdit] = useState(false);
@@ -123,38 +120,22 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
     }, [forceFormReset]);
 
     useEffect(() => {
-        console.log('This is the Manufacturer Data :: ', DealerData);
-    }, [DealerData]);
-
-    useEffect(() => {
         console.log(DealerSearchvalue);
         if (DealerSearchvalue?.length > 0) {
             fetchManufacturerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [DealerSearchvalue]);
 
     useEffect(() => {
         setDealerData(UserManagementManufacturerData);
-    }, [UserManagementManufacturerData]);
-
-    useEffect(() => {
-        if (!isDataLoaded && userId) {
-            // fetchList({ setIsLoading: listShowLoading, userId });
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, userId]);
+    }, [UserManagementManufacturerData]);
 
     useEffect(() => {
         setSearchdata(qualificationData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [qualificationData]);
-
-    useEffect(() => {
-        if (userId) {
-            // fetchList({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refershData, userId]);
 
     useEffect(() => {
         if (isDataLoaded && qualificationData) {
@@ -167,6 +148,7 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, qualificationData]);
+
     const tableDetails = [];
     tableDetails.push(
         tblPrepareColumns({
@@ -217,11 +199,6 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
             emailID: DealerData?.contactEmail,
         },
     ];
-
-    const tableDetailProps = {
-        tableColumn: tableDetails,
-        tableData: tableDetailData,
-    };
 
     const tableColumn = [];
     tableColumn.push(
@@ -304,8 +281,8 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
     };
 
     const onFinish = (values, e) => {
-        const recordId = selectedRecord?.id || '';
-        const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
+        // const recordId = selectedRecord?.id || '';
+        // const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
 
         const onSuccess = (res) => {
             onSaveShowLoading(false);
@@ -428,7 +405,6 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
     };
 
     const onSearchHandle = (value) => {
-        console.log('This is the searched Value : ', value);
         setDealerSearchvalue(value);
         if (value === 'B6G433') {
             setError(true);

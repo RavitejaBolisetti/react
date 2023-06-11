@@ -206,10 +206,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             }
         }
-        // else {
-        //     setIsChildAllowed(true);
-        // }
-
         setSelectedTreeKey(keys);
     };
 
@@ -269,7 +265,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const onFinish = (values) => {
         const recordId = formData?.id?.toString() || '';
-        const codeToBeSaved = selectedTreeSelectKey !== 'null' && selectedTreeSelectKey ? selectedTreeSelectKey : '';
+        const codeToBeSaved = selectedTreeSelectKey || '';
 
         const data = { ...values, id: recordId, parntProdctId: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N', skuAttributes, mfgOrgSk: organizationId };
         const onSuccess = (res) => {

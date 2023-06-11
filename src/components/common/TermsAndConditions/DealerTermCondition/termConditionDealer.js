@@ -184,6 +184,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         record && setFormData(record);
         setIsFormVisible(true);
     };
+
     const extraParams = [
         {
             key: 'id',
@@ -203,6 +204,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData({ cancelBtn: true });
     };
+
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
     const tableProps = {
@@ -214,8 +216,8 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const onFinish = (values, e) => {
         const recordId = formData?.id || '';
         const newVersion = (values.version ? Number(values?.version) + 1.0 : 1.0).toFixed(1);
-        const termConditionText = termsAndCondition.replace(/[&/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
-        const data = { ...values, version: String(newVersion), id: recordId, termConditionDescription: termConditionText };
+        const data = { ...values, version: String(newVersion), id: recordId };
+        // termConditionDescription
 
         const onSuccess = (res) => {
             listShowLoading(false);

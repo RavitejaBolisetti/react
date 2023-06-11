@@ -665,7 +665,6 @@
 .contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
     background-color: #e6e6e6;
     border-left: #e6e6e6;
-    background-color: #e6e6e6;
 }
 
 .contentHeaderBackground .userManagement :global .ant-btn-link {
@@ -864,7 +863,6 @@
 }
 
 .timingHeader {
-    border-radius: 8px;
     background-color: #f4f4f4;
     padding: 10px;
     margin-bottom: 1px;

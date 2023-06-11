@@ -10,7 +10,7 @@ import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufa
 const mapStateToProps = (state) => {
     const {
         data: {
-            ManufacturerAdminHierarchy: { authorityVisible, tokenNumber = [], errorMessage,isUpdating },
+            ManufacturerAdminHierarchy: { authorityVisible, tokenNumber = [], errorMessage, isUpdating },
         },
     } = state;
 
@@ -32,14 +32,12 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const AuthorityDetailMain = ({tokenNumber, handleFormValueChange, errorTokenValidate, viewMode, documentTypesList, setDocumentTypesList, formActionType, tokenValidate, setTokenValidate, forceUpdate }) => {
+const AuthorityDetailMain = ({ tokenNumber, handleFormValueChange, errorTokenValidate, viewMode, documentTypesList, setDocumentTypesList, formActionType, tokenValidate, setTokenValidate, forceUpdate }) => {
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [actionForm] = Form.useForm();
 
     const onActionFormFinish = (val) => {
-        // const { key } = val.authorityTypeCode;
         setDocumentTypesList((prev) => [...prev, { ...val, effectiveFrom: dayjs(val?.effectiveFrom).format('YYYY-MM-DD'), effectiveTo: dayjs(val?.effectiveTo).format('YYYY-MM-DD'), isModified: val?.isModified ?? false, employeeName: tokenNumber?.employeeName }]);
-        // setDocumentTypesList((prev) => [...prev, { id: val?.id, authorityEmployeeTokenNo: val?.authorityEmployeeTokenNo, authorityTypeCode: authorityTypeCode, employeeName: val?.employeeName, effectiveFrom: moment(val?.effectiveFrom).format('YYYY-MM-DD'), effectiveTo: moment(val?.effectiveTo).format('YYYY-MM-DD'), isModified: val?.isModified ?? false}]);
         actionForm.resetFields();
         errorTokenValidate('');
         forceUpdate();
@@ -47,12 +45,11 @@ const AuthorityDetailMain = ({tokenNumber, handleFormValueChange, errorTokenVali
 
     return (
         <>
-        <Divider/>
+            <Divider />
             {!viewMode && <AddEditForm isMainForm={true} handleFormValueChange={handleFormValueChange} onFinish={onActionFormFinish} tokenValidate={tokenValidate} setTokenValidate={setTokenValidate} form={actionForm} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} />}
-
             {documentTypesList?.length > 0 &&
                 documentTypesList?.map((record) => {
-                    return <AuthorityDetailCardItem handleFormValueChange={handleFormValueChange} record={record} formActionType={formActionType} setTokenValidate={setTokenValidate} viewMode={viewMode} form={actionForm} onFinish={onActionFormFinish} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} documentTypesList={documentTypesList} />;
+                    return <AuthorityDetailCardItem handleFormValueChange={handleFormValueChange} record={record} formActionType={formActionType} setTokenValidate={setTokenValidate} viewMode={viewMode} form={actionForm} onFinish={onActionFormFinish} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} />;
                 })}
         </>
     );

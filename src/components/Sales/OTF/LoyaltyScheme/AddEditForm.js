@@ -38,15 +38,7 @@ const AddEditFormMain = (props) => {
         handleEdit,
     };
 
-    return (
-        <>
-            {!isViewModeVisible ? (                
-                <ViewDetail {...viewProps} />
-            ) : (
-                <ViewDetail {...viewProps} />
-            )}
-        </>
-    );
+    return isViewModeVisible && <ViewDetail {...viewProps} />;
 };
 
 export const AddEditForm = AddEditFormMain;

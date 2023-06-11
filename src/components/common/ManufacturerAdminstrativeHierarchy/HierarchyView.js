@@ -35,13 +35,8 @@ export const HierarchyViewMain = ({ viewMode, viewTitle, buttonData, documentTyp
                 <Descriptions.Item label="Short Description">{selectedTreeData?.manufactureAdminShortName}</Descriptions.Item>
                 <Descriptions.Item label="Long Description">{selectedTreeData?.manufactureAdminLongName}</Descriptions.Item>
                 <Descriptions.Item label="Status">{selectedTreeData?.status ? 'Active' : 'InActive'}</Descriptions.Item>
-                <Space
-                    direction="vertical"
-                    size="small"
-                    className={styles.accordianContainer}
-                >
-                    {documentTypesList && documentTypesList.length > 0 && <AuthorityDetailPanel viewMode={viewMode} selectedTreeData={selectedTreeData} documentTypesList={documentTypesList} setDocumentTypesList={setDocumentTypesList} viewMode={true} />}
-
+                <Space direction="vertical" size="small" className={styles.accordianContainer}>
+                    {documentTypesList && documentTypesList.length > 0 && <AuthorityDetailPanel viewMode={viewMode} selectedTreeData={selectedTreeData} documentTypesList={documentTypesList} setDocumentTypesList={setDocumentTypesList} />}
                 </Space>
             </Descriptions>
         </div>
