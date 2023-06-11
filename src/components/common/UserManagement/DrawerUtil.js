@@ -9,7 +9,6 @@ const { Panel } = Collapse;
 const { Option } = Select;
 
 const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, DealerData, tableDetailData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
-    
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Manage User Access';
@@ -22,7 +21,6 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
     const handleForm = () => {
         setFormBtnDisable(true);
     };
-    const handleAddMacid = () => {};
 
     const onClose = () => {
         setDrawer(false);
@@ -103,7 +101,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Button onClick={handleAddMacid} form="myForm" key="Add" type="primary">
+                            <Button form="myForm" key="Add" type="primary">
                                 Add
                             </Button>
                         </Col>
@@ -126,7 +124,9 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
                                     <Form.Item name="userRole" label="User Role">
                                         <Select loading={!isDataAttributeLoaded} placeholder={'Select User Role'} showSearch allowClear>
                                             {attributeData?.map((item) => (
-                                                <Option key={item?.id} value={item?.id}>{item?.hierarchyAttribueName}</Option>
+                                                <Option key={item?.id} value={item?.id}>
+                                                    {item?.hierarchyAttribueName}
+                                                </Option>
                                             ))}
                                         </Select>
                                     </Form.Item>
@@ -147,7 +147,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
                                         title="Sales Executive"
                                         extra={
                                             <>
-                                                <a href="/#" >Application Access</a>
+                                                <a href="/#">Application Access</a>
                                                 <a href="/#">
                                                     <IoTrashOutline />
                                                 </a>
