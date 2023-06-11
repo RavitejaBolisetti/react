@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { ListPinCodeMaster } from '../Geo/Pincode/ListPinCodeMaster';
-import { Pin, PinData } from './Common/Data/data';
-import { InputFieldAvailablity, buttonLookAndFireEvent, buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange, searchFieldTest, searchFunctionality, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
+import { Pin } from './Common/Data/data';
+import { InputFieldAvailablity, buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange, searchFieldTest, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
 import { fetchList, saveData, listShowLoading } from './Common/CommonImports/commonImports';
 
 jest.mock('react-redux', () => ({
@@ -48,26 +48,24 @@ describe('PIN Master Test', () => {
 
     test('Is table rendering data', async () => {
         render(<ListPinCodeMaster PinData={Pin} fetchList={fetchList} listShowLoading={listShowLoading} />);
-        tablerender('Pincode Master List', 'Locality')
+        tablerender('Pincode Master List', 'Locality');
     });
 
     test('Edit Functionality in Table', async () => {
         render(<ListPinCodeMaster PinData={Pin} fetchList={fetchList} saveData={saveData} />);
-        buttonLookAndFireEventWithLabel('fa-edit') //click on edit button
+        buttonLookAndFireEventWithLabel('fa-edit'); //click on edit button
 
-        
-        inputFieldLookAndtextChange('Please enter Tehsil Code', '483504','412311' );
-        inputFieldLookAndtextChange('Please enter Tehsil Name', 'Murwara')
+        inputFieldLookAndtextChange('Please enter Tehsil Code', '483504', '412311');
+        inputFieldLookAndtextChange('Please enter Tehsil Name', 'Murwara');
 
         const inputCodelabel = await screen.findAllByText('PIN Code');
         const Validations2 = await screen.findAllByText('Locality');
 
         expect(inputCodelabel).toBeTruthy();
         expect(Validations2).toBeTruthy();
-        
-        buttonLookAndFireEventByRole('Save')
-    });
 
+        buttonLookAndFireEventByRole('Save');
+    });
 
     test('is drawer closing on click of cancel button', async () => {
         render(<ListPinCodeMaster PinData={Pin} fetchList={fetchList} saveData={saveData} />);
@@ -108,7 +106,7 @@ describe('PIN Master Test', () => {
         const onFinish = jest.fn();
         render(<ListPinCodeMaster PinData={Pin} fetchList={fetchList} saveData={saveData} />);
 
-        buttonLookAndFireEventWithText('Add District')
+        buttonLookAndFireEventWithText('Add District');
         InputFieldAvailablity('Please enter Pincode');
         InputFieldAvailablity('Please enter Locality');
         onFinish.mockResolvedValue({
@@ -117,7 +115,7 @@ describe('PIN Master Test', () => {
         });
 
         const result = await onFinish();
-      
+
         buttonLookAndFireEventWithText('Save');
 
         expect(result).toBeTruthy();

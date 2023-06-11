@@ -114,7 +114,6 @@ describe('manufacturerAdminHierarchy component', () => {
 
         await waitFor(() => {
             buttonLookAndFireEventWithText('Administrative Change History');
-            // buttonLookAndFireEventWithText('Authority Change History');
             const admin = screen.findByText('Admin Change History');
             expect(admin).toBeTruthy();
             const find = screen.findByText('Changed/Modified Date');
@@ -140,32 +139,17 @@ describe('manufacturerAdminHierarchy component', () => {
 
         await waitFor(() => {
             buttonLookAndFireEventWithText('Authority Change History');
-            const admin = screen.findByText('Authority Change History');
-            expect(admin).toBeTruthy();
-            const find = screen.findByText('Created Date');
-            expect(find).toBeTruthy();
-            const find1 = screen.findByText('Created By');
-            expect(find1).toBeTruthy();
-            const find2 = screen.findByText('Authority Type Code');
-            expect(find2).toBeTruthy();
-            const find3 = screen.findByText('Employee Name');
-            expect(find3).toBeTruthy();
-            const find4 = screen.findByText('Employee Token No.');
-            expect(find4).toBeTruthy();
-            const find5 = screen.findByText('Authority Id');
-            expect(find5).toBeTruthy();
-            const find6 = screen.findByText('Effective From');
-            expect(find6).toBeTruthy();
-            const find7 = screen.findByText('Effective To');
-            expect(find7).toBeTruthy();
+            const admin = await screen.findByText('Authority Change History');
+            const find = await screen.findByText('Created Date');
+            const find1 = await screen.findByText('Created By');
+            const find2 = await screen.findByText('Authority Type Code');
+            const find3 = await screen.findByText('Employee Name');
+            const find4 = await screen.findByText('Employee Token No.');
+            const find5 = await screen.findByText('Authority Id');
+            const find6 = await screen.findByText('Effective From');
+            const find7 = await screen.findByText('Effective To');
+
+            expect(admin || find ||find1 || find2||find3||find4||find5||find6||find7).toBeTruthy();
         });
     });
-    // test.only('selecting combobox', async () => {
-    //     render(<ManufacturerAdminstrativeHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
-    //     textFindAfterClickinDrawer();
-    //     // buttonLookAndFireEventByRole('Change Histor');
-    //     expect(screen.getByRole('heading')).toHaveTextContent('Attribute Level');
-    //     expect(screen.getByRole('combobox')).toHaveDisplayValue('Please select attribute level');
-    //     expect(await screen.findByRole('option', { name: 'Cluster' })).toBeInTheDocument();
-    // });
 });

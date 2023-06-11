@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-// import { DealerLocationTypeMasterData as dealerLocationTypeData } from './Common/Data/data';
 import { InputFieldAvailablity, buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
 import { fetchList, saveData, listShowLoading } from './Common/CommonImports/commonImports';
 import { ListPartyMaster } from '../PartyMaster/ListPartyMaster';
@@ -104,24 +103,4 @@ describe('Dealer Location Type Master Test', () => {
         InputFieldAvailablity('address');
         InputFieldAvailablity('state');
     }, 8000);
-
-    // test('Save drawer element', async () => {
-    //     const onFinish = jest.fn();
-    //     render(<ListDealerLocationTypeMaster DealerLocationTypeMasterData={dealerLocationTypeData} fetchList={fetchList} saveData={saveData} />);
-
-    //     buttonLookAndFireEventWithText('Add Type');
-    //     InputFieldAvailablity('Please enter Location Type Code');
-    //     InputFieldAvailablity('Please enter Location Type Description');
-    //     onFinish.mockResolvedValue({
-    //         locationCode: 'A02',
-    //         locationDescription: 'Agartala',
-    //     });
-
-    //     const result = await onFinish();
-
-    //     buttonLookAndFireEventWithText('Save');
-
-    //     expect(result).toBeTruthy();
-    //     expect(onFinish).toHaveBeenCalled();
-    // });
 });
