@@ -177,13 +177,11 @@ const AddEditFormMain = (props) => {
                             <TextArea rows={1} placeholder={preparePlaceholderText('long description')} showCount maxLength={100} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
-                    {/* { selectedTreeData.subProdct.length > 0  && formActionType === FROM_ACTION_TYPE.EDIT ? null :   */}
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                         <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} label="Status" name="active">
                             <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false}  {...disabledProps} />
                         </Form.Item>
                     </Col>
-                    {/* // } */}
                 </Row>
                 {showProductAttribute && (
                     <Row gutter={20}>
