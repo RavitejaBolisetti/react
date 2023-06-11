@@ -73,7 +73,9 @@ const AddEditFormMain = (props) => {
                                     {...selectProps}
                                 >
                                     {titleData?.map((item) => (
-                                        <Option value={item?.key}>{item?.value}</Option>
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.value}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
@@ -87,7 +87,7 @@ export const OtfMasterBase = (props) => {
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-       
+
         record && setFormData(record);
         setIsFormVisible(true);
     };
@@ -161,6 +161,16 @@ export const OtfMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -170,7 +180,7 @@ export const OtfMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Otf Details'),
+        titleOverride: drawerTitle.concat('Otf Details'),
         tableData: searchData,
         buttonData,
         setButtonData,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -205,6 +205,16 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
+    
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
 
     const formProps = {
         form,
@@ -219,7 +229,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Location Type'),
+        titleOverride: drawerTitle.concat('Location Type'),
         tableData: searchData,
 
         ADD_ACTION,

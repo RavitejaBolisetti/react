@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer,useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -216,6 +216,16 @@ export const ListPartyMasterBase = (props) => {
             listFilterForm.validateFields(['code']);
         }
     };
+    
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
 
     const formProps = {
         form,
@@ -227,7 +237,7 @@ export const ListPartyMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: drawerTitle.concat(moduleTitle),
         tableData: searchData,
         typeData,
         fetchDetail,

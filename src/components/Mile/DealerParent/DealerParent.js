@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: dealerParentDataActions.listShowLoading,
 
             fetchTitleList: dealerParentTitleDataActions.fetchDetail,
-            
+
             showGlobalNotification,
         },
         dispatch
@@ -210,6 +210,16 @@ export const DealerParentBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -220,7 +230,7 @@ export const DealerParentBase = (props) => {
         dealerParentData: data,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Parent Group'),
+        titleOverride: drawerTitle.concat('Dealer Parent Group'),
         tableData: searchData,
         buttonData,
         setButtonData,

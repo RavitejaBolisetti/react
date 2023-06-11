@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -226,6 +226,16 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -233,14 +243,13 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         setFormActionType,
         onFinish,
         onFinishFailed,
-
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Department'),
+        titleOverride: drawerTitle.concat('Department'),
         tableData: searchData,
 
         isDivisionLoading,
-        divisionData:divisionData?.filter((i) => i.status),
+        divisionData: divisionData?.filter((i) => i.status),
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -277,7 +286,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
             listFilterForm.setFieldsValue({ code: undefined });
         }
     };
-
 
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {

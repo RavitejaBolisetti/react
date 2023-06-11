@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -44,7 +44,7 @@ const mapStateToProps = (state) => {
         isDivisionDataLoaded,
         isDivisionLoading,
         divisionData: divisionData?.filter((i) => i.status),
-        
+
         isDepartmentDataLoaded,
         isDepartmentLoading,
         departmentData: departmentData?.filter((i) => i.status),
@@ -270,6 +270,16 @@ export const ListRoleMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -280,7 +290,7 @@ export const ListRoleMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Role'),
+        titleOverride: drawerTitle.concat('Role'),
         tableData: searchData,
 
         isDivisionDataLoaded,

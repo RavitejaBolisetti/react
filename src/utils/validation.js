@@ -24,7 +24,7 @@ export const validationFieldLetter = (fieldName, lowercase = true) => ({
 });
 
 export const validatePanField = (fieldName, lowercase = true) => ({
-    pattern: /^([A-Z]){5}([0-9]){4}([A-Z]){1}?$/,
+    pattern: /^([A-Z]){5}(\d){4}([A-Z]){1}?$/,
     message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
@@ -79,7 +79,7 @@ export const validateNumberOnly = (fieldName, lowercase = true) => ({
 });
 
 export const validateGSTIN = (fieldName, lowercase = true) => ({
-    pattern: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
+    pattern: /^\d{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
     message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
@@ -183,7 +183,7 @@ export const validateTin = (fieldName) => ({
     message: 'Please enter valid ' + fieldName,
 });
 export const validateDrivingLicenseNo = (fieldName) => ({
-    pattern:  /^([A-Z]{2})(\d{2}|\d{3})[a-zA-Z]{0,1}(\d{4})(\d{7})$/,
+    pattern:  /^([A-Z]{2})(\d{2}|\d{3})[a-zA-Z]?(\d{4})(\d{7})$/,
     message: 'Please enter valid ' + fieldName,
     
 });
@@ -192,6 +192,6 @@ export const validateAadhar = (fieldName) => ({
     message: 'Please enter valid ' + fieldName,
 });
 export const validateVoterId = (fieldName) => ({
-    pattern: /^([a-zA-Z]){3}([0-9]){7}?$/,
+    pattern: /^([a-zA-Z]){3}\d{7}$/,
     mesage: 'Please enter valid ' + fieldName,
 })

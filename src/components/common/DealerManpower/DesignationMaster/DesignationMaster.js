@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -272,6 +272,16 @@ export const DesignationMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -282,7 +292,7 @@ export const DesignationMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Designation'),
+        titleOverride: drawerTitle.concat('Designation'),
         tableData: searchData,
         divisionData,
         departmentData,

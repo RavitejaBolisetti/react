@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Col, Row, Form } from 'antd';
@@ -194,6 +194,16 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -203,9 +213,8 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Qualification'),
+        titleOverride: drawerTitle.concat('Qualification'),
         tableData: searchData,
-
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,

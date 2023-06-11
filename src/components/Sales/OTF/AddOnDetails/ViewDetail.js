@@ -5,7 +5,7 @@ import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import AccessoriesInformationCard from './ViewDetails/AccessoriesInformationCard';
 
 const { Panel } = Collapse;
-const { Text} = Typography;
+const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
     const { activeKey, onChange, styles } = props;
@@ -16,7 +16,7 @@ const ViewDetailMain = (props) => {
         <Space style={{ display: 'flex' }} direction="vertical" size="middle">
             <Collapse
                 expandIcon={() => {
-                    if (activeKey ==='ci') {
+                    if (activeKey === 'ci') {
                         return <MinusOutlined className={styles?.iconsColor} />;
                     } else {
                         return <PlusOutlined className={styles?.iconsColor} />;
@@ -57,13 +57,13 @@ const ViewDetailMain = (props) => {
                         header={
                             <div className={styles?.alignUser}>
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {accessories.accessoriesName }
+                                    {accessories.accessoriesName}
                                 </Text>
                             </div>
                         }
                         key={index}
                     >
-                        <Text>DETAILS</Text>
+                        <Text key={'dtl' + index}>DETAILS</Text>
                     </Panel>
                 </Collapse>
             ))}

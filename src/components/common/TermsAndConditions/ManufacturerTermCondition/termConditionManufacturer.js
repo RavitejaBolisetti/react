@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
@@ -244,6 +244,17 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
+
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         isVisible: isFormVisible,
         isViewModeVisible,
@@ -253,7 +264,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         saveandnewclick,
         setIsFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: drawerTitle.concat(moduleTitle),
         selectedRecord,
         formBtnDisable,
         setFormBtnDisable,

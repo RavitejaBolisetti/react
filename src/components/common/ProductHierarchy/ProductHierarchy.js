@@ -185,13 +185,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const flatternData = generateList(productHierarchyData);
 
-    // const formModifiedData = (selectedData) => {
-    //     const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.id === selectedData?.attributeKey)?.hierarchyAttribueName;
-    //     const productName = flatternData.find((i) => selectedData?.parntProdctId === i.attributeKey)?.data?.prodctShrtName;
-
-    //     return { ...selectedData, hierarchyAttribueName, parentName: productName };
-    // };
-
     const handleTreeViewClick = (keys) => {
         form.resetFields();
         setFormData([]);
@@ -208,7 +201,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChildAllowed, siblingBtn: true });
                 const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
                 const prodctShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.prodctShrtName;
-                formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: prodctShrtName });
+                setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: prodctShrtName });
             } else {
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             }
@@ -275,7 +268,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     };
 
     const onFinish = (values) => {
-        
         const recordId = formData?.id?.toString() || '';
         const codeToBeSaved = selectedTreeSelectKey !== 'null' && selectedTreeSelectKey ? selectedTreeSelectKey : '';
 
@@ -284,10 +276,9 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             form.resetFields();
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
-            if(selectedTreeData?.subProdct?.length > 0  && formActionType === FROM_ACTION_TYPE.EDIT && data?.active === false){
+            if (selectedTreeData?.subProdct?.length > 0 && formActionType === FROM_ACTION_TYPE.EDIT && data?.active === false) {
                 showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Not allowed to disabled' });
-            }
-            else if (res?.data) {
+            } else if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 if (organizationId && userId) {
                     fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: organizationId });

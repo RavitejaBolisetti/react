@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListStateMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded,  listShowLoading, resetData, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, resetData, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, countryShowLoading } = props;
 
     const [form] = Form.useForm();
@@ -273,6 +273,16 @@ export const ListStateMasterBase = (props) => {
         handleResetFilter,
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -282,7 +292,7 @@ export const ListStateMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: drawerTitle.concat(moduleTitle),
         tableData: searchData,
         isDataCountryLoaded,
         isCountryLoading,

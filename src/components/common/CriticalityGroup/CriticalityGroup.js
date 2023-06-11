@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
@@ -109,10 +109,10 @@ export const CriticalityGroupMain = (props) => {
                 const filterDataItem = criticalityGroupData?.filter((item) => (keyword ? filterFunction(keyword)(item?.criticalityGroupCode) || filterFunction(keyword)(item?.criticalityGroupName) : true));
 
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
-               // setShowDataLoading(false);
+                // setShowDataLoading(false);
             } else {
                 setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
-               // setShowDataLoading(false);
+                // setShowDataLoading(false);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -216,15 +216,24 @@ export const CriticalityGroupMain = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         isVisible: isFormVisible,
         showGlobalNotification,
         onFinish,
         onFinishFailed,
-
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: drawerTitle.concat(moduleTitle),
         formData,
         setIsFormVisible,
         formActionType,
@@ -249,7 +258,7 @@ export const CriticalityGroupMain = (props) => {
         if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
-          //  setShowDataLoading(false);
+            //  setShowDataLoading(false);
         }
     };
 
