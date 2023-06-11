@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Divider } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
@@ -17,24 +17,12 @@ const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
     const { onCloseAction, formActionType, setIsViewModeVisible } = props;
     const [form] = Form.useForm();
-    const [customerForm] = Form.useForm();
     const [keyAccountForm] = Form.useForm();
     const [isReadOnly, setIsReadOnly] = useState(false);
-    const [authorityForm] = Form.useForm();
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [openAccordian, setOpenAccordian] = useState();
-    const [FinalFormData, setFinalFormData] = useState({
-        customerForm: [],
-        keyAccountForm: [],
-        authorityForm: [],
-    });
+
     const [collapseView, setCollapseView] = useState(false);
-
-
-  
-    useEffect(() => {
-        console.log('FinalFormData', FinalFormData);
-    }, [FinalFormData]);
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -54,8 +42,9 @@ const AddEditFormMain = (props) => {
         setIsReadOnly(true);
     };
 
-    const onHandleAddChange = () => {
+    const onHandleAddChange = (val) => {
         setCollapseView(true);
+        keyAccountForm.resetFields();
     };
 
     const onHandleResetButton = () => {
@@ -69,7 +58,7 @@ const AddEditFormMain = (props) => {
             const newActivekeys = [];
 
             activeKey.filter((item) => {
-                if (item != values) {
+                if (item !== values) {
                     newActivekeys.push(item);
                 }
             });
@@ -235,7 +224,7 @@ const AddEditFormMain = (props) => {
                                     key="2"
                                 >
                                     <Divider />
-                                    <Form autoComplete="off" layout="vertical" form={keyAccountForm}>
+                                    <Form autoComplete="off" layout="vertical" form={keyAccountForm} onFinish={onHandleAddChange}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Tax/Charges Type" name="type">
@@ -269,7 +258,7 @@ const AddEditFormMain = (props) => {
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                                <Button type="primary" onClick={onHandleAddChange}>
+                                                <Button type="primary" htmlType="submit">
                                                     Add
                                                 </Button>
                                                 <Button danger onClick={onHandleResetButton}>
