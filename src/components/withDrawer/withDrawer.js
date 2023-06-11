@@ -14,8 +14,9 @@ export const withDrawer =
                 document.body.style.overflow = 'overlay';
             }
         }, [isVisible]);
+
         return (
-            <Drawer title={titleOverride || title} onOk={onOk} footer={footer} onClose={onCloseAction} width={width} open={isVisible} className={styles.myDrawerStyle} keyboard={false} maskClosable={false}>
+            <Drawer title={titleOverride || title} onOk={onOk} onClose={onCloseAction} width={width} open={isVisible} className={width == 1200 ? styles.bigDrawerStyle : styles.myDrawerStyle} keyboard={false} maskClosable={false}>
                 {isVisible && <InputComponent {...props} />}
             </Drawer>
         );

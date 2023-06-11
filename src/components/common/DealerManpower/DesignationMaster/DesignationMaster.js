@@ -42,9 +42,9 @@ const mapStateToProps = (state) => {
         isDepartmentLoading,
         isRoleDataLoaded,
         isRoleLoading,
-        roleData,
-        departmentData,
-        divisionData,
+        roleData: roleData?.filter((i) => i.status),
+        departmentData: departmentData?.filter((i) => i.status),
+        divisionData: divisionData?.filter((i) => i.status),
         moduleTitle,
     };
     return returnValue;

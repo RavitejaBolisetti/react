@@ -275,6 +275,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     };
 
     const onFinish = (values) => {
+        
         const recordId = formData?.id?.toString() || '';
         const codeToBeSaved = selectedTreeSelectKey !== 'null' && selectedTreeSelectKey ? selectedTreeSelectKey : '';
 
@@ -283,7 +284,10 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             form.resetFields();
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
-            if (res?.data) {
+            if(selectedTreeData?.subProdct?.length > 0  && formActionType === FROM_ACTION_TYPE.EDIT && data?.active === false){
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Not allowed to disabled' });
+            }
+            else if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 if (organizationId && userId) {
                     fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: organizationId });

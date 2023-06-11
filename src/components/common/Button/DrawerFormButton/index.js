@@ -1,2 +1,3 @@
 import { DrawerFormButton } from './DrawerFormButton';
-export { DrawerFormButton };
+import { Otfbuttons } from './OtfDrawerFormButtons';
+export { DrawerFormButton, Otfbuttons };

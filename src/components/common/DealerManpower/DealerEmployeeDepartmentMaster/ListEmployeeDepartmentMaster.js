@@ -238,7 +238,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         tableData: searchData,
 
         isDivisionLoading,
-        divisionData,
+        divisionData:divisionData?.filter((i) => i.status),
 
         ADD_ACTION,
         EDIT_ACTION,

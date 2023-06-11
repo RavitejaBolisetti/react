@@ -425,7 +425,7 @@
     padding: 10px 20px;
 }
 
-:global .ant-drawer-body::-webkit-scrollbar-track,
+/* :global .ant-drawer-body::-webkit-scrollbar-track,
 :global .ant-drawer-body::-webkit-scrollbar-track {
     background-color: #ffffff;
 }
@@ -440,7 +440,7 @@
 :global .ant-drawer-body::-webkit-scrollbar-thumb {
     background-color: rgba(52, 44, 44, 0.34);
     border-radius: 10px;
-}
+} */
 
 :global .ant-drawer .ant-drawer-close {
     margin-inline-end: 0px;
