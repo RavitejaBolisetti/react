@@ -1,11 +1,10 @@
 import { Button, Form, Typography, Upload, message, Row, Col, Select, Input, Divider, Checkbox } from 'antd';
 import Svg from 'assets/images/Filter.svg';
 
-import style from '../../../Common.module.css';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 
+import style from '../../../Common.module.css';
 import { contactPurpose, title, gender } from 'constants/modules/CustomerMaster/individualProfile';
 
 const { Option } = Select;
