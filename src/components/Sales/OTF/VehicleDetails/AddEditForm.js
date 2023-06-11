@@ -72,8 +72,13 @@ const AddEditFormMain = (props) => {
         setIsReadOnly(true);
     };
 
-    const onHandleAddChange = () => {
+    const onHandleAddChange = (val) => {
         setCollapseView(true);
+        addFormdata.push(val);
+        keyAccountForm.resetFields();
+        const formatData = [];
+        addFormdata.map((item) => formatData.push({ code: item?.code, type: item?.type, description: item?.description, rate: item.rate, rateType: item.rateType }));
+        console.log(addFormdata,'ddd')
     };
 
     const onHandleResetButton = () => {
@@ -298,7 +303,7 @@ const AddEditFormMain = (props) => {
                                     key="2"
                                 >
                                     <Divider />
-                                    <Form autoComplete="off" layout="vertical" form={keyAccountForm}>
+                                    <Form autoComplete="off" layout="vertical" form={keyAccountForm} onFinish={onHandleAddChange}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Tax/Charges Type" name="type">
@@ -332,7 +337,7 @@ const AddEditFormMain = (props) => {
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                                <Button type="primary" onClick={onHandleAddChange}>
+                                                <Button type="primary" htmlType="submit">
                                                     Add
                                                 </Button>
                                                 <Button danger onClick={onHandleResetButton}>
@@ -340,34 +345,11 @@ const AddEditFormMain = (props) => {
                                                 </Button>
                                             </Col>
                                         </Row>
-                                        <Collapse
-                                            expandIcon={() => {
-                                                if (activeKey.includes(4)) {
-                                                    return <MinusOutlined className={styles.iconsColor} />;
-                                                } else {
-                                                    return <PlusOutlined className={styles.iconsColor} />;
-                                                }
-                                            }}
-                                            activeKey={activeKey}
-                                            onChange={() => onChange(4)}
-                                            expandIconPosition="end"
-                                        >
-                                            <Panel
-                                                header={
-                                                    <div className={styles.alignUser}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                                Sales Tax
-                                                            </Text>
-                                                        </Col>
-                                                    </div>
-                                                }
-                                                key="2"
-                                            >
-                                                
-                                            </Panel>
-                                        </Collapse>
-                                        ;
+
+                                        {addFormdata?.length > 0 &&
+                                            addFormdata?.map((action) => {
+                                               <h2>{action.rate}</h2>
+                                            })}
                                     </Form>
                                 </Panel>
                             </Collapse>
