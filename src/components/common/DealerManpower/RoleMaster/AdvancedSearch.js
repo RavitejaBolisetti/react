@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
-import { validateRequiredSelectField } from 'utils/validation';
 
+import { validateRequiredSelectField,searchValidator } from 'utils/validation';
 import { withModal } from 'components/withModal';
-import { searchValidator } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 

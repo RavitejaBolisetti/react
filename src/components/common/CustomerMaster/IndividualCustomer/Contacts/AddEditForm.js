@@ -1,12 +1,9 @@
 import { useState } from 'react';
-
 import { Button, Form, message, Typography, Row, Col, Space, Select, Input, Divider, Checkbox } from 'antd';
-
 import { BiLockAlt } from 'react-icons/bi';
 
-import { validateRequiredInputField, validateRequiredSelectField, validateMobileNoField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 
 import UploadUtils from './UploadUtils';
 

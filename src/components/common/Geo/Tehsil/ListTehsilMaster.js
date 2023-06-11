@@ -257,15 +257,7 @@ export const ListTehsilBase = (props) => {
                 advanceFilterForm.setFieldsValue({ districtCode: undefined });
                 advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
             }
-
-            // if (name === 'districtCode') {
-            //     setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
-            //     setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
-            //     advanceFilterForm.setFieldsValue({ cityCode: undefined });
-            //     advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
-            // }
         };
-    // console.log(setFilteredDistrictData,'setFilteredDistrictData')
 
     const onFinish = (values) => {
         let data = { ...values, includedOn: values?.includedOn?.format('YYYY-MM-DD') };

@@ -204,18 +204,13 @@ const ListPinCodeMasterBase = (props) => {
     }, [userId, isDataCountryLoaded, isStateDataLoaded, isDistrictDataLoaded, isCityDataLoaded, isTehsilDataLoaded, isDataLoaded]);
 
     const loadPinCodeDataList = () => {
-        // && (filterString?.tehsilCode || filterString?.cityCode)
         if (userId && (filterString?.pincode || (filterString?.countryCode && filterString?.stateCode && filterString?.districtCode))) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        } else {
-            // onErrorAction('Please enter pincode OR country, state, tehsil, city to search data');
         }
     };
 
     const handleDownloadReport = () => {
-        // exportToExcel({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        // Need to remove this POC code after confirmation
         const AuthStr = 'Bearer '.concat(token);
         const headers = { Authorization: AuthStr, userId, accessToken: token, deviceType: 'W', deviceId: '' };
 
