@@ -212,15 +212,6 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     const onSearch = (value) => console.log(value);
     const isDashboard = pagePath === routing.ROUTING_DASHBOARD;
 
-    // let formatPhoneNumber = (mobileNo) => {
-    //     let cleaned = ('' + mobileNo).replace(/\D/g, '');
-    //     let match = cleaned.match(/^(\d{3})(\d{4})(\d{3})$/);
-
-    //     if (match) {
-    //         return '+91-' + match[1] + '  ' + match[2] + ' ' + match[3];
-    //     }
-    //     return null;
-    // };
     return (
         <>
             {!isLoading ? (

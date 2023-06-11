@@ -198,13 +198,6 @@ export const ListTehsilBase = (props) => {
             canRemove: true,
         },
     ];
-    // useEffect(() => {
-    //     if (userId && filterString) {
-    //         fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction });
-    //     }
-
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [filterString, userId]);
 
     useEffect(() => {
         if (isDataLoaded && data && userId) {

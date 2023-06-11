@@ -250,11 +250,6 @@
     justify-content: right;
 }
 
-.addGroup {
-    display: flex;
-    justify-content: right;
-}
-
 .actionbtn {
     background-color: #ff3e5b;
     border-radius: 5px;

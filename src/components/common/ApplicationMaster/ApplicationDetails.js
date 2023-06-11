@@ -7,10 +7,9 @@ import { LANGUAGE_EN } from 'language/en';
 import TreeSelectField from '../TreeSelectField';
 
 const { Option } = Select;
-const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING
+const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
-
-const ApplicationDetails = ({setCanFormSave, form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setparentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification }) => {
+const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setparentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification }) => {
     useEffect(() => {
         form.setFieldsValue({ ...finalFormdata?.applicationDetails });
         setparentAppCode(finalFormdata?.applicationDetails.parentApplicationId);
@@ -24,7 +23,7 @@ const ApplicationDetails = ({setCanFormSave, form, onFinishFailed = () => {}, pa
         setIsDocumentToGenerate(val);
     };
     const fieldNames = { label: 'menuTitle', value: 'menuId', children: 'subMenu' };
- 
+
     const handleSelectTreeClick = (value) => {
         if (value === finalFormdata?.applicationDetails?.applicationId) {
             return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
@@ -35,8 +34,8 @@ const ApplicationDetails = ({setCanFormSave, form, onFinishFailed = () => {}, pa
     };
 
     const onFieldsChange = () => {
-        setCanFormSave(true)
-    }
+        setCanFormSave(true);
+    };
 
     const treeSelectFieldProps = {
         treeFieldNames: fieldNames,
@@ -74,7 +73,9 @@ const ApplicationDetails = ({setCanFormSave, form, onFinishFailed = () => {}, pa
                         <Form.Item label="Application Type" name="applicationType" rules={[validateRequiredSelectField('application type')]}>
                             <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} maxLength={50} placeholder={preparePlaceholderText('application type')}>
                                 {configurableParamData?.map((type) => (
-                                    <Option value={type?.value}>{type?.value}</Option>
+                                    <Option key={'at' + type.value} value={type?.value}>
+                                        {type?.value}
+                                    </Option>
                                 ))}
                             </Select>
                         </Form.Item>
@@ -103,7 +104,7 @@ const ApplicationDetails = ({setCanFormSave, form, onFinishFailed = () => {}, pa
                         <Form.Item label="Application Criticality Group" name="criticalityGroupMasterId" rules={[validateRequiredInputField('Application Criticality Group')]}>
                             <Select maxLength={50} placeholder={preparePlaceholderText('Application Criticality Group')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 {criticalityGroupData?.map((group) => (
-                                    <Option value={group?.id} disabled={!group?.activeIndicator}>
+                                    <Option key={'acg' + group?.id} value={group?.id} disabled={!group?.activeIndicator}>
                                         {group?.criticalityGroupName}
                                     </Option>
                                 ))}

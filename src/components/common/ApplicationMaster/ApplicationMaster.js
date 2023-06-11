@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Empty,Spin } from 'antd';
+import { Button, Col, Form, Row, Empty, Spin } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { menuDataActions } from 'store/actions/data/menu';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
@@ -73,7 +73,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const [applicationForm] = Form.useForm();
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
-    const [formActionType, setFormActionType] = useState('');
+    // const [formActionType, setFormActionType] = useState('');
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -108,7 +108,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
 
     const handleAdd = (type) => {
         setisVisible(true);
-        setFormActionType(type);
+        // setFormActionType(type);
         setIsReadOnly(false);
     };
 
@@ -136,7 +136,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
             applicationCall(rest?.applicationId);
             setSelectedTreeKey([rest?.applicationId]);
 
-            setFormActionType('view');
+            // setFormActionType('view');
             setisVisible(false);
         }
     };
@@ -184,7 +184,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
 
         setSelectedTreeKey([]);
         if (keys && keys.length > 0) {
-            setFormActionType('view');
+            // setFormActionType('view');
             applicationCall(keys[0]);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             setSelectedTreeKey(keys);
@@ -215,7 +215,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         forceUpdate();
 
         setisVisible(true);
-        setFormActionType(type);
+        // setFormActionType(type);
     };
 
     const onClose = () => {

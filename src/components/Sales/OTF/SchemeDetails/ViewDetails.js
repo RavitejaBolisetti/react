@@ -1,6 +1,5 @@
 import React from 'react';
-import { Descriptions } from 'antd';
-import { Space, Collapse, Typography, Divider } from 'antd';
+import { Space, Collapse, Typography, Divider,Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 const { Panel } = Collapse;

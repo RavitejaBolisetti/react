@@ -1,6 +1,5 @@
 import React from 'react';
-import { Descriptions } from 'antd';
-import { Col, Row, Card } from 'antd';
+import { Col, Row, Card, Descriptions } from 'antd';
 
 const ViewDetailMain = (props) => {
     const viewProps = {
