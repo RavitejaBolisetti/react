@@ -126,7 +126,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
                                     <Form.Item name="userRole" label="User Role">
                                         <Select loading={!isDataAttributeLoaded} placeholder={'Select User Role'} showSearch allowClear>
                                             {attributeData?.map((item) => (
-                                                <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
+                                                <Option key={item?.id} value={item?.id}>{item?.hierarchyAttribueName}</Option>
                                             ))}
                                         </Select>
                                     </Form.Item>

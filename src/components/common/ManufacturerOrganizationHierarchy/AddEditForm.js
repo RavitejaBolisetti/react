@@ -79,7 +79,7 @@ const AddEditFormMain = (props) => {
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
                             <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} disabled={formData?.id || isReadOnly} showSearch allowClear>
                                 {attributeData?.map((item) => (
-                                    <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
+                                    <Option key={item?.id} value={item?.id}>{item?.hierarchyAttribueName}</Option>
                                 ))}
                             </Select>
                         </Form.Item>

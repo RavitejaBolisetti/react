@@ -60,7 +60,7 @@
 //                                         <Option value={item?.code}>{item?.name}</Option>
 //                                     ))} */}
 //                                     {productHierarchyAttributeData?.map((item) => (
-//                                         <Option value={item?.id}>{item?.attributeCode}</Option>
+//                                         <Option key={item?.id} value={item?.id}>{item?.attributeCode}</Option>
 //                                     ))}
 //                                 </Select>
 //                             </Form.Item>
