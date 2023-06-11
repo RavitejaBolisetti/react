@@ -74,9 +74,6 @@ const AddEditFormMain = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-    const handleProductchange = (e) => {
-    };
-
     const onActionFormFinish = (val) => {
         const { value, label } = val?.attributeName;
         setSKUAttributes((prev) => [...prev, { attributeName: label, id: value, attributeValue: val.attributeValue }]);
@@ -133,14 +130,13 @@ const AddEditFormMain = (props) => {
         className: styles.headerSelectField,
     };
 
-   
     return (
         <>
             <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
-                            <Select {...selectProps} onChange={handleAttributeChange} onClick={handleProductchange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} disabled={formData?.id || isReadOnly}>
+                            <Select {...selectProps} onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} disabled={formData?.id || isReadOnly}>
                                 {attributeData?.map((item) => (
                                     <Option key={item?.id} value={item?.id}>
                                         {item?.hierarchyAttribueName}
@@ -179,7 +175,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                         <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} label="Status" name="active">
-                            <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false}  {...disabledProps} />
+                            <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>

@@ -1,7 +1,7 @@
 export const FindprodctCode = (node, prodctCode, key) => {
     let foundduplicate = undefined;
     function datas(node, prodctCode, key) {
-        if (node?.prodctCode == prodctCode) {
+        if (node?.prodctCode === prodctCode) {
             foundduplicate = true;
             return;
         }
@@ -14,24 +14,6 @@ export const FindprodctCode = (node, prodctCode, key) => {
     datas(node, prodctCode, key);
     return foundduplicate;
 };
-// export const FindParent = (node, key) => {
-//     let flag = true;
-//     let newkey = key;
-//     while (flag) {
-//         node.find((element) => {
-//             if (element?.key == newkey) {
-//                 if (element['data']?.parntProdctId?.length > 0) {
-//                     newkey = element['data']?.parntProdctId;
-//                     return;
-//                 } else {
-//                     flag = false;
-//                     return;
-//                 }
-//             }
-//         });
-//     }
-//     return newkey;
-// };
 
 export const disableParent = (node) => {
     function datas(node) {

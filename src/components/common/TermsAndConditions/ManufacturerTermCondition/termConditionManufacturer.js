@@ -114,7 +114,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
-        //setShowDataLoading(false);
     };
 
     useEffect(() => {
@@ -188,7 +187,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         let toDate = (values?.effectiveto).format('YYYY-MM-DD');
         let fromDate = (values?.effectivefrom).format('YYYY-MM-DD');
 
-        const termConsitionText = values.termsAndCondition.editor.getData().replace(/[&/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
+        const termConsitionText = values.termsAndCondition.editor.getData();
         const data = { ...values, version: String(newVersion), termsconditiondescription: termConsitionText, effectivefrom: fromDate, effectiveto: toDate };
 
         const onSuccess = (res) => {
@@ -310,7 +309,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
-            //setShowDataLoading(false);
         }
     };
 

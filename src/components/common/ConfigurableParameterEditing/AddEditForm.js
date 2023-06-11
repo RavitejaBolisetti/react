@@ -49,7 +49,13 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.controlId} label="Control ID" name="controlId" rules={[validateRequiredInputField('ControlID')]}>
                                 <Select placeholder="Select" showSearch allowClear onChange={handleControlChange} disabled={isReadOnly}>
-                                    {typeData && typeData[PARAM_MASTER.CFG_PARAM.id] && typeData[PARAM_MASTER.CFG_PARAM.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)}
+                                    {typeData &&
+                                        typeData[PARAM_MASTER.CFG_PARAM.id] &&
+                                        typeData[PARAM_MASTER.CFG_PARAM.id]?.map((item) => (
+                                            <Option key={'id' + item?.key} value={item?.key}>
+                                                {item?.value}
+                                            </Option>
+                                        ))}
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -63,14 +69,26 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Control Group" initialValue={formData?.controlGroup} name="controlGroup" rules={[validateRequiredSelectField('controlGroup')]}>
                                 <Select disabled={isReadOnly} placeholder="Select">
-                                    {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)}
+                                    {typeData &&
+                                        typeData[PARAM_MASTER.CTRL_GRP.id] &&
+                                        typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => (
+                                            <Option key={'cg' + item?.key} value={item?.key}>
+                                                {item?.value}
+                                            </Option>
+                                        ))}
                                 </Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Configurable Parameter Type" rules={[validateRequiredSelectField('ConfigParamType')]}>
                                 <Select defaultValue={parameterType} placeholder="Select Parameter Type" onChange={changeSelectOptionHandler} disabled={isReadOnly}>
-                                    {typeData && typeData[PARAM_MASTER.CFG_PARAM_TYPE.id] && typeData[PARAM_MASTER.CFG_PARAM_TYPE.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)}
+                                    {typeData &&
+                                        typeData[PARAM_MASTER.CFG_PARAM_TYPE.id] &&
+                                        typeData[PARAM_MASTER.CFG_PARAM_TYPE.id]?.map((item) => (
+                                            <Option key={'cpt' + item?.key} value={item?.key}>
+                                                {item?.value}
+                                            </Option>
+                                        ))}
                                 </Select>
                             </Form.Item>
                         </Col>

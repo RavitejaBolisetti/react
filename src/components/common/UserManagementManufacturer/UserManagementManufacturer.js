@@ -281,9 +281,7 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
     };
 
     const onFinish = (values, e) => {
-        // const recordId = selectedRecord?.id || '';
-        // const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
-
+      
         const onSuccess = (res) => {
             onSaveShowLoading(false);
             form.resetFields();
@@ -414,7 +412,6 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
         setFilterString(value);
     };
 
-    const ChangeSearchHandler = () => {};
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
@@ -474,7 +471,7 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.padT5}>
-                                <Search placeholder="Search" value={DealerSearchvalue} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} disabled={false} className={styles.headerSearchField} />
+                                <Search placeholder="Search" value={DealerSearchvalue} allowClear onSearch={onSearchHandle} disabled={false} className={styles.headerSearchField} />
                             </Col>
                         </Row>
                         {Object.keys(DealerData).length > 0 ? (

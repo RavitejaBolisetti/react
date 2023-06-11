@@ -49,10 +49,8 @@ const IndividualContactMain = ({ isViewModeVisible }) => {
     };
 
     const addBtnContactHandeler = (e) => {
-        // e.preventDefault();
         e.stopPropagation();
         form.resetFields();
-        console.log('clicked');
         setShowAddEditForm(true);
         setOpenAccordian('1');
     };

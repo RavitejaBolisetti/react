@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Empty, ConfigProvider, Col, Form, Row, Input, Space } from 'antd';
@@ -79,8 +79,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [formData, setFormData] = useState([]);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
-
-    
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -314,6 +312,16 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         }),
     ];
 
+    const drawerTitle = useMemo(() => {
+        if (isViewModeVisible) {
+            return 'View ';
+        } else if (formData?.id) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [isViewModeVisible, formData]);
+
     const formProps = {
         moduleTitle,
         setIsViewModeVisible,
@@ -328,7 +336,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         showSaveBtn,
         showSaveAndAddNewBtn,
         isVisible: isFormVisible,
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: drawerTitle.concat(moduleTitle),
         onCloseAction: () => {
             form.resetFields();
             setIsFormVisible(false);

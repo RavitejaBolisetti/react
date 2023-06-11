@@ -61,9 +61,9 @@ const ViewDetailMain = (props) => {
                                 </Text>
                             </div>
                         }
-                        key={index}
+                        key={'dtl' + index}
                     >
-                        <Text key={'dtl' + index}>DETAILS</Text>
+                        <Text>DETAILS</Text>
                     </Panel>
                 </Collapse>
             ))}

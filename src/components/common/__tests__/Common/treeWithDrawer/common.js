@@ -1,5 +1,4 @@
 import { fireEvent, screen } from '@testing-library/react';
-import { async } from 'sonarqube-scanner';
 import axios from 'axios';
 
 export const childSiblingEdit = async () => {
@@ -11,11 +10,8 @@ export const childSiblingEdit = async () => {
     expect(editBtn).toBeInTheDocument();
     fireEvent.click(addChildBtn);
     buttonLookAndFireEventWithText('Cancel');
-    // const cancelBtn = await screen.findByRole('Cancel');
-    // expect(cancelBtn).toBeTruthy();
-    // const saveBtn = await screen.findByRole('Save');
-    // expect(saveBtn).toBeTruthy();
 };
+
 export const siblingClick = async () => {
     const addChildBtn = await screen.findByRole('button', { name: 'Add Child' });
     expect(addChildBtn).toBeInTheDocument();
@@ -25,10 +21,6 @@ export const siblingClick = async () => {
     expect(editBtn).toBeInTheDocument();
     fireEvent.click(addiblingBtn);
     buttonLookAndFireEventWithText('Cancel');
-    // const cancelBtn = await screen.findByRole('Cancel');
-    // expect(cancelBtn).toBeTruthy();
-    // const saveBtn = await screen.findByRole('Save');
-    // expect(saveBtn).toBeTruthy();
 };
 
 export const commonTreeTest = async () => {
@@ -43,7 +35,7 @@ export const commonDrawer = async () => {
     const addiblingBtn = await screen.findByRole('button', { name: 'Edit' });
     expect(addiblingBtn).toBeInTheDocument();
     fireEvent.click(addiblingBtn);
-    const saveBtn = await screen.getByText('Save');
+    const saveBtn = screen.getByText('Save');
     expect(saveBtn).toBeTruthy();
 };
 
@@ -71,7 +63,7 @@ export const findplaceholder = async (placeholderText) => {
 export const searchIsWorking = async () => {
     findplaceholder('Search');
     const nameText = await screen.findByText('ZHJ');
-    fireEvent.change(nameField, { target: { value: 'ZHJ' } });
+    fireEvent.change(nameText, { target: { value: 'ZHJ' } });
 
     expect(nameText.value).toBeFalsy();
 };
@@ -104,7 +96,7 @@ export const axiosCall = async (BASE_URL, fetchList, listShowLoading) => {
     const result = await fetchList();
     expect(axios.get).toHaveBeenCalledWith(BASE_URL);
     console.log(axios.get.mock.calls);
-    //expect(result).toMatchObject(users);
+    expect(result).toMatchObject(users);
 };
 export const textFindAfterClickinDrawer = async (text) => {
     const Treepresent = screen.getByRole('tree');

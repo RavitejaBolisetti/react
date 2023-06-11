@@ -10,7 +10,6 @@ import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
-import viewStyle from 'components/common/Common.module.css';
 
 import { withDrawer } from 'components/withDrawer';
 import { ViewRoleManagement } from './ViewRoleManagement';
@@ -213,10 +212,6 @@ const AddEditFormMain = (props) => {
         setExpandedKeys({ ...ExpandedKeys, [value]: expanded });
     };
 
-    const handleSearch = (element, value) => {
-        // console.log('ths is El ', element, value);
-    };
-
     const AccordianTreeUtils = (data) => {
         return (
             <>
@@ -232,7 +227,6 @@ const AddEditFormMain = (props) => {
                                                 style={{
                                                     width: '100%',
                                                 }}
-                                                onSearch={(element) => handleSearch(element, el)}
                                                 allowClear
                                             />
                                         </Col>
@@ -279,7 +273,7 @@ const AddEditFormMain = (props) => {
         isVisible: isViewModeVisible,
         setClosePanels,
         formData,
-        viewStyle,
+        viewStyle: styles,
     };
 
     return (

@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisible,fetchChangeHistoryList, viewTitle, userId, changeHistoryModelOpen, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, manufacturerOrgHierarchyData, showGlobalNotification, unFilteredAttributeData }) => {
+export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisible, fetchChangeHistoryList, viewTitle, userId, changeHistoryModelOpen, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, manufacturerOrgHierarchyData, showGlobalNotification, unFilteredAttributeData }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -144,20 +144,18 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
 
             if (formData) {
                 const isChildAllowed = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
-                formData && setFormData({ ...formData?.data, isChildAllowed });
+                setFormData({ ...formData?.data, isChildAllowed });
 
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChildAllowed, siblingBtn: true });
                 const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
                 const manufactureOrgShrtName = flatternData.find((i) => formData?.data?.manufactureOrgParntId === i.key)?.data?.manufactureOrgShrtName;
-                formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: manufactureOrgShrtName });
+                setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: manufactureOrgShrtName });
             } else {
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             }
         }
 
         setSelectedTreeKey(keys);
-    };
-    const handleAttributeChange = (value) => {
     };
 
     const handleSelectTreeClick = (value) => {
@@ -258,7 +256,6 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
         unFilteredAttributeData,
         selectedTreeSelectKey,
         handleResetBtn,
-        handleAttributeChange,
         formData,
         manufacturerOrgHierarchyData,
         handleSelectTreeClick,
@@ -281,8 +278,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
-    const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING
-
+    const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
     const leftCol = manufacturerOrgHierarchyData?.length > 0 ? 16 : 24;
     const rightCol = manufacturerOrgHierarchyData?.length > 0 ? 8 : 24;
@@ -298,11 +294,6 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                                     <Form.Item
                                         label={`${title}`}
                                         name="code"
-                                        // rules={[
-                                        //     {
-                                        //         validator: validator,
-                                        //     },
-                                        // ]}
                                         validateTrigger={['onSearch']}
                                     >
                                         <Row gutter={20}>

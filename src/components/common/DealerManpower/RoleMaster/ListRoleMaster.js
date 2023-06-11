@@ -129,19 +129,18 @@ export const ListRoleMasterBase = (props) => {
     }, [userId, isDivisionDataLoaded, isDepartmentDataLoaded, isDataLoaded]);
 
     useEffect(() => {
-        if (isDataLoaded && data && userId) {
-            if (filterString) {
-                const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
-                const division = filterString?.divisionCode;
-                const department = filterString?.departmentCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.roleCode) || filterFunction(keyword)(item?.roleDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
-                setShowDataLoading(false);
-            } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
-                setShowDataLoading(false);
-            }
+        if (isDataLoaded && data && userId && filterString) {
+            const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
+            const division = filterString?.divisionCode;
+            const department = filterString?.departmentCode;
+            const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.roleCode) || filterFunction(keyword)(item?.roleDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true));
+            setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+            setShowDataLoading(false);
+        } else {
+            setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+            setShowDataLoading(false);
         }
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
 

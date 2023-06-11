@@ -16,6 +16,8 @@ import CommonCard from './CommonCard';
 import MacIdCard from './MacIdCard';
 
 const { Panel } = Collapse;
+const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
+
 const AddEditFormMain = (props) => {
     const { onCloseAction, productHierarchyData, DealerSearchvalue, showSaveBtn, setSaveAndAddNewBtnClicked, onFinishFailed, onFinish, form, footerEdit, DealerData } = props;
     const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setClosePanels, AccessMacid, setAccessMacid, hanndleEditData } = props;
@@ -148,17 +150,17 @@ const AddEditFormMain = (props) => {
                                     display: 'flex',
                                 }}
                             >
-                                <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                                <Collapse onChange={() => handleCollapse(1)} expandIcon={expandIcon} activeKey={openAccordian}>
                                     <Panel header={<span className={openAccordian === 1 ? styles.accordianHeader : ''}>Assign User Roles</span>} key="1">
                                         <AssignUserRole userRoleOptions={DealerData?.roles} DealerSearchvalue={DealerSearchvalue} finalFormdata={finalFormdata} setfinalFormdata={setfinalFormdata} />
                                     </Panel>
                                 </Collapse>
-                                <Collapse onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                                <Collapse onChange={() => handleCollapse(2)} expandIcon={expandIcon} activeKey={openAccordian}>
                                     <Panel header={<span className={openAccordian === 2 ? styles.accordianHeader : ''}>Branch Mapping</span>} key="2">
                                         <BranchMapping BranchMappingData={DealerData?.branches} finalFormdata={finalFormdata} setfinalFormdata={setfinalFormdata} />
                                     </Panel>
                                 </Collapse>
-                                <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                                <Collapse onChange={() => handleCollapse(3)} expandIcon={expandIcon} activeKey={openAccordian}>
                                     <Panel header={<span className={openAccordian === 3 ? styles.accordianHeader : ''}>Product Mapping</span>} key="3">
                                         <ProductMapping ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} finalFormdata={finalFormdata} setfinalFormdata={setfinalFormdata} />
                                     </Panel>

@@ -51,23 +51,6 @@ describe('Dealer Division Master Test', () => {
         tablerender('Bay Type Master', 'Bay Type Code')
     });
 
-    // test('Edit Functionality in Table', async () => {
-    //     render(<BayTypeMaster BayTypeMasterData={bayTypeData} fetchList={fetchList} saveData={saveData} />);
-    //     buttonLookAndFireEventWithLabel('fa-edit') //click on edit button
-
-        
-    //     inputFieldLookAndtextChange('Please enter Division Code', "DIV001","DIV002");
-    //     inputFieldLookAndtextChange('Please enter Division Description', 'Dealer One','Dealer')
-
-    //     const inputCodelabel = await screen.findAllByText('Division Code');
-    //     const Validations2 = await screen.findAllByText('Division Description');
-
-    //     expect(inputCodelabel).toBeTruthy();
-    //     expect(Validations2).toBeTruthy();
-        
-    //     buttonLookAndFireEventByRole('Save')
-    // });
-
     test('is drawer closing on click of cancel button', async () => {
         render(<BayTypeMaster  BayTypeMasterData={bayTypeData} fetchList={fetchList} saveData={saveData} />);
         buttonLookAndFireEventWithText('Add Division');

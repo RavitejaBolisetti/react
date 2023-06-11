@@ -81,7 +81,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const { moduleTitle, viewTitle, detailData, changeHistoryAuthorityModelOpen, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, uploadModelOpen, cardBtnDisableAction } = props;
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);

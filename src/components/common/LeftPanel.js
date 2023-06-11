@@ -17,8 +17,7 @@ const LeftPanel = (props) => {
 
     const dataList = [];
     const generateList = (data) => {
-        for (let i = 0; i < data.length; i++) {
-            const node = data[i];
+        for (let node of data) {
             dataList.push({
                 id: node[fieldNames?.key],
                 title: node[fieldNames?.title],

@@ -18,6 +18,8 @@ const { Panel } = Collapse;
 const { Option } = Select;
 const { Dragger } = Upload;
 
+const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
+
 const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeVisible, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable }) => {
     const [companyInfoform] = Form.useForm();
     const [uploadCustomerForm] = Form.useForm();
@@ -96,7 +98,6 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
                 setactiveKey([1]);
             });
     };
-
 
     const viewProps = {
         activeKey,
@@ -186,7 +187,7 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
                                 </Panel>
                             </Collapse>
 
-                            <Collapse defaultActiveKey={['2']} expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)} expandIconPosition="end">
+                            <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
                                 <Panel
                                     key="2"
                                     header={

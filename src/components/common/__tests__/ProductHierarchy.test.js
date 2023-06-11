@@ -120,7 +120,7 @@ describe('Product Hierarchy component', () => {
     //     render(<ProductHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} productHierarchyData={treeDatas} attributeData={Dropdata} />);
     //     commonTreeTest();
     //     treebranchClickAndTextFinder();
-    //     const SkuField = await screen.getByRole('combobox', { name: '' });
+    //     const SkuField = screen.getByRole('combobox', { name: '' });
     //     expect(SkuField).toBeTruthy();
     //     fireEvent.change(SkuField, { target: { value: 'Product SKU' } });
 

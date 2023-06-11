@@ -28,19 +28,6 @@ const configParamData = [
     },
 ];
 
-const typeData = [
-    {
-        id: '5ef8b161-ecf6-42a1-894b-78807f0a4292',
-        key: 'ACLOK',
-        value: 'Lock Account',
-    },
-    {
-        id: '763b9094-43d8-4096-a7fc-4f2954937baa',
-        key: 'NOLOG',
-        value: 'No Login',
-    },
-];
-
 const fetchList = () => {
     return;
 };
@@ -52,38 +39,36 @@ const saveData = () => {
 const fetchDataList = () => {
     return;
 };
-const listShowLoading = () =>{
+const listShowLoading = () => {
     return;
-}
-
+};
 
 describe('Config Param Test', () => {
     test('Is Add Group Button Present on  render of Table', async () => {
         render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} fetchDataList={fetchDataList} configData={configParamData} />);
 
-        buttonLookAndFireEventWithText('Add Group')
-        switchAvailablity('fa-switch')
-        InputFieldAvailablity('Select Parameter Type')
-        InputFieldAvailablity('Enter Data')
-        buttonLookAndFireEventWithText('Cancel')
+        buttonLookAndFireEventWithText('Add Group');
+        switchAvailablity('fa-switch');
+        InputFieldAvailablity('Select Parameter Type');
+        InputFieldAvailablity('Enter Data');
+        buttonLookAndFireEventWithText('Cancel');
     });
 
     test('Is the search Field Present or not', async () => {
         render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} fetchDataList={fetchDataList} configData={configParamData} />);
-        searchFieldTest()
+        searchFieldTest();
     });
     test('Is the Refresh Button Present or not', () => {
         render(<ConfigurableParameterEditing configData={configParamData} fetchList={fetchList} saveData={saveData} />);
-        buttonLookAndFireEventWithLabel('fa-ref')
+        buttonLookAndFireEventWithLabel('fa-ref');
     });
     test('Is the View Button Present or not', () => {
         render(<ConfigurableParameterEditing configData={configParamData} fetchList={fetchList} saveData={saveData} />);
-        buttonLookAndFireEventWithLabel('ai-view')
-
+        buttonLookAndFireEventWithLabel('ai-view');
     });
     test('Is table rendering data', async () => {
         render(<ConfigurableParameterEditing configData={configParamData} fetchList={fetchList} listShowLoading={listShowLoading} />);
-        tablerender('Configurable Parameter Editing', 'OTP Expiry')
+        tablerender('Configurable Parameter Editing', 'OTP Expiry');
     });
     test('is drawer closing on click of cancel button', async () => {
         render(<ConfigurableParameterEditing configData={configParamData} fetchList={fetchList} saveData={saveData} />);
@@ -91,15 +76,14 @@ describe('Config Param Test', () => {
         buttonLookAndFireEventWithText('Cancel');
     });
     test('View Functionality in Table', async () => {
-        
         render(<ConfigurableParameterEditing configData={configParamData} fetchList={fetchList} saveData={saveData} />);
         const textfield = await screen.findByText('Configurable Parameter Editing');
         expect(textfield).toBeTruthy();
 
-        buttonLookAndFireEventWithLabel('ai-view')
+        buttonLookAndFireEventWithLabel('ai-view');
         InputFieldAvailablity('Select Parameter Type');
         InputFieldAvailablity('Enter Data');
-        
+
         buttonLookAndFireEventByRole('Edit');
     });
     test('is drawer opening on click of Add Qualification', async () => {
@@ -107,17 +91,15 @@ describe('Config Param Test', () => {
         buttonLookAndFireEventWithText('Add Group');
         InputFieldAvailablity('Select Parameter Type');
         InputFieldAvailablity('Enter Data');
-
     });
     test('is drawer opening on click of Add Qualification to add new', async () => {
         render(<ConfigurableParameterEditing configData={configParamData} fetchList={fetchList} saveData={saveData} />);
         buttonLookAndFireEventWithText('Add Group');
-        switchAvailablity('fa-switch')
-        buttonLookAndFireEventWithText('Save')
+        switchAvailablity('fa-switch');
+        buttonLookAndFireEventWithText('Save');
 
         InputFieldAvailablity('Select Parameter Type');
         InputFieldAvailablity('Enter Data');
-
     }, 8000);
     test('Save drawer element', async () => {
         const onFinish = jest.fn();
@@ -138,6 +120,4 @@ describe('Config Param Test', () => {
         expect(result).toBeTruthy();
         expect(onFinish).toHaveBeenCalled();
     });
-
-    
 });

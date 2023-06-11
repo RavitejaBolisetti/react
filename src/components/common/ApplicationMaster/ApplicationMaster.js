@@ -73,7 +73,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const [applicationForm] = Form.useForm();
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
-    // const [formActionType, setFormActionType] = useState('');
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -135,8 +134,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
 
             applicationCall(rest?.applicationId);
             setSelectedTreeKey([rest?.applicationId]);
-
-            // setFormActionType('view');
             setisVisible(false);
         }
     };
@@ -184,7 +181,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
 
         setSelectedTreeKey([]);
         if (keys && keys.length > 0) {
-            // setFormActionType('view');
             applicationCall(keys[0]);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             setSelectedTreeKey(keys);
@@ -215,7 +211,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         forceUpdate();
 
         setisVisible(true);
-        // setFormActionType(type);
     };
 
     const onClose = () => {

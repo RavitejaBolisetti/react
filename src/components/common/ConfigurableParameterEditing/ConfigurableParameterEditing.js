@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider } from 'antd';
@@ -313,6 +313,16 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         tableData: searchData,
     };
 
+    const drawerTitle = useMemo(() => {
+        if (isViewModeVisible) {
+            return 'View ';
+        } else if (formData?.id) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [isViewModeVisible, formData]);
+
     const formProps = {
         form,
         formActionType,
@@ -332,7 +342,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
             setFormData([]);
             console.log('hello');
         },
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: drawerTitle.concat(moduleTitle),
         onFinish,
         onFinishFailed,
         isFormBtnActive,

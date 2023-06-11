@@ -5,7 +5,7 @@ import { withModal } from '../../../../withModal/withModal';
 import styles from '../../CustomertMaster.module.css';
 
 const MarkAsDefaultModalMain = (props) => {
-    const { remaining, onCloseAction } = props;
+    const { onCloseAction } = props;
     return (
         <>
             <Row>

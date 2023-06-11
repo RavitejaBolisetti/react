@@ -1,8 +1,6 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DealerManpower } from '../DealerManpower/DealerManpower';
-import LeftPanel from '../LeftPanel';
-import { Tree } from 'antd';
 
 jest.mock('react-redux', () => ({
     connect: () => (DealerManpower) => DealerManpower,
@@ -114,25 +112,13 @@ describe('DealerManpower component', () => {
         expect(addChildBtn).toBeInTheDocument();
     });
 
-    // test('render Exit button', async () => {
-    //     render(<DealerManpower fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
-    //     const Exit = screen.getByText('Exit');
-    //     expect(Exit).toBeInTheDocument();
-    // });
-
-    // test('render Change History button', async () => {
-    //     render(<DealerManpower fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
-    //     const changeHistoryBtn = screen.getByText('Change History');
-    //     expect(changeHistoryBtn).toBeInTheDocument();
-    // });
-
     test('render form', async () => {
         render(<DealerManpower fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
         const codeInputField = screen.queryByPlaceholderText('Select');
         expect(codeInputField).toBeNull();
     });
 
-    test('render form element', async () => {
+    test('render form element 1', async () => {
         render(<DealerManpower fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
         const RootChildButton = screen.getByText('Add Child');
         fireEvent.click(RootChildButton);
@@ -140,7 +126,7 @@ describe('DealerManpower component', () => {
         expect(codeInputField).toBeTruthy();
     });
 
-    test('render form element', async () => {
+    test('render form element 2', async () => {
         render(<DealerManpower fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
         const RootChildButton = screen.getByText('Add Child');
         fireEvent.click(RootChildButton);
@@ -149,7 +135,7 @@ describe('DealerManpower component', () => {
         expect(RootChildButton).toBeTruthy();
     });
 
-    test('render form element', async () => {
+    test('render form element 3', async () => {
         render(<DealerManpower fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
         const RootChildButton = screen.getByText('Add Child');
         fireEvent.click(RootChildButton);
@@ -183,13 +169,10 @@ describe('DealerManpower component', () => {
 
     test('Save form element', async () => {
         const onFinish = jest.fn();
-        const { getByLabelText, getByText } = render(<DealerManpower fetchList={fetchList} onFinish={onFinish} saveData={saveData} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
+        const { getByText } = render(<DealerManpower fetchList={fetchList} onFinish={onFinish} saveData={saveData} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
         const RootChildButton = screen.getByText('Add Child');
         fireEvent.click(RootChildButton);
-        // console.log("test",SaveBtn)
-        const codeInputField = getByLabelText('Code');
-        const nameInputField = getByLabelText('Name');
-        const SaveBtn = getByText('Save');
+        const SaveBtn = screen.getByText('Save');
         onFinish.mockResolvedValue({
             dealerManpowerCode: 'ABCDE',
             dealerManpowerName: 'Asia',
@@ -264,9 +247,9 @@ describe('DealerManpower component', () => {
 
         const codeInputName = screen.getByPlaceholderText('Name');
         const codeInputCode = screen.getByPlaceholderText('Code');
-        const ParentField = await screen.getByRole('combobox', { name: 'Parent' });
-        const DealerManpowerLevel = await screen.getByRole('combobox', { name: 'Dealer Manpower Attribute Level' });
-        const codeSwitch = await screen.getByRole('switch', { name: 'Status' });
+        const ParentField = screen.getByRole('combobox', { name: 'Parent' });
+        const DealerManpowerLevel = screen.getByRole('combobox', { name: 'Dealer Manpower Attribute Level' });
+        const codeSwitch = screen.getByRole('switch', { name: 'Status' });
         expect(codeInputName).toBeDisabled();
         expect(codeInputCode).toBeDisabled();
         expect(ParentField).toBeDisabled();
@@ -278,8 +261,8 @@ describe('DealerManpower component', () => {
         expect(DealerManpowerLevel).not.toBeDisabled();
         expect(codeSwitch).not.toBeDisabled();
 
-        const SaveBtn = await screen.getByRole('button', { name: 'Save' });
-        const cancelBtn = await screen.getByRole('button', { name: 'Cancel' });
+        const SaveBtn = screen.getByRole('button', { name: 'Save' });
+        const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
         expect(SaveBtn).toBeInTheDocument();
         expect(cancelBtn).toBeInTheDocument();
 
@@ -297,9 +280,9 @@ describe('DealerManpower component', () => {
         fireEvent.click(treeBranch);
         const codeInputName = screen.getByPlaceholderText('Name');
         const codeInputCode = screen.getByPlaceholderText('Code');
-        const ParentField = await screen.getByRole('combobox', { name: 'Parent' });
-        const DealerManpowerLevel = await screen.getByRole('combobox', { name: 'Dealer Manpower Attribute Level' });
-        const codeSwitch = await screen.getByRole('switch', { name: 'Status' });
+        const ParentField = screen.getByRole('combobox', { name: 'Parent' });
+        const DealerManpowerLevel = screen.getByRole('combobox', { name: 'Dealer Manpower Attribute Level' });
+        const codeSwitch = screen.getByRole('switch', { name: 'Status' });
 
         expect(ParentField).toBeTruthy();
         expect(DealerManpowerLevel).toBeTruthy();
@@ -327,9 +310,9 @@ describe('DealerManpower component', () => {
         fireEvent.click(addChildBtn);
         const codeInputName = screen.getByPlaceholderText('Name');
         const codeInputCode = screen.getByPlaceholderText('Code');
-        const ParentField = await screen.getByRole('combobox', { name: 'Parent' });
-        const DealerManpowerLevel = await screen.getByRole('combobox', { name: 'Dealer Manpower Attribute Level' });
-        const codeSwitch = await screen.getByRole('switch', { name: 'Status' });
+        const ParentField = screen.getByRole('combobox', { name: 'Parent' });
+        const DealerManpowerLevel = screen.getByRole('combobox', { name: 'Dealer Manpower Attribute Level' });
+        const codeSwitch = screen.getByRole('switch', { name: 'Status' });
         fireEvent.change(codeInputName, { target: { value: '23' } });
         fireEvent.change(codeInputCode, { target: { value: '23' } });
         fireEvent.keyDown(ParentField, { key: 'A', code: 'KeyA' });

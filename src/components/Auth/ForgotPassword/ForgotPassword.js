@@ -260,6 +260,11 @@ const ForgotPasswordBase = (props) => {
     };
     return (
         <>
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
             <div className={styles.loginSection}>
                 <div className={styles.loginMnMlogo}>
                     <img src={IMAGES.MAH_WHITE_LOGO} alt="" />

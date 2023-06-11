@@ -77,7 +77,9 @@ const AddEditFormMain = (props) => {
                                                 <Form.Item initialValue={'YES'} label="M&M Customer" name="mnmCustomer">
                                                     <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange} className={styles.inputBox} allowClear ref={selectRef}>
                                                         {type.map((item) => (
-                                                            <Option value={item.value}>{item.name}</Option>
+                                                            <Option key={'mc' + item?.value} value={item.value}>
+                                                                {item.name}
+                                                            </Option>
                                                         ))}
                                                     </Select>
                                                 </Form.Item>
@@ -101,7 +103,9 @@ const AddEditFormMain = (props) => {
                                                 <Form.Item initialValue={'Father'} label="Relationship" name="relationship">
                                                     <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear ref={selectRef} disabled={value}>
                                                         {type.map((item) => (
-                                                            <Option value={item.value}>{item.name}</Option>
+                                                            <Option key={'rel' + item?.value} value={item.value}>
+                                                                {item.name}
+                                                            </Option>
                                                         ))}
                                                     </Select>
                                                 </Form.Item>

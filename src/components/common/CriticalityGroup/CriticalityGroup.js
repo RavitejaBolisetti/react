@@ -109,10 +109,8 @@ export const CriticalityGroupMain = (props) => {
                 const filterDataItem = criticalityGroupData?.filter((item) => (keyword ? filterFunction(keyword)(item?.criticalityGroupCode) || filterFunction(keyword)(item?.criticalityGroupName) : true));
 
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
-                // setShowDataLoading(false);
             } else {
                 setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
-                // setShowDataLoading(false);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -175,7 +173,6 @@ export const CriticalityGroupMain = (props) => {
     };
 
     const handleReferesh = () => {
-        //setShowDataLoading(true);
         setRefershData(!refershData);
     };
 
@@ -258,7 +255,6 @@ export const CriticalityGroupMain = (props) => {
         if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
-            //  setShowDataLoading(false);
         }
     };
 

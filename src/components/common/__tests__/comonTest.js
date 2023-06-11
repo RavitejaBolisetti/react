@@ -1,12 +1,8 @@
-import React from 'react'
-import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
-import { Table } from 'antd';
-import userEvent from '@testing-library/user-event';
-import DataTable from 'utils/dataTable/DataTable';
+import React from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { QualificationMaster } from '../QualificationMaster/QualificationMaster';
 
-
-const comonTest = ( {fetchChangeHistoryList, fetchList,saveData, listShowLoading} ) => (
+const comonTest = ({ fetchChangeHistoryList, fetchList, saveData, listShowLoading }) =>
     test('Is the search Field Present or not qwertyuiwertyui', () => {
         render(<QualificationMaster fetchList={fetchList} saveData={saveData} />);
         const searchField = screen.findByPlaceholderText('Search');
@@ -19,8 +15,6 @@ const comonTest = ( {fetchChangeHistoryList, fetchList,saveData, listShowLoading
         const searchBtn = screen.getByRole('button', { name: 'search' });
         expect(searchBtn).toBeTruthy();
         fireEvent.click(searchBtn);
-    })
-);
-
+    });
 
 export default comonTest;

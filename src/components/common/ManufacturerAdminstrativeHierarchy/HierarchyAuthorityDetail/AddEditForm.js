@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Input, Form, Col, Row, Button, Select, DatePicker, Typography } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
-import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField, duplicateValidator } from 'utils/validation';
+import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
@@ -75,8 +75,8 @@ const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, hand
     const onFinishFailed = (err) => {
         console.error(err);
     };
+
     const errorAction = (message) => {
-        // errorTokenValidate(message);
         errorTokenValidate({ message, isUpdating: isEditing });
     };
 
@@ -91,14 +91,8 @@ const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, hand
         }
         setTokenValidate({ tokenVisible: !!e.target.value });
         if (tokenNumber?.employeeName || errorMessage) {
-            // errorTokenValidate('');
             errorTokenValidate({ errorMessage: '', isUpdating: isEditing });
         }
-
-        // form.setFieldsValue({
-        //     effectiveTo: null,
-        //     effectiveFrom: '',
-        // });
     };
 
     useEffect(() => {
@@ -107,23 +101,19 @@ const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, hand
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
-    
+
     const fieldNames = { label: 'value', value: 'key' };
 
     return (
         <Form autoComplete="off" form={form} id="myForm" onFinish={onFinish} layout="vertical" onFieldsChange={handleFormValueChange} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type'),
-                    //  { validator: (rule, value) => duplicateValidator(value, 'authorityTypeCode', documentTypesList, record?.authorityTypeCode) }
-                     ]}>
+                    <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type')]}>
                         <Select labelInValue getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" fieldNames={fieldNames} options={apiData} disabled={isBtnDisabled} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Token" name={'authorityEmployeeTokenNo'} rules={[validateRequiredInputField('Token Required'), validationFieldLetterAndNumber('Token Required'),
-                    //  { validator: (rule, value) => duplicateValidator(value, 'authorityEmployeeTokenNo', documentTypesList, record?.authorityEmployeeTokenNo) }
-                     ]}>
+                    <Form.Item label="Token" name={'authorityEmployeeTokenNo'} rules={[validateRequiredInputField('Token Required')]}>
                         <Search disabled={isBtnDisabled} allowClear onChange={onChangeHandle(recordId)} onSearch={onSearchHandle(recordId)} placeholder={preparePlaceholderText('Token')} />
                     </Form.Item>
                 </Col>
