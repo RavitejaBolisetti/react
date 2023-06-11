@@ -36,8 +36,10 @@ const AddEditForm = (props) => {
     const showModal = () => {
         setIsModalOpen(true);
     };
+
     useEffect(() => {
         setFinalFormData({ ...FinalFormData, individualForm: individualFormValues, uploadCustomerForm: uploadCustomerFormValues });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [done]);
 
     const [activeKey, setactiveKey] = useState([1]);
@@ -76,7 +78,7 @@ const AddEditForm = (props) => {
         if (isPresent) {
             const newActivekeys = [];
 
-            activeKey.filter((item) => {
+            activeKey.forEach((item) => {
                 if (item !== values) {
                     newActivekeys.push(item);
                 }

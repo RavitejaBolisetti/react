@@ -43,7 +43,7 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
         if (isPresent) {
             const newActivekeys = [];
 
-            activeKey.filter((item) => {
+            activeKey.forEach((item) => {
                 if (item !== values) {
                     newActivekeys.push(item);
                 }

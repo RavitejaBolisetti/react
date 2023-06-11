@@ -19,10 +19,10 @@ const AddEditFormMain = (props) => {
     const [form] = Form.useForm();
     const [keyAccountForm] = Form.useForm();
     const [isReadOnly, setIsReadOnly] = useState(false);
-    const [showAddEditForm, setShowAddEditForm] = useState(false);
+    // const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [openAccordian, setOpenAccordian] = useState();
 
-    const [collapseView, setCollapseView] = useState(false);
+    // const [collapseView, setCollapseView] = useState(false);
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -37,13 +37,13 @@ const AddEditFormMain = (props) => {
     const addContactHandeler = (e) => {
         e.stopPropagation();
         form.resetFields();
-        setShowAddEditForm(true);
+        // setShowAddEditForm(true);
         setOpenAccordian('2');
         setIsReadOnly(true);
     };
 
     const onHandleAddChange = (val) => {
-        setCollapseView(true);
+        // setCollapseView(true);
         keyAccountForm.resetFields();
     };
 
@@ -57,7 +57,7 @@ const AddEditFormMain = (props) => {
         if (isPresent) {
             const newActivekeys = [];
 
-            activeKey.filter((item) => {
+            activeKey.forEach((item) => {
                 if (item !== values) {
                     newActivekeys.push(item);
                 }

@@ -75,7 +75,7 @@ const AddEditFormMain = (props) => {
             const newActivekeys = [];
 
             // eslint-disable-next-line array-callback-return
-            activeKey.filter((item) => {
+            activeKey.forEach((item) => {
                 if (item !== values) {
                     newActivekeys.push(item);
                 }

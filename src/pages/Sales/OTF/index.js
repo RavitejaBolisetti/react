@@ -1,3 +1,3 @@
-import {OtfMasterPage} from './OtfMasterPage'
+import { OtfMasterPage } from './OtfMasterPage';
 
-export {OtfMasterPage}
+export default OtfMasterPage;

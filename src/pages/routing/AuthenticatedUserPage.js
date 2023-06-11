@@ -31,8 +31,8 @@ import {
     TermConditionDealerMasterPage,
     TermConditionManufacturerMasterPage,
 } from 'pages/common';
-import { OtfMasterPage } from 'pages/Sales';
 
+import { OtfMasterPage } from 'pages/Sales';
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
 
