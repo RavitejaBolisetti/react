@@ -1,2 +1,2 @@
-import OtfMasterPage from './OTF';
-export { OtfMasterPage };
+import OTFMasterPage from './OTF';
+export { OTFMasterPage };
