@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, AutoComplete } from 'antd';
 
-import { validateRequiredInputField, validatePincodeField, validateMobileNoField, validatePanField, validateGSTIN, validateNumberOnly, valueBetween0to100, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validateRequiredInputField, validatePincodeField, validateMobileNoField, validatePanField, validateGSTIN, validateNumberOnly, valueBetween0to100 } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -91,6 +91,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleOnSearch = (value) => {
+        setOptions();
         if (value.length <= 5) {
             form.validateFields(['pinCode']);
         } else if (value.length > 5) {
@@ -272,7 +273,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item label="Credit Limit" initialValue={formData?.creditLimit} rules={[validateRequiredInputField('credit limit'), validateNumberWithTwoDecimalPlaces('credit limit')]} name="creditLimit">
+                                <Form.Item label="Credit Limit" initialValue={formData?.creditLimit} rules={[validateRequiredInputField('credit limit')]} name="creditLimit">
                                     <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('credit limit')} maxLength={15} />
                                 </Form.Item>
                             </Col>
