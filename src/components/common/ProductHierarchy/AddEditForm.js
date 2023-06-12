@@ -15,7 +15,7 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, unFilteredAttributeData, formActionType, isReadOnly = false, formData, fieldNames, isDataAttributeLoaded, attributeData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute } = props;
-    const { isFormBtnActive, setFormBtnActive } = props;
+    const { isFormBtnActive, setFormBtnActive ,showGlobalNotification} = props;
     const { form, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
     const { selectedTreeKey, flatternData, setSelectedTreeSelectKey, selectedTreeSelectKey, handleSelectTreeClick, productHierarchyData } = props;
 
@@ -121,6 +121,7 @@ const AddEditFormMain = (props) => {
         isVisible,
         selectedTreeData,
         formActionType,
+        showGlobalNotification,
     };
 
     const selectProps = {

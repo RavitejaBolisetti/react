@@ -268,6 +268,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         const codeToBeSaved = selectedTreeSelectKey || '';
 
         const data = { ...values, id: recordId, parntProdctId: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N', skuAttributes, mfgOrgSk: organizationId };
+        console.log(data,'requestData')
         const onSuccess = (res) => {
             form.resetFields();
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
@@ -302,6 +303,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             onError,
             onSuccess,
         };
+        
         saveData(requestData);
     };
 
@@ -355,6 +357,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         showProductAttribute,
         selectedTreeData,
         setShowProductAttribute,
+        showGlobalNotification,
     };
 
     const viewProps = {

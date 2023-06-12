@@ -5,10 +5,9 @@ import FormProductAttribute from './FormProductAttribute';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const ProductAttributeMaster = (props) => {
-    const { productHierarchyAttributeData, isVisible, setSKUAttributes, selectedTreeData, formActionType, skuAttributes, setFormBtnActive } = props;
+    const { productHierarchyAttributeData, isVisible, setSKUAttributes, selectedTreeData, formActionType, skuAttributes, setFormBtnActive,showGlobalNotification } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [attributeForm] = Form.useForm();
-
     const [finalFormdata, setFinalFormdata] = useState([]);
     const [formDecider, setFormDecider] = useState(false);
 
@@ -19,7 +18,7 @@ const ProductAttributeMaster = (props) => {
         const formatData = [];
 
         finalFormdata.forEach((item) => {
-            formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key });
+            formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue });
         });
 
         setSKUAttributes(formatData);
@@ -39,6 +38,7 @@ const ProductAttributeMaster = (props) => {
         productHierarchyAttributeData,
         skuAttributes,
         setFormBtnActive,
+        showGlobalNotification,
     };
 
     const formProductAttributeProps = {
@@ -53,7 +53,7 @@ const ProductAttributeMaster = (props) => {
             selectedTreeData?.skuAttributes &&
                 // eslint-disable-next-line array-callback-return
                 selectedTreeData?.skuAttributes?.map((data) => {
-                    setFinalFormdata([...finalFormdata, { attributeName: { label: data.code }, attributeValue: data.value, fromApi: true }]);
+                    setFinalFormdata( (result) => [...result, { attributeName: { label: data?.code, id: data?.id }, attributeValue: data?.value, fromApi: true, id: data?.id, adPhProductAttributeMstId: data?.adPhProductAttributeMstId }]);
                 });
             attributeForm.resetFields();
             forceUpdate();
@@ -69,7 +69,7 @@ const ProductAttributeMaster = (props) => {
 
             {finalFormdata?.length > 0 &&
                 finalFormdata?.map((action) => {
-                    return <CardProductAttribute {...cardAttributeProps} attributeName={action?.attributeName?.label} attributeValue={action?.attributeValue} attributeId={action?.attributeName?.key} fromApi={action?.fromApi} />;
+                    return <CardProductAttribute {...cardAttributeProps} attributeName={action?.attributeName?.label} attributeValue={action?.attributeValue} fromApi={action?.fromApi} id = {action?.id} adPhProductAttributeMstId= {action?.adPhProductAttributeMstId} />;
                 })}
         </>
     );
