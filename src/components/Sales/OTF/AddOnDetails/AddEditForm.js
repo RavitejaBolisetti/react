@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
+import AccessoriesAddonMain from './AccessoriesInformation/AccessoriesAddonMain';
 
 function AddEditForm(props) {
     const [activeKey, setActiveKey] = useState('');
+    const [canFormSave, setCanFormSave] = useState(false);
+    const [addOnItemInfo, SetAddOnItemInfo] = useState([]);
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible } = props;
 
     const handleEdit = () => {
@@ -23,7 +26,7 @@ function AddEditForm(props) {
         handleEdit,
     };
 
-    return isViewModeVisible && <ViewDetail {...viewProps} />;
+    return isViewModeVisible ?  <ViewDetail {...viewProps} /> : <AccessoriesAddonMain setCanFormSave={setCanFormSave} addOnItemInfo={addOnItemInfo} SetAddOnItemInfo={SetAddOnItemInfo} />;
 }
 
 export default AddEditForm;
