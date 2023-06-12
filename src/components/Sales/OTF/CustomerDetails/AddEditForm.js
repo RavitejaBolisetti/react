@@ -1,16 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Col, Input, Form, Row, Checkbox, Space, Collapse, Typography } from 'antd';
+import { Col, Input, Form, Row} from 'antd';
+
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-
 import { validateRequiredInputField } from 'utils/validation';
-
-import styles from 'components/common/Common.module.css';
-import { ViewDetail } from './ViewDetail';
-
-const { Text } = Typography;
-
-const { Panel } = Collapse;
 
 const AddEditForm = (props) => {
     const { formActionType, onFinish, onFinishFailed, formData, bookingCustomer, billingCustomer, activeKey } = props;

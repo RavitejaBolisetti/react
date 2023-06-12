@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Col, Input, Form, Row, Checkbox, Space, Collapse, Typography } from 'antd';
+import { Col, Form, Row, Checkbox, Space, Collapse, Typography } from 'antd';
 
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
@@ -15,7 +15,7 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 export const CustomerDetailsMaster = (props) => {
-    const { formActionType, onFinish, onFinishFailed, formData } = props;
+    const { formActionType, formData } = props;
 
     const [bookingCustomer] = Form.useForm();
     const [billingCustomer] = Form.useForm();
@@ -36,6 +36,7 @@ export const CustomerDetailsMaster = (props) => {
         bookingCustomer,
         billingCustomer,
         activeKey,
+        formData,
     };
 
     const onChange = (values) => {
