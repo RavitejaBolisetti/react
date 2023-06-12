@@ -43,11 +43,11 @@ const mapStateToProps = (state) => {
 
         isDivisionDataLoaded,
         isDivisionLoading,
-        divisionData: divisionData?.filter((i) => i.status),
+        divisionData,
 
         isDepartmentDataLoaded,
         isDepartmentLoading,
-        departmentData: departmentData?.filter((i) => i.status),
+        departmentData,
 
         isLoading,
         moduleTitle,
@@ -133,14 +133,14 @@ export const ListRoleMasterBase = (props) => {
             const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
             const division = filterString?.divisionCode;
             const department = filterString?.departmentCode;
-            const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.roleCode) || filterFunction(keyword)(item?.roleDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true));
+            const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.roleDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true));
             setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             setShowDataLoading(false);
         } else {
             setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
             setShowDataLoading(false);
         }
-        
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
 
@@ -351,7 +351,11 @@ export const ListRoleMasterBase = (props) => {
     const removeFilter = (key) => {
         if (key === 'divisionCode') {
             const { divisionCode, departmentCode, ...rest } = filterString;
-            setFilterString({ ...rest });
+            if (!filterString?.keyword) {
+                setFilterString();
+            } else {
+                setFilterString({ ...rest });
+            }
         } else if (key === 'departmentCode') {
             const { departmentCode, ...rest } = filterString;
             setFilterString({ ...rest });

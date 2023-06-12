@@ -110,7 +110,6 @@ export const ListDistrictBase = (props) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
     };
 
     useEffect(() => {
@@ -316,10 +315,10 @@ export const ListDistrictBase = (props) => {
     };
 
     const handleResetFilter = () => {
+        setFilterString();
         resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
-        setFilterString();
     };
 
     const onSearchHandle = (value) => {
@@ -378,6 +377,7 @@ export const ListDistrictBase = (props) => {
     };
 
     const title = 'District Name';
+    
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,
