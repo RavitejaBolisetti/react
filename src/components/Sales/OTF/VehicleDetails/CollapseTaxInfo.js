@@ -1,155 +1,50 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
+import { Col, Card, Row, Button, Form, Divider, Typography, Input } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const { Text } = Typography;
+const { TextArea } = Input;
 
 const CollapseTaxInfo = (props) => {
-    const [productAttributeEdit, setProductAttributeEdit] = useState(false);
-    const { isVisible, finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive } = props;
-    const [editedAttributeValue, setEditedAttributeValue] = useState(null);
-    const [ flag , setFlag] = useState(null);
-    const [editForm] = Form.useForm();
-
-    const onAttributeEdit = (props) => {
-        setEditedAttributeValue({ attributeName: props.attributeName, attributeValue: props.attributeValue });
-        setFormDecider(true);
-        setFormBtnActive(true)
-    };
-
-    let formatData = [];
-
-    const onAttributeSave = (val) => {
-        setFormDecider(false);
-        const newFormData = editForm.getFieldsValue();
-
-        setFinalFormdata((prev) => {
-            const updatedValue = prev;
-            const indx = prev.findIndex((el) => el.attributeName?.key === val?.attributeId && el.attributeValue === val?.attributeValue);
-            const formatData = {
-                attributeName: { label: typeof newFormData?.attributeName === 'object' ? newFormData?.attributeName?.label : newFormData?.attributeName },
-                attributeValue: newFormData?.attributeValue,
-            };
-            updatedValue?.splice(indx, 1, { ...formatData });
-            return updatedValue;
-        });
-        
-        setSKUAttributes(formatData);
-        setFlag(1);
-        setProductAttributeEdit(false);
-        attributeForm.resetFields();
-        forceUpdate();
-    };
-
-    const onAttributeDelete = (val) => {
-        setFinalFormdata((prev) => {
-            const indx = prev.findIndex((el) => el.attributeName?.key === val?.attributeId && el.attributeValue === val?.attributeValue);
-            let updatedValue = prev;
-            updatedValue?.splice(indx, 1);
-            return updatedValue;
-        });
-
-        // const formatData = [];
-        // finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
-        setSKUAttributes(formatData);
-        setFlag(1);
-        attributeForm.resetFields();
-        setProductAttributeEdit(false);
-        forceUpdate();
-    };
-
-    const onAttributeCancel = () => {
-        setFormDecider(false);
-        setProductAttributeEdit(false);
-    };
-
-    useEffect(() => {
-        return () => {
-            setProductAttributeEdit(false);
-            // eslint-disable-next-line no-lone-blocks
-            {
-                !view && setFormDecider(true);
-            }
-        };
-    }, [setFormDecider, view]);
-
-    useEffect( () => {
-        formatData = [];
-        finalFormdata?.map((item) => formatData?.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
-        if(!view){
-            setSKUAttributes(formatData);
-        } 
-    },[flag] )
-
-    const colLeft = !isVisible ? 24 : 18;
-    const colRight = !isVisible ? 24 : 6;
-    
-    const FormProductAttributeProp = {
-        productHierarchyAttributeData,
-        editForm,
-        formDecider,
-        finalFormdata,
-    }
-
     return (
-        <Card
-            style={{
-                backgroundColor: '#BEBEBE1A',
-                marginTop: '12px',
-            }}
-        >
-            <Row align="middle">
-                <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
-                    <div>
-                        <Text strong>{props.attributeName}</Text>
-                    </div>
-                    <div>
-                        <Text type="secondary">{props.attributeValue}</Text>
-                    </div>
-                </Col>
-
-                {isVisible && (
-                    <Col xs={colRight} sm={colRight} md={colRight} lg={colRight} xl={colRight} xxl={colRight}>
-                        {!productAttributeEdit ? (
-                            <div className={styles.cardItemBtn}>
-                                <>
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} style={{ margin: '0 8px 0 0' }}>
-                                        <Button
-                                            type="link"
-                                            icon={<FiEdit />}
-                                            onClick={() => {
-                                                onAttributeEdit(props);
-                                                setProductAttributeEdit(true);
-                                            }}
-                                        />
-                                    </Col>
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} disabled={props.fromApi} />
-                                    </Col>
-                                </>
-                            </div>
-                        ) : (
-                            <div className={styles.cardItemBtn}>
-                                <Button type="link" onClick={onAttributeCancel}>
-                                    Cancel
-                                </Button>
-                                <Button type="link" onClick={() => onAttributeSave(props)}>
-                                    Save
-                                </Button>
-                            </div>
-                        )}
+        <>
+            <Form autoComplete="off" layout="vertical" id="myForm">
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={props.type} label="Tax/Charges Type" name="type">
+                            <Input placeholder={preparePlaceholderText('Type')} disabled />
+                        </Form.Item>
                     </Col>
-                )}
-            </Row>
-
-            {productAttributeEdit && (
-                <>
-                    <Divider />
-                </>
-            )}
-        </Card>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item label="Tax/Charges Code" name="code" initialValue={props.code}>
+                            <Input placeholder={preparePlaceholderText('Code')} disabled />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item label="Rate" name="rate" initialValue={props.rate}>
+                            <Input placeholder={preparePlaceholderText('Rate')} disabled />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item label="Rate Type" name="rateType" initialValue={props.rateType}>
+                            <Input placeholder={preparePlaceholderText('Rate Type')} disabled />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Form.Item label="Charge Description" name="description" initialValue={props.description}>
+                            <TextArea placeholder={preparePlaceholderText('description')} showCount maxLength={100} autoSize={{ minRows: 2, maxRows: 5 }} disabled />
+                        </Form.Item>
+                    </Col>
+                </Row>
+            </Form>
+        </>
     );
 };
 
-export  default CollapseTaxInfo;
+export default CollapseTaxInfo;
