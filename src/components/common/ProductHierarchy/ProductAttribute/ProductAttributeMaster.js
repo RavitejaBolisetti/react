@@ -51,6 +51,7 @@ const ProductAttributeMaster = (props) => {
         }
         if (formActionType === FROM_ACTION_TYPE.EDIT) {
             selectedTreeData?.skuAttributes &&
+                // eslint-disable-next-line array-callback-return
                 selectedTreeData?.skuAttributes?.map((data) => {
                     setFinalFormdata([...finalFormdata, { attributeName: { label: data.code }, attributeValue: data.value, fromApi: true }]);
                 });
