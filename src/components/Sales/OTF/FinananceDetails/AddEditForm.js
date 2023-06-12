@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Space, Collapse, Typography } from 'antd';
-import {  validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
@@ -18,7 +18,6 @@ const AddEditFormMain = (props) => {
     const [customerForm] = Form.useForm();
     const [authorityForm] = Form.useForm();
     const [activeKey, setactiveKey] = useState([1]);
-
 
     const handleEdit = () => {
         setIsViewModeVisible(false);
@@ -83,7 +82,7 @@ const AddEditFormMain = (props) => {
                                     <Form autoComplete="off" layout="vertical" form={customerForm}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Financier" name="financier" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
+                                                <Form.Item label="Financier" name="financier" data-testid="customerType">
                                                     <Select placeholder="Select" disabled={false} loading={false} allowClear>
                                                         <Option value="financier1">HDFC</Option>
                                                         <Option value="financier2">SBI</Option>
@@ -128,16 +127,18 @@ const AddEditFormMain = (props) => {
                                                     <Select disabled={false} loading={false} placeholder="Select" allowClear>
                                                         <Option value="dorecived1">Yes</Option>
                                                         <Option value="dorecived2">No</Option>
+                                                        <Option value="dorecived3">NA</Option>
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
+
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="D.O. Number" name="donumber" data-testid="customerType">
+                                                <Form.Item label="D.O. Number" name="donumber" data-testid="customerType" rules={[validateRequiredSelectField('D.O. number')]}>
                                                     <Input placeholder={preparePlaceholderText('do number')}></Input>
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="D.O. Date" name="dodate" data-testid="CustomerCategory">
+                                                <Form.Item label="D.O. Date" name="dodate" data-testid="CustomerCategory" rules={[validateRequiredSelectField('D.O. date')]}>
                                                     <Input placeholder={preparePlaceholderText('do date')}></Input>
                                                 </Form.Item>
                                             </Col>
