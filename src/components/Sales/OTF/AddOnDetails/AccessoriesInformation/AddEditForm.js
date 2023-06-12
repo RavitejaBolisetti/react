@@ -38,6 +38,8 @@ function AddEditForm({ form, onFieldsChange, onFinish, isEditing, isBtnDisabled,
                         <Input disabled={isBtnDisabled} maxLength={50} placeholder={preparePlaceholderText('mrp')} />
                     </Form.Item>
                 </Col>
+            </Row>
+            <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity')]}>
                         <Input disabled={isBtnDisabled} maxLength={50} placeholder={preparePlaceholderText('required quantity')} />
@@ -46,7 +48,14 @@ function AddEditForm({ form, onFieldsChange, onFinish, isEditing, isBtnDisabled,
 
                 <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                     <Form.Item label="Part Description" name="partDescription" rules={[validateRequiredInputField('part description')]}>
-                        <TextArea showCount maxLength={100} />
+                        <TextArea
+                            autoSize={{
+                                minRows: 2,
+                                maxRows: 6,
+                            }}
+                            showCount
+                            maxLength={300}
+                        />
                     </Form.Item>
                 </Col>
 

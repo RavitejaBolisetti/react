@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useReducer } from 'react';
-import { Form, Divider, Collapse } from 'antd';
+import { Form, Divider, Collapse, Card } from 'antd';
 
 import CardAccessories from './CardAccessories';
 import AddEditForm from './AddEditForm';
@@ -29,16 +29,15 @@ const AccessoriesAddonMain = ({ setCanFormSave, setIsBtnDisabled, isBtnDisabled,
 
     return (
         <Fragment>
-            <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
-                <Panel header={'Accessories Information'} key="1">
-                    <AddEditForm form={addOnform} onFinish={addOnformOnFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} addOnItemInfo={addOnItemInfo} onFieldsChange={onFieldsChange} />
+            <Card>
+                <Divider />
+                <AddEditForm form={addOnform} onFinish={addOnformOnFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} addOnItemInfo={addOnItemInfo} onFieldsChange={onFieldsChange} />
 
-                    {addOnItemInfo?.length > 0 &&
-                        addOnItemInfo?.map((item) => {
-                            return <CardAccessories {...item} form={addOnform} onFinish={addOnformOnFinish} addOnItemInfo={addOnItemInfo} SetAddOnItemInfo={SetAddOnItemInfo} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} onFieldsChange={onFieldsChange} />;
-                        })}
-                </Panel>
-            </Collapse>
+                {addOnItemInfo?.length > 0 &&
+                    addOnItemInfo?.map((item) => {
+                        return <CardAccessories {...item} form={addOnform} onFinish={addOnformOnFinish} addOnItemInfo={addOnItemInfo} SetAddOnItemInfo={SetAddOnItemInfo} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} onFieldsChange={onFieldsChange} />;
+                    })}
+            </Card>
         </Fragment>
     );
 };
