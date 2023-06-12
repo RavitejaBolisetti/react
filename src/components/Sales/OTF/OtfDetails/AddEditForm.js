@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Col, Input, Form, Row, Select, DatePicker } from 'antd';
+import { Row, Col, Input, Form, Select, DatePicker } from 'antd';
+
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
@@ -10,25 +11,26 @@ const { Option } = Select;
 function AddEditForm({ formData, formActionType }) {
     const { form } = Form.useForm();
 
-    const onFinish =()=>{};
+    const onFinish = () => {};
     const onFinishFailed = () => {};
 
     return (
         <>
+         
             <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Initial Promise Delivery Date" name="initialPromiseDeliveryDate" >
+                        <Form.Item label="Initial Promise Delivery Date" name="initialPromiseDeliveryDate">
                             <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Cust. Expected Delivery Date" name="custExpectedDeliveryDate" >
+                        <Form.Item label="Cust. Expected Delivery Date" name="custExpectedDeliveryDate">
                             <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="saleType" label="Sale Type" >
+                        <Form.Item name="saleType" label="Sale Type">
                             <Select placeholder="Select" showSearch allowClear>
                                 <Option value="GST">GST</Option>
                             </Select>

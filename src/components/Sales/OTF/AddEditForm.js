@@ -6,6 +6,8 @@ import styles from 'components/common/Common.module.css';
 import { OTF_FORM_ACTION_TYPE } from 'constants/otfActionType';
 
 import FormProgressBar from './FormProgressBar';
+
+import { OtfDetailsMaster } from './OtfDetails';
 import { CustomerDetailsMaster } from './CustomerDetails';
 import { SchemeDetailsMaster } from './SchemeDetails';
 import { InsuranceDetailsMaster } from './InsuranceDetails';
@@ -89,7 +91,7 @@ const AddEditFormMain = (props) => {
 
     const renderElement = () => {
         if (leftTimeline?.otfDetails) {
-            return <CustomerDetailsMaster {...RenderElementCommonProps} />;
+            return <OtfDetailsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.customerDetails) {
             return <CustomerDetailsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.vehicleDetails) {
