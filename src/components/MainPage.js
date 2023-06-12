@@ -65,11 +65,15 @@ const MainPageBase = ({ notification }) => {
         <div>
             {isLoggedIn ? (
                 <>
-                    <SessionTimeout />
-                    <AuthenticatedUserPage />
+                    <div style={{ border: '1px solid red' }}>
+                        <SessionTimeout />
+                        <AuthenticatedUserPage />
+                    </div>
                 </>
             ) : (
-                <UnAuthenticatedUserPage />
+                <div style={{ border: '1px solid yellow' }}>
+                    <UnAuthenticatedUserPage />
+                </div>
             )}
         </div>
     );
