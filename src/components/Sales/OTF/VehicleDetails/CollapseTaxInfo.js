@@ -2,7 +2,6 @@ import React, { useState, Fragment, useEffect } from 'react';
 import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
-import FormProductAttribute from './FormProductAttribute';
 
 const { Text } = Typography;
 
@@ -147,11 +146,10 @@ const CollapseTaxInfo = (props) => {
             {productAttributeEdit && (
                 <>
                     <Divider />
-                    <FormProductAttribute {...editedAttributeValue} {...FormProductAttributeProp}/>
                 </>
             )}
         </Card>
     );
 };
 
-export default CollapseTaxInfo;
+export  default CollapseTaxInfo;

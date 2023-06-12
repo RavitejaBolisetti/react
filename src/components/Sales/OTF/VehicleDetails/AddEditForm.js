@@ -5,7 +5,7 @@ import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
-import { CollapseTaxInfo } from './CollapseTaxInfo';
+import CollapseTaxInfo from './CollapseTaxInfo';
 
 import styles from 'components/common/Common.module.css';
 
@@ -22,6 +22,8 @@ const AddEditFormMain = (props) => {
     const [keyAccountForm] = Form.useForm();
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [openAccordian, setOpenAccordian] = useState();
+    const [isCollapseView, setCollapseView] = useState(false);
+    const [addFormdata, setAddFormData] = useState([]);
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -226,6 +228,7 @@ const AddEditFormMain = (props) => {
                                     key="2"
                                 >
                                     <Divider />
+
                                     <Form autoComplete="off" layout="vertical" form={keyAccountForm} onFinish={onHandleAddChange}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
