@@ -1,7 +1,5 @@
 import React from 'react';
-import { Divider, Space, Card, Typography, Descriptions } from 'antd';
-
-const { Text } = Typography;
+import { Card, Descriptions } from 'antd';
 
 const ViewDetailMain = (props) => {
     const { styles } = props;
@@ -34,7 +32,7 @@ const ViewDetailMain = (props) => {
 
     return (
         <>
-            <Card style={{ marginBottom: '40px', backgroundColor: '#F2F2F2', borderRadius: '8px', marginBottom: '50px' }}>
+            <Card className={styles.ExchangeCard}>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Customer ID">{customerForm?.customerId}</Descriptions.Item>
                     <Descriptions.Item label="Customer Name">{customerForm?.customerName}</Descriptions.Item>

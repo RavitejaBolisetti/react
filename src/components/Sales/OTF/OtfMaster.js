@@ -15,7 +15,7 @@ export const OtfMasterBase = (props) => {
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
-    const [showDataLoading, setShowDataLoading] = useState(true);
+    const [showDataLoading, setShowDataLoading] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
     const [page, setPage] = useState(1);
@@ -223,7 +223,7 @@ export const OtfMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={false} {...tableProps} />
+                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
@@ -15,7 +15,7 @@ const AddEditFormMain = (props) => {
     };
 
     return !formActionType?.viewMode ? (
-        <Card style={{ marginBottom: '410px', backgroundColor: '#F2F2F2', borderRadius: '8px', marginBottom: '50px' }}>
+        <Card className={styles.ExchangeCard}>
             <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

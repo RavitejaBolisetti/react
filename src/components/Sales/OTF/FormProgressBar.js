@@ -1,10 +1,10 @@
 import React from 'react';
-import { Timeline, Progress } from 'antd';
+import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 
 const FormProgressBar = (props) => {
-    const { leftTimeline, setleftTimeline, moduleName, setmoduleName } = props;
+    const { leftTimeline, setleftTimeline, setmoduleName } = props;
     const onHandle = (key) => {
         switch (key) {
             case 'otfDetails':
@@ -81,12 +81,6 @@ const FormProgressBar = (props) => {
                 {
                     dot: <FaCheckCircle />,
                     children: <p onClick={() => onHandle('customerDetails')}>Customer Details</p>,
-                    // (
-                    //     <>
-                    //         <p onClick={() => onHandle('customerDetails')}>Customer Details</p>
-                    //         <Progress percent={100} size="small" />
-                    //     </>
-                    // ),
                 },
                 {
                     dot: <FaCheckCircle />,

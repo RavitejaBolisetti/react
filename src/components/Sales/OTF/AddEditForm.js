@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Col, Row, Collapse, Avatar, Space } from 'antd';
+import React, { useState } from 'react';
+import { Col, Row, Collapse, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { FaChevronDown } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
@@ -16,7 +16,7 @@ import { LoyaltySchemeMaster } from './LoyaltyScheme';
 import { ReferralsMaster } from './Referrals';
 import { ExchangeVehiclesMaster } from './ExchangeVehicles';
 import { AddOnDetailsMaster } from './AddOnDetails';
-import CommonTimeline from './Timeline';
+// import CommonTimeline from './Timeline';
 
 const { Panel } = Collapse;
 const expandIcon = ({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />;
@@ -94,43 +94,33 @@ const AddEditFormMain = (props) => {
         switch (moduleName) {
             case 'OTF Details': {
                 return <CustomerDetailsMaster {...RenderElementCommonProps} />;
-                break;
             }
             case 'Customer Details': {
                 return <CustomerDetailsMaster {...RenderElementCommonProps} />;
-                break;
             }
             case 'Vehicle Details': {
                 return <VehicleDetailsMaster {...RenderElementCommonProps} />;
-                break;
             }
             case 'Scheme Details': {
                 return <SchemeDetailsMaster {...RenderElementCommonProps} />;
-                break;
             }
             case 'Insurance Details': {
                 return <InsuranceDetailsMaster {...RenderElementCommonProps} />;
-                break;
             }
             case 'Finance Details': {
                 return <FinananceDetailsMaster {...RenderElementCommonProps} />;
-                break;
             }
             case 'Exchange vehicle': {
                 return <ExchangeVehiclesMaster {...RenderElementCommonProps} />;
-                break;
             }
             case 'Referrals': {
                 return <ReferralsMaster {...RenderElementCommonProps} />;
-                break;
             }
             case 'Loyalty scheme': {
                 return <LoyaltySchemeMaster {...RenderElementCommonProps} />;
-                break;
             }
             case 'Add On Details': {
                 return <AddOnDetailsMaster {...RenderElementCommonProps} />;
-                break;
             }
             default: {
                 return <CustomerDetailsMaster {...RenderElementCommonProps} />;

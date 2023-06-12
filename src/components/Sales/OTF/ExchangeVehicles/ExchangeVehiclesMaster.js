@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from 'components/common/Common.module.css';
 import { AddEditForm } from './AddEditForm';
-import { Row, Col, Form } from 'antd';
+import { Form } from 'antd';
 
 export const ExchangeVehiclesMaster = (props) => {
     const [form] = Form.useForm();
