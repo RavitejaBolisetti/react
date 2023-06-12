@@ -1,6 +1,5 @@
 import React from 'react';
-import { Descriptions } from 'antd';
-import { Space, Collapse, Typography } from 'antd';
+import { Space, Collapse, Typography, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FaRegUserCircle } from 'react-icons/fa';
 

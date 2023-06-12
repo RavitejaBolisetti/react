@@ -121,10 +121,14 @@ const AddEditFormMain = (props) => {
                                 <Panel
                                     header={
                                         <>
-                                            <Avatar size={40}>USER</Avatar>
+                                            {/* <Avatar size={40}>USER</Avatar> */}
                                             <Space direction="vertical">
-                                                <span>John Michael</span>
-                                                <span>C200615396</span>
+                                                <p>
+                                                    Name - <span>John Michael</span>
+                                                </p>
+                                                <p>
+                                                    OTF No. - <span>4962946</span>
+                                                </p>
                                             </Space>
                                         </>
                                     }
@@ -135,6 +139,15 @@ const AddEditFormMain = (props) => {
                                     </p>
                                     <p>
                                         Mobile No.: <span>9893473843</span>
+                                    </p>
+                                    <p>
+                                        OTF Date: <span>01 Dec 2021</span>
+                                    </p>
+                                    <p>
+                                        Model: <span>SCORPIO</span>
+                                    </p>
+                                    <p>
+                                        CPD: <span>13 April 2023</span>
                                     </p>
                                 </Panel>
                             </Collapse>
