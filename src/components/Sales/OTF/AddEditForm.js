@@ -173,11 +173,11 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18} className={styles.drawerBodyRight}>
                     <Row gutter={20}>
-                        <Col span={12}>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <h2>{moduleName}</h2>
                         </Col>
-                        <Col span={12}>
-                            <CommonTimeline />
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                            {/* <CommonTimeline /> */}
                         </Col>
                     </Row>
                     {renderElement()}
