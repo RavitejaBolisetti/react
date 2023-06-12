@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
 import { withModal } from 'components/withModal';
 import styles from 'components/common/Common.module.css';
-import { validateRequiredSelectField } from 'utils/validation';
-import { searchValidator } from 'utils/validation';
+import { validateRequiredSelectField, searchValidator } from 'utils/validation';
 
 const { Option } = Select;
 

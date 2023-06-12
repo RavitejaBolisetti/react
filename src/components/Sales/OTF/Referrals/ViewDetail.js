@@ -1,6 +1,5 @@
 import React from 'react';
-import { Descriptions } from 'antd';
-import { Divider, Space, Card, Typography } from 'antd';
+import { Divider, Space, Card, Typography,Descriptions } from 'antd';
 
 const { Text } = Typography;
 

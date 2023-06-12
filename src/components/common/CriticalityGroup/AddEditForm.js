@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
-
 import { Input, Form, Col, Row, Switch } from 'antd';
-
 import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { DrawerFormButton } from 'components/common/Button';
 import { withDrawer } from 'components/withDrawer';
-
 import { ViewCriticalityGroup } from './ViewCriticalityGroup';
 import AllowedTimingList from './AllowedTimings/AllowedTimingList';
-
 import style from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
-    const { formActionType, setIsFormVisible, forceUpdate, showGlobalNotification, onFinish, onFinishFailed, form, formData, setFormData, defaultBtnVisiblity, criticalityGroupData, timeData, setTimeData } = props;
+    const { formActionType, setIsFormVisible, forceUpdate, showGlobalNotification, onFinish, onFinishFailed, form, formData, setFormData, defaultBtnVisiblity, timeData, setTimeData } = props;
     const { isLoadingOnSave, deletedTime, setDeletedTime, buttonData, setButtonData, handleButtonClick } = props;
-
     const [TimesegmentLengthTracker, setTimesegmentLengthTracker] = useState(generateRandomNumber());
     const [isAddTimeVisible, setIsAddTimeVisible] = useState(false);
     const [allowedTimingSave, setAllowedTimingSave] = useState(true);

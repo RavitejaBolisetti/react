@@ -17,4 +17,4 @@ const OtfMasterBase = (props) => {
     );
 };
 
-export const OtfMasterPage = withLayoutMaster(OtfMasterBase);
+export const OTFMasterPage = withLayoutMaster(OtfMasterBase);

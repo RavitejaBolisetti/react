@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Col, Row, Input, Form } from 'antd';
-
+import { Col, Row, Form } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
 import { ListDataTable } from 'utils/ListDataTable';
+import { btnVisiblity } from 'utils/btnVisiblity';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-
 import { showGlobalNotification } from 'store/actions/notification';
-
 import { filterFunction } from 'utils/filterFunction';
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
 import { AddEditForm } from './AddEditForm';
 import { tableColumn } from './tableColumn';
-
-const { Search } = Input;
 
 const mapStateToProps = (state) => {
     const {
@@ -28,8 +23,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('data', data);
-
     const moduleTitle = 'Qualification Master';
 
     let returnValue = {
@@ -38,7 +31,6 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         data,
-
         moduleTitle,
     };
     return returnValue;
@@ -60,22 +52,15 @@ const mapDispatchToProps = (dispatch) => ({
 export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataLoaded, fetchList, listShowLoading, data, showGlobalNotification, isLoading }) => {
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
-
     const [formData, setFormData] = useState({});
-
     const [searchData, setSearchdata] = useState(data);
     const [refershData, setRefershData] = useState(false);
-
     const [isFormVisible, setIsFormVisible] = useState(false);
-
     const [page, setPage] = useState(1);
-
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [filterString, setFilterString] = useState();
-
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
@@ -124,13 +109,11 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         record && setFormData(record);
         setIsFormVisible(true);
     };
-
-    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
@@ -211,6 +194,16 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -218,17 +211,14 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
         setFormActionType,
         onFinish,
         onFinishFailed,
-
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Qualification'),
+        titleOverride: drawerTitle.concat('Qualification'),
         tableData: searchData,
-
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
         buttonData,
-
         setButtonData,
         handleButtonClick,
         handleResetFilter,
@@ -239,7 +229,6 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
         advanceFilter: false,
         filterString,
         from: listFilterForm,
-
         onSearchHandle,
         handleClearInSearch,
         handleReferesh,

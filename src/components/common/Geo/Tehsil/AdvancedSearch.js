@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
 import { validateRequiredInputField } from 'utils/validation';
 import { withModal } from 'components/withModal';
-
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
@@ -36,6 +35,7 @@ export const AdvancedSearchFrom = (props) => {
 
     useEffect(() => {
         handleResetFilter();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -46,7 +46,7 @@ export const AdvancedSearchFrom = (props) => {
                         {defaultCountry && (
                             <Select defaultValue={defaultCountry} onChange={handleFilterChange('countryCode')} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
                                 {countryData?.map((item) => (
-                                    <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                    <Option key={item?.countryCode} value={item?.countryCode}>{item?.countryName}</Option>
                                 ))}
                             </Select>
                         )}

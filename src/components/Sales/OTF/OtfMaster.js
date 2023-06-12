@@ -1,50 +1,13 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
-import { bindActionCreators } from 'redux';
-import { dealerCompanyDataActions } from 'store/actions/data/dealer/dealerCompany';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { showGlobalNotification } from 'store/actions/notification';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { filterFunction } from 'utils/filterFunction';
+import { btnVisiblity } from 'utils/btnVisiblity';
 import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
-import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
-import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
-import { Otfbuttons } from 'components/common/Button';
-
-const mapStateToProps = (state) => {
-    const {
-        auth: { userId },
-        data: {
-            DealerHierarchy: {
-                DealerCompany: { isLoaded: isDataLoaded = false, isLoading, data = [] },
-                DealerParent: { isLoaded: isDealerParentDataLoaded = false, isLoading: isDealerParentDataLoading = false, data: dealerParentData = [] },
-            },
-            Geo: {
-                Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
-            },
-        },
-    } = state;
-
-    const moduleTitle = 'Otf Master';
-    let returnValue = {
-        userId,
-        isDataLoaded,
-        data,
-        isDealerParentDataLoaded,
-        isDealerParentDataLoading,
-        dealerParentData,
-        isPinCodeDataLoaded,
-        pincodeData,
-        isLoading,
-        moduleTitle,
-        isPinCodeLoading,
-    };
-    return returnValue;
-};
-
 
 export const OtfMasterBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isPinCodeLoading, pinCodeShowLoading } = props;
@@ -123,7 +86,7 @@ export const OtfMasterBase = (props) => {
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         record && setFormData(record);
         setIsFormVisible(true);
@@ -198,6 +161,16 @@ export const OtfMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -207,7 +180,7 @@ export const OtfMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Otf Details'),
+        titleOverride: drawerTitle.concat('Otf Details'),
         tableData: searchData,
         buttonData,
         setButtonData,
@@ -250,7 +223,7 @@ export const OtfMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={false} {...tableProps} />
+                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />

@@ -1,44 +1,23 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 
-import { Col, Checkbox, Divider, Row, Button, Form, Input, Radio, Select, Space, Typography } from 'antd';
+import { Row, Col, Checkbox, Button, Form, Input, Select, Space } from 'antd';
+
 import { SearchOutlined } from '@ant-design/icons';
 
-import styles from '../../../Common.module.css';
-
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validationFieldLetteNumberandPeriod, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
 
-const { Option } = Select;
-const { Search } = Input;
 let index = 0;
 
-const addressType = [
-    { key: 'office', name: 'Office' },
-    { key: 'residence', name: 'Residence' },
-    { key: 'permanent', name: 'Permanent' },
-    { key: 'other', name: 'Other' },
-];
-
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onFinish, form, onCloseAction, isViewModeVisible, styles } = props;
+    const { isReadOnly = false, onFinish, form } = props;
 
-    const disabledProps = { disabled: isReadOnly };
     const [items, setItems] = useState(['Office', 'Residence', 'Permanent', 'Other']);
     const [name, setName] = useState('');
-    const [isOther, setIsOther] = useState(false);
 
     const inputRef = useRef(null);
     const onNameChange = (event) => {
         setName(event.target.value);
-    };
-
-    const addItem = (e) => {
-        e.preventDefault();
-        setItems([...items, name || `New item ${index++}`]);
-        setName('');
-        setTimeout(() => {
-            inputRef.current?.focus();
-        }, 0);
     };
 
     const handleReset = () => {
@@ -46,7 +25,7 @@ const AddEditForm = (props) => {
     };
 
     const handleOther = (key) => {
-        setIsOther(key === 4);
+       // setIsOther(key === 4);
     };
     return (
         <>

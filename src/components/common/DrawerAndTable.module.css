@@ -138,12 +138,6 @@
     border-radius: 7px;
 }
 
-.addGroup {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 0px !important;
-}
-
 .contentHeaderBackground .addGroup button {
     margin-bottom: 0px !important;
     margin-left: 10px;
@@ -243,11 +237,6 @@
 
 .srchbtn :global .ant-btn-default {
     background-color: #ffffff;
-}
-
-.addGroup {
-    display: flex;
-    justify-content: right;
 }
 
 .addGroup {

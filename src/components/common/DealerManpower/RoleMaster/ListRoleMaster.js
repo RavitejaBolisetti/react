@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -15,6 +15,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { filterFunction } from 'utils/filterFunction';
+import { btnVisiblity } from 'utils/btnVisiblity';
 import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
@@ -43,7 +44,7 @@ const mapStateToProps = (state) => {
         isDivisionDataLoaded,
         isDivisionLoading,
         divisionData: divisionData?.filter((i) => i.status),
-        
+
         isDepartmentDataLoaded,
         isDepartmentLoading,
         departmentData: departmentData?.filter((i) => i.status),
@@ -73,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListRoleMasterBase = (props) => {
-    const { data, saveData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { isDivisionDataLoaded, listDivisionShowLoading, fetchDivisionLovList, isDivisionLoading, divisionData } = props;
     const { isDepartmentDataLoaded, listDepartmentShowLoading, fetchDepartmentLovList, isDepartmentLoading, departmentData } = props;
 
@@ -128,19 +129,18 @@ export const ListRoleMasterBase = (props) => {
     }, [userId, isDivisionDataLoaded, isDepartmentDataLoaded, isDataLoaded]);
 
     useEffect(() => {
-        if (isDataLoaded && data && userId) {
-            if (filterString) {
-                const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
-                const division = filterString?.divisionCode;
-                const department = filterString?.departmentCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.roleCode) || filterFunction(keyword)(item?.roleDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
-                setShowDataLoading(false);
-            } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
-                setShowDataLoading(false);
-            }
+        if (isDataLoaded && data && userId && filterString) {
+            const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
+            const division = filterString?.divisionCode;
+            const department = filterString?.departmentCode;
+            const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.roleCode) || filterFunction(keyword)(item?.roleDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true));
+            setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+            setShowDataLoading(false);
+        } else {
+            setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+            setShowDataLoading(false);
         }
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
 
@@ -193,7 +193,7 @@ export const ListRoleMasterBase = (props) => {
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         record && setFormData(record);
         setIsFormVisible(true);
@@ -269,6 +269,16 @@ export const ListRoleMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -279,7 +289,7 @@ export const ListRoleMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Role'),
+        titleOverride: drawerTitle.concat('Role'),
         tableData: searchData,
 
         isDivisionDataLoaded,

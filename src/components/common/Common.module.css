@@ -198,29 +198,6 @@
     color: #8e8585;
 }
 
-.container {
-    padding: 20px;
-}
-
-.mb10 {
-    margin-bottom: 20px;
-}
-
-.inputBox {
-    border-radius: 4px;
-    height: 36px;
-}
-
-.treemenu {
-    margin: 24px 0px;
-    /* padding-left: 25px; */
-    padding-left: 0px;
-    padding-bottom: 0px;
-    line-height: 2em;
-    list-style: none;
-    background-color: transparent;
-    color: #0b0b0c;
-}
 
 .floatRight {
     float: right;
@@ -257,41 +234,6 @@
 .exitButton:active,
 .exitButton:active:focus,
 .exitButton.active:hover {
-    background-color: #ff3e5b;
-    color: #ffffff !important;
-}
-
-.treeViewContainer {
-    clear: both;
-    margin-bottom: 10px;
-}
-
-.treeCollapsibleButton {
-    border: 1px solid #ff3e5b;
-    border-radius: 3px;
-    position: absolute;
-    z-index: 10;
-    top: 136px;
-    /* left:266px; */
-    padding: 5px;
-    color: #ff3e5b;
-    line-height: 2px;
-    background-color: #ffffff;
-    font-weight: 400;
-    cursor: pointer;
-    width: 30px;
-    margin: 10px auto 10px 15px;
-    float: left;
-    will-change: box-shadow, transform;
-    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.treeCollapsibleButton:hover,
-.treeCollapsibleButton:focus,
-.treeCollapsibleButton:active,
-.treeCollapsibleButton.active,
-.treeCollapsibleButton:active:focus,
-.treeCollapsibleButton.active:hover {
     background-color: #ff3e5b;
     color: #ffffff !important;
 }
@@ -353,58 +295,6 @@
     color: #ffffff !important;
 }
 
-.leftpanel {
-    padding: 0.2em;
-    width: 99%;
-    background: #f4f4f4;
-    /* margin-left: 8px; */
-    box-shadow: 0px 0px 8px rgba(78, 78, 78, 0.25);
-    border-radius: 10px;
-    border-top-left-radius: 0;
-    margin-bottom: 20px;
-    height: 90vh;
-    /* overflow-y: scroll; */
-    white-space: nowrap;
-    margin-top: 5px;
-}
-
-.treeMenuLeft {
-    padding-left: 0 !important;
-    margin-left: -10px;
-}
-
-.ant-input-group-wrapper {
-    vertical-align: inherit;
-    margin-top: 13px;
-}
-
-.outer {
-    transition: max-width 1s;
-}
-
-.ant-row {
-    display: flex;
-    flex-flow: row wrap;
-    min-width: 0;
-    /* margin-right: 0px !important; */
-}
-
-.formContainer {
-    padding: 0px;
-}
-
-.pad10 {
-    padding: 0px;
-}
-
-.padRight18 {
-    padding-right: 18px;
-}
-
-.padLeft10 :global .ant-form {
-    margin: 0px 0px 0px 46px;
-}
-
 .drawerFooterButtons button {
     margin-bottom: 0 !important;
     height: 34px;
@@ -413,14 +303,6 @@
 .drawerFooterButtons button:not(:first-child) {
     margin-left: 10px !important;
 }
-
-.contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost :hover {
-    background-color: #ff3e5b;
-}
-
-/* .contentHeaderBackground :global .ant-btn-default {
-    border-color: transparent !important;
-} */
 
 .contentHeaderBackground .headerSearchField :global .ant-btn-default {
     border-color: transparent !important;
@@ -447,37 +329,6 @@
     list-style: none;
     background-color: transparent;
     color: #0b0b0c;
-}
-
-.floatRight {
-    float: right;
-}
-
-.exitButton {
-    border: 1px solid #ff3e5b;
-    border-radius: 3px;
-    position: relative;
-    padding: 18px 36px;
-    margin: 4px 1px;
-    font-size: 14px;
-    color: #ff3e5b;
-    line-height: 2px;
-    background-color: #fff;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0;
-    will-change: box-shadow, transform;
-    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    float: right;
-}
-
-.exitButton:hover,
-.exitButton:focus,
-.exitButton:active,
-.exitButton:active:focus,
-.exitButton.active:hover {
-    background-color: #ff3e5b;
-    color: #ffffff !important;
 }
 
 .treeViewContainer {
@@ -514,21 +365,6 @@
     color: #ffffff !important;
 }
 
-.buttonContainer {
-    text-align: right;
-    /* padding: 0px !important; */
-    padding-right: 18px;
-    margin-top: 8px;
-}
-
-.buttonContainer button {
-    margin-left: 14px;
-}
-
-.buttonContainer .buttonIcon {
-    margin-right: 6px;
-    padding-top: 2px;
-}
 
 .leftpanel {
     padding: 0.2em;
@@ -824,7 +660,6 @@
 .contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
     background-color: #e6e6e6;
     border-left: #e6e6e6;
-    background-color: #e6e6e6;
 }
 
 .contentHeaderBackground .userManagement :global .ant-btn-link {
@@ -1023,7 +858,6 @@
 }
 
 .timingHeader {
-    border-radius: 8px;
     background-color: #f4f4f4;
     padding: 10px;
     margin-bottom: 1px;
@@ -1088,60 +922,6 @@
     border: none !important;
 }
 
-/* Crticality group allowed timing css end*/
-
-.tableIcons {
-    border: none !important;
-    /* color: #ff3e5b !important; */
-    padding: 0px;
-    box-shadow: transparent !important;
-    width: 18px !important;
-}
-
-/* .tableIcons:hover,
-.tableIcons:hover svg {
-    color: #ff3e5b !important;
-} */
-
-.searchContainer {
-    background-color: #f4f4f4;
-    border-radius: 7px;
-    margin-bottom: 20px;
-    padding: 10px;
-}
-
-.searchContainer .searchBox {
-    padding-left: 20px !important;
-    display: flex;
-    align-items: center;
-}
-
-.searchContainer .searchBox .subheading {
-    font-size: 16px;
-    color: #0b0c0c;
-    padding-right: 0px !important;
-    padding-left: 0px !important;
-    display: flex;
-    justify-content: flex-start;
-}
-
-.searchContainer .addGroup button {
-    margin-bottom: 0 !important;
-    margin-left: 10px;
-}
-
-.searchContainer .addGroup .refreshBtn {
-    background-color: initial;
-    font-size: 18px;
-    line-height: 18px;
-    width: 60px !important;
-}
-
-.searchContainer .searchBox :global .ant-input-group:hover {
-    border: 1px solid #0b0b0c;
-}
-
-/*for datepicker */
 .datepicker {
     width: 100%;
 }
@@ -1240,12 +1020,6 @@
 
 :global .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
     background: #00a310;
-}
-
-.addGroup {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 0px !important;
 }
 
 .addGroup button:first-child {
@@ -1442,25 +1216,9 @@
     margin-top: -2px;
 }
 
-.advanceTimingContainer {
-    background-color: #f4f4f4;
-    border-bottom-right-radius: 8px;
-    border-bottom-left-radius: 8px;
-}
-
-.advanceTimingContainer :global .ant-card-bordered {
-    border: 1px solid #B5B5B6;
-    background-color: #B5B5B6;
-}
-
-/* Customer Master / OTF Details Drawer */
 
 .drawerBodyLeft {
-    /* padding: 20px; */
     background: #F2F2F2;
-    /* position: sticky;
-    height: 100vh;
-    top: 60px !important; */
 }
 
 .drawerBodyRight {
@@ -1656,9 +1414,8 @@
 }
 
 @media (max-width: 768px) {
-    /* For mobile phones: */
-    /* .contentHeaderBackground{text-align: center;} */
 
+    /* For mobile phones: */
     .headerSearchField {
         vertical-align: middle;
         margin: 0 0px;

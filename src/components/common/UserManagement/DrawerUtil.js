@@ -1,20 +1,14 @@
 import React from 'react';
-import { Drawer, Input, Form, Col, Row, Switch, Button, Card, Collapse, Select, Space } from 'antd';
-
+import { Drawer, Input, Form, Col, Row, Button, Card, Collapse, Select, Space } from 'antd';
 import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
 import { IoTrashOutline } from 'react-icons/io5';
-
 import style from 'components/common/DrawerAndTable.module.css';
 
-const { Meta } = Card;
 const { Panel } = Collapse;
 const { Option } = Select;
 
 const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, DealerData, tableDetailData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
-    const disabledProps = { disabled: isReadOnly };
-    console.log('isLoadingOnSave', isLoadingOnSave);
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Manage User Access';
@@ -27,7 +21,6 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
     const handleForm = () => {
         setFormBtnDisable(true);
     };
-    const handleAddMacid = () => {};
 
     const onClose = () => {
         setDrawer(false);
@@ -108,7 +101,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Button onClick={handleAddMacid} form="myForm" key="Add" type="primary">
+                            <Button form="myForm" key="Add" type="primary">
                                 Add
                             </Button>
                         </Col>
@@ -131,7 +124,9 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
                                     <Form.Item name="userRole" label="User Role">
                                         <Select loading={!isDataAttributeLoaded} placeholder={'Select User Role'} showSearch allowClear>
                                             {attributeData?.map((item) => (
-                                                <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
+                                                <Option key={item?.id} value={item?.id}>
+                                                    {item?.hierarchyAttribueName}
+                                                </Option>
                                             ))}
                                         </Select>
                                     </Form.Item>
@@ -139,8 +134,8 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
                                         title="Manager"
                                         extra={
                                             <>
-                                                <a href="#">Application Access</a>
-                                                <a href="#">
+                                                <a href="/#">Application Access</a>
+                                                <a href="/#">
                                                     <IoTrashOutline />
                                                 </a>
                                             </>
@@ -152,8 +147,8 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
                                         title="Sales Executive"
                                         extra={
                                             <>
-                                                <a href="#">Application Access</a>
-                                                <a href="#">
+                                                <a href="/#">Application Access</a>
+                                                <a href="/#">
                                                     <IoTrashOutline />
                                                 </a>
                                             </>
@@ -165,8 +160,8 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
                                         title="Financial Executive"
                                         extra={
                                             <>
-                                                <a href="#">Application Access</a>
-                                                <a href="#">
+                                                <a href="/#">Application Access</a>
+                                                <a href="/#">
                                                     <IoTrashOutline />
                                                 </a>
                                             </>

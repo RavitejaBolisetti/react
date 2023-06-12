@@ -1,18 +1,15 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
-import { Row, Col, Input, Form } from 'antd';
-
+import { Row, Col, Form } from 'antd';
 import { showGlobalNotification } from 'store/actions/notification';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { filterFunction } from 'utils/filterFunction';
 import { ListDataTable } from 'utils/ListDataTable';
-import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { ContentHeader } from 'utils/ContentHeader';
+import { btnVisiblity } from 'utils/btnVisiblity';
 import { tableColumn } from './tableColumn';
-
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { AddEditForm } from './AddEditForm';
 
@@ -59,7 +56,7 @@ export const CriticalityGroupMain = (props) => {
     const { saveFormShowLoading, isLoadingOnSave, moduleTitle, fetchList, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
-console.log("isLoadingOnSave",isLoadingOnSave)
+    console.log('isLoadingOnSave', isLoadingOnSave);
     const [refershData, setRefershData] = useState(false);
     const [formData, setFormData] = useState({});
     const [forceFormReset, setForceFormReset] = useState(false);
@@ -76,8 +73,6 @@ console.log("isLoadingOnSave",isLoadingOnSave)
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-
-    const [showDataLoading, setShowDataLoading] = useState(true);
     const [timeData, setTimeData] = useState([]);
     const [deletedTime, setDeletedTime] = useState([]);
 
@@ -92,7 +87,7 @@ console.log("isLoadingOnSave",isLoadingOnSave)
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
-        setShowDataLoading(false);
+        //setShowDataLoading(false);
     };
 
     useEffect(() => {
@@ -114,10 +109,8 @@ console.log("isLoadingOnSave",isLoadingOnSave)
                 const filterDataItem = criticalityGroupData?.filter((item) => (keyword ? filterFunction(keyword)(item?.criticalityGroupCode) || filterFunction(keyword)(item?.criticalityGroupName) : true));
 
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
-                setShowDataLoading(false);
             } else {
                 setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
-                setShowDataLoading(false);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -131,7 +124,7 @@ console.log("isLoadingOnSave",isLoadingOnSave)
     }, [refershData]);
 
     const onFinish = (values) => {
-        saveFormShowLoading(true)
+        saveFormShowLoading(true);
         const modifiedDeletedTime = deletedTime.concat(timeData);
 
         const modifiedTimeData = modifiedDeletedTime?.map((element) => {
@@ -147,7 +140,7 @@ console.log("isLoadingOnSave",isLoadingOnSave)
             setTimeData([]);
 
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            
+
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
@@ -180,7 +173,6 @@ console.log("isLoadingOnSave",isLoadingOnSave)
     };
 
     const handleReferesh = () => {
-        setShowDataLoading(true);
         setRefershData(!refershData);
     };
 
@@ -201,7 +193,7 @@ console.log("isLoadingOnSave",isLoadingOnSave)
         }
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         record && setFormData(record);
         setIsFormVisible(true);
@@ -221,32 +213,37 @@ console.log("isLoadingOnSave",isLoadingOnSave)
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         isVisible: isFormVisible,
         showGlobalNotification,
         onFinish,
         onFinishFailed,
-
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: drawerTitle.concat(moduleTitle),
         formData,
         setIsFormVisible,
         formActionType,
         setFormData,
         isLoading,
         forceUpdate,
-
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
         buttonData,
-
         handleButtonClick,
-        buttonData,
         setButtonData,
         defaultBtnVisiblity,
-
         timeData,
         setTimeData,
         deletedTime,
@@ -258,7 +255,6 @@ console.log("isLoadingOnSave",isLoadingOnSave)
         if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
-            setShowDataLoading(false);
         }
     };
 
@@ -286,7 +282,6 @@ console.log("isLoadingOnSave",isLoadingOnSave)
 
     return (
         <>
-            {/* <AppliedAdvanceFilter {...advanceFilterResultProps} /> */}
             <ContentHeader {...ContentHeaderProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

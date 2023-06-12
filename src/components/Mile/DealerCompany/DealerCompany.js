@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -8,6 +8,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { filterFunction } from 'utils/filterFunction';
+import { btnVisiblity } from 'utils/btnVisiblity';
 import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
 import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
@@ -65,8 +66,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchPincodeDetail: geoPincodeDataActions.fetchList,
             pinCodeShowLoading: geoPincodeDataActions.listShowLoading,
 
-            fetchLovList : dealerCompanyLovDataActions.fetchList,
-            listLovShowLoading : dealerCompanyLovDataActions.listShowLoading,
+            fetchLovList: dealerCompanyLovDataActions.fetchList,
+            listLovShowLoading: dealerCompanyLovDataActions.listShowLoading,
 
             showGlobalNotification,
         },
@@ -76,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const DealerCompanyBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isPinCodeLoading, pinCodeShowLoading } = props;
-    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail, fetchLovList,isDealerLovDataLoaded,listLovShowLoading,dealerLovData } = props;
+    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail, fetchLovList, isDealerLovDataLoaded, listLovShowLoading, dealerLovData } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -118,7 +119,7 @@ export const DealerCompanyBase = (props) => {
         if (userId && !isDealerLovDataLoaded) {
             fetchLovList({ setIsLoading: listLovShowLoading, userId });
         }
-        
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded, isDealerParentDataLoaded]);
 
@@ -154,7 +155,8 @@ export const DealerCompanyBase = (props) => {
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         record && setFormData(record);
         setIsFormVisible(true);
@@ -229,6 +231,16 @@ export const DealerCompanyBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -238,7 +250,7 @@ export const DealerCompanyBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Parent Company'),
+        titleOverride: drawerTitle.concat('Dealer Parent Company'),
         tableData: searchData,
         buttonData,
         setButtonData,

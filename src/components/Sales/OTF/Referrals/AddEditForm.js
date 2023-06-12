@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
 
-
 const AddEditFormMain = (props) => {
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible } = props;
     const [activeKey, setactiveKey] = useState([1]);
@@ -27,7 +26,6 @@ const AddEditFormMain = (props) => {
         } else {
             setactiveKey([...activeKey, values]);
         }
-
     };
 
     const viewProps = {
@@ -39,17 +37,7 @@ const AddEditFormMain = (props) => {
         handleEdit,
     };
 
-    return (
-        <>
-            {!isViewModeVisible ? (
-                <ViewDetail {...viewProps} />
-
-                
-            ) : (
-                <ViewDetail {...viewProps} />
-            )}
-        </>
-    );
+    return isViewModeVisible && <ViewDetail {...viewProps} />;
 };
 
 export const AddEditForm = AddEditFormMain;

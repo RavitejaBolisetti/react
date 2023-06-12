@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
+
 import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography } from 'antd';
-import { validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+
 import { FaRegUserCircle } from 'react-icons/fa';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import styles from 'components/common/Common.module.css';
-import { ViewDetail } from './ViewIndivisualCustomerDetails';
-const { Text } = Typography;
 
+import { validateRequiredSelectField } from 'utils/validation';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
+
+import { ViewDetail } from './ViewIndivisualCustomerDetails';
+
+import styles from 'components/common/Common.module.css';
+
+const { Text } = Typography;
 const { Option } = Select;
 const { Panel } = Collapse;
+
 const AddEditFormMain = (props) => {
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible } = props;
+    
     const [customerForm] = Form.useForm();
     const [keyAccountForm] = Form.useForm();
     const [authorityForm] = Form.useForm();
@@ -29,7 +36,6 @@ const AddEditFormMain = (props) => {
         setFinalFormData({ ...FinalFormData, customerForm: customerFormValues, keyAccountForm: keyAccountFormValues, authorityForm: authorityFormValues });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [done]);
-    
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -39,10 +45,7 @@ const AddEditFormMain = (props) => {
     const onFinish = () => {
         const customerFormValues = customerForm.getFieldsValue();
         const keyAccountFormValues = keyAccountForm.getFieldsValue();
-
         const authorityFormValues = authorityForm.getFieldsValue();
-
-        console.log('customerFormValues', customerFormValues, 'keyAccountFormValues', keyAccountFormValues, 'authorityFormValues', authorityFormValues);
 
         customerForm
             .validateFields()
@@ -56,7 +59,6 @@ const AddEditFormMain = (props) => {
                         setDone(!done);
                     })
                     .catch(() => {
-                        console.log('error');
                         setactiveKey([3]);
                     });
             })
@@ -65,18 +67,15 @@ const AddEditFormMain = (props) => {
             });
     };
 
-    const onFinishFailed = () => {
-        customerForm.validateFields();
-        keyAccountForm.validateFields();
-        authorityForm.validateFields();
-    };
+
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
         if (isPresent) {
             const newActivekeys = [];
 
-            activeKey.filter((item) => {
+            // eslint-disable-next-line array-callback-return
+            activeKey.forEach((item) => {
                 if (item !== values) {
                     newActivekeys.push(item);
                 }
@@ -86,6 +85,10 @@ const AddEditFormMain = (props) => {
             setactiveKey([...activeKey, values]);
         }
     };
+
+    const onFinishFailed = () =>{
+        return;
+    }
 
     const viewProps = {
         activeKey,
@@ -119,14 +122,13 @@ const AddEditFormMain = (props) => {
                                         <div className={styles.alignUser}>
                                             <FaRegUserCircle className={styles.userCircle} />
                                             <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                {' '}
                                                 Customer Information
                                             </Text>
                                         </div>
                                     }
                                     key="1"
                                 >
-                                    <Form autoComplete="off" layout="vertical" form={customerForm}>
+                                    <Form autoComplete="off" layout="vertical" form={customerForm} onFinishFailed={onFinishFailed}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>

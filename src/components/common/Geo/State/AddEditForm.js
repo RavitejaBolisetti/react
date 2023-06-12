@@ -55,7 +55,7 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
                                 <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
                                     {countryData?.map((item) => (
-                                        <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                        <Option key={item?.countryCode} value={item?.countryCode}>{item?.countryName}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>

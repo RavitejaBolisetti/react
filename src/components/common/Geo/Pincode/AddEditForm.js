@@ -92,7 +92,9 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
                                 <Select className={styles.headerSelectField} {...selectProps} loading={!isDataCountryLoaded} placeholder="Select" onChange={handleCountryChange}>
                                     {countryData?.map((item) => (
-                                        <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                        <Option key={'co' + item?.countryCode} value={item?.countryCode}>
+                                            {item?.countryName}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>
@@ -101,7 +103,7 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.stateCode} label="State" name="stateCode" rules={[validateRequiredSelectField('State')]}>
                                 <Select placeholder={preparePlaceholderSelect('State')} {...selectProps} onChange={handleStateChange}>
                                     {filteredStateData?.map((item) => (
-                                        <Option key={item?.key} value={item?.key}>
+                                        <Option key={'sc' + item?.key} value={item?.key}>
                                             {item?.value}
                                         </Option>
                                     ))}
@@ -115,7 +117,7 @@ const AddEditFormMain = (props) => {
                             <Form.Item label="District" initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
                                 <Select placeholder={preparePlaceholderSelect('District')} {...selectProps} onChange={handleDistrictChange}>
                                     {filteredDistrictData?.map((item) => (
-                                        <Option key={item?.key} value={item?.key}>
+                                        <Option key={'ds' + item?.key} value={item?.key}>
                                             {item?.value}
                                         </Option>
                                     ))}
@@ -126,7 +128,7 @@ const AddEditFormMain = (props) => {
                             <Form.Item label="City" initialValue={formData?.cityCode} name="cityCode" rules={[validateRequiredSelectField('City')]}>
                                 <Select placeholder={preparePlaceholderSelect('City')} {...selectProps}>
                                     {filteredCityData?.map((item) => (
-                                        <Option key={item?.key} value={item?.key}>
+                                        <Option key={'cc' + item?.key} value={item?.key}>
                                             {item?.value}
                                         </Option>
                                     ))}
@@ -140,7 +142,7 @@ const AddEditFormMain = (props) => {
                             <Form.Item label="Tehsil" initialValue={formData?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
                                 <Select {...selectProps} placeholder={preparePlaceholderSelect('Tehsil')}>
                                     {filteredTehsilData?.map((item) => (
-                                        <Option key={item?.key} value={item?.key}>
+                                        <Option key={'tc' + item?.key} value={item?.key}>
                                             {item?.value}
                                         </Option>
                                     ))}
@@ -152,7 +154,9 @@ const AddEditFormMain = (props) => {
                             <Form.Item label="Pin Category" initialValue={formData?.pinCategory} name="pinCategory" rules={[validateRequiredSelectField('Pin Category')]}>
                                 <Select {...selectProps} placeholder={preparePlaceholderSelect('Pin Category')}>
                                     {typeData?.map((item) => (
-                                        <Option value={item?.key}>{item?.value}</Option>
+                                        <Option key={'pnc' + item?.key} value={item?.key}>
+                                            {item?.value}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>

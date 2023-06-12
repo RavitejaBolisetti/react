@@ -11,13 +11,15 @@ import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 
+const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
+
 const ProductAttributePanel = (props) => {
     const { viewMode, form, skuAttributes } = props;
     const { selectedTreeData, setDocumentTypesList } = props;
-    const [openAccordian, setOpenAccordian] = useState('');
+    const [openAccordian, setOpenAccordian] = useState();
 
     const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
+        setOpenAccordian((prev) => (prev !== key ? key : undefined));
     };
 
     const attributeFormProps = {
@@ -28,8 +30,8 @@ const ProductAttributePanel = (props) => {
         setDocumentTypesList,
     };
     return (
-        <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
-            <Panel header={<span className={openAccordian === 1 ? styles.accordianHeader : ''}>Product Atrribute Details</span>} key="1">
+        <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={expandIcon}>
+            <Panel header={<span className={openAccordian === 1 ? styles.accordianHeader : ''}>Product Atrribute Details</span>} key={1}>
                 <Divider />
                 {!viewMode && <ProductAttributeAddEditForm {...attributeFormProps} />}
                 <ListProductAttribute {...attributeFormProps} />

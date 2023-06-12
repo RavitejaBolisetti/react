@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 
-import { Col, Collapse, Form, Select, Space, Typography, Button } from 'antd';
-import { UserOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { Collapse, Form, Space, Typography, Button } from 'antd';
 
-import { FaUserCircle, FaRegUserCircle } from 'react-icons/fa';
+import { PlusOutlined } from '@ant-design/icons';
+import {FaRegUserCircle } from 'react-icons/fa'
 
-import { accordianExpandIcon, expandIcon } from 'utils/accordianExpandIcon';
+import { expandIcon } from 'utils/accordianExpandIcon';
 
 import styles from 'components/common/Common.module.css';
-
-import { ViewIndividualAddressDetails } from './ViewIndividualAddressDetails';
 
 import ViewAddressList from './ViewAddressList';
 import AddEditForm from './AddEditForm';
 
 const { Panel } = Collapse;
-
 const { Text } = Typography;
 
 const formData = [
@@ -36,7 +33,6 @@ const formData = [
 ];
 
 const IndividualAddressMasterBase = (props) => {
-    const { isViewModeVisible } = props;
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -47,16 +43,13 @@ const IndividualAddressMasterBase = (props) => {
     };
 
     const onFinish = (value) => {
-        console.log('on finish value ', value);
         setContactData((prev) => [...prev, { ...value }]);
         setShowAddEditForm(false);
     };
 
     const addContactHandeler = (e) => {
-        // e.preventDefault();
         e.stopPropagation();
         form.resetFields();
-        console.log('clicked');
         setShowAddEditForm(true);
         setOpenAccordian('1');
     };

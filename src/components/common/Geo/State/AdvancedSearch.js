@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
-import { searchValidator } from 'utils/validation';
+import { searchValidator, validateRequiredSelectField } from 'utils/validation';
 import { withModal } from 'components/withModal';
-
-import { validateRequiredSelectField } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
@@ -36,7 +34,9 @@ export const AdvancedSearchFrom = (props) => {
                         {defaultCountry && (
                             <Select defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
                                 {countryData?.map((item) => (
-                                    <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                    <Option key={item?.countryCode} value={item?.countryCode}>
+                                        {item?.countryName}
+                                    </Option>
                                 ))}
                             </Select>
                         )}

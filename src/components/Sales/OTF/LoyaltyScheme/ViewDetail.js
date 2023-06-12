@@ -1,6 +1,5 @@
 import React from 'react';
-import { Descriptions } from 'antd';
-import { Space, Card } from 'antd';
+import { Space, Card, Descriptions } from 'antd';
 
 const ViewDetailMain = (props) => {
     const { styles } = props;
@@ -53,8 +52,6 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </div>
                 </Card>
-
-
             </Space>
         </div>
     );

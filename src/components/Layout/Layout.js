@@ -9,8 +9,6 @@ const InnerHeader = ({ children }) => <div className={styles.innerHeader}>{child
 
 const LeftMenu = ({ children }) => <Sider className={styles.leftMenuSider}>{children}</Sider>;
 
-// const LeftMenu = ({ children }) => <div className={styles.leftMenuSider}>{children}</div>;
-
 const MainBody = ({ children }) => <div className={styles.mainContainer}>{children}</div>;
 
 const CenterBody = ({ children }) => <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', width: '100%', overflow: 'auto', height: '100%' }}>{children}</div>;

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Descriptions } from 'antd';
-import { Col, Row, Space, Collapse, Typography, Checkbox } from 'antd';
+import { Col, Row, Space, Collapse, Typography, Checkbox,Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';

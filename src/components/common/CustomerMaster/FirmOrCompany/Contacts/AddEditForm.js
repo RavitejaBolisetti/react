@@ -1,11 +1,10 @@
 import { Button, Form, Typography, Upload, message, Row, Col, Select, Input, Divider, Checkbox } from 'antd';
 import Svg from 'assets/images/Filter.svg';
 
-import style from '../../../Common.module.css';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 
+import style from '../../../Common.module.css';
 import { contactPurpose, title, gender } from 'constants/modules/CustomerMaster/individualProfile';
 
 const { Option } = Select;
@@ -62,9 +61,7 @@ const AddEditForm = (props) => {
                             <Typography.Text>File type should be .png and .jpg and max file size to be 5MB</Typography.Text>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ textAlign: 'center' }}>
-                                    {/* <Upload {...uploadProps}> */}
                                     <Button danger>Upload File</Button>
-                                    {/* </Upload> */}
                                 </Col>
                             </Row>
                         </Dragger>
@@ -76,7 +73,9 @@ const AddEditForm = (props) => {
                         <Form.Item label="Purpose of Contact" name="purposeOfContact">
                             <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps}>
                                 {contactPurpose?.map((item) => (
-                                    <Option value={item.key}>{item.name}</Option>
+                                    <Option key={'poc' + item?.key} value={item.key}>
+                                        {item.name}
+                                    </Option>
                                 ))}
                             </Select>
                         </Form.Item>
@@ -101,7 +100,9 @@ const AddEditForm = (props) => {
                         <Form.Item label="Gender" name="gender" rules={[validateRequiredSelectField('gender')]}>
                             <Select placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
                                 {gender?.map((item) => (
-                                    <Option value={item.key}>{item.name}</Option>
+                                    <Option key={'g' + item?.key} value={item.key}>
+                                        {item.name}
+                                    </Option>
                                 ))}
                             </Select>
                         </Form.Item>
@@ -110,7 +111,9 @@ const AddEditForm = (props) => {
                         <Form.Item label="Title" name="contactNameTitle" rules={[validateRequiredSelectField('title')]}>
                             <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('title')} {...disabledProps}>
                                 {title?.map((item) => (
-                                    <Option value={item?.key}>{item?.name}</Option>
+                                    <Option key={'title' + item?.key} value={item?.key}>
+                                        {item?.name}
+                                    </Option>
                                 ))}
                             </Select>
                         </Form.Item>

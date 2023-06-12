@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, DatePicker, Space, Collapse, Typography } from 'antd';
-import { validateRequiredInputField,validateRequiredSelectField} from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
@@ -13,7 +13,6 @@ const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
     const { onCloseAction, setIsViewModeVisible, formActionType } = props;
     const [customerForm] = Form.useForm();
-
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -36,10 +35,9 @@ const AddEditFormMain = (props) => {
         } else {
             setactiveKey([...activeKey, values]);
         }
-
     };
 
-    const schemeType = [{code:'hey'},{code:'bud'}]
+    const schemeType = [{ code: 'hey' }, { code: 'bud' }];
 
     const viewProps = {
         activeKey,
@@ -89,7 +87,11 @@ const AddEditFormMain = (props) => {
                                                         }}
                                                     >
                                                         {schemeType?.map((item) => {
-                                                            return <Option value={item?.code}>{item?.code}</Option>;
+                                                            return (
+                                                                <Option key={'st' + item.code} value={item?.code}>
+                                                                    {item?.code}
+                                                                </Option>
+                                                            );
                                                         })}
                                                     </Select>
                                                 </Form.Item>
@@ -108,12 +110,12 @@ const AddEditFormMain = (props) => {
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item initialValue={''} label="Valid From" name="4" rules={[validateRequiredInputField('Valid From')]}>
-                                                    <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} style={{width:'100%'}} />
+                                                    <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} style={{ width: '100%' }} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item initialValue={''} label="Valid To" name="5" rules={[validateRequiredInputField('Valid To')]}>
-                                                    <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} style={{width:'100%'}} />
+                                                    <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} style={{ width: '100%' }} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
@@ -130,7 +132,7 @@ const AddEditFormMain = (props) => {
                             </Collapse>
                         </Space>
                     </Col>
-                </Row>      
+                </Row>
             ) : (
                 <ViewDetail {...viewProps} />
             )}

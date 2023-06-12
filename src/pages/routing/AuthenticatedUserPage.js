@@ -31,8 +31,8 @@ import {
     TermConditionDealerMasterPage,
     TermConditionManufacturerMasterPage,
 } from 'pages/common';
-import { OtfMasterPage } from 'pages/Sales';
 
+import { OTFMasterPage } from 'pages/Sales';
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
 
@@ -103,8 +103,8 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_ABOUT} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_DISCLAIMER} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_CONTACT} element={<CMSPage />} exact />
-            <Route path={routing.ROUTING_OTF} element={<OtfMasterPage />} exact />
-            
+            <Route path={routing.ROUTING_OTF} element={<OTFMasterPage />} exact />
+
             {/* <Route path="*" element={<LoginPage />} exact /> */}
         </Routes>
     );

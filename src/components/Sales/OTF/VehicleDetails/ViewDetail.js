@@ -1,6 +1,5 @@
 import React from 'react';
-import { Descriptions } from 'antd';
-import { Space, Collapse, Typography, Divider } from 'antd';
+import { Space, Collapse, Typography, Divider, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import style from 'utils/PasswordStrengthMeter/PasswordStrengthMeter.module.css';
@@ -244,8 +243,6 @@ const ViewDetailMain = (props) => {
                     </Collapse>
                 </Panel>
             </Collapse>
-
-            
         </Space>
     );
 };

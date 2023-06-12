@@ -1,6 +1,5 @@
 import React from 'react';
-import { Descriptions } from 'antd';
-import { Space, Card } from 'antd';
+import { Space, Card, Descriptions } from 'antd';
 
 const ViewDetailMain = (props) => {
     const { styles } = props;
@@ -21,7 +20,7 @@ const ViewDetailMain = (props) => {
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Card style={{backgroundColor:'#f2f2f2'}}>
+                <Card style={{ backgroundColor: '#f2f2f2' }}>
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Insurance Company">{insuranceForm?.insuranceComapny}</Descriptions.Item>
                         <Descriptions.Item label="Insurance Cover Note">{insuranceForm?.insuranceCoverNote}</Descriptions.Item>
@@ -30,7 +29,6 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label="Registration Number">{insuranceForm?.registrationNumber}</Descriptions.Item>
                     </Descriptions>
                 </Card>
-                
             </Space>
         </div>
     );

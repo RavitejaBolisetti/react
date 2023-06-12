@@ -15,9 +15,9 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData } = props;
-    const { selectedTreeKey, selectedTreeData, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
+    const { selectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
-    const { onFinish, onFinishFailed, tokenValidate, setTokenValidate } = props;
+    const { onFinish, onFinishFailed } = props;
 
     const [form] = Form.useForm();
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
@@ -26,7 +26,7 @@ const AddEditFormMain = (props) => {
 
     let treeCodeId = '';
     let treeCodeReadOnly = false;
-    let selectedAttribute = selectedTreeData?.attributeKey;
+
     if (formActionType === FROM_ACTION_TYPE.EDIT) {
         treeCodeId = formData?.manufactureAdminParntId;
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
@@ -69,7 +69,9 @@ const AddEditFormMain = (props) => {
                             <Form.Item name="attributeKey" label="Attribute Level" initialValue={formData?.attributeKey} rules={[validateRequiredSelectField('attribute level')]}>
                                 <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} {...disabledProps} showSearch allowClear>
                                     {attributeData?.map((item) => (
-                                        <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
+                                        <Option key={item?.id} value={item?.id}>
+                                            {item?.hierarchyAttribueName}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>

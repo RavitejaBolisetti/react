@@ -42,7 +42,7 @@ export const AdvancedSearchFrom = (props) => {
                         {defaultCountry && (
                             <Select defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleFilterChange('countryCode')}>
                                 {countryData?.map((item) => (
-                                    <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                    <Option key={item?.countryCode} value={item?.countryCode}>{item?.countryName}</Option>
                                 ))}
                             </Select>
                         )}
