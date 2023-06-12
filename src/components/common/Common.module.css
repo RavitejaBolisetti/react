@@ -1221,14 +1221,6 @@
     background: #F2F2F2;
 }
 
-.drawerBodyRight {
-    padding: 20px;
-    height: calc(100vh - 60px);
-    max-height: calc(100vh - 60px);
-    overflow: hidden;
-    overflow-y: auto;
-}
-
 .drawerBodyLeft :global .ant-collapse {
     background: #e6e6e6;
     border: 1px solid #b5b5b6;
@@ -1373,6 +1365,14 @@
     margin-inline-start: 4px;
 }
 
+.drawerBodyRight {
+    padding: 20px;
+    height: calc(100vh - 60px);
+    max-height: calc(100vh - 60px);
+    overflow: hidden;
+    overflow-y: overlay;
+}
+
 .drawerBodyRight::-webkit-scrollbar-track {
     background-color: #ffffff;
 }
@@ -1391,6 +1391,23 @@
     margin-left: 10px;
 }
 
+.drawerBodyRight :global .ant-collapse>.ant-collapse-item >.ant-collapse-header {
+    padding: 16px 20px;
+    background: #f2f2f2;
+    border-radius: 8px;
+    border: 1px solid #f2f2f2;
+}
+
+.drawerBodyRight :global .ant-collapse>.ant-collapse-item >.ant-collapse-header .ant-typography {
+    margin-left: 0 !important;
+}
+
+.drawerBodyRight :global .ant-collapse>.ant-collapse-item >.ant-collapse-header .ant-typography strong {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+}
+
 .userCircle {
     color: #ff3e5b !important;
 
@@ -1403,11 +1420,11 @@
     width: 24px !important;
 }
 
-.alignUser {
+/* .alignUser {
     display: flex;
     align-items: center;
 
-}
+} */
 
 .iconsColor {
     color: #ff3e5b;

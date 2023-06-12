@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Col, Input, Form, Row} from 'antd';
+import { Row,Col, Input, Form,Switch } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
@@ -108,8 +108,8 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="addCorporateDetails" label="Do You Want to Add Corporate Details" initialValue={formData?.addCorporateDetails} rules={[validateRequiredInputField('Do You Want to Add Corporate Details')]}>
-                            <Input placeholder={preparePlaceholderText('Do You Want to Add Corporate Details')} maxLength={50} />
+                        <Form.Item initialValue={formActionType?.editMode ? formData?.status : true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Do You Want to Add Corporate Details" valuePropName="checked">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                         </Form.Item>
                     </Col>
                 </Row>
