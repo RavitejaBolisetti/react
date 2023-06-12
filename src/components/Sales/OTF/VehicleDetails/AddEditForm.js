@@ -10,6 +10,7 @@ import { IoTrashOutline } from 'react-icons/io5';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
+import { CollapseTaxInfo } from './CollapseTaxInfo';
 
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
@@ -75,10 +76,10 @@ const AddEditFormMain = (props) => {
     const onHandleAddChange = (val) => {
         setCollapseView(true);
         addFormdata.push(val);
-        keyAccountForm.resetFields();
         const formatData = [];
         addFormdata.map((item) => formatData.push({ code: item?.code, type: item?.type, description: item?.description, rate: item.rate, rateType: item.rateType }));
-        console.log(addFormdata,'ddd')
+        console.log(addFormdata, 'ddd');
+        keyAccountForm.resetFields();
     };
 
     const onHandleResetButton = () => {
@@ -348,7 +349,7 @@ const AddEditFormMain = (props) => {
 
                                         {addFormdata?.length > 0 &&
                                             addFormdata?.map((action) => {
-                                               <h2>{action.rate}</h2>
+                                                return <CollapseTaxInfo />;
                                             })}
                                     </Form>
                                 </Panel>
