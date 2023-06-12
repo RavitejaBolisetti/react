@@ -4,7 +4,7 @@ import { AddEditForm } from './AddEditForm';
 import { Form } from 'antd';
 
 export const ReferralsMaster = (props) => {
-    const [form] = Form.useform();
+    const [form] = Form.useForm();
     const onFinish = (values) => {};
     const onFinishFailed = (values) => {};
     const ReferralsMasterProps = {
