@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Col, Input, Form, Row, Select, Space, Collapse, Typography } from 'antd';
+import { Col, Input, Form, Row, Select, Space, Collapse, Typography, DatePicker } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs';
 
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewFinanceDetail';
@@ -18,9 +19,19 @@ const AddEditFormMain = (props) => {
     const [customerForm] = Form.useForm();
     const [authorityForm] = Form.useForm();
     const [activeKey, setactiveKey] = useState([1]);
+    const [selected, setSelected] = useState();
 
     const handleEdit = () => {
         setIsViewModeVisible(false);
+    };
+
+    const datePickerStyle = {
+        width: '100%',
+    };
+
+    const handleDOChange = (item) => {
+        console.log(item);
+        setSelected(item);
     };
 
     const onChange = (values) => {
@@ -70,7 +81,6 @@ const AddEditFormMain = (props) => {
                                 <Panel
                                     header={
                                         <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
                                             <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                                 {' '}
                                                 Finance Information
@@ -124,22 +134,21 @@ const AddEditFormMain = (props) => {
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="D.O. Recived" name="dorecived" data-testid="CustomerCategory">
-                                                    <Select disabled={false} loading={false} placeholder="Select" allowClear>
+                                                    <Select disabled={false} loading={false} placeholder="Select" allowClear onChange={handleDOChange}>
                                                         <Option value="dorecived1">Yes</Option>
                                                         <Option value="dorecived2">No</Option>
                                                         <Option value="dorecived3">NA</Option>
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="D.O. Number" name="donumber" data-testid="customerType" rules={[validateRequiredSelectField('D.O. number')]}>
-                                                    <Input placeholder={preparePlaceholderText('do number')}></Input>
+                                                    <Input disabled={selected == 'dorecived1' ? false : true} placeholder={preparePlaceholderText('d.o. number')}></Input>
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="D.O. Date" name="dodate" data-testid="CustomerCategory" rules={[validateRequiredSelectField('D.O. date')]}>
-                                                    <Input placeholder={preparePlaceholderText('do date')}></Input>
+                                                    <DatePicker disabled={selected == 'dorecived1' ? false : true} placeholder={preparePlaceholderText('date')} style={datePickerStyle} disabledDate={(date) => date > dayjs()} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
@@ -169,7 +178,6 @@ const AddEditFormMain = (props) => {
                                 <Panel
                                     header={
                                         <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
                                             <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                                 Invoice/Delivery Information
                                             </Text>
@@ -181,7 +189,7 @@ const AddEditFormMain = (props) => {
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Invoice/Delivery Type" name="delivery" data-testid="CustomerCategory">
-                                                    <Select disabled={false} loading={false} placeholder="Select" allowClear>
+                                                    <Select disabled={true} loading={false} placeholder="Select" allowClear>
                                                         <Option value="delivery1">Delivery Note</Option>
                                                         <Option value="delivery2">Delivery Note1</Option>
                                                     </Select>
@@ -189,19 +197,19 @@ const AddEditFormMain = (props) => {
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Invoice/Delivery No." name="deliverynumber">
-                                                    <Input placeholder={preparePlaceholderText('invoice/delivery no')} />
+                                                    <Input placeholder={preparePlaceholderText('invoice/delivery no')} disabled={true} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Invoice/Delivery Date" name="deliverydate1">
-                                                    <Input placeholder={preparePlaceholderText('invoice/delivery date')} />
+                                                    <Input placeholder={preparePlaceholderText('invoice/delivery date')} disabled={true} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Invoice/Delivery Status" name="deliverystatus">
-                                                    <Input placeholder={preparePlaceholderText('invoice/delivery status')} />
+                                                    <Input placeholder={preparePlaceholderText('invoice/delivery status')} disabled={true} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
