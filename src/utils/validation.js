@@ -142,19 +142,15 @@ export const valueBetween0to100 = (value, fieldName) => {
 };
 
 export const duplicateProductValidator = (value, dataList) => {
-    let status = false;
     if (dataList?.length > 0) {
         for (let i = 0; i < dataList?.length; i++) {
-            if (dataList[i]?.attributeName?.label === value?.attributeName?.label) {
-                status = true;
-                return Promise.reject('Duplicate found');
-            }
-            if (!status) {
+            if(dataList[i]?.attributeName?.key === value?.attributeName?.key){
                 return Promise.resolve('');
             }
+            else if (dataList[i]?.attributeName?.label === value?.attributeName?.label) {
+                return Promise.reject('Duplicate found');
+            }
         }
-    } else {
-        return Promise.resolve('');
     }
     return Promise.resolve('');
 };

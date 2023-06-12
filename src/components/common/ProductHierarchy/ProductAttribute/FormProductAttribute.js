@@ -7,7 +7,7 @@ import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
     const { attributeForm, isVisible, productHierarchyAttributeData, onAttributeFormFinish, formDecider, editForm, finalFormdata } = props;
-    const [changeValue, setChangeValue] = useState(null);
+    const [ changeValue, setChangeValue ] = useState(null);
 
     const onFinishFailed = (err) => {
         console.error(err);
@@ -15,8 +15,8 @@ function FormProductAttribute(props) {
 
     const fieldNames = { label: 'attributeCode', value: 'id' };
 
-    const getValues = () => {
-        let newFormData = formDecider ? editForm.getFieldsValue() : attributeForm.getFieldsValue();
+    const getValues = () =>{
+        let newFormData = formDecider ? editForm?.getFieldsValue() : attributeForm?.getFieldsValue();
         setChangeValue(newFormData);
     };
 
@@ -24,7 +24,8 @@ function FormProductAttribute(props) {
         <Form form={formDecider ? editForm : attributeForm} id="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Attribute Name" name="attributeName" initialValue={props?.attributeName} rules={[validateRequiredSelectField('Attribute Name'), { validator: (value) => duplicateProductValidator(changeValue, finalFormdata) }]}>
+                    <Form.Item label="Attribute Name" name="attributeName" initialValue={props?.attributeName} rules={[ validateRequiredSelectField('Attribute Name'), {validator: () =>
+                    duplicateProductValidator(changeValue, finalFormdata)}]}>
                         <Select
                             getPopupContainer={(triggerNode) => triggerNode.parentElement}
                             placeholder={preparePlaceholderSelect('attribute name')}
@@ -47,7 +48,7 @@ function FormProductAttribute(props) {
 
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                     <Form.Item labelAlign="left" name="fromApi" initialValue={props?.fromApi}>
-                        <Checkbox value={false} />
+                        <Checkbox value={props?.fromApi} />
                     </Form.Item>
                 </Col>
 
