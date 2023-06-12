@@ -6,6 +6,7 @@ import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 
 const { Panel } = Collapse;
 
+const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
 export const ViewProductDetailMain = ({ form, setSKUAttributes, isAddBtnDisabled, setAddBtnDisabled, onActionFormFinish, viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
     const viewProps = {
         bordered: false,
@@ -16,7 +17,7 @@ export const ViewProductDetailMain = ({ form, setSKUAttributes, isAddBtnDisabled
     };
 
     const [view, setView] = useState(true);
- 
+
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner} ${styles.viewProductDetail}`}>
             <Descriptions {...viewProps}>
@@ -30,10 +31,10 @@ export const ViewProductDetailMain = ({ form, setSKUAttributes, isAddBtnDisabled
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             {selectedTreeData?.skuAttributes?.length > 0 && (
-                                <Collapse expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
+                                <Collapse expandIcon={expandIcon}>
                                     <Panel header={<span>Product SKU</span>} key="2">
                                         {selectedTreeData?.skuAttributes?.map((item, index) => (
-                                            <CardProductAttribute key={'sku' + index} attributeName={item.code} attributeValue={item.value} view={view} setView={setView} />
+                                            <CardProductAttribute key={'sku' + item?.code} attributeName={item.code} attributeValue={item.value} view={view} setView={setView} />
                                         ))}
                                     </Panel>
                                 </Collapse>

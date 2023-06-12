@@ -43,11 +43,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ManufacturerAdminAuthorityChangeHistoryMain = ({ fetchAuthorityChangeHistoryList, changeHistoryAuthorityShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
     useEffect(() => {
-        if (!isHistoryLoaded && userId) {
+        if ( userId) {
             fetchAuthorityChangeHistoryList({ setIsLoading: changeHistoryAuthorityShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isHistoryLoaded]);
+    }, [isHistoryLoaded, userId]);
 
     const tableColumn = [
         tblPrepareColumns({

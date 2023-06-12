@@ -1,14 +1,13 @@
 import React from 'react';
-import { Descriptions } from 'antd';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Typography } from 'antd';
+import { Space, Collapse, Typography, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { FaRegPlusSquare, FaPlus, FaRegUserCircle } from 'react-icons/fa';
+import { FaRegUserCircle } from 'react-icons/fa';
 
 const { Panel } = Collapse;
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, setactiveKey, onChange, styles, parameterType } = props;
+    const { activeKey, onChange, styles } = props;
     const viewProps = {
         bordered: false,
         colon: false,

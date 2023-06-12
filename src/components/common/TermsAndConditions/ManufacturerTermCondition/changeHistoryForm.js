@@ -30,16 +30,6 @@ const ChangeHistoryMain = (props) => {
         }),
 
         tblPrepareColumns({
-            title: 'Description',
-            dataIndex: 'termsconditiondescription',
-            width: '15%',
-        }),
-        tblPrepareColumns({
-            title: 'Version',
-            dataIndex: 'version',
-            width: '15%',
-        }),
-        tblPrepareColumns({
             title: 'Effective From',
             dataIndex: 'effectiveFrom',
             width: '15%',
@@ -50,24 +40,18 @@ const ChangeHistoryMain = (props) => {
             dataIndex: 'effectiveTo',
             width: '15%',
             render: (text) => convertDate(text),
+        }),
+
+        tblPrepareColumns({
+            title: 'Description',
+            dataIndex: 'termsconditiondescription',
+            width: '15%',
+        }),
+        tblPrepareColumns({
+            title: 'Version',
+            dataIndex: 'version',
+            width: '15%',
         })
-        // tblPrepareColumns({
-        //     title: 'MFG T&C',
-        //     width: '15%',
-        //     sorter: false,
-        //     render: (text, record, index) => {
-        //         return (
-        //             <Space>
-        //                 {
-        //                     <Button className={styles.tableIcons} danger ghost aria-label="ai-view">
-        //                         {/* onClick={() => handleView(record)} */}
-        //                         <ViewEyeIcon />
-        //                     </Button>
-        //                 }
-        //             </Space>
-        //         );
-        //     },
-        // }),
 
         // tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%' })
     );

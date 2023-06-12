@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
-import { Descriptions, Row, Col, Button, Form, Space } from 'antd';
+import React from 'react';
+import { Descriptions, Button, Space } from 'antd';
 import AddEditForm from './AddEditForm';
 
 const ViewDetailBase = (props) => {
     const { formData, styles } = props;
-    const { setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, isEditing, setIsEditing, index } = props;
-
-    // const [form] = Form.useForm();
-    // const [isEditing, setIsEditing] = useState(false);
+    const { setShowAddEditForm, setContactData, onFinish, form, isEditing, setIsEditing, index } = props;
 
     const viewProps = {
         bordered: false,
@@ -18,8 +15,6 @@ const ViewDetailBase = (props) => {
 
     const editContactHandeler = (data) => {
         setIsEditing(true);
-        // setShowAddEditForm(true);
-        console.log('formData', formData);
         form.setFieldsValue(data);
     };
 
@@ -56,7 +51,7 @@ const ViewDetailBase = (props) => {
                     </Descriptions>
 
                     <Space>
-                        <Button type="primary" onClick={() => editContactHandeler({formData, index})}>
+                        <Button type="primary" onClick={() => editContactHandeler({ formData, index })}>
                             Edit
                         </Button>
                         <Button>Delete</Button>

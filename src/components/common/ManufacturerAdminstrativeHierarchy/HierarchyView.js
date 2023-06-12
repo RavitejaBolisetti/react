@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Descriptions } from 'antd';
+import { Descriptions, Space } from 'antd';
 import { AuthorityDetailPanel } from './HierarchyAuthorityDetail';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
-export const HierarchyViewMain = ({ viewTitle, buttonData, documentTypesList, setDocumentTypesList, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles, authorityVisible }) => {
+export const HierarchyViewMain = ({ viewMode, viewTitle, buttonData, documentTypesList, setDocumentTypesList, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles, authorityVisible }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -35,8 +35,10 @@ export const HierarchyViewMain = ({ viewTitle, buttonData, documentTypesList, se
                 <Descriptions.Item label="Short Description">{selectedTreeData?.manufactureAdminShortName}</Descriptions.Item>
                 <Descriptions.Item label="Long Description">{selectedTreeData?.manufactureAdminLongName}</Descriptions.Item>
                 <Descriptions.Item label="Status">{selectedTreeData?.status ? 'Active' : 'InActive'}</Descriptions.Item>
+                <Space direction="vertical" size="small" className={styles.accordianContainer}>
+                    {documentTypesList && documentTypesList.length > 0 && <AuthorityDetailPanel viewMode={viewMode} selectedTreeData={selectedTreeData} documentTypesList={documentTypesList} setDocumentTypesList={setDocumentTypesList} />}
+                </Space>
             </Descriptions>
-            {documentTypesList && documentTypesList.length > 0 && <AuthorityDetailPanel selectedTreeData={selectedTreeData} documentTypesList={documentTypesList} setDocumentTypesList={setDocumentTypesList} viewMode={true} />}
         </div>
     );
 };

@@ -15,7 +15,7 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, unFilteredAttributeData, formActionType, isReadOnly = false, formData, fieldNames, isDataAttributeLoaded, attributeData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute } = props;
-    const { isFormBtnActive, setFormBtnActive,setNotification } = props;
+    const { isFormBtnActive, setFormBtnActive, showGlobalNotification } = props;
     const { form, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
     const { selectedTreeKey, flatternData, setSelectedTreeSelectKey, selectedTreeSelectKey, handleSelectTreeClick, productHierarchyData } = props;
 
@@ -74,11 +74,8 @@ const AddEditFormMain = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-    const handleProductchange = (e) => {
-        const value = e.target.textContent;
-    };
-
     const onActionFormFinish = (val) => {
+        console.log(val,'finalValue')
         const { value, label } = val?.attributeName;
         setSKUAttributes((prev) => [...prev, { attributeName: label, id: value, attributeValue: val.attributeValue }]);
         actionForm.resetFields();
@@ -125,6 +122,7 @@ const AddEditFormMain = (props) => {
         isVisible,
         selectedTreeData,
         formActionType,
+        showGlobalNotification,
     };
 
     const selectProps = {
@@ -134,24 +132,13 @@ const AddEditFormMain = (props) => {
         className: styles.headerSelectField,
     };
 
-    useState( 
-        () =>{
-            if(selectedTreeData?.subProdct?.length > 0  && formActionType === FROM_ACTION_TYPE.EDIT){
-                setNotification(true);
-            }
-            else{
-                setNotification(false);
-            }
-        }
-    ,[selectedTreeData] )
-   
     return (
         <>
             <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
-                            <Select {...selectProps} onChange={handleAttributeChange} onClick={handleProductchange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} disabled={formData?.id || isReadOnly}>
+                            <Select {...selectProps} onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} disabled={formData?.id || isReadOnly}>
                                 {attributeData?.map((item) => (
                                     <Option key={item?.id} value={item?.id}>
                                         {item?.hierarchyAttribueName}
@@ -188,13 +175,11 @@ const AddEditFormMain = (props) => {
                             <TextArea rows={1} placeholder={preparePlaceholderText('long description')} showCount maxLength={100} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
-                    {/* { selectedTreeData.subProdct.length > 0  && formActionType === FROM_ACTION_TYPE.EDIT ? null :   */}
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                         <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} label="Status" name="active">
-                            <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false}  {...disabledProps} />
+                            <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
                         </Form.Item>
                     </Col>
-                    {/* // } */}
                 </Row>
                 {showProductAttribute && (
                     <Row gutter={20}>

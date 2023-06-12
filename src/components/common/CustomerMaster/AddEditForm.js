@@ -12,6 +12,8 @@ import FormProgressBar from './FormProgressBar';
 
 const { Panel } = Collapse;
 
+const expandIcon = ({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />;
+
 const AddEditFormMain = (props) => {
     const { onCloseAction } = props;
     const { isViewModeVisible, setIsViewModeVisible } = props;
@@ -102,7 +104,7 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.timelineBg}>
                             <Row>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Collapse bordered={true} defaultActiveKey={['1']} expandIcon={({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />}>
+                                    <Collapse bordered={true} defaultActiveKey={['1']} expandIcon={expandIcon}>
                                         <Panel
                                             header={
                                                 <>

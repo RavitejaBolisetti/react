@@ -72,8 +72,8 @@ const AddEditFormMain = (props) => {
         if (isPresent) {
             const newActivekeys = [];
 
-            activeKey.filter((item) => {
-                if (item != values) {
+            activeKey.forEach((item) => {
+                if (item !== values) {
                     newActivekeys.push(item);
                 }
             });
@@ -81,7 +81,6 @@ const AddEditFormMain = (props) => {
         } else {
             setactiveKey([...activeKey, values]);
         }
-        console.log('values', values);
     };
 
     const viewProps = {

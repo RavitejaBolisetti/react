@@ -33,16 +33,6 @@ const ChangeHistoryMain = (props) => {
         }),
 
         tblPrepareColumns({
-            title: 'Description',
-            dataIndex: 'termsconditiondescription',
-            width: '15%',
-        }),
-        tblPrepareColumns({
-            title: 'Version',
-            dataIndex: 'version',
-            width: '15%',
-        }),
-        tblPrepareColumns({
             title: 'Effective From',
             dataIndex: 'effectiveFrom',
             width: '15%',
@@ -53,6 +43,17 @@ const ChangeHistoryMain = (props) => {
             dataIndex: 'effectiveTo',
             width: '15%',
             render: (text) => convertDate(text),
+        }),
+
+        tblPrepareColumns({
+            title: 'Description',
+            dataIndex: 'termsconditiondescription',
+            width: '15%',
+        }),
+        tblPrepareColumns({
+            title: 'Version',
+            dataIndex: 'version',
+            width: '15%',
         })
     );
 

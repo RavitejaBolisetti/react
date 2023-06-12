@@ -10,6 +10,7 @@ export const ROUTING_DASHBOARD = '/dashboard';
 
 export const ROUTING_COMMON = '/common/';
 export const ROUTING_MILE = '/mile/';
+export const ROUTING_SALES = '/sales/';
 export const ROUTING_TERM_CONDITION = ROUTING_COMMON.concat('term-condition');
 
 export const ROUTING_COMMON_GEO = ROUTING_COMMON.concat('geo/');
@@ -46,8 +47,8 @@ export const ROUTING_MILE_DEALER_MANPOWER_DESIGNATION_MASTER = ROUTING_MILE_DEAL
 export const ROUTING_MILE_DEALER_MANPOWER_EMPLOYEE_DEPARTMENT_MASTER = ROUTING_MILE_DEALER_MANPOWER.concat('employee-department');
 export const ROUTING_MILE_DEALER_MANPOWER_ROLE_MASTER = ROUTING_MILE_DEALER_MANPOWER.concat('role-master');
 
-export const ROUTING_MILE_DEALER_HIERARCHY_DEALER_PARENT = ROUTING_MILE.concat('dealer-parent')
-export const ROUTING_MILE_DEALER_HIERARCHY_DEALER_COMPANY = ROUTING_MILE.concat('dealer-company')
+export const ROUTING_MILE_DEALER_HIERARCHY_DEALER_PARENT = ROUTING_MILE.concat('dealer-parent');
+export const ROUTING_MILE_DEALER_HIERARCHY_DEALER_COMPANY = ROUTING_MILE.concat('dealer-company');
 
 export const ROUTING_COMMON_CONFIG_PARAM_EDIT = ROUTING_COMMON.concat('config-param-edit');
 
@@ -77,3 +78,6 @@ export const ROUTING_ADMIN = '/admin/';
 export const ROUTING_ADMIN_USER_MANAGEMENT = ROUTING_ADMIN.concat('user-management/');
 export const ROUTING_USER_MANAGEMENT_DEALER = ROUTING_ADMIN_USER_MANAGEMENT.concat('dealer');
 export const ROUTING_USER_MANAGEMENT_MANUFACTURER = ROUTING_ADMIN_USER_MANAGEMENT.concat('manufacturer');
+export const ROUTING_OTF = ROUTING_SALES.concat('otf');
+
+export const ROUTING_REPORT_OTF_REPORTS = ROUTING_REPORT.concat('otf-reports')

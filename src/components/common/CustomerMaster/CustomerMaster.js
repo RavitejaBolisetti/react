@@ -3,15 +3,11 @@ import { connect } from 'react-redux';
 import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider, Select } from 'antd';
 import { IoBanOutline } from 'react-icons/io5';
 import { PlusOutlined } from '@ant-design/icons';
-
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import DataTable from 'utils/dataTable/DataTable';
-import { escapeRegExp } from 'utils/escapeRegExp';
-
 import { AddEditForm } from './AddEditForm';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
-
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
@@ -85,17 +81,14 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
-    const [isLoadingOnSave, setisLoadingOnSave] = useState();
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    const [data, setData] = useState(initialTableData);
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
     const [forceFormReset, setForceFormReset] = useState(false);
     const [searchData, setSearchdata] = useState();
-    const [refershData, setRefershData] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [filterString, setFilterString] = useState();
     const [footerEdit, setFooterEdit] = useState(false);
@@ -104,16 +97,12 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     const [saveBtn, setSaveBtn] = useState(false);
     const [saveclick, setsaveclick] = useState();
     const [saveandnewclick, setsaveandnewclick] = useState();
-    const [successAlert, setSuccessAlert] = useState(false);
     const [error, setError] = useState(false);
-    const [valid, setValid] = useState(false);
     const [DealerSearchvalue, setDealerSearchvalue] = useState();
     const [DealerSelected, setDealerSelected] = useState();
-    const [disabled, setdisabled] = useState(true);
     const [DealerData, setDealerData] = useState();
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
-    const [closePanels, setClosePanels] = React.useState([]);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [AccessMacid, setAccessMacid] = useState([]);
     const [finalFormdata, setfinalFormdata] = useState({
@@ -135,14 +124,12 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
         form.setFieldValue(formData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
- 
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId });
             hierarchyAttributeFetchList({ setIsLoading: listShowLoading, userId });
         }
-        // setdisabled(true);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
@@ -152,25 +139,23 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     }, [productHierarchyData, attributeData, qualificationData]);
 
     useEffect(() => {
-        if (DealerSelected?.length > 0 && DealerSelected != undefined) {
-            setdisabled(false);
+        if (DealerSelected?.length > 0 && DealerSelected !== undefined) {
             setDealerData({});
             setError(false);
         }
         if (DealerSelected === undefined) {
             setDealerSearchvalue('');
             setDealerData({});
-            setdisabled(true);
             setError(false);
         }
     }, [DealerSearchvalue, DealerSelected]);
 
-    useEffect(() => {
-        if (userId) {
-            // fetchList({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refershData, userId]);
+    // useEffect(() => {
+    //     if (userId) {
+    //         // fetchList({ setIsLoading: listShowLoading, userId });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [refershData, userId]);
 
     const tableDetails = [];
 
@@ -224,7 +209,6 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     );
 
     const tableDetailData = [
-      
         {
             employeeCode: DealerData?.employeeCode,
             dealerName: DealerSelected,
@@ -234,7 +218,6 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
             emailid: DealerData?.employeeEmail,
         },
     ];
-
 
     const tableColumn = [];
     tableColumn.push(
@@ -316,7 +299,6 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
         listShowLoading(false);
         form.resetFields();
         setSelectedRecord({});
-        setSuccessAlert(true);
         if (saveclick === true) {
             setDrawer(false);
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -336,9 +318,6 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     };
 
     const onFinish = (values, e) => {
-        console.log('The On Finish Function Called : ');
-        const recordId = selectedRecord?.id || '';
-        const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
 
         const requestData = {
             data: savePayload,
@@ -434,9 +413,6 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
         setIsReadOnly(false);
         setShowSaveBtn(true);
     };
-    const handleReferesh = (e) => {
-        setRefershData(!refershData);
-    };
 
     const onChange = (sorter, filters) => {
         form.resetFields();
@@ -453,19 +429,13 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
         }
         if (value === 'B6G431') {
             setError(true);
-            setValid(false);
         } else if (value === 'B6G433') {
             setError(false);
-            setValid(true);
         }
         setFilterString(value);
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
-    };
     const handleChange = (selectedvalue) => {
-        setdisabled(false);
         setDealerSelected(selectedvalue);
     };
     const ChangeSearchHandler = (event) => {
@@ -474,12 +444,8 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
         }
         setDealerSearchvalue(event.target.value);
     };
-    const filterFunction = (filterString) => (title) => {
-        return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
-    };
 
     const formProps = {
-        setClosePanels,
         saveclick,
         DealerSearchvalue,
         setsaveclick,
@@ -488,7 +454,6 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
         isVisible: isFormVisible,
         isViewModeVisible,
         setIsViewModeVisible,
-        isLoadingOnSave,
         formBtnDisable,
         isFormBtnActive,
         setFormBtnActive,
@@ -500,7 +465,6 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
         form,
         handleAdd,
         drawer,
-        data,
         setDrawer,
         isChecked,
         formData,

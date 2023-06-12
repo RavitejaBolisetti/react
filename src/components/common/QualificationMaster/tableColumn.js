@@ -1,4 +1,4 @@
-import { tblPrepareColumns, tblSerialNumberColumn, tblStatusColumn, tblActionColumn } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblSerialNumberColumn,  tblActionColumn } from 'utils/tableCloumn';
 import { Tag } from 'antd';
 
 import styles from 'components/common/Common.module.css';

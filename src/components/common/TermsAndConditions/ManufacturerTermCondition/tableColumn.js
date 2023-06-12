@@ -1,7 +1,6 @@
-import { tblPrepareColumns, tblSerialNumberColumn, tblStatusColumn, tblActionColumn } from 'utils/tableCloumn';
-import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
-import { FiEdit, FiEye } from 'react-icons/fi';
-import moment from 'moment';
+import { tblPrepareColumns } from 'utils/tableCloumn';
+import { Button, Space } from 'antd';
+import { FiEye } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { convertDate } from 'utils/formatDateTime';
@@ -10,8 +9,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
 
     tableColumn.push(
-        //tblSerialNumberColumn({ page, pageSize, width: '5%' }),
-
         tblPrepareColumns({
             title: 'Product Hierarchy',
             dataIndex: 'productName',
@@ -31,16 +28,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
 
         tblPrepareColumns({
-            title: 'Description',
-            dataIndex: 'termsconditiondescription',
-            width: '25%',
-        }),
-        tblPrepareColumns({
-            title: 'Version',
-            dataIndex: 'version',
-            width: '2%',
-        }),
-        tblPrepareColumns({
             title: 'Effective From',
             dataIndex: 'effectivefrom',
             width: '13%',
@@ -52,23 +39,19 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '13%',
             render: (text) => convertDate(text),
         }),
-        // tblPrepareColumns({
-        //     title: 'MFG T&C',
-        //     width: '15%',
-        //     sorter: false,
-        //     render: (text, record, index) => {
-        //         return (
-        //             <Space>
-        //                 {
-        //                     <Button className={styles.tableIcons} danger ghost aria-label="ai-view">
-        //                         {/* onClick={() => handleView(record)} */}
-        //                         <ViewEyeIcon />
-        //                     </Button>
-        //                 }
-        //             </Space>
-        //         );
-        //     },
-        // }),
+
+        tblPrepareColumns({
+            title: 'Description',
+            dataIndex: 'termsconditiondescription',
+            width: '25%',
+            render: (dataIndex) => dataIndex.substring(0, 25) + (dataIndex.length > 25 ? '...' : ''),
+        }),
+        tblPrepareColumns({
+            title: 'Version',
+            dataIndex: 'version',
+            width: '2%',
+        }),
+
         tblPrepareColumns({
             title: 'View',
             width: '5%',
@@ -83,8 +66,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
                 );
             },
         })
-
-        // tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%' })
     );
 
     return tableColumn;
