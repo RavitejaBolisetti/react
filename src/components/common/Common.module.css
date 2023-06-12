@@ -1219,6 +1219,24 @@
 
 .drawerBodyLeft {
     background: #F2F2F2;
+    /* padding: 20px; */
+    height: calc(100vh - 60px);
+    overflow-y: overlay;
+}
+
+.drawerBodyLeft::-webkit-scrollbar-track {
+    background-color: #f4f4f4;
+}
+
+.drawerBodyLeft::-webkit-scrollbar {
+    background-color: #f4f4f4;
+    width: 5px;
+}
+
+.drawerBodyLeft::-webkit-scrollbar-thumb {
+    background-color: rgba(52, 44, 44, 0.34);
+    border-radius: 10px;
+    /* border: 2px solid ; */
 }
 
 .drawerBodyLeft :global .ant-collapse {
@@ -1228,7 +1246,9 @@
 }
 
 .drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
-    padding: 20px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
 }
 
 .drawerBodyLeft :global .ant-collapse .ant-collapse-content {
@@ -1266,25 +1286,27 @@
 .drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
     position: absolute;
     right: 0;
-    top: 26px;
-    padding-inline-end: 14px;
+    padding-inline-end: 20px;
     color: #ff3e5b;
-}
-
-.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-avatar-circle {
-    vertical-align: sub;
 }
 
 .drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space-vertical {
-    padding-left: 10px;
     display: inline-block;
 }
 
-.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item:first-child {
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item p {
+    padding-left: 0 !important;
+    color: #0b0b0c;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item p span {
     color: #ff3e5b;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
-    line-height: 26px;
+    line-height: 24px;
 }
 
 .drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item:last-child {
@@ -1295,24 +1317,7 @@
 }
 
 .drawerBodyLeft :global .ant-timeline {
-    padding: 9px 15px 0 27px;
-    height: 68.8vh;
-    overflow-y: auto;
-}
-
-.drawerBodyLeft :global .ant-timeline::-webkit-scrollbar-track {
-    background-color: #f4f4f4;
-}
-
-.drawerBodyLeft :global .ant-timeline::-webkit-scrollbar {
-    background-color: #f4f4f4;
-    width: 5px;
-}
-
-.drawerBodyLeft :global .ant-timeline::-webkit-scrollbar-thumb {
-    background-color: rgba(52, 44, 44, 0.34);
-    border-radius: 10px;
-    /* border: 2px solid ; */
+    padding: 9px 20px 0 27px;
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item {
@@ -1338,6 +1343,10 @@
     font-size: 14px;
     font-weight: 700;
     line-height: 22px;
+}
+
+.drawerBodyLeft :global .ant-timeline .ant-timeline-item-last>.ant-timeline-item-content {
+    min-height: 32px;
 }
 
 .drawerBodyLeft :global .ant-progress .ant-progress-bg {
@@ -1410,21 +1419,16 @@
 
 .userCircle {
     color: #ff3e5b !important;
-
     margin-top: 3px !important;
-
     margin-left: 3px !important;
-
     height: 24px !important;
-
     width: 24px !important;
 }
 
 /* .alignUser {
     display: flex;
     align-items: center;
-
-} */
+}*/
 
 .iconsColor {
     color: #ff3e5b;
