@@ -8,7 +8,6 @@ const ProductAttributeMaster = (props) => {
     const { productHierarchyAttributeData, isVisible, setSKUAttributes, selectedTreeData, formActionType, skuAttributes, setFormBtnActive } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [attributeForm] = Form.useForm();
-
     const [finalFormdata, setFinalFormdata] = useState([]);
     const [formDecider, setFormDecider] = useState(false);
 
@@ -51,6 +50,7 @@ const ProductAttributeMaster = (props) => {
         }
         if (formActionType === FROM_ACTION_TYPE.EDIT) {
             selectedTreeData?.skuAttributes &&
+                // eslint-disable-next-line array-callback-return
                 selectedTreeData?.skuAttributes?.map((data) => {
                     setFinalFormdata([...finalFormdata, { attributeName: { label: data.code }, attributeValue: data.value, fromApi: true }]);
                 });
