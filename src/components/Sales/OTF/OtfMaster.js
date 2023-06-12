@@ -180,7 +180,7 @@ export const OtfMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('Otf Details'),
+        titleOverride: drawerTitle.concat('Order Tracking From'),
         tableData: searchData,
         buttonData,
         setButtonData,

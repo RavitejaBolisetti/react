@@ -10,15 +10,7 @@ const { Text } = Typography;
 const OtfDetailsMaster = () => {
     return (
         <>
-            <Card
-                title={
-                    <div className={styles.alignUser}>
-                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                            OTF Details
-                        </Text>
-                    </div>
-                }
-            >
+            <Card>
                 <AddEditForm />
             </Card>
         </>

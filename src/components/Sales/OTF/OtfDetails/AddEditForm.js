@@ -5,7 +5,6 @@ import { Row, Col, Input, Form, Select, DatePicker } from 'antd';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-
 const { Option } = Select;
 
 function AddEditForm({ formData, formActionType }) {
@@ -16,7 +15,6 @@ function AddEditForm({ formData, formActionType }) {
 
     return (
         <>
-         
             <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
