@@ -34,7 +34,7 @@ const ViewDetailMain = (props) => {
 
     return (
         <>
-            <Card style={{ backgroundColor: '#F2F2F2', borderRadius: '8px', marginBottom: '50px' }}>
+            <Card style={{ marginBottom: '40px', backgroundColor: '#F2F2F2', borderRadius: '8px', marginBottom: '50px' }}>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Customer ID">{customerForm?.customerId}</Descriptions.Item>
                     <Descriptions.Item label="Customer Name">{customerForm?.customerName}</Descriptions.Item>

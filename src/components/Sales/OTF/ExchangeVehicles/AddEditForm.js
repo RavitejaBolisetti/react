@@ -5,7 +5,7 @@ import { ViewDetail } from './ViewDetail';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { Col, Input, Form, Row, Select } from 'antd';
+import { Col, Input, Form, Row, Select, Card } from 'antd';
 
 const AddEditFormMain = (props) => {
     const { formActionType, formData, form, onFinishFailed, onFinish } = props;
@@ -15,12 +15,12 @@ const AddEditFormMain = (props) => {
     };
 
     return !formActionType?.viewMode ? (
-        <>
+        <Card style={{ marginBottom: '410px', backgroundColor: '#F2F2F2', borderRadius: '8px', marginBottom: '50px' }}>
             <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item name="customerId" label="Customer ID" initialValue={formData?.customerId} rules={[validateRequiredInputField('id')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={formActionType?.editMode ? true : false} />
+                            <Input maxLength={6} placeholder={preparePlaceholderText('id')} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -72,7 +72,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item name="oldchessisnumber" label="Old Chessis Number" initialValue={formData?.oldchessisnumber} rules={[validateRequiredInputField('Old Chessis Number')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Old Chessis Number')} disabled={formActionType?.editMode ? true : false} />
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Old Chessis Number')} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -101,7 +101,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item name="yearofreg" label="Year of Registration" initialValue={formData?.yearofreg} rules={[validateRequiredInputField('year of reg')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Year of Registration')} disabled={formActionType?.editMode ? true : false} />
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Year of Registration')} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -130,7 +130,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item name="schemeName" label="Scheme Name" initialValue={formData?.aadhar} rules={[validateRequiredInputField('Scheme Name')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Scheme Name')} disabled={formActionType?.editMode ? true : false} />
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Scheme Name')} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -147,7 +147,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item name="procurementPrice" label="Procurement Price" initialValue={formData?.procurementPrice} rules={[validateRequiredInputField('Procurement Price')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Procurement Price')} disabled={formActionType?.editMode ? true : false} />
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Procurement Price')} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -163,7 +163,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
             </Form>
-        </>
+        </Card>
     ) : (
         <ViewDetail {...viewProps} />
     );
