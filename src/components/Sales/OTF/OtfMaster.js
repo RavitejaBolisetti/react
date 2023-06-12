@@ -201,7 +201,7 @@ export const OtfMasterBase = (props) => {
         setPage,
     };
 
-    const title = 'Company Name';
+    const title = 'Search OTF';
 
     const advanceFilterResultProps = {
         advanceFilter: false,

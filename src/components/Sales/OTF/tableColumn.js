@@ -5,22 +5,34 @@ import styles from 'components/common/Common.module.css';
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
-        tblSerialNumberColumn({ page, pageSize, fixed: 'left' }),
+        // tblSerialNumberColumn({ page, pageSize, fixed: 'left' }),
 
         tblPrepareColumns({
-            title: 'Parent Group Name',
-            dataIndex: 'dealerParentName',
-            width: '20%',
-        }),
-        tblPrepareColumns({
-            title: 'Company Code',
-            dataIndex: 'companyCode',
+            title: 'OTF No.',
+            dataIndex: 'otfNumber',
             width: '15%',
         }),
         tblPrepareColumns({
-            title: 'Company Name',
-            dataIndex: 'companyName',
-            width: '20%',
+            title: 'OTF Date',
+            dataIndex: 'otfDate',
+            width: '15%',
+        }),
+        tblPrepareColumns({
+            title: 'Customer Name',
+            dataIndex: 'customerName',
+            width: '15%',
+        }),
+
+        tblPrepareColumns({
+            title: 'Mobile No.',
+            dataIndex: 'mobileNumber',
+            width: '15%',
+        }),
+
+        tblPrepareColumns({
+            title: 'Model',
+            dataIndex: 'model',
+            width: '15%',
         }),
 
 
