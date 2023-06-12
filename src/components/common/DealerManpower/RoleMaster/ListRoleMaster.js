@@ -140,7 +140,6 @@ export const ListRoleMasterBase = (props) => {
             setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
             setShowDataLoading(false);
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
 

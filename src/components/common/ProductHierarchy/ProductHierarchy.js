@@ -295,6 +295,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             onError,
             onSuccess,
         };
+        console.log(requestData,'ConsoleDatarequestData')
         saveData(requestData);
     };
 
