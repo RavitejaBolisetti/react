@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Col, Form, Row, Space, Collapse, Typography, Divider } from 'antd';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import styles from 'components/common/Common.module.css';
-import { ViewDetail } from './ViewInvoiceDetail';
 import { DataTable } from 'utils/dataTable';
+import { ViewInvoiceDetail } from './ViewInvoiceDetail';
 const { Text } = Typography;
 
 const { Panel } = Collapse;
@@ -137,7 +137,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            {formActionType?.viewMode ? (
+            {!formActionType?.viewMode ? (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space size="middle" direction="vertical" className={styles.accordianContainer}>
@@ -185,7 +185,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
             ) : (
-                <ViewDetail {...viewProps} />
+                <ViewInvoiceDetail {...viewProps} />
             )}
         </>
     );

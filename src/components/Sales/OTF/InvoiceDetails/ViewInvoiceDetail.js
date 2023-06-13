@@ -1,35 +1,194 @@
-import React from 'react';
-import { Descriptions } from 'antd';
+import React, { useState } from 'react';
+import { Col, Form, Row, Space, Collapse, Typography, Divider } from 'antd';
+import { accordianExpandIcon } from 'utils/accordianExpandIcon';
+import styles from 'components/common/Common.module.css';
+import { ViewDetail } from '../../OTF/ViewDetail';
+import { DataTable } from 'utils/dataTable';
+const { Text } = Typography;
 
-const ViewDetailBase = ({ formData, styles, parameterType }) => {
-    const viewProps = {
-        bordered: false,
-        colon: false,
-        layout: 'vertical',
-        column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
+const { Panel } = Collapse;
+
+const ViewInvoiceDetailMain = (props) => {
+    const { onCloseAction, formActionType, setIsViewModeVisible } = props;
+    const [openAccordian, setOpenAccordian] = useState();
+    const [activeKey, setactiveKey] = useState([1]);
+
+    const handleEdit = () => {
+        setIsViewModeVisible(false);
     };
+
+    const handleCollapse = (key) => {
+        setOpenAccordian((prev) => (prev === key ? '' : key));
+    };
+
+    const onChange = (values) => {
+        const isPresent = activeKey.includes(values);
+
+        if (isPresent) {
+            const newActivekeys = [];
+
+            activeKey.forEach((item) => {
+                if (item !== values) {
+                    newActivekeys.push(item);
+                }
+            });
+            setactiveKey(newActivekeys);
+        } else {
+            setactiveKey([...activeKey, values]);
+        }
+    };
+    const columns = [
+        {
+            title: 'Srl',
+            dataIndex: 'srl',
+            key: 'srl',
+        },
+        {
+            title: 'Invoice Number',
+            dataIndex: 'innum',
+            key: 'innum',
+        },
+        {
+            title: 'Invoice Date ',
+            dataIndex: 'indate',
+            key: 'indate',
+        },
+        {
+            title: 'Invoice Status ',
+            dataIndex: 'instatus',
+            key: 'instatus',
+        },
+    ];
+
+    const data = [
+        {
+            key: '1',
+            innum: 'CGST @18%',
+            indate: '18%',
+            instatus: '80,0000',
+        },
+        {
+            key: '2',
+            innum: 'CGST @18%',
+            indate: '18%',
+            instatus: '80,0000',
+        },
+        {
+            key: '3',
+            innum: 'CGST @18%',
+            indate: '18%',
+            instatus: '80,0000',
+        },
+    ];
+
+    const optionalColumns = [
+        {
+            title: 'Srl',
+            dataIndex: 'srl',
+            key: 'srl',
+        },
+        {
+            title: 'Delivery Note Number',
+            dataIndex: 'dlnum',
+            key: 'dlnum',
+        },
+
+        {
+            title: 'Delivery Note Date ',
+            dataIndex: 'dldate',
+            key: 'dldate',
+        },
+
+        {
+            title: 'Delivery Note Status ',
+            dataIndex: 'dlstatus',
+            key: 'dlstatus',
+        },
+    ];
+
+    const optionalData = [
+        {
+            key: '1',
+            dlnum: 'Registration Charges',
+            dldate: '12%',
+            dlstatus: '80,0000',
+        },
+        {
+            key: '2',
+            dlnum: 'Registration Charges',
+            dldate: '18%',
+            dlstatus: '80,0000',
+        },
+        {
+            key: '3',
+            dlnum: 'Registration Charges',
+            dldate: '12%',
+            dlstatus: '80,0000',
+        },
+    ];
+    const viewProps = {
+        activeKey,
+        setactiveKey,
+        onChange,
+        styles,
+        onCloseAction,
+        handleEdit,
+    };
+
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
-            <>
-                <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Parent Group Code">{formData?.parentCode}</Descriptions.Item>
-                    <Descriptions.Item label="Parent Group Name">{formData?.dealerParentName}</Descriptions.Item>
-                    <Descriptions.Item label="Company Code">{formData?.companyCode}</Descriptions.Item>
-                    <Descriptions.Item label="Company Name">{formData?.companyName}</Descriptions.Item>
-                    <Descriptions.Item label="Company Address">{formData?.address}</Descriptions.Item>
-                    <Descriptions.Item label="Pin Code">{formData?.pinCode}</Descriptions.Item>
-                    <Descriptions.Item label="City">{formData?.cityName}</Descriptions.Item>
-                    <Descriptions.Item label="Tehsil">{formData?.tehsilName}</Descriptions.Item>
-                    <Descriptions.Item label="District">{formData?.districtName}</Descriptions.Item>
-                    <Descriptions.Item label="State">{formData?.stateName}</Descriptions.Item>
-                    <Descriptions.Item label="TIN">{formData?.companyTin}</Descriptions.Item>
-                    <Descriptions.Item label="TAN">{formData?.companyTan}</Descriptions.Item>
-                    <Descriptions.Item label="PAN">{formData?.companyPan}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
-                </Descriptions>
-            </>
-        </div>
+        <>
+            {!formActionType?.viewMode ? (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Space size="middle" direction="vertical" className={styles.accordianContainer}>
+                            <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
+                                <Panel
+                                    header={
+                                        <div className={styles.alignUser}>
+                                            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                                    Invoice Information
+                                                </Text>
+                                            </Col>
+                                        </div>
+                                    }
+                                    key="1"
+                                >
+                                    <Divider />
+
+                                    <Form autoComplete="off" layout="vertical">
+                                        <DataTable tableColumn={columns} tableData={data} pagination={false} />
+                                    </Form>
+                                </Panel>
+                            </Collapse>
+                            <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
+                                <Panel
+                                    header={
+                                        <div className={styles.alignUser}>
+                                            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                                    Delivery Information
+                                                </Text>
+                                            </Col>
+                                        </div>
+                                    }
+                                    key="2"
+                                >
+                                    <Divider />
+
+                                    <Form autoComplete="off" layout="vertical">
+                                        <DataTable tableColumn={optionalColumns} tableData={optionalData} pagination={false} />
+                                    </Form>
+                                </Panel>
+                            </Collapse>
+                        </Space>
+                    </Col>
+                </Row>
+            ) : (
+                <ViewDetail {...viewProps} />
+            )}
+        </>
     );
 };
 
-export const ViewDetail = ViewDetailBase;
+export const ViewInvoiceDetail = ViewInvoiceDetailMain;
