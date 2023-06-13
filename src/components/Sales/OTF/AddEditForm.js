@@ -16,6 +16,7 @@ import { LoyaltySchemeMaster } from './LoyaltyScheme';
 import { ReferralsMaster } from './Referrals';
 import { ExchangeVehiclesMaster } from './ExchangeVehicles';
 import { AddOnDetailsMaster } from './AddOnDetails';
+import { InvoiceDetailsMaster } from './InvoiceDetails';
 
 const { Panel } = Collapse;
 const expandIcon = ({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />;
@@ -41,6 +42,7 @@ const AddEditFormMain = (props) => {
         referrals: false,
         loyaltyScheme: false,
         addOnDetails: false,
+        invoiceDetails: false,
     });
     const [buttonData, setbuttonData] = useState({
         closeBtn: true,
@@ -108,6 +110,8 @@ const AddEditFormMain = (props) => {
             return <FinananceDetailsMaster {...RenderElementCommonProps} />;
         } else if (leftTimeline?.addOnDetails) {
             return <AddOnDetailsMaster {...RenderElementCommonProps} />;
+        } else if (leftTimeline?.invoiceDetails) {
+            return <InvoiceDetailsMaster {...RenderElementCommonProps} />;
         }
     };
 
