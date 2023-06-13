@@ -22,7 +22,7 @@ const { Panel } = Collapse;
 const expandIcon = ({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible, formActionType } = props;
+    const { onCloseAction, isViewModeVisible, formActionType, isVisible } = props;
     const [moduleName, setmoduleName] = useState('OTF Details');
     const EDIT_ACTION = OTF_FORM_ACTION_TYPE?.EDIT;
     const CANCEL_ACTION = OTF_FORM_ACTION_TYPE?.CANCEL;
@@ -53,6 +53,7 @@ const AddEditFormMain = (props) => {
         transferBtn: true,
         nextBtn: true,
     });
+
     const handleOtfButtonClick = ({ buttonAction, record }) => {
         if (buttonAction === EDIT_ACTION) {
             console.log('edit');
@@ -78,8 +79,9 @@ const AddEditFormMain = (props) => {
     const TimelineProps = {
         leftTimeline,
         setleftTimeline,
-
         setmoduleName,
+        moduleName,
+        isVisible,
     };
 
     const RenderElementCommonProps = {

@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
+import styles from 'components/common/Common.module.css';
 
 const FormProgressBar = (props) => {
-    const { leftTimeline, setleftTimeline, setmoduleName } = props;
+    const { leftTimeline, setleftTimeline, setmoduleName, isVisible } = props;
+    useEffect(() => {
+        if (isVisible && leftTimeline) {
+            const TimeLineClass = document.getElementsByClassName('ant-timeline-item');
+            console.log('TimeLineClass', TimeLineClass);
+            for (let i = 0; i < TimeLineClass.length; i++) {
+                if (TimeLineClass[i]['children']['1']['children']['0']['classList'].contains('Common_activeForm__PgAbl')) {
+                    console.log('foundVal', TimeLineClass[i]);
+                    TimeLineClass[i].firstChild.style.backgroundColor = '#ff3e5b';
+                    TimeLineClass[i].lastChild.firstChild.style.color = '#ff3e5b';
+                } else {
+                    TimeLineClass[i].firstChild.style.backgroundColor = '#70c922';
+                    TimeLineClass[i].lastChild.firstChild.style.color = '#0b0b0c';
+                }
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [leftTimeline, isVisible]);
     const onHandle = (key) => {
         switch (key) {
             case 'otfDetails':
@@ -75,43 +93,104 @@ const FormProgressBar = (props) => {
         <Timeline
             items={[
                 {
-                    dot: <BsRecordCircleFill color="#ff3e5b" />,
+                    dot: leftTimeline?.otfDetails ? (
+                        <div className={styles.activeForm}>
+                            <BsRecordCircleFill />
+                        </div>
+                    ) : (
+                        <FaCheckCircle />
+                    ),
                     children: <p onClick={() => onHandle('otfDetails')}>Otf Details</p>,
                 },
                 {
-                    dot: <FaCheckCircle />,
+                    dot: leftTimeline?.customerDetails ? (
+                        <BsRecordCircleFill className={styles.activeForm} />
+                    ) : (
+                        <div className={styles.inactiveForm}>
+                            <FaCheckCircle />
+                        </div>
+                    ),
                     children: <p onClick={() => onHandle('customerDetails')}>Customer Details</p>,
                 },
                 {
-                    dot: <FaCheckCircle />,
+                    dot: leftTimeline?.vehicleDetails ? (
+                        <BsRecordCircleFill className={styles.activeForm} />
+                    ) : (
+                        <div className={styles.inactiveForm}>
+                            <FaCheckCircle />
+                        </div>
+                    ),
                     children: <p onClick={() => onHandle('vehicleDetails')}>Vehicle Details</p>,
                 },
                 {
-                    dot: <FaCheckCircle />,
+                    dot: leftTimeline?.schemeDetails ? (
+                        <BsRecordCircleFill className={styles.activeForm} />
+                    ) : (
+                        <div className={styles.inactiveForm}>
+                            <FaCheckCircle />
+                        </div>
+                    ),
                     children: <p onClick={() => onHandle('schemeDetails')}>Scheme Details</p>,
                 },
+
                 {
-                    dot: <FaCheckCircle />,
+                    dot: leftTimeline?.insuranceDetails ? (
+                        <BsRecordCircleFill className={styles.activeForm} />
+                    ) : (
+                        <div className={styles.inactiveForm}>
+                            <FaCheckCircle />
+                        </div>
+                    ),
                     children: <p onClick={() => onHandle('insuranceDetails')}>Insurance Details</p>,
                 },
                 {
-                    dot: <FaCheckCircle />,
+                    dot: leftTimeline?.fiananceDetails ? (
+                        <BsRecordCircleFill className={styles.activeForm} />
+                    ) : (
+                        <div className={styles.inactiveForm}>
+                            <FaCheckCircle />
+                        </div>
+                    ),
                     children: <p onClick={() => onHandle('financeDetails')}>Finance Details</p>,
                 },
                 {
-                    dot: <FaCheckCircle />,
+                    dot: leftTimeline?.exchangeVehicle ? (
+                        <BsRecordCircleFill className={styles.activeForm} />
+                    ) : (
+                        <div className={styles.inactiveForm}>
+                            <FaCheckCircle />
+                        </div>
+                    ),
                     children: <p onClick={() => onHandle('exchangeVehicles')}>Exchange Vehicle</p>,
                 },
                 {
-                    dot: <FaCheckCircle />,
+                    dot: leftTimeline?.referrals ? (
+                        <BsRecordCircleFill className={styles.activeForm} />
+                    ) : (
+                        <div className={styles.inactiveForm}>
+                            <FaCheckCircle />
+                        </div>
+                    ),
                     children: <p onClick={() => onHandle('referrals')}>Referrals</p>,
                 },
                 {
-                    dot: <FaCheckCircle />,
+                    dot: leftTimeline?.loyaltyScheme ? (
+                        <BsRecordCircleFill className={styles.activeForm} />
+                    ) : (
+                        <div className={styles.inactiveForm}>
+                            <FaCheckCircle />
+                        </div>
+                    ),
                     children: <p onClick={() => onHandle('loyaltyScheme')}>Loyalty Scheme</p>,
                 },
                 {
-                    dot: <FaCheckCircle />,
+                    dot: leftTimeline?.addOnDetails ? (
+                        <BsRecordCircleFill className={styles.activeForm} />
+                    ) : (
+                        <div className={styles.inactiveForm}>
+                            <FaCheckCircle />
+                        </div>
+                    ),
                     children: <p onClick={() => onHandle('addOnDetails')}>Add-On Details</p>,
                 },
             ]}

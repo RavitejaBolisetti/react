@@ -1330,7 +1330,7 @@
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item .ant-timeline-item-content p:hover {
-    color: #ff3e5b;
+    color: #ff3e5b !important;
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item-last .ant-timeline-item-content {
@@ -1349,7 +1349,7 @@
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item-tail {
-    background: #70c922 !important;
+    inset-block-start: 9px;
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item-head-custom {
@@ -1428,6 +1428,12 @@
     background: #f2f2f2;
     border-radius: 8px;
     margin-bottom: 50px;
+}
+.activeForm {
+    color: #ff3e5b;
+}
+.inactiveForm {
+    /* color: #00a310; */
 }
 
 @media (max-width: 768px) {
