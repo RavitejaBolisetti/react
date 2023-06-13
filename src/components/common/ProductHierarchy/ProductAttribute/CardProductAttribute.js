@@ -103,6 +103,7 @@ const CardProductAttribute = (props) => {
         <Card
             style={{
                 backgroundColor: '#BEBEBE1A',
+                marginTop: '12px',
             }}
         >
             <Row align="middle">
