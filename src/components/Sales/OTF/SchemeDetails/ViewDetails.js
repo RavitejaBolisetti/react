@@ -22,6 +22,7 @@ const ViewDetailMain = (props) => {
             validFrom: '10/10/2023',
             validTo: '1/11/2023',
             id: 1,
+            description: 'Refer the best High Touch Engineer-Routing & Switching',
         },
         {
             schemeType: 'WOW',
@@ -30,6 +31,7 @@ const ViewDetailMain = (props) => {
             validFrom: '10/10/2023',
             validTo: '1/11/2023',
             id: 2,
+            description: 'Refer the best High Touch Engineer-Routing & Switching',
         },
         {
             schemeType: 'WOW',
@@ -38,6 +40,7 @@ const ViewDetailMain = (props) => {
             validFrom: '10/10/2023',
             validTo: '1/11/2023',
             id: 3,
+            description: 'Refer the best High Touch Engineer-Routing & Switching',
         },
     ];
 
@@ -74,6 +77,10 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label="Amount">{schemeForm?.amount}</Descriptions.Item>
                                 <Descriptions.Item label="Valid From">{schemeForm?.validFrom}</Descriptions.Item>
                                 <Descriptions.Item label="Valid To">{schemeForm?.validTo}</Descriptions.Item>
+                            </Descriptions>
+
+                            <Descriptions {...viewProps}>
+                                <Descriptions.Item label="Description">{schemeForm?.description}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
