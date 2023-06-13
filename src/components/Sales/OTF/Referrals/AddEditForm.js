@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Col, Input, Form, Row, DatePicker, Space, Collapse, Typography } from 'antd';
+import { Col, Input, Form, Row, DatePicker,Card } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
@@ -17,7 +16,7 @@ const AddEditFormMain = (props) => {
     };
 
     return !formActionType?.viewMode ? (
-        <>
+        <Card style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
             <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -61,12 +60,12 @@ const AddEditFormMain = (props) => {
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item name="dob" label="D.O.B" initialValue={formData?.chessisNumber} rules={[validateRequiredSelectField('D.O.B')]}>
-                            <DatePicker placeholder={preparePlaceholderSelect('Date of Birth')} style={{ width: '280px' }} />
+                            <DatePicker placeholder={preparePlaceholderSelect('Date of Birth')} style={{ width: '250px' }} />
                         </Form.Item>
                     </Col>
                 </Row>
             </Form>
-        </>
+        </Card>
     ) : (
         <ViewDetail {...viewProps} />
     );

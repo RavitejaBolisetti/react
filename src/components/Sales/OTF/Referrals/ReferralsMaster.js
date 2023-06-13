@@ -15,8 +15,7 @@ export const ReferralsMaster = (props) => {
     };
     return (
         <div className={styles.drawerCustomerMaster}>
-            <h2>Referrals</h2>
-            <AddEditForm {...props} />
+            <AddEditForm {...ReferralsMasterProps} />
         </div>
     );
 };

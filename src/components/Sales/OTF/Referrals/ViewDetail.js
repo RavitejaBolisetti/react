@@ -1,10 +1,9 @@
 import React from 'react';
-import { Divider, Space, Card, Typography, Descriptions } from 'antd';
+import { Divider, Card, Typography, Descriptions } from 'antd';
 
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { styles } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -38,7 +37,7 @@ const ViewDetailMain = (props) => {
                 <Descriptions.Item label="Chessis Number">{customerForm?.chassisNumber}</Descriptions.Item>
                 <Descriptions.Item label="D.O.B">{customerForm?.dob}</Descriptions.Item>
             </Descriptions>
-         </Card>
+        </Card>
     );
 };
 
