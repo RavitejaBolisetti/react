@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Space, Collapse, Typography, DatePicker } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 
@@ -142,12 +142,12 @@ const AddEditFormMain = (props) => {
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="D.O. Number" name="donumber" data-testid="customerType" rules={[validateRequiredSelectField('D.O. number')]}>
-                                                    <Input disabled={selected == 'dorecived1' ? false : true} placeholder={preparePlaceholderText('d.o. number')}></Input>
+                                                    <Input disabled={selected === 'dorecived1' ? false : true} placeholder={preparePlaceholderText('d.o. number')}></Input>
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="D.O. Date" name="dodate" data-testid="CustomerCategory" rules={[validateRequiredSelectField('D.O. date')]}>
-                                                    <DatePicker disabled={selected == 'dorecived1' ? false : true} placeholder={preparePlaceholderText('date')} style={datePickerStyle} disabledDate={(date) => date > dayjs()} />
+                                                    <DatePicker disabled={selected === 'dorecived1' ? false : true} placeholder={preparePlaceholderSelect('date')} style={datePickerStyle} disabledDate={(date) => date > dayjs()} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
@@ -201,7 +201,7 @@ const AddEditFormMain = (props) => {
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Invoice/Delivery Date" name="deliverydate1">
-                                                    <Input placeholder={preparePlaceholderText('invoice/delivery date')} disabled={true} />
+                                                    <DatePicker disabled={true} placeholder={preparePlaceholderSelect('invoice/delivery date')} style={datePickerStyle} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
