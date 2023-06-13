@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Space, Collapse, Typography, DatePicker } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { FaRegUserCircle } from 'react-icons/fa';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 
