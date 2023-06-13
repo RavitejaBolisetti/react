@@ -92,7 +92,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.qualificationCode) || filterFunction(keyword)(item?.qualificationName) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.qualificationName) : true));
 
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
@@ -179,6 +179,8 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
+        } else if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
         }
     };
 

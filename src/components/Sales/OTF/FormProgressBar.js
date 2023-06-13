@@ -1,5 +1,5 @@
 import React from 'react';
-import { Timeline, Progress } from 'antd';
+import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 

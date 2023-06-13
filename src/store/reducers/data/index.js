@@ -20,6 +20,7 @@ import { TermCondition } from './termsConditions';
 import { DealerHierarchy } from './dealer';
 import { PincodeDetails } from './pincodeDetails';
 import { LessorCompanyMaster } from './lessorCompanyMaster';
+import { OtfReports } from './otfReports';
 
 export const data = combineReducers({
     Menu,
@@ -43,4 +44,5 @@ export const data = combineReducers({
     DealerHierarchy,
     PincodeDetails,
     LessorCompanyMaster,
+    OtfReports,
 });
