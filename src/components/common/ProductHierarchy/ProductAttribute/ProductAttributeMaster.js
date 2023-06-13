@@ -5,23 +5,21 @@ import FormProductAttribute from './FormProductAttribute';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const ProductAttributeMaster = (props) => {
-    const { productHierarchyAttributeData, isVisible, setSKUAttributes, selectedTreeData, formActionType, skuAttributes, setFormBtnActive,showGlobalNotification } = props;
+    const { productHierarchyAttributeData, isVisible, setSKUAttributes, selectedTreeData, formActionType, skuAttributes, setFormBtnActive, showGlobalNotification } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [attributeForm] = Form.useForm();
     const [finalFormdata, setFinalFormdata] = useState([]);
     const [formDecider, setFormDecider] = useState(false);
+    const [disableSaveButton, setDisableSaveButton] = useState(false);
 
     const onAttributeFormFinish = (val) => {
         finalFormdata.push(val);
         attributeForm.resetFields();
         forceUpdate();
         const formatData = [];
-
-        finalFormdata.forEach((item) => {
-            formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue });
-        });
-
+        finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, id: item?.attributeName?.key, fromApi: item?.fromApi === true ? true : false }));
         setSKUAttributes(formatData);
+        setFormBtnActive(true);
     };
 
     const cardAttributeProps = {
@@ -38,6 +36,8 @@ const ProductAttributeMaster = (props) => {
         productHierarchyAttributeData,
         skuAttributes,
         setFormBtnActive,
+        disableSaveButton,
+        setDisableSaveButton,
         showGlobalNotification,
     };
 
@@ -53,13 +53,15 @@ const ProductAttributeMaster = (props) => {
             selectedTreeData?.skuAttributes &&
                 // eslint-disable-next-line array-callback-return
                 selectedTreeData?.skuAttributes?.map((data) => {
-                    setFinalFormdata( (result) => [...result, { attributeName: { label: data?.code, id: data?.id }, attributeValue: data?.value, fromApi: true, id: data?.id, adPhProductAttributeMstId: data?.adPhProductAttributeMstId }]);
+                    setFinalFormdata((result) => [...result, { attributeName: { label: data?.code, id: data?.id }, attributeValue: data?.value, fromApi: true, adPhProductAttributeMstId: data?.adPhProductAttributeMstId, id: data?.id }]);
                 });
-            attributeForm.resetFields();
+            //attributeForm.resetFields();
             forceUpdate();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    console.log(finalFormdata, 'console');
 
     return (
         <>
@@ -69,7 +71,7 @@ const ProductAttributeMaster = (props) => {
 
             {finalFormdata?.length > 0 &&
                 finalFormdata?.map((action) => {
-                    return <CardProductAttribute {...cardAttributeProps} attributeName={action?.attributeName?.label} attributeValue={action?.attributeValue} fromApi={action?.fromApi} id = {action?.id} adPhProductAttributeMstId= {action?.adPhProductAttributeMstId} />;
+                    return <CardProductAttribute {...cardAttributeProps} attributeName={action?.attributeName?.label} attributeValue={action?.attributeValue} fromApi={action?.fromApi === true ? true : false} adPhProductAttributeMstId={action?.adPhProductAttributeMstId} id={action?.id} />;
                 })}
         </>
     );
