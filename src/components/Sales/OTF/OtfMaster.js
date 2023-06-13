@@ -308,35 +308,7 @@ export const OtfMasterBase = (props) => {
 
     return (
         <>
-            {/* <AppliedAdvanceFilter {...advanceFilterResultProps} />  */}
             <AdvanceOtfFilter {...advanceFilterResultProps} />
-            {/* <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                Search OTF
-                            </Col>
-                            <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                <div className={styles.selectSearchBg}>
-                                    <Select className={styles.headerSelectField} onChange={handleOTFChange} placeholder="Select Parameter" allowClear>
-                                        {otfSearchList?.map((item) => (
-                                            <Option value={item.id}>{item.value}</Option>
-                                        ))}
-                                    </Select>
-
-                                    <Search placeholder="Search" value={otfSearchvalue} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} className={styles.headerSearchField} />
-                                    
-                                </div>
-                            </Col>
-                            
-                        </Row>
-
-                        <AppliedAdvanceFilter {...advanceFilterResultProps} />
-                    </div>
-                </Col>
-            </Row> */}
-
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} />
