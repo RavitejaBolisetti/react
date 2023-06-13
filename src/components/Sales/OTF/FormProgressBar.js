@@ -9,10 +9,8 @@ const FormProgressBar = (props) => {
     useEffect(() => {
         if (isVisible && leftTimeline) {
             const TimeLineClass = document.getElementsByClassName('ant-timeline-item');
-            console.log('TimeLineClass', TimeLineClass);
             for (let i = 0; i < TimeLineClass.length; i++) {
                 if (TimeLineClass[i]['children']['1']['children']['0']['classList'].contains('Common_activeForm__PgAbl')) {
-                    console.log('foundVal', TimeLineClass[i]);
                     TimeLineClass[i].firstChild.style.backgroundColor = '#ff3e5b';
                     TimeLineClass[i].lastChild.firstChild.style.color = '#ff3e5b';
                 } else {
