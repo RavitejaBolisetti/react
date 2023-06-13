@@ -314,6 +314,7 @@ export const ListRoleMasterBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
+        setFilteredDepartmentData([]);
     };
 
     const handleResetFilter = () => {
