@@ -16,7 +16,7 @@ const AddEditFormMain = (props) => {
     const { buttonData, setButtonData, handleButtonClick, formActionType, effectiveFrom, effectiveTo } = props;
     const { termsAndCondition } = props;
     const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState();
+    // const [endDate, setEndDate] = useState();
 
     useEffect(() => {
         form.resetFields();
@@ -46,7 +46,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleToDateChange = (value) => {
-        setEndDate(value);
+        // setEndDate(value);
     };
 
     const disableFromDate = (value) => {
