@@ -15,6 +15,12 @@ const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { isViewModeVisible } = undefined, onFinish, onFinishFailed } = props;
     const { buttonData, setButtonData, handleButtonClick, formActionType, termsAndCondition, setTermsAndCondition } = props;
     const [startDate, setStartDate] = useState(new Date());
+    // const [endDate, setEndDate] = useState();
+
+    // useEffect(() => {
+    //     form.resetFields();
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [effectiveFrom, effectiveTo, form]);
 
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -45,7 +51,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleToDateChange = (value) => {
-        //setEndDate(value);
+        // setEndDate(value);
     };
 
     const disableFromDate = (value) => {

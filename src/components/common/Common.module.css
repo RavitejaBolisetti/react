@@ -1234,6 +1234,14 @@
     /* border: 2px solid ; */
 }
 
+.drawerBodyRight {
+    padding: 20px;
+    height: calc(100vh - 60px);
+    min-height: calc(100vh - 60px);
+    overflow: hidden;
+    overflow-y: auto;
+}
+
 .drawerBodyLeft :global .ant-collapse {
     background: #e6e6e6;
     border: 1px solid #b5b5b6;
