@@ -137,7 +137,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            {!formActionType?.viewMode ? (
+            {formActionType?.viewMode ? (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space size="middle" direction="vertical" className={styles.accordianContainer}>
