@@ -34,7 +34,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('stateData', stateData);
 
     const moduleTitle = 'City';
     const finalCountryData = countryData?.map((item, index) => {
@@ -99,7 +98,6 @@ export const ListCityMasterBase = (props) => {
 
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    const [page, setPage] = useState(1);
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
@@ -363,6 +361,7 @@ export const ListCityMasterBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
+        setFilteredDistrictData([]);
     };
 
     const handleResetFilter = () => {
@@ -398,9 +397,8 @@ export const ListCityMasterBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
-        setPage,
     };
 
     const title = 'City Name';

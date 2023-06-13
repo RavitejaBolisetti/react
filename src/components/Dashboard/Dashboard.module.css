@@ -235,7 +235,7 @@
 .scrollbar::-webkit-scrollbar-thumb {
     border-radius: 10px;
     /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3); */
-    background-color: rgba(52, 44, 44, 0.34) !important;
+    background-color: #C1C1C1 !important;
 }
 
 .newsCard {

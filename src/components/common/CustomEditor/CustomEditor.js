@@ -5,7 +5,7 @@ const CustomEditor = (props) => {
     const { onChange = undefined, onBlur = undefined, data = undefined, readOnly = false } = props;
     return (
         <CKEditor
-            data={data}
+            initData={data}
             readOnly={readOnly}
             onChange={(e) => {
                 onChange && onChange(e);

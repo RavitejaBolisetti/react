@@ -93,27 +93,27 @@ export const validatePincodeField = (fieldName, digit = '6', lowercase = true) =
     message: 'Please enter 6 digit valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
-export const validatInstagramProfileUrl = (fieldName) =>({
-    pattern: /(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am|instagr.com)\/(\w+)/igm,
+export const validatInstagramProfileUrl = (fieldName) => ({
+    pattern: /(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am|instagr.com)\/(\w+)/gim,
     message: 'Please enter valid url ' + fieldName,
-})
+});
 
-export const validatFacebookProfileUrl = (fieldName) =>({
+export const validatFacebookProfileUrl = (fieldName) => ({
     pattern: /(?:http:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w-]*\/)*([\w-]*)/,
     message: 'Please enter valid url ' + fieldName,
-})
+});
 
-export const validatYoutubeProfileUrl = (fieldName) =>({
+export const validatYoutubeProfileUrl = (fieldName) => ({
     pattern: /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)([^#&?]*).*/,
     message: 'Please enter valid url ' + fieldName,
-})
+});
 // pattern: /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)([^#&?]*).*/,
 // pat1: /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})?$/,
 
-export const validattwitterProfileUrl = (fieldName) =>({
+export const validattwitterProfileUrl = (fieldName) => ({
     pattern: /^https?:\/\/(www\.)?twitter\.com\/(#!\/)?([^/]+)(\/\w+)*$/,
     message: 'Please enter valid url ' + fieldName,
-})
+});
 // pattern: /^http:\/\/)?(www\.)?twitter\.com\/(\w+)/,
 // pattern: /(?:https?:)?\/\/(?:www\.|m\.)?twitter\.com\/(\w{2,15})\/?(?:\?\S+)?(?:\#\S+)?$/igm,
 
@@ -141,14 +141,15 @@ export const valueBetween0to100 = (value, fieldName) => {
     }
 };
 
-export const duplicateProductValidator = (value, dataList) => {
+export const duplicateProductValidator = (value, dataList, props) => {
     if (dataList?.length > 0) {
-        for (let i = 0; i < dataList?.length; i++) {
-            if(dataList[i]?.attributeName?.key === value?.attributeName?.key){
-                return Promise.resolve('');
-            }
-            else if (dataList[i]?.attributeName?.label === value?.attributeName?.label) {
-                return Promise.reject('Duplicate found');
+        if (props?.attributeName === value?.attributeName?.label) {
+            return Promise.resolve('');
+        } else {
+            for (let i = 0; i < dataList?.length; i++) {
+                if (dataList[i]?.attributeName?.label === value?.attributeName?.label) {
+                    return Promise.reject('Duplicate found');
+                }
             }
         }
     }
@@ -179,9 +180,8 @@ export const validateTin = (fieldName) => ({
     message: 'Please enter valid ' + fieldName,
 });
 export const validateDrivingLicenseNo = (fieldName) => ({
-    pattern:  /^([A-Z]{2})(\d{2}|\d{3})[a-zA-Z]?(\d{4})(\d{7})$/,
+    pattern: /^([A-Z]{2})(\d{2}|\d{3})[a-zA-Z]?(\d{4})(\d{7})$/,
     message: 'Please enter valid ' + fieldName,
-    
 });
 export const validateAadhar = (fieldName) => ({
     pattern: /^\d{4}\d{4}\d{4}$/,
@@ -190,4 +190,4 @@ export const validateAadhar = (fieldName) => ({
 export const validateVoterId = (fieldName) => ({
     pattern: /^([a-zA-Z]){3}\d{7}$/,
     mesage: 'Please enter valid ' + fieldName,
-})
+});
