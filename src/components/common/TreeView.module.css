@@ -83,7 +83,7 @@
 }
 
 .scrollTreeData::-webkit-scrollbar-thumb {
-    background-color: rgba(52, 44, 44, 0.34);
+    background-color: #C1C1C1;
     border-radius: 10px;
 }
 

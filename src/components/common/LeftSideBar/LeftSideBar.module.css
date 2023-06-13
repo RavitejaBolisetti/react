@@ -158,13 +158,13 @@
 }
 
 :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb {
-    background-color: rgba(52, 44, 44, 0.34);
+    background-color: #C1C1C1;
     border-radius: 10px;
     border: 2px solid #ffffff;
 }
 
 :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb:hover {
-    border: 2px solid #bab7b7;
+    border: 2px solid #C1C1C1;
 }
 
 /* :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar:hover {
