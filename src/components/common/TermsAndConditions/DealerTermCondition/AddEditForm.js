@@ -39,13 +39,8 @@ const AddEditFormMain = (props) => {
         setStartDate(value);
     };
 
-    const handleToDateChange = (value) => {
-        //setEndDate(value);
-    };
-
     const disableFromDate = (value) => {
-        var d = new Date();
-        return value < d.setDate(d.getDate() - 1);
+        return value < new Date();
         // value > endDate;
     };
 
@@ -107,10 +102,19 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item {...toDateInitialValue} label="Effective To" name="effectiveTo">
-                                <DatePicker format="YYYY-MM-DD" disabled style={{ width: '100%' }} onChange={handleToDateChange} disabledDate={disableToDate} />
+                                <DatePicker format="YYYY-MM-DD" disabled style={{ width: '100%' }} disabledDate={disableToDate} />
                             </Form.Item>
                         </Col>
                     </Row>
+                    {(formActionType?.viewMode || formActionType?.editMode) && (
+                        <Row gutter={20}>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                <Form.Item initialValue={parseInt(formData?.version) + 1.0} label="Version" name="version">
+                                    <Input disabled={true} placeholder={preparePlaceholderText('Version')} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    )}
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -120,15 +124,6 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    {(formActionType?.viewMode || formActionType?.editMode) && (
-                        <Row gutter={20}>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={formData?.version} label="Version" name="version">
-                                    <Input disabled={true} placeholder={preparePlaceholderText('Version')} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                    )}
                 </>
             ) : (
                 <ViewTermConditionList {...viewProps} />

@@ -336,8 +336,8 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const showChangeHistoryList = () => {
         setButtonData({ cancelBtn: true });
         setIsHistoryVisible(true);
-        extraParams['0']['value'] = '1ebc0d34-409b-44f3-a7e3-ffb70f1cc888';
-        changeHistoryData({ setIsLoading: listShowChangeHistoryLoading, userId, extraParams });
+        // extraParams['0']['value'] = '1ebc0d34-409b-44f3-a7e3-ffb70f1cc888';
+        changeHistoryData({ setIsLoading: listShowChangeHistoryLoading, userId });
     };
 
     const advanceFilterResultProps = {
