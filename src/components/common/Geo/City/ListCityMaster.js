@@ -50,10 +50,10 @@ const mapStateToProps = (state) => {
         defaultCountry,
         isStateDataLoaded,
         isStateLoading,
-        stateData: stateData?.filter((i) => i.status),
+        stateData,
         isDistrictDataLoaded,
         isDistrictLoading,
-        districtData: districtData?.filter((i) => i.status),
+        districtData,
         isDataLoaded,
         isLoading,
         data,
@@ -119,7 +119,6 @@ export const ListCityMasterBase = (props) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
     };
 
     useEffect(() => {

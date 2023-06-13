@@ -1,8 +1,8 @@
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_CRITICALITY_GROUP as baseURL } from 'constants/routingApi';
+import { BASE_URL_OTF_REPORTS as baseURL } from 'constants/routingApi';
 
-const PREFIX = 'CRITICALITY_';
-const moduleName = 'Application Criticality Group';
+const PREFIX = 'OTF_REPORTS_';
+const moduleName = 'OTF Reports';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';
@@ -11,9 +11,8 @@ export const RECEIVE_FILTERED_DATA_ACTION_CONSTANT = PREFIX + 'FILTERED_LIST_REC
 export const RECIEVE_DATA_DETAIL_ACTION_CONSTANT = PREFIX + 'RECIEVE_DETAIL_DATA';
 export const SAVE_DATA_ACTION_CONSTANT = PREFIX + 'SAVE_DATA';
 export const RESET_DATA_ACTION_CONSTANT = PREFIX + 'RESET_DATA';
-export const SAVE_FORM_DATA_LOADING_CONSTANT = PREFIX + 'SAVE_FORM_DATA_LOADING_CONSTANT';
 
-export const criticalityDataActions = dataActions({
+export const otfReportsDataActions = dataActions({
     baseURL,
     moduleName,
     RECEIVE_DATA_LOADING_ACTION_CONSTANT,
@@ -23,5 +22,4 @@ export const criticalityDataActions = dataActions({
     RECIEVE_DATA_DETAIL_ACTION_CONSTANT,
     SAVE_DATA_ACTION_CONSTANT,
     RESET_DATA_ACTION_CONSTANT,
-    SAVE_FORM_DATA_LOADING_CONSTANT,
 });

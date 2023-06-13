@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Form, Row, Col, Button } from 'antd';
 
+import moment from 'moment';
+
 import { PlusOutlined } from '@ant-design/icons';
 
 import { LANGUAGE_EN } from 'language/en';
@@ -18,6 +20,11 @@ const AllowedTimingList = (props) => {
     const [timingForm] = Form.useForm();
 
     const validatedDuplicateTime = (timeSlotFrom, timeSlotTo) => {
+        const isBefore = moment(timeSlotFrom, 'HH:mm').isBefore(moment(timeSlotTo, 'HH:mm'));
+        if (!isBefore) {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: LANGUAGE_EN.GENERAL.START_TIME_GREATER_THAN_END_TIME.MESSAGE, placement: 'bottomRight' });
+            return true;
+        }
         let timeSegments = [...timeData, { timeSlotFrom, timeSlotTo }];
         if (timeSegments?.length === 1) {
             return false;

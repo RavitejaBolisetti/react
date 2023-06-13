@@ -86,24 +86,17 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const [isCollapsableView, setCollapsableView] = useState(true);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
-
     const [skuAttributes, setSKUAttributes] = useState([]);
-
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
-
     const [formData, setFormData] = useState([]);
     const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
-
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
-
     const [isChildAllowed, setIsChildAllowed] = useState(true);
-
     const [showProductAttribute, setShowProductAttribute] = useState(false);
-
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
@@ -302,6 +295,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             onError,
             onSuccess,
         };
+        console.log(requestData,'ConsoleDatarequestData')
         saveData(requestData);
     };
 
@@ -355,6 +349,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         showProductAttribute,
         selectedTreeData,
         setShowProductAttribute,
+        showGlobalNotification,
     };
 
     const viewProps = {
@@ -362,7 +357,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         attributeData,
         selectedTreeData,
         handleButtonClick,
-
         styles,
         viewTitle,
     };

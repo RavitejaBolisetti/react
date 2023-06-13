@@ -122,7 +122,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                 const keyword = filterString?.keyword;
                 const division = filterString?.divisionCode;
 
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.departmentCode) || filterFunction(keyword)(item?.departmentName) : true) && (division ? filterFunction(division)(item?.divisionCode) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.departmentName) : true) && (division ? filterFunction(division)(item?.divisionCode) : true));
 
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
@@ -249,7 +249,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         tableData: searchData,
 
         isDivisionLoading,
-        divisionData: divisionData?.filter((i) => i.status),
+        divisionData,
 
         ADD_ACTION,
         EDIT_ACTION,
