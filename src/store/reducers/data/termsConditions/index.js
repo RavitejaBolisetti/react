@@ -7,6 +7,7 @@ import { LanguageData } from './tncLanguage';
 import { DealerTermsConditions } from './tncDealerSave';
 import { ManufacturerTermsConditions } from './termConditionManufacturerReducer';
 import { ChangeHistoryTermsConditions } from './changeHistoryReducer';
+import { ChangeHistoryManufacturerTermsConditions } from './changeHistoryManufacturerTermsConditionsReducer';
 
 export const TermCondition = combineReducers({
     ProductHierarchyData,
@@ -16,4 +17,5 @@ export const TermCondition = combineReducers({
     DealerTermsConditions,
     ManufacturerTermsConditions,
     ChangeHistoryTermsConditions,
+    ChangeHistoryManufacturerTermsConditions,
 });

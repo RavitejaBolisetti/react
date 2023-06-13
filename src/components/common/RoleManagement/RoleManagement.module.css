@@ -18,6 +18,7 @@ h4 {
     /* margin-bottom: 24px; */
     vertical-align: top;
 }
+
 p {
     text-align: center;
 }
@@ -25,12 +26,15 @@ p {
 .floatRight {
     float: right !important;
 }
+
 :global(.ant-tree .ant-tree-list-holder-inner) {
     background: rgba(239, 67, 94, 0.1);
 }
+
 :global .ant-collapse-content-box {
     background: #e6e6e6;
 }
+
 .allowedTiming {
     background: #f4f4f4;
     border-radius: 8px;
@@ -41,8 +45,8 @@ p {
     margin-bottom: 20px;
 }
 
-.allowedTiming :global .ant-picker-input > input:placeholder-shown,
-.allowedTiming :global .ant-picker-input > input {
+.allowedTiming :global .ant-picker-input>input:placeholder-shown,
+.allowedTiming :global .ant-picker-input>input {
     font-size: 14px;
 }
 
@@ -256,7 +260,7 @@ p {
 }
 
 :global .ant-picker-time-panel-column::-webkit-scrollbar-thumb {
-    background-color: rgba(52, 44, 44, 0.34) !important;
+    background-color: #C1C1C1 !important;
     border-radius: 10px;
 }
 
@@ -281,15 +285,18 @@ p {
 :global .ant-form-item-explain-error {
     font-size: 12px !important;
 }
+
 .placement {
     border: 1px solid blue;
 }
-:global .ant-tree .ant-tree-node-content-wrapper:hover .ant-tree .ant-tree-checkbox + span:hover {
+
+:global .ant-tree .ant-tree-node-content-wrapper:hover .ant-tree .ant-tree-checkbox+span:hover {
     background-color: transparent !important;
     color: #ffffff;
     border-radius: 4px;
     padding: 0px 17px 0px 4px;
 }
+
 :global .ant-checkbox-group-item {
     margin-inline-end: 30px;
     width: 64px;
@@ -298,25 +305,31 @@ p {
 :global .ant-checkbox-group {
     display: inline-block;
 }
-:global .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+
+:global .ant-checkbox-wrapper+.ant-checkbox-wrapper {
     margin-inline-start: 0px;
 }
+
 :global .react-checkbox-tree ol .rct-node-leaf {
     display: inline-block;
     width: 128px !important;
 }
+
 :global .rct-icon .rct-icon-half-check {
     height: 20px !important;
     width: 20px !important;
 }
+
 :global .rct-title {
     padding: 0 5px;
     color: #e31837;
 }
+
 :global .rct-icons-fa4 .rct-icon-check::before {
     /* content: "\f046"; */
     color: #ff3e5b;
 }
+
 :global .rct-icons-fa4 .rct-icon-uncheck::before {
     border: #ff3e5b;
 }
