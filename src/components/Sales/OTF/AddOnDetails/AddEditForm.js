@@ -5,6 +5,9 @@ import { Space, Collapse, Divider } from 'antd';
 import styles from 'components/common/Common.module.css';
 import AccessoriesAddonMain from './AccessoriesInformation/AccessoriesAddonMain';
 import ShieldForm from './Shield/ShieldForm';
+import AMCForm from './AMC/AMCForm';
+import FMSForm from './FMS/FMSForm';
+import RSAForm from './RSA/RSAForm';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { ViewDetail } from './ViewDetail';
 
@@ -58,22 +61,21 @@ function AddEditForm(props) {
             <Collapse onChange={() => handleCollapse('RSA')} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
                 <Panel header={'RSA'} key="RSA">
                     <Divider />
-
-                    <ShieldForm />
+                    <RSAForm />
                 </Panel>
             </Collapse>
 
             <Collapse onChange={() => handleCollapse('AMC')} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
                 <Panel header={'AMC'} key="AMC">
                     <Divider />
-                    <ShieldForm />
+                    <AMCForm />
                 </Panel>
             </Collapse>
 
             <Collapse onChange={() => handleCollapse('FMS')} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
                 <Panel header={'FMS'} key="FMS">
                     <Divider />
-                    <ShieldForm />
+                    <FMSForm   />
                 </Panel>
             </Collapse>
         </Space>

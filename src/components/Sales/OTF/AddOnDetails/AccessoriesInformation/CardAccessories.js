@@ -92,7 +92,7 @@ const CardAccessories = (prop) => {
                             <Divider type="vertical" />
 
                             <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                <Text strong>Signature: </Text> {partNumber ? <Text type="success">Active</Text> : <Text type="secondary">Inactive</Text>}
+                                <Text strong> {partNumber}</Text>
                             </Col>
                         </Row>
                         <Row>
