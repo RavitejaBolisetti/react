@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Divider } from 'antd';
+import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Divider, Table } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { validateRequiredInputField } from 'utils/validation';
@@ -11,6 +11,7 @@ import CollapseTaxInfo from './CollapseTaxInfo';
 import styles from 'components/common/Common.module.css';
 
 import { ViewDetail } from './ViewDetail';
+import { DataTable } from 'utils/dataTable';
 const { Text } = Typography;
 
 const { Option } = Select;
@@ -25,7 +26,6 @@ const AddEditFormMain = (props) => {
     const [openAccordian, setOpenAccordian] = useState();
     const [isCollapseView, setCollapseView] = useState(false);
     const [addFormdata, setAddFormData] = useState([]);
-
     const [activeKey, setactiveKey] = useState([1]);
 
     const handleEdit = () => {
@@ -39,7 +39,7 @@ const AddEditFormMain = (props) => {
     const addContactHandeler = (e) => {
         e.stopPropagation();
         form.resetFields();
-        setOpenAccordian('2');
+        setOpenAccordian('3');
         setIsReadOnly(true);
     };
 
@@ -71,7 +71,86 @@ const AddEditFormMain = (props) => {
             setactiveKey([...activeKey, values]);
         }
     };
+    const columns = [
+        {
+            title: 'Srl',
+            dataIndex: 'srl',
+            key: 'srl',
+        },
+        {
+            title: 'Description',
+            dataIndex: 'description',
+            key: 'description',
+        },
+        {
+            title: 'Rate ',
+            dataIndex: 'rate',
+            key: 'rate',
+        },
+        {
+            title: 'Amount ',
+            dataIndex: 'amount',
+            key: 'amount',
+        },
+    ];
 
+    const data = [
+        {
+            key: '1',
+            description: 'CGST @18%',
+            rate: '18%',
+            amount: '80,0000',
+        },
+        {
+            key: '2',
+            description: 'CGST @18%',
+            rate: '18%',
+            amount: '80,0000',
+        },
+        {
+            key: '3',
+            description: 'CGST @18%',
+            rate: '18%',
+            amount: '80,0000',
+        },
+    ];
+
+    const optionalColumns = [
+        {
+            title: 'Srl',
+            dataIndex: 'srl',
+            key: 'srl',
+        },
+        {
+            title: 'Service Name',
+            dataIndex: 'name',
+            key: 'name',
+        },
+
+        {
+            title: 'Amount ',
+            dataIndex: 'amount',
+            key: 'amount',
+        },
+    ];
+
+    const optionalData = [
+        {
+            key: '1',
+            name: 'Registration Charges',
+            amount: '80,0000',
+        },
+        {
+            key: '2',
+            name: 'Registration Charges',
+            amount: '80,0000',
+        },
+        {
+            key: '3',
+            name: 'Registration Charges',
+            amount: '80,0000',
+        },
+    ];
     const viewProps = {
         activeKey,
         setactiveKey,
@@ -190,25 +269,25 @@ const AddEditFormMain = (props) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Discount Amount" name="discountAmount">
-                                                    <Input placeholder={preparePlaceholderText('Discount Amount')} />
+                                                <Form.Item label="Vehicle Selling Price" name="vehicleSellingPrice">
+                                                    <Input placeholder={preparePlaceholderText('Vehicle Selling Price')} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Vehicle Selling Price" name="vehicleSellingPrice">
-                                                    <Input placeholder={preparePlaceholderText('Vehicle Selling Price')} />
+                                                <Form.Item label="Discount Amount" name="discountAmount">
+                                                    <Input placeholder={preparePlaceholderText('Discount Amount')} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Charge Amount" name="chargeAmount">
-                                                    <Input placeholder={preparePlaceholderText('Charge Amount')} />
+                                                <Form.Item label="Tax Amount" name="taxAmount">
+                                                    <Input placeholder={preparePlaceholderText('Tax Amount')} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="OTF Amount" name="otfAmount">
-                                                    <Input placeholder={preparePlaceholderText('OTF Amount')} />
+                                                <Form.Item label="Vehicle Amount" name="vehicleAmount">
+                                                    <Input placeholder={preparePlaceholderText('Vehicle Amount')} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
@@ -221,13 +300,8 @@ const AddEditFormMain = (props) => {
                                         <div className={styles.alignUser}>
                                             <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                    Tax & Charges Information
+                                                    Tax Details
                                                 </Text>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                                                <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
-                                                    Add
-                                                </Button>
                                             </Col>
                                         </div>
                                     }
@@ -235,84 +309,33 @@ const AddEditFormMain = (props) => {
                                 >
                                     <Divider />
 
-                                    <Form autoComplete="off" layout="vertical" form={keyAccountForm} onFinish={onHandleAddChange}>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Tax/Charges Type" name="type" rules={[validateRequiredSelectField('Tax/Charges Type')]}>
-                                                    <Input placeholder={preparePlaceholderText('Type')} />
-                                                </Form.Item>
+                                    <Form autoComplete="off" layout="vertical">
+                                        <DataTable tableColumn={columns} tableData={data} pagination={false} />
+                                    </Form>
+                                </Panel>
+                            </Collapse>
+                            <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
+                                <Panel
+                                    header={
+                                        <div className={styles.alignUser}>
+                                            <Col xs={24} sm={24} md={5} lg={5} xl={5}>
+                                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                                    Optional Services
+                                                </Text>
                                             </Col>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Tax/Charges Code" name="code" rules={[validateRequiredSelectField('Tax/Charges Code')]}>
-                                                    <Input placeholder={preparePlaceholderText('Code')} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Rate" name="rate" rules={[validateRequiredSelectField('Rate')]}>
-                                                    <Input placeholder={preparePlaceholderText('Rate')} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Rate Type" name="rateType" rules={[validateRequiredSelectField('Rate Type')]}>
-                                                    <Input placeholder={preparePlaceholderText('Rate Type')} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Form.Item label="Charge Description" name="description" rules={[validateRequiredSelectField('Charge Description')]}>
-                                                    <TextArea placeholder={preparePlaceholderText('description')} showCount maxLength={100} autoSize={{ minRows: 1, maxRows: 5 }} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ marginBottom: '20px' }}>
-                                                <Button type="primary" htmlType="submit">
+                                            <Col xs={24} sm={24} md={19} lg={19} xl={19}>
+                                                <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
                                                     Add
                                                 </Button>
-                                                <Button danger onClick={onHandleResetButton}>
-                                                    Reset
-                                                </Button>
                                             </Col>
-                                        </Row>
+                                        </div>
+                                    }
+                                    key="3"
+                                >
+                                    <Divider />
 
-                                        {addFormdata?.length > 0 &&
-                                            addFormdata?.map((action) => {
-                                                return (
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Collapse
-                                                                expandIcon={() => {
-                                                                    if (activeKey.includes(3)) {
-                                                                        return <MinusOutlined className={styles.iconsColor} />;
-                                                                    } else {
-                                                                        return <PlusOutlined className={styles.iconsColor} />;
-                                                                    }
-                                                                }}
-                                                                activeKey={activeKey}
-                                                                onChange={() => onChange(3)}
-                                                                expandIconPosition="end"
-                                                            >
-                                                                <Panel
-                                                                    header={
-                                                                        <div className={styles.alignUser}>
-                                                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                                                {action.type}
-                                                                            </Text>
-                                                                        </div>
-                                                                    }
-                                                                    key="3"
-                                                                >
-                                                                    <Divider />
-                                                                    <CollapseTaxInfo {...collapseProps} type={action?.type} code={action?.code} rate={action?.rate} rateType={action?.rateType} description={action?.description} />
-                                                                </Panel>
-                                                            </Collapse>
-                                                        </Col>
-                                                    </Row>
-                                                );
-                                            })}
+                                    <Form autoComplete="off" layout="vertical" form={keyAccountForm} onFinish={onHandleAddChange}>
+                                        <DataTable tableColumn={optionalColumns} tableData={optionalData} pagination={false} />
                                     </Form>
                                 </Panel>
                             </Collapse>
