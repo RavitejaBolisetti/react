@@ -9,14 +9,13 @@ const { Text } = Typography;
 
 const CardAccessories = (prop) => {
     const { id, partNumber, partType, sellingPrice, mrp, requiredQuantity, partDescription } = prop;
-    const { SetAddOnItemInfo, setIsBtnDisabled, isBtnDisabled, onFieldsChange } = prop;
+    const { SetAddOnItemInfo, isBtnDisabled, onFieldsChange } = prop;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         return () => {
             setIsEditing(false);
-            // setIsBtnDisabled(false);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -27,7 +26,6 @@ const CardAccessories = (prop) => {
             ...data
         });
         setIsEditing(true);
-        // setIsBtnDisabled(true);
     };
 
     const onUpdate = (value) => {
@@ -41,7 +39,6 @@ const CardAccessories = (prop) => {
                     return [ ...newList];
                 });
                 setIsEditing(false);
-                // setIsBtnDisabled(false);
                 form.resetFields();
             })
             .catch((err) => {
@@ -57,13 +54,11 @@ const CardAccessories = (prop) => {
             return [...newList];
         });
         setIsEditing(false);
-        // setIsBtnDisabled(false);
         form.resetFields();
     };
 
     const onCancel = () => {
         setIsEditing(false);
-        // setIsBtnDisabled(false);
     };
 
     const formProps = {
@@ -83,7 +78,7 @@ const CardAccessories = (prop) => {
         <>
             <Card className={style.viewCardSize} key={partNumber}>
                 <Row align="middle">
-                    <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
+                <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
                         <Row align="middle">
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Text strong>Part Description: {partDescription}</Text>

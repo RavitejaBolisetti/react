@@ -1,7 +1,6 @@
 import React from 'react';
 import { Row, Col, Input, Form, Button } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import styles from 'components/common/Common.module.css';
 
 const ShieldForm = () => {
     const disableProps = { disabled: true };

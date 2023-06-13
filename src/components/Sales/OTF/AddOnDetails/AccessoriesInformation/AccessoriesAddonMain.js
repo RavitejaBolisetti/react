@@ -4,20 +4,19 @@ import { Form, Divider, Card } from 'antd';
 import CardAccessories from './CardAccessories';
 import AddEditForm from './AddEditForm';
 
-
-const AccessoriesAddonMain = ({ setCanFormSave, setIsBtnDisabled, isBtnDisabled, setFormBtnDisable, setAddOnItemInfo, addOnItemInfo }) => {
+const AccessoriesAddonMain = ({ setIsBtnDisabled, isBtnDisabled, setFormBtnDisable, setAddOnItemInfo, addOnItemInfo }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [addOnform] = Form.useForm();
 
     const addOnformOnFinish = (val) => {
-        console.log('val', val)
+        console.log('val', val);
         setAddOnItemInfo((prev) => [...prev, val]);
         addOnform.resetFields();
         forceUpdate();
     };
 
     const onFieldsChange = () => {
-        setCanFormSave(true);
+        // setCanFormSave(true);
     };
 
     return (

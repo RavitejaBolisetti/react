@@ -14,7 +14,7 @@ const { Panel } = Collapse;
 
 function AddEditForm(props) {
     const [activeKey, setActiveKey] = useState('');
-    const [canFormSave, setCanFormSave] = useState(false);
+    // const [canFormSave, setCanFormSave] = useState(false);
     const [addOnItemInfo, setAddOnItemInfo] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('');
 
@@ -46,7 +46,7 @@ function AddEditForm(props) {
         <Space direction="vertical" size="small" className={styles.accordianContainer}>
             <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
                 <Panel header={'Accessories Information'} key="1">
-                    <AccessoriesAddonMain setCanFormSave={setCanFormSave} addOnItemInfo={addOnItemInfo} setAddOnItemInfo={setAddOnItemInfo} />
+                    <AccessoriesAddonMain  addOnItemInfo={addOnItemInfo} setAddOnItemInfo={setAddOnItemInfo} />
                 </Panel>
             </Collapse>
 
