@@ -7,18 +7,13 @@ import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 
 const { Panel } = Collapse;
 
-const AccessoriesAddonMain = ({ setCanFormSave, setIsBtnDisabled, isBtnDisabled, setFormBtnDisable, SetAddOnItemInfo, addOnItemInfo }) => {
+const AccessoriesAddonMain = ({ setCanFormSave, setIsBtnDisabled, isBtnDisabled, setFormBtnDisable, setAddOnItemInfo, addOnItemInfo }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [openAccordian, setOpenAccordian] = useState('');
-
     const [addOnform] = Form.useForm();
 
-    const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
-    };
-
     const addOnformOnFinish = (val) => {
-        SetAddOnItemInfo((prev) => [...prev, val]);
+        console.log('val', val)
+        setAddOnItemInfo((prev) => [...prev, val]);
         addOnform.resetFields();
         forceUpdate();
     };
@@ -35,7 +30,7 @@ const AccessoriesAddonMain = ({ setCanFormSave, setIsBtnDisabled, isBtnDisabled,
 
                 {addOnItemInfo?.length > 0 &&
                     addOnItemInfo?.map((item) => {
-                        return <CardAccessories {...item} form={addOnform} onFinish={addOnformOnFinish} addOnItemInfo={addOnItemInfo} SetAddOnItemInfo={SetAddOnItemInfo} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} onFieldsChange={onFieldsChange} />;
+                        return <CardAccessories {...item} form={addOnform} onFinish={addOnformOnFinish} addOnItemInfo={addOnItemInfo} setAddOnItemInfo={setAddOnItemInfo} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} onFieldsChange={onFieldsChange} />;
                     })}
             </Card>
         </Fragment>
