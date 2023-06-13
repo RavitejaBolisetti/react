@@ -12,8 +12,9 @@ export const LANGUAGE_EN = {
         ADD_DEALER_LOCATION: { TITLE: 'Success', MESSAGE: 'Location added successfully' },
         ADD_DUPLICATE_DEALER_LOCATION: { TITLE: 'Error', MESSAGE: 'This location is already added' },
         REMOVE_DEALER_LOCATION: { TITLE: 'Delete', MESSAGE: '{NAME} deleted sucessfully' },
-        ALLOWED_TIMING_DELETED : {TITLE: 'SUCCESS',MESSAGE: 'Group Timing has been deleted Successfully'},
-        TIME_OVERLAPPING : {TITLE: 'ERROR',MESSAGE: 'Time overlaps with other time'},
-        HIERARCHY_SAME_PARENT_AND_CHILD_WARNING : {TITLE: 'WARNING',MESSAGE: 'Select different parent'},
+        ALLOWED_TIMING_DELETED: { TITLE: 'SUCCESS', MESSAGE: 'Group Timing has been deleted Successfully' },
+        TIME_OVERLAPPING: { TITLE: 'ERROR', MESSAGE: 'Time overlaps with other time' },
+        START_TIME_GREATER_THAN_END_TIME: { TITLE: 'ERROR', MESSAGE: 'Start Time cannot be greater than End Time' },
+        HIERARCHY_SAME_PARENT_AND_CHILD_WARNING: { TITLE: 'WARNING', MESSAGE: 'Select different parent' },
     },
 };

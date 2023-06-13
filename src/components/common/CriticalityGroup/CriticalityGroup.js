@@ -106,7 +106,7 @@ export const CriticalityGroupMain = (props) => {
         if (isDataLoaded && criticalityGroupData && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = criticalityGroupData?.filter((item) => (keyword ? filterFunction(keyword)(item?.criticalityGroupCode) || filterFunction(keyword)(item?.criticalityGroupName) : true));
+                const filterDataItem = criticalityGroupData?.filter((item) => (keyword ? filterFunction(keyword)(item?.criticalityGroupName) : true));
 
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
@@ -255,6 +255,8 @@ export const CriticalityGroupMain = (props) => {
         if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
+        } else if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
         }
     };
 

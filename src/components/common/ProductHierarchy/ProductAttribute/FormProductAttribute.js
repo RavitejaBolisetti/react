@@ -7,7 +7,7 @@ import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
     const { attributeForm, isVisible, productHierarchyAttributeData, onAttributeFormFinish, formDecider, editForm, finalFormdata } = props;
-    const [changeValue, setChangeValue] = useState(null);
+    const [ changeValue, setChangeValue ] = useState(null);
 
     const onFinishFailed = (err) => {
         console.error(err);
