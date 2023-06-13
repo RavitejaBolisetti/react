@@ -77,15 +77,20 @@ const FormProgressBar = (props) => {
                 setmoduleName('Loyalty scheme');
 
                 break;
+            case 'invoiceDetails':
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, invoiceDetails: true, addOnDetails: false });
+                setmoduleName('Invoice Details');
+
+                break;
 
             case 'addOnDetails':
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: true });
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, invoiceDetails: false, addOnDetails: true });
                 setmoduleName('Add On Details');
 
                 break;
 
             default:
-                setleftTimeline({ ...leftTimeline, otfDetails: true, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: false });
+                setleftTimeline({ ...leftTimeline, otfDetails: true, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, invoiceDetails: false, addOnDetails: false });
                 setmoduleName('OTF Details');
         }
     };
@@ -182,6 +187,16 @@ const FormProgressBar = (props) => {
                         </div>
                     ),
                     children: <p onClick={() => onHandle('loyaltyScheme')}>Loyalty Scheme</p>,
+                },
+                {
+                    dot: leftTimeline?.invoiceDetails ? (
+                        <BsRecordCircleFill className={styles.activeForm} />
+                    ) : (
+                        <div className={styles.inactiveForm}>
+                            <FaCheckCircle />
+                        </div>
+                    ),
+                    children: <p onClick={() => onHandle('invoiceDetails')}>Invoice/Delivery Details</p>,
                 },
                 {
                     dot: leftTimeline?.addOnDetails ? (

@@ -17,6 +17,7 @@ import { ReferralsMaster } from './Referrals';
 import { ExchangeVehiclesMaster } from './ExchangeVehicles';
 import { AddOnDetailsMaster } from './AddOnDetails';
 import { OtfDetailsMaster } from './OtfDetails';
+import { InvoiceDetailsMaster } from './InvoiceDetails';
 // import CommonTimeline from './Timeline';
 
 const { Panel } = Collapse;
@@ -43,6 +44,7 @@ const AddEditFormMain = (props) => {
         referrals: false,
         loyaltyScheme: false,
         addOnDetails: false,
+        invoiceDetails: false,
     });
 
     const [buttonData, setbuttonData] = useState({
@@ -121,6 +123,9 @@ const AddEditFormMain = (props) => {
             }
             case 'Loyalty scheme': {
                 return <LoyaltySchemeMaster {...RenderElementCommonProps} />;
+            }
+            case 'Invoice Details': {
+                return <InvoiceDetailsMaster {...RenderElementCommonProps} />;
             }
             case 'Add On Details': {
                 return <AddOnDetailsMaster {...RenderElementCommonProps} />;
