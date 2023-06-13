@@ -151,9 +151,6 @@ export const duplicateProductValidator = (value, dataList, props) => {
                     return Promise.reject('Duplicate found');
                 }
             }
-            else if (dataList[i]?.attributeName?.label === value?.attributeName?.label) {
-                return Promise.reject('Duplicate found');
-            }
         }
     }
     return Promise.resolve('');
