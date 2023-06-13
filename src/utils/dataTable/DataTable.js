@@ -3,8 +3,9 @@ import { Table } from 'antd';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { tblSerialNumberColumn } from 'utils/tableCloumn';
 
-export default function DataTable({ isLoading, tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {}, srl = true }) {
+export default function DataTable({ isLoading, removePagination = false, srl = true, tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
     const showTotal = (total) => total && `Total ${total} items`;
+
     const [tablePagination, setPagination] = useState({ pageSize: 10, current: 1, position: ['bottomRight'], showSizeChanger: true, hideOnSinglePage: false, showTotal });
 
     const handleTableChange = (pagination, filters, sorter) => {
@@ -25,7 +26,7 @@ export default function DataTable({ isLoading, tableColumn, scroll = 'auto', tab
             columns={isLoading ? tableSkeletonColumn : srl ? tableColumnWithSrl : tableColumn}
             dataSource={isLoading ? skeletonData : tableData}
             onChange={handleTableChange}
-            pagination={!isLoading && tablePagination}
+            pagination={removePagination ? false : !isLoading && tablePagination}
             rowKey={rowKey}
             scroll={{
                 x: scroll,
