@@ -7,6 +7,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
 import CollapseTaxInfo from './CollapseTaxInfo';
+import { FiEdit } from 'react-icons/fi';
 
 import styles from 'components/common/Common.module.css';
 
@@ -34,7 +35,6 @@ const AddEditFormMain = (props) => {
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
-        setIsReadOnly(true);
     };
     const addContactHandeler = (e) => {
         e.stopPropagation();
@@ -139,16 +139,24 @@ const AddEditFormMain = (props) => {
             key: '1',
             name: (
                 <>
-                    <Form.Item  name="name">
-                        <Input placeholder={preparePlaceholderText(' Name')} />
-                    </Form.Item>
+                    {!formActionType?.viewMode ? (
+                        <Form.Item name="name">
+                            <Input placeholder={preparePlaceholderText(' Name')} />
+                        </Form.Item>
+                    ) : (
+                        'Registration Charges'
+                    )}
                 </>
             ),
             amount: (
                 <>
-                    <Form.Item  name="amount">
-                        <Input placeholder={preparePlaceholderText('Amount')} />
-                    </Form.Item>
+                    {!formActionType?.viewMode ? (
+                        <Form.Item name="amount">
+                            <Input placeholder={preparePlaceholderText('Amount')} />
+                        </Form.Item>
+                    ) : (
+                        '80,0000'
+                    )}
                 </>
             ),
         },
@@ -175,11 +183,20 @@ const AddEditFormMain = (props) => {
         styles,
         onCloseAction,
         handleEdit,
+        columns,
+        data,
+        optionalColumns,
+        optionalData,
     };
 
     const collapseProps = {
         addFormdata,
         setAddFormData,
+    };
+    const datatableprops = {
+        tableColumn: columns,
+        tableData: data,
+        removePagination: true,
     };
 
     return (
@@ -191,12 +208,43 @@ const AddEditFormMain = (props) => {
                             <Collapse
                                 expandIcon={() => {
                                     if (activeKey.includes(1)) {
-                                        return <MinusOutlined className={styles.iconsColor} />;
+                                        return (
+                                            <>
+                                                <div className={styles.iconsColor}>
+                                                    {formActionType?.editMode ? (
+                                                        <>
+                                                            <FiEdit />
+                                                            Edit
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            {' '}
+                                                            <MinusOutlined className={styles.iconsColor} />
+                                                        </>
+                                                    )}
+                                                </div>
+                                            </>
+                                        );
                                     } else {
-                                        return <PlusOutlined className={styles.iconsColor} />;
+                                        return (
+                                            <>
+                                                <div>
+                                                    {formActionType?.editMode ? (
+                                                        <>
+                                                            <FiEdit />
+                                                            Edit
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            {' '}
+                                                            <PlusOutlined className={styles.iconsColor} />
+                                                        </>
+                                                    )}
+                                                </div>
+                                            </>
+                                        );
                                     }
                                 }}
-                                activeKey={activeKey}
                                 onChange={() => onChange(1)}
                                 expandIconPosition="end"
                             >
@@ -239,55 +287,55 @@ const AddEditFormMain = (props) => {
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Available Stock" name="availableStock" data-testid="availableStock">
-                                                    <Select disabled={false} loading={false} placeholder="Select" allowClear>
+                                                    <Select disabled={formActionType?.editMode ? true : false} loading={false} placeholder="Select" allowClear>
                                                         <Option value="availableStock">availableStock</Option>
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Vehicle Allocated Status" name="vehicleAllocatedStatus" data-testid="vehicleAllocatedStatus">
-                                                    <Select disabled={false} loading={false} placeholder="Select" allowClear>
+                                                    <Select disabled={formActionType?.editMode ? true : false} loading={false} placeholder="Select" allowClear>
                                                         <Option value="vehicleAllocatedStatus">vehicleAllocatedStatus</Option>
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="PO Number" name="poNumber">
-                                                    <Input placeholder={preparePlaceholderText('PO Number')} />
+                                                    <Input disabled={formActionType?.editMode ? true : false} placeholder={preparePlaceholderText('PO Number')} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="PO Date" name="poDate">
-                                                    <Input placeholder={preparePlaceholderText('PO Date')} />
+                                                    <Input disabled={formActionType?.editMode ? true : false} placeholder={preparePlaceholderText('PO Date')} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="PO Status" name="poStatus">
-                                                    <Input placeholder={preparePlaceholderText('PO Status')} />
+                                                    <Input disabled={formActionType?.editMode ? true : false} placeholder={preparePlaceholderText('PO Status')} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="SO Number" name="soNumber">
-                                                    <Input placeholder={preparePlaceholderText('SO Number')} />
+                                                    <Input disabled={formActionType?.editMode ? true : false} placeholder={preparePlaceholderText('SO Number')} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="SO Status" name="soStatus">
-                                                    <Input placeholder={preparePlaceholderText('SO Status')} />
+                                                    <Input disabled={formActionType?.editMode ? true : false} placeholder={preparePlaceholderText('SO Status')} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="VIN Number" name="vinNumber">
-                                                    <Input placeholder={preparePlaceholderText('VIN number')} />
+                                                    <Input disabled={formActionType?.editMode ? true : false} placeholder={preparePlaceholderText('VIN number')} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Vehicle Selling Price" name="vehicleSellingPrice">
-                                                    <Input placeholder={preparePlaceholderText('Vehicle Selling Price')} />
+                                                    <Input disabled={formActionType?.editMode ? true : false} placeholder={preparePlaceholderText('Vehicle Selling Price')} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
@@ -299,12 +347,12 @@ const AddEditFormMain = (props) => {
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Tax Amount" name="taxAmount">
-                                                    <Input placeholder={preparePlaceholderText('Tax Amount')} />
+                                                    <Input disabled={formActionType?.editMode ? true : false} placeholder={preparePlaceholderText('Tax Amount')} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item label="Vehicle Amount" name="vehicleAmount">
-                                                    <Input placeholder={preparePlaceholderText('Vehicle Amount')} />
+                                                    <Input disabled={formActionType?.editMode ? true : false} placeholder={preparePlaceholderText('Vehicle Amount')} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
@@ -326,9 +374,7 @@ const AddEditFormMain = (props) => {
                                 >
                                     <Divider />
 
-                                    <Form autoComplete="off" layout="vertical">
-                                        <DataTable tableColumn={columns} tableData={data} pagination={false} />
-                                    </Form>
+                                    <DataTable {...datatableprops} />
                                 </Panel>
                             </Collapse>
                             <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
@@ -352,7 +398,7 @@ const AddEditFormMain = (props) => {
                                     <Divider />
 
                                     <Form autoComplete="off" layout="vertical" form={keyAccountForm} onFinish={onHandleAddChange}>
-                                        <DataTable tableColumn={optionalColumns} tableData={optionalData} pagination={false} />
+                                        <DataTable tableColumn={optionalColumns} tableData={optionalData} pagination={false} removePagination={true} />
                                     </Form>
                                 </Panel>
                             </Collapse>

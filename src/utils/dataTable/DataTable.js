@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Table } from 'antd';
 import { InputSkeleton } from 'components/common/Skeleton';
 
-export default function DataTable({ isLoading, tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
+export default function DataTable({ isLoading, removePagination = false, tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
     const showTotal = (total) => total && `Total ${total} items`;
+    console.log(removePagination);
 
     const [tablePagination, setPagination] = useState({ pageSize: 10, current: 1, position: ['bottomRight'], showSizeChanger: true, hideOnSinglePage: false, showTotal });
 
@@ -23,7 +24,7 @@ export default function DataTable({ isLoading, tableColumn, scroll = 'auto', tab
             columns={isLoading ? tableSkeletonColumn : tableColumn}
             dataSource={isLoading ? skeletonData : tableData}
             onChange={handleTableChange}
-            pagination={!isLoading && tablePagination}
+            pagination={removePagination ? false : !isLoading && tablePagination}
             rowKey={rowKey}
             scroll={{
                 x: scroll,
