@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Form, Row, Space, Collapse, Typography, Divider } from 'antd';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
-
 import styles from 'components/common/Common.module.css';
-
 import { ViewDetail } from './ViewInvoiceDetail';
 import { DataTable } from 'utils/dataTable';
 const { Text } = Typography;
@@ -12,7 +10,6 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, formActionType, setIsViewModeVisible } = props;
-    const [isReadOnly, setIsReadOnly] = useState(false);
     const [openAccordian, setOpenAccordian] = useState();
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -22,7 +19,6 @@ const AddEditFormMain = (props) => {
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
-        setIsReadOnly(true);
     };
 
     const onChange = (values) => {
