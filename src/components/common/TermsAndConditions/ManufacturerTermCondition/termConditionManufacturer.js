@@ -14,6 +14,7 @@ import { AddEditForm } from './AddEditForm';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ListDataTable } from 'utils/ListDataTable';
 import { btnVisiblity } from 'utils/btnVisiblity';
+import { CustomEditor } from 'components/common/CustomEditor';
 
 import { tableColumn } from './tableColumn';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
@@ -85,7 +86,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
 
-    const [forceFormReset, setForceFormReset] = useState(false);
+    const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState();
     const [refershData, setRefershData] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
@@ -101,39 +102,32 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const [productName, setProductName] = useState();
     const [documentName, setDocumentName] = useState();
     const [languageName, setLanguageName] = useState();
-    const [termsAndCondition, setTermsAndCondition] = useState(undefined);
     const [effectiveFrom, seteffectiveFrom] = useState('');
     const [effectiveTo, seteffectiveTo] = useState('');
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
-
-    const [page, setPage] = useState(1);
+    const [termsAndCondition, setTermsAndCondition] = useState(undefined);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
+        setShowDataLoading(false);
     };
-
-    useEffect(() => {
-        form.resetFields();
-        form.setFieldValue(formData);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [forceFormReset]);
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
             fetchDocumentTypeList({ setIsLoading: listShowLoading, userId });
             fetchLanguageList({ setIsLoading: listShowLoading, userId });
-            fetchTermCondition({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [islanguageDataLoaded, userId]);
 
     useEffect(() => {
-        if (userId && refershData) {
+        if (userId) {
             fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -156,7 +150,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, isViewModeVisible: buttonAction === VIEW_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, saveAndNewBtn: false }));
 
         if (buttonAction === 'view') {
             setIsViewModeVisible(true);
@@ -174,12 +168,12 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
             setIsFormVisible(true);
         }, 150);
     };
+
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
-        setPage,
     };
 
     const onFinish = (values, e) => {
@@ -195,9 +189,11 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
             form.resetFields();
             setSelectedRecord({});
             if (saveclick === true) {
+                setShowDataLoading(true);
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             } else {
+                setShowDataLoading(true);
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             }
@@ -227,6 +223,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     };
 
     const handleReferesh = (e) => {
+        setShowDataLoading(true);
         setRefershData(!refershData);
     };
 
@@ -276,7 +273,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setIsChecked,
         formActionType,
         setFormData,
-        setForceFormReset,
         isLoadingOnSave,
         setIsViewModeVisible,
         productHierarchyList,
@@ -302,6 +298,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         effectiveTo,
         seteffectiveFrom,
         seteffectiveTo,
+        CustomEditor,
     };
 
     const title = 'Term & Condition';
@@ -356,10 +353,9 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     return (
         <>
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
-
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleAdd} isLoading={isLoading} {...tableProps} />
+                    <ListDataTable handleAdd={handleAdd} isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <ChangeHistory {...changeHistoryProps} />

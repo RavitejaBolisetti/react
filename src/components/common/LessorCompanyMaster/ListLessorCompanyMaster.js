@@ -58,7 +58,7 @@ export const ListLessorCompanyMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState(detailData);
     const [refershData, setRefershData] = useState(false);
-    const [page, setPage] = useState(1);
+    
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState('');
@@ -235,9 +235,8 @@ export const ListLessorCompanyMasterBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
-        tableData: searchData,
-        setPage,
+        tableColumn: tableColumn(handleButtonClick),
+       tableData: searchData,
     };
 
     const title = 'Lessor Company Name';

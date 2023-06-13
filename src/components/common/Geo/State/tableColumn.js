@@ -1,12 +1,10 @@
-import { tblPrepareColumns, tblSerialNumberColumn, tblStatusColumn, tblActionColumn } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblStatusColumn, tblActionColumn } from 'utils/tableCloumn';
 
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
-        tblSerialNumberColumn({ page, pageSize, width: '5%' }),
-
         tblPrepareColumns({
             title: 'State Code',
             dataIndex: 'code',
