@@ -1,13 +1,10 @@
-import { tblPrepareColumns, tblSerialNumberColumn, tblStatusColumn, tblApprovalStatusColumn, tblActionColumn } from 'utils/tableCloumn';
-import { Checkbox } from 'antd';
+import { tblPrepareColumns, tblStatusColumn, tblApprovalStatusColumn, tblActionColumn } from 'utils/tableCloumn';
 
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
-        tblSerialNumberColumn({ page, pageSize, width: '10%', fixed: 'left' }),
-
         tblPrepareColumns({
             title: 'PIN Code',
             dataIndex: 'pinCode',
@@ -47,17 +44,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             dataIndex: 'stateName',
             width: '200px',
         }),
-
-        // tblPrepareColumns({
-        //     title: 'Detail',
-        //     width: '300px',
-        //     render: (text, record) => {
-        //         let $sDetail = 'Country:' + record?.countryName;
-        //         $sDetail += 'District:' + record?.districtName;
-
-        //         return $sDetail;
-        //     },
-        // }),
 
         tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%' })
     );

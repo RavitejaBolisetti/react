@@ -138,12 +138,6 @@
     border-radius: 7px;
 }
 
-.addGroup {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 0px !important;
-}
-
 .contentHeaderBackground .addGroup button {
     margin-bottom: 0px !important;
     margin-left: 10px;
@@ -243,11 +237,6 @@
 
 .srchbtn :global .ant-btn-default {
     background-color: #ffffff;
-}
-
-.addGroup {
-    display: flex;
-    justify-content: right;
 }
 
 .addGroup {
@@ -425,7 +414,7 @@
     padding: 10px 20px;
 }
 
-:global .ant-drawer-body::-webkit-scrollbar-track,
+/* :global .ant-drawer-body::-webkit-scrollbar-track,
 :global .ant-drawer-body::-webkit-scrollbar-track {
     background-color: #ffffff;
 }
@@ -440,7 +429,7 @@
 :global .ant-drawer-body::-webkit-scrollbar-thumb {
     background-color: #C1C1C1;
     border-radius: 10px;
-}
+} */
 
 :global .ant-drawer .ant-drawer-close {
     margin-inline-end: 0px;

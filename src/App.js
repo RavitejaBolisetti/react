@@ -1,4 +1,4 @@
-import React, { useEffect, createContext } from 'react';
+import React, { useEffect, createContext, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { ConfigProvider, notification } from 'antd';
 import { MainPage } from './components/MainPage';
@@ -9,7 +9,6 @@ import { FcCancel } from 'react-icons/fc';
 import { hideGlobalNotification } from 'store/actions/notification';
 
 import styles from './App.module.css';
-// import styles1 from 'https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;1,100;1,300;1,400;1,700&display=swap';
 
 const mapStateToProps = (state) => ({});
 
@@ -28,33 +27,36 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const checkIcon = {
-        success: <AiOutlineCheckCircle />,
-        warning: <AiOutlineInfoCircle />,
-        error: <AiOutlineCloseCircle />,
-        successBeforeLogin: <AiOutlineCheckCircle />,
-        errorBeforeLogin: <FcCancel />,
-    };
+    const informationModalBox = useCallback(
+        ({ type = 'error', title = 'ERROR', message, duration = 5, placement = 'topRight', showTitle = true }) => {
+            const checkIcon = {
+                success: <AiOutlineCheckCircle />,
+                warning: <AiOutlineInfoCircle />,
+                error: <AiOutlineCloseCircle />,
+                successBeforeLogin: <AiOutlineCheckCircle />,
+                errorBeforeLogin: <FcCancel />,
+            };
 
-    const checkClassName = {
-        success: styles.success,
-        warning: styles.warning,
-        error: styles.error,
-        successBeforeLogin: styles.successBeforeLogin,
-        errorBeforeLogin: styles.errorBeforeLogin,
-    };
+            const checkClassName = {
+                success: styles.success,
+                warning: styles.warning,
+                error: styles.error,
+                successBeforeLogin: styles.successBeforeLogin,
+                errorBeforeLogin: styles.errorBeforeLogin,
+            };
 
-    const informationModalBox = ({ type = 'error', title = 'ERROR', message, duration = 5, placement = 'topRight', showTitle = true }) => {
-        informationNotification.open({
-            icon: checkIcon?.[type],
-            message: showTitle ? title : false,
-            description: message,
-            className: `${checkClassName?.[type]} ${styles?.[placement]}`,
-            duration,
-            placement,
-            onClose: hideGlobalNotification,
-        });
-    };
+            informationNotification.open({
+                icon: checkIcon?.[type],
+                message: showTitle ? title : false,
+                description: message,
+                className: `${checkClassName?.[type]} ${styles?.[placement]}`,
+                duration,
+                placement,
+                onClose: hideGlobalNotification,
+            });
+        },
+        [hideGlobalNotification, informationNotification]
+    );
 
     return (
         <>

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Button, Input, message, notification, Space } from 'antd';
-import { CiCircleRemove, CiCircleAlert } from 'react-icons/ci';
+import { CiCircleRemove } from 'react-icons/ci';
 import { FiLock } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
 import { AiOutlineEyeInvisible, AiOutlineEye, AiOutlineWarning } from 'react-icons/ai';
@@ -71,23 +71,7 @@ const Login = (props) => {
     const forceUpdate = React.useCallback(() => updateState({}), []);
 
     useEffect(() => {
-        ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {
-            // console.log(status, 'status');
-        });
-
-        return () => {
-            ReactRecaptcha3.destroy();
-            form.resetFields();
-            doCloseLoginError();
-        };
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [GOOGLE_CAPTCHA_SITE_KEY]);
-
-    useEffect(() => {
-        ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {
-            // console.log(status, 'status');
-        });
+        ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {});
 
         return () => {
             ReactRecaptcha3.destroy();

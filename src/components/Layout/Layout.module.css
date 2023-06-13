@@ -4,11 +4,6 @@ body {
   scrollbar-width: thin;
 }
 
-
-.topHeader {
-  
-}
-
 .leftMenuSider {
   width: auto;
   overflow: hidden;
@@ -82,8 +77,7 @@ body {
   text-align: center;
 }
 
-.leftMenuSider :global .ant-menu-inline-collapsed :global .ant-menu-item div
-{
+.leftMenuSider :global .ant-menu-inline-collapsed :global .ant-menu-item div {
   left: 26px;
 }
 
@@ -118,7 +112,7 @@ body {
   .leftMenuSider {
     overflow-y: auto;
   }
-  
+
 
 }
 

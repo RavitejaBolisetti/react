@@ -1,4 +1,3 @@
-import { ProductMasterPage } from './ProductMaster/ProductMasterPage';
 import { RoleManagementPage } from './RoleManagement/RoleManagementPage';
 import { ProductHierarchyPage } from './ProductHierarchy';
 import { CriticalityGroupPage } from './CriticalityGroup';
@@ -13,7 +12,42 @@ import { UserManagementManufacturerPage } from './UserManagementManufacturer';
 import { StatePage, DistrictPage, TehsilPage, CityPage, PinCodePage } from './Geo';
 import { DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DealerEmployeeDepartmentPage, DesignationMasterPage, RoleMasterPage } from './DealerManpower';
 import { PartyMasterPage } from './PartyMaster';
-import {DealerCompanyPage, DealerParentPage} from './Dealer';
+import { CustomerMasterPage } from './CustomerMaster';
+import { TermConditionDealerMasterPage } from './TermsAndConditions/DealerTermCondition';
+import { TermConditionManufacturerMasterPage } from './TermsAndConditions/ManufacturerTermCondition';
+import { DealerCompanyPage, DealerParentPage } from './Dealer';
 import { LessorCompanyMasterPage } from './LessorCompanyMaster';
+import { OtfReportsPage } from './OTFReports';
 
-export { ProductMasterPage, ProductHierarchyPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, ConfigurableParameterEditingPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, QualificationMasterPage, HierarchyAttributeMasterPage, UserManagementPage, UserManagementManufacturerPage, StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage, DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DealerEmployeeDepartmentPage, DesignationMasterPage, RoleMasterPage, PartyMasterPage, LessorCompanyMasterPage ,DealerCompanyPage, DealerParentPage};
+export {
+    ProductHierarchyPage,
+    ManufacturerAdministrativeHierarchyPage,
+    ManufacturerOrgHierarchyPage,
+    ConfigurableParameterEditingPage,
+    ApplicationMasterPage,
+    CriticalityGroupPage,
+    RoleManagementPage,
+    QualificationMasterPage,
+    HierarchyAttributeMasterPage,
+    UserManagementPage,
+    UserManagementManufacturerPage,
+    StatePage,
+    DistrictPage,
+    CityPage,
+    TehsilPage,
+    PinCodePage,
+    DealerLocationTypePage,
+    DealerDivisionMasterPage,
+    BayTypeMasterPage,
+    DealerEmployeeDepartmentPage,
+    DesignationMasterPage,
+    RoleMasterPage,
+    PartyMasterPage,
+    LessorCompanyMasterPage,
+    DealerCompanyPage,
+    DealerParentPage,
+    CustomerMasterPage,
+    TermConditionDealerMasterPage,
+    TermConditionManufacturerMasterPage,
+    OtfReportsPage,
+};

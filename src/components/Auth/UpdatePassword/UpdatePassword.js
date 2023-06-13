@@ -1,26 +1,19 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-
 import { Form, Row, Col, Button, Input } from 'antd';
 import { FiLock } from 'react-icons/fi';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
-
 import { doLogoutAPI, authPostLogin } from 'store/actions/auth';
 import { updatePasswordActions } from 'store/actions/data/updatePassword';
 import { showGlobalNotification } from 'store/actions/notification';
-
 import { bindActionCreators } from 'redux';
-
 import { validateRequiredInputField } from 'utils/validation';
-
 import styles from '../Auth.module.css';
-
 import * as IMAGES from 'assets';
 import { ROUTING_LOGIN } from 'constants/routing';
 import Footer from '../Footer';
 import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const mapStateToProps = (state) => {
     const {

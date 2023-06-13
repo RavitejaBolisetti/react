@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, AutoComplete } from 'antd';
 
-import { validateRequiredInputField, validatePincodeField, validateMobileNoField, validatePanField, validateGSTIN, validateNumberOnly, valueBetween0to100, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validateRequiredInputField, validatePincodeField, validateMobileNoField, validatePanField, validateGSTIN, validateNumberOnly, valueBetween0to100 } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -75,7 +75,7 @@ const AddEditFormMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    const handleOnSelect = (key, option) => {
+    const handleOnSelect = (key) => {
         const selectedPinCode = pincodeData?.find((i) => i.id === key);
         if (selectedPinCode) {
             form.setFieldsValue({
@@ -91,8 +91,13 @@ const AddEditFormMain = (props) => {
     };
 
     const handleOnSearch = (value) => {
-        if (value.length > 5) {
-            setOptions();
+        if (!(typeof options === 'undefined')) {
+            return;
+        }
+        setOptions();
+        if (value.length <= 5) {
+            form.validateFields(['pinCode']);
+        } else if (value.length > 5) {
             const extraParams = [
                 {
                     key: 'pincode',
@@ -113,17 +118,6 @@ const AddEditFormMain = (props) => {
             district: undefined,
             locality: undefined,
         });
-    };
-
-    const handleOnfocus = (e) => {
-        setOptions();
-        const extraParams = [
-            {
-                key: 'pincode',
-                value: e.target.value,
-            },
-        ];
-        fetchPincodeDetail({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
 
     const viewProps = {
@@ -202,15 +196,15 @@ const AddEditFormMain = (props) => {
                         <Row gutter={16}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={formData?.address} label="Address" name="address" rules={[validateRequiredInputField('address')]}>
-                                    <TextArea rows={2} {...disabledProps} placeholder={preparePlaceholderText('Address')} showCount maxLength={255} />
+                                    <TextArea rows={2} {...disabledProps} placeholder={preparePlaceholderText('Address')} showCount maxLength={100} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={16}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
-                                    <AutoComplete {...disabledProps} className={styles.searchField} options={options} onSelect={handleOnSelect} onFocus={handleOnfocus}>
-                                        <Input.Search onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} type="text" allowClear />
+                                    <AutoComplete {...disabledProps} maxLength={6} className={styles.searchField} options={options} onSelect={handleOnSelect}>
+                                        <Input.Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} type="text" allowClear />
                                     </AutoComplete>
                                 </Form.Item>
                             </Col>
@@ -281,7 +275,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item label="Credit Limit" initialValue={formData?.creditLimit} rules={[validateRequiredInputField('credit limit'), validateNumberWithTwoDecimalPlaces('credit limit')]} name="creditLimit">
+                                <Form.Item label="Credit Limit" initialValue={formData?.creditLimit} rules={[validateRequiredInputField('credit limit')]} name="creditLimit">
                                     <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('credit limit')} maxLength={15} />
                                 </Form.Item>
                             </Col>

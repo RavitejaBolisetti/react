@@ -1,9 +1,6 @@
 import React from 'react';
-import { Drawer, Input, Form, Col, Row, Switch, Button, Card, Collapse, Select } from 'antd';
+import { Drawer, Form, Col, Row, Button, Card, Collapse, Select } from 'antd';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
 import { IoTrashOutline } from 'react-icons/io5';
 
 import style from 'components/common/DrawerAndTable.module.css';
@@ -13,8 +10,6 @@ const { Panel } = Collapse;
 const { Option } = Select;
 
 const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
-    const disabledProps = { disabled: isReadOnly };
-    console.log("isLoadingOnSave", isLoadingOnSave)
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Manage User Access';
@@ -51,13 +46,6 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                             </Button>
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.saveBtn}>
-                            {/* {saveAndSaveNew ? (
-                                <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                    Save & Add New
-                                </Button>
-                            ) : (
-                                ''
-                            )} */}
                             {saveBtn ? (
                                 <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
                                     Save
@@ -81,10 +69,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Card>
-                            <Meta
-                                title="Sandeep Lad"
-                                description="Token No.: B6G433"
-                            />
+                            <Meta title="Sandeep Lad" description="Token No.: B6G433" />
                         </Card>
                     </Col>
                 </Row>
@@ -92,7 +77,9 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <div className={style.manageAccessHeader}>
-                            <p>Access Management<span>*</span></p>
+                            <p>
+                                Access Management<span>*</span>
+                            </p>
                         </div>
                     </Col>
                 </Row>
@@ -104,17 +91,41 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                                 <Form.Item name="userRole" label="User Role">
                                     <Select loading={!isDataAttributeLoaded} placeholder={'Select User Role'} showSearch allowClear>
                                         {attributeData?.map((item) => (
-                                            <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
+                                            <Option key={item?.id} value={item?.id}>{item?.hierarchyAttribueName}</Option>
                                         ))}
                                     </Select>
                                 </Form.Item>
-                                <Card title="Manager" extra={<><a href="#">Application Access</a><a href="#"><IoTrashOutline /></a></>}>
+                                <Card
+                                    title="Manager"
+                                    extra={
+                                        <>
+                                            Application Access
+                                            <IoTrashOutline />
+                                        </>
+                                    }
+                                >
                                     Role ID: B6G433
                                 </Card>
-                                <Card title="Sales Executive" extra={<><a href="#">Application Access</a><a href="#"><IoTrashOutline /></a></>}>
+                                <Card
+                                    title="Sales Executive"
+                                    extra={
+                                        <>
+                                            Application Access
+                                            <IoTrashOutline />
+                                        </>
+                                    }
+                                >
                                     Role ID: B6G433
                                 </Card>
-                                <Card title="Financial Executive" extra={<><a href="#">Application Access</a><a href="#"><IoTrashOutline /></a></>}>
+                                <Card
+                                    title="Financial Executive"
+                                    extra={
+                                        <>
+                                            Application Access
+                                            <IoTrashOutline />
+                                        </>
+                                    }
+                                >
                                     Role ID: B6G433
                                 </Card>
                             </Panel>
@@ -127,7 +138,6 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                         </Collapse>
                     </Col>
                 </Row>
-
             </Form>
         </Drawer>
     );

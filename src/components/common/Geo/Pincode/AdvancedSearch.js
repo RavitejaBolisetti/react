@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField, searchValidatorPincode } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField,  searchValidatorPincode } from 'utils/validation';
 import { withModal } from 'components/withModal';
-import { searchValidator } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
@@ -11,7 +10,6 @@ const { Option } = Select;
 export const AdvancedSearchFrom = (props) => {
     const { isDataCountryLoaded, setAdvanceSearchVisible, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData, filteredCityData, filteredTehsilData } = props;
     const { filterString, setFilterString, advanceFilterForm, handleResetFilter } = props;
-    const { tehsilCodeValue, setTehsilCodeValue, cityCodeValue, setCityCodeValue } = props;
 
     useEffect(() => {
         advanceFilterForm.resetFields();
@@ -44,7 +42,7 @@ export const AdvancedSearchFrom = (props) => {
                         {defaultCountry && (
                             <Select defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleFilterChange('countryCode')}>
                                 {countryData?.map((item) => (
-                                    <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                    <Option key={item?.countryCode} value={item?.countryCode}>{item?.countryName}</Option>
                                 ))}
                             </Select>
                         )}

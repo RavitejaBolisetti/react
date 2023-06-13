@@ -1,8 +1,5 @@
 :global .ant-layout .ant-layout-header {
     line-height: 40px;
-}
-
-:global .ant-layout .ant-layout-header {
     height: 64px;
 }
 
@@ -155,7 +152,7 @@
     /* padding-right: 20px; */
     /* padding-top: 18px; */
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .headerRight :global .ant-input-group {
@@ -191,6 +188,8 @@
 
 .headerRight :global .ant-btn-default {
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0);
+    background-color: #ffffff;
+    font-size: 16px;
 }
 
 .headerRight :global .ant-btn-default:not(:disabled):hover {
@@ -295,12 +294,6 @@
     color: #ff3e5b;
 }
 
-
-.headerRight :global .ant-btn-default {
-    background-color: #ffffff;
-    font-size: 16px;
-}
-
 .welcomeUser .navLink:hover,
 .welcomeUser .navLink .userServiceArea:hover,
 .welcomeUser .navLink:active {
@@ -342,11 +335,8 @@
     padding: 10px;
     border: 1px solid #0B0B0C;
     border-radius: 6px;
-    box-shadow: none;
-}
-
-:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu {
     margin-top: 16px;
+    box-shadow: none;
 }
 
 :global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item:not(:last-child) {

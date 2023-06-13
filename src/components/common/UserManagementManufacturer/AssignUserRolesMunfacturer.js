@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Checkbox } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
-import style from 'components/common/DrawerAndTable.module.css';
+import React, { useState } from 'react';
+import { Col, Row, Select, Button, Space, Card, Checkbox } from 'antd';
 import style4 from './UserManagementManufacturer.module.css';
 
 import { PlusOutlined } from '@ant-design/icons';
@@ -15,15 +13,10 @@ const AssignUserRolesMunfacturer = ({ userRoleOptions, DealerSearchvalue }) => {
             return el?.roleName === option;
         });
     };
-    useEffect(() => {
-        console.log('These are the Roles :', userRoleOptions);
-        console.log('These checked :', checked);
-    }, [userRoleOptions, checked]);
+
     const onChange = (values) => {
-        console.log('Values : ', values, 'Type of Values', typeof values);
         const newValues = [];
         Object.entries(values).forEach(([key, value]) => {
-            console.log(`${key} ${value}`);
             const SelectedDetails = FindRoleDetails(value);
             newValues.push(SelectedDetails);
         });
@@ -49,26 +42,6 @@ const AssignUserRolesMunfacturer = ({ userRoleOptions, DealerSearchvalue }) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    {/* <Select
-                        showSearch
-                        placeholder="Select a person"
-                        optionFilterProp="children"
-                        filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
-                        options={[
-                            {
-                                value: 'jack',
-                                label: 'Jack',
-                            },
-                            {
-                                value: 'lucy',
-                                label: 'Lucy',
-                            },
-                            {
-                                value: 'tom',
-                                label: 'Tom',
-                            },
-                        ]}
-                    /> */}
                     <Select
                         mode="multiple"
                         style={{

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -16,8 +16,9 @@ import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { filterFunction } from 'utils/filterFunction';
-import { searchValidatorPincode } from 'utils/validation';
+import { btnVisiblity } from 'utils/btnVisiblity';
 
+import { searchValidatorPincode } from 'utils/validation';
 import { FilterIcon } from 'Icons';
 
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
@@ -65,15 +66,15 @@ const mapStateToProps = (state) => {
         isDistrictLoading,
         isStateLoading,
         isDistrictDataLoaded,
-        districtData,
+        districtData: districtData?.filter((i) => i.status),
         isTehsilDataLoaded,
         isTehsilLoading,
-        tehsilData,
+        tehsilData: tehsilData?.filter((i) => i.status),
         isCityDataLoaded,
         isCityLoading,
-        cityData,
+        cityData: cityData?.filter((i) => i.status),
         data,
-        stateData,
+        stateData: stateData?.filter((i) => i.status),
         isDataLoaded,
         isConfigDataLoaded,
         isConfigLoading,
@@ -132,7 +133,6 @@ const ListPinCodeMasterBase = (props) => {
     const [filteredTehsilData, setFilteredTehsilData] = useState([]);
 
     const [refershData, setRefershData] = useState(false);
-    const [page, setPage] = useState(1);
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
@@ -157,7 +157,6 @@ const ListPinCodeMasterBase = (props) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
     };
 
     const onErrorAction = (message) => {
@@ -203,18 +202,13 @@ const ListPinCodeMasterBase = (props) => {
     }, [userId, isDataCountryLoaded, isStateDataLoaded, isDistrictDataLoaded, isCityDataLoaded, isTehsilDataLoaded, isDataLoaded]);
 
     const loadPinCodeDataList = () => {
-        // && (filterString?.tehsilCode || filterString?.cityCode)
         if (userId && (filterString?.pincode || (filterString?.countryCode && filterString?.stateCode && filterString?.districtCode))) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        } else {
-            // onErrorAction('Please enter pincode OR country, state, tehsil, city to search data');
         }
     };
 
     const handleDownloadReport = () => {
-        // exportToExcel({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        // Need to remove this POC code after confirmation
         const AuthStr = 'Bearer '.concat(token);
         const headers = { Authorization: AuthStr, userId, accessToken: token, deviceType: 'W', deviceId: '' };
 
@@ -259,8 +253,6 @@ const ListPinCodeMasterBase = (props) => {
         if (!showDataLoading && data && userId) {
             if (filterString?.length > 0) {
                 const keyword = filterString?.pincode ? filterString?.pincode : filterString?.keyword;
-                const state = filterString?.stateCode;
-                const district = filterString?.districtCode;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.pincode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
@@ -331,7 +323,7 @@ const ListPinCodeMasterBase = (props) => {
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         const pinCategoryName = typeData?.find((category) => category.key === record?.pinCategory)?.value;
         record && setFormData({ ...record, pinCategoryName: pinCategoryName });
@@ -423,6 +415,16 @@ const ListPinCodeMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -433,7 +435,7 @@ const ListPinCodeMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: drawerTitle.concat(moduleTitle),
         tableData: data,
 
         isDataCountryLoaded,
@@ -467,9 +469,9 @@ const ListPinCodeMasterBase = (props) => {
         </>
     );
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
-        setPage,
+
         noDataMessage: dataMessage,
     };
 
@@ -537,7 +539,6 @@ const ListPinCodeMasterBase = (props) => {
             listFilterForm.validateFields(['code']);
         }
     };
-
 
     const removeFilter = (key) => {
         if (key === 'countryCode') {

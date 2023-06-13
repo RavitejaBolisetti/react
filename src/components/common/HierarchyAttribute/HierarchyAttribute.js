@@ -5,18 +5,19 @@ import { bindActionCreators } from 'redux';
 import { TfiReload } from 'react-icons/tfi';
 import { PlusOutlined } from '@ant-design/icons';
 
-import { Button, Col, Form, Row, Select, Space, Input, notification, ConfigProvider, Empty, Tag } from 'antd';
+import { Button, Col, Form, Row, Select, Input } from 'antd';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
-import { FiEdit, FiEye } from 'react-icons/fi';
 
 import styles from 'components/common/Common.module.css';
 
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
-import { tblPrepareColumns } from 'utils/tableCloumn';
 import { showGlobalNotification } from 'store/actions/notification';
+
 import { AddEditForm } from './AddEditForm';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { ListDataTable } from 'utils/ListDataTable';
+import { btnVisiblity } from 'utils/btnVisiblity';
+
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
@@ -69,21 +70,16 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataLoaded, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData, showGlobalNotification, isDataLoading, isLoadingOnSave }) => {
     const [form] = Form.useForm();
-    const [rowdata, setRowsData] = useState([]);
     const [editRow, setEditRow] = useState({});
     const [searchData, setSearchdata] = useState('');
-    const [ForceReset, setForceReset] = useState();
     const [selectedHierarchy, setSelectedHierarchy] = useState('');
-    const [saveclick, setsaveclick] = useState();
     const [RefershData, setRefershData] = useState(false);
 
-    const [saveandnewclick, setsaveandnewclick] = useState();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [filterString, setFilterString] = useState('');
 
-    const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -92,7 +88,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-    const [page, setPage] = useState(1);
+    
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -102,6 +98,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         setShowDataLoading(false);
         RefershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
+
     const onErrorAction = (message) => {
         resetData();
         showGlobalNotification({ message });
@@ -116,7 +113,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
             }
             if (detailData?.hierarchyAttribute) {
                 forceUpdate(generateRandomNumber());
-                setRowsData(detailData?.hierarchyAttribute);
             }
         }
 
@@ -142,7 +138,8 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
     useEffect(() => {
         form.resetFields();
         setEditRow({});
-    }, [ForceReset]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [forceUpdate]);
 
     useEffect(() => {
         if (!selectedHierarchy || !RefershData) return;
@@ -158,7 +155,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ForceReset, RefershData]);
+    }, [forceUpdate, RefershData]);
 
     const handleEditView = () => {
         setFormActionType('edit');
@@ -176,10 +173,9 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
     };
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
-        console.log('buttonAction', buttonAction);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         setIsFormVisible(true);
         setEditRow(record);
@@ -247,9 +243,9 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
-        setPage,
+        
         noDataMessage:
             selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
                 <span className={styles.descriptionText}>
@@ -267,21 +263,24 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         showAddButton: selectedHierarchy ? true : false,
     };
 
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setButtonData({ ...defaultBtnVisiblity });
+    };
+
     const formProps = {
         isVisible: isFormVisible,
         isViewModeVisible,
         codeIsReadOnly,
         tableData: detailData?.hierarchyAttribute,
-        setsaveclick,
-        setsaveandnewclick,
-        onCloseAction: () => (setIsFormVisible(false), setFormBtnDisable(false), form.resetFields()),
+        onCloseAction,
         titleOverride: (isViewModeVisible ? 'View ' : editRow?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         selectedHierarchy,
         onFinishFailed,
         onFinish,
         setEditRow,
         editRow,
-        saveandnewclick,
         formActionType,
         handleEditView,
         isReadOnly,
@@ -289,7 +288,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         setFormBtnDisable,
         formBtnDisable,
         isLoadingOnSave,
-        formActionType,
         setFormActionType,
         buttonData,
         setButtonData,
@@ -299,7 +297,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
 
     return (
         <>
-            {contextAlertNotification}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>

@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import { Col, Card, Row, Button, Divider, Form } from 'antd';
+import { Col, Card, Row, Button, Divider, Form, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
-import { Typography } from 'antd';
-
-import style from './../../Common.module.css';
-
 
 import ApplicationActionsForm from './ApplicationActionsForms';
-import { Fragment } from 'react';
+
+import styles from './../../Common.module.css';
 
 const { Text } = Typography;
 
@@ -32,7 +29,6 @@ const CardApplicationAction = (props) => {
     };
 
     const onUpdate = () => {
-
         const newFormData = form.getFieldsValue();
         setFinalFormdata((prev) => {
             const newList = prev?.applicationAction;
@@ -48,9 +44,8 @@ const CardApplicationAction = (props) => {
     };
 
     const handleDeleteAction = (val) => {
-        
         setFinalFormdata((prev) => {
-            console.log(prev,'deleter')
+            console.log(prev, 'deleter');
             const newList = prev?.applicationAction;
             const indx = prev?.applicationAction?.findIndex((el) => el?.actionId === val.actionId);
             newList.splice(indx, 1);
@@ -69,10 +64,7 @@ const CardApplicationAction = (props) => {
 
     return (
         <>
-            <Card
-               className={style.viewCardSize}  
-               key={actionId}                   
-            >
+            <Card className={styles.viewCardSize} key={actionId}>
                 <Row align="middle">
                     <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
@@ -92,24 +84,26 @@ const CardApplicationAction = (props) => {
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                                         <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ status, actionName, actionId, actionMasterId, id })} />
                                     </Col>
-                                    {!id ?
+                                    {!id ? (
                                         <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                                             <Button disabled={isBtnDisabled} onClick={() => handleDeleteAction({ status, actionName, actionId })} type="link" icon={<FiTrash />}></Button>
                                         </Col>
-                                        : ''}
+                                    ) : (
+                                        ''
+                                    )}
                                 </>
                             ) : (
                                 <>
-                                    {' '}
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Button type="link" onClick={onUpdate}>
-                                            Save
-                                        </Button>
-                                    </Col>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Button type="link" onClick={() => onCancel()}>
-                                            Cancel
-                                        </Button>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} styles={{ display: 'flex' }}>
+                                        <div className={styles.saveCancelBtn}>
+                                            <div className={styles.saveBtn} onClick={onUpdate}>
+                                                Save
+                                            </div>
+
+                                            <div className={styles.cancelBtn} onClick={() => onCancel()}>
+                                                Cancel
+                                            </div>
+                                        </div>
                                     </Col>
                                 </>
                             )}
@@ -118,10 +112,10 @@ const CardApplicationAction = (props) => {
                 </Row>
 
                 {isEditing && (
-                    <Fragment>
+                    <>
                         <Divider />
                         <ApplicationActionsForm status={status} name={actionName} id={id} form={form} isEditing={isEditing} actions={actions} disableStatus={true} onFieldsChange={onFieldsChange} />
-                    </Fragment>
+                    </>
                 )}
             </Card>
         </>

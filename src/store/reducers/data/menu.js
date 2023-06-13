@@ -18,8 +18,7 @@ export const Menu = (state = initialState, action) => {
         case MENU_DATA_LOADED: {
             const dataList = [];
             const generateList = (data) => {
-                for (let i = 0; i < data.length; i++) {
-                    const node = data[i];
+                for (let node of data) {
                     dataList.push({
                         ...node,
                         id: node[fieldNames?.key],

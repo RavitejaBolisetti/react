@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
+
+import { validateRequiredSelectField, searchValidator } from 'utils/validation';
 import { withModal } from 'components/withModal';
-import { searchValidator } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData, filteredCityData, filteredTehsilData } = props;
-    const { filterString, setFilterString, advanceFilterForm, handleResetFilter, isAdvanceSearchVisible, setAdvanceSearchVisible, setFilteredDistrictData } = props;
+    const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData } = props;
+    const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible } = props;
 
     useEffect(() => {
         advanceFilterForm.resetFields();
@@ -43,7 +43,9 @@ export const AdvancedSearchFrom = (props) => {
                         {defaultCountry && (
                             <Select defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleFilterChange('countryCode')}>
                                 {countryData?.map((item) => (
-                                    <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                    <Option key={item?.countryCode} value={item?.countryCode}>
+                                        {item?.countryName}
+                                    </Option>
                                 ))}
                             </Select>
                         )}

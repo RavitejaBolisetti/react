@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import OTPInput from 'otp-input-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -15,11 +15,9 @@ import { BiUser } from 'react-icons/bi';
 
 import { ROUTING_LOGIN } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
-import { Link } from 'react-router-dom';
 import Footer from '../Footer';
 import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
 import { FiLock } from 'react-icons/fi';
@@ -52,7 +50,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, showGlobalNotification, hideGlobalNotification, listShowLoading, isLoading }) => {
+const ForgotPasswordBase = (props) => {
+    const { verifyUser, sendOTP, validateOTP, updatePassword, showGlobalNotification, hideGlobalNotification, listShowLoading, isLoading } = props;
+    
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const userIdRef = useRef(null);
@@ -396,7 +396,6 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        {/* <div className={styles.otpTitle}>Enter OTP {addToolTip('Please enter 6 digit OTP', 'bottom')(<AiOutlineInfoCircle size={13} color={'#2782F9'} />)}</div> */}
                                                         <div className={styles.otpTitle}>Enter OTP</div>
                                                     </Col>
                                                 </Row>

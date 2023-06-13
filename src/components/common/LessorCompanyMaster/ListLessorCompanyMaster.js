@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -9,6 +9,7 @@ import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { ListDataTable } from 'utils/ListDataTable';
+import { btnVisiblity } from 'utils/btnVisiblity';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -57,7 +58,7 @@ export const ListLessorCompanyMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState(detailData);
     const [refershData, setRefershData] = useState(false);
-    const [page, setPage] = useState(1);
+    
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState('');
@@ -101,13 +102,14 @@ export const ListLessorCompanyMasterBase = (props) => {
         if (detailData?.length) {
             setSearchdata(detailData);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [detailData]);
 
     useEffect(() => {
         if (detailData?.length > 0 && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = detailData?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyCode) || filterFunction(keyword)(item?.companyDescription) : true));
+                const filterDataItem = detailData?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyDescription) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -128,7 +130,7 @@ export const ListLessorCompanyMasterBase = (props) => {
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         record && setFormData(record);
         setIsFormVisible(true);
@@ -139,12 +141,14 @@ export const ListLessorCompanyMasterBase = (props) => {
             setFilterString({ ...filterString, advanceFilter: false, keyword: value });
         }
     };
-
+   
     const handleClearInSearch = (e) => {
         if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
+        } else if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
         }
     };
 
@@ -197,6 +201,16 @@ export const ListLessorCompanyMasterBase = (props) => {
     };
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
+    
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
 
     const formProps = {
         form,
@@ -208,7 +222,7 @@ export const ListLessorCompanyMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: drawerTitle.concat(moduleTitle),
         tableData: searchData,
 
         ADD_ACTION,
@@ -221,9 +235,8 @@ export const ListLessorCompanyMasterBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
-        tableData: searchData,
-        setPage,
+        tableColumn: tableColumn(handleButtonClick),
+       tableData: searchData,
     };
 
     const title = 'Lessor Company Name';

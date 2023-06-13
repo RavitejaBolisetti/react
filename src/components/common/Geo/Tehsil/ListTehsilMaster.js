@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { filterFunction } from 'utils/filterFunction';
+import { btnVisiblity } from 'utils/btnVisiblity';
+
 import { tableColumn } from './tableColumn';
 
 import { geoCountryDataActions } from 'store/actions/data/geo/country';
@@ -56,9 +58,8 @@ const mapStateToProps = (state) => {
         isTehsilCategoryDataLoaded,
         isTehsilCategoryDataLoading,
         tehsilCategoryData: tehsilCategoryData && tehsilCategoryData[PARAM_MASTER.GEO_TEH_CAT.id],
-
-        data,
         stateData,
+        data,
         isDataLoaded,
         moduleTitle,
     };
@@ -107,7 +108,7 @@ export const ListTehsilBase = (props) => {
 
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    const [page, setPage] = useState(1);
+    
 
     const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -126,7 +127,6 @@ export const ListTehsilBase = (props) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
     };
 
     useEffect(() => {
@@ -161,7 +161,8 @@ export const ListTehsilBase = (props) => {
     }, [defaultCountry]);
     useEffect(() => {
         if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
-            setFilteredStateData(stateData?.filter((i) => i?.parentKey === defaultCountry));
+            setFilterString({ countryCode: defaultCountry });
+            defaultCountry ? setFilteredStateData(stateData?.filter((i) => i?.parentKey === defaultCountry)) : setFilteredStateData();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataCountryLoaded, isStateDataLoaded]);
@@ -196,13 +197,6 @@ export const ListTehsilBase = (props) => {
             canRemove: true,
         },
     ];
-    // useEffect(() => {
-    //     if (userId && filterString) {
-    //         fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction });
-    //     }
-
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [filterString, userId]);
 
     useEffect(() => {
         if (isDataLoaded && data && userId) {
@@ -231,7 +225,7 @@ export const ListTehsilBase = (props) => {
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         const tehsilCategory = tehsilCategoryData?.find((category) => category.key === record?.tehsilCategoryCode)?.value;
         record && setFormData({ ...record, tehsilCategory });
@@ -255,15 +249,7 @@ export const ListTehsilBase = (props) => {
                 advanceFilterForm.setFieldsValue({ districtCode: undefined });
                 advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
             }
-
-            // if (name === 'districtCode') {
-            //     setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
-            //     setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
-            //     advanceFilterForm.setFieldsValue({ cityCode: undefined });
-            //     advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
-            // }
         };
-    // console.log(setFilteredDistrictData,'setFilteredDistrictData')
 
     const onFinish = (values) => {
         let data = { ...values, includedOn: values?.includedOn?.format('YYYY-MM-DD') };
@@ -311,6 +297,16 @@ export const ListTehsilBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -321,7 +317,7 @@ export const ListTehsilBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: drawerTitle.concat(moduleTitle),
         tableData: searchData,
 
         isDataCountryLoaded,
@@ -347,14 +343,14 @@ export const ListTehsilBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
-        tableData: searchData,
-        setPage,
+        tableColumn: tableColumn(handleButtonClick),
+       tableData: searchData,
     };
 
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
+        setFilteredDistrictData([]);
     };
 
     const handleResetFilter = () => {

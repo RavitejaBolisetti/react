@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
@@ -21,26 +21,17 @@ const mapStateToProps = (state) => {
 };
 
 const ManufacturerAdministrativeHierarchyPageBase = () => {
-    const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
-
-    // const handleChangeHistoryClick = (e) => {
-    //     setChangeHistoryVisible(!isChangeHistoryVisible);
-    // };
-
     const pageTitle = 'Manufacturer Adminstrative Hierarchy';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
         showChangeHisoty: false,
         visibleChangeHistory: false,
-        // handleChangeHistoryClick,
-        isChangeHistoryVisible,
-        // isUploadVisible: true,
     };
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <ManufacturerAdminstrativeHierarchy isChangeHistoryVisible={isChangeHistoryVisible} />
+            <ManufacturerAdminstrativeHierarchy />
         </>
     );
 };

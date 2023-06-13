@@ -1,25 +1,19 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Empty, Input, Spin } from 'antd';
+import { Button, Col, Form, Row, Empty, Spin } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-
 import { menuDataActions } from 'store/actions/data/menu';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { showGlobalNotification } from 'store/actions/notification';
-
 import LeftPanel from '../LeftPanel';
 import { AddEditForm } from './AddEditForm';
 import { HierarchyFormButton } from '../Button';
 import ViewApplicationDetailMain from './viewDeatils/ViewApplicationDetail';
-
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { LANGUAGE_EN } from 'language/en';
-
 import styles from 'components/common/Common.module.css';
 import { ContentHeader } from 'utils/ContentHeader';
-
-const { Search } = Input;
 
 const mapStateToProps = (state) => {
     const {
@@ -53,19 +47,14 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchApplication: applicationMasterDataActions.fetchApplicationDetails,
             applicationDetailListShowLoading: applicationMasterDataActions.detailListShowLoading,
-
             fetchApplicationCriticality: applicationMasterDataActions.fetchApplicationCriticalityGroup,
             fetchApplicationAction: applicationMasterDataActions.fetchApplicationAction,
             fetchCriticalitiData: applicationMasterDataActions.fetchConfigurableParameterList,
-
             applicationMasterDataShowLoading: applicationMasterDataActions.listShowLoading,
-
             onSaveShowLoading: applicationMasterDataActions.onSaveShowLoading,
             saveApplicationDetails: applicationMasterDataActions.saveApplicationDetails,
-
             fetchList: applicationMasterDataActions.fetchMenuList,
             applicationListShowLoading: menuDataActions.applicationListShowLoading,
-
             showGlobalNotification,
         },
         dispatch
@@ -84,13 +73,11 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const [applicationForm] = Form.useForm();
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
-    const [formActionType, setFormActionType] = useState('');
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [isVisible, setisVisible] = useState(false);
 
-    const [isActive, setIsActive] = useState(false);
     const [menuType, setMenuType] = useState('W');
     const [searchValue, setSearchValue] = useState('');
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -120,7 +107,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
 
     const handleAdd = (type) => {
         setisVisible(true);
-        setFormActionType(type);
+        // setFormActionType(type);
         setIsReadOnly(false);
     };
 
@@ -131,7 +118,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const handleTypeClick = (type) => {
         setSelectedTreeKey([]);
 
-        setIsActive((current) => !current);
         setMenuType(type);
     };
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
@@ -148,8 +134,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
 
             applicationCall(rest?.applicationId);
             setSelectedTreeKey([rest?.applicationId]);
-
-            setFormActionType('view');
             setisVisible(false);
         }
     };
@@ -159,7 +143,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
 
     const onFinish = (values) => {
-        const { applicationDetails, applicationAction, documentType, accessibleLocation } = finalFormdata;
+        const { applicationAction, documentType, accessibleLocation } = finalFormdata;
 
         if (applicationAction?.length < 1) {
             return showGlobalNotification({ message: LANGUAGE_EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'application action') });
@@ -197,7 +181,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
 
         setSelectedTreeKey([]);
         if (keys && keys.length > 0) {
-            setFormActionType('view');
             applicationCall(keys[0]);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             setSelectedTreeKey(keys);
@@ -228,7 +211,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         forceUpdate();
 
         setisVisible(true);
-        setFormActionType(type);
     };
 
     const onClose = () => {

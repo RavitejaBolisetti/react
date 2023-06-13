@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Input, Form, Row, Select, Switch } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validateLettersWithWhitespaces } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
@@ -80,7 +80,7 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredSelectField('Country')]}>
                                 <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
                                     {countryData?.map((item) => (
-                                        <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                        <Option key={item?.countryCode} value={item?.countryCode}>{item?.countryName}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>

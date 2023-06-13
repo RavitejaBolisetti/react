@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer,useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -11,6 +11,7 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
 import { tableColumn } from './tableColumn';
+import { btnVisiblity } from 'utils/btnVisiblity';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -80,7 +81,7 @@ export const ListPartyMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    const [page, setPage] = useState(1);
+    
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
@@ -149,13 +150,13 @@ export const ListPartyMasterBase = (props) => {
             setRecordData(record);
         }
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         setIsFormVisible(true);
     };
 
     const onFinish = (values) => {
-        let data = { ...values, creditLimit: parseFloat(values?.creditLimit) };
+        let data = { ...values };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -211,8 +212,20 @@ export const ListPartyMasterBase = (props) => {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
+        } else if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
         }
     };
+    
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
 
     const formProps = {
         form,
@@ -224,7 +237,7 @@ export const ListPartyMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: drawerTitle.concat(moduleTitle),
         tableData: searchData,
         typeData,
         fetchDetail,
@@ -251,9 +264,8 @@ export const ListPartyMasterBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
-        tableData: searchData,
-        setPage,
+        tableColumn: tableColumn(handleButtonClick),
+       tableData: searchData,
     };
 
     const title = 'Party Name';

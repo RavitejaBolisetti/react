@@ -43,11 +43,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
     useEffect(() => {
-        if (!isHistoryLoaded && userId) {
+        if ( userId) {
             fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isHistoryLoaded]);
+    }, [isHistoryLoaded, userId]);
 
     const tableColumn = [
         tblPrepareColumns({
@@ -65,15 +65,15 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
         }),
         tblPrepareColumns({
             title: 'Short Description',
-            dataIndex: 'shortDescript',
+            dataIndex: 'shortDescription',
         }),
         tblPrepareColumns({
             title: 'Long Description',
-            dataIndex: 'shortDescript',
+            dataIndex: 'longDescription',
         }),
         tblPrepareColumns({
             title: 'Hierarchy Code',
-            dataIndex: 'hierarchyCode',
+            dataIndex: 'code',
         }),
         tblStatusColumn({ styles, width: '15%' }),
     ];

@@ -5,6 +5,25 @@
     overflow-y: auto;
 }
 
+.bigDrawerStyle :global .ant-drawer-wrapper-body .ant-drawer-body {
+    padding: 0px;
+    overflow: hidden;
+}
+
+.myDrawerStyle :global .ant-drawer-body::-webkit-scrollbar-track {
+    background-color: #ffffff;
+}
+
+.myDrawerStyle :global .ant-drawer-body::-webkit-scrollbar {
+    width: 5px;
+    background-color: #ffffff;
+}
+
+.myDrawerStyle :global .ant-drawer-body::-webkit-scrollbar-thumb {
+    background-color: rgba(52, 44, 44, 0.34);
+    border-radius: 10px;
+}
+
 .myDrawerStyle :global .ant-drawer-title {
     font-size: 20px;
     font-weight: 500;

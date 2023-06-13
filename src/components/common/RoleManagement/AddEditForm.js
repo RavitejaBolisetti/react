@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CheckboxTree from 'react-checkbox-tree';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 
-import { Drawer, Input, Form, Col, Row, Switch, Button, Space, Collapse, Checkbox, Tabs, Descriptions } from 'antd';
+import { Input, Form, Col, Row, Switch, Button, Space, Collapse, Tabs } from 'antd';
 import { FaSquare } from 'react-icons/fa';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineCheck } from 'react-icons/ai';
 
@@ -10,11 +10,9 @@ import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
-import viewStyle from 'components/common/Common.module.css';
 
 import { withDrawer } from 'components/withDrawer';
 import { ViewRoleManagement } from './ViewRoleManagement';
-// import { ViewRoleManagement } from './ViewRoleManagement';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -33,12 +31,6 @@ const mocktreeData = [
                     {
                         title: 'Sub Application Master',
                         key: 'subApplicationMaster1',
-                        // children: [
-                        //     {
-                        //         isLeaf: true,
-                        //         checkable: false,
-                        //     },
-                        // ],
                     },
                 ],
             },
@@ -53,12 +45,6 @@ const mocktreeData = [
                             {
                                 title: 'Sub Application Master',
                                 key: 'subApplicationMaster2',
-                                // children: [
-                                //     {
-                                //         isLeaf: true,
-                                //         checkable: false,
-                                //     },
-                                // ],
                             },
                         ],
                     },
@@ -98,51 +84,6 @@ const mocktreeData = [
     },
 ];
 
-const mockData = [
-    {
-        title: 'Common',
-        key: 'common',
-
-        children: [
-            {
-                title: 'Application Master',
-                key: 'ApplicationMaster1',
-                children: [
-                    {
-                        title: 'Sub Application Master',
-                        key: 'subApplicationMaster1',
-                    },
-                ],
-            },
-            {
-                title: 'Application Criticality Group',
-                key: 'applicationCriticalityGroup1',
-                children: [
-                    {
-                        title: 'Application Master',
-                        key: 'ApplicationMaster2',
-                        children: [
-                            {
-                                title: 'Sub Application Master',
-                                key: 'subApplicationMaster2',
-                            },
-                        ],
-                    },
-                    {
-                        title: 'Application Criticality Group',
-                        key: 'applicationCriticalityGroup2',
-                        children: [
-                            {
-                                title: 'dummy1',
-                                key: 'dummy-1',
-                            },
-                        ],
-                    },
-                ],
-            },
-        ],
-    },
-];
 const FinalTreedata = [
     {
         value: 'Common',
@@ -194,59 +135,25 @@ const FinalTreedata = [
     },
 ];
 const AddEditFormMain = (props) => {
-    const { moduleTitle, setClosePanels, setIsViewModeVisible, viewData, showSaveBtn, formData, isFormBtnActive, onCloseAction, setFormBtnActive, handleEditData, open, MenuAlteredData, setSaveClick, form, isReadOnly, setIsReadOnly, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, handleUpdate2, setFormBtnDisable, onFinish, openDrawer, setOpenDrawer, setsaveclick, footerEdit, setSaveAndAddNewBtnClicked, isViewModeVisible } = props;
-    const disabledProps = { disabled: isReadOnly };
-    console.log('adasda', formData);
-    // const [selectedActions, setSelectedActions] = useState({})
-    const [ParentCheck, setParentCheck] = useState();
-    const Mychildren = [
-        {
-            label: 'Read',
-            value: 'Read',
-        },
-        {
-            label: 'View',
-            value: 'View',
-        },
-        {
-            label: 'Update',
-            value: 'Update',
-        },
-        {
-            label: 'Delete',
-            value: 'Delete',
-        },
-        {
-            label: 'Create',
-            value: 'Create',
-        },
-        {
-            label: 'Upload',
-            value: 'Upload',
-        },
-    ];
+    const { setClosePanels, showSaveBtn, formData, isFormBtnActive, onCloseAction, setFormBtnActive, handleEditData, MenuAlteredData, form, isReadOnly, onFinish, footerEdit, setSaveAndAddNewBtnClicked, isViewModeVisible } = props;
+
     const StateMangement = {
         Common: [],
         Common1: [],
     };
-    // const disabledProps = { disabled: false };
+
     const [treeData, settreeData] = useState([]);
-    const [SelectedKeys, setSelectedKeys] = useState();
     const [CheckedKeys, setCheckedKeys] = useState();
     const [ExpandedKeys, setExpandedKeys] = useState({});
-    const [ourCheckedKeys, setourCheckedKeys] = useState();
 
     useEffect(() => {
         if (!treeData.length) {
             Subpanel(mocktreeData);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    useEffect(() => {
-        console.log('These are the Expanded Keys : ', ExpandedKeys);
-    }, [ExpandedKeys]);
-    useEffect(() => {
-        console.log('The MenuAlteredData : ', MenuAlteredData);
 
+    useEffect(() => {
         const withCheck = {};
         const withExpanded = {};
         MenuAlteredData?.forEach((el) => {
@@ -256,31 +163,6 @@ const AddEditFormMain = (props) => {
         setCheckedKeys(withCheck);
         setExpandedKeys(withExpanded);
     }, [MenuAlteredData]);
-
-    useEffect(() => {
-        console.log('We change our checked keys to 404 : ', CheckedKeys);
-    }, [CheckedKeys]);
-    useEffect(() => {
-        let evalue;
-        // FinalTreedata.map((e) => {
-        //     StateMangement[e?.value] = [];
-        // });
-    }, []);
-
-    useEffect(() => {
-        function Subpanel(node) {
-            if (!node?.children) {
-                // setTreeData([{ ...node, children: Mychildren }]);
-                console.log('node==>', node);
-                return;
-            }
-            if (node?.children) {
-                node?.children.forEach((child) => {
-                    Subpanel(child);
-                });
-            }
-        }
-    }, []);
 
     function Subpanel(arr) {
         const result = arr.map((row) => {
@@ -315,79 +197,11 @@ const AddEditFormMain = (props) => {
 
     const onFinishFailed = () => {};
 
-    const Title = (props) => {
-        console.log('render');
-        return <span className={styles.placement}>{props.title}</span>;
-    };
-    const Paneldata = (data) => {
-        return data?.map((subData) => {
-            Subpanel(subData);
-
-            function Subpanel(node) {
-                if (!node?.children) {
-                    return (
-                        <Button onClick={() => setSaveClick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
-                            Save
-                        </Button>
-                    );
-                }
-                node?.children.forEach((child) => {
-                    Subpanel(child);
-                });
-                {
-                    return (
-                        <Collapse>
-                            <Panel header={node?.title}></Panel>
-                        </Collapse>
-                    );
-                }
-            }
-        });
-
-        // return (
-        //     <Collapse expandIcon={() => <PlusOutlined />}>
-        //         <Panel header={node?.title}></Panel>
-        //     </Collapse>
-        // );
-    };
-
-    function updatedTreeData(arr, key) {
-        const result = arr.map((row) => {
-            if (row.children && row.children.length && row.children.key === key) {
-                const children = updatedTreeData(row.children);
-                return { ...row, children };
-            } else {
-                console.log('key', row);
-                return {
-                    ...row,
-                    checkable: true,
-                    children: [
-                        {
-                            isLeaf: true,
-                            checkable: false,
-                            key: row.key,
-                        },
-                    ],
-                };
-            }
-        });
-        settreeData(result);
-        return result;
-    }
-
     const onTreeCheck = (checked, targetNode, value) => {
-        // setCheckedKeys({ ...CheckedKeys, [CheckedKeys[EvalChecked2]]: checked });
-
         setCheckedKeys({ ...CheckedKeys, [value]: checked });
-        // setExpandedKeys({ ...ExpandedKeys, [value]: expanded });
+    };
 
-        console.log('onTreeSelect', checked, targetNode);
-    };
-    const OnChanges = (value) => {
-        console.log('this is the Change in the Tree =>>>>>', value);
-    };
     const OnExpanded = (expanded, targetNode, value) => {
-        //  StateMangement.expanded[0]=expanded;
         let ExpandVals = [];
         for (const [key, value] of Object.entries(expanded)) {
             if (key === '0') {
@@ -395,28 +209,7 @@ const AddEditFormMain = (props) => {
             }
         }
         StateMangement[expanded[0]] = expanded;
-        const updated = { ...StateMangement, [expanded[0]]: expanded };
-        console.log('This is the updated : ', expanded);
-
         setExpandedKeys({ ...ExpandedKeys, [value]: expanded });
-    };
-    const CheckboxUtil = ({ upload, view, del, read, create, update, key }) => {
-        return (
-            <>
-                <Form.Item
-                    name="remember"
-                    wrapperCol={{
-                        offset: 8,
-                        span: 16,
-                    }}
-                >
-                    <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-            </>
-        );
-    };
-    const handleSearch = (element, value) => {
-        console.log('ths is El ', element, value);
     };
 
     const AccordianTreeUtils = (data) => {
@@ -434,7 +227,6 @@ const AddEditFormMain = (props) => {
                                                 style={{
                                                     width: '100%',
                                                 }}
-                                                onSearch={(element) => handleSearch(element, el)}
                                                 allowClear
                                             />
                                         </Col>
@@ -447,7 +239,7 @@ const AddEditFormMain = (props) => {
                                                 checked={!!CheckedKeys[el?.value]}
                                                 onCheck={(checked, targetNode) => onTreeCheck(checked, targetNode, el?.value)}
                                                 onExpand={(expanded, targetNode) => OnExpanded(expanded, targetNode, el?.value)}
-                                                onMoveNode={OnChanges}
+                                                // onMoveNode={OnChanges}
                                                 title={{
                                                     label: 'name',
                                                     value: 'code',
@@ -481,7 +273,7 @@ const AddEditFormMain = (props) => {
         isVisible: isViewModeVisible,
         setClosePanels,
         formData,
-        viewStyle,
+        viewStyle: styles,
     };
 
     return (

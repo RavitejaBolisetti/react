@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
-import { RxCross2 } from 'react-icons/rx';
 import { bindActionCreators } from 'redux';
+
+import { Col, Form, Row } from 'antd';
 
 import { dealerManpowerDivisionMasterDataActions } from 'store/actions/data/dealerManpower/dealerDivisionMaster';
 import { dealerManpowerEmployeeDepartmentDataActions } from 'store/actions/data/dealerManpower/dealerEmployeeDepartmentMaster';
@@ -15,19 +15,12 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { filterFunction } from 'utils/filterFunction';
-import { searchValidator } from 'utils/validation';
+import { btnVisiblity } from 'utils/btnVisiblity';
 import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
-import { PlusOutlined } from '@ant-design/icons';
 import { FilterIcon } from 'Icons';
-import { TfiReload } from 'react-icons/tfi';
-
-import styles from 'components/common/Common.module.css';
-
-const { Search } = Input;
-const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
@@ -81,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListRoleMasterBase = (props) => {
-    const { data, saveData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { isDivisionDataLoaded, listDivisionShowLoading, fetchDivisionLovList, isDivisionLoading, divisionData } = props;
     const { isDepartmentDataLoaded, listDepartmentShowLoading, fetchDepartmentLovList, isDepartmentLoading, departmentData } = props;
 
@@ -94,7 +87,7 @@ export const ListRoleMasterBase = (props) => {
 
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    const [page, setPage] = useState(1);
+    
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
@@ -136,18 +129,16 @@ export const ListRoleMasterBase = (props) => {
     }, [userId, isDivisionDataLoaded, isDepartmentDataLoaded, isDataLoaded]);
 
     useEffect(() => {
-        if (isDataLoaded && data && userId) {
-            if (filterString) {
-                const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
-                const division = filterString?.divisionCode;
-                const department = filterString?.departmentCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.roleCode) || filterFunction(keyword)(item?.roleDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
-                setShowDataLoading(false);
-            } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
-                setShowDataLoading(false);
-            }
+        if (isDataLoaded && data && userId && filterString) {
+            const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
+            const division = filterString?.divisionCode;
+            const department = filterString?.departmentCode;
+            const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.roleDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true));
+            setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+            setShowDataLoading(false);
+        } else {
+            setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+            setShowDataLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
@@ -201,7 +192,7 @@ export const ListRoleMasterBase = (props) => {
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         record && setFormData(record);
         setIsFormVisible(true);
@@ -213,8 +204,6 @@ export const ListRoleMasterBase = (props) => {
             listFilterForm.setFieldsValue({ code: undefined });
         }
     };
-
-  
 
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
@@ -279,6 +268,16 @@ export const ListRoleMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -289,7 +288,7 @@ export const ListRoleMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Role'),
+        titleOverride: drawerTitle.concat('Role'),
         tableData: searchData,
 
         isDivisionDataLoaded,
@@ -308,14 +307,14 @@ export const ListRoleMasterBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
-        tableData: searchData,
-        setPage,
+        tableColumn: tableColumn(handleButtonClick),
+       tableData: searchData,
     };
 
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
+        setFilteredDepartmentData([]);
     };
 
     const handleResetFilter = () => {
@@ -351,7 +350,11 @@ export const ListRoleMasterBase = (props) => {
     const removeFilter = (key) => {
         if (key === 'divisionCode') {
             const { divisionCode, departmentCode, ...rest } = filterString;
-            setFilterString({ ...rest });
+            if (!filterString?.keyword) {
+                setFilterString();
+            } else {
+                setFilterString({ ...rest });
+            }
         } else if (key === 'departmentCode') {
             const { departmentCode, ...rest } = filterString;
             setFilterString({ ...rest });

@@ -2,15 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Input, Form, Collapse, Col, Row, Switch, Select, Button } from 'antd';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 import { withDrawer } from 'components/withDrawer';
-
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import TreeSelectField from '../TreeSelectField';
-import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
-
 import ProductAttributeMaster from './ProductAttribute/ProductAttributeMaster';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpaceHyphenPeriod } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
@@ -18,13 +14,12 @@ const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, unFilteredAttributeData, formActionType, isReadOnly = false, formData, fieldNames, isDataAttributeLoaded, attributeData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute, skuAttributes, treeSelectProps } = props;
-    const { isFormBtnActive, setFormBtnActive } = props;
+    const { onCloseAction, handleAttributeChange, unFilteredAttributeData, formActionType, isReadOnly = false, formData, fieldNames, isDataAttributeLoaded, attributeData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute } = props;
+    const { isFormBtnActive, setFormBtnActive, showGlobalNotification } = props;
     const { form, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
-    const { selectedTreeKey, flatternData, setSelectedTreeSelectKey, selectedTreeSelectKey, handleSelectTreeClick, treeProdFieldNames, productHierarchyData } = props;
+    const { selectedTreeKey, flatternData, setSelectedTreeSelectKey, selectedTreeSelectKey, handleSelectTreeClick, productHierarchyData } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
-
     const [actionForm] = Form.useForm();
     const [openAccordian, setOpenAccordian] = useState(1);
     const [isAddBtnDisabled, setAddBtnDisabled] = useState(false);
@@ -43,7 +38,7 @@ const AddEditFormMain = (props) => {
         if (attributeData.find((attribute) => attribute.id === formData?.attributeKey)) {
             attributeHierarchyFieldValidation.initialValue = formData?.attributeKey;
         } else {
-            const Attribute = unFilteredAttributeData.find((attribute) => attribute.id === formData?.attributeKey);
+            const Attribute = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.attributeKey);
             if (Attribute) {
                 attributeHierarchyFieldValidation.initialValue = Attribute?.hierarchyAttribueName;
                 attributeHierarchyFieldValidation.rules.push({ type: 'number', message: Attribute?.hierarchyAttribueName + ' is not active anymore. Please select a different attribute. ' });
@@ -79,11 +74,8 @@ const AddEditFormMain = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-    const handleProductchange = (e) => {
-        const value = e.target.textContent;
-    };
-
     const onActionFormFinish = (val) => {
+        console.log(val,'finalValue')
         const { value, label } = val?.attributeName;
         setSKUAttributes((prev) => [...prev, { attributeName: label, id: value, attributeValue: val.attributeValue }]);
         actionForm.resetFields();
@@ -130,6 +122,7 @@ const AddEditFormMain = (props) => {
         isVisible,
         selectedTreeData,
         formActionType,
+        showGlobalNotification,
     };
 
     const selectProps = {
@@ -138,13 +131,14 @@ const AddEditFormMain = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
+
     return (
         <>
             <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
-                            <Select {...selectProps} onChange={handleAttributeChange} onClick={handleProductchange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} disabled={formData?.id || isReadOnly}>
+                            <Select {...selectProps} onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} disabled={formData?.id || isReadOnly}>
                                 {attributeData?.map((item) => (
                                     <Option key={item?.id} value={item?.id}>
                                         {item?.hierarchyAttribueName}
@@ -181,7 +175,6 @@ const AddEditFormMain = (props) => {
                             <TextArea rows={1} placeholder={preparePlaceholderText('long description')} showCount maxLength={100} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
-
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                         <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} label="Status" name="active">
                             <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />

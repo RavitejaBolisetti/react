@@ -11,7 +11,7 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, listShowLoading, userId, dealerParentData } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, listShowLoading, userId, dealerParentData, dealerLovData } = props;
     const { isVisible, buttonData, setButtonData, handleButtonClick, pincodeData, fetchPincodeDetail, isPinCodeLoading, forceUpdate, pinCodeShowLoading } = props;
 
     const [options, setOptions] = useState(false);
@@ -44,17 +44,17 @@ const AddEditFormMain = (props) => {
     const parentName = (values) => {
         if (values === undefined) {
             groupValue = null;
+            parentGroupId = null;
             form.setFieldValue('dealerParentName', groupValue);
             form.setFieldValue('parentId', parentGroupId);
         } else {
-            dealerParentData?.map((item) => {
-                if (item?.code === values) {
-                    groupValue = item?.name;
-                    parentGroupId = item?.id;
-                    form.setFieldValue('dealerParentName', groupValue);
-                    form.setFieldValue('parentId', parentGroupId);
-                }
-            });
+            const parentData = dealerParentData?.find((item) => item?.code === values);
+            if (parentData) {
+                groupValue = parentData?.name;
+                parentGroupId = parentData?.id;
+                form.setFieldValue('dealerParentName', groupValue);
+                form.setFieldValue('parentId', parentGroupId);
+            }
         }
     };
 
@@ -156,9 +156,11 @@ const AddEditFormMain = (props) => {
                                     onChange={parentName}
                                     disabled={editMode}
                                 >
-                                    {dealerParentData?.map((item) => {
-                                        return <Option value={item?.code}>{item?.code}</Option>;
-                                    })}
+                                    {dealerLovData?.map((item) => (
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.key}
+                                        </Option>
+                                    ))}
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -188,7 +190,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.address} label="Company Address" name="address" rules={[validateRequiredInputField('Company Address')]}>
-                                <TextArea rows={2} placeholder={preparePlaceholderText('Company Address')} showCount maxLength={255} />
+                                <TextArea rows={2} placeholder={preparePlaceholderText('Company Address')} showCount maxLength={100} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -203,11 +205,6 @@ const AddEditFormMain = (props) => {
                     </Row>
 
                     <Row gutter={16}>
-                        {/* <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={pincodeDetails[0]?.locality} label="Locality" name="locality">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Locality')} disabled />
-                            </Form.Item>
-                        </Col> */}
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
                             <Form.Item initialValue={formData?.cityCode} label="City" name="cityCode">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('City')} disabled />
@@ -277,7 +274,6 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    {/* <Row gutter={16}></Row> */}
                 </>
             )}
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -8,10 +8,12 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { filterFunction } from 'utils/filterFunction';
+import { btnVisiblity } from 'utils/btnVisiblity';
 import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
 import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { dealerCompanyLovDataActions } from 'store/actions/data/dealer/dealerCompanyLov';
 
 const mapStateToProps = (state) => {
     const {
@@ -20,6 +22,7 @@ const mapStateToProps = (state) => {
             DealerHierarchy: {
                 DealerCompany: { isLoaded: isDataLoaded = false, isLoading, data = [] },
                 DealerParent: { isLoaded: isDealerParentDataLoaded = false, isLoading: isDealerParentDataLoading = false, data: dealerParentData = [] },
+                DealerCompanyLov: { isLoaded: isDealerLovDataLoaded = false, isLoading: isDealerLovDataLoading = false, data: dealerLovData = [] },
             },
             Geo: {
                 Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
@@ -35,6 +38,11 @@ const mapStateToProps = (state) => {
         isDealerParentDataLoaded,
         isDealerParentDataLoading,
         dealerParentData,
+
+        isDealerLovDataLoaded,
+        isDealerLovDataLoading,
+        dealerLovData,
+
         isPinCodeDataLoaded,
         pincodeData,
         isLoading,
@@ -57,6 +65,10 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchPincodeDetail: geoPincodeDataActions.fetchList,
             pinCodeShowLoading: geoPincodeDataActions.listShowLoading,
+
+            fetchLovList: dealerCompanyLovDataActions.fetchList,
+            listLovShowLoading: dealerCompanyLovDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -65,14 +77,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const DealerCompanyBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isPinCodeLoading, pinCodeShowLoading } = props;
-    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail } = props;
+    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail, fetchLovList, isDealerLovDataLoaded, listLovShowLoading, dealerLovData } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    const [page, setPage] = useState(1);
+    
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -103,6 +115,9 @@ export const DealerCompanyBase = (props) => {
         }
         if (userId && !isDealerParentDataLoaded) {
             fetchDealerParentList({ setIsLoading: listDealerParentShowLoading, userId });
+        }
+        if (userId && !isDealerLovDataLoaded) {
+            fetchLovList({ setIsLoading: listLovShowLoading, userId });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -140,7 +155,8 @@ export const DealerCompanyBase = (props) => {
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         record && setFormData(record);
         setIsFormVisible(true);
@@ -163,6 +179,8 @@ export const DealerCompanyBase = (props) => {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
+        } else if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
         }
     };
 
@@ -213,6 +231,16 @@ export const DealerCompanyBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -222,7 +250,7 @@ export const DealerCompanyBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Parent Company'),
+        titleOverride: drawerTitle.concat('Dealer Parent Company'),
         tableData: searchData,
         buttonData,
         setButtonData,
@@ -235,13 +263,13 @@ export const DealerCompanyBase = (props) => {
         isPinCodeLoading,
         forceUpdate,
         pinCodeShowLoading,
+        dealerLovData,
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
-        setPage,
-    };
+      };
 
     const title = 'Company Name';
 

@@ -4,7 +4,7 @@ import styles from './TreeView.module.css';
 
 const LeftPanel = (props) => {
     const { selectedTreeKey, treeData, fieldNames, handleTreeViewClick, isOpenInModal } = props;
-    const { isTreeViewVisible, handleTreeViewVisiblity } = props;
+    const { isTreeViewVisible } = props;
     const { searchValue, setSearchValue } = props;
 
     const [expandedKeys, setExpandedKeys] = useState([]);
@@ -17,8 +17,7 @@ const LeftPanel = (props) => {
 
     const dataList = [];
     const generateList = (data) => {
-        for (let i = 0; i < data.length; i++) {
-            const node = data[i];
+        for (let node of data) {
             dataList.push({
                 id: node[fieldNames?.key],
                 title: node[fieldNames?.title],
@@ -48,7 +47,7 @@ const LeftPanel = (props) => {
     useEffect(() => {
         const newExpandedKeys = dataList
             ?.map((item) => {
-                if (item?.title.toLowerCase()?.indexOf(searchValue?.toLowerCase()) > -1) {
+                if (item?.title?.toLowerCase()?.indexOf(searchValue?.toLowerCase()) > -1) {
                     return getParentKey(item?.id, treeData);
                 }
                 return null;
@@ -67,9 +66,9 @@ const LeftPanel = (props) => {
             data?.map((item) => {
                 const strTitle = item[fieldNames?.title];
 
-                const strTitleLowerCase = strTitle.toLowerCase();
+                const strTitleLowerCase = strTitle?.toLowerCase();
                 const searchValueLowerCase = searchValue?.toLowerCase();
-                const index = strTitleLowerCase.indexOf(searchValueLowerCase);
+                const index = strTitleLowerCase?.indexOf(searchValueLowerCase);
 
                 const beforeStr = strTitle?.substring(0, index);
                 const afterStr = strTitle?.slice(index + searchValue?.length);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -15,6 +15,8 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { showGlobalNotification } from 'store/actions/notification';
 import { filterFunction } from 'utils/filterFunction';
+import { btnVisiblity } from 'utils/btnVisiblity';
+
 import { AddEditForm } from './AddEditForm';
 import { FilterIcon } from 'Icons';
 
@@ -72,7 +74,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    const [page, setPage] = useState(1);
+    
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
@@ -120,7 +122,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                 const keyword = filterString?.keyword;
                 const division = filterString?.divisionCode;
 
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.departmentCode) || filterFunction(keyword)(item?.departmentName) : true) && (division ? filterFunction(division)(item?.divisionCode) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.departmentName) : true) && (division ? filterFunction(division)(item?.divisionCode) : true));
 
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
@@ -141,7 +143,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         form.resetFields();
         setFormData([]);
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
         record && setFormData(record);
         setIsFormVisible(true);
     };
@@ -224,6 +226,16 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add ';
+        }
+    }, [formActionType]);
+
     const formProps = {
         form,
         formData,
@@ -231,10 +243,9 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         setFormActionType,
         onFinish,
         onFinishFailed,
-
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Department'),
+        titleOverride: drawerTitle.concat('Department'),
         tableData: searchData,
 
         isDivisionLoading,
@@ -250,9 +261,8 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
-        tableData: searchData,
-        setPage,
+        tableColumn: tableColumn(handleButtonClick),
+       tableData: searchData,
     };
 
     const advanceFilterProps = {
@@ -275,7 +285,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
             listFilterForm.setFieldsValue({ code: undefined });
         }
     };
-
 
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {

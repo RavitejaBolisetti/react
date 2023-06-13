@@ -1,8 +1,7 @@
 export const generateList = (data, fieldNames) => {
     const listItem = [];
 
-    for (let i = 0; i < data.length; i++) {
-        const node = data[i];
+    for (let node of data) {
         listItem.push({
             id: node[fieldNames?.key],
             title: node[fieldNames?.title],

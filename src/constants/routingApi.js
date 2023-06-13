@@ -30,7 +30,7 @@ export const BASE_URL_DEALER_MANPOWER = BASE_URL + 'dealer';
 export const BASE_URL_DEALER_MANPOWER_LOCATION_TYPE = BASE_URL_DEALER_MANPOWER + '/locationtypes';
 export const BASE_URL_DEALER_MANPOWER_BAY_TYPE = BASE_URL_DEALER_MANPOWER + '/baytypes';
 export const BASE_URL_DEALER_MANPOWER_DIVISION_MASTER = BASE_URL_DEALER_MANPOWER + '/divisions';
-export const BASE_URL_DEALER_MANPOWER_DESIGNATION = BASE_URL_DEALER_MANPOWER + '/designations'
+export const BASE_URL_DEALER_MANPOWER_DESIGNATION = BASE_URL_DEALER_MANPOWER + '/designations';
 
 export const BASE_URL_DEALER_MANPOWER_EMPLOYEE_DEPARTMENT = BASE_URL_DEALER_MANPOWER + '/employee/departments';
 export const BASE_URL_ROLE = BASE_URL_DEALER_MANPOWER + '/roles';
@@ -75,6 +75,7 @@ export const BASE_URL_DEALER_PARENT = BASE_URL + 'dealer/parents';
 export const BASE_URL_DEALER_COMAPANY = BASE_URL + 'dealer/company';
 export const BASE_URL_DEALER_PARENT_GROUP_SEARCH = BASE_URL + 'dealer/search/parentgroups';
 export const BASE_URL_DEALER_PARENT_TITLE = BASE_URL + 'configurableparametertypes';
+export const BASE_URL_DEALER_COMPANY_LOV = BASE_URL + 'dealer/parents/lov';
 
 //get all applications
 export const BASE_URL_APPLICATIONS = BASE_URL + 'applications';
@@ -90,4 +91,14 @@ export const BASE_URL_DOCUMENT_TYPE = BASE_URL + 'document';
 export const BASE_URL_USER_MANAGEMENT_DEALER = BASE_URL + 'users/dealer';
 export const BASE_URL_USER_MANAGEMENT_MANUFACTURER = BASE_URL + 'users/manufacturer';
 
+export const BASE_URL_TERM_CONDITION_PRODUCT_HIERARCHY = BASE_URL + 'product';
+//export const BASE_URL_TERM_CONDITION_DOCUMENT_TYPE = BASE_URL + 'appmst/documenttypes?code=tns&type=DOCUMENT';
+export const BASE_URL_TERM_CONDITION_DOCUMENT_TYPE = BASE_URL + 'appmst/documenttypes?code=TERMS_CONDITIONS&type=MODULE';
+export const BASE_URL_TERM_CONDITION_LANGUAGE = BASE_URL + 'configurableparametertypes?parameterType=MOTHER_TOUNGE';
+export const BASE_URL_TERM_CONDITION_DEALER = BASE_URL + 'appmst/termconditiondealer';
+//export const BASE_URL_TERM_CONDITION_MANUFACTURER = BASE_URL + 'dealer/tncmanufracturer';
+export const BASE_URL_TERM_CONDITION_MANUFACTURER = BASE_URL + 'appmst/tncmanufracturer';
+export const BASE_URL_TERM_CONDITION_CHANGE_HISTORY = BASE_URL + 'appmst/termconditiondealerhistory';
 
+export const BASE_URL_OTF_REPORTS = BASE_URL + 'customreports/otf/names';
+export const BASE_URL_OTF_DOWNLAOD_REPORT = BASE_URL + 'customreports/otf/register';

@@ -1,0 +1,57 @@
+import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
+import styles from 'components/common/Common.module.css';
+import { convertDate } from 'utils/formatDateTime';
+
+export const tableColumn = (handleButtonClick, page, pageSize) => {
+    const tableColumn = [];
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Product Hierarchy',
+            dataIndex: 'productName',
+            width: '14%',
+        }),
+
+        tblPrepareColumns({
+            title: 'Document Type',
+            dataIndex: 'documentType',
+            width: '14%',
+        }),
+
+        tblPrepareColumns({
+            title: 'Language',
+            dataIndex: 'languageDesc',
+            width: '14%',
+        }),
+
+        tblPrepareColumns({
+            title: 'Effective From',
+            dataIndex: 'effectivefrom',
+            width: '13%',
+            render: (text) => convertDate(text),
+        }),
+        tblPrepareColumns({
+            title: 'Effective To',
+            dataIndex: 'effectiveto',
+            width: '13%',
+            render: (text) => convertDate(text),
+        }),
+
+        // tblPrepareColumns({
+        //     title: 'Description',
+        //     dataIndex: 'termsconditiondescription',
+        //     width: '25%',
+        //     render: (dataIndex) => dataIndex.substring(0, 25) + (dataIndex.length > 25 ? '...' : ''),
+        // }),
+
+        tblPrepareColumns({
+            title: 'Version',
+            dataIndex: 'version',
+            width: '2%',
+        }),
+
+        tblActionColumn({ styles, handleButtonClick, width: '8%' })
+    );
+
+    return tableColumn;
+};

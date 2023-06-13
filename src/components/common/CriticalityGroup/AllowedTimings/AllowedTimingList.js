@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Form, Row, Col, Button } from 'antd';
+
+import moment from 'moment';
 
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -18,6 +20,11 @@ const AllowedTimingList = (props) => {
     const [timingForm] = Form.useForm();
 
     const validatedDuplicateTime = (timeSlotFrom, timeSlotTo) => {
+        const isBefore = moment(timeSlotFrom, 'HH:mm').isBefore(moment(timeSlotTo, 'HH:mm'));
+        if (!isBefore) {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: LANGUAGE_EN.GENERAL.START_TIME_GREATER_THAN_END_TIME.MESSAGE, placement: 'bottomRight' });
+            return true;
+        }
         let timeSegments = [...timeData, { timeSlotFrom, timeSlotTo }];
         if (timeSegments?.length === 1) {
             return false;
@@ -40,7 +47,7 @@ const AllowedTimingList = (props) => {
         let timeSlotFrom = values?.timeSlotFrom?.format('HH:mm');
         let timeSlotTo = values?.timeSlotTo?.format('HH:mm');
         let isDeleted = values?.isDeleted;
-        let overlap = validatedDuplicateTime(timeSlotFrom, timeSlotTo, isDeleted);
+        let overlap = validatedDuplicateTime(timeSlotFrom, timeSlotTo);
         !overlap && setTimeData([...timeData, { timeSlotFrom, timeSlotTo, isDeleted }]);
         timingForm.resetFields();
         setAllowedTimingSave(true);
@@ -124,11 +131,11 @@ const AllowedTimingList = (props) => {
                 {timeData?.length > 0 && (
                     <div className={styles.viewTiming}>
                         <div className={formActionType?.viewMode || !isAddTimeVisible ? styles.viewSeparator : styles.separator}></div>
-                        {timeData?.map((timing) => {
-                            if (timing?.isDeleted === 'N') {
-                                return <AllowedTimingCard styles={{ marginBottom: '10px', backgroundColor: '#B5B5B6' }} {...cardProps} {...timing} />;
-                            }
-                        })}
+                        {timeData
+                            ?.filter((i) => i?.isDeleted)
+                            ?.map((timing) => (
+                                <AllowedTimingCard styles={{ marginBottom: '10px', backgroundColor: '#B5B5B6' }} {...cardProps} {...timing} />
+                            ))}
                     </div>
                 )}
             </div>
