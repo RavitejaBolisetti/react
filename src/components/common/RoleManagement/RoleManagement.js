@@ -121,7 +121,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         const recordId = selectedRecord?.id || '';
         const data = {
             ...values,
-            // id: RowData?.id,
             webRoleApplicationMapping: [
                 {
                     id: '',
@@ -324,9 +323,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         moduleTitle,
         setIsViewModeVisible,
         isViewModeVisible,
-        //RowData,
         RoleData,
-        // setSaveClick,
         form,
         setFormBtnDisable,
         formBtnDisable,
