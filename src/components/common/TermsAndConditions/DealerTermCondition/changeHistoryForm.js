@@ -10,7 +10,6 @@ import { convertDate } from 'utils/formatDateTime';
 const ChangeHistoryMain = (props) => {
     const { ChangeHistoryTermsConditionsData } = props;
 
-    const [page, setPage] = useState(1);
     const tableColumn = [];
 
     tableColumn.push(
@@ -60,7 +59,7 @@ const ChangeHistoryMain = (props) => {
     const tableProps = {
         tableColumn,
         tableData: ChangeHistoryTermsConditionsData,
-        setPage,
+
         page,
     };
     return (

@@ -39,8 +39,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('Redux state:', state);
-
     const moduleTitle = 'Term & Condition';
 
     let returnValue = {
@@ -110,9 +108,8 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const [termsAndCondition, setTermsAndCondition] = useState();
     const [effectiveFrom, seteffectiveFrom] = useState('');
     const [effectiveTo, seteffectiveTo] = useState('');
-    const [CustomEditorLoad, setCustomEditorLoad] = useState(Math.random());
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [page, setPage] = useState(1);
+
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
@@ -134,16 +131,23 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
-            fetchTermCondition({ setIsLoading: listShowLoading, userId });
+            fetchDocumentTypeList({ setIsLoading: listShowLoading, userId });
+            fetchLanguageList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, userId]);
+    }, [islanguageDataLoaded, userId]);
+
+    useEffect(() => {
+        if (userId) {
+            fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [refershData, userId]);
 
     useEffect(() => {
         if (!isDocumentTypeDataLoaded && userId) {
             fetchDocumentTypeList({ setIsLoading: listShowLoading, userId });
             fetchLanguageList({ setIsLoading: listShowLoading, userId });
-            fetchTermCondition({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
@@ -208,9 +212,8 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, handleManufacturerButtonClick, page?.current, page?.pageSize),
+        tableColumn: tableColumn(handleButtonClick, handleManufacturerButtonClick),
         tableData: searchData,
-        setPage,
     };
 
     const onFinish = (values, e) => {
@@ -253,6 +256,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     };
 
     const handleReferesh = (e) => {
+        setShowDataLoading(true);
         setRefershData(!refershData);
     };
 
@@ -326,8 +330,8 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         effectiveTo,
         seteffectiveFrom,
         seteffectiveTo,
-        CustomEditorLoad,
-        setCustomEditorLoad,
+        // CustomEditorLoad,
+        // setCustomEditorLoad,
     };
 
     const title = 'Term & Condition';

@@ -40,12 +40,12 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             render: (text) => convertDate(text),
         }),
 
-        tblPrepareColumns({
-            title: 'Description',
-            dataIndex: 'termsconditiondescription',
-            width: '25%',
-            render: (dataIndex) => dataIndex.substring(0, 25) + (dataIndex.length > 25 ? '...' : ''),
-        }),
+        // tblPrepareColumns({
+        //     title: 'Description',
+        //     dataIndex: 'termsconditiondescription',
+        //     width: '25%',
+        //     render: (dataIndex) => dataIndex.substring(0, 25) + (dataIndex.length > 25 ? '...' : ''),
+        // }),
         tblPrepareColumns({
             title: 'Version',
             dataIndex: 'version',
@@ -58,7 +58,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             sorter: false,
             render: (text, record, index) => {
                 return (
-                    <Space>
+                    <Space key={'view' + record?.id}>
                         <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
                             <FiEye />
                         </Button>

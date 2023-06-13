@@ -88,7 +88,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-    const [page, setPage] = useState(1);
+    
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -243,9 +243,9 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
-        setPage,
+        
         noDataMessage:
             selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
                 <span className={styles.descriptionText}>
