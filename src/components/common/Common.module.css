@@ -1467,6 +1467,20 @@
     border-radius: 4px;
 }
 
+.drawerBodyRight :global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
+    color: #ff3e5b;
+}
+
+.drawerBodyRight :global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon svg {
+    margin-right: 6px;
+}
+
+.drawerBodyRight :global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon span {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
 .userCircle {
     color: #ff3e5b !important;
     margin-top: 3px !important;
@@ -1479,10 +1493,6 @@
     display: flex;
     align-items: center;
 }*/
-
-.iconsColor {
-    color: #ff3e5b;
-}
 
 .saveCancelBtn {
     display: flex;

@@ -67,13 +67,13 @@ export const CustomerDetailsMaster = (props) => {
                                     if (activeKey.includes(1)) {
                                         return (
                                             <>
-                                                <FiEdit className={styles.iconsColor} /> <div>Edit</div>
+                                                <FiEdit /> <span>Edit</span>
                                             </>
                                         );
                                     } else {
                                         return (
                                             <>
-                                                <FiEdit className={styles.iconsColor} /> <div>Edit</div>
+                                                <FiEdit /> <span>Edit</span>
                                             </>
                                         );
                                     }
@@ -85,9 +85,7 @@ export const CustomerDetailsMaster = (props) => {
                                 <Panel
                                     header={
                                         <div className={styles.alignUser}>
-                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                Booking Customer
-                                            </Text>
+                                            <Text strong>Booking Customer</Text>
                                         </div>
                                     }
                                     key="1"
@@ -100,13 +98,13 @@ export const CustomerDetailsMaster = (props) => {
                                     if (activeKey.includes(2)) {
                                         return (
                                             <>
-                                                <FiEdit className={styles.iconsColor} /> <div>Edit</div>
+                                                <FiEdit /> <span>Edit</span>
                                             </>
                                         );
                                     } else {
                                         return (
                                             <>
-                                                <FiEdit className={styles.iconsColor} /> <div>Edit</div>
+                                                <FiEdit /> <span>Edit</span>
                                             </>
                                         );
                                     }
@@ -118,9 +116,7 @@ export const CustomerDetailsMaster = (props) => {
                                 <Panel
                                     header={
                                         <div className={styles.alignUser}>
-                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                Billing Customer
-                                            </Text>
+                                            <Text strong>Billing Customer</Text>
                                         </div>
                                     }
                                     key="2"
