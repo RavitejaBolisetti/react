@@ -1,10 +1,7 @@
-import React, { useState, Fragment, useEffect } from 'react';
-import { Col, Card, Row, Button, Form, Divider, Typography, Input } from 'antd';
-import { FiEdit, FiTrash } from 'react-icons/fi';
-import styles from 'components/common/Common.module.css';
+import React from 'react';
+import { Col, Row, Form, Input } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-const { Text } = Typography;
 const { TextArea } = Input;
 
 const CollapseTaxInfo = (props) => {
