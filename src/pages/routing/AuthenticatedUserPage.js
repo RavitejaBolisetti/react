@@ -30,6 +30,7 @@ import {
     CustomerMasterPage,
     TermConditionDealerMasterPage,
     TermConditionManufacturerMasterPage,
+    OtfReportsPage,
 } from 'pages/common';
 
 import { OTFMasterPage } from 'pages/Sales';
@@ -104,6 +105,8 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_DISCLAIMER} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_CONTACT} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_OTF} element={<OTFMasterPage />} exact />
+            <Route path={routing.ROUTING_REPORT_OTF_REPORTS} element={<OtfReportsPage />} />
+
 
             {/* <Route path="*" element={<LoginPage />} exact /> */}
         </Routes>

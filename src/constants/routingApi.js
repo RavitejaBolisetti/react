@@ -99,3 +99,6 @@ export const BASE_URL_TERM_CONDITION_DEALER = BASE_URL + 'appmst/termconditionde
 //export const BASE_URL_TERM_CONDITION_MANUFACTURER = BASE_URL + 'dealer/tncmanufracturer';
 export const BASE_URL_TERM_CONDITION_MANUFACTURER = BASE_URL + 'appmst/tncmanufracturer';
 export const BASE_URL_TERM_CONDITION_CHANGE_HISTORY = BASE_URL + 'appmst/termconditiondealerhistory';
+
+export const BASE_URL_OTF_REPORTS = BASE_URL + 'customreports/otf/names';
+export const BASE_URL_OTF_DOWNLAOD_REPORT = BASE_URL + 'customreports/otf/register';

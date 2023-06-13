@@ -1479,6 +1479,17 @@
     color: #ff3e5b;
 }
 
+.saveCancelBtn {
+    display: flex;
+}
+
+.saveCancelBtn .saveBtn,
+.saveCancelBtn .cancelBtn {
+    color: #ff3e5bda;
+    cursor: pointer;
+    margin: 0px 10px;
+}
+
 @media (max-width: 768px) {
 
     /* For mobile phones: */
