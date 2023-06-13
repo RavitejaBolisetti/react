@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useReducer, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { Col, Form, Row, Input, Select} from 'antd';
+import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import  AdvanceOtfFilter  from './AdvanceOtfFilter';
@@ -11,7 +11,6 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 
 import { FilterIcon } from 'Icons';
-
 
 const otfSearchList = [{"id":"OTF No", "value":"OTF No."}, {"id":"Mobile No", "value":"Mobile No."}, {"id":"Customer Name", "value":"Customer Name"}];
 const otfStatusList = [{"key":"Invoiced", "value":"Invoiced"}, {"key":"Transferred", "value":"Transferred"}, {"key":"Cancelled", "value":"Cancelled"},
