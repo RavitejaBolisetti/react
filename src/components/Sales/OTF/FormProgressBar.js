@@ -1,5 +1,5 @@
 import React from 'react';
-import { Timeline, Progress } from 'antd';
+import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 
@@ -52,7 +52,7 @@ const FormProgressBar = (props) => {
             case 'addOnDetails':
                 setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: true });
                 break;
-                
+
             default:
                 setleftTimeline({ ...leftTimeline, otfDetails: true, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: false });
         }
@@ -62,93 +62,49 @@ const FormProgressBar = (props) => {
             items={[
                 {
                     dot: <BsRecordCircleFill color="#ff3e5b" />,
-                    children: (
-                        <>
-                            <p onClick={() => onHandle('otfDetails')}>Otf Details</p>
-                            <Progress percent={60} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('otfDetails')}>Otf Details</p>,
                 },
                 {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <p onClick={() => onHandle('customerDetails')}>Customer Details</p>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('customerDetails')}>Customer Details</p>,
+                    // (
+                    //     <>
+                    //         <p onClick={() => onHandle('customerDetails')}>Customer Details</p>
+                    //         <Progress percent={100} size="small" />
+                    //     </>
+                    // ),
                 },
                 {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <p onClick={() => onHandle('vehicleDetails')}>Vehicle Details</p>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('vehicleDetails')}>Vehicle Details</p>,
                 },
                 {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <p onClick={() => onHandle('schemeDetails')}>Scheme Details</p>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('schemeDetails')}>Scheme Details</p>,
                 },
                 {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <p onClick={() => onHandle('insuranceDetails')}>Insurance Details</p>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('insuranceDetails')}>Insurance Details</p>,
                 },
                 {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <p onClick={() => onHandle('financeDetails')}>Finance Details</p>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('financeDetails')}>Finance Details</p>,
                 },
                 {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <p onClick={() => onHandle('exchangeVehicles')}>Exchange Vehicle</p>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('exchangeVehicles')}>Exchange Vehicle</p>,
                 },
                 {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <p onClick={() => onHandle('referrals')}>Referrals</p>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('referrals')}>Referrals</p>,
                 },
                 {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <p onClick={() => onHandle('loyaltyScheme')}>Loyalty Scheme</p>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('loyaltyScheme')}>Loyalty Scheme</p>,
                 },
                 {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <p onClick={() => onHandle('addOnDetails')}>Add-On Details</p>
-                            <Progress percent={10} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('addOnDetails')}>Add-On Details</p>,
                 },
             ]}
         />

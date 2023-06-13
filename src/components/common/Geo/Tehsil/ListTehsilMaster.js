@@ -128,7 +128,6 @@ export const ListTehsilBase = (props) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
     };
 
     useEffect(() => {

@@ -131,7 +131,7 @@
     transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
     border-radius: 6px;
     box-shadow: none;
-    height: 34px;
+    /* height: 34px; */
 }
 
 :global .ant-empty .ant-empty-footer {
