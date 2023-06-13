@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Col, Form, Row, Checkbox, Space, Collapse, Typography } from 'antd';
 
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { FiEdit } from 'react-icons/fi';
 
 import AddEditForm from './AddEditForm';
 
@@ -65,9 +65,17 @@ export const CustomerDetailsMaster = (props) => {
                             <Collapse
                                 expandIcon={() => {
                                     if (activeKey.includes(1)) {
-                                        return <MinusOutlined className={styles.iconsColor} />;
+                                        return (
+                                            <>
+                                                <FiEdit className={styles.iconsColor} /> <div>Edit</div>
+                                            </>
+                                        );
                                     } else {
-                                        return <PlusOutlined className={styles.iconsColor} />;
+                                        return (
+                                            <>
+                                                <FiEdit className={styles.iconsColor} /> <div>Edit</div>
+                                            </>
+                                        );
                                     }
                                 }}
                                 activeKey={activeKey}
@@ -90,9 +98,17 @@ export const CustomerDetailsMaster = (props) => {
                             <Collapse
                                 expandIcon={() => {
                                     if (activeKey.includes(2)) {
-                                        return <MinusOutlined className={styles.iconsColor} />;
+                                        return (
+                                            <>
+                                                <FiEdit className={styles.iconsColor} /> <div>Edit</div>
+                                            </>
+                                        );
                                     } else {
-                                        return <PlusOutlined className={styles.iconsColor} />;
+                                        return (
+                                            <>
+                                                <FiEdit className={styles.iconsColor} /> <div>Edit</div>
+                                            </>
+                                        );
                                     }
                                 }}
                                 activeKey={activeKey}
