@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Divider, Table } from 'antd';
+import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Divider } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
-import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
-import CollapseTaxInfo from './CollapseTaxInfo';
 import { FiEdit } from 'react-icons/fi';
 
 import styles from 'components/common/Common.module.css';
@@ -16,7 +13,6 @@ import { DataTable } from 'utils/dataTable';
 const { Text } = Typography;
 
 const { Option } = Select;
-const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
@@ -25,8 +21,7 @@ const AddEditFormMain = (props) => {
     const [keyAccountForm] = Form.useForm();
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [openAccordian, setOpenAccordian] = useState();
-    const [isCollapseView, setCollapseView] = useState(false);
-    const [addFormdata, setAddFormData] = useState([]);
+    // const [addFormdata, setAddFormData] = useState([]);
     const [activeKey, setactiveKey] = useState([1]);
 
     const handleEdit = () => {
@@ -44,14 +39,7 @@ const AddEditFormMain = (props) => {
     };
 
     const onHandleAddChange = (val) => {
-        setCollapseView(true);
-        const formatData = [];
-        console.log(addFormdata, 'ddd');
-        setAddFormData((prev) => [...prev, { ...val }]);
-        keyAccountForm.resetFields();
-    };
-
-    const onHandleResetButton = () => {
+        //setAddFormData((prev) => [...prev, { ...val }]);
         keyAccountForm.resetFields();
     };
 
@@ -189,10 +177,6 @@ const AddEditFormMain = (props) => {
         optionalData,
     };
 
-    const collapseProps = {
-        addFormdata,
-        setAddFormData,
-    };
     const datatableprops = {
         tableColumn: columns,
         tableData: data,
