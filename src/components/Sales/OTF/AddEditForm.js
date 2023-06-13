@@ -16,6 +16,7 @@ import { LoyaltySchemeMaster } from './LoyaltyScheme';
 import { ReferralsMaster } from './Referrals';
 import { ExchangeVehiclesMaster } from './ExchangeVehicles';
 import { AddOnDetailsMaster } from './AddOnDetails';
+import { OtfDetailsMaster } from './OtfDetails';
 // import CommonTimeline from './Timeline';
 
 const { Panel } = Collapse;
@@ -95,7 +96,7 @@ const AddEditFormMain = (props) => {
     const renderElement = () => {
         switch (moduleName) {
             case 'OTF Details': {
-                return <CustomerDetailsMaster {...RenderElementCommonProps} />;
+                return <OtfDetailsMaster {...RenderElementCommonProps} />;
             }
             case 'Customer Details': {
                 return <CustomerDetailsMaster {...RenderElementCommonProps} />;
