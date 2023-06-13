@@ -240,7 +240,7 @@ export const OtfMasterBase = (props) => {
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-        tableData: [{}],
+        tableData: otfSearchResult,
     };
 
     const handleOTFChange = (selectedvalue) => {
