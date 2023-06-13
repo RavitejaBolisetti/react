@@ -81,7 +81,7 @@ export const DesignationMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    const [page, setPage] = useState(1);
+    
     const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
     const [filteredRoleData, setFilteredRoleData] = useState([]);
     const [formData, setFormData] = useState([]);
@@ -308,9 +308,8 @@ export const DesignationMasterBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
-        tableData: searchData,
-        setPage,
+        tableColumn: tableColumn(handleButtonClick),
+       tableData: searchData,
     };
 
     const onAdvanceSearchCloseAction = () => {
