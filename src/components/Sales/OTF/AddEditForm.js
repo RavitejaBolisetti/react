@@ -18,13 +18,14 @@ import { LoyaltySchemeMaster } from './LoyaltyScheme';
 import { ReferralsMaster } from './Referrals';
 import { ExchangeVehiclesMaster } from './ExchangeVehicles';
 import { AddOnDetailsMaster } from './AddOnDetails';
+// import CommonTimeline from './Timeline';
 
 const { Panel } = Collapse;
 const expandIcon = ({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible, formActionType } = props;
-
+    const { onCloseAction, isViewModeVisible, formActionType, isVisible } = props;
+    const [moduleName, setmoduleName] = useState('OTF Details');
     const EDIT_ACTION = OTF_FORM_ACTION_TYPE?.EDIT;
     const CANCEL_ACTION = OTF_FORM_ACTION_TYPE?.CANCEL;
     const ALLOT_ACTION = OTF_FORM_ACTION_TYPE?.ALLOT;
@@ -44,6 +45,7 @@ const AddEditFormMain = (props) => {
         loyaltyScheme: false,
         addOnDetails: false,
     });
+
     const [buttonData, setbuttonData] = useState({
         closeBtn: true,
         editBtn: true,
@@ -53,6 +55,7 @@ const AddEditFormMain = (props) => {
         transferBtn: true,
         nextBtn: true,
     });
+
     const handleOtfButtonClick = ({ buttonAction, record }) => {
         if (buttonAction === EDIT_ACTION) {
             console.log('edit');
@@ -78,6 +81,9 @@ const AddEditFormMain = (props) => {
     const TimelineProps = {
         leftTimeline,
         setleftTimeline,
+        setmoduleName,
+        moduleName,
+        isVisible,
     };
 
     const RenderElementCommonProps = {
@@ -88,28 +94,41 @@ const AddEditFormMain = (props) => {
         setleftTimeline,
         isViewModeVisible,
     };
-
     const renderElement = () => {
-        if (leftTimeline?.otfDetails) {
-            return <OtfDetailsMaster {...RenderElementCommonProps} />;
-        } else if (leftTimeline?.customerDetails) {
-            return <CustomerDetailsMaster {...RenderElementCommonProps} />;
-        } else if (leftTimeline?.vehicleDetails) {
-            return <VehicleDetailsMaster {...RenderElementCommonProps} />;
-        } else if (leftTimeline?.schemeDetails) {
-            return <SchemeDetailsMaster {...RenderElementCommonProps} />;
-        } else if (leftTimeline?.insuranceDetails) {
-            return <InsuranceDetailsMaster {...RenderElementCommonProps} />;
-        } else if (leftTimeline?.exchangeVehicle) {
-            return <ExchangeVehiclesMaster {...RenderElementCommonProps} />;
-        } else if (leftTimeline.referrals) {
-            return <ReferralsMaster {...RenderElementCommonProps} />;
-        } else if (leftTimeline.loyaltyScheme) {
-            return <LoyaltySchemeMaster {...RenderElementCommonProps} />;
-        } else if (leftTimeline?.fiananceDetails) {
-            return <FinananceDetailsMaster {...RenderElementCommonProps} />;
-        } else if (leftTimeline?.addOnDetails) {
-            return <AddOnDetailsMaster {...RenderElementCommonProps} />;
+        switch (moduleName) {
+            case 'OTF Details': {
+                return <OtfDetailsMaster {...RenderElementCommonProps} />;
+            }
+            case 'Customer Details': {
+                return <CustomerDetailsMaster {...RenderElementCommonProps} />;
+            }
+            case 'Vehicle Details': {
+                return <VehicleDetailsMaster {...RenderElementCommonProps} />;
+            }
+            case 'Scheme Details': {
+                return <SchemeDetailsMaster {...RenderElementCommonProps} />;
+            }
+            case 'Insurance Details': {
+                return <InsuranceDetailsMaster {...RenderElementCommonProps} />;
+            }
+            case 'Finance Details': {
+                return <FinananceDetailsMaster {...RenderElementCommonProps} />;
+            }
+            case 'Exchange vehicle': {
+                return <ExchangeVehiclesMaster {...RenderElementCommonProps} />;
+            }
+            case 'Referrals': {
+                return <ReferralsMaster {...RenderElementCommonProps} />;
+            }
+            case 'Loyalty scheme': {
+                return <LoyaltySchemeMaster {...RenderElementCommonProps} />;
+            }
+            case 'Add On Details': {
+                return <AddOnDetailsMaster {...RenderElementCommonProps} />;
+            }
+            default: {
+                return <CustomerDetailsMaster {...RenderElementCommonProps} />;
+            }
         }
     };
 
@@ -160,6 +179,14 @@ const AddEditFormMain = (props) => {
                     </Row>
                 </Col>
                 <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18} className={styles.drawerBodyRight}>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.drawerBodyRightModuleName}>
+                            <p>{moduleName}</p>
+                        </Col>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                            {/* <CommonTimeline /> */}
+                        </Col>
+                    </Row>
                     {renderElement()}
                     <Otfbuttons {...otfButtonProps} />
                 </Col>
