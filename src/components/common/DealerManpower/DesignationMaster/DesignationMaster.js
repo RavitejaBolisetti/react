@@ -315,6 +315,8 @@ export const DesignationMasterBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
+        setFilteredDepartmentData([]);
+        setFilteredRoleData([]);
     };
 
     const handleResetFilter = () => {

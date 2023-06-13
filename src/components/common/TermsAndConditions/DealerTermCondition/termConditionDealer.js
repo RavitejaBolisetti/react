@@ -213,7 +213,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const onFinish = (values, e) => {
         const recordId = formData?.id || '';
         const newVersion = (values.version ? Number(values?.version) : 1.0).toFixed(1);
-        const termConditionText = values.termConditionDescription.editor.getData().replace(/[&\/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
+        const termConditionText = values.termConditionDescription.editor.getData().replace(/[&/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
         const data = { ...values, version: String(newVersion), id: recordId, termConditionDescription: termConditionText, effectiveFrom: values?.effectiveFrom?.format('YYYY-MM-DD'), effectiveTo: values?.effectiveTo?.format('YYYY-MM-DD') };
 
         const onSuccess = (res) => {

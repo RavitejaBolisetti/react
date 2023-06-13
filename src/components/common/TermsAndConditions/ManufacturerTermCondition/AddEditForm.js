@@ -13,7 +13,7 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, productHierarchyList, documentTypeList, languageList, formActionType: { isViewModeVisible } = undefined, onFinish, onFinishFailed } = props;
-    const { buttonData, setButtonData, handleButtonClick, formActionType, termsAndCondition, setTermsAndCondition } = props;
+    const { buttonData, setButtonData, handleButtonClick, formActionType } = props;
     const [startDate, setStartDate] = useState(new Date());
 
     const handleFormFieldChange = () => {
@@ -34,11 +34,6 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
         saveButtonName: formActionType?.editMode ? 'Revise T&C' : 'Add T&C',
     };
-
-    // const handleEditorChange = (e) => {
-    //     setTermsAndCondition(e.editor.getData());
-    //     form.setFieldValue('termsConditionDescription', e.editor.getData());
-    // };
 
     const handleFromDateChange = (value) => {
         setStartDate(value);
@@ -62,13 +57,13 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={formActionType?.editMode || formActionType?.viewMode ? 'Revised' : 'Initial'} label="Document Category" name="documentcategory">
+                            <Form.Item initialValue={formActionType?.editMode || formActionType?.viewMode ? 'Revised' : 'Initial'} label="Document Category" name="documentCategory">
                                 <Input disabled={true} maxLength={10} placeholder={preparePlaceholderText('Document Category')} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={formData?.productcode} label="Product Hierarchy" name="productcode">
+                            <Form.Item initialValue={formData?.productCode} label="Product Hierarchy" name="productCode">
                                 <Select disabled={formActionType?.viewMode} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {productHierarchyList?.map((item) => (
                                         <Option value={item.prodctCode}>{item.prodctLongName}</Option>
@@ -126,14 +121,8 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item disabled={formActionType?.viewMode} initialValue={formData?.termsconditiondescription} label="Terms & Conditions" name="termsconditiondescription">
                                 <CustomEditor onReady={formData?.termsconditiondescription} data={formData?.termsconditiondescription} />
-                                {/* <CustomEditor onChange={handleEditorChange} data={formData?.termsconditiondescription} /> */}
                             </Form.Item>
                         </Col>
-                        {/* <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                            <Form.Item label="" name="termsConditionDescription" initialValue={termsAndCondition || formData?.termsconditiondescription}>
-                                <Input />
-                            </Form.Item>
-                        </Col> */}
                     </Row>
                 </>
             ) : (

@@ -34,7 +34,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('stateData', stateData);
 
     const moduleTitle = 'City';
     const finalCountryData = countryData?.map((item, index) => {
@@ -362,6 +361,7 @@ export const ListCityMasterBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
+        setFilteredDistrictData([]);
     };
 
     const handleResetFilter = () => {

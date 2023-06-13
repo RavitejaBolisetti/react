@@ -49,7 +49,7 @@
 }
 
 .changeHistoryContainer :global .ant-table-content::-webkit-scrollbar-thumb {
-    background-color: #342C2C;
+    background-color: #C1C1C1;
     border-radius: 10px;
 }
 

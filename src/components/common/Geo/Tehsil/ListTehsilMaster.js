@@ -54,13 +54,12 @@ const mapStateToProps = (state) => {
         isDistrictLoading,
         isStateLoading,
         isDistrictDataLoaded,
-        districtData: districtData?.filter((i) => i.status),
+        districtData,
         isTehsilCategoryDataLoaded,
         isTehsilCategoryDataLoading,
         tehsilCategoryData: tehsilCategoryData && tehsilCategoryData[PARAM_MASTER.GEO_TEH_CAT.id],
-
+        stateData,
         data,
-        stateData: stateData?.filter((i) => i.status),
         isDataLoaded,
         moduleTitle,
     };
@@ -162,7 +161,8 @@ export const ListTehsilBase = (props) => {
     }, [defaultCountry]);
     useEffect(() => {
         if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
-            setFilteredStateData(stateData?.filter((i) => i?.parentKey === defaultCountry));
+            setFilterString({ countryCode: defaultCountry });
+            defaultCountry ? setFilteredStateData(stateData?.filter((i) => i?.parentKey === defaultCountry)) : setFilteredStateData();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataCountryLoaded, isStateDataLoaded]);
@@ -350,6 +350,7 @@ export const ListTehsilBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
+        setFilteredDistrictData([]);
     };
 
     const handleResetFilter = () => {

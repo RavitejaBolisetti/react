@@ -49,7 +49,7 @@
 }
 
 :global .rc-virtual-list-scrollbar-thumb {
-    background: rgba(52, 44, 44, 0.34) !important;
+    background: #C1C1C1 !important;
 }
 
 .changeThemeBorder {
@@ -807,7 +807,7 @@
 
 :global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-thumb,
 :global .ant-table-wrapper .ant-table .ant-table-content::-webkit-scrollbar-thumb {
-    background-color: rgba(52, 44, 44, 0.34);
+    background-color: #C1C1C1;
     border-radius: 10px;
     /* border: 2px solid ; */
 }

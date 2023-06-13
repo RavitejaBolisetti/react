@@ -9,7 +9,6 @@ import { tncDocumentTypeDataActions } from 'store/actions/data/termsConditions/t
 import { tncLanguage } from 'store/actions/data/termsConditions/tncLanguage';
 import { termConditionManufacturerActions } from 'store/actions/data/termsConditions/termsConditionsManufacturerAction';
 import { changeHistoryManufacturerDataActions } from 'store/actions/data/termsConditions/changeHistoryManufacturerAction';
-import { changeHistoryDataActions } from 'store/actions/data/termsConditions/changeHistoryAction';
 import { ChangeHistory } from './changeHistoryForm';
 import { AddEditForm } from './AddEditForm';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -188,15 +187,9 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
             listShowLoading(false);
             form.resetFields();
             setSelectedRecord({});
-            // if (saveclick === true) {
             setShowDataLoading(false);
             setIsFormVisible(false);
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            // } else {
-            //     setShowDataLoading(true);
-            //     setIsFormVisible(true);
-            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            // }
         };
         setTimeout(() => {
             fetchTermCondition({ setIsLoading: listShowLoading, userId });
