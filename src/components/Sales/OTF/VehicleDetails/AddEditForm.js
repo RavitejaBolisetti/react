@@ -34,7 +34,7 @@ const AddEditFormMain = (props) => {
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
-        setIsReadOnly((prev) => (prev == key ? true : false));
+        setIsReadOnly(true);
     };
     const addContactHandeler = (e) => {
         e.stopPropagation();
@@ -137,8 +137,20 @@ const AddEditFormMain = (props) => {
     const optionalData = [
         {
             key: '1',
-            name: 'Registration Charges',
-            amount: '80,0000',
+            name: (
+                <>
+                    <Form.Item  name="name">
+                        <Input placeholder={preparePlaceholderText(' Name')} />
+                    </Form.Item>
+                </>
+            ),
+            amount: (
+                <>
+                    <Form.Item  name="amount">
+                        <Input placeholder={preparePlaceholderText('Amount')} />
+                    </Form.Item>
+                </>
+            ),
         },
         {
             key: '2',
@@ -147,6 +159,11 @@ const AddEditFormMain = (props) => {
         },
         {
             key: '3',
+            name: 'Registration Charges',
+            amount: '80,0000',
+        },
+        {
+            key: '4',
             name: 'Registration Charges',
             amount: '80,0000',
         },
