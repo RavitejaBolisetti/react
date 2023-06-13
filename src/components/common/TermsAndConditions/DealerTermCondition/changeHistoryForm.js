@@ -60,7 +60,7 @@ const ChangeHistoryMain = (props) => {
         tableColumn,
         tableData: ChangeHistoryTermsConditionsData,
 
-        page,
+        // page,
     };
     return (
         <>
