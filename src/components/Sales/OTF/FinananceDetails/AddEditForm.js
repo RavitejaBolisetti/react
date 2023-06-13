@@ -95,6 +95,8 @@ const AddEditFormMain = (props) => {
                                                     <Select placeholder="Select" disabled={false} loading={false} allowClear>
                                                         <Option value="financier1">HDFC</Option>
                                                         <Option value="financier2">SBI</Option>
+                                                        <Option value="financier3">ICICI</Option>
+                                                        <Option value="financier4">PNB</Option>
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
@@ -191,6 +193,7 @@ const AddEditFormMain = (props) => {
                                                     <Select disabled={true} loading={false} placeholder="Select" allowClear>
                                                         <Option value="delivery1">Delivery Note</Option>
                                                         <Option value="delivery2">Delivery Note1</Option>
+                                                        <Option value="delivery3">Delivery Note2</Option>
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
