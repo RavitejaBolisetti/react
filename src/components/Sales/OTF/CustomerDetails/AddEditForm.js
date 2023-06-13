@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Row,Col, Input, Form,Switch } from 'antd';
+import { Row, Col, Input, Form, Switch } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
@@ -13,8 +13,8 @@ const AddEditForm = (props) => {
             <Form form={activeKey === 1 ? bookingCustomer : billingCustomer} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="customerId" label="Customer ID" initialValue={formData?.customerId} rules={[validateRequiredInputField('id')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={formActionType?.editMode ? true : false} />
+                        <Form.Item name="mobileNumber" label="Mobile Number" initialValue={formData?.customerType} rules={[validateRequiredInputField('Mobile Number')]}>
+                            <Input placeholder={preparePlaceholderText('Mobile Number')} maxLength={10} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -23,8 +23,8 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="mobileNumber" label="Mobile Number" initialValue={formData?.customerType} rules={[validateRequiredInputField('Mobile Number')]}>
-                            <Input placeholder={preparePlaceholderText('Mobile Number')} maxLength={50} />
+                        <Form.Item name="customerId" label="Customer ID" initialValue={formData?.customerId} rules={[validateRequiredInputField('id')]}>
+                            <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={formActionType?.editMode ? true : false} />
                         </Form.Item>
                     </Col>
                 </Row>
