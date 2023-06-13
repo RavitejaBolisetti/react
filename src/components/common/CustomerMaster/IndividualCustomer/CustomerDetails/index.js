@@ -1,2 +1,2 @@
-import IndivisualCustomerDetailsMaster from './IndivisualCustomerDetailsMaster';
+import {IndivisualCustomerDetailsMaster} from './IndivisualCustomerDetailsMaster';
 export { IndivisualCustomerDetailsMaster };

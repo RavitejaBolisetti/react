@@ -199,4 +199,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, { width: 1200, footer: null });
+export const AddEditForm = withDrawer(AddEditFormMain, { width: '90%', footer: null });

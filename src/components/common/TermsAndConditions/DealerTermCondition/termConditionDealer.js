@@ -79,13 +79,14 @@ const mapDispatchToProps = (dispatch) => ({
             fetchTermCondition: tncDealerSaveActions.fetchList,
             saveData: tncDealerSaveActions.saveData,
             changeHistoryData: changeHistoryDataActions.fetchList,
+            listShowChangeHistoryLoading: changeHistoryDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHistoryTermsConditionsData, DealerTermsConditionsDataLoaded, ChangeHistoryTermsConditionsDataLoaded, DealerTermsConditionsData, changeHistoryData, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, fetchManufacturerTermConditionDetail, listShowLoading, productHierarchyList, documentTypeList, languageList, showGlobalNotification, isLoading, isLoadingOnSave, ManufacturerData, manufacturerTncLoaded }) => {
+const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHistoryTermsConditionsData, DealerTermsConditionsDataLoaded, ChangeHistoryTermsConditionsDataLoaded, DealerTermsConditionsData, changeHistoryData, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, fetchManufacturerTermConditionDetail, listShowLoading, listShowChangeHistoryLoading, productHierarchyList, documentTypeList, languageList, showGlobalNotification, isLoading, isLoadingOnSave, ManufacturerData, manufacturerTncLoaded }) => {
     const [form] = Form.useForm();
     const [formActionType, setFormActionType] = useState('');
     const [formData, setFormData] = useState({});
@@ -211,15 +212,16 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
 
     const onFinish = (values, e) => {
         const recordId = formData?.id || '';
-        const newVersion = (values.version ? Number(values?.version) + 1.0 : 1.0).toFixed(1);
-        const data = { ...values, version: String(newVersion), id: recordId };
+        const newVersion = (values.version ? Number(values?.version) : 1.0).toFixed(1);
+        const termConditionText = values.termConditionDescription.editor.getData().replace(/[&/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
+        const data = { ...values, version: String(newVersion), id: recordId, termConditionDescription: termConditionText, effectiveFrom: values?.effectiveFrom?.format('YYYY-MM-DD'), effectiveTo: values?.effectiveTo?.format('YYYY-MM-DD') };
 
         const onSuccess = (res) => {
             listShowLoading(false);
             form.resetFields();
             setSelectedRecord({});
             setIsFormVisible(false);
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
 
         setTimeout(() => {
@@ -334,8 +336,8 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const showChangeHistoryList = () => {
         setButtonData({ cancelBtn: true });
         setIsHistoryVisible(true);
-        extraParams['0']['value'] = '1ebc0d34-409b-44f3-a7e3-ffb70f1cc888';
-        changeHistoryData({ setIsLoading: listShowLoading, userId, extraParams });
+        // extraParams['0']['value'] = '1ebc0d34-409b-44f3-a7e3-ffb70f1cc888';
+        changeHistoryData({ setIsLoading: listShowChangeHistoryLoading, userId });
     };
 
     const advanceFilterResultProps = {

@@ -73,8 +73,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
-    const [RowData, setRowData] = useState();
-    const [saveClick, setSaveClick] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [formData, setFormData] = useState([]);
@@ -123,7 +121,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         const recordId = selectedRecord?.id || '';
         const data = {
             ...values,
-            id: RowData?.id,
             webRoleApplicationMapping: [
                 {
                     id: '',
@@ -326,9 +323,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         moduleTitle,
         setIsViewModeVisible,
         isViewModeVisible,
-        RowData,
         RoleData,
-        setSaveClick,
         form,
         setFormBtnDisable,
         formBtnDisable,
