@@ -74,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const LeftSideBarMain = (props) => {
-    const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, childredData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed, setSelectKeyToScroll, selectedMenudId } = props;
+    const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, childredData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed, setSelectKeyToScroll } = props;
 
     const location = useLocation();
     const navigate = useNavigate();
