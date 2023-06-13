@@ -1,11 +1,9 @@
-import React, { Fragment, useState, useReducer } from 'react';
-import { Form, Divider, Collapse, Card } from 'antd';
+import React, { Fragment, useReducer } from 'react';
+import { Form, Divider, Card } from 'antd';
 
 import CardAccessories from './CardAccessories';
 import AddEditForm from './AddEditForm';
-import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 
-const { Panel } = Collapse;
 
 const AccessoriesAddonMain = ({ setCanFormSave, setIsBtnDisabled, isBtnDisabled, setFormBtnDisable, setAddOnItemInfo, addOnItemInfo }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);

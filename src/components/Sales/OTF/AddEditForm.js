@@ -157,9 +157,16 @@ const AddEditFormMain = (props) => {
                         </Col>
                     </Row>
                 </Col>
-                <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18} className={styles.drawerBodyRight}>
-                    {renderElement()}
-                    <Otfbuttons {...otfButtonProps} />
+
+                <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18} >
+                    <Row >
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.drawerBodyRight}>
+                            {renderElement()}
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} >
+                            <Otfbuttons {...otfButtonProps} />
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
         </>

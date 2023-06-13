@@ -26,7 +26,7 @@ const RSAForm = () => {
                     </Form.Item>
                 </Col>
             </Row>
-            <Row gutter={20} className={styles.formFooter}>
+            <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Button htmlType="submit" danger>
                         Save
