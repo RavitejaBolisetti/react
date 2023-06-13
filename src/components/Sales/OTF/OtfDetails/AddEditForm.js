@@ -1,34 +1,31 @@
 import React from 'react';
 
-import { Col, Input, Form, Row, Select, DatePicker } from 'antd';
+import { Row, Col, Input, Form, Select, DatePicker, Switch } from 'antd';
+
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-
 const { Option } = Select;
 
-function AddEditForm({ formData, formActionType }) {
-    const { form } = Form.useForm();
-
-    const onFinish =()=>{};
-    const onFinishFailed = () => {};
+function AddEditForm(props) {
+    const { form, formData, formActionType, onFinish, onFinishFailed } = props;
 
     return (
         <>
             <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Initial Promise Delivery Date" name="initialPromiseDeliveryDate" >
+                        <Form.Item label="Initial Promise Delivery Date" name="initialPromiseDeliveryDate">
                             <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Cust. Expected Delivery Date" name="custExpectedDeliveryDate" >
+                        <Form.Item label="Cust. Expected Delivery Date" name="custExpectedDeliveryDate">
                             <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="saleType" label="Sale Type" >
+                        <Form.Item name="saleType" label="Sale Type">
                             <Select placeholder="Select" showSearch allowClear>
                                 <Option value="GST">GST</Option>
                             </Select>
@@ -78,7 +75,9 @@ function AddEditForm({ formData, formActionType }) {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Delivery At" name="deliveryAt" rules={[validateRequiredInputField('Delivery At')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Delivery At')} disabled={formActionType?.editMode ? true : false} />
+                            <Select placeholder="Select" showSearch allowClear>
+                                <Option value="deliveryAt">deliveryAt</Option>
+                            </Select>
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -101,6 +100,25 @@ function AddEditForm({ formData, formActionType }) {
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Mode Of Payment" name="modeOfPayment" rules={[validateRequiredInputField('Mode Of Payment')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('Mode Of Payment')} disabled={formActionType?.editMode ? true : false} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item name="financeArrangedBy" label="Finance Arranged By" initialValue={formData?.financeArrangedBy} rules={[validateRequiredSelectField('Finance Arranged By')]}>
+                            <Select placeholder="Select" showSearch allowClear>
+                                <Option value="financeArrangedBy">financeArrangedBy</Option>
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={formActionType?.editMode ? formData?.status : true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Exchange" valuePropName="checked">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={formActionType?.editMode ? formData?.status : true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Loyality Scheme" valuePropName="checked">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                         </Form.Item>
                     </Col>
                 </Row>

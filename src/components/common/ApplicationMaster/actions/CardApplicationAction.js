@@ -4,7 +4,7 @@ import { FiEdit, FiTrash } from 'react-icons/fi';
 
 import ApplicationActionsForm from './ApplicationActionsForms';
 
-import style from './../../Common.module.css';
+import styles from './../../Common.module.css';
 
 const { Text } = Typography;
 
@@ -64,7 +64,7 @@ const CardApplicationAction = (props) => {
 
     return (
         <>
-            <Card className={style.viewCardSize} key={actionId}>
+            <Card className={styles.viewCardSize} key={actionId}>
                 <Row align="middle">
                     <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
@@ -94,16 +94,16 @@ const CardApplicationAction = (props) => {
                                 </>
                             ) : (
                                 <>
-                                    {' '}
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Button type="link" onClick={onUpdate}>
-                                            Save
-                                        </Button>
-                                    </Col>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Button type="link" onClick={() => onCancel()}>
-                                            Cancel
-                                        </Button>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} styles={{ display: 'flex' }}>
+                                        <div className={styles.saveCancelBtn}>
+                                            <div className={styles.saveBtn} onClick={onUpdate}>
+                                                Save
+                                            </div>
+
+                                            <div className={styles.cancelBtn} onClick={() => onCancel()}>
+                                                Cancel
+                                            </div>
+                                        </div>
                                     </Col>
                                 </>
                             )}
