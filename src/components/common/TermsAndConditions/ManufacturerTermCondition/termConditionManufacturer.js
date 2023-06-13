@@ -8,6 +8,7 @@ import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditio
 import { tncDocumentTypeDataActions } from 'store/actions/data/termsConditions/tncDocumentType';
 import { tncLanguage } from 'store/actions/data/termsConditions/tncLanguage';
 import { termConditionManufacturerActions } from 'store/actions/data/termsConditions/termsConditionsManufacturerAction';
+import { changeHistoryManufacturerDataActions } from 'store/actions/data/termsConditions/changeHistoryManufacturerAction';
 import { changeHistoryDataActions } from 'store/actions/data/termsConditions/changeHistoryAction';
 import { ChangeHistory } from './changeHistoryForm';
 import { AddEditForm } from './AddEditForm';
@@ -29,7 +30,7 @@ const mapStateToProps = (state) => {
                 DocumentTypeData: { isLoaded: isDocumentTypeDataLoaded = false, data: documentTypeList },
                 LanguageData: { isLoaded: islanguageDataLoaded = false, data: languageList },
                 ManufacturerTermsConditions: { isLoaded: ManufacturerTermsConditionsDataLoaded = false, data: ManufacturerTermsConditionsData },
-                ChangeHistoryTermsConditions: { isLoaded: ChangeHistoryTermsConditionsDataLoaded = false, data: ChangeHistoryTermsConditionsData },
+                ChangeHistoryManufacturerTermsConditions: { isLoaded: ChangeHistoryTermsConditionsDataLoaded = false, data: ChangeHistoryTermsConditionsData },
             },
         },
         common: {
@@ -72,14 +73,15 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchTermCondition: termConditionManufacturerActions.fetchList,
             saveData: termConditionManufacturerActions.saveData,
-            changeHistoryData: changeHistoryDataActions.fetchList,
+            changeHistoryData: changeHistoryManufacturerDataActions.fetchList,
+            listShowChangeHistoryLoading: changeHistoryManufacturerDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, ManufacturerTermsConditionsDataLoaded, ManufacturerTermsConditionsData, isDataLoaded, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, changeHistoryData, ChangeHistoryTermsConditionsData, ChangeHistoryTermsConditionsDataLoaded, listShowLoading, productHierarchyList, documentTypeList, languageList, fetchList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, ManufacturerTermsConditionsDataLoaded, ManufacturerTermsConditionsData, isDataLoaded, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, changeHistoryData, ChangeHistoryTermsConditionsData, ChangeHistoryTermsConditionsDataLoaded, listShowLoading, listShowChangeHistoryLoading, productHierarchyList, documentTypeList, languageList, fetchList, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -177,26 +179,24 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     };
 
     const onFinish = (values, e) => {
-        const newVersion = values.version ? Number(values?.version) + 1.0 : 1.0;
-        let toDate = (values?.effectiveto).format('YYYY-MM-DD');
-        let fromDate = (values?.effectivefrom).format('YYYY-MM-DD');
-
-        const termConsitionText = values.termsAndCondition.editor.getData();
-        const data = { ...values, version: String(newVersion), termsconditiondescription: termConsitionText, effectivefrom: fromDate, effectiveto: toDate };
+        const recordId = formData?.id || '';
+        const newVersion = (values.version ? Number(values?.version) : 1.0).toFixed(1);
+        const termConsitionText = values.termsconditiondescription.editor.getData().replace(/[&/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
+        const data = { ...values, version: String(newVersion), id: recordId, termsconditiondescription: termConsitionText, effectivefrom: values?.effectivefrom?.format('YYYY-MM-DD'), effectiveto: values?.effectiveto?.format('YYYY-MM-DD') };
 
         const onSuccess = (res) => {
             listShowLoading(false);
             form.resetFields();
             setSelectedRecord({});
-            if (saveclick === true) {
-                setShowDataLoading(true);
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            } else {
-                setShowDataLoading(true);
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            }
+            // if (saveclick === true) {
+            setShowDataLoading(false);
+            setIsFormVisible(false);
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            // } else {
+            //     setShowDataLoading(true);
+            //     setIsFormVisible(true);
+            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            // }
         };
         setTimeout(() => {
             fetchTermCondition({ setIsLoading: listShowLoading, userId });
@@ -209,6 +209,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
 
         const requestData = {
             data: data,
+            method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -309,20 +310,10 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         }
     };
 
-    const extraParams = [
-        {
-            key: 'id',
-            title: 'id',
-            value: '',
-            name: 'id',
-        },
-    ];
-
     const showChangeHistoryList = () => {
         setButtonData({ cancelBtn: true });
         setIsHistoryVisible(true);
-        extraParams['0']['value'] = '1ebc0d34-409b-44f3-a7e3-ffb70f1cc888';
-        changeHistoryData({ setIsLoading: listShowLoading, userId, extraParams });
+        changeHistoryData({ setIsLoading: listShowLoading, userId });
     };
 
     const advanceFilterResultProps = {
