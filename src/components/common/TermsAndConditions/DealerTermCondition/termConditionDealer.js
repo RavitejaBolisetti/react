@@ -91,7 +91,6 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
 
-    const [forceFormReset, setForceFormReset] = useState(false);
     const [searchData, setSearchdata] = useState();
     const [refershData, setRefershData] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
@@ -121,12 +120,6 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         setRefershData(false);
         setShowDataLoading(false);
     };
-
-    useEffect(() => {
-        form.resetFields();
-        form.setFieldValue(formData);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [forceFormReset]);
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -183,7 +176,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, saveAndNewBtn: false }));
 
         record && setFormData(record);
         setIsFormVisible(true);
@@ -220,7 +213,6 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         const recordId = formData?.id || '';
         const newVersion = (values.version ? Number(values?.version) + 1.0 : 1.0).toFixed(1);
         const data = { ...values, version: String(newVersion), id: recordId };
-        // termConditionDescription
 
         const onSuccess = (res) => {
             listShowLoading(false);
@@ -303,7 +295,6 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         setIsChecked,
         formActionType,
         setFormData,
-        setForceFormReset,
         isLoadingOnSave,
         setIsViewModeVisible,
         productHierarchyList,
@@ -330,8 +321,6 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         effectiveTo,
         seteffectiveFrom,
         seteffectiveTo,
-        // CustomEditorLoad,
-        // setCustomEditorLoad,
     };
 
     const title = 'Term & Condition';

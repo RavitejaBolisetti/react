@@ -87,7 +87,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [forceFormReset, setForceFormReset] = useState(false);
     const [searchData, setSearchdata] = useState();
     const [refershData, setRefershData] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
@@ -108,8 +107,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [termsAndCondition, setTermsAndCondition] = useState(undefined);
 
-    
-
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
@@ -119,12 +116,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setRefershData(false);
         setShowDataLoading(false);
     };
-
-    useEffect(() => {
-        form.resetFields();
-        form.setFieldValue(formData);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [forceFormReset]);
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -159,7 +150,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, isViewModeVisible: buttonAction === VIEW_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, saveAndNewBtn: false }));
 
         if (buttonAction === 'view') {
             setIsViewModeVisible(true);
@@ -177,11 +168,12 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
             setIsFormVisible(true);
         }, 150);
     };
+
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-       tableData: searchData,
+        tableData: searchData,
     };
 
     const onFinish = (values, e) => {
@@ -260,7 +252,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     }, [formActionType]);
 
     const formProps = {
-        isVisible: true,
+        isVisible: isFormVisible,
         isViewModeVisible,
         saveclick,
         setsaveclick,
@@ -281,7 +273,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setIsChecked,
         formActionType,
         setFormData,
-        setForceFormReset,
         isLoadingOnSave,
         setIsViewModeVisible,
         productHierarchyList,

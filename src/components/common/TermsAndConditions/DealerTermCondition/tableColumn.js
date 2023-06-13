@@ -1,4 +1,4 @@
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
 import { Button, Space } from 'antd';
 import { FiEye } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
@@ -52,7 +52,7 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
         }),
         tblPrepareColumns({
             title: 'MFG T&C',
-            width: '5%',
+            width: '10%',
             sorter: false,
             render: (text, record, index) => {
                 return (
@@ -66,20 +66,7 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
                 );
             },
         }),
-        tblPrepareColumns({
-            title: 'View',
-            width: '5%',
-            sorter: false,
-            render: (text, record, index) => {
-                return (
-                    <Space>
-                        <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
-                            <FiEye />
-                        </Button>
-                    </Space>
-                );
-            },
-        })
+        tblActionColumn({ styles, handleButtonClick, width: '8%' })
     );
 
     return tableColumn;
