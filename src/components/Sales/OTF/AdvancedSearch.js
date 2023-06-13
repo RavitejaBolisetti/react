@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Form, Row, Select, Input, Button, DatePicker } from 'antd';
-
-import { validateRequiredSelectField,searchValidator } from 'utils/validation';
+import { Col, Form, Row, Select, Button, DatePicker } from 'antd';
 import { withModal } from 'components/withModal';
-
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
@@ -26,25 +23,25 @@ export const AdvancedSearchFrom = (props) => {
         setAdvanceSearchVisible(false);
         form.resetFields();
     };
-    const { isDivisionDataLoaded, divisionData } = props;
-    const { isDepartmentDataLoaded, departmentData } = props;
+    const { isDivisionDataLoaded } = props;
+    //const { departmentData } = props;
 
-    const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
+    //const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
     const handleDivisionChange = (division) => {
         handleFilterChange('divisionCode');
-        setFilteredDepartmentData(departmentData?.filter((i) => i?.parentKey === division));
+        //setFilteredDepartmentData(departmentData?.filter((i) => i?.parentKey === division));
     };
 
     const onFinishFailed = () => {
         return;
     };
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        className: styles.headerSelectField,
-    };
+    // const selectProps = {
+    //     optionFilterProp: 'children',
+    //     showSearch: true,
+    //     allowClear: true,
+    //     className: styles.headerSelectField,
+    // };
     return (
         <Form autoComplete="off" layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>

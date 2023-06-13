@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Col, Form, Row, Input, Select} from 'antd';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import  AdvanceOtfFilter  from './AdvanceOtfFilter';
 import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';
@@ -11,11 +10,8 @@ import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 
-import styles from 'components/common/Common.module.css';
 import { FilterIcon } from 'Icons';
 
-const { Search } = Input;
-const { Option } = Select;
 
 const otfSearchList = [{"id":"OTF No", "value":"OTF No."}, {"id":"Mobile No", "value":"Mobile No."}, {"id":"Customer Name", "value":"Customer Name"}];
 const otfStatusList = [{"key":"Invoiced", "value":"Invoiced"}, {"key":"Transferred", "value":"Transferred"}, {"key":"Cancelled", "value":"Cancelled"},
@@ -123,7 +119,7 @@ export const OtfMasterBase = (props) => {
             setFilterString({ ...filterString, advanceFilter: false, keyword: value });
         }
 
-        if(otfSearchSelected != undefined && otfSearchSelected && otfSearchSelected?.length >0)
+        if(otfSearchSelected !== undefined && otfSearchSelected && otfSearchSelected?.length >0)
         console.log('otfSearchSelected', otfSearchSelected);
     
         if (value === '') {
@@ -132,9 +128,9 @@ export const OtfMasterBase = (props) => {
             
         if(otfSearchSelected === 'OTF No')
             setOtfSearchResult(initialTableData.filter((data) => data.otfNumber.includes(value) ));
-        else if(otfSearchSelected == 'Mobile No')
+        else if(otfSearchSelected === 'Mobile No')
             setOtfSearchResult(initialTableData.filter((data) => data.mobileNumber.includes(value) ));
-        else if(otfSearchSelected == 'Customer Name')
+        else if(otfSearchSelected === 'Customer Name')
             setOtfSearchResult(initialTableData.filter((data) => data.customerName.includes(value) ));
 
     };
@@ -257,7 +253,7 @@ export const OtfMasterBase = (props) => {
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
-            const filterValue = type === 'text' ? value.target.value : value;
+            //const filterValue = type === 'text' ? value.target.value : value;
 
             if (name === 'code') {
                // setFilteredDepartmentData(departmentData?.filter((i) => i?.patentKey === filterValue));
