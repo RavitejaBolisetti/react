@@ -12,17 +12,17 @@ export default function DataTable({ isLoading, tableColumn, scroll = 'auto', tab
         setPagination({ ...pagination, showTotal });
     };
 
-    const tableSkeletonColumn = tableColumn?.map((item) => {
-        return { ...item, render: () => <InputSkeleton height={40} /> };
-    });
-
     const skeletonData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
     const tableColumnWithSrl = [tblSerialNumberColumn({ page: tablePagination?.current, pageSize: tablePagination?.pageSize, width: '5%' }), ...tableColumn];
 
+    const tableSkeletonColumn = tableColumnWithSrl?.map((item) => {
+        return { ...item, render: () => <InputSkeleton height={40} /> };
+    });
+
     return (
         <Table
-            columns={isLoading ? tableSkeletonColumn : srl ? tableColumnWithSrl : tableColumn}
+            columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl}
             dataSource={isLoading ? skeletonData : tableData}
             onChange={handleTableChange}
             pagination={!isLoading && tablePagination}
