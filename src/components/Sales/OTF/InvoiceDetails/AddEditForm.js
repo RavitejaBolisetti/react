@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Form, Row, Space, Collapse, Typography, Divider } from 'antd';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import styles from 'components/common/Common.module.css';
@@ -15,22 +15,17 @@ const AddEditFormMain = (props) => {
     const handleEdit = () => {
         setIsViewModeVisible(false);
     };
+    useEffect(() => {
+        console.log('activeKey', activeKey);
+    }, [activeKey]);
 
     const onChange = (values) => {
-        const isPresent = activeKey.includes(values);
-
-        if (isPresent) {
-            const newActivekeys = [];
-
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setactiveKey(newActivekeys);
-        } else {
-            setactiveKey([...activeKey, values]);
+        if (activeKey?.includes(values)) {
+            setactiveKey([]);
+            return;
         }
+        setactiveKey([]);
+        setactiveKey([values]);
     };
     const columns = [
         {
