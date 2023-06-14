@@ -929,6 +929,7 @@
 
 :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     background: #f2f2f2;
+    border-radius: 0 0 8px 8px;
 }
 
 .tableIcons {
@@ -1282,14 +1283,6 @@
     /* border: 2px solid ; */
 }
 
-.drawerBodyRight {
-    padding: 20px;
-    height: calc(100vh - 60px);
-    min-height: calc(100vh - 60px);
-    overflow: hidden;
-    overflow-y: auto;
-}
-
 .drawerBodyLeft :global .ant-collapse {
     background: #e6e6e6;
     border: 1px solid #b5b5b6;
@@ -1448,12 +1441,18 @@
     margin-bottom: 20px;
 }
 
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item-label>label {
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item-label>label,
+.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-vertical .ant-form-item-label>label {
     color: #545454;
     font-size: 14px;
     font-weight: 400;
     line-height: 24px;
     margin-bottom: 6px;
+}
+
+.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-vertical {
+    padding-top: 20px;
+    border-top: 1px solid #E6E6E6;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker {
@@ -1497,10 +1496,14 @@
 }
 
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
-    padding: 16px 20px;
+    padding: 20px 30px;
     background: #f2f2f2;
     border-radius: 8px;
-    border: 1px solid #f2f2f2;
+    /* border: 1px solid #f2f2f2; */
+}
+
+.drawerBodyRight :global .ant-collapse>.ant-collapse-item-active>.ant-collapse-header {
+    border-radius: 8px 8px 0 0;
 }
 
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-typography {
@@ -1518,8 +1521,20 @@
     border-radius: 4px;
 }
 
+.drawerBodyRight :global .ant-input-disabled,
+.drawerBodyRight :global .ant-input[disabled],
+.drawerBodyRight :global .ant-input-disabled:hover,
+.drawerBodyRight :global .ant-input[disabled]:hover {
+    border-color: #E6E6E6;
+}
+
 .drawerBodyRight :global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
     color: #ff3e5b;
+}
+
+.drawerBodyRight :global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item-active>.ant-collapse-header .ant-collapse-expand-icon {
+    color: #B5B5B6;
+    pointer-events: none;
 }
 
 .drawerBodyRight :global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon svg {
@@ -1530,6 +1545,40 @@
     font-size: 16px;
     font-weight: 700;
     line-height: 24px;
+}
+
+.drawerBodyRight :global .ant-collapse .ant-collapse-content {
+    border-top: none;
+}
+
+.drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+    background: #F2F2F2;
+    border-radius: 0 0 8px 8px;
+    padding: 0 30px;
+}
+
+.drawerBodyRight :global .ant-card .ant-card-body {
+    padding-bottom: 0;
+}
+
+.drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
+    border: 1px solid #0B0B0C;
+}
+
+.drawerBodyRight :global .ant-checkbox+span {
+    padding-inline-start: 4px;
+    color: #ff3e5b;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 23px;
+}
+
+.drawerBodyRight :global .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled) .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
+    border: 1px solid #ff3e5b;
+}
+
+.drawerBodyRight :global .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
+    background-color: #ff3e5b !important;
 }
 
 .userCircle {
