@@ -993,6 +993,10 @@
     display: none;
 }
 
+:global .ant-switch.ant-switch-checked .ant-switch-inner {
+    padding-inline-end: 0px
+}
+
 :global .ant-switch .ant-switch-inner {
     display: block;
     overflow: hidden;

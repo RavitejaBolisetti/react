@@ -289,8 +289,6 @@
     top: -142px !important;
 }
 
-@media (max-width: 768px) {
-    /* :global .ant-input-group {
-        margin-top: 20px;
-    } */
+:global .ant-table-wrapper .ant-table-tbody>tr>td {
+    word-break: break-word;
 }
