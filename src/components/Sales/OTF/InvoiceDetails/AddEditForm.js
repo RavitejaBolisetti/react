@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row, Space, Collapse, Typography, Divider } from 'antd';
-import { accordianExpandIcon } from 'utils/accordianExpandIcon';
+import { dynamicExpandIcon } from 'utils/accordianExpandIcon';
 import styles from 'components/common/Common.module.css';
 import { DataTable } from 'utils/dataTable';
 import { ViewInvoiceDetail } from './ViewInvoiceDetail';
@@ -117,6 +117,7 @@ const AddEditFormMain = (props) => {
         optionalColumns,
         data,
         columns,
+        dynamicExpandIcon,
     };
 
     return (
@@ -125,7 +126,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space size="middle" direction="vertical" className={styles.accordianContainer}>
-                            <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={activeKey}>
+                            <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
                                 <Panel
                                     header={
                                         <div className={styles.alignUser}>
@@ -143,7 +144,7 @@ const AddEditFormMain = (props) => {
                                     <DataTable removePagination={true} tableColumn={columns} tableData={data} />
                                 </Panel>
                             </Collapse>
-                            <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={activeKey}>
+                            <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
                                 <Panel
                                     header={
                                         <div className={styles.alignUser}>
