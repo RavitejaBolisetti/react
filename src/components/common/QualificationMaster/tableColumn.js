@@ -1,4 +1,4 @@
-import { tblPrepareColumns, tblSerialNumberColumn,  tblActionColumn } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
 import { Tag } from 'antd';
 
 import styles from 'components/common/Common.module.css';
@@ -6,7 +6,6 @@ import styles from 'components/common/Common.module.css';
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
-        tblSerialNumberColumn({ page, pageSize }),
         tblPrepareColumns({
             title: 'Qualification Code',
             dataIndex: 'qualificationCode',

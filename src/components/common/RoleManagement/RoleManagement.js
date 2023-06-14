@@ -269,13 +269,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
 
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'srl',
-            sorter: false,
-            render: (_t, _r, i) => i + 1,
-            width: '5%',
-        }),
-        tblPrepareColumns({
             title: 'Role ID',
             dataIndex: 'roleId',
             width: '20%',

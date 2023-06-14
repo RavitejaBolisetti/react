@@ -182,16 +182,8 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'srl',
-            sorter: false,
-            width: '5%',
-        }),
-
-        tblPrepareColumns({
             title: 'Control ID',
             dataIndex: 'controlName',
-            // render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
             width: '15%',
         }),
 
