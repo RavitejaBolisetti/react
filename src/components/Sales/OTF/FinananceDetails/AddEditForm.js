@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Card, Space, DatePicker } from 'antd';
-import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import dayjs from 'dayjs';
 
@@ -95,16 +94,20 @@ const AddEditFormMain = (props) => {
                                                 </Select>
                                             </Form.Item>
                                         </Col>
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="D.O. Number" name="donumber" data-testid="customerType" rules={[validateRequiredSelectField('D.O. number')]}>
-                                                <Input disabled={selected === 'dorecived1' ? false : true} placeholder={preparePlaceholderText('d.o. number')}></Input>
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="D.O. Date" name="dodate" data-testid="CustomerCategory" rules={[validateRequiredSelectField('D.O. date')]}>
-                                                <DatePicker disabled={selected === 'dorecived1' ? false : true} placeholder={preparePlaceholderSelect('date')} style={datePickerStyle} disabledDate={(date) => date > dayjs()} />
-                                            </Form.Item>
-                                        </Col>
+                                        {selected === 'dorecived1' && (
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item label="D.O. Number" name="donumber" data-testid="customerType">
+                                                    <Input placeholder={preparePlaceholderText('d.o. number')}></Input>
+                                                </Form.Item>
+                                            </Col>
+                                        )}
+                                        {selected === 'dorecived1' && (
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item label="D.O. Date" name="dodate" data-testid="CustomerCategory">
+                                                    <DatePicker placeholder={preparePlaceholderSelect('date')} style={datePickerStyle} disabledDate={(date) => date > dayjs()} />
+                                                </Form.Item>
+                                            </Col>
+                                        )}
                                     </Row>
                                 </Form>
                             </Card>

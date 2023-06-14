@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Card } from 'antd';
+import { Form } from 'antd';
 
 import AddEditForm from './AddEditForm';
 
@@ -17,13 +17,7 @@ const OtfDetailsMaster = (props) => {
         onFinishFailed,
     };
 
-    return (
-        <>
-            <Card>
-                <AddEditForm {...formProps} />
-            </Card>
-        </>
-    );
+    return <AddEditForm {...formProps} />;
 };
 
 export default OtfDetailsMaster;

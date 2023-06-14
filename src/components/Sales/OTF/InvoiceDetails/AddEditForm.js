@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Form, Row, Space, Collapse, Typography, Divider } from 'antd';
+import { Col, Row, Space, Collapse, Typography, Divider } from 'antd';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import styles from 'components/common/Common.module.css';
 import { DataTable } from 'utils/dataTable';
@@ -48,21 +48,21 @@ const AddEditFormMain = (props) => {
     const data = [
         {
             key: '1',
-            innum: 'CGST @18%',
-            indate: '18%',
-            instatus: '80,0000',
+            innum: 'INV-21-12-009',
+            indate: '02 June 2023',
+            instatus: 'Generated',
         },
         {
             key: '2',
-            innum: 'CGST @18%',
-            indate: '18%',
-            instatus: '80,0000',
+            innum: 'INV-21-12-009',
+            indate: '02 June 2023',
+            instatus: 'Generated',
         },
         {
             key: '3',
-            innum: 'CGST @18%',
-            indate: '18%',
-            instatus: '80,0000',
+            innum: 'INV-21-12-009',
+            indate: '02 June 2023',
+            instatus: 'Generated',
         },
     ];
 
@@ -89,21 +89,21 @@ const AddEditFormMain = (props) => {
     const optionalData = [
         {
             key: '1',
-            dlnum: 'Registration Charges',
-            dldate: '12%',
-            dlstatus: '80,0000',
+            dlnum: '81162112',
+            dldate: '11 June 2023',
+            dlstatus: 'Pending',
         },
         {
             key: '2',
-            dlnum: 'Registration Charges',
-            dldate: '18%',
-            dlstatus: '80,0000',
+            dlnum: '81162112',
+            dldate: '11 June 2023',
+            dlstatus: 'Approved',
         },
         {
             key: '3',
-            dlnum: 'Registration Charges',
-            dldate: '12%',
-            dlstatus: '80,0000',
+            dlnum: '81162112',
+            dldate: '11 June 2023',
+            dlstatus: '50,0000',
         },
     ];
     const viewProps = {
@@ -113,6 +113,10 @@ const AddEditFormMain = (props) => {
         styles,
         onCloseAction,
         handleEdit,
+        optionalData,
+        optionalColumns,
+        data,
+        columns,
     };
 
     return (
@@ -136,9 +140,7 @@ const AddEditFormMain = (props) => {
                                 >
                                     <Divider />
 
-                                    <Form autoComplete="off" layout="vertical">
-                                        <DataTable removePagination={true} tableColumn={columns} tableData={data} pagination={false} />
-                                    </Form>
+                                    <DataTable removePagination={true} tableColumn={columns} tableData={data} />
                                 </Panel>
                             </Collapse>
                             <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={activeKey}>
@@ -156,9 +158,7 @@ const AddEditFormMain = (props) => {
                                 >
                                     <Divider />
 
-                                    <Form autoComplete="off" layout="vertical">
-                                        <DataTable removePagination={true} tableColumn={optionalColumns} tableData={optionalData} pagination={false} />
-                                    </Form>
+                                    <DataTable removePagination={true} tableColumn={optionalColumns} tableData={optionalData} />
                                 </Panel>
                             </Collapse>
                         </Space>

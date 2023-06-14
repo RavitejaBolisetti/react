@@ -10,7 +10,8 @@ const FormProgressBar = (props) => {
         if (isVisible && leftTimeline) {
             const TimeLineClass = document.getElementsByClassName('ant-timeline-item');
             for (let i = 0; i < TimeLineClass.length; i++) {
-                if (TimeLineClass[i]['children']['1']['children']['0']['classList'].contains('Common_activeForm__PgAbl')) {
+                const ActiveForm = TimeLineClass[i]['children']['1']['children']['0']['classList']['0'];
+                if (ActiveForm!==undefined && ActiveForm.match('Common_activeForm')) {
                     TimeLineClass[i].firstChild.style.backgroundColor = '#ff3e5b';
                     TimeLineClass[i].lastChild.firstChild.style.color = '#ff3e5b';
                 } else {
@@ -40,9 +41,9 @@ const FormProgressBar = (props) => {
 
                 break;
 
-            case 'schemeDetails':
+            case 'schemeOfferDetails':
                 setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: true, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, invoiceDetails: false, addOnDetails: false });
-                setmoduleName('Scheme Details');
+                setmoduleName('Scheme and Offer Details');
 
                 break;
 
@@ -75,9 +76,9 @@ const FormProgressBar = (props) => {
                 setmoduleName('Loyalty scheme');
 
                 break;
-            case 'invoiceDetails':
+            case 'invoiceInformation':
                 setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, invoiceDetails: true, addOnDetails: false });
-                setmoduleName('Invoice/Delivery Information');
+                setmoduleName('Invoice Information');
 
                 break;
 
@@ -133,9 +134,8 @@ const FormProgressBar = (props) => {
                             <FaCheckCircle />
                         </div>
                     ),
-                    children: <p onClick={() => onHandle('schemeDetails')}>Scheme Details</p>,
+                    children: <p onClick={() => onHandle('schemeOfferDetails')}>Scheme and Offer Details</p>,
                 },
-
                 {
                     dot: leftTimeline?.insuranceDetails ? (
                         <BsRecordCircleFill className={styles.activeForm} />
@@ -167,6 +167,16 @@ const FormProgressBar = (props) => {
                     children: <p onClick={() => onHandle('exchangeVehicles')}>Exchange Vehicle</p>,
                 },
                 {
+                    dot: leftTimeline?.invoiceDetails ? (
+                        <BsRecordCircleFill className={styles.activeForm} />
+                    ) : (
+                        <div className={styles.inactiveForm}>
+                            <FaCheckCircle />
+                        </div>
+                    ),
+                    children: <p onClick={() => onHandle('invoiceInformation')}>Invoice Information</p>,
+                },
+                {
                     dot: leftTimeline?.referrals ? (
                         <BsRecordCircleFill className={styles.activeForm} />
                     ) : (
@@ -185,16 +195,6 @@ const FormProgressBar = (props) => {
                         </div>
                     ),
                     children: <p onClick={() => onHandle('loyaltyScheme')}>Loyalty Scheme</p>,
-                },
-                {
-                    dot: leftTimeline?.invoiceDetails ? (
-                        <BsRecordCircleFill className={styles.activeForm} />
-                    ) : (
-                        <div className={styles.inactiveForm}>
-                            <FaCheckCircle />
-                        </div>
-                    ),
-                    children: <p onClick={() => onHandle('invoiceDetails')}>Invoice/Delivery Information</p>,
                 },
                 {
                     dot: leftTimeline?.addOnDetails ? (
