@@ -124,7 +124,7 @@ const AddEditFormMain = (props) => {
             case 'Loyalty scheme': {
                 return <LoyaltySchemeMaster {...RenderElementCommonProps} />;
             }
-            case 'Invoice Details': {
+            case 'Invoice/Delivery Information': {
                 return <InvoiceDetailsMaster {...RenderElementCommonProps} />;
             }
             case 'Add On Details': {

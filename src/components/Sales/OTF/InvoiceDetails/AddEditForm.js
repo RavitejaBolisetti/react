@@ -141,7 +141,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space size="middle" direction="vertical" className={styles.accordianContainer}>
-                            <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
+                            <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={activeKey}>
                                 <Panel
                                     header={
                                         <div className={styles.alignUser}>
@@ -157,11 +157,11 @@ const AddEditFormMain = (props) => {
                                     <Divider />
 
                                     <Form autoComplete="off" layout="vertical">
-                                        <DataTable tableColumn={columns} tableData={data} pagination={false} />
+                                        <DataTable removePagination={true} tableColumn={columns} tableData={data} pagination={false} />
                                     </Form>
                                 </Panel>
                             </Collapse>
-                            <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
+                            <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={activeKey}>
                                 <Panel
                                     header={
                                         <div className={styles.alignUser}>
@@ -177,7 +177,7 @@ const AddEditFormMain = (props) => {
                                     <Divider />
 
                                     <Form autoComplete="off" layout="vertical">
-                                        <DataTable tableColumn={optionalColumns} tableData={optionalData} pagination={false} />
+                                        <DataTable removePagination={true} tableColumn={optionalColumns} tableData={optionalData} pagination={false} />
                                     </Form>
                                 </Panel>
                             </Collapse>
