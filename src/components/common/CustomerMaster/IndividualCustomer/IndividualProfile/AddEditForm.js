@@ -160,14 +160,14 @@ const AddEditForm = (props) => {
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('date')]}>
-                                                    <DatePicker disabled={isReadOnly} />
+                                                    <DatePicker disabled={isReadOnly} className={styles.datepicker} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Gender" name="gender" rules={[validateRequiredSelectField('gender')]}>
                                                     <Select value={null} placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
                                                         {gender?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
+                                                            <Option key={'ge' + item.key} value={item.key}>{item.name}</Option>
                                                         ))}
                                                     </Select>
                                                 </Form.Item>
@@ -176,7 +176,7 @@ const AddEditForm = (props) => {
                                                 <Form.Item label="Maritial Status" name="martialStatus">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('maritial status')} {...disabledProps}>
                                                         {maritialStatus?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
+                                                            <Option key={'ms' + item.key} value={item.key}>{item.name}</Option>
                                                         ))}
                                                     </Select>
                                                 </Form.Item>
@@ -185,14 +185,14 @@ const AddEditForm = (props) => {
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Anniversary Date" name="weddingAnniversary">
-                                                    <DatePicker styles={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                                    <DatePicker className={styles.datepicker} disabled={isReadOnly} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Occupation" name="occupation">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
                                                         {occupation?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
+                                                            <Option key={'occ' + item.key } value={item.key}>{item.name}</Option>
                                                         ))}
                                                     </Select>
                                                 </Form.Item>
