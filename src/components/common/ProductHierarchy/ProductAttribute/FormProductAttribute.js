@@ -36,6 +36,7 @@ function FormProductAttribute(props) {
                             allowClear
                             labelInValue
                             onChange={getValues}
+                            key={productHierarchyAttributeData.id}
                         />
                     </Form.Item>
                 </Col>
