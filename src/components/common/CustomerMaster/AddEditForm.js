@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Row, Collapse, Avatar, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-
+import './Demo.css'
 import { FaChevronDown } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
 
@@ -108,7 +108,7 @@ const AddEditFormMain = (props) => {
                                         <Panel
                                             header={
                                                 <>
-                                                    <Avatar size={40}>USER</Avatar>
+                                                    <div className="userProfile"/>
                                                     <Space direction="vertical">
                                                         <span>John Michael</span>
                                                         <span>C200615396</span>
