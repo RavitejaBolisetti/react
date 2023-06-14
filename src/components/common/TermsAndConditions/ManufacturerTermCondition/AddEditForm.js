@@ -57,16 +57,16 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={formActionType?.editMode || formActionType?.viewMode ? 'Revised' : 'Initial'} label="Document Category" name="documentCategory">
+                            <Form.Item initialValue={formActionType?.editMode || formActionType?.viewMode ? 'Revised' : 'Initial'} label="Document Category" name="documentcategory">
                                 <Input disabled={true} maxLength={10} placeholder={preparePlaceholderText('Document Category')} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={formData?.productCode} label="Product Hierarchy" name="productCode">
+                            <Form.Item initialValue={formData?.productcode} label="Product Hierarchy" name="productcode">
                                 <Select disabled={formActionType?.viewMode} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {productHierarchyList?.map((item) => (
-                                        <Option value={item.prodctCode}>{item.prodctLongName}</Option>
+                                        <Option value={item.prodctCode}>{item.prodctShrtName}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>

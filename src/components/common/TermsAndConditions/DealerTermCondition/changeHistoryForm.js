@@ -43,15 +43,15 @@ const ChangeHistoryMain = (props) => {
             width: '15%',
             render: (text) => convertDate(text),
         }),
+        tblPrepareColumns({
+            title: 'Version',
+            dataIndex: 'version',
+            width: '15%',
+        }),
 
         tblPrepareColumns({
             title: 'Description',
             dataIndex: 'termsconditiondescription',
-            width: '15%',
-        }),
-        tblPrepareColumns({
-            title: 'Version',
-            dataIndex: 'version',
             width: '15%',
         })
     );

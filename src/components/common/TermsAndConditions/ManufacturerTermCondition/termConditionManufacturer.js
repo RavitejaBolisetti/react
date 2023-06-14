@@ -180,8 +180,8 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     const onFinish = (values, e) => {
         const recordId = formData?.id || '';
         const newVersion = (values.version ? Number(values?.version) : 1.0).toFixed(1);
-        const termConsitionText = values.termsconditiondescription.editor.getData().replace(/[&/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
-        const data = { ...values, version: String(newVersion), id: recordId, termsconditiondescription: termConsitionText, effectivefrom: values?.effectivefrom?.format('YYYY-MM-DD'), effectiveto: values?.effectiveto?.format('YYYY-MM-DD') };
+        const termConditionText = typeof values.termsconditiondescription === 'string' ? values.termsconditiondescription : values.termsconditiondescription.editor.getData();
+        const data = { ...values, version: String(newVersion), id: recordId, termsconditiondescription: termConditionText, effectivefrom: values?.effectivefrom?.format('YYYY-MM-DD'), effectiveto: values?.effectiveto?.format('YYYY-MM-DD') };
 
         const onSuccess = (res) => {
             listShowLoading(false);
