@@ -16,7 +16,7 @@ const expandIcon = ({ isActive }) => <FaChevronDown size={18} rotate={isActive ?
 
 const AddEditFormMain = (props) => {
     const { onCloseAction } = props;
-    const { isViewModeVisible, setIsViewModeVisible } = props;
+    const { isViewModeVisible, setIsViewModeVisible,formActionType } = props;
     const { toggleButton, settoggleButton } = props;
     const [leftTimeline, setleftTimeline] = useState({
         AccountRelated: false,
@@ -38,6 +38,7 @@ const AddEditFormMain = (props) => {
     const CustomerProfileMasterProps = {
         onCloseAction,
         isViewModeVisible,
+        formActionType,
     };
 
     const CustomerDetailsMasterProps = {
