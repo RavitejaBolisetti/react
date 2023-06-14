@@ -19,7 +19,6 @@ const ViewDetailMain = (props) => {
         dorecived: 'Yes',
         donumber: '121121212123',
         dodate: '12/09/2022',
-        arrangedby: 'HDFC',
     };
 
     return (
@@ -37,7 +36,6 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="D.O. Recived">{financeForm?.dorecived}</Descriptions.Item>
                             <Descriptions.Item label="D.O. Number">{financeForm?.donumber}</Descriptions.Item>
                             <Descriptions.Item label="D.O. Date">{financeForm?.dodate}</Descriptions.Item>
-                            <Descriptions.Item label="Finance Arranged By">{financeForm?.arrangedby}</Descriptions.Item>
                         </Descriptions>
                     </div>
                 </Card>
