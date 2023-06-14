@@ -146,7 +146,7 @@ export const ListStateMasterBase = (props) => {
         if (isDataLoaded && data && userId && filterString) {
             const keyword = filterString?.keyword;
             const countryCode = filterString?.countryCode;
-            const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (countryCode ? filterFunction(countryCode)(item?.countryCode) : true));
+            const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true) && (countryCode ? filterFunction(countryCode)(item?.countryCode) : true));
             setSearchdata(filterDataItem);
             setShowDataLoading(false);
         } else {
