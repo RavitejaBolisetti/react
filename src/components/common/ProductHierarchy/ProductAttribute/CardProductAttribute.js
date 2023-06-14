@@ -73,9 +73,8 @@ const CardProductAttribute = (props) => {
     useEffect(() => {
         return () => {
             setProductAttributeEdit(false);
-            // eslint-disable-next-line no-lone-blocks
-            {
-                !view && setFormDecider(true);
+            if(!view){
+                setFormDecider(true);
             }
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
