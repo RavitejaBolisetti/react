@@ -23,10 +23,6 @@ const ViewDetailMain = (props) => {
 
     return (
         <Card style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
-            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                Referral Information
-            </Text>
-            <Divider />
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Customer ID">{customerForm?.customerId}</Descriptions.Item>
                 <Descriptions.Item label="Customer Type">{customerForm?.customerType}</Descriptions.Item>
