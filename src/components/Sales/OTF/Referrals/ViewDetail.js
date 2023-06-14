@@ -1,7 +1,5 @@
 import React from 'react';
-import { Divider, Card, Typography, Descriptions } from 'antd';
-
-const { Text } = Typography;
+import { Card, Descriptions } from 'antd';
 
 const ViewDetailMain = (props) => {
     const viewProps = {
