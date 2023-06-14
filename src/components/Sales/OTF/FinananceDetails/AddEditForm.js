@@ -40,7 +40,7 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space style={{ display: 'flex' }} size="middle" direction="vertical">
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
-                                <Form autoComplete="off" layout="vertical" form={financeForm}>
+                                <Form id="myform" autoComplete="off" layout="vertical" form={financeForm}>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Financier" name="financier" data-testid="customerType">

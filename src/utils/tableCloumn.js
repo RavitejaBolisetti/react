@@ -30,9 +30,9 @@ export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellips
     };
 };
 
-export const tblSerialNumberColumn = ({ page = 1, pageSize = DEFAULT_PAGE_SIZE, width = '5%', fixed = '' }) => {
+export const tblSerialNumberColumn = ({ page = 1, pageSize = DEFAULT_PAGE_SIZE, width = '5%', title = 'Srl.', fixed = '' }) => {
     return {
-        title: 'Srl.',
+        title,
         dataIndex: 'srl',
         render: (_, __, index) => (page - 1) * pageSize + (index + 1),
         fixed: fixed,

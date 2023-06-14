@@ -38,7 +38,7 @@ const ViewInvoiceDetailMain = (props) => {
                         >
                             <Divider />
 
-                            <DataTable removePagination={true} tableColumn={columns} tableData={data} />
+                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={columns} tableData={data} />
                         </Panel>
                     </Collapse>
                     <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={activeKey}>
@@ -56,7 +56,7 @@ const ViewInvoiceDetailMain = (props) => {
                         >
                             <Divider />
 
-                            <DataTable removePagination={true} tableColumn={optionalColumns} tableData={optionalData} />
+                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={optionalColumns} tableData={optionalData} />
                         </Panel>
                     </Collapse>
                 </Space>

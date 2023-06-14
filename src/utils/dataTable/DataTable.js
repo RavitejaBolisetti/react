@@ -3,7 +3,7 @@ import { Table } from 'antd';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { tblSerialNumberColumn } from 'utils/tableCloumn';
 
-export default function DataTable({ isLoading, removePagination = false, srl = true, tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
+export default function DataTable({ isLoading, removePagination = false, srl = true, srlTitle = 'Srl', tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
     const showTotal = (total) => total && `Total ${total} items`;
 
     const [tablePagination, setPagination] = useState({ pageSize: 10, current: 1, position: ['bottomRight'], showSizeChanger: true, hideOnSinglePage: false, showTotal });
@@ -19,7 +19,7 @@ export default function DataTable({ isLoading, removePagination = false, srl = t
 
     const skeletonData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
-    const tableColumnWithSrl = [tblSerialNumberColumn({ page: tablePagination?.current, pageSize: tablePagination?.pageSize, width: '5%' }), ...tableColumn];
+    const tableColumnWithSrl = [tblSerialNumberColumn({ page: tablePagination?.current, title: srlTitle, pageSize: tablePagination?.pageSize, width: '5%' }), ...tableColumn];
 
     return (
         <Table
