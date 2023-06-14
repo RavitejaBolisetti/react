@@ -151,9 +151,9 @@ const AddEditFormMain = (props) => {
                         <Row gutter={16}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Form.Item initialValue={formData?.partyCategory} disabled label="Party Category" name="partyCategory" placeholder={preparePlaceholderSelect('party category')} rules={[validateRequiredInputField('party category')]}>
-                                    <Select {...disabledProps} className={styles.headerSelectField} loading={!(typeData?.PTY_CAT?.length !== 0)} placeholder="Select" {...selectProps}>
+                                    <Select {...disabledProps} className={styles.headerSelectField} loading={!(typeData?.PTY_CAT?.length !== 0)} placeholder="Select" {...selectProps}  getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                         {typeData?.PTY_CAT?.map((item) => (
-                                            <Option value={item?.value}>{item?.value}</Option>
+                                            <Option key={'pty' + item?.value } value={item?.value}>{item?.value}</Option>
                                         ))}
                                     </Select>
                                 </Form.Item>
@@ -210,11 +210,6 @@ const AddEditFormMain = (props) => {
                             </Col>
                         </Row>
                         <Row gutter={16}>
-                            {/* <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item label="Locality" initialValue={formData?.locality} rules={[validateRequiredInputField('locality name')]} name="locality">
-                                    <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('locality name')} maxLength={50} />
-                                </Form.Item>
-                            </Col> */}
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Form.Item label="City" initialValue={formData?.city} rules={[validateRequiredInputField('city')]} name="city">
                                     <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('city')} maxLength={50} />
@@ -297,7 +292,6 @@ const AddEditFormMain = (props) => {
 
                 <DrawerFormButton {...buttonProps} />
             </Form>
-            {/* <AddressAddEdit {...addressAddEditFormProps} /> */}
         </>
     );
 };
