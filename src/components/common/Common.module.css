@@ -1470,6 +1470,10 @@
     border-radius: 8px;
     margin-bottom: 50px;
 }
+.marginBottom60
+{
+    margin-bottom: 60px;
+}
 .activeForm {
     color: #ff3e5b;
 }

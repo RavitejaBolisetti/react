@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Row, Collapse, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-import { FaChevronDown } from 'react-icons/fa';
+import { SlArrowDown } from 'react-icons/sl';
 import styles from 'components/common/Common.module.css';
 import { OTF_FORM_ACTION_TYPE } from 'constants/otfActionType';
 
@@ -21,7 +21,7 @@ import { InvoiceDetailsMaster } from './InvoiceDetails';
 // import CommonTimeline from './Timeline';
 
 const { Panel } = Collapse;
-const expandIcon = ({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />;
+const expandIcon = ({ isActive }) => <SlArrowDown size={18} rotate={isActive ? -90 : 90} />;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, isViewModeVisible, formActionType, isVisible } = props;
@@ -187,7 +187,7 @@ const AddEditFormMain = (props) => {
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.drawerBodyRight}>
                             <h2>{moduleName}</h2>
-                            {renderElement()}
+                            <div className={styles.marginBottom60}>{renderElement()}</div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Otfbuttons {...otfButtonProps} />
