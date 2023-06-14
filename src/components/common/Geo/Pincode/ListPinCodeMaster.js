@@ -2,10 +2,10 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
-import { convertDate } from 'utils/formatDateTime';
+// import { convertDate } from 'utils/formatDateTime';
 import { tableColumn } from './tableColumn';
 
-import { BASE_URL_GEO_GRAPHY_PINCODE_REPORT } from 'constants/routingApi';
+// import { BASE_URL_GEO_GRAPHY_PINCODE_REPORT } from 'constants/routingApi';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
@@ -66,15 +66,15 @@ const mapStateToProps = (state) => {
         isDistrictLoading,
         isStateLoading,
         isDistrictDataLoaded,
-        districtData: districtData?.filter((i) => i.status),
+        districtData,
         isTehsilDataLoaded,
         isTehsilLoading,
-        tehsilData: tehsilData?.filter((i) => i.status),
+        tehsilData,
         isCityDataLoaded,
         isCityLoading,
-        cityData: cityData?.filter((i) => i.status),
+        cityData,
         data,
-        stateData: stateData?.filter((i) => i.status),
+        stateData,
         isDataLoaded,
         isConfigDataLoaded,
         isConfigLoading,
@@ -112,7 +112,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 const ListPinCodeMasterBase = (props) => {
-    const { data, token, saveData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
 
     const { isStateDataLoaded, isStateLoading, stateData, listStateShowLoading, fetchStateLovList } = props;
@@ -208,31 +208,31 @@ const ListPinCodeMasterBase = (props) => {
         }
     };
 
-    const handleDownloadReport = () => {
-        const AuthStr = 'Bearer '.concat(token);
-        const headers = { Authorization: AuthStr, userId, accessToken: token, deviceType: 'W', deviceId: '' };
+    // const handleDownloadReport = () => {
+    //     const AuthStr = 'Bearer '.concat(token);
+    //     const headers = { Authorization: AuthStr, userId, accessToken: token, deviceType: 'W', deviceId: '' };
 
-        let sExtraParamsString = '?';
-        extraParams?.forEach((item, index) => {
-            sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
-        });
+    //     let sExtraParamsString = '?';
+    //     extraParams?.forEach((item, index) => {
+    //         sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+    //     });
 
-        sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+    //     sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
 
-        fetch(BASE_URL_GEO_GRAPHY_PINCODE_REPORT + sExtraParamsString, {
-            method: 'GET',
-            headers: headers,
-        }).then((response) => {
-            response.blob().then((blob) => {
-                let url = window.URL.createObjectURL(blob);
-                let a = document.createElement('a');
-                a.href = url;
-                a.download = 'pincode-' + convertDate(undefined, 'YYYY-MM-DD_HH:mm:ss') + '.csv';
-                a.click();
-                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: 'Your download should start automatically in a few seconds' });
-            });
-        });
-    };
+    //     fetch(BASE_URL_GEO_GRAPHY_PINCODE_REPORT + sExtraParamsString, {
+    //         method: 'GET',
+    //         headers: headers,
+    //     }).then((response) => {
+    //         response.blob().then((blob) => {
+    //             let url = window.URL.createObjectURL(blob);
+    //             let a = document.createElement('a');
+    //             a.href = url;
+    //             a.download = 'pincode-' + convertDate(undefined, 'YYYY-MM-DD_HH:mm:ss') + '.csv';
+    //             a.click();
+    //             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: 'Your download should start automatically in a few seconds' });
+    //         });
+    //     });
+    // };
 
     useEffect(() => {
         if (refershData) {
@@ -254,7 +254,7 @@ const ListPinCodeMasterBase = (props) => {
             if (filterString?.length > 0) {
                 const keyword = filterString?.pincode ? filterString?.pincode : filterString?.keyword;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.pincode) : true));
-                setSearchdata(filterDataItem);
+                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             }
         }
@@ -262,7 +262,7 @@ const ListPinCodeMasterBase = (props) => {
     }, [filterString, isDataLoaded, userId]);
 
     useEffect(() => {
-        setSearchdata(data);
+        setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
     }, [data]);
 
     const extraParams = [
@@ -589,8 +589,8 @@ const ListPinCodeMasterBase = (props) => {
         setFilterString,
         title,
         validator: searchValidatorPincode,
-        downloadReport: true,
-        handleDownloadReport,
+        // downloadReport: true,
+        // handleDownloadReport,
     };
     return (
         <>
