@@ -87,7 +87,6 @@ export const ListDistrictBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    const [page, setPage] = useState(1);
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
@@ -304,9 +303,8 @@ export const ListDistrictBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
-        setPage,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -377,7 +375,7 @@ export const ListDistrictBase = (props) => {
     };
 
     const title = 'District Name';
-    
+
     const advanceFilterResultProps = {
         advanceFilter: true,
         filterString,

@@ -56,7 +56,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
     const [searchData, setSearchdata] = useState(data);
     const [refershData, setRefershData] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [page, setPage] = useState(1);
+
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [filterString, setFilterString] = useState();
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
@@ -116,9 +116,8 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
-        setPage,
     };
     const onFinish = (values) => {
         const recordId = formData?.id || '';

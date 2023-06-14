@@ -39,8 +39,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('Redux state:', state);
-
     const moduleTitle = 'Term & Condition';
 
     let returnValue = {
@@ -81,19 +79,19 @@ const mapDispatchToProps = (dispatch) => ({
             fetchTermCondition: tncDealerSaveActions.fetchList,
             saveData: tncDealerSaveActions.saveData,
             changeHistoryData: changeHistoryDataActions.fetchList,
+            listShowChangeHistoryLoading: changeHistoryDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHistoryTermsConditionsData, DealerTermsConditionsDataLoaded, ChangeHistoryTermsConditionsDataLoaded, DealerTermsConditionsData, changeHistoryData, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, fetchManufacturerTermConditionDetail, listShowLoading, productHierarchyList, documentTypeList, languageList, showGlobalNotification, isLoading, isLoadingOnSave, ManufacturerData, manufacturerTncLoaded }) => {
+const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHistoryTermsConditionsData, DealerTermsConditionsDataLoaded, ChangeHistoryTermsConditionsDataLoaded, DealerTermsConditionsData, changeHistoryData, isDataLoaded, resetData, isDocumentTypeDataLoaded, islanguageDataLoaded, fetchProductList, fetchDocumentTypeList, fetchLanguageList, fetchManufacturerTermConditionDetail, listShowLoading, listShowChangeHistoryLoading, productHierarchyList, documentTypeList, languageList, showGlobalNotification, isLoading, isLoadingOnSave, ManufacturerData, manufacturerTncLoaded }) => {
     const [form] = Form.useForm();
     const [formActionType, setFormActionType] = useState('');
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
 
-    const [forceFormReset, setForceFormReset] = useState(false);
     const [searchData, setSearchdata] = useState();
     const [refershData, setRefershData] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
@@ -110,9 +108,8 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const [termsAndCondition, setTermsAndCondition] = useState();
     const [effectiveFrom, seteffectiveFrom] = useState('');
     const [effectiveTo, seteffectiveTo] = useState('');
-    const [CustomEditorLoad, setCustomEditorLoad] = useState(Math.random());
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [page, setPage] = useState(1);
+
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
@@ -126,24 +123,25 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     };
 
     useEffect(() => {
-        form.resetFields();
-        form.setFieldValue(formData);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [forceFormReset]);
-
-    useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
-            fetchTermCondition({ setIsLoading: listShowLoading, userId });
+            fetchDocumentTypeList({ setIsLoading: listShowLoading, userId });
+            fetchLanguageList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, userId]);
+    }, [islanguageDataLoaded, userId]);
+
+    useEffect(() => {
+        if (userId) {
+            fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [refershData, userId]);
 
     useEffect(() => {
         if (!isDocumentTypeDataLoaded && userId) {
             fetchDocumentTypeList({ setIsLoading: listShowLoading, userId });
             fetchLanguageList({ setIsLoading: listShowLoading, userId });
-            fetchTermCondition({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
@@ -179,7 +177,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, saveAndNewBtn: false }));
 
         record && setFormData(record);
         setIsFormVisible(true);
@@ -208,23 +206,22 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, handleManufacturerButtonClick, page?.current, page?.pageSize),
+        tableColumn: tableColumn(handleButtonClick, handleManufacturerButtonClick),
         tableData: searchData,
-        setPage,
     };
 
     const onFinish = (values, e) => {
         const recordId = formData?.id || '';
-        const newVersion = (values.version ? Number(values?.version) + 1.0 : 1.0).toFixed(1);
-        const data = { ...values, version: String(newVersion), id: recordId };
-        // termConditionDescription
+        const newVersion = (values.version ? Number(values?.version) : 1.0).toFixed(1);
+        const termConditionText = values.termConditionDescription.editor.getData().replace(/[&/\\#,+()$~%.'":*?<p></p>\n{}]/g, '');
+        const data = { ...values, version: String(newVersion), id: recordId, termConditionDescription: termConditionText, effectiveFrom: values?.effectiveFrom?.format('YYYY-MM-DD'), effectiveTo: values?.effectiveTo?.format('YYYY-MM-DD') };
 
         const onSuccess = (res) => {
             listShowLoading(false);
             form.resetFields();
             setSelectedRecord({});
             setIsFormVisible(false);
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
 
         setTimeout(() => {
@@ -253,6 +250,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     };
 
     const handleReferesh = (e) => {
+        setShowDataLoading(true);
         setRefershData(!refershData);
     };
 
@@ -299,7 +297,6 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         setIsChecked,
         formActionType,
         setFormData,
-        setForceFormReset,
         isLoadingOnSave,
         setIsViewModeVisible,
         productHierarchyList,
@@ -326,8 +323,6 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         effectiveTo,
         seteffectiveFrom,
         seteffectiveTo,
-        CustomEditorLoad,
-        setCustomEditorLoad,
     };
 
     const title = 'Term & Condition';
@@ -341,8 +336,8 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
     const showChangeHistoryList = () => {
         setButtonData({ cancelBtn: true });
         setIsHistoryVisible(true);
-        extraParams['0']['value'] = '1ebc0d34-409b-44f3-a7e3-ffb70f1cc888';
-        changeHistoryData({ setIsLoading: listShowLoading, userId, extraParams });
+        // extraParams['0']['value'] = '1ebc0d34-409b-44f3-a7e3-ffb70f1cc888';
+        changeHistoryData({ setIsLoading: listShowChangeHistoryLoading, userId });
     };
 
     const advanceFilterResultProps = {

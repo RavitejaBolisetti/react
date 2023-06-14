@@ -17,7 +17,7 @@ import { TermConditionDealerMasterPage } from './TermsAndConditions/DealerTermCo
 import { TermConditionManufacturerMasterPage } from './TermsAndConditions/ManufacturerTermCondition';
 import { DealerCompanyPage, DealerParentPage } from './Dealer';
 import { LessorCompanyMasterPage } from './LessorCompanyMaster';
-import { OtfReportsPage } from './OTF Reports';
+import { OtfReportsPage } from './OTFReports';
 
 export {
     ProductHierarchyPage,
