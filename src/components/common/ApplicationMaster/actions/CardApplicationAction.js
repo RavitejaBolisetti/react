@@ -85,7 +85,7 @@ const CardApplicationAction = (props) => {
                                         <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ status, actionName, actionId, actionMasterId, id })} />
                                     </Col>
                                     {!id ? (
-                                        <Col xs={6} sm={6} md={4} lg={4} xl={4} xxl={4}>
+                                        <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
                                             <Button disabled={isBtnDisabled} onClick={() => handleDeleteAction({ status, actionName, actionId })} type="link" icon={<FiTrash />}></Button>
                                         </Col>
                                     ) : (
