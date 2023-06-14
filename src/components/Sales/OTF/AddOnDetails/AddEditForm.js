@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Space, Collapse, Divider, Typography, Button } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { FaRegUserCircle } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
 import AccessoriesAddonMain from './AccessoriesInformation/AccessoriesAddonMain';
 import ShieldForm from './Shield/ShieldForm';
@@ -16,15 +15,13 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const serviceData = {
-    shieldFormData: { name: 'amc amc', shieldPrice: '500' },
-    amcFormData: { name: 'amc amc', amcPrice: '500' },
+    shieldFormData: { name: 'amc amc', price: '500' },
+    amcFormData: { name: 'amc amc', price: '500' },
     fmsFormData: {},
-    rsaFormData: { name: 'rsa rsa', rsaPrice: '300' },
+    rsaFormData: { name: 'rsa rsa', price: '300' },
 };
 
 function AddEditForm(props) {
-    // const [activeKey, setActiveKey] = useState('');
-    // const [canFormSave, setCanFormSave] = useState(false);
     const [addOnItemInfo, setAddOnItemInfo] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('');
 
@@ -37,25 +34,19 @@ function AddEditForm(props) {
     const handleEdit = () => {
         setIsViewModeVisible(false);
     };
-    // const onChange = (values) => {
-    //     setActiveKey((prev) => (prev === values ? '' : values));
-    // };
 
     const viewProps = {
-        // activeKey,
-        // setActiveKey,
-        // onChange,
         styles,
         onCloseAction,
         handleEdit,
     };
 
     const onAddAccessories = () => {};
-    const headerPropsFn = (headerText, funct, dataKey, activeAccordianKey) => {
+    const headerPropsFn = (headerText, funct, dataKey) => {
         return (
             <Space>
                 <Text strong> {headerText}</Text>
-                {( activeAccordianKey !== headerText && !serviceData[dataKey]?.name ) && (
+                {( openAccordian !== headerText && !serviceData[dataKey]?.name ) && (
                     <Button onClick={funct} icon={<PlusOutlined />} type="primary">
                         Add
                     </Button>
@@ -63,13 +54,13 @@ function AddEditForm(props) {
             </Space>
         );
     };
-console.log('keeeeeey', openAccordian)
+
     return isViewModeVisible ? (
         <ViewDetail {...viewProps} />
     ) : (
         <Space direction="vertical" size="small" className={styles.accordianContainer}>
-            <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                <Panel header={headerPropsFn('Accessories Information', onAddAccessories)} key="1">
+            <Collapse onChange={() => handleCollapse("Accessories Information")} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                <Panel header={headerPropsFn('Accessories Information', onAddAccessories, null )} key="Accessories Information">
                     <AccessoriesAddonMain addOnItemInfo={addOnItemInfo} setAddOnItemInfo={setAddOnItemInfo} />
                 </Panel>
             </Collapse>

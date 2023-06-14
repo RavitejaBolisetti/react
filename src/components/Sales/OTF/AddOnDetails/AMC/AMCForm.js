@@ -15,12 +15,12 @@ const AMCForm = ({data}) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="AMC" name="amc">
-                        <Input {...disableProps} placeholder={preparePlaceholderText('RSA')} />
+                        <Input initialValue={data?.name} {...disableProps} placeholder={preparePlaceholderText('RSA')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="AMC Rate" name="amcRate">
-                        <Input {...disableProps}  placeholder={preparePlaceholderText('amc rate')} />
+                        <Input initialValue={data?.price} {...disableProps}  placeholder={preparePlaceholderText('amc rate')} />
                     </Form.Item>
                 </Col>
             </Row>
