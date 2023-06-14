@@ -54,7 +54,6 @@ export const dataActions = (params) => {
                 if (res?.data) {
                     onSuccessAction && onSuccessAction(res);
                     dispatch(recieveData(type ? res?.data?.hierarchyAttribute : res?.data));
-                    // RECEIVE_FILTERED_DATA_ACTION_CONSTANT && dispatch(innerDataActions.fetchFilteredList({ setIsLoading: () => {}, userId }));
                 } else {
                     onError(LANGUAGE_EN.INTERNAL_SERVER_ERROR);
                 }
@@ -165,6 +164,7 @@ export const dataActions = (params) => {
 
             const onSuccessAction = (res) => {
                 onSuccess(res);
+                RECEIVE_FILTERED_DATA_ACTION_CONSTANT && dispatch(innerDataActions.fetchFilteredList({ setIsLoading: () => {}, userId }));
             };
 
             const apiCallParams = {
