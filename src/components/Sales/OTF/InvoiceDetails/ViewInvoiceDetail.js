@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Col, Form, Row, Space, Collapse, Typography, Divider } from 'antd';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import styles from 'components/common/Common.module.css';
@@ -10,14 +10,9 @@ const { Panel } = Collapse;
 
 const ViewInvoiceDetailMain = (props) => {
     const { onCloseAction, activeKey, setactiveKey, formActionType, setIsViewModeVisible } = props;
-    const [openAccordian, setOpenAccordian] = useState();
 
     const handleEdit = () => {
         setIsViewModeVisible(false);
-    };
-
-    const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     const onChange = (values) => {
@@ -37,11 +32,6 @@ const ViewInvoiceDetailMain = (props) => {
         }
     };
     const columns = [
-        {
-            title: 'Srl',
-            dataIndex: 'srl',
-            key: 'srl',
-        },
         {
             title: 'Invoice Number',
             dataIndex: 'innum',
@@ -81,11 +71,6 @@ const ViewInvoiceDetailMain = (props) => {
     ];
 
     const optionalColumns = [
-        {
-            title: 'Srl',
-            dataIndex: 'srl',
-            key: 'srl',
-        },
         {
             title: 'Delivery Note Number',
             dataIndex: 'dlnum',
@@ -140,7 +125,7 @@ const ViewInvoiceDetailMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space size="middle" direction="vertical" className={styles.accordianContainer}>
-                            <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={activeKey}>
+                            <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={activeKey}>
                                 <Panel
                                     header={
                                         <div className={styles.alignUser}>
@@ -160,7 +145,7 @@ const ViewInvoiceDetailMain = (props) => {
                                     </Form>
                                 </Panel>
                             </Collapse>
-                            <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={activeKey}>
+                            <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={activeKey}>
                                 <Panel
                                     header={
                                         <div className={styles.alignUser}>

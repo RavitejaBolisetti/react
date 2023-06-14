@@ -10,15 +10,10 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, formActionType, setIsViewModeVisible } = props;
-    const [openAccordian, setOpenAccordian] = useState();
     const [activeKey, setactiveKey] = useState([1]);
 
     const handleEdit = () => {
         setIsViewModeVisible(false);
-    };
-
-    const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     const onChange = (values) => {
@@ -38,11 +33,6 @@ const AddEditFormMain = (props) => {
         }
     };
     const columns = [
-        {
-            title: 'Srl',
-            dataIndex: 'srl',
-            key: 'srl',
-        },
         {
             title: 'Invoice Number',
             dataIndex: 'innum',
@@ -82,11 +72,6 @@ const AddEditFormMain = (props) => {
     ];
 
     const optionalColumns = [
-        {
-            title: 'Srl',
-            dataIndex: 'srl',
-            key: 'srl',
-        },
         {
             title: 'Delivery Note Number',
             dataIndex: 'dlnum',
@@ -141,7 +126,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space size="middle" direction="vertical" className={styles.accordianContainer}>
-                            <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={activeKey}>
+                            <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={activeKey}>
                                 <Panel
                                     header={
                                         <div className={styles.alignUser}>
@@ -161,7 +146,7 @@ const AddEditFormMain = (props) => {
                                     </Form>
                                 </Panel>
                             </Collapse>
-                            <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={activeKey}>
+                            <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={activeKey}>
                                 <Panel
                                     header={
                                         <div className={styles.alignUser}>
