@@ -226,7 +226,7 @@ const AddEditForm = (props) => {
                                                             <>
                                                                 <Button loading={mobileLoader} onClick={showModal} style={{ marginRight: '-3px', borderColor: '#d9d9d9', color: '#B5B5B6' }}>
                                                                     Send OTP
-                                                                </Button>{' '}
+                                                                </Button>
                                                                 <MarkAsDefaultModal {...modalProps} />
                                                             </>
                                                         }

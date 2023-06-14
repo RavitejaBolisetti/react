@@ -9,6 +9,8 @@ import styles from 'components/common/Common.module.css';
 import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
 import { CompanyAddressMaster, CompanyProfile, CompanyContact, AccountRelatedMaster } from './FirmOrCompany';
 import { CompanyCustomerDetailsMaster } from './FirmOrCompany';
+import { SupportingDocument } from './IndividualCustomer';
+
 import FormProgressBar from './FormProgressBar';
 import { Otfbuttons } from '../Button';
 
@@ -24,10 +26,11 @@ const AddEditFormMain = (props) => {
         AccountRelated: false,
         Address: false,
         Contacts: false,
-        CustomerDetails: true,
+        CustomerDetails: false,
         FamilyDetails: false,
         IndividualProfile: false,
         CustomerProfile: false,
+        SupportingDocument: true,
     });
 
     const EDIT_ACTION = OTF_FORM_ACTION_TYPE?.EDIT;
@@ -102,6 +105,8 @@ const AddEditFormMain = (props) => {
                 return <IndividualProfileMaster {...IndividualProfileMasterProps} />;
             } else if (leftTimeline?.FamilyDetails) {
                 return <FamilyDetails />;
+            } else if (leftTimeline?.SupportingDocument) {
+                return <SupportingDocument />;
             }
         } else {
             if (leftTimeline?.CustomerDetails) {
@@ -116,6 +121,8 @@ const AddEditFormMain = (props) => {
                 return <CompanyAddressMaster />;
             } else if (leftTimeline?.IndividualProfile) {
                 return <IndividualProfileMaster {...IndividualProfileMasterProps} />;
+            } else if (leftTimeline?.SupportingDocument) {
+                return <SupportingDocument />;
             }
         }
     };
@@ -130,7 +137,6 @@ const AddEditFormMain = (props) => {
                                 <Panel
                                     header={
                                         <>
-                                            
                                             <Space direction="vertical">
                                                 <p>
                                                     Name - <span>John Michael</span>
@@ -166,4 +172,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, { width: '90%' , footer: null});
+export const AddEditForm = withDrawer(AddEditFormMain, { width: '90%', footer: null });

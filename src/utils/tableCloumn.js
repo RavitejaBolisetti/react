@@ -67,7 +67,7 @@ export const tblActionColumn = ({ styles, handleButtonClick, width = '8%', fixed
         dataIndex: '',
         width,
         fixed: fixed,
-        render: (record) => [
+        render: (record) => {
             <Space wrap>
                 <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
                     <FiEye />
@@ -75,7 +75,7 @@ export const tblActionColumn = ({ styles, handleButtonClick, width = '8%', fixed
                 <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
                     <FiEdit />
                 </Button>
-            </Space>,
-        ],
+            </Space>;
+        },
     };
 };
