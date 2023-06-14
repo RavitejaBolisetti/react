@@ -96,12 +96,12 @@ const AddEditFormMain = (props) => {
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="D.O. Number" name="donumber" data-testid="customerType" rules={[validateRequiredSelectField('D.O. number')]}>
+                                            <Form.Item label="D.O. Number" name="donumber" data-testid="customerType">
                                                 <Input disabled={selected === 'dorecived1' ? false : true} placeholder={preparePlaceholderText('d.o. number')}></Input>
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="D.O. Date" name="dodate" data-testid="CustomerCategory" rules={[validateRequiredSelectField('D.O. date')]}>
+                                            <Form.Item label="D.O. Date" name="dodate" data-testid="CustomerCategory">
                                                 <DatePicker disabled={selected === 'dorecived1' ? false : true} placeholder={preparePlaceholderSelect('date')} style={datePickerStyle} disabledDate={(date) => date > dayjs()} />
                                             </Form.Item>
                                         </Col>
