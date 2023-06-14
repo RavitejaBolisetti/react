@@ -138,11 +138,6 @@
     margin-top: 12px;
 }
 
-:global .ant-form-vertical .ant-form-item-label {
-    margin: 0;
-    padding: 0px;
-}
-
 :global .ant-modal .ant-modal-content {
     padding: 20px;
     max-height: 300vh;
@@ -227,6 +222,7 @@
 :global .ant-form-vertical .ant-form-item-label {
     margin: 0;
     padding: 0px;
+    pointer-events: none;
 }
 
 :global .ant-switch .ant-switch-inner {

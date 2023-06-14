@@ -69,7 +69,7 @@ const ProductAttributeMaster = (props) => {
 
             {finalFormdata?.length > 0 &&
                 finalFormdata?.map((action) => {
-                    return <CardProductAttribute {...cardAttributeProps} attributeName={action?.attributeName?.label} attributeValue={action?.attributeValue} fromApi={action?.fromApi === true ? true : false} adPhProductAttributeMstId={action?.adPhProductAttributeMstId} id={action?.id} />;
+                    return <CardProductAttribute {...cardAttributeProps} attributeName={action?.attributeName?.label} attributeValue={action?.attributeValue} fromApi={action?.fromApi === true ? true : false} adPhProductAttributeMstId={action?.adPhProductAttributeMstId} id={action?.id} key={action?.id} />;
                 })}
         </>
     );
