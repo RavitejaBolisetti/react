@@ -41,13 +41,27 @@ const ViewDetailMain = (props) => {
         customerConsent: 'string',
         customerConsentForm: 'string',
     };
-    const uploadCustomerForm = {
+    const socialMedia = {
+        mmfsl:'ps@mahindra.com',
         facebookId: 'facebook@286',
         twitterId: 'twitter@234',
         instagramId: 'insta@123',
         youtubeChannel: 'youtube@1234',
-        teamBhp: 'string',
+        teamBhp: 'koncept@mahindra',
     };
+    const keyAccountDetailsForm = {
+        accountCode: 'CFG464787',
+        accountName: 'Koncept',
+        accountSegement: 'Individual',
+        accountClientName: 'Pal Singh',
+        accountMappingDate: '12-11-2022',
+    }
+    const authorityDetails = {
+        nameOfPerson: 'Pal Singh',
+        position: 'Manager',
+        companyName: 'Koncept',
+        remarks: 'This is remarks',
+    }
 
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
@@ -104,7 +118,6 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </Panel>
                 </Collapse>
-
                 <Collapse
                     expandIcon={() => {
                         if (activeKey.includes(2)) {
@@ -122,20 +135,84 @@ const ViewDetailMain = (props) => {
                             <div className={styles.alignUser}>
                                 <FaRegUserCircle className={styles.userCircle} />
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {' '}
-                                    Social Profile
+                                   Key Account Details
                                 </Text>
                             </div>
                         }
                         key="2"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="M1-MMFSL">{uploadCustomerForm?.mmfsl}</Descriptions.Item>
-                            <Descriptions.Item label="Facebook Link">{uploadCustomerForm?.facebookId}</Descriptions.Item>
-                            <Descriptions.Item label="Twitter Link">{uploadCustomerForm?.twitterId}</Descriptions.Item>
-                            <Descriptions.Item label="Instagram Link">{uploadCustomerForm?.instagramId}</Descriptions.Item>
-                            <Descriptions.Item label="Youtube Channel">{uploadCustomerForm?.youtubeChannel}</Descriptions.Item>
-                            <Descriptions.Item label="Team BHP Link">{uploadCustomerForm?.teamBhp}</Descriptions.Item>
+                            <Descriptions.Item label="Account Code">{keyAccountDetailsForm?.accountCode}</Descriptions.Item>
+                            <Descriptions.Item label="Account Name">{keyAccountDetailsForm?.accountName}</Descriptions.Item>
+                            <Descriptions.Item label="Account Segement">{keyAccountDetailsForm?.accountSegement}</Descriptions.Item>
+                            <Descriptions.Item label="Account Client Name">{keyAccountDetailsForm?.accountClientName}</Descriptions.Item>
+                            <Descriptions.Item label="Account Mapping Date">{keyAccountDetailsForm?.accountMappingDate}</Descriptions.Item>
+                        </Descriptions>
+                    </Panel>
+                </Collapse>
+                <Collapse
+                    expandIcon={() => {
+                        if (activeKey.includes(3)) {
+                            return <MinusOutlined className={styles.iconsColor} />;
+                        } else {
+                            return <PlusOutlined className={styles.iconsColor} />;
+                        }
+                    }}
+                    activeKey={activeKey}
+                    onChange={() => onChange(3)}
+                    expandIconPosition="end"
+                >
+                    <Panel
+                        header={
+                            <div className={styles.alignUser}>
+                                <FaRegUserCircle className={styles.userCircle} />
+                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                    Authority Details (Who Knows Whom)
+                                </Text>
+                            </div>
+                        }
+                        key="3"
+                    >
+                        <Descriptions {...viewProps}>
+                            <Descriptions.Item label="Name Of Person">{authorityDetails?.nameOfPerson}</Descriptions.Item>
+                            <Descriptions.Item label="Position">{authorityDetails?.position}</Descriptions.Item>
+                            <Descriptions.Item label="Company Name">{authorityDetails?.companyName}</Descriptions.Item>
+                            <Descriptions.Item label="Remarks">{authorityDetails?.remarks}</Descriptions.Item>
+                        </Descriptions>
+                    </Panel>
+                </Collapse>
+
+                <Collapse
+                    expandIcon={() => {
+                        if (activeKey.includes(5)) {
+                            return <MinusOutlined className={styles.iconsColor} />;
+                        } else {
+                            return <PlusOutlined className={styles.iconsColor} />;
+                        }
+                    }}
+                    activeKey={activeKey}
+                    onChange={() => onChange(5)}
+                    expandIconPosition="end"
+                >
+                    <Panel
+                        header={
+                            <div className={styles.alignUser}>
+                                <FaRegUserCircle className={styles.userCircle} />
+                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                    {' '}
+                                    Social Profile
+                                </Text>
+                            </div>
+                        }
+                        key="5"
+                    >
+                        <Descriptions {...viewProps}>
+                            <Descriptions.Item label="M1-MMFSL">{socialMedia?.mmfsl}</Descriptions.Item>
+                            <Descriptions.Item label="Facebook Link">{socialMedia?.facebookId}</Descriptions.Item>
+                            <Descriptions.Item label="Twitter Link">{socialMedia?.twitterId}</Descriptions.Item>
+                            <Descriptions.Item label="Instagram Link">{socialMedia?.instagramId}</Descriptions.Item>
+                            <Descriptions.Item label="Youtube Channel">{socialMedia?.youtubeChannel}</Descriptions.Item>
+                            <Descriptions.Item label="Team BHP Link">{socialMedia?.teamBhp}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>

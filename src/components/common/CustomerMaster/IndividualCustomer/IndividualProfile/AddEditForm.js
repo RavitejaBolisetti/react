@@ -15,6 +15,7 @@ import { MarkAsDefaultModal } from './MarkAsDefaultModal';
 
 const { Panel } = Collapse;
 const { Option } = Select;
+const { TextArea } = Input;
 const { Text } = Typography;
 const { Dragger } = Upload;
 
@@ -443,7 +444,6 @@ const AddEditForm = (props) => {
                                     </Form>
                                 </Panel>
                             </Collapse>
-
                             <Collapse
                                 expandIcon={() => {
                                     if (activeKey.includes(3)) {
@@ -461,11 +461,126 @@ const AddEditForm = (props) => {
                                         <div className={styles.alignUser}>
                                             <FaRegUserCircle className={styles.userCircle} />
                                             <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                                Upload Customer Form
+                                                Key Account details
                                             </Text>
                                         </div>
                                     }
                                     key="3"
+                                >
+                                    <Divider />
+                                    <Form autoComplete="off" layout="vertical" form={uploadCustomerForm}>
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Account Code" name="accountCode" initialValue={'CFG464787'}>
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter account code')} disabled />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Account Name" name="accountName" initialValue={'Koncept'}>
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Account Segement" name="accountSegement" initialValue={'Individual'}>
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} disabled />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Account Client Name" name="clientName" initialValue={'Pal Singh'}>
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} disabled />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Account Mapping Date" name="mapping date" initialValue={'12-11-2022'}>
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </Panel>
+                            </Collapse>
+                            <Collapse
+                                expandIcon={() => {
+                                    if (activeKey.includes(4)) {
+                                        return <MinusOutlined className={styles.iconsColor} />;
+                                    } else {
+                                        return <PlusOutlined className={styles.iconsColor} />;
+                                    }
+                                }}
+                                activeKey={activeKey}
+                                onChange={() => onChange(4)}
+                                expandIconPosition="end"
+                            >
+                                <Panel
+                                    header={
+                                        <div className={styles.alignUser}>
+                                            <FaRegUserCircle className={styles.userCircle} />
+                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                                Authority Details (Who Knowns Whom)
+                                            </Text>
+                                        </div>
+                                    }
+                                    key="4"
+                                >
+                                    <Divider />
+                                    <Form autoComplete="off" layout="vertical" form={uploadCustomerForm}>
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Name of Person" name="personName">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter name of person')}  />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Position" name="position" >
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter position')}  />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Company Name" name="companyName" >
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter company name')}  />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <Form.Item label="Remarks" name="remarks" >
+                                                    <TextArea placeholder={preparePlaceholderText('remarks')} showCount maxLength={100} autoSize={{ minRows: 2, maxRows: 5 }} />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </Panel>
+                            </Collapse>
+
+                            <Collapse
+                                expandIcon={() => {
+                                    if (activeKey.includes(5)) {
+                                        return <MinusOutlined className={styles.iconsColor} />;
+                                    } else {
+                                        return <PlusOutlined className={styles.iconsColor} />;
+                                    }
+                                }}
+                                activeKey={activeKey}
+                                onChange={() => onChange(5)}
+                                expandIconPosition="end"
+                            >
+                                <Panel
+                                    header={
+                                        <div className={styles.alignUser}>
+                                            <FaRegUserCircle className={styles.userCircle} />
+                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                                Upload Customer Form
+                                            </Text>
+                                        </div>
+                                    }
+                                    key="5"
                                 >
                                     <Divider />
                                     <Form autoComplete="off" layout="vertical">
@@ -494,18 +609,6 @@ const AddEditForm = (props) => {
                                 </Panel>
                             </Collapse>
                         </Space>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <Button danger onClick={onCloseAction}>
-                                    Cancel
-                                </Button>
-                            </Col>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <Button type="primary" onClick={onFinish}>
-                                    Save & Proceed
-                                </Button>
-                            </Col>
-                        </Row>
                     </Col>
                 </Row>
             ) : (

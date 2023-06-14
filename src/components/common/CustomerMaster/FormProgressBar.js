@@ -35,6 +35,10 @@ const FormProgressBar = (props) => {
                 setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: true });
                 break;
             }
+            case 'SupportingDocument': {
+                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: true });
+                break;
+            }
             default: {
                 setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: true, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false });
 
@@ -47,85 +51,37 @@ const FormProgressBar = (props) => {
             items={[
                 {
                     dot: <BsRecordCircleFill color="#ff3e5b" />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('details')} type="link" danger style={{ color: '#ff3e5b' }}>
-                                Customer Details
-                            </Button>
-                            <Progress percent={60} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('details')}>Customer Details</p>,
+                    
                 },
                 toggleButton?.company && {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('CustomerProfile')} type="link" danger>
-                                Company Profile
-                            </Button>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('CustomerProfile')}>Company Profile</p>,
                 },
                 toggleButton?.individual && {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('profile')} type="link" danger>
-                                Individual Profile
-                            </Button>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('profile')}>Individual Profile</p>,
                 },
                 {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('address')} type="link" danger>
-                                Address
-                            </Button>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('address')}>Address</p>,
                 },
                 {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('contact')} type="link" danger>
-                                Contact
-                            </Button>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('contact')}>Contact</p>,
                 },
                 toggleButton?.individual && {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('family')} type="link" danger>
-                                Family Details
-                            </Button>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('family')}>Family Details</p>,
                 },
                 {
                     dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('account')} type="link" danger>
-                                Account Related
-                            </Button>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('account')}>Account Related</p>,
                 },
 
                 {
                     dot: <FaCheckCircle />,
-                    label: 'Thank You',
+                    children: <p onClick={() => onHandle('SupportingDocument')}>Supporting Documents</p>,
                 },
             ]}
         />
