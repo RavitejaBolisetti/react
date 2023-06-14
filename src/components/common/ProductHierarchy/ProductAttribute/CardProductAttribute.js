@@ -23,9 +23,9 @@ const CardProductAttribute = (props) => {
 
     const onAttributeSave = (val) => { 
         setFormDecider(false);
-        const newFormData = editForm.getFieldsValue();
+        const newFormData = editForm?.getFieldsValue();
 
-        let status = editForm?.getFieldError("attributeName").length > 0 ? true : false;
+        let status = editForm?.getFieldError("attributeName")?.length > 0 ? true : false;
         if (status) {
             return showGlobalNotification({ notificationType: 'error', title: 'Duplicate', message: 'Can not Save having same Attribute Name', placement: 'bottomRight' });
         }
@@ -37,12 +37,14 @@ const CardProductAttribute = (props) => {
                 attributeName: { label: typeof newFormData?.attributeName === 'object' ? newFormData?.attributeName?.label : newFormData?.attributeName},
                 attributeValue: newFormData?.attributeValue,
                 fromApi: newFormData?.fromApi,
+                id: props?.id,
+                adPhProductAttributeMstId: props?.adPhProductAttributeMstId,
             };
             updatedValue?.splice(indx, 1, { ...formatData });
             return updatedValue;
         });
         
-        //setSKUAttributes(formatData);
+        setSKUAttributes(formatData);
         setFlag(1);
         setProductAttributeEdit(false);
         forceUpdate();
@@ -56,8 +58,6 @@ const CardProductAttribute = (props) => {
             return updatedValue;
         });
 
-        // const formatData = [];
-        // finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
         setSKUAttributes(formatData);
         setFlag(1);
         attributeForm.resetFields();
@@ -78,11 +78,12 @@ const CardProductAttribute = (props) => {
                 !view && setFormDecider(true);
             }
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setFormDecider, view]);
 
     formatData = [];
     useEffect( () => {
-        finalFormdata?.map((item) => formatData?.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key, fromApi: item?.fromApi === true ? true : false }));
+        finalFormdata?.map((item) => formatData?.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key, fromApi: item?.fromApi === true ? true : false, id: props?.id, }));
         if(!view){
             setSKUAttributes(formatData);
         } 
