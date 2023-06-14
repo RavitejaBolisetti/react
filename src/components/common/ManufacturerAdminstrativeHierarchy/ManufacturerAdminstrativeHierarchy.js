@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Input, Empty, Dropdown } from 'antd';
@@ -131,7 +131,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
             setFormData({ ...detailData, isChildAllowed });
             setSelectedTreeData({ ...detailData, hierarchyAttribueName, parentName: prodctShrtName });
-            setDocumentTypesList(detailData?.adminAuthority?.map(authority => ({...authority, isModified: false })) || []);
+            setDocumentTypesList(detailData?.adminAuthority?.map((authority) => ({ ...authority, isModified: false })) || []);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [detailData, selectedId]);
