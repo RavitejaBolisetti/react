@@ -61,11 +61,6 @@ const AddEditFormMain = (props) => {
     };
     const columns = [
         {
-            title: 'Srl',
-            dataIndex: 'srl',
-            key: 'srl',
-        },
-        {
             title: 'Description',
             dataIndex: 'description',
             key: 'description',
@@ -104,11 +99,6 @@ const AddEditFormMain = (props) => {
     ];
 
     const optionalColumns = [
-        {
-            title: 'Srl',
-            dataIndex: 'srl',
-            key: 'srl',
-        },
         {
             title: 'Service Name',
             dataIndex: 'name',
