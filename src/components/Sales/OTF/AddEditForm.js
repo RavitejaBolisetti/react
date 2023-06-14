@@ -24,7 +24,7 @@ const { Panel } = Collapse;
 const expandIcon = ({ isActive }) => <SlArrowDown size={18} rotate={isActive ? -90 : 90} />;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible, formActionType, isVisible } = props;
+    const { onCloseAction, isViewModeVisible, formActionType, setFormActionType, isVisible } = props;
     const [moduleName, setmoduleName] = useState('OTF Details');
     const EDIT_ACTION = OTF_FORM_ACTION_TYPE?.EDIT;
     const CANCEL_ACTION = OTF_FORM_ACTION_TYPE?.CANCEL;
@@ -48,18 +48,22 @@ const AddEditFormMain = (props) => {
     });
 
     const [buttonData, setbuttonData] = useState({
-        closeBtn: true,
         editBtn: true,
-        cancelBtn: true,
-        allotbtn: true,
-        invoiceBtn: true,
         transferBtn: true,
+        cancelBtn: true,
+        allotBtn: true,
+        unallotBtn: true,
+        invoiceBtn: true,
+        deliverBtn: true,
         nextBtn: true,
+        saveNext: false,
     });
 
     const handleOtfButtonClick = ({ buttonAction, record }) => {
         if (buttonAction === EDIT_ACTION) {
             console.log('edit');
+            setFormActionType({ editMode: buttonAction === EDIT_ACTION });
+            setbuttonData({ ...buttonData, editBtn: false, transferBtn: false, cancelBtn: false, allotBtn: false, unallotBtn: false, invoiceBtn: false, deliverBtn: false, nextBtn: false, saveNext: true });
         } else if (buttonAction === CANCEL_ACTION) {
             console.log('cancel');
         } else if (buttonAction === ALLOT_ACTION) {
@@ -77,6 +81,7 @@ const AddEditFormMain = (props) => {
         setbuttonData,
         onCloseAction,
         handleButtonClick: handleOtfButtonClick,
+        formActionType,
     };
 
     const TimelineProps = {
@@ -106,7 +111,7 @@ const AddEditFormMain = (props) => {
             case 'Vehicle Details': {
                 return <VehicleDetailsMaster {...RenderElementCommonProps} />;
             }
-            case 'Scheme Details': {
+            case 'Scheme and Offer Details': {
                 return <SchemeDetailsMaster {...RenderElementCommonProps} />;
             }
             case 'Insurance Details': {
@@ -124,7 +129,7 @@ const AddEditFormMain = (props) => {
             case 'Loyalty scheme': {
                 return <LoyaltySchemeMaster {...RenderElementCommonProps} />;
             }
-            case 'Invoice/Delivery Information': {
+            case 'Invoice Information': {
                 return <InvoiceDetailsMaster {...RenderElementCommonProps} />;
             }
             case 'Add On Details': {
