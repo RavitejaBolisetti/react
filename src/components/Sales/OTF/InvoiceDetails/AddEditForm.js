@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Form, Row, Space, Collapse, Typography, Divider } from 'antd';
+import { Col, Row, Space, Collapse, Typography, Divider } from 'antd';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import styles from 'components/common/Common.module.css';
 import { DataTable } from 'utils/dataTable';
@@ -113,6 +113,10 @@ const AddEditFormMain = (props) => {
         styles,
         onCloseAction,
         handleEdit,
+        optionalData,
+        optionalColumns,
+        data,
+        columns,
     };
 
     return (
@@ -136,9 +140,7 @@ const AddEditFormMain = (props) => {
                                 >
                                     <Divider />
 
-                                    <Form autoComplete="off" layout="vertical">
-                                        <DataTable removePagination={true} tableColumn={columns} tableData={data} pagination={false} />
-                                    </Form>
+                                    <DataTable removePagination={true} tableColumn={columns} tableData={data} />
                                 </Panel>
                             </Collapse>
                             <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={activeKey}>
@@ -156,9 +158,7 @@ const AddEditFormMain = (props) => {
                                 >
                                     <Divider />
 
-                                    <Form autoComplete="off" layout="vertical">
-                                        <DataTable removePagination={true} tableColumn={optionalColumns} tableData={optionalData} pagination={false} />
-                                    </Form>
+                                    <DataTable removePagination={true} tableColumn={optionalColumns} tableData={optionalData} />
                                 </Panel>
                             </Collapse>
                         </Space>

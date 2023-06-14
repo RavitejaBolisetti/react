@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Card, Space, DatePicker } from 'antd';
-import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import dayjs from 'dayjs';
 

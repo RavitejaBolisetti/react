@@ -1502,6 +1502,15 @@
     
     padding-bottom: 20px;
 }
+.ViewDataTabel
+{
+    background: red;
+
+}
+.drawerBodyRight  .accordianContainer :global .ant-table-wrapper .ant-table-thead >tr>th{
+    background: #f2f2f2 !important;
+
+}
 
 @media (max-width: 768px) {
     /* For mobile phones: */
