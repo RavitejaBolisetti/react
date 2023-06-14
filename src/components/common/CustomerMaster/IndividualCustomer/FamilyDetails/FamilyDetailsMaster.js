@@ -16,11 +16,19 @@ const FamilyDetailsBase = () => {
     }, []);
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
+    const [customerType, setCustomerType] = useState(null);
 
     const onFamilyFinish = (values) => {
+        console.log(values,'VALUES')
         setFamilyDetailsList((items)=>[...items,values]);
         familyForm.resetFields();
         setShowForm(false);
+
+        if(values?.relationship === 1){
+            setCustomerType(true);
+        } else if(values?.relationship === 0){
+            setCustomerType(false);
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -36,7 +44,7 @@ const FamilyDetailsBase = () => {
         onFamilyFinish,
         onFinishFailed,
         familyDetailList,
-        showForm, setShowForm,
+        showForm, setShowForm,customerType,
     };
 
     return (

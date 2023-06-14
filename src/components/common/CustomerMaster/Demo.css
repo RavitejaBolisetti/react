@@ -87,3 +87,10 @@
 .ant-descriptions .ant-descriptions-row >th{
     padding-bottom: 8px;
 }
+
+.flex100{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

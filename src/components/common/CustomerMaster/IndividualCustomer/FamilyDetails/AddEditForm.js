@@ -13,7 +13,7 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { familyForm, type, value, onChange, selectRef, onFamilyFinish, onFinishFailed, showForm, setShowForm } = props;
-    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList } = props;
+    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType } = props;
     const [activeKey, setactiveKey] = useState([null]);
 
     const handleEdit = () => {
@@ -41,9 +41,9 @@ const AddEditFormMain = (props) => {
         familyForm.resetFields();
     };
 
-    const onEdit = (values) =>{
-        console.log(values,'values')
-    }
+    const onEdit = (values) => {
+        console.log(values, 'values');
+    };
 
     const viewProps = {
         activeKey,
@@ -142,9 +142,9 @@ const AddEditFormMain = (props) => {
                                         <Collapse
                                             expandIcon={() => {
                                                 if (activeKey.includes(1)) {
-                                                    return <MinusOutlined style={{ color: '#FF3E5B' , width:'19.2px',height:'19.2px'}} />;
+                                                    return <MinusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
                                                 } else {
-                                                    return <PlusOutlined style={{ color: '#FF3E5B' , width:'19.2px',height:'19.2px'}} />;
+                                                    return <PlusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
                                                 }
                                             }}
                                             activeKey={activeKey}
@@ -154,14 +154,20 @@ const AddEditFormMain = (props) => {
                                         >
                                             <Panel
                                                 header={
-                                                    <div className={styles.alignUser}>
-                                                        <Typography className="heading">
-                                                            {item?.familyMembername} | {item?.relationship}
-                                                        </Typography>
-                                                        <div className="flex red" style={{margin:'0 0 0 1rem',cursor:'pointer'}}>
-                                                            <FiEdit onClick={onEdit(item)}/>
-                                                            <Typography className="red heading" style={{fontSize:'14px',margin:'0 0 0 0.5rem'}}>Edit</Typography>
+                                                    <div className="flex100">
+                                                        <div className={styles.alignUser}>
+                                                            <Typography className="heading">
+                                                                {item?.familyMembername} | {item?.relationship}
+                                                            </Typography>
+                                                            <div className="flex red" style={{ margin: '0 0 0 1rem', cursor: 'pointer' }}>
+                                                                <FiEdit onClick={onEdit(item)} />
+                                                                <Typography className="red heading" style={{ fontSize: '14px', margin: '0 0 0 0.5rem' }}>
+                                                                    Edit
+                                                                </Typography>
+                                                            </div>
                                                         </div>
+
+                                                        {customerType ? <Typography>M&M user </Typography> : !customerType ? <Typography>Non-M&M user</Typography> : null}
                                                     </div>
                                                 }
                                                 key="1"
@@ -169,8 +175,7 @@ const AddEditFormMain = (props) => {
                                                 <ViewDetail mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} familyMembername={item?.familyMembername} relationship={item?.relationship} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} />
                                             </Panel>
                                         </Collapse>
-                                    ))
-                                }
+                                    ))}
                             </Space>
                         </Card>
                     </Col>
