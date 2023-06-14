@@ -103,7 +103,7 @@ const FormProgressBar = (props) => {
                     ) : (
                         <FaCheckCircle />
                     ),
-                    children: <p onClick={() => onHandle('otfDetails')}>Otf Details</p>,
+                    children: <p onClick={() => onHandle('otfDetails')}>OTF Details</p>,
                 },
                 {
                     dot: leftTimeline?.customerDetails ? (

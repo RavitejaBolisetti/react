@@ -223,7 +223,7 @@ export const OtfMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('Otf Details'),
+        titleOverride: drawerTitle.concat('OTF Details'),
         tableData: searchData,
         buttonData,
         setButtonData,
