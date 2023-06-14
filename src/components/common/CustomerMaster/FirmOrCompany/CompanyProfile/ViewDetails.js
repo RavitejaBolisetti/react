@@ -165,6 +165,29 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </Panel>
                 </Collapse>
+                <Collapse
+                    expandIcon={() => {
+                        if (activeKey.includes(5)) {
+                            return <MinusOutlined className={style.iconsColor} />;
+                        } else {
+                            return <PlusOutlined className={style.iconsColor} />;
+                        }
+                    }}
+                    activeKey={activeKey}
+                    onChange={() => onChange(5)}
+                    expandIconPosition="end"
+                >
+                    <Panel
+                        header={
+                            <div className={style.alignUser}>
+                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                    Upload Customer Form
+                                </Text>
+                            </div>
+                        }
+                        key="5"
+                    ></Panel>
+                </Collapse>
             </Space>
         </div>
     );
