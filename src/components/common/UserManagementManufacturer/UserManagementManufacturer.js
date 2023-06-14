@@ -141,7 +141,7 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
         if (isDataLoaded && qualificationData) {
             if (filterString) {
                 const filterDataItem = qualificationData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.qualificationName));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
             } else {
                 setSearchdata(qualificationData?.map((el, i) => ({ ...el, srl: i + 1 })));
             }
@@ -281,7 +281,6 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
     };
 
     const onFinish = (values, e) => {
-      
         const onSuccess = (res) => {
             onSaveShowLoading(false);
             form.resetFields();

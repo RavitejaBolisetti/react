@@ -254,7 +254,7 @@ const ListPinCodeMasterBase = (props) => {
             if (filterString?.length > 0) {
                 const keyword = filterString?.pincode ? filterString?.pincode : filterString?.keyword;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.pincode) : true));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
                 setShowDataLoading(false);
             }
         }
@@ -262,7 +262,7 @@ const ListPinCodeMasterBase = (props) => {
     }, [filterString, isDataLoaded, userId]);
 
     useEffect(() => {
-        setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+        setSearchdata(data);
     }, [data]);
 
     const extraParams = [

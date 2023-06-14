@@ -139,10 +139,10 @@ export const ListDistrictBase = (props) => {
                 const keyword = filterString?.keyword;
                 const state = filterString?.stateCode;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.districtCode) || filterFunction(keyword)(item?.name) || filterFunction(keyword)(item?.code) : true) && (state ? filterFunction(state)(item?.stateCode) : true));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
                 setShowDataLoading(false);
             } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data);
                 setShowDataLoading(false);
             }
         }

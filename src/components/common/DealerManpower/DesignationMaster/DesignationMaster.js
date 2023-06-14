@@ -81,7 +81,7 @@ export const DesignationMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    
+
     const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
     const [filteredRoleData, setFilteredRoleData] = useState([]);
     const [formData, setFormData] = useState([]);
@@ -138,10 +138,10 @@ export const DesignationMasterBase = (props) => {
                 const department = filterString?.departmentCode;
                 const role = filterString?.roleCode;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.designationCode) || filterFunction(keyword)(item?.designationDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true) && (role ? filterFunction(role)(item?.roleCode) : true));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
                 setShowDataLoading(false);
             } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data);
                 setShowDataLoading(false);
             }
         }
@@ -309,7 +309,7 @@ export const DesignationMasterBase = (props) => {
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-       tableData: searchData,
+        tableData: searchData,
     };
 
     const onAdvanceSearchCloseAction = () => {

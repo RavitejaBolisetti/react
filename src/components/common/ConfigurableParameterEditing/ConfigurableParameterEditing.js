@@ -103,7 +103,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         if (isDataLoaded && configData && userId) {
             if (filterString) {
                 const filterDataItem = configData?.filter((item) => filterFunction(filterString)(item?.controlName) || filterFunction(filterString)(item?.controlDescription));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
             } else {
                 setSearchdata(configData?.map((el, i) => ({ ...el, srl: i + 1 })));
             }
