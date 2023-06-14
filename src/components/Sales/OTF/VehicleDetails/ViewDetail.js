@@ -114,7 +114,7 @@ const ViewDetailMain = (props) => {
                     }
                     key="2"
                 >
-                    <DataTable tableColumn={columns} tableData={data} pagination={false} />
+                    <DataTable tableColumn={columns} tableData={data} pagination={false} removePagination={true} />
                 </Panel>
             </Collapse>
 
@@ -140,7 +140,7 @@ const ViewDetailMain = (props) => {
                     }
                     key="3"
                 >
-                    <DataTable tableColumn={optionalColumns} tableData={optionalData} pagination={false} />
+                    <DataTable tableColumn={optionalColumns} tableData={optionalData} pagination={false} removePagination={true} />
                 </Panel>
             </Collapse>
         </Space>
