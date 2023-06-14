@@ -16,20 +16,12 @@ const ViewInvoiceDetailMain = (props) => {
     };
 
     const onChange = (values) => {
-        const isPresent = activeKey.includes(values);
-
-        if (isPresent) {
-            const newActivekeys = [];
-
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setactiveKey(newActivekeys);
-        } else {
-            setactiveKey([...activeKey, values]);
+        if (activeKey?.includes(values)) {
+            setactiveKey([]);
+            return;
         }
+        setactiveKey([]);
+        setactiveKey([values]);
     };
     const columns = [
         {
@@ -52,21 +44,21 @@ const ViewInvoiceDetailMain = (props) => {
     const data = [
         {
             key: '1',
-            innum: 'CGST @18%',
-            indate: '18%',
-            instatus: '80,0000',
+            innum: 'INV-21-12-009',
+            indate: '02 June 2023',
+            instatus: 'Generated',
         },
         {
             key: '2',
-            innum: 'CGST @18%',
-            indate: '18%',
-            instatus: '80,0000',
+            innum: 'INV-21-12-009',
+            indate: '02 June 2023',
+            instatus: 'Generated',
         },
         {
             key: '3',
-            innum: 'CGST @18%',
-            indate: '18%',
-            instatus: '80,0000',
+            innum: 'INV-21-12-009',
+            indate: '02 June 2023',
+            instatus: 'Generated',
         },
     ];
 
@@ -93,21 +85,21 @@ const ViewInvoiceDetailMain = (props) => {
     const optionalData = [
         {
             key: '1',
-            dlnum: 'Registration Charges',
-            dldate: '12%',
-            dlstatus: '80,0000',
+            dlnum: '81162112',
+            dldate: '11 June 2023',
+            dlstatus: 'Pending',
         },
         {
             key: '2',
-            dlnum: 'Registration Charges',
-            dldate: '18%',
-            dlstatus: '80,0000',
+            dlnum: '81162112',
+            dldate: '11 June 2023',
+            dlstatus: 'Approved',
         },
         {
             key: '3',
-            dlnum: 'Registration Charges',
-            dldate: '12%',
-            dlstatus: '80,0000',
+            dlnum: '81162112',
+            dldate: '11 June 2023',
+            dlstatus: '50,0000',
         },
     ];
     const viewProps = {
