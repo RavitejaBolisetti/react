@@ -1510,7 +1510,7 @@
 }
 
 .iconsColor {
-    color: #ff3e5b;
+    color: #ff3e5b !important;
 }
 
 .ExchangeCard {

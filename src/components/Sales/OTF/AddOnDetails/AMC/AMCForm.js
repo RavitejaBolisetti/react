@@ -1,13 +1,13 @@
 import React from 'react';
-import { Row, Col, Input, Form } from 'antd';
+import { Row, Col, Input, Form, Button } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-const AMCForm = () => {
-    const disableProps = { disabled: true };
+const AMCForm = ({data}) => {
+    const disableProps = { disabled: !!data?.name };
     const { form } = Form.useForm();
 
     const onFieldsChange = () => {};
-    const onFinish = (data) => {};
+    const onFinish = (values) => { console.log(values)};
     const onFinishFailed = () => {};
 
     return (
@@ -24,6 +24,13 @@ const AMCForm = () => {
                     </Form.Item>
                 </Col>
             </Row>
+            {!data?.name && (
+                <Row gutter={20}>
+                    <Button htmlType="submit" danger type="primary">
+                        Save
+                    </Button>
+                </Row>
+            )}
           
         </Form>
     );
