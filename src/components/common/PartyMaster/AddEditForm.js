@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, AutoComplete } from 'antd';
 
-import { validateRequiredInputField, validatePincodeField, validateMobileNoField, validatePanField, validateGSTIN, validateNumberOnly, valueBetween0to100 } from 'utils/validation';
+import { validateRequiredInputField, validatePincodeField, validateMobileNoField, validatePanField, validateGSTIN, validationNumber, valueBetween0to100 } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -151,9 +151,11 @@ const AddEditFormMain = (props) => {
                         <Row gutter={16}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Form.Item initialValue={formData?.partyCategory} disabled label="Party Category" name="partyCategory" placeholder={preparePlaceholderSelect('party category')} rules={[validateRequiredInputField('party category')]}>
-                                    <Select {...disabledProps} className={styles.headerSelectField} loading={!(typeData?.PTY_CAT?.length !== 0)} placeholder="Select" {...selectProps}  getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                                    <Select {...disabledProps} className={styles.headerSelectField} loading={!(typeData?.PTY_CAT?.length !== 0)} placeholder="Select" {...selectProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                         {typeData?.PTY_CAT?.map((item) => (
-                                            <Option key={'pty' + item?.value } value={item?.value}>{item?.value}</Option>
+                                            <Option key={'pty' + item?.value} value={item?.value}>
+                                                {item?.value}
+                                            </Option>
                                         ))}
                                     </Select>
                                 </Form.Item>
@@ -265,7 +267,7 @@ const AddEditFormMain = (props) => {
                         </Row>
                         <Row gutter={16}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item initialValue={formData?.partsDiscount} label="Parts Discount(%)" name="partsDiscount" rules={[validateRequiredInputField('part discount'), validateNumberOnly('part discount'), { validator: (value) => valueBetween0to100(value, 'part discount') }]}>
+                                <Form.Item initialValue={formData?.partsDiscount} label="Parts Discount(%)" name="partsDiscount" rules={[validateRequiredInputField('part discount'), validationNumber('part discount'), { validator: (value) => valueBetween0to100(value, 'part discount') }]}>
                                     <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('part discount')} maxLength={3} />
                                 </Form.Item>
                             </Col>
@@ -277,7 +279,7 @@ const AddEditFormMain = (props) => {
                         </Row>
                         <Row gutter={16}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item label="Credit Days" initialValue={formData?.creditDays} rules={[validateRequiredInputField('credit days'), validateNumberOnly('credit days')]} name="creditDays">
+                                <Form.Item label="Credit Days" initialValue={formData?.creditDays} rules={[validateRequiredInputField('credit days'), validationNumber('credit days')]} name="creditDays">
                                     <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('credit days')} maxLength={4} />
                                 </Form.Item>
                             </Col>
