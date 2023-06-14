@@ -9,7 +9,6 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, isBtnDisabled, setFormBtnDisab
     const [addOnform] = Form.useForm();
 
     const addOnformOnFinish = (val) => {
-        console.log('val', val);
         setAddOnItemInfo((prev) => [...prev, val]);
         addOnform.resetFields();
         forceUpdate();
