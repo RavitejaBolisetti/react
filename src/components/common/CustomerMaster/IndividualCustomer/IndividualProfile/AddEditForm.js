@@ -1,17 +1,15 @@
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, Switch, DatePicker, Checkbox, Divider } from 'antd';
+import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider } from 'antd';
 import { useEffect, useState } from 'react';
 import Svg from 'assets/images/Filter.svg';
 
-import { validateAadhar, validateDrivingLicenseNo, validateEmailField, validateGSTIN, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId } from 'utils/validation';
+import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { gender, income, maritialStatus, memberShip, occupation, religion, title, tongue, vehicle } from 'constants/modules/CustomerMaster/individualProfile';
+import { applicationCategory, applicationSubCategory, customerCategory, gender, income, maritialStatus, memberShip, occupation, religion, tongue, vehicle } from 'constants/modules/CustomerMaster/individualProfile';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { BiLockAlt } from 'react-icons/bi';
 
 import styles from 'components/common/Common.module.css';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { ViewDetail } from './ViewIndividualProfileDetails';
-import { MarkAsDefaultModal } from './MarkAsDefaultModal';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -20,7 +18,7 @@ const { Text } = Typography;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { onCloseAction, isViewModeVisible } = props;
+    const { isViewModeVisible } = props;
     const { isReadOnly = false } = props;
     const [individualForm] = Form.useForm();
     const [uploadCustomerForm] = Form.useForm();
@@ -31,12 +29,7 @@ const AddEditForm = (props) => {
     const [individualFormValues, setIndividualFormValues] = useState();
     const [uploadCustomerFormValues, setUploadCustomerFormValues] = useState();
     const [done, setDone] = useState();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [mobileLoader, setmobileLoader] = useState(false);
-
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
+    const [customer, setCustomer] = useState(false);
 
     useEffect(() => {
         setFinalFormData({ ...FinalFormData, individualForm: individualFormValues, uploadCustomerForm: uploadCustomerFormValues });
@@ -73,6 +66,9 @@ const AddEditForm = (props) => {
         individualForm.validateFields();
         uploadCustomerForm.validateFields();
     };
+    const onCustomerCategoryChange = (values) => {
+        setCustomer(values);
+    }
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
@@ -87,23 +83,6 @@ const AddEditForm = (props) => {
             setactiveKey(newActivekeys);
         } else {
             setactiveKey([...activeKey, values]);
-        }
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-        setmobileLoader(false);
-    };
-    const handleNumberValidation = (event) => {
-        const Mno = event.target.value;
-        const regex = new RegExp('^([5-9]){1}([0-9]){9}$/');
-        if (Mno?.length === 10 && regex.test(Mno)) {
-            setmobileLoader(true);
-            setTimeout(() => {
-                setIsModalOpen(true);
-            }, 1000);
-        } else {
-            setmobileLoader(false);
         }
     };
 
@@ -129,13 +108,6 @@ const AddEditForm = (props) => {
         activeKey,
         onChange,
         styles,
-    };
-    const modalProps = {
-        isVisible: isModalOpen,
-        icon: <BiLockAlt />,
-        titleOverride: 'Mobile Number Validation',
-        closable: false,
-        onCloseAction: handleCancel,
     };
 
     const disabledProps = { disabled: isReadOnly };
@@ -187,86 +159,15 @@ const AddEditForm = (props) => {
 
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Title" name="title" rules={[validateRequiredSelectField('title')]}>
-                                                    <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('title')} {...disabledProps}>
-                                                        {title?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
-                                                        ))}
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="First Name" name="firstName" rules={[validateRequiredSelectField('first name')]}>
-                                                    <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('first name')} {...disabledProps} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Middle Name" name="middleName">
-                                                    <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('middle name')} {...disabledProps} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Last Name" name="lastName">
-                                                    <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
-                                                    {/* <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('mobile number')} {...disabledProps} /> */}
-                                                    <Input
-                                                        maxLength={10}
-                                                        onChange={handleNumberValidation}
-                                                        placeholder={preparePlaceholderText('mobile number')}
-                                                        allowClear
-                                                        enterButton="Send OTP"
-                                                        size="small"
-                                                        suffix={
-                                                            <>
-                                                                <Button loading={mobileLoader} onClick={showModal} style={{ marginRight: '-3px', borderColor: '#d9d9d9', color: '#B5B5B6' }}>
-                                                                    Send OTP
-                                                                </Button>
-                                                                <MarkAsDefaultModal {...modalProps} />
-                                                            </>
-                                                        }
-                                                    />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Want to use Mobile no as whatsapp no?" name="wantWhtsappNo">
-                                                    <Switch value={null} checkedChildren="Yes" unCheckedChildren="No" defaultChecked={false} {...disabledProps} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Whatsapp Number" name="whatsappNumber" rules={[validateRequiredSelectField('whatsapp number')[validateMobileNoField('whatsapp number')]]}>
-                                                    <Input value={null} maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('whatsapp number')} {...disabledProps} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Do you want to contacted over whatsapp?" name="whatsappCommunicationAllowed">
-                                                    <Switch value={null} checkedChildren="Yes" unCheckedChildren="No" defaultChecked={false} {...disabledProps} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Email ID" name="email" rules={[validateEmailField('email')]}>
-                                                    <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('email id')} {...disabledProps} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('date')]}>
-                                                    <DatePicker disabled={isReadOnly} />
+                                                    <DatePicker disabled={isReadOnly} className={styles.datepicker} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Gender" name="gender" rules={[validateRequiredSelectField('gender')]}>
                                                     <Select value={null} placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
                                                         {gender?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
+                                                            <Option key={'ge' + item.key} value={item.key}>{item.name}</Option>
                                                         ))}
                                                     </Select>
                                                 </Form.Item>
@@ -275,7 +176,7 @@ const AddEditForm = (props) => {
                                                 <Form.Item label="Maritial Status" name="martialStatus">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('maritial status')} {...disabledProps}>
                                                         {maritialStatus?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
+                                                            <Option key={'ms' + item.key} value={item.key}>{item.name}</Option>
                                                         ))}
                                                     </Select>
                                                 </Form.Item>
@@ -284,14 +185,14 @@ const AddEditForm = (props) => {
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Anniversary Date" name="weddingAnniversary">
-                                                    <DatePicker styles={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                                    <DatePicker className={styles.datepicker} disabled={isReadOnly} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Occupation" name="occupation">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
                                                         {occupation?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
+                                                            <Option key={'occ' + item.key } value={item.key}>{item.name}</Option>
                                                         ))}
                                                     </Select>
                                                 </Form.Item>
@@ -374,6 +275,63 @@ const AddEditForm = (props) => {
                                                 </Form.Item>
                                             </Col>
                                         </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Usage/Application Categorization" name="applicationCategory">
+                                                    <Select value={null} placeholder={preparePlaceholderSelect('usage/application category')} {...disabledProps}>
+                                                        {applicationCategory?.map((item) => (
+                                                            <Option value={item.key}>{item.name}</Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Usage/Application Sub-Category" name="subCategory">
+                                                    <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
+                                                        {applicationSubCategory?.map((item) => (
+                                                            <Option value={item.key}>{item.name}</Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Customer Category" name="customerCategory">
+                                                    <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps} onChange={onCustomerCategoryChange}>
+                                                        {customerCategory?.map((item) => (
+                                                            <Option value={item.key}>{item.name}</Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        {customer === 'fleet' && (
+                                            <>
+                                                <Row gutter={20}>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item label="Business Details" name="businessDetails">
+                                                            <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('business details')} {...disabledProps} />
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item label="Vehicle Deployment Details" name="vehicleDeplyomentDetails">
+                                                            <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('vehicle deployment details')} {...disabledProps} />
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item label="Key Role Details" name="keyRoleDetails">
+                                                            <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('key role details')} {...disabledProps} />
+                                                        </Form.Item>
+                                                    </Col>
+                                                </Row>
+                                                <Row gutter={20}>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item label="Major Route Details" name="majorDetails">
+                                                            <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('major route details')} {...disabledProps} />
+                                                        </Form.Item>
+                                                    </Col>
+                                                </Row>
+                                            </>
+                                        )}
                                     </Form>
                                 </Panel>
                             </Collapse>
@@ -532,25 +490,25 @@ const AddEditForm = (props) => {
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Name of Person" name="personName">
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter name of person')}  />
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter name of person')} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Position" name="position" >
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter position')}  />
+                                                <Form.Item label="Position" name="position">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter position')} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Company Name" name="companyName" >
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter company name')}  />
+                                                <Form.Item label="Company Name" name="companyName">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter company name')} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                <Form.Item label="Remarks" name="remarks" >
+                                                <Form.Item label="Remarks" name="remarks">
                                                     <TextArea placeholder={preparePlaceholderText('remarks')} showCount maxLength={100} autoSize={{ minRows: 2, maxRows: 5 }} />
                                                 </Form.Item>
                                             </Col>
