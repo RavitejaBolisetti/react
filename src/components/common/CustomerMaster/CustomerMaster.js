@@ -9,73 +9,10 @@ import { AddEditForm } from './AddEditForm';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Search } = Input;
 const { Option } = Select;
-
-const initialTableData = [{ srNo: '1', employeecode: 'SH1121', dealername: 'Dealer 1', username: 'DeepakPalariya', useroles: 'dummy', hierarchyMapping: 'dummy', productsMapping: 'dummy' }];
-const dealersData = ['Dealer 1', 'Dealer 2', 'Dealer 3', 'Dealer 4', 'Dealer 5', 'Dealer 6 '];
-const savePayload = {
-    employeeCode: 'deepakpalariya',
-
-    employeeName: 'deepak',
-
-    employeeDesignation: 'Developer',
-
-    createUser: 'N',
-
-    roles: [
-        {
-            id: 'b9698119-cabf-4863-ac88-9b91561ba7bd',
-
-            roleId: '1b01c102-867f-42ed-b3dd-d8527f9ddc0c',
-
-            status: true,
-
-            applications: [
-                {
-                    id: '',
-
-                    appId: '92389586-eb20-45fe-82ad-2654e783c03d',
-
-                    status: true,
-
-                    actions: [
-                        {
-                            id: '',
-
-                            actionId: '6373a978-3332-4152-8095-90d4dc33c866',
-
-                            status: true,
-                        },
-                    ],
-                },
-            ],
-        },
-    ],
-
-    branches: [
-        {
-            id: '2e42a441-c82d-41b4-8b3e-8509bf9affb1',
-
-            branchCode: '8a4176b8-d5c9-4a68-a682-cd5bacb3be7b',
-
-            status: true,
-
-            defaultBranch: true,
-        },
-    ],
-
-    products: [
-        {
-            id: '06545d1e-d61b-46f6-8a79-eb262342f38a',
-
-            productCode: '644bb543-7727-4545-ae24-9bc03b8036b5',
-
-            status: true,
-        },
-    ],
-};
 
 const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeData, hierarchyAttributeFetchList, saveDealerDetails, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
     const [form] = Form.useForm();
@@ -105,14 +42,20 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [AccessMacid, setAccessMacid] = useState([]);
+    const [dealersData, setdealersData] = useState([{}]);
     const [finalFormdata, setfinalFormdata] = useState({
         Macid: [],
         AssignUserRole: [],
         BranchMapping: [],
         ProductMapping: [],
     });
-    const [toggleButton, settoggleButton] = useState({ individual: true, company: false });
+
+    const [toggleButton, settoggleButton] = useState('Individual');
     const moduleTitle = 'Customer Details';
+
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const FetchError = (message) => {
         setError(true);
@@ -149,13 +92,6 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
             setError(false);
         }
     }, [DealerSearchvalue, DealerSelected]);
-
-    // useEffect(() => {
-    //     if (userId) {
-    //         // fetchList({ setIsLoading: listShowLoading, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [refershData, userId]);
 
     const tableDetails = [];
 
@@ -291,7 +227,7 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     );
     const tableProps = {
         isLoading: isLoading,
-        tableData: initialTableData,
+        tableData: [{}],
         tableColumn: tableColumn,
     };
 
@@ -318,9 +254,8 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     };
 
     const onFinish = (values, e) => {
-
         const requestData = {
-            data: savePayload,
+            data: [{}],
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -489,6 +424,9 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
         setAccessMacid,
         toggleButton,
         settoggleButton,
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
     };
 
     return (
@@ -499,10 +437,10 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                    <Button className={styles.marR5} type={toggleButton?.individual ? 'primary' : 'link'} danger onClick={() => settoggleButton({ ...toggleButton, individual: true, company: false })}>
+                                    <Button className={styles.marR5} type={toggleButton === 'Individual' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Individual')}>
                                         Individual
                                     </Button>
-                                    <Button type={toggleButton?.company ? 'primary' : 'link'} danger onClick={() => settoggleButton({ ...toggleButton, company: true, individual: false })}>
+                                    <Button type={toggleButton === 'Firm/Company' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Firm/Company')}>
                                         Firm/Company
                                     </Button>
                                 </div>
