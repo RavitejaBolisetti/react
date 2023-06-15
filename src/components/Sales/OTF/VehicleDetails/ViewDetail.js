@@ -34,13 +34,6 @@ const ViewDetailMain = (props) => {
         taxAmount: '222',
         vehicleAmount: '12640',
     };
-    // const taxChargesForm = {
-    //     type: 'uttar pradesh',
-    //     code: 'ssss',
-    //     rate: '12312',
-    //     rateType: 'Delhi',
-    //     description: 'Delhi',
-    // };
 
     const text = 'Color - RED Seating Capacity - 7 Fuel - Diesel Variant - XUV 500 Name - XUV';
 
@@ -57,6 +50,8 @@ const ViewDetailMain = (props) => {
                 activeKey={activeKey}
                 onChange={() => onChange(1)}
                 expandIconPosition="end"
+                className={styles.collapseContainer}
+
             >
                 <Panel
                     header={
@@ -103,6 +98,8 @@ const ViewDetailMain = (props) => {
                 activeKey={activeKey}
                 onChange={() => onChange(2)}
                 expandIconPosition="end"
+                className={styles.collapseContainer}
+
             >
                 <Panel
                     header={
@@ -129,6 +126,8 @@ const ViewDetailMain = (props) => {
                 activeKey={activeKey}
                 onChange={() => onChange(3)}
                 expandIconPosition="end"
+                className={styles.collapseContainer}
+
             >
                 <Panel
                     header={
