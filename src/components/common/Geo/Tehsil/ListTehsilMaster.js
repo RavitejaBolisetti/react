@@ -108,7 +108,6 @@ export const ListTehsilBase = (props) => {
 
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    
 
     const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -205,10 +204,10 @@ export const ListTehsilBase = (props) => {
                 const state = filterString?.stateCode;
                 const district = filterString?.districtCode;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
                 setShowDataLoading(false);
             } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data);
                 setShowDataLoading(false);
             }
         }
@@ -344,7 +343,7 @@ export const ListTehsilBase = (props) => {
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-       tableData: searchData,
+        tableData: searchData,
     };
 
     const onAdvanceSearchCloseAction = () => {

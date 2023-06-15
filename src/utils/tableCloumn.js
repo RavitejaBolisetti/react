@@ -30,9 +30,9 @@ export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellips
     };
 };
 
-export const tblSerialNumberColumn = ({ page = 1, pageSize = DEFAULT_PAGE_SIZE, width = '5%', fixed = '' }) => {
+export const tblSerialNumberColumn = ({ page = 1, pageSize = DEFAULT_PAGE_SIZE, width = '5%', title = 'Srl.', fixed = '' }) => {
     return {
-        title: 'Srl.',
+        title,
         dataIndex: 'srl',
         render: (_, __, index) => (page - 1) * pageSize + (index + 1),
         fixed: fixed,
@@ -61,21 +61,28 @@ export const tblStatusColumn = ({ styles, width = '15%', fixed = '' }) => {
     };
 };
 
-export const tblActionColumn = ({ styles, handleButtonClick, width = '8%', fixed = '' }) => {
+export const tblActionColumn = ({ styles, handleButtonClick, width = '8%', fixed = '', EditIcon = true, EyeIcon = true }) => {
     return {
         title: 'Action',
         dataIndex: '',
         width,
         fixed: fixed,
-        render: (record) => {
+        render: (record) => [
             <Space wrap>
-                <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
-                    <FiEye />
-                </Button>
-                <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
-                    <FiEdit />
-                </Button>
-            </Space>;
-        },
+                {EyeIcon && (
+                    <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
+                        <FiEye />
+                    </Button>
+                )}
+
+                {EditIcon && (
+                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
+                        <FiEdit />
+                    </Button>
+                )}
+            </Space>,
+        ]
+        
     };
 };
+

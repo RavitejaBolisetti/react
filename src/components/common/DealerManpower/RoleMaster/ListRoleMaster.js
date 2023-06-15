@@ -74,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListRoleMasterBase = (props) => {
-    const { data, saveData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { data, isLoading, saveData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { isDivisionDataLoaded, listDivisionShowLoading, fetchDivisionLovList, isDivisionLoading, divisionData } = props;
     const { isDepartmentDataLoaded, listDepartmentShowLoading, fetchDepartmentLovList, isDepartmentLoading, departmentData } = props;
 
@@ -83,11 +83,11 @@ export const ListRoleMasterBase = (props) => {
     const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
+    console.log('🚀 ~ file: ListRoleMaster.js:86 ~ ListRoleMasterBase ~ showDataLoading:', showDataLoading);
     const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
 
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
@@ -121,12 +121,12 @@ export const ListRoleMasterBase = (props) => {
                 fetchDepartmentLovList({ setIsLoading: listDepartmentShowLoading, userId });
             }
 
-            if (!isDataLoaded) {
+            if (!isDataLoaded && !isLoading) {
                 fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDivisionDataLoaded, isDepartmentDataLoaded, isDataLoaded]);
+    }, [userId, isDivisionDataLoaded, isLoading, isDepartmentDataLoaded, isDataLoaded]);
 
     useEffect(() => {
         if (isDataLoaded && data && userId && filterString) {
@@ -134,10 +134,10 @@ export const ListRoleMasterBase = (props) => {
             const division = filterString?.divisionCode;
             const department = filterString?.departmentCode;
             const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.roleDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true));
-            setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+            setSearchdata(filterDataItem);
             setShowDataLoading(false);
         } else {
-            setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+            setSearchdata(data);
             setShowDataLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -166,14 +166,6 @@ export const ListRoleMasterBase = (props) => {
             canRemove: true,
         },
     ];
-
-    useEffect(() => {
-        if (userId && filterString) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction });
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, userId]);
 
     useEffect(() => {
         if (userId && refershData) {
@@ -308,7 +300,7 @@ export const ListRoleMasterBase = (props) => {
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-       tableData: searchData,
+        tableData: searchData,
     };
 
     const onAdvanceSearchCloseAction = () => {

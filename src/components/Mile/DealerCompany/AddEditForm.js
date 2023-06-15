@@ -82,8 +82,13 @@ const AddEditFormMain = (props) => {
     };
 
     const handleOnSearch = (value) => {
-        if (value.length > 5) {
-            setOptions();
+        if (!(typeof options === 'undefined')) {
+            return;
+        }
+        setOptions();
+        if (value.length <= 5) {
+            form.validateFields(['pinCode']);
+        } else if (value.length > 5) {
             const extraParams = [
                 {
                     key: 'pincode',

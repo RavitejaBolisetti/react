@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Collapse, Space, Card, Typography, Button, Divider } from 'antd';
+import { Col, Input, Form, Row, Select, DatePicker, Collapse, Space, Card, Typography, Button, Divider } from 'antd';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { ViewDetail } from './ViewFamilyDetails';
@@ -13,25 +15,20 @@ const AddEditFormMain = (props) => {
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode } = props;
     const [activeKey, setactiveKey] = useState([null]);
 
-    const handleEdit = () => {
-        setIsViewModeVisible(false);
-    };
+    // const handleEdit = () => {
+    // };
 
-    const onCollapseChange = (values) => {
-        const isPresent = activeKey.includes(values);
-        if (isPresent) {
-            const newActivekeys = [];
-            // eslint-disable-next-line array-callback-return
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setactiveKey(newActivekeys);
-        } else {
-            setactiveKey([...activeKey, values]);
-        }
-    };
+    //         // eslint-disable-next-line array-callback-return
+    //         activeKey.forEach((item) => {
+    //             if (item !== values) {
+    //                 newActivekeys.push(item);
+    //             }
+    //         });
+    //         setactiveKey(newActivekeys);
+    //     } else {
+    //         setactiveKey([...activeKey, values]);
+    //     }
+    // };
 
     const addFunction = () => {
         setShowForm(true);
@@ -43,21 +40,17 @@ const AddEditFormMain = (props) => {
         familyForm.setFieldsValue({
             mnmCustomer: values?.mnmCustomer,
             customerId: values?.customerId,
-            familyMembername: values?.familyMembername,
             relationship: values?.relationship,
             relationAge: values?.relationAge,
             remarks: values?.remarks,
         });
     };
 
-    const viewProps = {
-        activeKey,
-        setactiveKey,
-        onChange,
-        styles,
-        onCloseAction,
-        handleEdit,
-    };
+    //     onChange,
+    //     styles,
+    //     onCloseAction,
+    //     handleEdit,
+    // };
 
     const formProps = {
         value,

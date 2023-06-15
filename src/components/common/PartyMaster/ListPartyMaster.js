@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer,useMemo } from 'react';
+import React, { useState, useEffect, useReducer, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -81,7 +81,6 @@ export const ListPartyMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
@@ -126,10 +125,10 @@ export const ListPartyMasterBase = (props) => {
             if (filterString) {
                 const keyword = filterString?.keyword;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.partyName) : true));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
                 setShowDataLoading(false);
             } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data);
                 setShowDataLoading(false);
             }
         }
@@ -216,7 +215,7 @@ export const ListPartyMasterBase = (props) => {
             listFilterForm.validateFields(['code']);
         }
     };
-    
+
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
             return 'View ';
@@ -265,7 +264,7 @@ export const ListPartyMasterBase = (props) => {
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-       tableData: searchData,
+        tableData: searchData,
     };
 
     const title = 'Party Name';

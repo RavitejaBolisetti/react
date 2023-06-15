@@ -34,7 +34,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-
     const moduleTitle = 'City';
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
@@ -159,10 +158,10 @@ export const ListCityMasterBase = (props) => {
                 const state = filterString?.stateCode;
                 const district = filterString?.districtCode;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
                 setShowDataLoading(false);
             } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data);
                 setShowDataLoading(false);
             }
         }
