@@ -1,40 +1,36 @@
 import React, { useState } from 'react';
-import { Col, Input, Form, Row, Select, DatePicker, Collapse, Space, Card, Typography, Button, Divider } from 'antd';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { Row, Col, Collapse, Space, Card, Typography, Button, Divider } from 'antd';
+// import { Col, Input, Form, Row, Select, DatePicker, Collapse, Space, Card, Typography, Button, Divider } from 'antd';
+// import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { ViewDetail } from './ViewFamilyDetails';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { FiEdit } from 'react-icons/fi';
+import { FormContainer } from './FormContainer';
 
-const { Option } = Select;
-const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { familyForm, type, value, onChange, selectRef, onFamilyFinish, onFinishFailed, showForm, setShowForm } = props;
-    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType } = props;
+    const { value, selectRef, onFamilyFinish, onFinishFailed, familyForm, onChange, showForm, setShowForm } = props;
+    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode } = props;
     const [activeKey, setactiveKey] = useState([null]);
 
     const handleEdit = () => {
-        setIsViewModeVisible(false);
     };
 
-    const onCollapseChange = (values) => {
-        const isPresent = activeKey.includes(values);
-        if (isPresent) {
-            const newActivekeys = [];
-            // eslint-disable-next-line array-callback-return
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setactiveKey(newActivekeys);
-        } else {
-            setactiveKey([...activeKey, values]);
-        }
-    };
+//     const onCollapseChange = () => {
+//             // eslint-disable-next-line array-callback-return
+//             activeKey.forEach((item) => {
+//                 if (item !== values) {
+//                     newActivekeys.push(item);
+//                 }
+//             });
+//             setactiveKey(newActivekeys);
+//         } else {
+//             setactiveKey([...activeKey, values]);
+//         }
+//     };
+// }
 
     const addFunction = () => {
         setShowForm(true);
@@ -42,17 +38,36 @@ const AddEditFormMain = (props) => {
     };
 
     const onEdit = (values) => {
-        console.log(values, 'values');
+        setEditedMode(true);
+        familyForm.setFieldsValue({
+            mnmCustomer: values?.mnmCustomer,
+            customerId: values?.customerId,
+            familyMembername: values?.familyMembername,
+            relationship: values?.relationship,
+            relationAge: values?.relationAge,
+            remarks: values?.remarks,
+        });
     };
 
     const viewProps = {
-        activeKey,
-        setactiveKey,
         onChange,
         styles,
         onCloseAction,
         handleEdit,
     };
+
+    const formProps = {
+        value,
+        selectRef,
+        onFamilyFinish,
+        onFinishFailed,
+        familyForm,
+        onChange,
+        editedMode,
+        onSave,
+    };
+
+    console.log(editedMode,'EDITEDMODECHECL')
 
     return (
         <>
@@ -68,74 +83,7 @@ const AddEditFormMain = (props) => {
                             </div>
                             {showForm || familyDetailList?.length > 0 ? <Divider /> : null}
                             <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                                {showForm && (
-                                    <Form form={familyForm} id="familyForm" autoComplete="off" layout="vertical" onFinish={onFamilyFinish} onFinishFailed={onFinishFailed}>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item initialValue={null} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
-                                                    <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange} className={styles.inputBox} allowClear ref={selectRef}>
-                                                        {type.map((item) => (
-                                                            <Option key={'mc' + item?.value} value={item.value}>
-                                                                {item.name}
-                                                            </Option>
-                                                        ))}
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>
-
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item initialValue={null} label="Customer ID" name="customerId">
-                                                    <Input maxLength={6} placeholder={preparePlaceholderText('Customer ID')} className={styles.inputBox} disabled={true} />
-                                                </Form.Item>
-                                            </Col>
-
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item initialValue={null} label="Customer Name" name="familyMembername" rules={[validateRequiredInputField('Customer Name')]}>
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Customer Name')} disabled={value} className={styles.inputBox} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
-                                                    <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear ref={selectRef} disabled={value}>
-                                                        {type.map((item) => (
-                                                            <Option key={'rel' + item?.value} value={item.value}>
-                                                                {item.name}
-                                                            </Option>
-                                                        ))}
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>
-
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Date of Birth" rules={[validateRequiredInputField('Date of Birth')]}>
-                                                    {/* name="dateOfBirth" */}
-                                                    <DatePicker format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} disabled={value} />
-                                                </Form.Item>
-                                            </Col>
-
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item initialValue={null} label="Age" name="relationAge" rules={[validateRequiredInputField('Age')]}>
-                                                    <Input maxLength={3} placeholder={preparePlaceholderText('Age')} disabled={value} className={styles.inputBox} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                <Form.Item label="Remark" name="remarks">
-                                                    <TextArea rows={2} maxLength={250} placeholder={preparePlaceholderText('Remark')} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Form.Item>
-                                            <Button form="familyForm" type="primary" htmlType="submit">
-                                                Submit
-                                            </Button>
-                                        </Form.Item>
-                                    </Form>
-                                )}
+                                {showForm && <FormContainer {...formProps} />}
 
                                 {familyDetailList?.length > 0 &&
                                     familyDetailList?.map((item) => (
@@ -148,7 +96,7 @@ const AddEditFormMain = (props) => {
                                                 }
                                             }}
                                             activeKey={activeKey}
-                                            onChange={() => onCollapseChange(1)}
+                                            // onChange={() => onCollapseChange(1)}
                                             expandIconPosition="end"
                                             collapsible="icon"
                                         >
@@ -159,8 +107,8 @@ const AddEditFormMain = (props) => {
                                                             <Typography className="heading">
                                                                 {item?.familyMembername} | {item?.relationship}
                                                             </Typography>
-                                                            <div className="flex red" style={{ margin: '0 0 0 1rem', cursor: 'pointer' }}>
-                                                                <FiEdit onClick={onEdit(item)} />
+                                                            <div className="flex red" style={{ margin: '0 0 0 1rem', cursor: 'pointer' }} onClick={()=>onEdit(item)}>
+                                                                <FiEdit />
                                                                 <Typography className="red heading" style={{ fontSize: '14px', margin: '0 0 0 0.5rem' }}>
                                                                     Edit
                                                                 </Typography>
@@ -171,8 +119,9 @@ const AddEditFormMain = (props) => {
                                                     </div>
                                                 }
                                                 key="1"
+                                                style={{backgroundColor:'rgba(0, 0, 0, 0.02)'}}
                                             >
-                                                <ViewDetail mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} familyMembername={item?.familyMembername} relationship={item?.relationship} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} />
+                                                {editedMode ? <FormContainer {...formProps} /> : <ViewDetail mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} familyMembername={item?.familyMembername} relationship={item?.relationship} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} />}
                                             </Panel>
                                         </Collapse>
                                     ))}

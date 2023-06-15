@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Col, Row, Collapse, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
+import './Demo.css'
+import { OTF_FORM_ACTION_TYPE } from 'constants/otfActionType';
 
 import { FaChevronDown } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
@@ -11,7 +13,6 @@ import { CompanyCustomerDetailsMaster } from './FirmOrCompany';
 import { SupportingDocument } from './IndividualCustomer';
 
 import FormProgressBar from './FormProgressBar';
-import { DrawerFormButton } from '../Button';
 const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />;
