@@ -21,7 +21,6 @@ const CardAccessories = (prop) => {
     }, []);
 
     const onEdit = (data) => {
-        console.log('data', data);
         form.setFieldsValue({
             ...data,
         });
