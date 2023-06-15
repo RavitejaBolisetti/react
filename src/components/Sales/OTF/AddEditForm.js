@@ -19,6 +19,7 @@ import { AddOnDetailsMaster } from './AddOnDetails';
 import { OtfDetailsMaster } from './OtfDetails';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
 import { MovetoNextForm } from './OtfUtils';
+import OtfStatusBar from './OtfStatusBar';
 
 const { Panel } = Collapse;
 const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={18} /> : <SlArrowDown size={18} />);
@@ -214,6 +215,7 @@ const AddEditFormMain = (props) => {
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.drawerBodyRight}>
                             <h2>{moduleName}</h2>
+                            <OtfStatusBar />
                             <div className={styles.marginBottom60}>{renderElement()}</div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
