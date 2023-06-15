@@ -216,7 +216,7 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.drawerBodyRight}>
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <h2>{moduleName}</h2>
+                                    <span className={styles.drawerBodyHeading}>{moduleName}</span>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                     <OtfStatusBar />
