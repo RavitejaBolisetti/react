@@ -1,5 +1,5 @@
 import React from 'react';
-import { Space, Card, Descriptions } from 'antd';
+import { Card, Descriptions } from 'antd';
 
 const ViewDetailMain = (props) => {
     const { styles } = props;
@@ -28,7 +28,7 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <Card  className={styles.drawerCardView} style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
+        <Card className={styles.drawerCardView} style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Customer ID">{customerForm?.customerId}</Descriptions.Item>
                 <Descriptions.Item label="Customer Name">{customerForm?.customerName}</Descriptions.Item>

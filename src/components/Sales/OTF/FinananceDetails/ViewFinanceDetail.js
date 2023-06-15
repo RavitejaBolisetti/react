@@ -1,5 +1,5 @@
 import React from 'react';
-import { Space, Card, Descriptions } from 'antd';
+import { Card, Descriptions } from 'antd';
 
 const ViewDetailMain = (props) => {
     const { styles } = props;
