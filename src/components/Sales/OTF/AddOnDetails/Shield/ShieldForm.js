@@ -26,9 +26,11 @@ const ShieldForm = ({ data }) => {
             </Row>
             {!data?.name && (
                 <Row gutter={20}>
-                    <Button htmlType="submit" type='primary' danger>
-                        Save
-                    </Button>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Button htmlType="submit" type="primary" danger>
+                            Save
+                        </Button>
+                    </Col>
                 </Row>
             )}
         </Form>

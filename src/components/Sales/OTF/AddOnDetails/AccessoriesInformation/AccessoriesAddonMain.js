@@ -1,5 +1,5 @@
 import React, { Fragment, useReducer } from 'react';
-import { Form, Divider, Card } from 'antd';
+import { Form } from 'antd';
 
 import CardAccessories from './CardAccessories';
 import AddEditForm from './AddEditForm';
@@ -20,15 +20,12 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, isBtnDisabled, setFormBtnDisab
 
     return (
         <Fragment>
-            <Card>
-                <Divider />
-                <AddEditForm form={addOnform} onFinish={addOnformOnFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} addOnItemInfo={addOnItemInfo} onFieldsChange={onFieldsChange} />
+            <AddEditForm form={addOnform} onFinish={addOnformOnFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} addOnItemInfo={addOnItemInfo} onFieldsChange={onFieldsChange} />
 
-                {addOnItemInfo?.length > 0 &&
-                    addOnItemInfo?.map((item) => {
-                        return <CardAccessories {...item} form={addOnform} onFinish={addOnformOnFinish} addOnItemInfo={addOnItemInfo} setAddOnItemInfo={setAddOnItemInfo} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} onFieldsChange={onFieldsChange} />;
-                    })}
-            </Card>
+            {addOnItemInfo?.length > 0 &&
+                addOnItemInfo?.map((item) => {
+                    return <CardAccessories {...item} form={addOnform} onFinish={addOnformOnFinish} addOnItemInfo={addOnItemInfo} setAddOnItemInfo={setAddOnItemInfo} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} onFieldsChange={onFieldsChange} />;
+                })}
         </Fragment>
     );
 };

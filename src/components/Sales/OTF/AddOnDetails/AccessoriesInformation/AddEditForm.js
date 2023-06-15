@@ -1,9 +1,9 @@
 import React from 'react';
 import { Input, Form, Col, Row, Button, Divider } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import styles from 'components/common/Common.module.css';
 
 const { TextArea } = Input;
 
@@ -14,10 +14,8 @@ function AddEditForm({ onUpdate, onCancel, form, onFieldsChange, onFinish, isEdi
     };
 
     const handleOnSearch = (value) => {
-        console.log('value', value);
         if (value?.length < 3) return;
         form.setFieldsValue({
-            // partNumber: "qwert",
             partType: 'wert',
             sellingPrice: 'serg',
             mrp: 'wef',
@@ -31,7 +29,7 @@ function AddEditForm({ onUpdate, onCancel, form, onFieldsChange, onFinish, isEdi
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Part Number" name="partNumber" rules={[validateRequiredInputField('part number')]}>
-                        <Input.Search onSearch={handleOnSearch} placeholder={preparePlaceholderText('part number')} />
+                        <Input.Search onSearch={handleOnSearch} placeholder={preparePlaceholderText('part number')} className={styles.searchField} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -52,17 +50,25 @@ function AddEditForm({ onUpdate, onCancel, form, onFieldsChange, onFinish, isEdi
                         <Input {...disableProp} placeholder={preparePlaceholderText('mrp')} />
                     </Form.Item>
                 </Col>
-            </Row>
-            <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity')]}>
                         <Input placeholder={preparePlaceholderText('required quantity')} />
                     </Form.Item>
                 </Col>
+                {/* </Row>
+            <Row gutter={20}> */}
 
                 <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                     <Form.Item label="Part Description" name="partDescription">
-                        <TextArea {...disableProp} rows={4} showCount maxLength={300} />
+                        <TextArea
+                            {...disableProp}
+                            autoSize={{
+                                minRows: 2,
+                                maxRows: 2,
+                            }}
+                            showCount
+                            maxLength={300}
+                        />
                     </Form.Item>
                 </Col>
 

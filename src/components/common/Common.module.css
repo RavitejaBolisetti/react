@@ -1491,9 +1491,9 @@
     border-radius: 10px;
 }
 
-.drawerBodyRight :global .ant-btn-dangerous {
+/* .drawerBodyRight :global .ant-btn-dangerous {
     margin-left: 10px;
-}
+} */
 
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
     padding: 20px 30px;
@@ -1555,6 +1555,10 @@
     background: #F2F2F2;
     border-radius: 0 0 8px 8px;
     padding: 0 30px;
+}
+
+.drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box button{
+    margin-bottom: 20px;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body {

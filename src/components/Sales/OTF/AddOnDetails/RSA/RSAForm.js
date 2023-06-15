@@ -23,14 +23,14 @@ const RSAForm = ({ data }) => {
                         <Input {...disableProps} placeholder={preparePlaceholderText('RSA Rate')} />
                     </Form.Item>
                 </Col>
+                {!data?.name && (
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Button htmlType="submit" danger type="primary">
+                            Save
+                        </Button>
+                    </Col>
+                )}
             </Row>
-            {!data?.name && (
-                <Row gutter={20}>
-                    <Button htmlType="submit" danger>
-                        Save
-                    </Button>
-                </Row>
-            )}
         </Form>
     );
 };
