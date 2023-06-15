@@ -275,10 +275,6 @@
     height: 40px;
 }
 
-:global(.ant-card.ant-card-actions) {
-    height: 40px;
-}
-
 :global .ant-pagination .ant-pagination-options {
     position: absolute;
     left: 0;

@@ -72,6 +72,11 @@
     padding: 12px 8px !important;
 }
 
+.contentHeaderBackground .headerText {
+    line-height: 32px;
+    margin-right: 12px;
+}
+
 .contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper,
 .contentHeaderBackground .headerSelectField :global .ant-btn-default,
 .contentHeaderBackground :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
@@ -246,7 +251,11 @@
     display: inline-block;
     width: 100%;
     padding: 0;
-    text-align: left;
+    text-align: right;
+}
+
+.buttonHeadingContainer button:first-child {
+    margin-right: 12px;
 }
 
 .buttonHeadingContainer .buttonIcon {
