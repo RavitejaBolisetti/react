@@ -16,24 +16,21 @@ const AddEditFormMain = (props) => {
     const [activeKey, setactiveKey] = useState([null]);
 
     const handleEdit = () => {
-        setIsViewModeVisible(false);
     };
 
-    const onCollapseChange = (values) => {
-        const isPresent = activeKey.includes(values);
-        if (isPresent) {
-            const newActivekeys = [];
-            // eslint-disable-next-line array-callback-return
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setactiveKey(newActivekeys);
-        } else {
-            setactiveKey([...activeKey, values]);
-        }
-    };
+//     const onCollapseChange = () => {
+//             // eslint-disable-next-line array-callback-return
+//             activeKey.forEach((item) => {
+//                 if (item !== values) {
+//                     newActivekeys.push(item);
+//                 }
+//             });
+//             setactiveKey(newActivekeys);
+//         } else {
+//             setactiveKey([...activeKey, values]);
+//         }
+//     };
+// }
 
     const addFunction = () => {
         setShowForm(true);
@@ -53,8 +50,6 @@ const AddEditFormMain = (props) => {
     };
 
     const viewProps = {
-        activeKey,
-        setactiveKey,
         onChange,
         styles,
         onCloseAction,
@@ -101,7 +96,7 @@ const AddEditFormMain = (props) => {
                                                 }
                                             }}
                                             activeKey={activeKey}
-                                            onChange={() => onCollapseChange(1)}
+                                            // onChange={() => onCollapseChange(1)}
                                             expandIconPosition="end"
                                             collapsible="icon"
                                         >
