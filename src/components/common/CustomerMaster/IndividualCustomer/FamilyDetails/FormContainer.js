@@ -15,7 +15,7 @@ const FormBase = (props) => {
     ];
 
     return (
-        <Form form={familyForm} id="familyForm" autoComplete="off" layout="vertical" onFinish={onFamilyFinish} onFinishFailed={onFinishFailed} style={{ margin: '2rem', background: 'transparent' }}>
+        <Form form={familyForm} id="familyForm" autoComplete="off" layout="vertical" onFinish={onFamilyFinish} onFinishFailed={onFinishFailed} style={{  background: 'transparent' }}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={null} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>

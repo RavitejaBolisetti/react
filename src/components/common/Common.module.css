@@ -1706,9 +1706,9 @@
     margin-bottom: 20px;
 }
 
-.drawerBodyRight :global .ant-card .ant-card-body {
+/* .drawerBodyRight :global .ant-card .ant-card-body {
     padding-bottom: 0;
-}
+} */
 
 .drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
     border: 1px solid #0b0b0c;
