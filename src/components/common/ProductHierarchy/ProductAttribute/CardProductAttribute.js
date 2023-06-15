@@ -24,7 +24,7 @@ const CardProductAttribute = (props) => {
         setFormDecider(false);
         const newFormData = editForm?.getFieldsValue();
 
-        let status = editForm?.getFieldError('attributeName').length > 0 ? true : false;
+        let status = editForm?.getFieldError('attributeName')?.length > 0 ? true : false;
         if (status) {
             return showGlobalNotification({ notificationType: 'error', title: 'Duplicate', message: 'Can not Save having same Attribute Name', placement: 'bottomRight' });
         }

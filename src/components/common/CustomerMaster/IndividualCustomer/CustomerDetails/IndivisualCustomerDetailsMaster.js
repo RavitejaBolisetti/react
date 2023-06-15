@@ -9,4 +9,3 @@ export const IndivisualCustomerDetailsMaster = (props) => {
         </div>
     );
 };
-

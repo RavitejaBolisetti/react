@@ -13,7 +13,7 @@ export default function AdvanceOtfFilter(props) {
         <>
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
-                    {title}
+                    <span>{title}</span>
                     <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                         <Row gutter={20}>
                             {otfFilter && (

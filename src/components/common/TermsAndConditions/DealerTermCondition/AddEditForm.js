@@ -66,7 +66,7 @@ const AddEditFormMain = (props) => {
                                 <Select disabled={formActionType?.viewMode} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {productHierarchyList?.map((item) => (
                                         <Option key={'pc' + item.prodctCode} value={item.prodctCode}>
-                                            {item.prodctLongName}
+                                            {item.prodctShrtName}
                                         </Option>
                                     ))}
                                 </Select>

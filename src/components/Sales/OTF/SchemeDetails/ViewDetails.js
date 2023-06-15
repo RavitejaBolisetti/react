@@ -60,7 +60,6 @@ const ViewDetailMain = (props) => {
                         onChange={() => onChange(schemeForm?.id)}
                         expandIconPosition="end"
                         className={styles.collapseContainer}
-                        
                     >
                         <Panel
                             header={
@@ -79,9 +78,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label="Amount">{schemeForm?.amount}</Descriptions.Item>
                                 <Descriptions.Item label="Valid From">{schemeForm?.validFrom}</Descriptions.Item>
                                 <Descriptions.Item label="Valid To">{schemeForm?.validTo}</Descriptions.Item>
-                            </Descriptions>
-
-                            <Descriptions {...viewProps}>
+                                <Descriptions.Item label="" />
                                 <Descriptions.Item label="Description">{schemeForm?.description}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
