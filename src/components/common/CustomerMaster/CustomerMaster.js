@@ -13,8 +13,19 @@ import styles from 'components/common/Common.module.css';
 const { Search } = Input;
 const { Option } = Select;
 
-const initialTableData = [{ srNo: '1', employeecode: 'SH1121', dealername: 'Dealer 1', username: 'DeepakPalariya', useroles: 'dummy', hierarchyMapping: 'dummy', productsMapping: 'dummy' }];
+const initialTableData = [{ customerId: 'SH1121', customerName: 'Deepak Palariya', customerType: 'C T 1', mobileNo: '9988122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber:"RG001", chassisNumber:"9912", vpin:"1212", type:"individual" },
+{ customerId: 'SH1122', customerName: 'Rohan S', customerType: 'C T 1', mobileNo: '8888122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber:"RG001", chassisNumber:"9912", vpin:"1212", type:"individual" },
+{ customerId: 'SH1123', customerName: 'Deepak 2', customerType: 'C T 1', mobileNo: '9909122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber:"RG001", chassisNumber:"9912", vpin:"1212", type:"individual" },
+{ customerId: 'SH1124', customerName: 'Rohan 2', customerType: 'C T 1', mobileNo: '9900122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber:"RG001", chassisNumber:"9912", vpin:"1212", type:"individual" },
+{ customerId: 'SH1125', customerName: 'Deepak 3', customerType: 'C T 1', mobileNo: '9988122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber:"RG001", chassisNumber:"9912", vpin:"1212", type:"company" }];
+
 const dealersData = ['Dealer 1', 'Dealer 2', 'Dealer 3', 'Dealer 4', 'Dealer 5', 'Dealer 6 '];
+const dealersDataList = [{"dealerId":"Customer ID", "dealerNm":"Customer ID", "type":"individual"}, {"dealerId":"Customer Name", "dealerNm":"Customer Name" , "type":"individual"},
+{"dealerId":"Mobile Number", "dealerNm":"Mobile Number", "type":"individual"}, {"dealerId":"Registration Number", "dealerNm":"Registration Number" , "type":"individual"},
+{"dealerId":"Chassis Number", "dealerNm":"Chassis Number", "type":"individual"}, {"dealerId":'VIN', "dealerNm":"VIN" , "type":"individual"},
+ {"dealerId":"ABC", "dealerNm":"ABC", "type":"company"}, {"dealerId":"Company-1", "dealerNm":"Company-1", "type":"company"}];
+let showDealersDataList = dealersDataList.filter((d) => d.type === 'individual');
+
 const savePayload = {
     employeeCode: 'deepakpalariya',
 
@@ -105,6 +116,7 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [AccessMacid, setAccessMacid] = useState([]);
+    const [data, setData] = useState(initialTableData);
     const [finalFormdata, setfinalFormdata] = useState({
         Macid: [],
         AssignUserRole: [],
@@ -222,51 +234,44 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Sr.No.',
-            dataIndex: 'srl',
-            width: '6%',
+            title: 'Customer ID',
+            dataIndex: 'customerId',
+            width: '14%',
             sorter: false,
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Employee Code',
-            dataIndex: 'employeecode',
+            title: 'Customer Name',
+            dataIndex: 'customerName',
             width: '14%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Dealer Name',
-            dataIndex: 'dealername',
+            title: 'Customer Type',
+            dataIndex: 'customerType',
             width: '14%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'User Name',
-            dataIndex: 'username',
+            title: 'Mobile No.',
+            dataIndex: 'mobileNo',
             width: '14%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'User Roles',
-            dataIndex: 'useroles',
+            title: 'Email Address',
+            dataIndex: 'emailAddress',
             width: '14%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Branch Mapping',
-            dataIndex: 'hierarchyMapping',
-            width: '20%',
-        })
-    );
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Products Mapping',
-            dataIndex: 'productsMapping',
+            title: 'Membership Type',
+            dataIndex: 'membershipType',
             width: '20%',
         })
     );
@@ -291,7 +296,7 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     );
     const tableProps = {
         isLoading: isLoading,
-        tableData: initialTableData,
+        tableData: data,
         tableColumn: tableColumn,
     };
 
@@ -425,7 +430,7 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
             return;
         }
         if (DealerSearchvalue?.length > 0 && DealerSelected?.length > 0 && DealerSelected !== undefined) {
-            fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue, FetchError });
+            // /fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue, FetchError });
         }
         if (value === 'B6G431') {
             setError(true);
@@ -433,6 +438,10 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
             setError(false);
         }
         setFilterString(value);
+        if(DealerSelected ==='Customer Name')
+            setData(initialTableData.filter((d) => d.customerName.includes(value) ));
+        if(DealerSelected ==='Mobile Number')
+            setData(initialTableData.filter((d) => d.mobileNo.includes(value) ));
     };
 
     const handleChange = (selectedvalue) => {
@@ -444,6 +453,11 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
         }
         setDealerSearchvalue(event.target.value);
     };
+
+    const handleClickCustomerType = (custType) => {
+        showDealersDataList = dealersDataList.filter((d) => d.type === custType);
+        //setCustomerType(custType);
+    }
 
     const formProps = {
         saveclick,
@@ -465,6 +479,7 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
         form,
         handleAdd,
         drawer,
+        data,
         setDrawer,
         isChecked,
         formData,
@@ -499,10 +514,10 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                    <Button className={styles.marR5} type={toggleButton?.individual ? 'primary' : 'link'} danger onClick={() => settoggleButton({ ...toggleButton, individual: true, company: false })}>
+                                    <Button className={styles.marR5} type={toggleButton?.individual ? 'primary' : 'link'} danger onClick={() => {settoggleButton({ ...toggleButton, individual: true, company: false }); handleClickCustomerType('individual');}}>
                                         Individual
                                     </Button>
-                                    <Button type={toggleButton?.company ? 'primary' : 'link'} danger onClick={() => settoggleButton({ ...toggleButton, company: true, individual: false })}>
+                                    <Button type={toggleButton?.company ? 'primary' : 'link'} danger onClick={() => {settoggleButton({ ...toggleButton, company: true, individual: false }); handleClickCustomerType('company');}}>
                                         Firm/Company
                                     </Button>
                                 </div>
@@ -510,16 +525,16 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
                             <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                                 <div className={styles.selectSearchBg}>
                                     <Select className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter" allowClear>
-                                        {dealersData?.map((item) => (
-                                            <Option value={item}>{item}</Option>
+                                        {showDealersDataList?.map((item) => (
+                                            <Option value={item.dealerId}>{item.dealerNm}</Option>
                                         ))}
                                     </Select>
                                     <Search placeholder="Search" value={DealerSearchvalue} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} className={styles.headerSearchField} />
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.advanceFilterClear}>
-                                <Button danger type="link" onClick={handleAdd}>
-                                    View Draft
+                                <Button danger type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
+                                    Add
                                 </Button>
                             </Col>
                         </Row>
