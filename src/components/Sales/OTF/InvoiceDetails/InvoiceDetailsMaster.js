@@ -2,7 +2,7 @@ import React from 'react';
 import styles from 'components/common/Common.module.css';
 import { AddEditForm } from './AddEditForm';
 
-const FinananceDetailsMaster = (props) => {
+const InvoiceDetailsMaster = (props) => {
     return (
         <div className={styles.drawerCustomerMaster}>
 
@@ -11,4 +11,4 @@ const FinananceDetailsMaster = (props) => {
     );
 };
 
-export default FinananceDetailsMaster;
+export default InvoiceDetailsMaster;

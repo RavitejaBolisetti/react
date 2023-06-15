@@ -121,7 +121,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         const recordId = selectedRecord?.id || '';
         const data = {
             ...values,
-            id: '1',
             webRoleApplicationMapping: [
                 {
                     id: '',

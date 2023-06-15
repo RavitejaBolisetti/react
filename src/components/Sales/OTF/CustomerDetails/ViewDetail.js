@@ -49,6 +49,8 @@ const ViewDetailMain = (props) => {
                         activeKey={activeKey}
                         onChange={() => onChange(1)}
                         expandIconPosition="end"
+                        className={styles.collapseContainer}
+
                     >
                         <Panel
                             header={
@@ -93,6 +95,7 @@ const ViewDetailMain = (props) => {
                         activeKey={activeKey}
                         onChange={() => onChange(2)}
                         expandIconPosition="end"
+                        className={styles.collapseContainer}
                     >
                         <Panel
                             header={

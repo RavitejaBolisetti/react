@@ -7,21 +7,21 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const { TextArea } = Input;
 
-function AddEditForm({ form, onFieldsChange, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
+function AddEditForm({ onUpdate, onCancel, form, onFieldsChange, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
     const disableProp = { disabled: true };
     const onFinishFailed = (err) => {
         console.error(err);
     };
 
     const handleOnSearch = (value) => {
-        console.log('value',value)
-        if(value?.length < 3) return;
+        console.log('value', value);
+        if (value?.length < 3) return;
         form.setFieldsValue({
             // partNumber: "qwert",
             partType: 'wert',
             sellingPrice: 'serg',
             mrp: 'wef',
-            requiredQuantity: 'qwefrgtb',
+            requiredQuantity: '12',
             partDescription: 'wertgtr32e',
         });
     };
@@ -39,7 +39,7 @@ function AddEditForm({ form, onFieldsChange, onFinish, isEditing, isBtnDisabled,
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Part Type" name="partType">
-                        <Input {...disableProp} maxLength={50} placeholder={preparePlaceholderText('part type')} />
+                        <Input {...disableProp} placeholder={preparePlaceholderText('part type')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -49,20 +49,20 @@ function AddEditForm({ form, onFieldsChange, onFinish, isEditing, isBtnDisabled,
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="MRP" name="mrp">
-                        <Input {...disableProp} maxLength={50} placeholder={preparePlaceholderText('mrp')} />
+                        <Input {...disableProp} placeholder={preparePlaceholderText('mrp')} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity')]}>
-                        <Input maxLength={50} placeholder={preparePlaceholderText('required quantity')} />
+                        <Input placeholder={preparePlaceholderText('required quantity')} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                     <Form.Item label="Part Description" name="partDescription">
-                        <TextArea rows={2} showCount maxLength={300} />
+                        <TextArea {...disableProp} rows={4} showCount maxLength={300} />
                     </Form.Item>
                 </Col>
 
@@ -70,10 +70,19 @@ function AddEditForm({ form, onFieldsChange, onFinish, isEditing, isBtnDisabled,
                     <Input />
                 </Form.Item>
             </Row>
-            {!isEditing && (
-                <Button disabled={isBtnDisabled} icon={<PlusOutlined />} type="primary" danger htmlType="submit">
+            {!isEditing ? (
+                <Button disabled={isBtnDisabled} type="primary" danger htmlType="submit">
                     Add
                 </Button>
+            ) : (
+                <Row gutter={20}>
+                    <Button type="primary" onClick={onUpdate}>
+                        Save
+                    </Button>
+                    <Button danger onClick={() => onCancel()}>
+                        Cancel
+                    </Button>
+                </Row>
             )}
         </Form>
     );

@@ -31,30 +31,28 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <>
-            <Card className={styles.ExchangeCard}>
-                <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Customer ID">{customerForm?.customerId}</Descriptions.Item>
-                    <Descriptions.Item label="Customer Name">{customerForm?.customerName}</Descriptions.Item>
-                    <Descriptions.Item label="Make">{customerForm?.make}</Descriptions.Item>
-                    <Descriptions.Item label="Model Group">{customerForm?.modelGroup}</Descriptions.Item>
-                    <Descriptions.Item label="Variant">{customerForm?.variant}</Descriptions.Item>
-                    <Descriptions.Item label="Old Reg. Number">{customerForm?.oldRegNumber}</Descriptions.Item>
-                    <Descriptions.Item label="Old Chassis Number">{customerForm?.oldChassisNumber}</Descriptions.Item>
-                    <Descriptions.Item label="Date of Birth">{customerForm?.dob}</Descriptions.Item>
-                    <Descriptions.Item label="Relationship">{customerForm?.relationship}</Descriptions.Item>
-                    <Descriptions.Item label="Month of Registration">{customerForm?.month}</Descriptions.Item>
-                    <Descriptions.Item label="Year of Registration">{customerForm?.year}</Descriptions.Item>
-                    <Descriptions.Item label="Usage">{customerForm?.usage}</Descriptions.Item>
-                    <Descriptions.Item label="Scheme Name">{customerForm?.schemeName}</Descriptions.Item>
-                    <Descriptions.Item label="Scheme Amount">{customerForm?.schemeAmount}</Descriptions.Item>
-                    <Descriptions.Item label="Remarks">{customerForm?.KM}</Descriptions.Item>
-                    <Descriptions.Item label="Remarks">{customerForm?.expectedPrice}</Descriptions.Item>
-                    <Descriptions.Item label="Remarks">{customerForm?.procurementPrice}</Descriptions.Item>
-                    <Descriptions.Item label="Remarks">{customerForm?.financeCompany}</Descriptions.Item>
-                </Descriptions>
-            </Card>
-        </>
+        <Card className={styles.drawerCardView} >
+            <Descriptions {...viewProps}>
+                <Descriptions.Item label="Customer ID">{customerForm?.customerId}</Descriptions.Item>
+                <Descriptions.Item label="Customer Name">{customerForm?.customerName}</Descriptions.Item>
+                <Descriptions.Item label="Make">{customerForm?.make}</Descriptions.Item>
+                <Descriptions.Item label="Model Group">{customerForm?.modelGroup}</Descriptions.Item>
+                <Descriptions.Item label="Variant">{customerForm?.variant}</Descriptions.Item>
+                <Descriptions.Item label="Old Reg. Number">{customerForm?.oldRegNumber}</Descriptions.Item>
+                <Descriptions.Item label="Old Chassis Number">{customerForm?.oldChassisNumber}</Descriptions.Item>
+                <Descriptions.Item label="Date of Birth">{customerForm?.dob}</Descriptions.Item>
+                <Descriptions.Item label="Relationship">{customerForm?.relationship}</Descriptions.Item>
+                <Descriptions.Item label="Month of Registration">{customerForm?.month}</Descriptions.Item>
+                <Descriptions.Item label="Year of Registration">{customerForm?.year}</Descriptions.Item>
+                <Descriptions.Item label="Usage">{customerForm?.usage}</Descriptions.Item>
+                <Descriptions.Item label="Scheme Name">{customerForm?.schemeName}</Descriptions.Item>
+                <Descriptions.Item label="Scheme Amount">{customerForm?.schemeAmount}</Descriptions.Item>
+                <Descriptions.Item label="Remarks">{customerForm?.KM}</Descriptions.Item>
+                <Descriptions.Item label="Remarks">{customerForm?.expectedPrice}</Descriptions.Item>
+                <Descriptions.Item label="Remarks">{customerForm?.procurementPrice}</Descriptions.Item>
+                <Descriptions.Item label="Remarks">{customerForm?.financeCompany}</Descriptions.Item>
+            </Descriptions>
+        </Card>
     );
 };
 

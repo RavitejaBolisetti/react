@@ -4,15 +4,15 @@ import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
 
+
 const FormProgressBar = (props) => {
     const { leftTimeline, setleftTimeline, setmoduleName, isVisible } = props;
     useEffect(() => {
         if (isVisible && leftTimeline) {
             const TimeLineClass = document.getElementsByClassName('ant-timeline-item');
-            console.log('TimeLineClass', TimeLineClass);
             for (let i = 0; i < TimeLineClass.length; i++) {
-                if (TimeLineClass[i]['children']['1']['children']['0']['classList'].contains('Common_activeForm__PgAbl')) {
-                    console.log('foundVal', TimeLineClass[i]);
+                const ActiveForm = TimeLineClass[i]['children']['1']['children']['0']['classList']['0'];
+                if (ActiveForm!==undefined && ActiveForm.match('Common_activeForm')) {
                     TimeLineClass[i].firstChild.style.backgroundColor = '#ff3e5b';
                     TimeLineClass[i].lastChild.firstChild.style.color = '#ff3e5b';
                 } else {
@@ -26,66 +26,70 @@ const FormProgressBar = (props) => {
     const onHandle = (key) => {
         switch (key) {
             case 'otfDetails':
-                setleftTimeline({ ...leftTimeline, otfDetails: true, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: false });
+                setleftTimeline({ ...leftTimeline, otfDetails: true, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, invoiceDetails: false, addOnDetails: false });
                 setmoduleName('OTF Details');
                 break;
 
             case 'customerDetails':
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: true, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: false });
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: true, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, invoiceDetails: false, addOnDetails: false });
                 setmoduleName('Customer Details');
 
                 break;
 
             case 'vehicleDetails':
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: true, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: false });
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: true, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, invoiceDetails: false, addOnDetails: false });
                 setmoduleName('Vehicle Details');
 
                 break;
 
-            case 'schemeDetails':
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: true, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: false });
-                setmoduleName('Scheme Details');
+            case 'schemeOfferDetails':
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: true, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, invoiceDetails: false, addOnDetails: false });
+                setmoduleName('Scheme and Offer Details');
 
                 break;
 
             case 'insuranceDetails':
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: true, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: false });
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: true, exchangeVehicle: false, referrals: false, loyaltyScheme: false, invoiceDetails: false, addOnDetails: false });
                 setmoduleName('Insurance Details');
 
                 break;
 
             case 'financeDetails':
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: true, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: false });
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: true, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, invoiceDetails: false, addOnDetails: false });
                 setmoduleName('Finance Details');
 
                 break;
 
             case 'exchangeVehicles':
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: true, referrals: false, loyaltyScheme: false, addOnDetails: false });
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: true, referrals: false, loyaltyScheme: false, invoiceDetails: false, addOnDetails: false });
                 setmoduleName('Exchange vehicle');
 
                 break;
 
             case 'referrals':
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: true, loyaltyScheme: false, addOnDetails: false });
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: true, loyaltyScheme: false, invoiceDetails: false, addOnDetails: false });
                 setmoduleName('Referrals');
 
                 break;
 
             case 'loyaltyScheme':
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: true });
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, invoiceDetails: false, loyaltyScheme: true });
                 setmoduleName('Loyalty scheme');
+
+                break;
+            case 'invoiceInformation':
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, invoiceDetails: true, addOnDetails: false });
+                setmoduleName('Invoice Information');
 
                 break;
 
             case 'addOnDetails':
-                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: true });
+                setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, invoiceDetails: false, addOnDetails: true });
                 setmoduleName('Add On Details');
 
                 break;
-
             default:
-                setleftTimeline({ ...leftTimeline, otfDetails: true, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: false });
+                setleftTimeline({ ...leftTimeline, otfDetails: true, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, invoiceDetails: false, addOnDetails: false });
                 setmoduleName('OTF Details');
         }
     };
@@ -100,7 +104,7 @@ const FormProgressBar = (props) => {
                     ) : (
                         <FaCheckCircle />
                     ),
-                    children: <p onClick={() => onHandle('otfDetails')}>Otf Details</p>,
+                    children: <p onClick={() => onHandle('otfDetails')}>OTF Details</p>,
                 },
                 {
                     dot: leftTimeline?.customerDetails ? (
@@ -130,9 +134,8 @@ const FormProgressBar = (props) => {
                             <FaCheckCircle />
                         </div>
                     ),
-                    children: <p onClick={() => onHandle('schemeDetails')}>Scheme Details</p>,
+                    children: <p onClick={() => onHandle('schemeOfferDetails')}>Scheme and Offer Details</p>,
                 },
-
                 {
                     dot: leftTimeline?.insuranceDetails ? (
                         <BsRecordCircleFill className={styles.activeForm} />
@@ -162,6 +165,16 @@ const FormProgressBar = (props) => {
                         </div>
                     ),
                     children: <p onClick={() => onHandle('exchangeVehicles')}>Exchange Vehicle</p>,
+                },
+                {
+                    dot: leftTimeline?.invoiceDetails ? (
+                        <BsRecordCircleFill className={styles.activeForm} />
+                    ) : (
+                        <div className={styles.inactiveForm}>
+                            <FaCheckCircle />
+                        </div>
+                    ),
+                    children: <p onClick={() => onHandle('invoiceInformation')}>Invoice Information</p>,
                 },
                 {
                     dot: leftTimeline?.referrals ? (
