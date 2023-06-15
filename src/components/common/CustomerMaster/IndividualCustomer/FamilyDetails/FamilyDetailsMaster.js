@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Form } from 'antd';
 import { AddEditForm } from './AddEditForm';
+import '../../Demo.css'
 
 const FamilyDetailsBase = () => {
     const [familyForm] = Form.useForm();
