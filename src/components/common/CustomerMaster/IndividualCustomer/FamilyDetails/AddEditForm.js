@@ -161,7 +161,7 @@ const AddEditFormMain = (props) => {
                                                             </Typography>
                                                             <div className="flex red" style={{ margin: '0 0 0 1rem', cursor: 'pointer' }}>
                                                                 <FiEdit onClick={onEdit(item)} />
-                                                                <Typography className="red heading" style={{ fontSize: '14px', marginLeft: '0.5rem' }}>
+                                                                <Typography className="red heading" style={{ fontSize: '14px', margin: '0 0 0 0.5rem' }}>
                                                                     Edit
                                                                 </Typography>
                                                             </div>
