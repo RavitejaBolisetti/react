@@ -138,7 +138,7 @@ const AddEditFormMain = (props) => {
                                         </Text>
                                         <Divider />
                                         <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={3} lg={3} xl={3}>
+                                            <Col xs={24} sm={24} md={4} lg={4} xl={4}>
                                                 <Form.Item label="Title" name="title" data-testid="title" rules={[validateRequiredSelectField('title')]}>
                                                     <Select disabled={false} loading={false} placeholder="Select" allowClear>
                                                         {title?.map((item) => (
@@ -147,7 +147,7 @@ const AddEditFormMain = (props) => {
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                                            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                                                 <Form.Item label="First Name" name="firstName" data-testid="firstName" rules={[validateRequiredInputField('first name')]}>
                                                     <Input placeholder={preparePlaceholderText('first name')} />
                                                 </Form.Item>
