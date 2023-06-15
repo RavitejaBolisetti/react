@@ -3,7 +3,7 @@ import { Form } from 'antd';
 import { AddEditForm } from './AddEditForm';
 
 const FamilyDetailsBase = () => {
-    const [form] = Form.useForm();
+    const [familyForm] = Form.useForm();
     const type = [
         { name: 'YES', value: 1 },
         { name: 'NO', value: 0 },
@@ -14,21 +14,37 @@ const FamilyDetailsBase = () => {
         selectRef.current.blur();
         setValue(item);
     }, []);
+    const [familyDetailList, setFamilyDetailsList] = useState([]);
+    const [showForm, setShowForm] = useState(false);
+    const [customerType, setCustomerType] = useState(null);
 
-    const onFamilyFinish = (values) => {};
+    const onFamilyFinish = (values) => {
+        console.log(values,'VALUES')
+        setFamilyDetailsList((items)=>[...items,values]);
+        familyForm.resetFields();
+        setShowForm(false);
+
+        if(values?.relationship === 1){
+            setCustomerType(true);
+        } else if(values?.relationship === 0){
+            setCustomerType(false);
+        }
+    };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+       return
     };
 
     const formProps = {
-        form,
+        familyForm,
         type,
         value,
         onChange,
         selectRef,
         onFamilyFinish,
         onFinishFailed,
+        familyDetailList,
+        showForm, setShowForm,customerType,
     };
 
     return (
