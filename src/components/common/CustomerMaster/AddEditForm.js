@@ -12,7 +12,6 @@ import { CompanyCustomerDetailsMaster } from './FirmOrCompany';
 import { SupportingDocument } from './IndividualCustomer';
 
 import FormProgressBar from './FormProgressBar';
-import { Otfbuttons } from '../Button';
 
 const { Panel } = Collapse;
 
@@ -26,11 +25,11 @@ const AddEditFormMain = (props) => {
         AccountRelated: false,
         Address: false,
         Contacts: false,
-        CustomerDetails: false,
+        CustomerDetails: true,
         FamilyDetails: false,
         IndividualProfile: false,
         CustomerProfile: false,
-        SupportingDocument: true,
+        SupportingDocument: false,
     });
 
     const EDIT_ACTION = OTF_FORM_ACTION_TYPE?.EDIT;
