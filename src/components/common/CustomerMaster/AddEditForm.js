@@ -13,7 +13,6 @@ import { CompanyCustomerDetailsMaster } from './FirmOrCompany';
 import { SupportingDocument } from './IndividualCustomer';
 
 import FormProgressBar from './FormProgressBar';
-import { Otfbuttons } from '../Button';
 
 const { Panel } = Collapse;
 
