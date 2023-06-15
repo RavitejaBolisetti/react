@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Descriptions } from 'antd';
+import styles from 'components/common/Common.module.css';
 
 const ViewDetailMain = (props) => {
     const viewProps = {
@@ -20,7 +21,7 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <Card style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
+        <Card className={styles.drawerCardView} style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Customer ID">{customerForm?.customerId}</Descriptions.Item>
                 <Descriptions.Item label="Customer Type">{customerForm?.customerType}</Descriptions.Item>

@@ -39,7 +39,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '10%',
             render: (_, record) => (record?.orderStatus === 'Invoiced' ? <Tag color="grey">{record?.orderStatus}</Tag> : record?.orderStatus === 'Transferred' ? <Tag color="blue">{record?.orderStatus}</Tag> : record?.orderStatus === 'Cancelled' ? <Tag color="error">{record?.orderStatus}</Tag> : record?.orderStatus === 'Pending for Cancellation' ? <Tag color="orange">{record?.orderStatus}</Tag> : <Tag color="success">{record?.orderStatus}</Tag>),
         }),
-        tblActionColumn({ handleButtonClick, styles, width: '8%', fixed: 'right' })
+        tblActionColumn({ handleButtonClick, styles, width: '8%', fixed: 'right', EditIcon: false })
     );
 
     return tableColumn;
