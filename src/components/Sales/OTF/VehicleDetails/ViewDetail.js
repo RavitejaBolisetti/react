@@ -4,12 +4,13 @@ import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import style from 'utils/PasswordStrengthMeter/PasswordStrengthMeter.module.css';
 import { addToolTip } from 'utils/customMenuLink';
+import { DataTable } from 'utils/dataTable';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, onChange, styles } = props;
+    const { activeKey, onChange, styles, columns, data, optionalData, optionalColumns } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -30,15 +31,8 @@ const ViewDetailMain = (props) => {
         VINNumber: 'MAFCL723849203VIN',
         discountAmount: '24500',
         sellingPrice: '2454324',
-        chargeAmount: '222',
-        otfAmount: '12640',
-    };
-    const taxChargesForm = {
-        type: 'uttar pradesh',
-        code: 'ssss',
-        rate: '12312',
-        rateType: 'Delhi',
-        description: 'Delhi',
+        taxAmount: '222',
+        vehicleAmount: '12640',
     };
 
     const text = 'Color - RED Seating Capacity - 7 Fuel - Diesel Variant - XUV 500 Name - XUV';
@@ -56,6 +50,8 @@ const ViewDetailMain = (props) => {
                 activeKey={activeKey}
                 onChange={() => onChange(1)}
                 expandIconPosition="end"
+                className={styles.collapseContainer}
+
             >
                 <Panel
                     header={
@@ -83,10 +79,10 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label="SO Number">{vehicleForm?.SONumber}</Descriptions.Item>
                         <Descriptions.Item label="SO Status">{vehicleForm?.SOStatus}</Descriptions.Item>
                         <Descriptions.Item label="VIN Number">{vehicleForm?.VINNumber}</Descriptions.Item>
-                        <Descriptions.Item label="Discount Amount">{vehicleForm?.discountAmount}</Descriptions.Item>
                         <Descriptions.Item label="Vehicle Selling Price">{vehicleForm?.sellingPrice}</Descriptions.Item>
-                        <Descriptions.Item label="Charge Amount">{vehicleForm?.chargeAmount}</Descriptions.Item>
-                        <Descriptions.Item label="OTF Amount">{vehicleForm?.otfAmount}</Descriptions.Item>
+                        <Descriptions.Item label="Discount Amount">{vehicleForm?.discountAmount}</Descriptions.Item>
+                        <Descriptions.Item label="Tax Amount">{vehicleForm?.taxAmount}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Amount">{vehicleForm?.vehicleAmount}</Descriptions.Item>
                     </Descriptions>
                 </Panel>
             </Collapse>
@@ -102,145 +98,48 @@ const ViewDetailMain = (props) => {
                 activeKey={activeKey}
                 onChange={() => onChange(2)}
                 expandIconPosition="end"
+                className={styles.collapseContainer}
+
             >
                 <Panel
                     header={
                         <div className={styles.alignUser}>
                             <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                Tax & Charges Information
+                                Tax Details
                             </Text>
                         </div>
                     }
                     key="2"
                 >
-                    <Collapse
-                        expandIcon={() => {
-                            if (activeKey.includes(3)) {
-                                return <MinusOutlined className={styles.iconsColor} />;
-                            } else {
-                                return <PlusOutlined className={styles.iconsColor} />;
-                            }
-                        }}
-                        activeKey={activeKey}
-                        onChange={() => onChange(3)}
-                        expandIconPosition="end"
-                    >
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        Sales Tax
-                                    </Text>
-                                </div>
-                            }
-                            key="3"
-                        >
-                            <Divider />
-                            <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Tax/Charges Type ">{taxChargesForm?.type}</Descriptions.Item>
-                                <Descriptions.Item label="Tax/Charges Code">{taxChargesForm?.code}</Descriptions.Item>
-                                <Descriptions.Item label="Rate">{taxChargesForm?.rate}</Descriptions.Item>
-                                <Descriptions.Item label="Rate Type">{taxChargesForm?.rateType}</Descriptions.Item>
-                                <Descriptions.Item label="Charges Description">{taxChargesForm?.description}</Descriptions.Item>
-                            </Descriptions>
-                        </Panel>
-                    </Collapse>
-                    <Collapse
-                        expandIcon={() => {
-                            if (activeKey.includes(4)) {
-                                return <MinusOutlined className={styles.iconsColor} />;
-                            } else {
-                                return <PlusOutlined className={styles.iconsColor} />;
-                            }
-                        }}
-                        activeKey={activeKey}
-                        onChange={() => onChange(4)}
-                        expandIconPosition="end"
-                    >
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        GST
-                                    </Text>
-                                </div>
-                            }
-                            key="4"
-                        >
-                            <Divider />
-                            <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Tax/Charges Type ">{taxChargesForm?.type}</Descriptions.Item>
-                                <Descriptions.Item label="Tax/Charges Code">{taxChargesForm?.code}</Descriptions.Item>
-                                <Descriptions.Item label="Rate">{taxChargesForm?.rate}</Descriptions.Item>
-                                <Descriptions.Item label="Rate Type">{taxChargesForm?.rateType}</Descriptions.Item>
-                                <Descriptions.Item label="Charges Description">{taxChargesForm?.description}</Descriptions.Item>
-                            </Descriptions>
-                        </Panel>
-                    </Collapse>
-                    <Collapse
-                        expandIcon={() => {
-                            if (activeKey.includes(5)) {
-                                return <MinusOutlined className={styles.iconsColor} />;
-                            } else {
-                                return <PlusOutlined className={styles.iconsColor} />;
-                            }
-                        }}
-                        activeKey={activeKey}
-                        onChange={() => onChange(5)}
-                        expandIconPosition="end"
-                    >
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        VAT
-                                    </Text>
-                                </div>
-                            }
-                            key="5"
-                        >
-                            <Divider />
-                            <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Tax/Charges Type ">{taxChargesForm?.type}</Descriptions.Item>
-                                <Descriptions.Item label="Tax/Charges Code">{taxChargesForm?.code}</Descriptions.Item>
-                                <Descriptions.Item label="Rate">{taxChargesForm?.rate}</Descriptions.Item>
-                                <Descriptions.Item label="Rate Type">{taxChargesForm?.rateType}</Descriptions.Item>
-                                <Descriptions.Item label="Charges Description">{taxChargesForm?.description}</Descriptions.Item>
-                            </Descriptions>
-                        </Panel>
-                    </Collapse>
-                    <Collapse
-                        expandIcon={() => {
-                            if (activeKey.includes(6)) {
-                                return <MinusOutlined className={styles.iconsColor} />;
-                            } else {
-                                return <PlusOutlined className={styles.iconsColor} />;
-                            }
-                        }}
-                        activeKey={activeKey}
-                        onChange={() => onChange(6)}
-                        expandIconPosition="end"
-                    >
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        IGST
-                                    </Text>
-                                </div>
-                            }
-                            key="6"
-                        >
-                            <Divider />
-                            <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Tax/Charges Type ">{taxChargesForm?.type}</Descriptions.Item>
-                                <Descriptions.Item label="Tax/Charges Code">{taxChargesForm?.code}</Descriptions.Item>
-                                <Descriptions.Item label="Rate">{taxChargesForm?.rate}</Descriptions.Item>
-                                <Descriptions.Item label="Rate Type">{taxChargesForm?.rateType}</Descriptions.Item>
-                                <Descriptions.Item label="Charges Description">{taxChargesForm?.description}</Descriptions.Item>
-                            </Descriptions>
-                        </Panel>
-                    </Collapse>
+                    <DataTable tableColumn={columns} tableData={data} pagination={false} removePagination={true} />
+                </Panel>
+            </Collapse>
+
+            <Collapse
+                expandIcon={() => {
+                    if (activeKey.includes(3)) {
+                        return <MinusOutlined className={styles.iconsColor} />;
+                    } else {
+                        return <PlusOutlined className={styles.iconsColor} />;
+                    }
+                }}
+                activeKey={activeKey}
+                onChange={() => onChange(3)}
+                expandIconPosition="end"
+                className={styles.collapseContainer}
+
+            >
+                <Panel
+                    header={
+                        <div className={styles.alignUser}>
+                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                Optional Service
+                            </Text>
+                        </div>
+                    }
+                    key="3"
+                >
+                    <DataTable tableColumn={optionalColumns} tableData={optionalData} pagination={false} removePagination={true} />
                 </Panel>
             </Collapse>
         </Space>

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 
 import { Col, Input, Form, Row, Checkbox, Space, Collapse, Typography } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-
+import { FiEdit } from 'react-icons/fi';
 import { validateRequiredInputField } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
@@ -53,9 +52,19 @@ const AddEditForm = (props) => {
                             <Collapse
                                 expandIcon={() => {
                                     if (activeKey.includes(1)) {
-                                        return <MinusOutlined className={styles.iconsColor} />;
+                                        return (
+                                            <>
+                                                <FiEdit />
+                                                <span>Edit</span>
+                                            </>
+                                        );
                                     } else {
-                                        return <PlusOutlined className={styles.iconsColor} />;
+                                        return (
+                                            <>
+                                                <FiEdit />
+                                                <span>Edit</span>
+                                            </>
+                                        );
                                     }
                                 }}
                                 activeKey={activeKey}
@@ -181,9 +190,19 @@ const AddEditForm = (props) => {
                             <Collapse
                                 expandIcon={() => {
                                     if (activeKey.includes(2)) {
-                                        return <MinusOutlined className={styles.iconsColor} />;
+                                        return (
+                                            <>
+                                                <FiEdit />
+                                                <span>Edit</span>
+                                            </>
+                                        );
                                     } else {
-                                        return <PlusOutlined className={styles.iconsColor} />;
+                                        return (
+                                            <>
+                                                <FiEdit />
+                                                <span>Edit</span>
+                                            </>
+                                        );
                                     }
                                 }}
                                 activeKey={activeKey}
@@ -200,8 +219,14 @@ const AddEditForm = (props) => {
                                     }
                                     key="2"
                                 >
-                                    <Checkbox>Same as Booking Customer</Checkbox>
                                     <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                        <Row>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <Form.Item name="checkbox">
+                                                    <Checkbox>Same as Booking Customer</Checkbox>
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item name="customerId" label="Customer ID" initialValue={formData?.customerId} rules={[validateRequiredInputField('id')]}>
