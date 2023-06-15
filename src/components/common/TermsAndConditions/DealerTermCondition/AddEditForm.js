@@ -41,7 +41,6 @@ const AddEditFormMain = (props) => {
 
     const disableFromDate = (value) => {
         return value < new Date();
-        // value > endDate;
     };
 
     const disableToDate = (value) => {
@@ -66,7 +65,9 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.productCode} label="Product Hierarchy" name="productCode">
                                 <Select disabled={formActionType?.viewMode} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {productHierarchyList?.map((item) => (
-                                        <Option value={item.prodctCode}>{item.prodctShrtName}</Option>
+                                        <Option key={'pc' + item.prodctCode} value={item.prodctCode}>
+                                            {item.prodctLongName}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>
@@ -77,7 +78,9 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.documentTypeCode} label="Document Type" name="documentTypeCode">
                                 <Select disabled={formActionType?.viewMode} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {documentTypeList?.map((item) => (
-                                        <Option value={item.documentCode}>{item.documentCode}</Option>
+                                        <Option key={'dt' + item.documentCode} value={item.documentCode}>
+                                            {item.documentCode}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>
@@ -87,7 +90,9 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.languageCode} label="Language" name="languageCode">
                                 <Select disabled={formActionType?.viewMode} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {languageList?.map((item) => (
-                                        <Option value={item.key}>{item.value}</Option>
+                                        <Option key={'lc' + item.key} value={item.key}>
+                                            {item.value}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>

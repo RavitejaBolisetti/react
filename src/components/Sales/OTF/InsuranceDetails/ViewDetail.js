@@ -18,19 +18,17 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
-            <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Card style={{ backgroundColor: '#f2f2f2' }}>
-                    <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Insurance Company">{insuranceForm?.insuranceComapny}</Descriptions.Item>
-                        <Descriptions.Item label="Insurance Cover Note">{insuranceForm?.insuranceCoverNote}</Descriptions.Item>
-                        <Descriptions.Item label="Insurance Amount">{insuranceForm?.insuranceAmount}</Descriptions.Item>
-                        <Descriptions.Item label="Date">{insuranceForm?.date}</Descriptions.Item>
-                        <Descriptions.Item label="Registration Number">{insuranceForm?.registrationNumber}</Descriptions.Item>
-                    </Descriptions>
-                </Card>
-            </Space>
-        </div>
+        <Space style={{ display: 'flex' }} direction="vertical" size="middle">
+            <Card style={{ backgroundColor: '#f2f2f2' }} className={styles.drawerCardView} >
+                <Descriptions {...viewProps}>
+                    <Descriptions.Item label="Insurance Company">{insuranceForm?.insuranceComapny}</Descriptions.Item>
+                    <Descriptions.Item label="Insurance Cover Note">{insuranceForm?.insuranceCoverNote}</Descriptions.Item>
+                    <Descriptions.Item label="Insurance Amount">{insuranceForm?.insuranceAmount}</Descriptions.Item>
+                    <Descriptions.Item label="Date">{insuranceForm?.date}</Descriptions.Item>
+                    <Descriptions.Item label="Registration Number">{insuranceForm?.registrationNumber}</Descriptions.Item>
+                </Descriptions>
+            </Card>
+        </Space>
     );
 };
 

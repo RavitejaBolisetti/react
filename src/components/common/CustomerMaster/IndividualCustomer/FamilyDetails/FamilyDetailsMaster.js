@@ -1,13 +1,10 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Form } from 'antd';
 import { AddEditForm } from './AddEditForm';
+import '../../Demo.css'
 
 const FamilyDetailsBase = () => {
     const [familyForm] = Form.useForm();
-    const type = [
-        { name: 'YES', value: 1 },
-        { name: 'NO', value: 0 },
-    ];
     const [value, setValue] = useState(true);
     const selectRef = useRef();
     const onChange = useCallback((item) => {
@@ -17,34 +14,47 @@ const FamilyDetailsBase = () => {
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [customerType, setCustomerType] = useState(null);
+    const [editedMode, setEditedMode] = useState(false);
+
+    const onSave = () => {
+        let values = familyForm.getFieldsValue();
+        console.log(values,'VALUES')
+        setShowForm(false);
+        setEditedMode(false);
+        //let index = familyDetailList?.findIndex(e => e.familyMembername === values.familyMembername && e.relationAge === values.relationAge);
+        setFamilyDetailsList(()=> [values])
+    }
 
     const onFamilyFinish = (values) => {
-        console.log(values,'VALUES')
-        setFamilyDetailsList((items)=>[...items,values]);
+         setFamilyDetailsList((items) => [...items,values ]);
         familyForm.resetFields();
         setShowForm(false);
 
-        if(values?.relationship === 1){
+        if (values?.relationship === 1) {
             setCustomerType(true);
-        } else if(values?.relationship === 0){
+        } else if (values?.relationship === 0) {
             setCustomerType(false);
         }
     };
 
     const onFinishFailed = (errorInfo) => {
-       return
+        return;
     };
 
     const formProps = {
         familyForm,
-        type,
         value,
         onChange,
         selectRef,
         onFamilyFinish,
         onFinishFailed,
         familyDetailList,
-        showForm, setShowForm,customerType,
+        showForm,
+        setShowForm,
+        customerType,
+        onSave,
+        editedMode, 
+        setEditedMode,
     };
 
     return (

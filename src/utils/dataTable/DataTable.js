@@ -3,8 +3,9 @@ import { Table } from 'antd';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { tblSerialNumberColumn } from 'utils/tableCloumn';
 
-export default function DataTable({ isLoading, tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {}, srl = true }) {
+export default function DataTable({ isLoading, removePagination = false, srl = true, srlTitle = 'Srl', tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
     const showTotal = (total) => total && `Total ${total} items`;
+
     const [tablePagination, setPagination] = useState({ pageSize: 10, current: 1, position: ['bottomRight'], showSizeChanger: true, hideOnSinglePage: false, showTotal });
 
     const handleTableChange = (pagination, filters, sorter) => {
@@ -12,20 +13,20 @@ export default function DataTable({ isLoading, tableColumn, scroll = 'auto', tab
         setPagination({ ...pagination, showTotal });
     };
 
-    const tableSkeletonColumn = tableColumn?.map((item) => {
+    const skeletonData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+
+    const tableColumnWithSrl = [tblSerialNumberColumn({ page: tablePagination?.current, title: srlTitle, pageSize: tablePagination?.pageSize, width: '5%' }), ...tableColumn];
+
+    const tableSkeletonColumn = tableColumnWithSrl?.map((item) => {
         return { ...item, render: () => <InputSkeleton height={40} /> };
     });
 
-    const skeletonData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
-
-    const tableColumnWithSrl = [tblSerialNumberColumn({ page: tablePagination?.current, pageSize: tablePagination?.pageSize, width: '5%' }), ...tableColumn];
-
     return (
         <Table
-            columns={isLoading ? tableSkeletonColumn : srl ? tableColumnWithSrl : tableColumn}
+            columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl}
             dataSource={isLoading ? skeletonData : tableData}
             onChange={handleTableChange}
-            pagination={!isLoading && tablePagination}
+            pagination={removePagination ? false : !isLoading && tablePagination}
             rowKey={rowKey}
             scroll={{
                 x: scroll,
