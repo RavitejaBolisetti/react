@@ -72,7 +72,6 @@ export const ListDealerLocationTypeMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
@@ -115,10 +114,10 @@ export const ListDealerLocationTypeMasterBase = (props) => {
             if (filterString) {
                 const keyword = filterString?.keyword;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.locationDescription) : true));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
                 setShowDataLoading(false);
             } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data);
                 setShowDataLoading(false);
             }
         }
@@ -205,7 +204,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
-    
+
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
             return 'View ';
@@ -243,7 +242,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-       tableData: searchData,
+        tableData: searchData,
     };
 
     const title = 'Location Type Name';

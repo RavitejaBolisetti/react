@@ -32,7 +32,7 @@ const ApplicationActionsForm = ({ finalFormdata, form, onFinish, status, name, i
                                 </Form.Item>
                             </Col>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Status" valuePropName="checked">
+                                <Form.Item onClick={e => e.stopPropagation()} initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Status" valuePropName="checked">
                                     <Switch disabled={isBtnDisabled} checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
                                 </Form.Item>
                             </Col>

@@ -121,6 +121,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         const recordId = selectedRecord?.id || '';
         const data = {
             ...values,
+            id: '1',
             webRoleApplicationMapping: [
                 {
                     id: '',
@@ -265,13 +266,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     };
 
     const tableColumn = [
-        tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'srl',
-            sorter: false,
-            render: (_t, _r, i) => i + 1,
-            width: '5%',
-        }),
         tblPrepareColumns({
             title: 'Role ID',
             dataIndex: 'roleId',

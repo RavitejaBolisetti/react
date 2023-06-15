@@ -98,10 +98,10 @@ export const OtfMasterBase = (props) => {
             if (filterString) {
                 const keyword = filterString?.keyword;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyName) : true));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
                 setShowDataLoading(false);
             } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data);
                 setShowDataLoading(false);
             }
         }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -58,7 +58,6 @@ export const ListLessorCompanyMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState(detailData);
     const [refershData, setRefershData] = useState(false);
-    
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState('');
@@ -110,7 +109,7 @@ export const ListLessorCompanyMasterBase = (props) => {
             if (filterString) {
                 const keyword = filterString?.keyword;
                 const filterDataItem = detailData?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyDescription) : true));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
                 setShowDataLoading(false);
             } else {
                 setSearchdata(detailData?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -141,7 +140,7 @@ export const ListLessorCompanyMasterBase = (props) => {
             setFilterString({ ...filterString, advanceFilter: false, keyword: value });
         }
     };
-   
+
     const handleClearInSearch = (e) => {
         if (e?.target?.value === '') {
             setFilterString();
@@ -201,7 +200,7 @@ export const ListLessorCompanyMasterBase = (props) => {
     };
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
-    
+
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
             return 'View ';
@@ -236,7 +235,7 @@ export const ListLessorCompanyMasterBase = (props) => {
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-       tableData: searchData,
+        tableData: searchData,
     };
 
     const title = 'Lessor Company Name';

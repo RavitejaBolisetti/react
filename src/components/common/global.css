@@ -214,6 +214,7 @@
 :global .ant-form-vertical .ant-form-item-label {
     margin: 0;
     padding: 0px;
+    pointer-events: none;
 }
 
 :global .ant-tree .ant-tree-list-holder-inner {
@@ -265,10 +266,6 @@
 :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-texts {
     font-weight: 600;
     font-size: 16px;
-}
-
-:global(.ant-card.ant-card-actions) {
-    height: 40px;
 }
 
 :global(.ant-card.ant-card-actions) {

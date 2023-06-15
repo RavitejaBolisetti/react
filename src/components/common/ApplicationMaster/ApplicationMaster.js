@@ -159,8 +159,9 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         const reqData = [
             {
                 nodeType: '',
-                id: values.id || '',
+                id: values?.id || '',
                 ...values,
+                status: values?.applicationStatus,
                 parentApplicationId: parentAppCode,
                 documentType: documentType?.map((el) => ({ ...el, id: el.id || '' })),
                 accessibleLocation: accessibleLocation?.map(({ dealerMasterLocationId, id }) => ({ id: id || '', dealerMasterLocationId: dealerMasterLocationId })),

@@ -94,10 +94,10 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
                 const keyword = filterString?.keyword;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.qualificationName) : true));
 
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
                 setShowDataLoading(false);
             } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data);
                 setShowDataLoading(false);
             }
         }

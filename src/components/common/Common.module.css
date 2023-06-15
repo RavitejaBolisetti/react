@@ -72,6 +72,11 @@
     padding: 12px 8px !important;
 }
 
+.contentHeaderBackground .headerText {
+    line-height: 32px;
+    margin-right: 12px;
+}
+
 .contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper,
 .contentHeaderBackground .headerSelectField :global .ant-btn-default,
 .contentHeaderBackground :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
@@ -246,7 +251,11 @@
     display: inline-block;
     width: 100%;
     padding: 0;
-    text-align: left;
+    text-align: right;
+}
+
+.buttonHeadingContainer button:first-child {
+    margin-right: 12px;
 }
 
 .buttonHeadingContainer .buttonIcon {
@@ -581,8 +590,14 @@
     gap: 10px;
 }
 
-.viewCardSize :global .ant-card-body button {
-    margin-top: -8px;
+.viewCardSize :global .ant-card-body .ant-btn-link {
+    margin-top: -4px;
+    width: 16px;
+    height: 16px;
+}
+
+.viewCardSize .saveCancelBtn :global .ant-btn-link {
+    padding: 0;
 }
 
 .searchAndLabelAlign {
@@ -986,6 +1001,10 @@
 
 ::-ms-reveal {
     display: none;
+}
+
+:global .ant-switch.ant-switch-checked .ant-switch-inner {
+    padding-inline-end: 0px
 }
 
 :global .ant-switch .ant-switch-inner {
@@ -1714,20 +1733,13 @@
     color: #ff3e5b;
 }
 
-.inactiveForm {
-    /* color: #00a310; */
-}
+/* .inactiveForm {
+    color: #00a310;
+} */
 
-.saveCancelBtn {
-    display: flex;
-}
-
-.saveCancelBtn .saveBtn,
-.saveCancelBtn .cancelBtn {
-    color: #ff3e5bda;
-    cursor: pointer;
-    margin: 0px 10px;
-}
+/* .inactiveForm {
+    color: #00a310;
+} */
 
 .drawerCardView :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
     padding-bottom: 0px;

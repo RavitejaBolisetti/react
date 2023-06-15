@@ -131,7 +131,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
             setFormData({ ...detailData, isChildAllowed });
             setSelectedTreeData({ ...detailData, hierarchyAttribueName, parentName: prodctShrtName });
-            setDocumentTypesList(detailData?.adminAuthority?.map(authority => ({...authority, isModified: false })) || []);
+            setDocumentTypesList(detailData?.adminAuthority?.map((authority) => ({ ...authority, isModified: false })) || []);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [detailData, selectedId]);
@@ -336,9 +336,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Col xs={19} sm={19} md={19} lg={19} xl={12}>
-                                Hierarchy
+                        <Row gutter={20}>
+                            <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                <span className={styles.headerText}>Hierarchy</span>
                                 <Search
                                     placeholder="Search"
                                     style={{
@@ -349,26 +349,24 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                     className={styles.searchField}
                                 />
                             </Col>
-                            <div>
+                            <Col className={styles.buttonHeadingContainer} xs={10} sm={10} md={10} lg={10} xl={10}>
                                 <Button type="primary" onClick={uploadModelOpen}>
                                     Upload
                                 </Button>
                                 {manufacturerAdminHierarchyData?.length > 0 && (
-                                    <Col className={styles.buttonHeadingContainer} xs={5} sm={5} md={5} lg={5} xl={5}>
-                                        <Dropdown
-                                            menu={{
-                                                items: historyOptions,
-                                            }}
-                                        >
-                                            <Button type="primary">
-                                                <FaHistory className={styles.buttonIcon} />
-                                                Change History
-                                                <DownOutlined />
-                                            </Button>
-                                        </Dropdown>
-                                    </Col>
+                                    <Dropdown
+                                        menu={{
+                                            items: historyOptions,
+                                        }}
+                                    >
+                                        <Button type="primary">
+                                            <FaHistory className={styles.buttonIcon} />
+                                            Change History
+                                            <DownOutlined />
+                                        </Button>
+                                    </Dropdown>
                                 )}
-                            </div>
+                            </Col>
                         </Row>
                     </div>
                     <div className={styles.content}>

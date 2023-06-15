@@ -107,7 +107,7 @@ export const CriticalityGroupMain = (props) => {
                 const keyword = filterString?.keyword;
                 const filterDataItem = criticalityGroupData?.filter((item) => (keyword ? filterFunction(keyword)(item?.criticalityGroupName) : true));
 
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
             } else {
                 setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
             }

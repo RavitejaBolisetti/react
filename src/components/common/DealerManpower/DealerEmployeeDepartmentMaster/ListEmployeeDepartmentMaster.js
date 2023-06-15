@@ -74,7 +74,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
@@ -124,10 +123,10 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
 
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.departmentName) : true) && (division ? filterFunction(division)(item?.divisionCode) : true));
 
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
                 setShowDataLoading(false);
             } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data);
                 setShowDataLoading(false);
             }
         }
@@ -262,7 +261,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-       tableData: searchData,
+        tableData: searchData,
     };
 
     const advanceFilterProps = {
