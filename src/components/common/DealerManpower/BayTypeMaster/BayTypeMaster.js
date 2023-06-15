@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -61,7 +61,6 @@ export const BayTypeMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    const [page, setPage] = useState(1);
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
@@ -227,9 +226,8 @@ export const BayTypeMasterBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
-        setPage,
     };
 
     const title = 'Bay Type Name';

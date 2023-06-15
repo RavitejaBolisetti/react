@@ -131,7 +131,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
             setFormData({ ...detailData, isChildAllowed });
             setSelectedTreeData({ ...detailData, hierarchyAttribueName, parentName: prodctShrtName });
-            setDocumentTypesList(detailData?.adminAuthority?.map(authority => ({...authority, isModified: false })) || []);
+            setDocumentTypesList(detailData?.adminAuthority?.map((authority) => ({ ...authority, isModified: false })) || []);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [detailData, selectedId]);

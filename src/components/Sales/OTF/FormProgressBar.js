@@ -3,8 +3,10 @@ import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 
+
 const FormProgressBar = (props) => {
     const { leftTimeline, setleftTimeline } = props;
+    
 
     const onHandle = (key) => {
         switch (key) {
@@ -52,7 +54,6 @@ const FormProgressBar = (props) => {
             case 'addOnDetails':
                 setleftTimeline({ ...leftTimeline, otfDetails: false, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: true });
                 break;
-
             default:
                 setleftTimeline({ ...leftTimeline, otfDetails: true, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, addOnDetails: false });
         }
@@ -61,6 +62,7 @@ const FormProgressBar = (props) => {
         <Timeline
             items={[
                 {
+                    
                     dot: <BsRecordCircleFill color="#ff3e5b" />,
                     children: <p onClick={() => onHandle('otfDetails')}>Otf Details</p>,
                 },

@@ -87,7 +87,7 @@ export const ListRoleMasterBase = (props) => {
 
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    const [page, setPage] = useState(1);
+    
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
@@ -307,14 +307,14 @@ export const ListRoleMasterBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
-        tableData: searchData,
-        setPage,
+        tableColumn: tableColumn(handleButtonClick),
+       tableData: searchData,
     };
 
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
+        setFilteredDepartmentData([]);
     };
 
     const handleResetFilter = () => {

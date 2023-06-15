@@ -133,7 +133,6 @@ const ListPinCodeMasterBase = (props) => {
     const [filteredTehsilData, setFilteredTehsilData] = useState([]);
 
     const [refershData, setRefershData] = useState(false);
-    const [page, setPage] = useState(1);
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
@@ -470,9 +469,9 @@ const ListPinCodeMasterBase = (props) => {
         </>
     );
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
-        setPage,
+
         noDataMessage: dataMessage,
     };
 

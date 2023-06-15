@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Table } from 'antd';
 import { InputSkeleton } from 'components/common/Skeleton';
+import { tblSerialNumberColumn } from 'utils/tableCloumn';
 
-export default function DataTable({ isLoading, tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
+export default function DataTable({ isLoading, tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {}, srl = true }) {
     const showTotal = (total) => total && `Total ${total} items`;
-
     const [tablePagination, setPagination] = useState({ pageSize: 10, current: 1, position: ['bottomRight'], showSizeChanger: true, hideOnSinglePage: false, showTotal });
 
     const handleTableChange = (pagination, filters, sorter) => {
@@ -18,9 +18,11 @@ export default function DataTable({ isLoading, tableColumn, scroll = 'auto', tab
 
     const skeletonData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
+    const tableColumnWithSrl = [tblSerialNumberColumn({ page: tablePagination?.current, pageSize: tablePagination?.pageSize, width: '5%' }), ...tableColumn];
+
     return (
         <Table
-            columns={isLoading ? tableSkeletonColumn : tableColumn}
+            columns={isLoading ? tableSkeletonColumn : srl ? tableColumnWithSrl : tableColumn}
             dataSource={isLoading ? skeletonData : tableData}
             onChange={handleTableChange}
             pagination={!isLoading && tablePagination}

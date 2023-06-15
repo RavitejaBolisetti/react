@@ -1,12 +1,10 @@
-import { tblPrepareColumns, tblSerialNumberColumn, tblStatusColumn, tblApprovalStatusColumn, tblActionColumn } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblStatusColumn, tblApprovalStatusColumn, tblActionColumn } from 'utils/tableCloumn';
 
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
-        tblSerialNumberColumn({ page, pageSize, width: '10%', fixed: 'left' }),
-
         tblPrepareColumns({
             title: 'PIN Code',
             dataIndex: 'pinCode',

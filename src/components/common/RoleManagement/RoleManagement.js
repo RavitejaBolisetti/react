@@ -73,8 +73,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
-    // const [RowData, setRowData] = useState();
-    // const [saveClick, setSaveClick] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [formData, setFormData] = useState([]);
@@ -124,11 +122,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         const data = {
             ...values,
             //id: RowData?.id,
-            webRoleApplicationMapping: [
-                {
-                    id: '',
                     activeIndicator: true,
-                    applicationId: '4af77de8-363e-480e-bdac-e6c836c8467c',
                     subApplication: [
                         {
                             id: '',
@@ -326,18 +320,10 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         moduleTitle,
         setIsViewModeVisible,
         isViewModeVisible,
-        //RowData,
         RoleData,
-        //setSaveClick,
         form,
         setFormBtnDisable,
-        formBtnDisable,
-        isLoadingOnSave,
-        showSaveBtn,
-        showSaveAndAddNewBtn,
-        isVisible: isFormVisible,
         titleOverride: drawerTitle.concat(moduleTitle),
-        onCloseAction: () => {
             form.resetFields();
             setIsFormVisible(false);
             setFormData([]);

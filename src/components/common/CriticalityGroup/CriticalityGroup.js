@@ -64,7 +64,6 @@ export const CriticalityGroupMain = (props) => {
 
     const [filterString, setFilterString] = useState();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [page, setPage] = useState(1);
 
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -202,8 +201,7 @@ export const CriticalityGroupMain = (props) => {
     const tableProps = {
         isLoading,
         tableData: searchData,
-        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
-        setPage,
+        tableColumn: tableColumn(handleButtonClick),
     };
 
     const onCloseAction = () => {

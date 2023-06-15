@@ -11,6 +11,7 @@ export default function ListDataTable({
     addTitle = 'Group',
     scroll = 'auto',
     showAddButton = true,
+    srl,
     noDataMessage = (
         <>
             No records found. Please add new parameter <br />
@@ -40,7 +41,7 @@ export default function ListDataTable({
                 )}
             >
                 <div className={styles.tableProduct}>
-                    <DataTable isLoading={isLoading} tableData={tableData} tableColumn={tableColumn} scroll={scroll} />
+                    <DataTable isLoading={isLoading} tableData={tableData} srl={srl} tableColumn={tableColumn} scroll={scroll} />
                 </div>
             </ConfigProvider>
         </>

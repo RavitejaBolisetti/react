@@ -15,7 +15,7 @@ function FormProductAttribute(props) {
 
     const fieldNames = { label: 'attributeCode', value: 'id' };
 
-    const getValues = () =>{
+    const getValues = () => {
         let newFormData = formDecider ? editForm?.getFieldsValue() : attributeForm?.getFieldsValue();
         setChangeValue(newFormData);
     };
@@ -24,8 +24,7 @@ function FormProductAttribute(props) {
         <Form form={formDecider ? editForm : attributeForm} id="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Attribute Name" name="attributeName" initialValue={props?.attributeName} rules={[ validateRequiredSelectField('Attribute Name'), {validator: () =>
-                    duplicateProductValidator(changeValue, finalFormdata)}]}>
+                    <Form.Item label="Attribute Name" name="attributeName" initialValue={props?.attributeName} rules={[validateRequiredSelectField('Attribute Name'), { validator: () => duplicateProductValidator(changeValue, finalFormdata, props) }]}>
                         <Select
                             getPopupContainer={(triggerNode) => triggerNode.parentElement}
                             placeholder={preparePlaceholderSelect('attribute name')}
@@ -37,6 +36,7 @@ function FormProductAttribute(props) {
                             allowClear
                             labelInValue
                             onChange={getValues}
+                            key={productHierarchyAttributeData.id}
                         />
                     </Form.Item>
                 </Col>

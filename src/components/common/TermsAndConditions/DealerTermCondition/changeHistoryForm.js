@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Row, Col } from 'antd';
 
 import { tblPrepareColumns } from 'utils/tableCloumn';
@@ -10,7 +10,6 @@ import { convertDate } from 'utils/formatDateTime';
 const ChangeHistoryMain = (props) => {
     const { ChangeHistoryTermsConditionsData } = props;
 
-    const [page, setPage] = useState(1);
     const tableColumn = [];
 
     tableColumn.push(
@@ -44,15 +43,15 @@ const ChangeHistoryMain = (props) => {
             width: '15%',
             render: (text) => convertDate(text),
         }),
+        tblPrepareColumns({
+            title: 'Version',
+            dataIndex: 'version',
+            width: '15%',
+        }),
 
         tblPrepareColumns({
             title: 'Description',
             dataIndex: 'termsconditiondescription',
-            width: '15%',
-        }),
-        tblPrepareColumns({
-            title: 'Version',
-            dataIndex: 'version',
             width: '15%',
         })
     );
@@ -60,8 +59,6 @@ const ChangeHistoryMain = (props) => {
     const tableProps = {
         tableColumn,
         tableData: ChangeHistoryTermsConditionsData,
-        setPage,
-        page,
     };
     return (
         <>
