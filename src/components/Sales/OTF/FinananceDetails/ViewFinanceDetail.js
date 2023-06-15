@@ -1,5 +1,5 @@
 import React from 'react';
-import { Space, Card, Descriptions } from 'antd';
+import { Card, Descriptions } from 'antd';
 
 const ViewDetailMain = (props) => {
     const { styles } = props;
@@ -22,25 +22,19 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
-            <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Card style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
-                    <div className={styles.alignUser}>
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Financier">{financeForm?.financier}</Descriptions.Item>
-                            <Descriptions.Item label="Branch">{financeForm?.branch}</Descriptions.Item>
-                            <Descriptions.Item label="File Number">{financeForm?.filenumber}</Descriptions.Item>
-                            <Descriptions.Item label="Loan Amount">{financeForm?.loanamoount}</Descriptions.Item>
-                            <Descriptions.Item label="EMI">{financeForm?.emi}</Descriptions.Item>
-                            <Descriptions.Item label="Finance Done">{financeForm?.financedone}</Descriptions.Item>
-                            <Descriptions.Item label="D.O. Recived">{financeForm?.dorecived}</Descriptions.Item>
-                            <Descriptions.Item label="D.O. Number">{financeForm?.donumber}</Descriptions.Item>
-                            <Descriptions.Item label="D.O. Date">{financeForm?.dodate}</Descriptions.Item>
-                        </Descriptions>
-                    </div>
-                </Card>
-            </Space>
-        </div>
+        <Card className={styles.drawerCardView} style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
+            <Descriptions {...viewProps}>
+                <Descriptions.Item label="Financier">{financeForm?.financier}</Descriptions.Item>
+                <Descriptions.Item label="Branch">{financeForm?.branch}</Descriptions.Item>
+                <Descriptions.Item label="File Number">{financeForm?.filenumber}</Descriptions.Item>
+                <Descriptions.Item label="Loan Amount">{financeForm?.loanamoount}</Descriptions.Item>
+                <Descriptions.Item label="EMI">{financeForm?.emi}</Descriptions.Item>
+                <Descriptions.Item label="Finance Done">{financeForm?.financedone}</Descriptions.Item>
+                <Descriptions.Item label="D.O. Recived">{financeForm?.dorecived}</Descriptions.Item>
+                <Descriptions.Item label="D.O. Number">{financeForm?.donumber}</Descriptions.Item>
+                <Descriptions.Item label="D.O. Date">{financeForm?.dodate}</Descriptions.Item>
+            </Descriptions>
+        </Card>
     );
 };
 

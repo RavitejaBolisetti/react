@@ -59,6 +59,8 @@ const ViewDetailMain = (props) => {
                         activeKey={activeKey}
                         onChange={() => onChange(schemeForm?.id)}
                         expandIconPosition="end"
+                        className={styles.collapseContainer}
+                        
                     >
                         <Panel
                             header={
