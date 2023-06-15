@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row, Button, Space, Collapse, Typography, Descriptions } from 'antd';
+import { Col, Row, Button, Space, Collapse, Typography, Descriptions, Card, Divider } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FaRegUserCircle } from 'react-icons/fa';
 
@@ -15,129 +15,63 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
     const customerForm = {
-        customerType: 'uttar pradesh',
-        corporateCode: 'ssss',
-        CustomerCategory: '12312',
-        usageCategorization: 'Delhi',
-        usageCategorizationcategory: true,
-    };
-    const AuthorityForm = {
-        companyName: 'uttar pradesh',
-        personName: 'ssss',
-        postion: '12312',
-        remarks: 'Delhi',
-    };
-    const keyAccountForm = {
-        accountClientName: 'uttar pradesh',
-        accountCode: 'ssss',
-        accountMappingDate: '12312',
-        accountName: 'Delhi',
-        accountSegment: true,
+        mobileNumber: '8707023991',
+        customerType: 'Individual',
+        title:'Mr.',
+        firstName: 'Arvind',
+        middleName: 'Pal',
+        lastName: 'Singh',
+        emailId: 'pal.arvind@gmail.com',
+        contactedOverWhatsapp: true,
+        useMobileNumber: 'false',
+        whatsappNumber: '8707023991',
+        corporateType: 'Non-Listed',
+        corporateCategory: 'C1',
+        corporateName: 'ABC',
+        membershipType: 'Gold',
     };
 
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(1)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(1)}
-                    expandIconPosition="end"
+                <Card
+                    header={
+                        <div className={styles.alignUser}>
+                            <FaRegUserCircle className={styles.userCircle} />
+                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                Customer Information
+                            </Text>
+                        </div>
+                    }
                 >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {' '}
-                                    Customer Information
-                                </Text>
-                            </div>
-                        }
-                        key="1"
-                    >
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Customer Type">{customerForm?.customerType}</Descriptions.Item>
-                            <Descriptions.Item label="corporate Code">{customerForm?.corporateCode}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Category">{customerForm?.CustomerCategory}</Descriptions.Item>
-                            <Descriptions.Item label="Usage Categorization">{customerForm?.usageCategorization}</Descriptions.Item>
-                            <Descriptions.Item label="usage Categorization Category">{customerForm?.usageCategorizationcategory ? 'Active' : 'Inactive'}</Descriptions.Item>
-                        </Descriptions>
-                    </Panel>
-                </Collapse>
+                    <Descriptions {...viewProps}>
+                        <Descriptions.Item label="Mobile Number">{customerForm?.mobileNumber}</Descriptions.Item>
+                        <Descriptions.Item label="Customer Type">{customerForm?.customerType}</Descriptions.Item>
+                        <Divider/>
+                        
 
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(2)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(2)}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {' '}
-                                    Key Account Details
-                                </Text>
+                        <Card>
+                            <div className={`${styles.cardInsideBox} ${styles.customerName}`}>
+                                <Text className={styles.customerName}>Customer Name</Text>
+                                <Divider />
+                                {customerForm?.title}
+                                <span className={styles.nameSpacing}></span>
+                                {customerForm?.firstName}
+                                <span className={styles.nameSpacing}></span>
+                                {customerForm.middleName}
+                                <span className={styles.nameSpacing}></span>
+                                {customerForm.lastName}
                             </div>
-                        }
-                        key="2"
-                    >
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Account Client Name">{keyAccountForm?.accountClientName}</Descriptions.Item>
-                            <Descriptions.Item label="Account Code">{keyAccountForm?.accountCode}</Descriptions.Item>
-                            <Descriptions.Item label="Account Mapping Date">{keyAccountForm?.accountMappingDate}</Descriptions.Item>
-                            <Descriptions.Item label="Account Name">{keyAccountForm?.accountName}</Descriptions.Item>
-                            <Descriptions.Item label="Account Segment">{keyAccountForm?.accountSegment ? 'Active' : 'Inactive'}</Descriptions.Item>
-                        </Descriptions>
-                    </Panel>
-                </Collapse>
+                        </Card>
+                        <br />
+                        <br />
 
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(3)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(3)}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {' '}
-                                    Authority Details
-                                </Text>
-                            </div>
-                        }
-                        key="3"
-                    >
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Company Name">{AuthorityForm?.companyName}</Descriptions.Item>
-                            <Descriptions.Item label="Person Name">{AuthorityForm?.personName}</Descriptions.Item>
-                            <Descriptions.Item label="Postion">{AuthorityForm?.postion}</Descriptions.Item>
-                            <Descriptions.Item label="Remarks">{AuthorityForm?.remarks}</Descriptions.Item>
-                        </Descriptions>
-                    </Panel>
-                </Collapse>
+                        <Descriptions.Item label="Customer Name">{customerForm?.corporateName}</Descriptions.Item>
+                        <Descriptions.Item label="Customer Category">{customerForm?.corporateName}</Descriptions.Item>
+                        <Descriptions.Item label="usage Categorization Category">{customerForm?.usageCategorizationcategory ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    </Descriptions>
+                </Card>
+
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                         <Button danger onClick={onCloseAction}>
