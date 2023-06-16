@@ -2,7 +2,7 @@ import React, { useState, Fragment, useEffect } from 'react';
 import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 
-import style from './../../Common.module.css';
+import styles from './../../Common.module.css';
 import DocumentTypesForm from './DocumentTypesForm';
 
 const { Text } = Typography;
@@ -70,7 +70,7 @@ const CardDocumentType = (prop) => {
 
     return (
         <>
-            <Card className={style.viewCardSize} key={documentTypeCode}>
+            <Card className={styles.viewCardSize} key={documentTypeCode}>
                 <Row align="middle">
                     <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
                         <Row align="middle">
@@ -99,20 +99,19 @@ const CardDocumentType = (prop) => {
                                         <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(id, status, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode)} />
                                     </Col>
                                     {!id?.length > 0 && (
-                                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                                        <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
                                             <Button disabled={isBtnDisabled} onClick={() => handleDeleteDocType({ termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode })} type="link" icon={<FiTrash />}></Button>
                                         </Col>
                                     )}
                                 </>
                             ) : (
                                 <>
-                                    {' '}
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={styles.saveCancelBtn}>
                                         <Button type="link" onClick={onUpdate}>
                                             Save
                                         </Button>
                                     </Col>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                    <Col xs={11} sm={11} md={11} lg={11} xl={11} xxl={11} className={styles.saveCancelBtn}>
                                         <Button type="link" onClick={() => onCancel()}>
                                             Cancel
                                         </Button>

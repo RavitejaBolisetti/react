@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
-import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography } from 'antd';
+import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Card, Divider, Switch } from 'antd';
 
 import { FaRegUserCircle } from 'react-icons/fa';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
-import { validateRequiredSelectField } from 'utils/validation';
+import { validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewIndivisualCustomerDetails';
 
 import styles from 'components/common/Common.module.css';
+import { memberShip, title } from 'constants/modules/CustomerMaster/individualProfile';
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -105,195 +106,130 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                            <Collapse
-                                expandIcon={() => {
-                                    if (activeKey.includes(1)) {
-                                        return <MinusOutlined className={styles.iconsColor} />;
-                                    } else {
-                                        return <PlusOutlined className={styles.iconsColor} />;
-                                    }
-                                }}
-                                activeKey={activeKey}
-                                onChange={() => onChange(1)}
-                                expandIconPosition="end"
+                            <Card
+                                header={
+                                    <div className={styles.alignUser}>
+                                        <FaRegUserCircle className={styles.userCircle} />
+                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                            Customer Information
+                                        </Text>
+                                    </div>
+                                }
                             >
-                                <Panel
-                                    header={
-                                        <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
-                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                Customer Information
-                                            </Text>
-                                        </div>
-                                    }
-                                    key="1"
-                                >
-                                    <Form autoComplete="off" layout="vertical" form={customerForm} onFinishFailed={onFinishFailed}>
+                                <Form autoComplete="off" layout="vertical" form={customerForm} onFinishFailed={onFinishFailed}>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="Mobile Number" name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
+                                                <Input placeholder={preparePlaceholderText('mobile number')} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
+                                                <Select placeholder="Select" disabled={false} loading={false} allowClear>
+                                                    <Option value="customerType">Corporate</Option>
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Divider />
+                                    <div className={styles.cardInsideBox}>
+                                        <Text style={{ fontSize:'16px'}} strong>
+                                            Customer Name
+                                        </Text>
+                                        <Divider />
                                         <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                                                    <Select placeholder="Select" disabled={false} loading={false} allowClear>
-                                                        <Option value="customerType">customerType</Option>
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Corporate Code" name="corporateCode" data-testid="corporateCode">
+                                            <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                                <Form.Item label="Title" name="title" data-testid="title" rules={[validateRequiredSelectField('title')]}>
                                                     <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                                        <Option value="corporateCode">customerType</Option>
+                                                        {title?.map((item) => (
+                                                            <Option key={'ti' + item.key}>{item.name}</Option>
+                                                        ))}
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
+                                            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                                                <Form.Item label="First Name" name="firstName" data-testid="firstName" rules={[validateRequiredInputField('first name')]}>
+                                                    <Input placeholder={preparePlaceholderText('first name')} />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                                                <Form.Item label="Middle Name" name="middleName" data-testid="middleName">
+                                                    <Input placeholder={preparePlaceholderText('middle name')} />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                                                <Form.Item label="Last Name" name="lastName" data-testid="lastName">
+                                                    <Input placeholder={preparePlaceholderText('last name')} />
+                                                </Form.Item>
+                                            </Col>
                                         </Row>
+                                    </div>
+                                    <Divider />
 
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Usage/Application Categorization" name="usageCategorization" data-testid="usageCategorization">
-                                                    <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                                        <Option value="usageCategorization">usageCategorization</Option>
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Usage/Application Sub-category" name="usageCategorizationcategory" data-testid="customerType">
-                                                    <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                                        <Option value="Usage/Application Sub-category">Usage/Application Sub-category</Option>
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Customer Category" name="CustomerCategory" data-testid="CustomerCategory">
-                                                    <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                                        <Option value="CustomerCategory">CustomerCategory</Option>
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                    </Form>
-                                </Panel>
-                            </Collapse>
-                            <Collapse
-                                expandIcon={() => {
-                                    if (activeKey.includes(2)) {
-                                        return <MinusOutlined className={styles.iconsColor} />;
-                                    } else {
-                                        return <PlusOutlined className={styles.iconsColor} />;
-                                    }
-                                }}
-                                activeKey={activeKey}
-                                onChange={() => onChange(2)}
-                                expandIconPosition="end"
-                            >
-                                <Panel
-                                    header={
-                                        <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
-                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                Key Account details
-                                            </Text>
-                                        </div>
-                                    }
-                                    key="2"
-                                >
-                                    <Form autoComplete="off" layout="vertical" form={keyAccountForm}>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Account Code" name="accountCode">
-                                                    <Input disabled />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Account Name" name="accountName">
-                                                    <Input disabled />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Account Segment" name="accountSegment">
-                                                    <Input disabled />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Account Client Name" name="accountClientName">
-                                                    <Input disabled />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Account Mapping Date" name="accountMappingDate">
-                                                    <Input disabled />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                    </Form>
-                                </Panel>
-                            </Collapse>
-                            <Collapse
-                                expandIcon={() => {
-                                    if (activeKey.includes(3)) {
-                                        return <MinusOutlined className={styles.iconsColor} />;
-                                    } else {
-                                        return <PlusOutlined className={styles.iconsColor} />;
-                                    }
-                                }}
-                                activeKey={activeKey}
-                                onChange={() => onChange(3)}
-                                expandIconPosition="end"
-                            >
-                                <Panel
-                                    header={
-                                        <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
-                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                Authority details
-                                            </Text>
-                                        </div>
-                                    }
-                                    key="3"
-                                >
-                                    <Form autoComplete="off" layout="vertical" form={authorityForm}>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Name of  Person" name="personName">
-                                                    <Input placeholder={preparePlaceholderText('name')} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Position" name="postion">
-                                                    <Input placeholder={preparePlaceholderText('position')} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="Company Name" name="companyName">
-                                                    <Input placeholder={preparePlaceholderText('company name')} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Form.Item name="remarks" label="Remarks">
-                                                    <Input.TextArea maxLength={100} placeholder={preparePlaceholderText('remarks')} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                    </Form>
-                                </Panel>
-                            </Collapse>
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Button danger onClick={onCloseAction}>
-                                        Cancel
-                                    </Button>
-                                </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Button type="primary" onClick={onFinish} className={styles.floatRight}>
-                                        Save & Proceed
-                                    </Button>
-                                </Col>
-                            </Row>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="Email ID" name="emailId" data-testid="emailId">
+                                                <Input placeholder={preparePlaceholderText('email id')} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="Do you want to contacted over whatsapp?" name="contactedOverWhatsapp" data-testid="contactedOverWhatsapp">
+                                                <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="Want to use Mobile no as whatsapp no?" name="useMobileNumber" data-testid="useMobileNumber">
+                                                <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="Whatsapp Number" name="whatsappNumber" data-testid="whatsappNumber">
+                                                <Input placeholder={preparePlaceholderText('whatsapp number')} />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Divider />
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="Corporate Type" name="corporateType" data-testid="corporateType">
+                                                <Select disabled={false} loading={false} placeholder="Select" allowClear>
+                                                    <Option value="corporateType">Listed</Option>
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="Corporate Name" name="corporateName" data-testid="corporateName">
+                                                <Select disabled={false} loading={false} placeholder="Select" allowClear>
+                                                    <Option value="corporateName">Corporate ABC</Option>
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item initialValue={222} label="Corporate Code" name="corporateCode" data-testid="corporate code">
+                                                <Input placeholder={preparePlaceholderText('parent company name')} disabled />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="Corporate Category" name="corporateCategory" data-testid="corporateCategory">
+                                                <Select disabled={false} loading={false} placeholder="Select" allowClear>
+                                                    <Option value="corporateCategory">Corporate Category 1</Option>
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item label="Membership Type" name="membershipType" data-testid="membershipType" rules={[validateRequiredSelectField('membership type')]}>
+                                                <Select disabled={false} loading={false} placeholder="Select" allowClear>
+                                                    {memberShip?.map((item) => (
+                                                        <Option key={'memb' + item.key}>{item.name}</Option>
+                                                    ))}
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            </Card>
                         </Space>
                     </Col>
                 </Row>

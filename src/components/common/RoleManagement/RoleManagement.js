@@ -73,6 +73,8 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
+    // const [RowData, setRowData] = useState();
+    // const [saveClick, setSaveClick] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [formData, setFormData] = useState([]);
@@ -267,13 +269,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
 
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'srl',
-            sorter: false,
-            render: (_t, _r, i) => i + 1,
-            width: '5%',
-        }),
-        tblPrepareColumns({
             title: 'Role ID',
             dataIndex: 'roleId',
             width: '20%',
@@ -324,7 +319,9 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         moduleTitle,
         setIsViewModeVisible,
         isViewModeVisible,
+        //RowData,
         RoleData,
+        //setSaveClick,
         form,
         setFormBtnDisable,
         formBtnDisable,

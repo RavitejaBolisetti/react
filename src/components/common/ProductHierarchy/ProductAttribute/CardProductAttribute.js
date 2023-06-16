@@ -8,24 +8,24 @@ const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
     const [productAttributeEdit, setProductAttributeEdit] = useState(false);
-    const { isVisible, finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive,showGlobalNotification } = props;
+    const { isVisible, finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive, showGlobalNotification } = props;
     const [editedAttributeValue, setEditedAttributeValue] = useState(null);
-    const [ flag , setFlag] = useState(null);
+    const [ flag , setFlag] = useState(false);
     const [editForm] = Form.useForm();
 
     const onAttributeEdit = (props) => {
-        setEditedAttributeValue({ attributeName: props?.attributeName, attributeValue: props?.attributeValue, fromApi: props?.fromApi, adPhProductAttributeMstId: props?.adPhProductAttributeMstId, id: props?.id  });
+        setEditedAttributeValue({ attributeName: props?.attributeName, attributeValue: props?.attributeValue, fromApi: props?.fromApi, adPhProductAttributeMstId: props?.adPhProductAttributeMstId, id: props?.id });
         setFormDecider(true);
         setFormBtnActive(true);
     };
 
     let formatData = [];
 
-    const onAttributeSave = (val) => { 
+    const onAttributeSave = (val) => {
         setFormDecider(false);
         const newFormData = editForm?.getFieldsValue();
 
-        let status = editForm?.getFieldError("attributeName")?.length > 0 ? true : false;
+        let status = editForm?.getFieldError('attributeName')?.length > 0 ? true : false;
         if (status) {
             return showGlobalNotification({ notificationType: 'error', title: 'Duplicate', message: 'Can not Save having same Attribute Name', placement: 'bottomRight' });
         }
@@ -34,7 +34,7 @@ const CardProductAttribute = (props) => {
             const updatedValue = prev;
             const indx = prev.findIndex((el) => el.attributeName?.key === val?.attributeId && el.attributeValue === val?.attributeValue);
             const formatData = {
-                attributeName: { label: typeof newFormData?.attributeName === 'object' ? newFormData?.attributeName?.label : newFormData?.attributeName},
+                attributeName: { label: typeof newFormData?.attributeName === 'object' ? newFormData?.attributeName?.label : newFormData?.attributeName },
                 attributeValue: newFormData?.attributeValue,
                 fromApi: newFormData?.fromApi,
                 id: props?.id,
@@ -43,24 +43,24 @@ const CardProductAttribute = (props) => {
             updatedValue?.splice(indx, 1, { ...formatData });
             return updatedValue;
         });
-        
+
         setSKUAttributes(formatData);
-        setFlag(1);
+        setFlag(!flag);
         setProductAttributeEdit(false);
         forceUpdate();
     };
 
     const onAttributeDelete = (val) => {
         setFinalFormdata((prev) => {
-            const indx = prev.findIndex((el) => el.attributeName?.key === val?.attributeId && el.attributeValue === val?.attributeValue);
+            const indx = prev.findIndex((el) => el.attributeName?.label === val?.attributeName && el.attributeValue === val?.attributeValue);
             let updatedValue = prev;
             updatedValue?.splice(indx, 1);
             return updatedValue;
         });
 
-        setSKUAttributes(formatData);
-        setFlag(1);
-        attributeForm.resetFields();
+        //setSKUAttributes(formatData);
+        setFlag(!flag);
+         attributeForm.resetFields();
         setProductAttributeEdit(false);
         forceUpdate();
     };
@@ -73,9 +73,7 @@ const CardProductAttribute = (props) => {
     useEffect(() => {
         return () => {
             setProductAttributeEdit(false);
-            if(!view){
-                setFormDecider(true);
-            }
+            !view && setFormDecider(true);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setFormDecider, view]);
@@ -83,21 +81,27 @@ const CardProductAttribute = (props) => {
     formatData = [];
     useEffect( () => {
         finalFormdata?.map((item) => formatData?.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key, fromApi: item?.fromApi === true ? true : false, id: props?.id, }));
+        //setSKUAttributes(formatData);
+
         if(!view){
             setSKUAttributes(formatData);
         } 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[flag] )
 
+    // useEffect( () => {
+
+    // },[productAttributeEdit] )
+
     const colLeft = !isVisible ? 24 : 18;
     const colRight = !isVisible ? 24 : 6;
-    
+
     const FormProductAttributeProp = {
         productHierarchyAttributeData,
         editForm,
         formDecider,
         finalFormdata,
-    }
+    };
 
     return (
         <Card
@@ -141,7 +145,7 @@ const CardProductAttribute = (props) => {
                                 <Button type="link" onClick={onAttributeCancel}>
                                     Cancel
                                 </Button>
-                                <Button type="link" onClick={onAttributeSave} >
+                                <Button type="link" onClick={onAttributeSave}>
                                     Save
                                 </Button>
                             </div>
@@ -153,7 +157,7 @@ const CardProductAttribute = (props) => {
             {productAttributeEdit && (
                 <>
                     <Divider />
-                    <FormProductAttribute {...editedAttributeValue} {...FormProductAttributeProp}/>
+                    <FormProductAttribute {...editedAttributeValue} {...FormProductAttributeProp} />
                 </>
             )}
         </Card>

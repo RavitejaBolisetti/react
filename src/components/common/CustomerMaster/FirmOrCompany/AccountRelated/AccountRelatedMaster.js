@@ -1,78 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Col, Collapse, Row, Button, Space, Typography } from 'antd';
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { FaRegUserCircle } from 'react-icons/fa';
+import { Col, Row, Button, Space, Card } from 'antd';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewAccountDetails';
 
 import styles from 'components/common/Common.module.css';
 
-const { Panel } = Collapse;
-const { Text } = Typography;
-
 const AccountRelatedBase = (props) => {
     const { onCloseAction, isViewModeVisible } = props;
 
-    const [openAccordian, setOpenAccordian] = useState([1]);
-
-    const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
-    };
     const viewProps = {
         styles,
     };
 
     return (
         <>
-            <h2>Account Related</h2>
             {!isViewModeVisible ? (
                 <Space direction="vertical" size="small" style={{ display: 'flex' }}>
-                    <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus /> : <AiOutlinePlus />)} activeKey={openAccordian} expandIconPosition="end">
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <FaRegUserCircle className={styles.userCircle} />
-                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        Company Account
-                                    </Text>
-                                </div>
-                            }
-                            key="1"
-                        >
-                            <AddEditForm {...props} />
-                        </Panel>
-                    </Collapse>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                            <Button danger onClick={onCloseAction}>
-                                Cancel
-                            </Button>
-                        </Col>
-                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                            <Button type="primary" className={styles.floatRight}>
-                                Save & Proceed
-                                {/* onClick={onFinish} */}
-                            </Button>
-                        </Col>
-                    </Row>
+                    <Card style={{ backgroundColor: '#F2F2F2' }}>
+                        <AddEditForm {...props} />
+                    </Card>
                 </Space>
             ) : (
-                <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus /> : <AiOutlinePlus />)} activeKey={openAccordian} expandIconPosition="end">
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    Company Account
-                                </Text>
-                            </div>
-                        }
-                        key="1"
-                    >
-                        <ViewDetail {...viewProps} />
-                    </Panel>
-                </Collapse>
+                <Card style={{ backgroundColor: '#F2F2F2' }}>
+                    <ViewDetail {...viewProps} />
+                </Card>
             )}
         </>
     );
