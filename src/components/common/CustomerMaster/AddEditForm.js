@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Row, Collapse, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-import './Demo.css'
+import './Demo.css';
 
 import { FaChevronDown } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
@@ -44,7 +44,11 @@ const AddEditFormMain = (props) => {
     const [buttonData, setbuttonData] = useState({
         closeBtn: true,
         saveBtn: true,
+        formBtnActive: false,
     });
+    const onFieldsChange = () => {
+        setbuttonData({ ...buttonData, formBtnActive: true });
+    };
     const handleButtonClick = ({ buttonAction, record }) => {};
     const customerMasterBtnProps = {
         buttonData,
@@ -52,13 +56,14 @@ const AddEditFormMain = (props) => {
         onCloseAction,
         handleButtonClick,
         formData,
-        saveButtonName: leftTimeline?.CustomerDetails && formActionType === 'add' ? 'Create Customer Id' : 'Save',
+        saveButtonName: leftTimeline?.CustomerDetails && formActionType === 'add' ? 'Create Customer Id' : 'Save & Proceed',
     };
     const commonModuleProps = {
         onCloseAction,
         isViewModeVisible,
         setIsViewModeVisible,
         styles,
+        onFieldsChange,
     };
 
     const renderElement = () => {
@@ -90,7 +95,6 @@ const AddEditFormMain = (props) => {
                         return <IndivisualCustomerDetailsMaster {...commonModuleProps} />;
                     }
                 }
-                break;
             }
             case 'Firm/Company': {
                 switch (moduleName) {
@@ -116,7 +120,6 @@ const AddEditFormMain = (props) => {
                         return <CompanyCustomerDetailsMaster {...commonModuleProps} />;
                     }
                 }
-                break;
             }
             default: {
                 return;
