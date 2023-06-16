@@ -1,2 +1,3 @@
-import { CompanyProfile } from "./CompanyProfile";
+import { CompanyProfile } from './CompanyProfile';
+
 export { CompanyProfile };

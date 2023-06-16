@@ -65,3 +65,15 @@ export const contactPurpose = [
     { key: 'payment', name: 'Payment' },
     { key: 'followUp', name: 'Follow up' },
 ];
+export const applicationCategory = [
+    { key: 'category1', name: 'Category 1' },
+    { key: 'category2', name: 'Category 2' },
+]
+export const applicationSubCategory = [
+    { key: 'subcategory1', name: 'Sub-Category 1' },
+    { key: 'subcategory2', name: 'Sub-Category 2' },
+]
+export const customerCategory = [
+    { key: 'common', name: 'Common' },
+    { key: 'fleet', name: 'Fleet' },
+];

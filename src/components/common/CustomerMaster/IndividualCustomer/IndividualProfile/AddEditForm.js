@@ -1,25 +1,25 @@
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, Switch, DatePicker, Checkbox, Divider } from 'antd';
+import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Empty } from 'antd';
 import { useEffect, useState } from 'react';
 import Svg from 'assets/images/Filter.svg';
 
-import { validateAadhar, validateDrivingLicenseNo, validateEmailField, validateGSTIN, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId } from 'utils/validation';
+import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { gender, income, maritialStatus, memberShip, occupation, religion, title, tongue, vehicle } from 'constants/modules/CustomerMaster/individualProfile';
+import { applicationCategory, applicationSubCategory, customerCategory, gender, income, maritialStatus, memberShip, occupation, religion, tongue, vehicle } from 'constants/modules/CustomerMaster/individualProfile';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { BiLockAlt } from 'react-icons/bi';
 
 import styles from 'components/common/Common.module.css';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { ViewDetail } from './ViewIndividualProfileDetails';
-import { MarkAsDefaultModal } from './MarkAsDefaultModal';
+import { FiTrash } from 'react-icons/fi';
 
 const { Panel } = Collapse;
 const { Option } = Select;
+const { TextArea } = Input;
 const { Text } = Typography;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { onCloseAction, isViewModeVisible } = props;
+    const { isViewModeVisible } = props;
     const { isReadOnly = false } = props;
     const [individualForm] = Form.useForm();
     const [uploadCustomerForm] = Form.useForm();
@@ -30,12 +30,7 @@ const AddEditForm = (props) => {
     const [individualFormValues, setIndividualFormValues] = useState();
     const [uploadCustomerFormValues, setUploadCustomerFormValues] = useState();
     const [done, setDone] = useState();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [mobileLoader, setmobileLoader] = useState(false);
-
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
+    const [customer, setCustomer] = useState(false);
 
     useEffect(() => {
         setFinalFormData({ ...FinalFormData, individualForm: individualFormValues, uploadCustomerForm: uploadCustomerFormValues });
@@ -72,6 +67,9 @@ const AddEditForm = (props) => {
         individualForm.validateFields();
         uploadCustomerForm.validateFields();
     };
+    const onCustomerCategoryChange = (values) => {
+        setCustomer(values);
+    };
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
@@ -86,23 +84,6 @@ const AddEditForm = (props) => {
             setactiveKey(newActivekeys);
         } else {
             setactiveKey([...activeKey, values]);
-        }
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-        setmobileLoader(false);
-    };
-    const handleNumberValidation = (event) => {
-        const Mno = event.target.value;
-        const regex = new RegExp('^([5-9]){1}([0-9]){9}$/');
-        if (Mno?.length === 10 && regex.test(Mno)) {
-            setmobileLoader(true);
-            setTimeout(() => {
-                setIsModalOpen(true);
-            }, 1000);
-        } else {
-            setmobileLoader(false);
         }
     };
 
@@ -129,12 +110,12 @@ const AddEditForm = (props) => {
         onChange,
         styles,
     };
-    const modalProps = {
-        isVisible: isModalOpen,
-        icon: <BiLockAlt />,
-        titleOverride: 'Mobile Number Validation',
-        closable: false,
-        onCloseAction: handleCancel,
+
+    const showUploadList = {
+        showRemoveIcon: false,
+        showPreviewIcon: true,
+        showDownloadIcon: true,
+        previewIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
     };
 
     const disabledProps = { disabled: isReadOnly };
@@ -169,103 +150,48 @@ const AddEditForm = (props) => {
                                 >
                                     <Divider />
                                     <Form autoComplete="off" layout="vertical" form={individualForm} onFinishFailed={onFinishFailed}>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.uploadContainer}>
-                                                <Dragger {...uploadProps}>
-                                                    <p className="ant-upload-drag-icon">
-                                                        <img src={Svg} alt="" />
-                                                    </p>
-                                                    <p className={styles.uploadtext}>Upload Your Profile Picture</p>
-                                                    <p>File type should be .png and .jpg and max file size to be 500kb</p>
-                                                    <Button type="primary" style={{ marginLeft: '30px', marginTop: '16px' }}>
-                                                        Upload File
-                                                    </Button>
-                                                </Dragger>
+                                        <Row gutter={16}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <div className={styles.uploadDragger}>
+                                                    <Dragger showUploadList={showUploadList} {...uploadProps}>
+                                                        <Empty
+                                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                            imageStyle={{
+                                                                height: 100,
+                                                            }}
+                                                            description={
+                                                                <>
+                                                                    <span>
+                                                                        Click or drop your file here to upload the signed and <br />
+                                                                        scanned customer form.
+                                                                    </span>
+                                                                    <span>
+                                                                        <br />
+                                                                        File type should be png, jpg or pdf and max file size to be 5Mb
+                                                                    </span>
+                                                                </>
+                                                            }
+                                                        />
+
+                                                        <Button type="primary">Upload File</Button>
+                                                    </Dragger>
+                                                </div>
                                             </Col>
                                         </Row>
 
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Title" name="title" rules={[validateRequiredSelectField('title')]}>
-                                                    <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('title')} {...disabledProps}>
-                                                        {title?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
-                                                        ))}
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="First Name" name="firstName" rules={[validateRequiredSelectField('first name')]}>
-                                                    <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('first name')} {...disabledProps} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Middle Name" name="middleName">
-                                                    <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('middle name')} {...disabledProps} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Last Name" name="lastName">
-                                                    <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
-                                                    {/* <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('mobile number')} {...disabledProps} /> */}
-                                                    <Input
-                                                        maxLength={10}
-                                                        onChange={handleNumberValidation}
-                                                        placeholder={preparePlaceholderText('mobile number')}
-                                                        allowClear
-                                                        enterButton="Send OTP"
-                                                        size="small"
-                                                        suffix={
-                                                            <>
-                                                                <Button loading={mobileLoader} onClick={showModal} style={{ marginRight: '-3px', borderColor: '#d9d9d9', color: '#B5B5B6' }}>
-                                                                    Send OTP
-                                                                </Button>{' '}
-                                                                <MarkAsDefaultModal {...modalProps} />
-                                                            </>
-                                                        }
-                                                    />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Want to use Mobile no as whatsapp no?" name="wantWhtsappNo">
-                                                    <Switch value={null} checkedChildren="Yes" unCheckedChildren="No" defaultChecked={false} {...disabledProps} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Whatsapp Number" name="whatsappNumber" rules={[validateRequiredSelectField('whatsapp number')[validateMobileNoField('whatsapp number')]]}>
-                                                    <Input value={null} maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('whatsapp number')} {...disabledProps} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Do you want to contacted over whatsapp?" name="whatsappCommunicationAllowed">
-                                                    <Switch value={null} checkedChildren="Yes" unCheckedChildren="No" defaultChecked={false} {...disabledProps} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Email ID" name="email" rules={[validateEmailField('email')]}>
-                                                    <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('email id')} {...disabledProps} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('date')]}>
-                                                    <DatePicker disabled={isReadOnly} />
+                                                    <DatePicker disabled={isReadOnly} className={styles.datepicker} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Gender" name="gender" rules={[validateRequiredSelectField('gender')]}>
                                                     <Select value={null} placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
                                                         {gender?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
+                                                            <Option key={'ge' + item.key} value={item.key}>
+                                                                {item.name}
+                                                            </Option>
                                                         ))}
                                                     </Select>
                                                 </Form.Item>
@@ -274,7 +200,9 @@ const AddEditForm = (props) => {
                                                 <Form.Item label="Maritial Status" name="martialStatus">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('maritial status')} {...disabledProps}>
                                                         {maritialStatus?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
+                                                            <Option key={'ms' + item.key} value={item.key}>
+                                                                {item.name}
+                                                            </Option>
                                                         ))}
                                                     </Select>
                                                 </Form.Item>
@@ -283,14 +211,16 @@ const AddEditForm = (props) => {
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Anniversary Date" name="weddingAnniversary">
-                                                    <DatePicker styles={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                                    <DatePicker className={styles.datepicker} disabled={isReadOnly} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Occupation" name="occupation">
-                                                    <Select value={null} placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
+                                                    <Select value={null} placeholder={preparePlaceholderSelect('occupation')} {...disabledProps}>
                                                         {occupation?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
+                                                            <Option key={'occ' + item.key} value={item.key}>
+                                                                {item.name}
+                                                            </Option>
                                                         ))}
                                                     </Select>
                                                 </Form.Item>
@@ -317,7 +247,7 @@ const AddEditForm = (props) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Voter ID" name="voterId" rules={[validateVoterId('voter id')]}>
+                                                <Form.Item label="Voter ID" name="voterid" rules={[validateVoterId('voter id')]}>
                                                     <Input value={null} maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('voter id')} {...disabledProps} />
                                                 </Form.Item>
                                             </Col>
@@ -373,6 +303,63 @@ const AddEditForm = (props) => {
                                                 </Form.Item>
                                             </Col>
                                         </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Usage/Application Categorization" name="applicationCategorization">
+                                                    <Select value={null} placeholder={preparePlaceholderSelect('usage/application category')} {...disabledProps}>
+                                                        {applicationCategory?.map((item) => (
+                                                            <Option value={item.key}>{item.name}</Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Usage/Application Sub-Category" name="applicationSubCategory">
+                                                    <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
+                                                        {applicationSubCategory?.map((item) => (
+                                                            <Option value={item.key}>{item.name}</Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Customer Category" name="customerCategory">
+                                                    <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps} onChange={onCustomerCategoryChange}>
+                                                        {customerCategory?.map((item) => (
+                                                            <Option value={item.key}>{item.name}</Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        {customer === 'fleet' && (
+                                            <>
+                                                <Row gutter={20}>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item label="Business Details" name="businessDetails">
+                                                            <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('business details')} {...disabledProps} />
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item label="Vehicle Deployment Details" name="vechileDeploymentDetails">
+                                                            <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('vehicle deployment details')} {...disabledProps} />
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item label="Key Role Details" name="keyRoleDetails">
+                                                            <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('key role details')} {...disabledProps} />
+                                                        </Form.Item>
+                                                    </Col>
+                                                </Row>
+                                                <Row gutter={20}>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item label="Major Route Details" name="majorRouteDetails">
+                                                            <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('major route details')} {...disabledProps} />
+                                                        </Form.Item>
+                                                    </Col>
+                                                </Row>
+                                            </>
+                                        )}
                                     </Form>
                                 </Panel>
                             </Collapse>
@@ -410,32 +397,32 @@ const AddEditForm = (props) => {
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Facebook Link" name="facebookId">
+                                                <Form.Item label="Facebook Link" name="facebookLink">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Twitter Link" name="twitterId">
+                                                <Form.Item label="Twitter Link" name="twitterLink">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Instagram Link" name="instagramId">
+                                                <Form.Item label="Instagram Link" name="instagramLink">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Youtube Channel" name="youtubeChannel">
+                                                <Form.Item label="Youtube Channel" name="youtubeChannelLink">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Team BHP Link" name="teamBhp">
+                                                <Form.Item label="Team BHP Link" name="teamBhpLink">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
                                                 </Form.Item>
                                             </Col>
@@ -443,7 +430,6 @@ const AddEditForm = (props) => {
                                     </Form>
                                 </Panel>
                             </Collapse>
-
                             <Collapse
                                 expandIcon={() => {
                                     if (activeKey.includes(3)) {
@@ -461,17 +447,132 @@ const AddEditForm = (props) => {
                                         <div className={styles.alignUser}>
                                             <FaRegUserCircle className={styles.userCircle} />
                                             <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                                Upload Customer Form
+                                                Key Account details
                                             </Text>
                                         </div>
                                     }
                                     key="3"
                                 >
                                     <Divider />
+                                    <Form autoComplete="off" layout="vertical" form={uploadCustomerForm}>
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Account Code" name="accountCode" initialValue={'CFG464787'}>
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter account code')} disabled />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Account Name" name="accountName" initialValue={'Koncept'}>
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Account Segement" name="accountSegment" initialValue={'Individual'}>
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} disabled />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Account Client Name" name="accountClientName" initialValue={'Pal Singh'}>
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} disabled />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Account Mapping Date" name="accountMappingDate" initialValue={'12-11-2022'}>
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </Panel>
+                            </Collapse>
+                            <Collapse
+                                expandIcon={() => {
+                                    if (activeKey.includes(4)) {
+                                        return <MinusOutlined className={styles.iconsColor} />;
+                                    } else {
+                                        return <PlusOutlined className={styles.iconsColor} />;
+                                    }
+                                }}
+                                activeKey={activeKey}
+                                onChange={() => onChange(4)}
+                                expandIconPosition="end"
+                            >
+                                <Panel
+                                    header={
+                                        <div className={styles.alignUser}>
+                                            <FaRegUserCircle className={styles.userCircle} />
+                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                                Authority Details (Who Knowns Whom)
+                                            </Text>
+                                        </div>
+                                    }
+                                    key="4"
+                                >
+                                    <Divider />
+                                    <Form autoComplete="off" layout="vertical" form={uploadCustomerForm}>
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Name of Person" name="personName">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter name of person')} />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Position" name="position">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter position')} />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Company Name" name="companyName">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter company name')} />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <Form.Item label="Remarks" name="remarks">
+                                                    <TextArea placeholder={preparePlaceholderText('remarks')} showCount maxLength={100} autoSize={{ minRows: 2, maxRows: 5 }} />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </Panel>
+                            </Collapse>
+
+                            <Collapse
+                                expandIcon={() => {
+                                    if (activeKey.includes(5)) {
+                                        return <MinusOutlined className={styles.iconsColor} />;
+                                    } else {
+                                        return <PlusOutlined className={styles.iconsColor} />;
+                                    }
+                                }}
+                                activeKey={activeKey}
+                                onChange={() => onChange(5)}
+                                expandIconPosition="end"
+                            >
+                                <Panel
+                                    header={
+                                        <div className={styles.alignUser}>
+                                            <FaRegUserCircle className={styles.userCircle} />
+                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                                Upload Customer Form
+                                            </Text>
+                                        </div>
+                                    }
+                                    key="5"
+                                >
+                                    <Divider />
                                     <Form autoComplete="off" layout="vertical">
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Checkbox value="sentOnMobile">I Consent to share my details with Mahindra & Mahindra. </Checkbox>
+                                                <Checkbox value="customerConsent">I Consent to share my details with Mahindra & Mahindra. </Checkbox>
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
@@ -494,18 +595,6 @@ const AddEditForm = (props) => {
                                 </Panel>
                             </Collapse>
                         </Space>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <Button danger onClick={onCloseAction}>
-                                    Cancel
-                                </Button>
-                            </Col>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <Button type="primary" onClick={onFinish}>
-                                    Save & Proceed
-                                </Button>
-                            </Col>
-                        </Row>
                     </Col>
                 </Row>
             ) : (

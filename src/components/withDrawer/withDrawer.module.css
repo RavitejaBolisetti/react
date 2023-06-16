@@ -6,7 +6,7 @@
 }
 
 .bigDrawerStyle :global .ant-drawer-wrapper-body .ant-drawer-body {
-    padding: 0px;
+    padding: 0px !important;
     overflow: hidden;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .myDrawerStyle :global .ant-drawer-wrapper-body {
-    height: calc(100vh - 50px) !important;
+    height: calc(100vh - 0px) !important;
 }
 
 .myDrawerStyle :global .ant-drawer-close {

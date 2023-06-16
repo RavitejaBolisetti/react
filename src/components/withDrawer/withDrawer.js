@@ -16,7 +16,7 @@ export const withDrawer =
         }, [isVisible]);
 
         return (
-            <Drawer title={titleOverride || title} onOk={onOk} onClose={onCloseAction} width={width} open={isVisible} className={width == 1200 ? styles.bigDrawerStyle : styles.myDrawerStyle} keyboard={false} maskClosable={false}>
+            <Drawer title={titleOverride || title} onOk={onOk} onClose={onCloseAction} width={width} open={isVisible} className={width === '90%' ? styles.bigDrawerStyle : styles.myDrawerStyle} keyboard={false} maskClosable={false}>
                 {isVisible && <InputComponent {...props} />}
             </Drawer>
         );
