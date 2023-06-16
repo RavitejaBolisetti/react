@@ -15,7 +15,6 @@ const AccountRelatedBase = (props) => {
 
     return (
         <>
-            <h2>Account Related</h2>
             {!isViewModeVisible ? (
                 <Space direction="vertical" size="small" style={{ display: 'flex' }}>
                     <Card style={{ backgroundColor: '#F2F2F2' }}>
