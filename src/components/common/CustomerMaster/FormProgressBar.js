@@ -7,11 +7,11 @@ import styles from 'components/common/Common.module.css';
 const FormProgressBar = (props) => {
     const { leftTimeline, setleftTimeline, toggleButton, isVisible, setmoduleName } = props;
     useEffect(() => {
-        if (isVisible && leftTimeline) {
+        if (leftTimeline) {
             const TimeLineClass = document.getElementsByClassName('ant-timeline-item');
             for (let i = 0; i < TimeLineClass.length; i++) {
-                const ActiveForm = TimeLineClass[i]['children']['1']['children']['0']['classList']['0'];
-                if (ActiveForm !== undefined && ActiveForm.match('Common_activeForm')) {
+                const activeForm = TimeLineClass[i]['children']['1']['children']['0']['classList']['0'];
+                if (activeForm !== undefined && activeForm.match('Common_activeForm')) {
                     TimeLineClass[i].firstChild.style.backgroundColor = '#ff3e5b';
                     TimeLineClass[i].lastChild.firstChild.style.color = '#ff3e5b';
                 } else {
@@ -19,6 +19,8 @@ const FormProgressBar = (props) => {
                     TimeLineClass[i].lastChild.firstChild.style.color = '#0b0b0c';
                 }
             }
+            console.log('TimeLineClass', TimeLineClass);
+            TimeLineClass[TimeLineClass?.length - 1].firstChild.style.display = 'none';
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [leftTimeline, isVisible]);
