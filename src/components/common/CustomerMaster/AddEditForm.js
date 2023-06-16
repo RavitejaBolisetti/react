@@ -3,7 +3,7 @@ import { Col, Row, Collapse, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import './Demo.css';
 
-import { FaChevronDown } from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
 
 import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
@@ -15,7 +15,7 @@ import FormProgressBar from './FormProgressBar';
 import { DrawerFormButton } from '../Button';
 const { Panel } = Collapse;
 
-const expandIcon = ({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />;
+const expandIcon = ({ isActive }) => (isActive ? <FaChevronUp size={18} /> : <FaChevronDown size={18} />);
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, formActionType, formData, onFieldsChange, buttonData, setbuttonData } = props;
@@ -41,6 +41,7 @@ const AddEditFormMain = (props) => {
         settoggleButton,
         setmoduleName,
         moduleName,
+        formActionType,
     };
 
     const handleButtonClick = ({ buttonAction, record }) => {};
@@ -127,7 +128,7 @@ const AddEditFormMain = (props) => {
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Collapse bordered={true} activeKey={Activekey} expandIcon={expandIcon}>
+                            <Collapse onChange={() => (Activekey.includes(1) ? setActivekey([]) : setActivekey([1]))} bordered={true} activeKey={Activekey} expandIcon={expandIcon}>
                                 <Panel
                                     header={
                                         <>
