@@ -230,7 +230,7 @@ const Login = (props) => {
                                                             </label>
                                                         )}
                                                         <div className={styles.forgotPasswordLink}>
-                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forget Password?</Link>
+                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forgot Password?</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>

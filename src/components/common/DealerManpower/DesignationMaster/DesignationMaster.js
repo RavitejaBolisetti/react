@@ -137,7 +137,7 @@ export const DesignationMasterBase = (props) => {
                 const division = filterString?.code;
                 const department = filterString?.departmentCode;
                 const role = filterString?.roleCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.designationCode) || filterFunction(keyword)(item?.designationDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true) && (role ? filterFunction(role)(item?.roleCode) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.designationDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true) && (role ? filterFunction(role)(item?.roleCode) : true));
                 setSearchdata(filterDataItem);
                 setShowDataLoading(false);
             } else {
