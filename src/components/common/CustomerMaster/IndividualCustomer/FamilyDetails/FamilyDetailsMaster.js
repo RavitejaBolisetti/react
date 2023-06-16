@@ -1,37 +1,48 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Form } from 'antd';
 import { AddEditForm } from './AddEditForm';
 
 const FamilyDetailsBase = () => {
     const [familyForm] = Form.useForm();
-    const selectRef = useRef();
-
-    const onChange = (value) =>{
-        console.log(value)
-        setCustomerType(value);
-    }
-
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
-    const [customerType, setCustomerType] = useState(null);
+    const [customerType, setCustomerType] = useState('Yes');
     const [editedMode, setEditedMode] = useState(false);
+    const [generateId, setGenerateId] = useState(0);
+
+    const onChange = (value) => {
+        setCustomerType(value);
+    };
 
     const onSave = () => {
         let values = familyForm.getFieldsValue();
+           
+        const upd_obj = familyDetailList?.map(obj => {
+
+            if (obj?.customerId === values?.customerId) {
+                obj.customerName = values?.customerName;
+                obj.relationAge = values?.relationAge;
+                obj.relationship = values?.relationship;
+                obj.remarks = values?.remarks;
+            }
+            return obj;
+           }
+        )
+
+        setFamilyDetailsList([...upd_obj] )
         setShowForm(false);
         setEditedMode(false);
-        setFamilyDetailsList(() => [values]);
     };
 
     const onFamilyFinish = (values) => {
-        let yesNo = values?.mnmCustomer === 0 ? "No" : "Yes";
-        setFamilyDetailsList((items) => [...items,{...values, mnmCustomer: yesNo } ]);
+        setGenerateId(() => generateId + 1);
+        setFamilyDetailsList((items) => [...items, { ...values, customerId: generateId }]);
         familyForm.resetFields();
         setShowForm(false);
 
-        if (values?.mnmCustomer === 1) {
+        if (values?.mnmCustomer === 'Yes') {
             setCustomerType(true);
-        } else if (values?.mnmCustomer === 0) {
+        } else if (values?.mnmCustomer === 'No') {
             setCustomerType(false);
         }
     };
@@ -43,7 +54,6 @@ const FamilyDetailsBase = () => {
     const formProps = {
         familyForm,
         onChange,
-        selectRef,
         onFamilyFinish,
         onFinishFailed,
         familyDetailList,
@@ -53,6 +63,7 @@ const FamilyDetailsBase = () => {
         onSave,
         editedMode,
         setEditedMode,
+        setCustomerType,
     };
 
     return <AddEditForm {...formProps} />;
