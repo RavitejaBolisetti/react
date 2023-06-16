@@ -132,13 +132,18 @@
 .contentHeaderBackground .headingToggle {
     min-width: 154px;
     border: #e6e6e6 1px solid;
-    border-radius: 6px;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    padding: 7px 5px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    padding: 4px;
     display: inline-block;
-    margin-left: 4px;
+    margin-left: 8px;
     margin-right: 20px;
+}
+
+.contentHeaderBackground .headingToggle :global .ant-btn {
+    height: 26px;
+    padding: 2px 6px;
 }
 
 .autoCompleteContent :global .ant-input-search .ant-input:hover,
