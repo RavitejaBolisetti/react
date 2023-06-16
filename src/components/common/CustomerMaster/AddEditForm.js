@@ -18,10 +18,11 @@ const { Panel } = Collapse;
 const expandIcon = ({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, formActionType, formData } = props;
+    const { onCloseAction, formActionType, formData, onFieldsChange, buttonData, setbuttonData } = props;
     const { isViewModeVisible, setIsViewModeVisible } = props;
     const { toggleButton, settoggleButton } = props;
     const [moduleName, setmoduleName] = useState('Customer Details');
+    const [Activekey, setActivekey] = useState([1]);
     const [leftTimeline, setleftTimeline] = useState({
         CustomerDetails: true,
         IndividualProfile: false,
@@ -41,14 +42,7 @@ const AddEditFormMain = (props) => {
         setmoduleName,
         moduleName,
     };
-    const [buttonData, setbuttonData] = useState({
-        closeBtn: true,
-        saveBtn: true,
-        formBtnActive: false,
-    });
-    const onFieldsChange = () => {
-        setbuttonData({ ...buttonData, formBtnActive: true });
-    };
+
     const handleButtonClick = ({ buttonAction, record }) => {};
     const customerMasterBtnProps = {
         buttonData,
@@ -133,7 +127,7 @@ const AddEditFormMain = (props) => {
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Collapse bordered={true} defaultActiveKey={['1']} expandIcon={expandIcon}>
+                            <Collapse bordered={true} activeKey={Activekey} expandIcon={expandIcon}>
                                 <Panel
                                     header={
                                         <>

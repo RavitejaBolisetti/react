@@ -8,7 +8,6 @@ import { applicationCategory, applicationSubCategory, customerCategory, gender, 
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
-import { FaRegUserCircle } from 'react-icons/fa';
 import { ViewDetail } from './ViewIndividualProfileDetails';
 import { FiTrash } from 'react-icons/fi';
 
