@@ -10,6 +10,7 @@ const CardProductAttribute = (props) => {
     const [productAttributeEdit, setProductAttributeEdit] = useState(false);
     const { isVisible, finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive, showGlobalNotification } = props;
     const [editedAttributeValue, setEditedAttributeValue] = useState(null);
+    const [ flag , setFlag] = useState(false);
     const [editForm] = Form.useForm();
 
     const onAttributeEdit = (props) => {
@@ -44,20 +45,22 @@ const CardProductAttribute = (props) => {
         });
 
         setSKUAttributes(formatData);
+        setFlag(!flag);
         setProductAttributeEdit(false);
         forceUpdate();
     };
 
     const onAttributeDelete = (val) => {
         setFinalFormdata((prev) => {
-            const indx = prev.findIndex((el) => el.attributeName?.key === val?.attributeId && el.attributeValue === val?.attributeValue);
+            const indx = prev.findIndex((el) => el.attributeName?.label === val?.attributeName && el.attributeValue === val?.attributeValue);
             let updatedValue = prev;
             updatedValue?.splice(indx, 1);
             return updatedValue;
         });
 
-        setSKUAttributes(formatData);
-        attributeForm.resetFields();
+        //setSKUAttributes(formatData);
+        setFlag(!flag);
+         attributeForm.resetFields();
         setProductAttributeEdit(false);
         forceUpdate();
     };
@@ -74,6 +77,21 @@ const CardProductAttribute = (props) => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setFormDecider, view]);
+
+    formatData = [];
+    useEffect( () => {
+        finalFormdata?.map((item) => formatData?.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key, fromApi: item?.fromApi === true ? true : false, id: props?.id, }));
+        //setSKUAttributes(formatData);
+
+        if(!view){
+            setSKUAttributes(formatData);
+        } 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[flag] )
+
+    // useEffect( () => {
+
+    // },[productAttributeEdit] )
 
     const colLeft = !isVisible ? 24 : 18;
     const colRight = !isVisible ? 24 : 6;
