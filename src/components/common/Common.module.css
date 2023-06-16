@@ -137,7 +137,7 @@
     -webkit-border-radius: 6px;
     padding: 7px 5px;
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 4px;
     margin-right: 20px;
 }
 
@@ -305,6 +305,35 @@
 .buttonContainer :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
     background-color: #ff3e5b;
     color: #ffffff !important;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-drag {
+    border: 1px dashed rgba(52, 44, 44, 0.53);
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
+    height: 40px;
+    margin-top: 20px;
+    background-color: #e6e6e6;
+    border-radius: 6px;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
+    height: 40px;
+    margin-top: 20px;
+    background-color: #e6e6e6;
+    border-radius: 6px;
+    color: #0b0b0c;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-name,
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-icon .anticon {
+    color: black;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon,
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon:hover {
+    color: black;
 }
 
 .drawerFooterButtons button {
@@ -1011,7 +1040,7 @@
 }
 
 :global .ant-switch.ant-switch-checked .ant-switch-inner {
-    padding-inline-end: 0px
+    padding-inline-end: 0px;
 }
 
 :global .ant-switch .ant-switch-inner {
@@ -1763,10 +1792,6 @@
     color: #00a310;
 } */
 
-/* .inactiveForm {
-    color: #00a310;
-} */
-
 .drawerCardView :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
     padding-bottom: 0px;
 }
@@ -1789,6 +1814,22 @@
 
 .drawerBodyRight .accordianContainer :global .ant-table-wrapper .ant-table-thead>tr>th {
     background: #f2f2f2 !important;
+}
+
+.cardInsideBox {
+    border: 1px solid #E6E6E6;
+    border-radius: 4px;
+    color: #0B0B0C;
+    padding: 20px;
+}
+
+.customerName {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.nameSpacing {
+    margin: 0 0 0 0.25rem;
 }
 
 @media (max-width: 768px) {

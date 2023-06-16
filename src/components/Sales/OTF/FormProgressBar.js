@@ -4,6 +4,7 @@ import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
 
+
 const FormProgressBar = (props) => {
     const { leftTimeline, setleftTimeline, setmoduleName, isVisible } = props;
     useEffect(() => {
@@ -87,7 +88,6 @@ const FormProgressBar = (props) => {
                 setmoduleName('Add On Details');
 
                 break;
-
             default:
                 setleftTimeline({ ...leftTimeline, otfDetails: true, customerDetails: false, vehicleDetails: false, fiananceDetails: false, schemeDetails: false, insuranceDetails: false, exchangeVehicle: false, referrals: false, loyaltyScheme: false, invoiceDetails: false, addOnDetails: false });
                 setmoduleName('OTF Details');

@@ -340,7 +340,7 @@
     border-radius: 4px;
 }
 
-.modalButton{
+.modalButton {
     width: 170px;
     height: 36px;
     display: flex;
@@ -350,4 +350,3 @@
     padding: 6px 16px;
     border-radius: 4px;
 }
-

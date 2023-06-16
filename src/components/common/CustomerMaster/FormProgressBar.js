@@ -1,131 +1,163 @@
-import React from 'react';
-import { Timeline, Progress, Button } from 'antd';
+import React, { useEffect } from 'react';
+import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
+import styles from 'components/common/Common.module.css';
 
 const FormProgressBar = (props) => {
-    const { leftTimeline, setleftTimeline, toggleButton } = props;
+    const { leftTimeline, setleftTimeline, toggleButton, isVisible, setmoduleName } = props;
+    useEffect(() => {
+        if (leftTimeline) {
+            const TimeLineClass = document.getElementsByClassName('ant-timeline-item');
+            for (let i = 0; i < TimeLineClass.length; i++) {
+                if (TimeLineClass[i]['children']['1']['children']['0']['classList'].contains('Common_activeForm__PgAbl')) {
+                    TimeLineClass[i].firstChild.style.backgroundColor = '#ff3e5b';
+                    TimeLineClass[i].lastChild.firstChild.style.color = '#ff3e5b';
+                } else {
+                    TimeLineClass[i].firstChild.style.backgroundColor = '#70c922';
+                    TimeLineClass[i].lastChild.firstChild.style.color = '#0b0b0c';
+                }
+            }
+            console.log('TimeLineClass',TimeLineClass)
+            TimeLineClass[TimeLineClass?.length - 1].firstChild.style.display = 'none';
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [leftTimeline, isVisible]);
     const onHandle = (key) => {
         switch (key) {
-            case 'details': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: true, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false });
+            case 'customerDetails': {
+                setleftTimeline({ ...leftTimeline, CustomerDetails: true, IndividualProfile: false, CompanyProfile: false, Address: false, Contacts: false, FamilyDetails: false, AccountRelated: false, SupportingDocument: false });
+                setmoduleName('Customer Details');
                 break;
             }
-            case 'profile': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: true, CustomerProfile: false });
+            case 'companyProfile': {
+                setleftTimeline({ ...leftTimeline, CustomerDetails: false, IndividualProfile: false, CompanyProfile: true, Address: false, Contacts: false, FamilyDetails: false, AccountRelated: false, SupportingDocument: false });
+                setmoduleName('Company Profile');
+                break;
+            }
+            case 'individualProfile': {
+                setleftTimeline({ ...leftTimeline, CustomerDetails: false, IndividualProfile: true, CompanyProfile: false, Address: false, Contacts: false, FamilyDetails: false, AccountRelated: false, SupportingDocument: false });
+
+                setmoduleName('Individual profile');
                 break;
             }
             case 'address': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: true, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false });
+                setleftTimeline({ ...leftTimeline, CustomerDetails: false, IndividualProfile: false, CompanyProfile: false, Address: true, Contacts: false, FamilyDetails: false, AccountRelated: false, SupportingDocument: false });
+                setmoduleName('Address');
                 break;
             }
-            case 'contact': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: true, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false });
+            case 'contacts': {
+                setleftTimeline({ ...leftTimeline, CustomerDetails: false, IndividualProfile: false, CompanyProfile: false, Address: false, Contacts: true, FamilyDetails: false, AccountRelated: false, SupportingDocument: false });
+                setmoduleName('Contacts');
                 break;
             }
-            case 'account': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: true, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false });
+            case 'familyDetails': {
+                setleftTimeline({ ...leftTimeline, CustomerDetails: false, IndividualProfile: false, CompanyProfile: false, Address: false, Contacts: false, FamilyDetails: true, AccountRelated: false, SupportingDocument: false });
+                setmoduleName('Family Details');
                 break;
             }
-            case 'family': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: true, IndividualProfile: false, CustomerProfile: false });
+            case 'accountRelated': {
+                setleftTimeline({ ...leftTimeline, CustomerDetails: false, IndividualProfile: false, CompanyProfile: false, Address: false, Contacts: false, FamilyDetails: false, AccountRelated: true, SupportingDocument: false });
+                setmoduleName('Account Related');
                 break;
             }
-            case 'CustomerProfile': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false, CustomerProfile: true });
+            case 'SupportingDocument': {
+                setleftTimeline({ ...leftTimeline, CustomerDetails: false, IndividualProfile: false, CompanyProfile: false, Address: false, Contacts: false, FamilyDetails: false, AccountRelated: false, SupportingDocument: true });
+                setmoduleName('Supporting Document');
                 break;
             }
             default: {
-                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: true, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false });
-
-
+                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: true, FamilyDetails: false, IndividualProfile: false, CustomerProfile: false, SupportingDocument: false });
+                setmoduleName('Customer Details');
             }
         }
     };
+
     return (
         <Timeline
             items={[
                 {
-                    dot: <BsRecordCircleFill color="#ff3e5b" />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('details')} type="link" danger style={{ color: '#ff3e5b' }}>
-                                Customer Details
-                            </Button>
-                            <Progress percent={60} size="small" />
-                        </>
+                    dot: leftTimeline?.CustomerDetails ? (
+                        <div className={styles.activeForm}>
+                            <BsRecordCircleFill />
+                        </div>
+                    ) : (
+                        <FaCheckCircle />
                     ),
+                    children: <p onClick={() => onHandle('customerDetails')}>Customer Details</p>,
                 },
-                toggleButton?.company && {
-                    dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('CustomerProfile')} type="link" danger>
-                                Company Profile
-                            </Button>
-                            <Progress percent={100} size="small" />
-                        </>
+
+                toggleButton === 'Firm/Company' && {
+                    dot: leftTimeline?.CompanyProfile ? (
+                        <div className={styles.activeForm}>
+                            <BsRecordCircleFill />
+                        </div>
+                    ) : (
+                        <FaCheckCircle />
                     ),
+                    children: <p onClick={() => onHandle('companyProfile')}>Company Profile</p>,
                 },
-                toggleButton?.individual && {
-                    dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('profile')} type="link" danger>
-                                Individual Profile
-                            </Button>
-                            <Progress percent={100} size="small" />
-                        </>
+
+                toggleButton === 'Individual' && {
+                    dot: leftTimeline?.IndividualProfile ? (
+                        <div className={styles.activeForm}>
+                            <BsRecordCircleFill />
+                        </div>
+                    ) : (
+                        <FaCheckCircle />
                     ),
-                },
-                {
-                    dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('address')} type="link" danger>
-                                Address
-                            </Button>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('individualProfile')}>Individual Profile</p>,
                 },
                 {
-                    dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('contact')} type="link" danger>
-                                Contact
-                            </Button>
-                            <Progress percent={100} size="small" />
-                        </>
+                    dot: leftTimeline?.Address ? (
+                        <div className={styles.activeForm}>
+                            <BsRecordCircleFill />
+                        </div>
+                    ) : (
+                        <FaCheckCircle />
                     ),
-                },
-                toggleButton?.individual && {
-                    dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('family')} type="link" danger>
-                                Family Details
-                            </Button>
-                            <Progress percent={100} size="small" />
-                        </>
-                    ),
+                    children: <p onClick={() => onHandle('address')}>Address</p>,
                 },
                 {
-                    dot: <FaCheckCircle />,
-                    children: (
-                        <>
-                            <Button onClick={() => onHandle('account')} type="link" danger>
-                                Account Related
-                            </Button>
-                            <Progress percent={100} size="small" />
-                        </>
+                    dot: leftTimeline?.Contacts ? (
+                        <div className={styles.activeForm}>
+                            <BsRecordCircleFill />
+                        </div>
+                    ) : (
+                        <FaCheckCircle />
                     ),
+                    children: <p onClick={() => onHandle('contacts')}>Contact</p>,
+                },
+                toggleButton === 'Individual' && {
+                    dot: leftTimeline?.FamilyDetails ? (
+                        <div className={styles.activeForm}>
+                            <BsRecordCircleFill />
+                        </div>
+                    ) : (
+                        <FaCheckCircle />
+                    ),
+                    children: <p onClick={() => onHandle('familyDetails')}>Family Details</p>,
+                },
+                {
+                    dot: leftTimeline?.AccountRelated ? (
+                        <div className={styles.activeForm}>
+                            <BsRecordCircleFill />
+                        </div>
+                    ) : (
+                        <FaCheckCircle />
+                    ),
+                    children: <p onClick={() => onHandle('accountRelated')}>Account Related</p>,
                 },
 
                 {
-                    dot: <FaCheckCircle />,
-                    label: 'Thank You',
+                    dot: leftTimeline?.SupportingDocument ? (
+                        <div className={styles.activeForm}>
+                            <BsRecordCircleFill />
+                        </div>
+                    ) : (
+                        <FaCheckCircle />
+                    ),
+                    children: <p onClick={() => onHandle('SupportingDocument')}>Supporting Documents</p>,
                 },
             ]}
         />
