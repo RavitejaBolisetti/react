@@ -52,7 +52,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ForgotPasswordBase = (props) => {
     const { verifyUser, sendOTP, validateOTP, updatePassword, showGlobalNotification, hideGlobalNotification, listShowLoading, isLoading } = props;
-    
+
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const userIdRef = useRef(null);
@@ -139,6 +139,7 @@ const ForgotPasswordBase = (props) => {
     const handleSendOTP = (values = '') => {
         setOTPInput();
         setInValidOTP(false);
+        setDisableVerifyOTP(true);
 
         let otpSentOnMobile = '';
         let otpSentOnEmail = '';

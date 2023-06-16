@@ -303,11 +303,12 @@ p {
 }
 
 .loginForm :global .ant-btn-primary:disabled {
-    color: #858585
+    color: #858585;
 }
 
 .loginForm :global .ant-btn-primary:disabled:hover {
-    color: #ffffff
+    color: #858585;
+    background: transparent;
 }
 
 .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:focus,
