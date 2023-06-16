@@ -139,12 +139,9 @@ const AddEditForm = (props) => {
                             >
                                 <Panel
                                     header={
-                                        <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
-                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                                Individual Information
-                                            </Text>
-                                        </div>
+                                        <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                            Individual Information
+                                        </Text>
                                     }
                                     key="1"
                                 >
@@ -378,12 +375,9 @@ const AddEditForm = (props) => {
                             >
                                 <Panel
                                     header={
-                                        <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
-                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                                Social Profile
-                                            </Text>
-                                        </div>
+                                        <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                            Social Profile
+                                        </Text>
                                     }
                                     key="2"
                                 >
@@ -444,12 +438,9 @@ const AddEditForm = (props) => {
                             >
                                 <Panel
                                     header={
-                                        <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
-                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                                Key Account details
-                                            </Text>
-                                        </div>
+                                        <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                            Key Account details
+                                        </Text>
                                     }
                                     key="3"
                                 >
@@ -504,12 +495,9 @@ const AddEditForm = (props) => {
                             >
                                 <Panel
                                     header={
-                                        <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
-                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                                Authority Details (Who Knowns Whom)
-                                            </Text>
-                                        </div>
+                                        <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                            Authority Details (Who Knowns Whom)
+                                        </Text>
                                     }
                                     key="4"
                                 >
@@ -559,12 +547,9 @@ const AddEditForm = (props) => {
                             >
                                 <Panel
                                     header={
-                                        <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
-                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                                Upload Customer Form
-                                            </Text>
-                                        </div>
+                                        <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                            Upload Customer Form
+                                        </Text>
                                     }
                                     key="5"
                                 >
