@@ -17,7 +17,7 @@ export default function AdvanceOtfFilter(props) {
                     <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                         <Row gutter={20}>
                             {otfFilter && (
-                                <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                                <Col xs={24} sm={24} md={14} lg={14} xl={14}>
                                     <div className={styles.selectSearchBg}>
                                         <Select className={styles.headerSelectField} onChange={handleOTFChange} placeholder="OTF No." allowClear>
                                             {otfSearchList?.map((item) => (
@@ -29,7 +29,7 @@ export default function AdvanceOtfFilter(props) {
                                 </Col>
                             )}
                             {advanceFilter && (
-                                <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                                     <Button
                                         icon={<FilterIcon />}
                                         type="link"
