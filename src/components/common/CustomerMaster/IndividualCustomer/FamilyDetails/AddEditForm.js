@@ -9,7 +9,7 @@ import { FormContainer } from './FormContainer';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { value, selectRef, onFamilyFinish, onFinishFailed, familyForm, onChange, showForm, setShowForm } = props;
+    const { selectRef, onFamilyFinish, onFinishFailed, familyForm, onChange, showForm, setShowForm } = props;
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode } = props;
     const [activeKey, setactiveKey] = useState([null]);
 
@@ -57,10 +57,10 @@ const AddEditFormMain = (props) => {
         styles,
         onCloseAction,
         handleEdit,
+        customerType,
     };
 
     const formProps = {
-        value,
         selectRef,
         onFamilyFinish,
         onFinishFailed,
@@ -68,9 +68,8 @@ const AddEditFormMain = (props) => {
         onChange,
         editedMode,
         onSave,
+        customerType,
     };
-
-    console.log(editedMode, 'EDITEDMODECHECL');
 
     return (
         <>
@@ -103,14 +102,15 @@ const AddEditFormMain = (props) => {
                                 >
                                     <Panel
                                         header={
-                                            <Space style={{width:'100%'}}>
-                                                <Space>
+                                            <Space style={{width:'100%'}} size="large">
+                                                <Space >
                                                     <Typography className="heading">
-                                                        {item?.familyMembername} | {item?.relationship}
+                                                        {item?.familyMembername} | {'Brother'} 
+                                                        {/* {item?.relationship} */}
                                                     </Typography>
                                                     <Space style={{ cursor: 'pointer' }} onClick={() => onEdit(item)}>
-                                                        <FiEdit />
-                                                        <Typography className="red heading" style={{ fontSize: '14px', margin: '0 0 0 0.5rem' }}>
+                                                        <FiEdit color="#ff3e5b" style={{margin:'0.25rem 0 0 0'}} />
+                                                        <Typography style={{ fontSize: '14px', margin: '0 0 0 0.5rem',color:'#ff3e5b' }}>
                                                             Edit
                                                         </Typography>
                                                     </Space>

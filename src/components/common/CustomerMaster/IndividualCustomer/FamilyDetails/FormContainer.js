@@ -3,68 +3,87 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { Input, Select, DatePicker, Row, Col, Button, Form } from 'antd';
 import styles from 'components/common/Common.module.css';
-
 const { Option } = Select;
 const { TextArea } = Input;
 
 const FormBase = (props) => {
-    const { value, onSave, selectRef, onFamilyFinish, onFinishFailed, familyForm, onChange, editedMode,  } = props;
+    const { customerType, onSave, selectRef, onFamilyFinish, onFinishFailed, familyForm, onChange, editedMode } = props;
     const type = [
-        { name: 'YES', value: 1 },
-        { name: 'NO', value: 0 },
+        { name: 'YES', key: 1 },
+        { name: 'NO', key: 0 },
+    ];
+
+    const relation = [
+        { name: 'Brother', key: 'BHOTHER' },
+        { name: 'Sister', key: 'SISTER' },
     ];
 
     return (
-        <Form form={familyForm} id="familyForm" autoComplete="off" layout="vertical" onFinish={onFamilyFinish} onFinishFailed={onFinishFailed} style={{  background: 'transparent' }}>
+        <Form form={familyForm} id="familyForm" autoComplete="off" layout="vertical" onFinish={onFamilyFinish} onFinishFailed={onFinishFailed} style={{ background: 'transparent' }}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={null} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
                         <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange} className={styles.inputBox} allowClear ref={selectRef}>
                             {type?.map((item) => (
-                                <Option key={'mc' + item?.value} value={item?.value}>
+                                <Option key={'mc' + item?.key} value={item?.key}>
                                     {item?.name}
                                 </Option>
                             ))}
                         </Select>
                     </Form.Item>
                 </Col>
+                {customerType ? (
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={null} label="Customer ID" name="customerId">
+                            <Input maxLength={6} placeholder={preparePlaceholderText('Customer ID')} className={styles.inputBox} />
+                        </Form.Item>
+                    </Col>
+                ) : null}
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={null} label="Customer ID" name="customerId">
-                        <Input maxLength={6} placeholder={preparePlaceholderText('Customer ID')} className={styles.inputBox} disabled={!value} />
+                    <Form.Item initialValue={null} label="Customer Name" name="customerName" rules={[validateRequiredInputField('Customer Name')]}>
+                        <Input maxLength={50} placeholder={preparePlaceholderText('Customer Name')} disabled={customerType} className={styles.inputBox} />
                     </Form.Item>
                 </Col>
-
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={null} label="Customer Name" name="familyMembername" rules={[validateRequiredInputField('Customer Name')]}>
-                        <Input maxLength={50} placeholder={preparePlaceholderText('Customer Name')} disabled={value} className={styles.inputBox} />
-                    </Form.Item>
-                </Col>
+                {!customerType ? (
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
+                            <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear ref={selectRef} disabled={customerType}>
+                                {relation?.map((item) => (
+                                    <Option key={'rel' + item?.key} value={item.key}>
+                                        {item?.name}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                ) : null}
             </Row>
 
             <Row gutter={20}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
-                        <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear ref={selectRef} disabled={value}>
-                            {type.map((item) => (
-                                <Option key={'rel' + item?.value} value={item.value}>
-                                    {item.name}
-                                </Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-                </Col>
+                {customerType ? (
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
+                            <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear ref={selectRef} disabled={customerType}>
+                                {relation?.map((item) => (
+                                    <Option key={'rel' + item?.key} value={item.key}>
+                                        {item?.name}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                ) : null}
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="Date of Birth" rules={[validateRequiredInputField('Date of Birth')]}>
-                        {/* name="dateOfBirth" */}
-                        <DatePicker format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} disabled={value} />
+                    <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>
+                        <DatePicker format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} disabled={customerType} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={null} label="Age" name="relationAge" rules={[validateRequiredInputField('Age')]}>
-                        <Input maxLength={3} placeholder={preparePlaceholderText('Age')} disabled={value} className={styles.inputBox} />
+                        <Input maxLength={3} placeholder={preparePlaceholderText('Age')} disabled={customerType} className={styles.inputBox} />
                     </Form.Item>
                 </Col>
             </Row>

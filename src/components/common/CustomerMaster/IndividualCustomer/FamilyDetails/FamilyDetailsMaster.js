@@ -1,16 +1,16 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import { Form } from 'antd';
 import { AddEditForm } from './AddEditForm';
-// import '../../Demo.css';
 
 const FamilyDetailsBase = () => {
     const [familyForm] = Form.useForm();
-    const [value, setValue] = useState(true);
     const selectRef = useRef();
-    const onChange = useCallback((item) => {
-        selectRef.current.blur();
-        setValue(item);
-    }, []);
+
+    const onChange = (value) =>{
+        console.log(value)
+        setCustomerType(value);
+    }
+
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [customerType, setCustomerType] = useState(null);
@@ -18,21 +18,20 @@ const FamilyDetailsBase = () => {
 
     const onSave = () => {
         let values = familyForm.getFieldsValue();
-        console.log(values, 'VALUES');
         setShowForm(false);
         setEditedMode(false);
-        //let index = familyDetailList?.findIndex(e => e.familyMembername === values.familyMembername && e.relationAge === values.relationAge);
         setFamilyDetailsList(() => [values]);
     };
 
     const onFamilyFinish = (values) => {
-        setFamilyDetailsList((items) => [...items, values]);
+        let yesNo = values?.mnmCustomer === 0 ? "No" : "Yes";
+        setFamilyDetailsList((items) => [...items,{...values, mnmCustomer: yesNo } ]);
         familyForm.resetFields();
         setShowForm(false);
 
-        if (values?.relationship === 1) {
+        if (values?.mnmCustomer === 1) {
             setCustomerType(true);
-        } else if (values?.relationship === 0) {
+        } else if (values?.mnmCustomer === 0) {
             setCustomerType(false);
         }
     };
@@ -43,7 +42,6 @@ const FamilyDetailsBase = () => {
 
     const formProps = {
         familyForm,
-        value,
         onChange,
         selectRef,
         onFamilyFinish,
