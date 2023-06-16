@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Col, Row, Collapse, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-import './Demo.css'
 
 import { FaChevronDown } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
