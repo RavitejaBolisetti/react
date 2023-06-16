@@ -13,13 +13,13 @@ export default function AdvanceOtfFilter(props) {
         <>
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
-                    <span>{title}</span>
+                    <span className={styles.headerText}>{title}</span>
                     <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                         <Row gutter={20}>
                             {otfFilter && (
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                     <div className={styles.selectSearchBg}>
-                                        <Select className={styles.headerSelectField} onChange={handleOTFChange} placeholder="Select Parameter" allowClear>
+                                        <Select className={styles.headerSelectField} onChange={handleOTFChange} placeholder="OTF No." allowClear>
                                             {otfSearchList?.map((item) => (
                                                 <Option value={item.id}>{item.value}</Option>
                                             ))}
