@@ -397,13 +397,17 @@ p {
 }
 
 .fielderror .registered {
-    display: flex !important;
-    align-items: center !important;
+    /* display: flex !important;
+    align-items: center !important; */
     padding: 0;
     color: #FF3E5B;
     font-size: 14px;
     line-height: 24px;
     font-weight: 500;
+}
+
+.fielderror .registered :global .ant-checkbox {
+    align-self: center;
 }
 
 .fielderror .registered :global .ant-checkbox:not(.ant-checkbox-checked)+span,
