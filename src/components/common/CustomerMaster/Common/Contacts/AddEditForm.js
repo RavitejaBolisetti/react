@@ -35,7 +35,7 @@ const AddEditForm = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
-    const { isReadOnly = false, onFinish, form, setShowAddEditForm } = props;
+    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible } = props;
     const disabledProps = { disabled: isReadOnly };
 
     const handleCancelFormEdit = () => {
@@ -79,7 +79,7 @@ const AddEditForm = (props) => {
                         <Typography.Text strong>Add New Contact</Typography.Text>
                     </Row>
 
-                    <UploadUtils {...uploadProps} />
+                    <UploadUtils {...uploadProps} isViewModeVisible={isViewModeVisible} />
 
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>

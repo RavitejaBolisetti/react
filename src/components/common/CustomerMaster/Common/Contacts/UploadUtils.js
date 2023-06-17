@@ -9,11 +9,11 @@ const { Dragger } = Upload;
 const { Text, Title } = Typography;
 
 const UploadUtils = (props) => {
-    const { uploadTitle, uploadDescription, uploadBtnName } = props;
-
+    const { uploadTitle, uploadDescription, uploadBtnName, isViewModeVisible } = props;
+    
     return (
         <>
-            {false ? (
+            {!isViewModeVisible ? (
                 <Row gutter={20} justify="center" style={{ marginBotton: '40px' }} className={styles.uploadContainer}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Dragger {...props}>

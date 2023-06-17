@@ -69,6 +69,7 @@ const ContactMain = ({ isViewModeVisible, toggleButton }) => {
         isEditing,
         setIsEditing,
         deleteContactHandeler,
+        isViewModeVisible,
     };
 
     return (
@@ -77,7 +78,7 @@ const ContactMain = ({ isViewModeVisible, toggleButton }) => {
                 <Panel
                     header={
                         <Space>
-                            <Text strong> {toggleButton + 'Contact' }</Text>
+                            <Text strong> {toggleButton === 'Individual' ? 'Individual Contact' : 'Company Contact'  }</Text>
                             {!isViewModeVisible && (
                                 <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary">
                                     Add Contact
@@ -87,7 +88,7 @@ const ContactMain = ({ isViewModeVisible, toggleButton }) => {
                     }
                     key="1"
                 >
-                    {(showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />}
+                    {!isViewModeVisible && (showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />}
                     <ViewContactList {...formProps} />
                 </Panel>
             </Collapse>
