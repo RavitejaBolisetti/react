@@ -38,6 +38,7 @@ export const BASE_URL_ROLE = BASE_URL_DEALER_MANPOWER + '/roles';
 export const BASE_URL_CUSTOMER_MASTER = BASE_URL + 'customers';
 export const BASE_URL_PARTY_MASTER = BASE_URL_CUSTOMER_MASTER + '/partymaster';
 export const BASE_URL_LESSOR_COMPANY_MASTER = BASE_URL_CUSTOMER_MASTER + '/lessorcompany';
+export const BASE_URL_SUPPORTING_DOCUMENT = BASE_URL_CUSTOMER_MASTER + '/document';
 
 export const BASE_URL_GEO_GRAPHY_CHANGE_HISTORY = BASE_URL + 'geochangehistory';
 export const BASE_URL_ROLE_MANAGEMENT = BASE_URL + 'application/roles';
@@ -103,3 +104,5 @@ export const BASE_URL_TERM_CONDITION_MANUFACTURER_CHANGE_HISTORY = BASE_URL + 'a
 
 export const BASE_URL_OTF_REPORTS = BASE_URL + 'customreports/otf/names';
 export const BASE_URL_OTF_DOWNLAOD_REPORT = BASE_URL + 'customreports/otf/register';
+
+

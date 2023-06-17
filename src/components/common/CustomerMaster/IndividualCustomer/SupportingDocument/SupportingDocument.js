@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
@@ -9,6 +9,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
+
 import AddEditForm from './AddEditForm';
 
 const mapStateToProps = (state) => {
@@ -16,6 +18,7 @@ const mapStateToProps = (state) => {
         auth: { userId, accessToken, token },
         data: {
             ConfigurableParameterEditing: { isLoaded: isDocumentDataLoaded = false, isDocumentDataLoading, data: configData = [], paramdata: typeData = [] },
+            SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data, isLoadingOnSave },
         },
     } = state;
 
@@ -27,6 +30,8 @@ const mapStateToProps = (state) => {
         token,
         configData,
         typeData,
+        isDataLoaded,
+        isLoading,
     };
     return returnValue;
 };
@@ -38,6 +43,9 @@ const mapDispatchToProps = (dispatch) => ({
             configFetchList: configParamEditActions.fetchList,
             configListShowLoading: configParamEditActions.listShowLoading,
 
+            saveData: supportingDocumentDataActions.saveData,
+            supportingDocumentListShowLoading: supportingDocumentDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -45,7 +53,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupportingDocumentBase = (props) => {
-    const { userId, accessToken, token, configData, typeData, configFetchList, configListShowLoading } = props;
+    const { supportingDocumentListShowLoading,saveData, isDataLoaded, isLoading, userId, accessToken, token, configData, typeData, configFetchList, configListShowLoading } = props;
+
+    const [docId, setDocId] = useState('');
 
     useEffect(() => {
         if (userId) {
@@ -54,11 +64,40 @@ const SupportingDocumentBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
+    const onFinish = (values) => {
+        const data = { ...values, customerId: 'CUS001', status: true, docId: docId, id: '' };
+        const onSuccess = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message, placement: 'bottomRight' });
+        };
+
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: supportingDocumentListShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveData(requestData);
+    };
+
+    const onFinishFailed = () => {
+        console.log('failed');
+    };
     const formProps = {
         typeData,
         userId,
         accessToken,
         token,
+        saveData,
+        onFinish,
+        onFinishFailed,
+        setDocId,
     };
 
     return (

@@ -10,14 +10,15 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 
 import styles from 'components/common/Common.module.css';
 
+import axios from 'axios';
+
 const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { typeData, userId, token, accessToken } = props;
+    const { typeData, userId, token, accessToken, onFinish, onFinishFailed, setDocId } = props;
 
     const [form] = Form.useForm();
-   
 
     const AuthStr = 'Bearer '.concat(token);
     const headers = { Authorization: AuthStr, userId, accessToken, deviceType: 'W', deviceId: '' };
@@ -50,28 +51,42 @@ const AddEditForm = (props) => {
 
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
-        const xhr = new XMLHttpRequest();
+        // const xhr = new XMLHttpRequest();
         const formData = new FormData();
         formData.append('applicationId', 'app');
         formData.append('file', file);
 
-        xhr.open('POST', 'https://apidev.mahindradealerrise.com/common/document/upload', true);
-        xhr.onload = () => {
-            if (xhr.status === 200) {
-                onSuccess(xhr.response);
-            } else {
-                onError(xhr);
-            }
+        const config = {
+            headers: headers,
         };
+        axios
+            .post('https://apidev.mahindradealerrise.com/common/document/upload', formData, config)
+            .then((response) => {
+                console.log('response', response.data.data.docId);
+                setDocId(response.data.data.docId)
+                onSuccess(response.data);
+            })
+            .catch((error) => {
+                onError(error);
+            });
+
+        // xhr.open('POST', 'https://apidev.mahindradealerrise.com/common/document/upload', true);
+        // xhr.onload = () => {
+        //     if (xhr.status === 200) {
+        //         onSuccess(xhr.response);
+        //     } else {
+        //         onError(xhr);
+        //     }
+        // };
         // xhr.setRequestHeader('X-Requested-With', '');
 
-        xhr.setRequestHeader('Authorization', AuthStr);
-        xhr.setRequestHeader('userId', userId);
-        xhr.setRequestHeader('accessToken', token);
-        xhr.setRequestHeader('deviceType', 'W');
-        xhr.setRequestHeader('deviceId', '');
+        // xhr.setRequestHeader('Authorization', AuthStr);
+        // xhr.setRequestHeader('userId', userId);
+        // xhr.setRequestHeader('accessToken', token);
+        // xhr.setRequestHeader('deviceType', 'W');
+        // xhr.setRequestHeader('deviceId', '');
         // xhr.setRequestHeader(headers);
-        xhr.send(formData);
+        // xhr.send(formData);
     };
 
     const selectProps = {
@@ -82,13 +97,13 @@ const AddEditForm = (props) => {
     };
 
     return (
-        <Form form={form} layout="vertical">
+        <Form form={form} autoComplete="off" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="Document Type" name="documentType" placeholder={preparePlaceholderSelect('document type')} rules={[validateRequiredSelectField('document type')]}>
+                    <Form.Item label="Document Type" name="documentTypeId" placeholder={preparePlaceholderSelect('document type')} rules={[validateRequiredSelectField('document type')]}>
                         <Select className={styles.headerSelectField} loading={!(typeData?.CUST_FILES?.length !== 0)} placeholder="Select" {...selectProps}>
                             {typeData?.CUST_FILES?.map((item) => (
-                                <Option key={'cust' + item?.value} value={item?.value}>
+                                <Option key={item?.key} value={item?.key}>
                                     {item?.value}
                                 </Option>
                             ))}
@@ -96,7 +111,7 @@ const AddEditForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="File Name" name="fileName">
+                    <Form.Item label="File Name" name="documentName">
                         <Input placeholder={preparePlaceholderText('File Name')} rules={[validateRequiredInputField('fileName')]} allowClear />
                     </Form.Item>
                 </Col>
@@ -129,6 +144,9 @@ const AddEditForm = (props) => {
                     </div>
                 </Col>
             </Row>
+            <Button htmlType="submit" type="primary">
+                Submit
+            </Button>
         </Form>
     );
 };
