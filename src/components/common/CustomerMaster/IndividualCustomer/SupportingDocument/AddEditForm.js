@@ -8,7 +8,6 @@ import { withAuthToken } from 'utils/withAuthToken';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
-// import { getAuthToken, getAuthAccessToken, getUserId } from '../store/state/auth';
 
 import styles from 'components/common/Common.module.css';
 
@@ -21,10 +20,7 @@ const AddEditForm = (props) => {
     const [form] = Form.useForm();
     var accessTokenObj = JSON.parse(localStorage.getItem('Token:'));
 
-    // const token = getAuthToken(getState());
-    // const userId = getUserId(getState());
-    // const accessToken = getAuthAccessToken(getState());
-
+    
     const uploadProps = {
         name: 'file',
         multiple: true,
