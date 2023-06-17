@@ -23,7 +23,8 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        accessToken, token,
+        accessToken,
+        token,
         configData,
         typeData,
     };
@@ -44,8 +45,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupportingDocumentBase = (props) => {
-    const { userId,        accessToken, token,
-        configData, typeData, configFetchList, configListShowLoading } = props;
+    const { userId, accessToken, token, configData, typeData, configFetchList, configListShowLoading } = props;
 
     useEffect(() => {
         if (userId) {
@@ -56,7 +56,9 @@ const SupportingDocumentBase = (props) => {
 
     const formProps = {
         typeData,
-        userId,        accessToken, token,
+        userId,
+        accessToken,
+        token,
     };
 
     return (

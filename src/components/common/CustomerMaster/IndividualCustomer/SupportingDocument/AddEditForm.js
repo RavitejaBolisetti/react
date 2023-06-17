@@ -33,6 +33,7 @@ const AddEditForm = (props) => {
         multiple: true,
         action: 'https://apidev.mahindradealerrise.com/common/document/upload',
         headers: headers,
+        data: { applicationId: 'app' },
         uploadTitle: 'Upload Your Profile Picture',
         uploadDescription: 'File type should be .png and .jpg and max file size to be 5MB',
         uploadBtnName: 'Upload File',
