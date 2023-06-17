@@ -32,10 +32,10 @@ const uploadProps = {
 };
 
 const AddEditForm = (props) => {
+    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
-    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible } = props;
     const disabledProps = { disabled: isReadOnly };
 
     const handleCancelFormEdit = () => {
