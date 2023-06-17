@@ -1522,13 +1522,13 @@
     margin-inline-end: 0;
 }
 
-.drawerBodyRight :global .ant-steps .ant-steps-item-process.ant-steps-item-custom .ant-steps-item-icon>.ant-steps-icon {
+/* .drawerBodyRight :global .ant-steps .ant-steps-item-process.ant-steps-item-custom .ant-steps-item-icon>.ant-steps-icon {
     color: #70C922;
 }
 
 .drawerBodyRight :global .ant-steps .ant-steps-item-wait.ant-steps-item-custom .ant-steps-item-icon>.ant-steps-icon {
     color: #b5b5b6;
-}
+} */
 
 .drawerBodyRight :global .ant-steps .ant-steps-item-container {
     margin-right: 5px;
@@ -1735,10 +1735,6 @@
 .drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-divider-horizontal {
     margin-top: 0;
     margin-bottom: 20px;
-}
-
-.drawerBodyRight :global .ant-card .ant-card-body {
-    padding-bottom: 0;
 }
 
 .drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {

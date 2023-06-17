@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Col, Row, Collapse, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-import './Demo.css';
 
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
@@ -48,6 +47,8 @@ const AddEditFormMain = (props) => {
         buttonData,
         setButtonData,
         onCloseAction,
+        isViewModeVisible,
+        formActionType,
         handleButtonClick,
         formData,
         saveButtonName: leftTimeline?.CustomerDetails && formActionType?.addMode ? 'Create Customer ID' : 'Save & Proceed',

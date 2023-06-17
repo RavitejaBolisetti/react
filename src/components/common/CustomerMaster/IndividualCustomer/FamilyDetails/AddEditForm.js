@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Collapse, Space, Card, Typography, Button, Divider } from 'antd';
-// import { Col, Input, Form, Row, Select, DatePicker, Collapse, Space, Card, Typography, Button, Divider } from 'antd';
-// import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { Collapse, Space, Card, Typography, Button, Divider } from 'antd';
 import styles from 'components/common/Common.module.css';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { ViewDetail } from './ViewFamilyDetails';
@@ -35,6 +33,8 @@ const AddEditFormMain = (props) => {
     };
 
     const viewProps = {
+        activeKey,
+        setactiveKey,
         onChange,
         styles,
         onCloseAction,

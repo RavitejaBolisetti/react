@@ -1,22 +1,24 @@
 import { React, useEffect, useState } from 'react';
 
-import { Col, Input, Collapse, Row, Button, Space, Form, Select, Upload, message, Checkbox, Divider } from 'antd';
+import { Col, Input, Collapse, Row, Button, Space, Form, Select, Upload, message, Checkbox, Divider, Typography } from 'antd';
 
 import { validateRequiredInputField } from 'utils/validation';
 import style from 'components/common/Common.module.css';
 import styles from 'components/Auth/Auth.module.css';
 
-import { MEMBERSHIP_TYPE } from './MembershipType';
 import Svg from 'assets/images/Filter.svg';
 import { BiUserCircle } from 'react-icons/bi';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetails';
+import { OTF_FORM_ACTION_TYPE } from 'constants/otfActionType';
+const { Text } = Typography;
 
 const { Panel } = Collapse;
 const { Option } = Select;
 const { Dragger } = Upload;
+const { TextArea } = Input;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 
@@ -37,6 +39,7 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
     useEffect(() => {
         setFinalFormData({ ...FinalFormData, companyInfoform: companyInfoValues, uploadCustomerForm: uploadCustomerFormValues });
         // eslint-disable-next-line react-hooks/exhaustive-deps
+        console.log(formActionType,'disabled={formActionType ')
     }, [done]);
 
     const onChange = (values) => {
@@ -126,38 +129,17 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
                             >
                                 <Panel
                                     header={
-                                        <>
-                                            <div className={style.alignUser}>
-                                                <BiUserCircle className={style.userCircle} />
-                                                <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Company Information</div>
-                                            </div>{' '}
-                                        </>
+                                        <div className={styles.alignUser}>
+                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                                Company Information
+                                            </Text>
+                                        </div>
                                     }
                                     key="1"
                                 >
                                     <Divider />
 
                                     <Form autoComplete="off" layout="vertical" form={companyInfoform}>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Firm/Company Name" initialValue={formData?.companyName} name="companyName" rules={[validateRequiredInputField('Firm/Company Name')]}>
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter Name')} />
-                                                </Form.Item>
-                                            </Col>
-
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Parent Firm/Company Code" initialValue={formData?.companyCode} name="companyCode" rules={[validateRequiredInputField('Parent Firm/Company Code')]}>
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter Code')} />
-                                                </Form.Item>
-                                            </Col>
-
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Parent Firm/Company Name" initialValue={formData?.companyName} name="companyName">
-                                                    <Input maxLength={50} disabled placeholder={preparePlaceholderText('Parent Concept')} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="PAN" initialValue={formData?.panNumber} name="panNumber">
@@ -170,16 +152,56 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('GSTIN')} />
                                                 </Form.Item>
                                             </Col>
+                                        </Row>
+
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Usage/Application Categorization" name="categorization" initialValue={formData?.categorization}>
+                                                    <Select maxLength={50} placeholder={preparePlaceholderText('Usage/Application Categorization')}>
+                                                        <Option>Select</Option>
+                                                    </Select>{' '}
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Usage/Application Sub-Category" name="category" initialValue={formData?.category}>
+                                                    <Select maxLength={50} placeholder={preparePlaceholderText('Usage/Application Sub-Category')}>
+                                                        <Option>Select</Option>
+                                                    </Select>{' '}
+                                                </Form.Item>
+                                            </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Membership Type" name="membershipType" initialValue={formData?.membershipType} rules={[validateRequiredInputField('Membership Type')]}>
-                                                    <Select maxLength={50} placeholder={preparePlaceholderText('Membership Type')}>
+                                                <Form.Item label="Customer Category" name="customer" initialValue={formData?.customer}>
+                                                    <Select maxLength={50} placeholder={preparePlaceholderText('Customer Category')}>
                                                         <Option>Select</Option>
-                                                        <Option value={MEMBERSHIP_TYPE.GOLD.KEY}>{MEMBERSHIP_TYPE.GOLD.TITLE}</Option>
-                                                        <Option value={MEMBERSHIP_TYPE.SILVER.KEY}>{MEMBERSHIP_TYPE.SILVER.TITLE}</Option>
-                                                        <Option value={MEMBERSHIP_TYPE.PLATINUM.KEY}>{MEMBERSHIP_TYPE.PLATINUM.TITLE}</Option>
-                                                        <Option value={MEMBERSHIP_TYPE.NEW_CUSTOMER.KEY}>{MEMBERSHIP_TYPE.NEW_CUSTOMER.TITLE}</Option>
                                                     </Select>{' '}
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Divider />
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Business Details" initialValue={formData?.business} name="business">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Business Details')} />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Vehicle Deployment Details" initialValue={formData?.vehicle} name="vehicle">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Vehicle Deployment Details')} />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Key Role Details" initialValue={formData?.keyRole} name="keyRole">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Key Role Details')} />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Major Route Details" initialValue={formData?.route} name="route">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Major Route Details')} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
@@ -192,10 +214,11 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
                                     key="2"
                                     header={
                                         <>
-                                            <div className={style.alignUser}>
-                                                <BiUserCircle className={style.userCircle} />
-                                                <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Social Profiles</div>
-                                            </div>{' '}
+                                            <div className={styles.alignUser}>
+                                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                                    Social Profiles
+                                                </Text>
+                                            </div>
                                         </>
                                     }
                                 >
@@ -223,7 +246,100 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
                                     </Form>
                                 </Panel>
                             </Collapse>
+                            <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
+                                <Panel
+                                    key="2"
+                                    header={
+                                        <>
+                                            <div className={styles.alignUser}>
+                                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                                    Key Account details
+                                                </Text>
+                                            </div>
+                                        </>
+                                    }
+                                >
+                                    <Divider />
+                                    <Form form={form} layout="vertical">
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Account Code" initialValue={formData?.accountCode} name="accountCode">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Account Code')} disabled={true} />
+                                                </Form.Item>
+                                            </Col>
 
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Account Name" initialValue={formData?.accountName} name="accountName">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Account Name')} disabled={true} />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Account Segment" initialValue={formData?.segment} name="segment">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Account Segment')} disabled={true} />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Account Client Name" initialValue={formData?.clientName} name="clientName">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Account Client Name')} disabled={true} />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Account Mapping Date" initialValue={formData?.mappingData} name="mappingData">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Account Mapping Date')} disabled={true} />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </Panel>
+                            </Collapse>
+                            <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
+                                <Panel
+                                    key="2"
+                                    header={
+                                        <>
+                                            <div className={styles.alignUser}>
+                                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                                    Authority Details(Who Knows Whom)
+                                                </Text>
+                                            </div>
+                                        </>
+                                    }
+                                >
+                                    <Divider />
+                                    <Form form={form} layout="vertical">
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Name Of Person" initialValue={formData?.name} name="name">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Name Of Person')} />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Position" initialValue={formData?.position} name="position">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Position')} />
+                                                </Form.Item>
+                                            </Col>
+
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Company Name" initialValue={formData?.companyName} name="companyName">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Company Name')} />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <Form.Item label="Remarks" initialValue={formData?.remarks} name="remarks">
+                                                    <TextArea placeholder={preparePlaceholderText('Remarks')} showCount maxLength={100} autoSize={{ minRows: 2, maxRows: 5 }} />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </Panel>
+                            </Collapse>
                             <Collapse
                                 defaultActiveKey={['3']}
                                 expandIcon={() => {
@@ -241,10 +357,11 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
                                     key="3"
                                     header={
                                         <>
-                                            <div className={style.alignUser}>
-                                                <BiUserCircle className={style.userCircle} />
-                                                <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Upload Customer Form</div>
-                                            </div>{' '}
+                                            <div className={styles.alignUser}>
+                                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                                    Upload Customer Form
+                                                </Text>
+                                            </div>
                                         </>
                                     }
                                 >
@@ -252,9 +369,7 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
                                     <Form autoComplete="off" layout="vertical" form={uploadCustomerForm}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Checkbox value="sentOnMobile" className={styles.registered}>
-                                                    I Consent to share my details with Mahindra & Mahindra.{' '}
-                                                </Checkbox>
+                                                <Checkbox value="sentOnMobile">I Consent to share my details with Mahindra & Mahindra. </Checkbox>
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>

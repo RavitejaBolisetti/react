@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { Col, Row, Collapse, Space } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import styles from 'components/common/Common.module.css';
 import { OTF_FORM_ACTION_TYPE } from 'constants/otfActionType';
+import { OTF_SECTION } from 'constants/OTFSection';
 
-import FormProgressBar from './FormProgressBar';
 import { CustomerDetailsMaster } from './CustomerDetails';
 import { SchemeDetailsMaster } from './SchemeDetails';
 import { InsuranceDetailsMaster } from './InsuranceDetails';
@@ -18,15 +17,23 @@ import { ExchangeVehiclesMaster } from './ExchangeVehicles';
 import { AddOnDetailsMaster } from './AddOnDetails';
 import { OtfDetailsMaster } from './OtfDetails';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
-import { MovetoNextForm } from './OtfUtils';
-import OtfStatusBar from './OtfStatusBar';
 
-const { Panel } = Collapse;
-const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={18} /> : <SlArrowDown size={18} />);
+import OTFStatusBar from './utils/OTFStatusBar';
+import { MovetoNextForm } from './utils/OTFUtils';
+
+import { LeftSidebar } from './LeftSidebar';
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, isViewModeVisible, formActionType, setFormActionType, isVisible } = props;
-    const [moduleName, setmoduleName] = useState('OTF Details');
+    const [currentSection, setCurrentSection] = useState(OTF_SECTION.OTF_DETAILS.id);
+    const [section, setSection] = useState();
+
+    useEffect(() => {
+        const section = Object.values(OTF_SECTION)?.find((i) => i.id === currentSection);
+        setSection(section);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentSection]);
+
     const EDIT_ACTION = OTF_FORM_ACTION_TYPE?.EDIT;
     const TRANSFER_ACTION = OTF_FORM_ACTION_TYPE?.TRANSFER;
     const CANCEL_ACTION = OTF_FORM_ACTION_TYPE?.CANCEL;
@@ -89,7 +96,7 @@ const AddEditFormMain = (props) => {
                 break;
             }
             case NEXT_ACTION: {
-                MovetoNextForm(leftTimeline, setleftTimeline, setmoduleName);
+                MovetoNextForm(leftTimeline, setleftTimeline, setCurrentSection);
                 break;
             }
             case SAVEPROCEED_ACTION: {
@@ -108,11 +115,11 @@ const AddEditFormMain = (props) => {
         formActionType,
     };
 
-    const TimelineProps = {
+    const LeftSidebarProps = {
         leftTimeline,
         setleftTimeline,
-        setmoduleName,
-        moduleName,
+        setCurrentSection,
+        currentSection,
         isVisible,
     };
 
@@ -124,39 +131,40 @@ const AddEditFormMain = (props) => {
         setleftTimeline,
         isViewModeVisible,
     };
+
     const renderElement = () => {
-        switch (moduleName) {
-            case 'OTF Details': {
+        switch (currentSection) {
+            case OTF_SECTION.OTF_DETAILS.id: {
                 return <OtfDetailsMaster {...RenderElementCommonProps} />;
             }
-            case 'Customer Details': {
+            case OTF_SECTION.CUSTOMER_DETAILS.id: {
                 return <CustomerDetailsMaster {...RenderElementCommonProps} />;
             }
-            case 'Vehicle Details': {
+            case OTF_SECTION.VEHICLE_DETAILS.id: {
                 return <VehicleDetailsMaster {...RenderElementCommonProps} />;
             }
-            case 'Scheme and Offer Details': {
+            case OTF_SECTION.SCHEME_AND_OFFER_DETAILS.id: {
                 return <SchemeDetailsMaster {...RenderElementCommonProps} />;
             }
-            case 'Insurance Details': {
+            case OTF_SECTION.INSURANCE_DETAILS.id: {
                 return <InsuranceDetailsMaster {...RenderElementCommonProps} />;
             }
-            case 'Finance Details': {
+            case OTF_SECTION.FINANCE_DETAILS.id: {
                 return <FinananceDetailsMaster {...RenderElementCommonProps} />;
             }
-            case 'Exchange vehicle': {
+            case OTF_SECTION.EXCHANGE_VEHICLE.id: {
                 return <ExchangeVehiclesMaster {...RenderElementCommonProps} />;
             }
-            case 'Referrals': {
+            case OTF_SECTION.REFERRALS.id: {
                 return <ReferralsMaster {...RenderElementCommonProps} />;
             }
-            case 'Loyalty scheme': {
+            case OTF_SECTION.LOYALITY_SCHEME.id: {
                 return <LoyaltySchemeMaster {...RenderElementCommonProps} />;
             }
-            case 'Invoice Information': {
+            case OTF_SECTION.INVOICE_INFORMATION.id: {
                 return <InvoiceDetailsMaster {...RenderElementCommonProps} />;
             }
-            case 'Add On Details': {
+            case OTF_SECTION.ADDON_DETAIL.id: {
                 return <AddOnDetailsMaster {...RenderElementCommonProps} />;
             }
             default: {
@@ -171,42 +179,7 @@ const AddEditFormMain = (props) => {
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Collapse bordered={true} defaultActiveKey={['1']} expandIcon={expandIcon}>
-                                <Panel
-                                    header={
-                                        <>
-                                            <Space direction="vertical">
-                                                <p>
-                                                    Name - <span>John Michael</span>
-                                                </p>
-                                                <p>
-                                                    OTF No. - <span>4962946</span>
-                                                </p>
-                                            </Space>
-                                        </>
-                                    }
-                                    key="1"
-                                >
-                                    <p>
-                                        Customer Type: <span>Corporate</span>
-                                    </p>
-                                    <p>
-                                        Mobile No.: <span>9893473843</span>
-                                    </p>
-                                    <p>
-                                        OTF Date: <span>01 Dec 2021</span>
-                                    </p>
-                                    <p>
-                                        Model: <span>SCORPIO</span>
-                                    </p>
-                                    <p>
-                                        CPD: <span>13 April 2023</span>
-                                    </p>
-                                </Panel>
-                            </Collapse>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <FormProgressBar {...TimelineProps} />
+                            <LeftSidebar {...LeftSidebarProps} />
                         </Col>
                     </Row>
                 </Col>
@@ -216,10 +189,10 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.drawerBodyRight}>
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <span className={styles.drawerBodyHeading}>{moduleName}</span>
+                                    <span className={styles.drawerBodyHeading}>{section?.title}</span>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <OtfStatusBar />
+                                    <OTFStatusBar status={1} />
                                 </Col>
                             </Row>
                             <Row gutter={20}>

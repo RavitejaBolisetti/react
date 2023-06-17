@@ -2,11 +2,7 @@ import React from 'react';
 import { Descriptions, Card, Space, Row } from 'antd';
 
 const ViewDetailBase = (props) => {
-    const {
-        //formData,
-        styles,
-    } = props;
-
+ 
     const viewProps = {
         bordered: false,
         colon: false,
@@ -14,9 +10,9 @@ const ViewDetailBase = (props) => {
         column: { xxl: 3, xl: 3, lg: 3, md: 2, sm: 1, xs: 1 },
     };
     return (
-        <div className={`${styles?.viewContainer} ${styles?.hierarchyRightContaners}`}>
-            <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Card style={{backgroundColor:'#f2f2f2'}}>
+        <div >
+            <Space  direction="vertical" size="middle">
+                <Card >
                 <Descriptions {...viewProps}>
                  
                     <Descriptions.Item label="M&M Customer">{props?.mnmCustomer}</Descriptions.Item>
