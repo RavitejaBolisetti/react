@@ -17,7 +17,7 @@ const ViewDetailBase = (props) => {
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="M&M Customer">{props?.mnmCustomer}</Descriptions.Item>
 
-                        <Descriptions.Item label="Customer ID">{props?.customerCode}</Descriptions.Item>
+                        <Descriptions.Item label="Customer ID">{props?.customerId}</Descriptions.Item>
 
                         {customerType ? <Descriptions.Item label="Customer Name">{props?.customerName}</Descriptions.Item> : null}
 
@@ -25,10 +25,11 @@ const ViewDetailBase = (props) => {
 
                         <Descriptions.Item label="Date of Birth">
                             {props?.dateOfBirth?.$D}-{props?.dateOfBirth?.$M}-{props?.dateOfBirth?.$y}
+                            {/* {props?.dateOfBirth} */}
                         </Descriptions.Item>
 
                         <Descriptions.Item label="Age">{props?.relationAge}</Descriptions.Item>
-
+                        <Descriptions.Item label="" />
                         <Descriptions.Item label="Remark">{props?.remarks}</Descriptions.Item>
                     </Descriptions>
                 </Card>

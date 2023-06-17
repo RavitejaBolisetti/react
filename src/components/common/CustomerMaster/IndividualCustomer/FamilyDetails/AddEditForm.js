@@ -92,14 +92,14 @@ const AddEditFormMain = (props) => {
                             familyDetailList?.map((item) => (
                                 <Collapse
                                     expandIcon={() => {
-                                        if (activeKey.includes(item?.customerId)) {
+                                        if (activeKey.includes(item?.id)) {
                                             return <MinusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
                                         } else {
                                             return <PlusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
                                         }
                                     }}
                                     activeKey={activeKey}
-                                    onChange={() => onCollapseChange(item?.customerId)}
+                                    onChange={() => onCollapseChange(item?.id)}
                                     expandIconPosition="end"
                                     collapsible={editedMode ? 'disabled' : 'icon'}
                                 >
@@ -127,7 +127,7 @@ const AddEditFormMain = (props) => {
                                                 {customerType ? <Typography>M&M user </Typography> : !customerType ? <Typography>Non-M&M user</Typography> : null}
                                             </Space>
                                         }
-                                        key={item?.customerId}
+                                        key={item?.id}
                                         style={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
                                     >
                                         {editedMode ? <FormContainer {...formProps} item /> : <ViewDetail mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} />}

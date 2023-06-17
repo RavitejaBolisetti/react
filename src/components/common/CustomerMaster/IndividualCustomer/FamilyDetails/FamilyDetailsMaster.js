@@ -12,13 +12,11 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { isLoaded: isRelationDataLoaded = false, isRelationLoading, paramdata: relationData = [] },
-            CustomerMaster:{
-                FamilyDetails:{ isLoaded: isFamilyLoaded = false, isLoading: isFamilyLoading, data: familyData = [] }
-            }
+            CustomerMaster: {
+                FamilyDetails: { isLoaded: isFamilyLoaded = false, isLoading: isFamilyLoading, data: familyData = [] },
+            },
         },
     } = state;
-
-    console.log(state)
 
     let returnValue = {
         userId,
@@ -46,11 +44,8 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-
-
 const FamilyDetailsBase = (props) => {
-    const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading,isFamilyLoaded,isFamilyLoading, familyData} = props;
-    console.log(familyData)
+    const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData } = props;
     const [familyForm] = Form.useForm();
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -58,40 +53,19 @@ const FamilyDetailsBase = (props) => {
     const [editedMode, setEditedMode] = useState(false);
     const [generateId, setGenerateId] = useState(0);
 
-    const onSuccessAction = (res) => {
-        // refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        // setRefershData(false);
-        // setShowDataLoading(false);
-    };
-
-    const onErrorAction = (message) => {
-        // resetData();
-        // showGlobalNotification({ message });
-        // setShowDataLoading(false);
-    };
-
     useEffect(() => {
-        if (userId) {
-            if (!isRelationDataLoaded && !isRelationLoading) {
-                fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: 'FAMLY_RELTN' });
-            }
+        if (userId && !isRelationDataLoaded && !isRelationLoading) {
+            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: 'FAMLY_RELTN' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isRelationDataLoaded]);
 
     useEffect(() => {
-        if (userId &&!isFamilyLoaded ) {
-                fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, onSuccessAction, onErrorAction });
-            }
+        if (userId && !isFamilyLoaded) {
+            fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isFamilyLoaded]);
-
-    // const loadPinCodeDataList = () => {
-    //     if (userId && (filterString?.pincode || (filterString?.countryCode && filterString?.stateCode && filterString?.districtCode))) {
-    //         setShowDataLoading(true);
-    //         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-    //     }
-    // };
 
     const onChange = (value) => {
         setCustomerType(value);
@@ -117,7 +91,7 @@ const FamilyDetailsBase = (props) => {
 
     const onFamilyFinish = (values) => {
         setGenerateId(() => generateId + 1);
-        setFamilyDetailsList((items) => [...items, { ...values, customerId: generateId }]);
+        setFamilyDetailsList((items) => [...items, { ...values, id: generateId }]);
         familyForm.resetFields();
         setShowForm(false);
 
@@ -131,6 +105,11 @@ const FamilyDetailsBase = (props) => {
     const onFinishFailed = (errorInfo) => {
         return;
     };
+
+    useEffect(() => {
+        if (familyData?.length > 0) setFamilyDetailsList(() => [...familyData]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [familyData]);
 
     const formProps = {
         familyForm,
