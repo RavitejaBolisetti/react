@@ -75,17 +75,20 @@ const FamilyDetailsBase = (props) => {
         let values = familyForm.getFieldsValue();
         setFamilyDetailsList((items) => [...items, { ...values }]);
 
-        const upd_obj = familyDetailList?.map((obj) => {
-            if (obj?.editedId === values?.editedId) {
-                obj.customerName = values?.customerName;
-                obj.relationAge = values?.relationAge;
-                obj.relationship = values?.relationship;
-                obj.remarks = values?.remarks;
-            }
-            return obj;
-        });
+        if (editedMode) {
+            const upd_obj = familyDetailList?.map((obj) => {
+                if (obj?.editedId === values?.editedId) {
+                    obj.customerName = values?.customerName;
+                    obj.relationAge = values?.relationAge;
+                    obj.relationship = values?.relationship;
+                    obj.remarks = values?.remarks;
+                }
+                return obj;
+            });
 
-        setFamilyDetailsList([...upd_obj]);
+            setFamilyDetailsList([...upd_obj]);
+        }
+
         setShowForm(false);
         setEditedMode(false);
 
@@ -98,20 +101,22 @@ const FamilyDetailsBase = (props) => {
         }
     };
 
-    const onFamilyFinish = (values) => {};
+    const onFamilyFinish = (values) => {
+        
+    };
 
     const onFinishFailed = (errorInfo) => {
         return;
     };
 
-
     useEffect(() => {
         if (familyData?.length > 0) {
-            setFamilyDetailsList(familyData?.map((object) => {
-                setEditedId( () =>  editedId + 1)
-                return { ...object, editedId: editedId };
-            })
-            )
+            setFamilyDetailsList(
+                familyData?.map((object) => {
+                    setEditedId(() => editedId + 1);
+                    return { ...object, editedId: editedId };
+                })
+            );
         }
         // setFamilyDetailsList((values) => [...values, { ...arrWithColor}]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
