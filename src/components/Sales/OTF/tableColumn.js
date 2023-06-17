@@ -1,16 +1,16 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
-import { Tag } from 'antd';
+import { OTFStatusTag } from './utils/OTFStatusTag';
 
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
-    const tableColumn = [];
-    tableColumn.push(
+    const tableColumn = [
         tblPrepareColumns({
             title: 'OTF No.',
             dataIndex: 'otfNumber',
             width: '15%',
         }),
+
         tblPrepareColumns({
             title: 'OTF Date',
             dataIndex: 'otfDate',
@@ -33,14 +33,16 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             dataIndex: 'model',
             width: '15%',
         }),
+
         tblPrepareColumns({
             title: 'Order Status',
             dataIndex: 'orderStatus',
             width: '10%',
-            render: (_, record) => (record?.orderStatus === 'Invoiced' ? <Tag color="grey">{record?.orderStatus}</Tag> : record?.orderStatus === 'Transferred' ? <Tag color="blue">{record?.orderStatus}</Tag> : record?.orderStatus === 'Cancelled' ? <Tag color="error">{record?.orderStatus}</Tag> : record?.orderStatus === 'Pending for Cancellation' ? <Tag color="orange">{record?.orderStatus}</Tag> : <Tag color="success">{record?.orderStatus}</Tag>),
+            render: (_, record) => OTFStatusTag(record.status),
         }),
-        tblActionColumn({ handleButtonClick, styles, width: '8%', fixed: 'right', EditIcon: false })
-    );
+
+        tblActionColumn({ handleButtonClick, styles, width: '8%', fixed: 'right', EditIcon: false }),
+    ];
 
     return tableColumn;
 };
