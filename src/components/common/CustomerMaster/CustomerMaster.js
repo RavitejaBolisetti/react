@@ -11,6 +11,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import AdvanceFilter from './AdvanceFilter';
 import { ListDataTable } from 'utils/ListDataTable';
 import { tableColumn } from './tableColumn';
+import { btnVisiblity } from 'utils/btnVisiblity';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -39,7 +40,6 @@ let showDealersDataList = dealersDataList.filter((d) => d.type === 'individual')
 const CustomerMasterMain = ({ saveData, userId, isDataLoaded, listShowLoading, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
-    const [formActionType, setFormActionType] = useState('');
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
@@ -57,17 +57,20 @@ const CustomerMasterMain = ({ saveData, userId, isDataLoaded, listShowLoading, s
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [data, setData] = useState(initialTableData);
     const [error, setError] = useState(false);
-
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, closeBtn: false, formBtnActive: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    console.log('buttonData', buttonData);
     const [toggleButton, settoggleButton] = useState('Individual');
     const moduleTitle = 'Customer Details';
 
     const onFieldsChange = () => {
-        setbuttonData({ ...buttonData, formBtnActive: true });
+        setButtonData({ ...buttonData, formBtnActive: true });
     };
-    const [buttonData, setbuttonData] = useState({
-        closeBtn: true,
-        formBtnActive: false,
-    });
 
     useEffect(() => {
         if (DealerSelected?.length > 0 && DealerSelected !== undefined) {
@@ -78,10 +81,37 @@ const CustomerMasterMain = ({ saveData, userId, isDataLoaded, listShowLoading, s
             setError(false);
         }
     }, [DealerSearchvalue, DealerSelected]);
+    const handleButtonVisibility = (buttonAction) => {
+        switch (buttonAction) {
+            case ADD_ACTION: {
+                setButtonData({ ...buttonData, editBtn: false, saveBtn: true, closeBtn: true, formBtnActive: false });
+                break;
+            }
+            case EDIT_ACTION: {
+                setButtonData({ ...buttonData, editBtn: false, saveBtn: true, closeBtn: true, formBtnActive: false });
+                break;
+            }
+            case VIEW_ACTION: {
+                setButtonData({ ...buttonData, editBtn: true, saveBtn: false, closeBtn: true, formBtnActive: false });
+                break;
+            }
+            default: {
+                setButtonData({ ...buttonData, editBtn: false, saveBtn: true, closeBtn: true, formBtnActive: false });
+                break;
+            }
+        }
+    };
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        setFormData([]);
 
-    }
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        handleButtonVisibility(buttonAction);
+
+        record && setFormData(record);
+        setIsFormVisible(true);
+    };
 
     const tableProps = {
         isLoading: isLoading,
@@ -100,37 +130,6 @@ const CustomerMasterMain = ({ saveData, userId, isDataLoaded, listShowLoading, s
 
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'topRight' });
         }
-    };
-
-    const onError = (message) => {
-        setError(true);
-        onSaveShowLoading(false);
-        showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
-    };
-
-    const handleAdd = () => {
-        form.setFieldsValue({
-            userRole: 'Mahindra',
-        });
-
-        setFormActionType('add');
-        setIsViewModeVisible(false);
-
-        setSaveBtn(true);
-        setShowSaveBtn(true);
-        //setFooterEdit(false);
-        setIsFormVisible(true);
-        setFormBtnActive(true);
-
-        setDrawer(true);
-        //setIsReadOnly(false);
-        //setsaveclick(false);
-        setsaveandnewclick(true);
-        setFormData();
-    };
-
-    const onChange = (sorter, filters) => {
-        form.resetFields();
     };
 
     const onSearchHandle = (value) => {
@@ -171,29 +170,31 @@ const CustomerMasterMain = ({ saveData, userId, isDataLoaded, listShowLoading, s
         saveclick,
         onFieldsChange,
         buttonData,
-        setbuttonData,
+        setButtonData,
         setsaveclick,
         isVisible: isFormVisible,
         isViewModeVisible,
         setIsViewModeVisible,
         form,
         formActionType,
-        titleOverride: formActionType === 'add' ? 'Add New Customer' : (formActionType === 'view' ? 'View ' : 'Edit ').concat(moduleTitle),
+        titleOverride: formActionType?.addMode ? 'Add New Customer' : (formActionType?.viewMode ? 'View ' : 'Edit ').concat(moduleTitle),
         onCloseAction: () => setIsFormVisible(false),
         toggleButton,
         settoggleButton,
+        handleButtonClick,
     };
 
     const advanceFilterProps = {
         titleOverride: 'Advance Filters',
         showDealersDataList,
-        handleAdd,
         DealerSearchvalue,
         ChangeSearchHandler,
         onSearchHandle,
         handleChange,
         settoggleButton,
-        toggleButton
+        toggleButton,
+        handleAdd: handleButtonClick,
+        FROM_ACTION_TYPE,
     };
 
     return (
@@ -201,7 +202,7 @@ const CustomerMasterMain = ({ saveData, userId, isDataLoaded, listShowLoading, s
             <AdvanceFilter {...advanceFilterProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
+                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />

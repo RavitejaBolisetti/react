@@ -6,11 +6,11 @@ const { Search } = Input;
 const { Option } = Select;
 
 export default function AdvanceFilter(props) {
-    const { showDealersDataList, handleAdd, DealerSearchvalue, ChangeSearchHandler, onSearchHandle, handleChange, settoggleButton, toggleButton } = props;
+    const { showDealersDataList, DealerSearchvalue, ChangeSearchHandler, onSearchHandle, handleChange, settoggleButton, toggleButton, FROM_ACTION_TYPE, handleAdd } = props;
 
     return (
         <>
-           <Row gutter={20}>
+            <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
@@ -35,7 +35,7 @@ export default function AdvanceFilter(props) {
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.advanceFilterClear}>
-                                <Button danger type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
+                                <Button danger type="primary" icon={<PlusOutlined />} onClick={(e) => handleAdd({ buttonAction: FROM_ACTION_TYPE?.ADD, record: '' })}>
                                     Add
                                 </Button>
                             </Col>
