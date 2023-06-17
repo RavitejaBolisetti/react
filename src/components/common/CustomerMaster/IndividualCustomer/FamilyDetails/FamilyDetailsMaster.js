@@ -59,7 +59,6 @@ const FamilyDetailsBase = () => {
 
     return (
         <>
-            <h2>Family Details</h2>
             <AddEditForm {...formProps} />
         </>
     );

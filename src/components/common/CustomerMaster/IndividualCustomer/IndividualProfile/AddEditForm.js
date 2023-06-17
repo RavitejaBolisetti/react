@@ -18,7 +18,7 @@ const { Text } = Typography;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { isViewModeVisible } = props;
+    const { isViewModeVisible, formActionType } = props;
     const { isReadOnly = false } = props;
     const [individualForm] = Form.useForm();
     const [uploadCustomerForm] = Form.useForm();
@@ -120,7 +120,7 @@ const AddEditForm = (props) => {
     const disabledProps = { disabled: isReadOnly };
     return (
         <>
-            {!isViewModeVisible ? (
+            {!formActionType?.viewMode ? (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space direction="vertical" size="small" className={styles.accordianContainer}>

@@ -68,13 +68,7 @@ const IndividualContactMain = ({ isViewModeVisible }) => {
     };
 
     return (
-        <Space className={styles.accordianContainer} direction="vertical" size="middle" style={{ display: 'flex' }}>
-            <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <h2>Contacts</h2>
-                </Col>
-            </Row>
-            <Divider />
+        <>
             <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
                 <Panel
                     header={
@@ -94,7 +88,7 @@ const IndividualContactMain = ({ isViewModeVisible }) => {
                     <ViewContactList {...formProps} />
                 </Panel>
             </Collapse>
-        </Space>
+        </>
     );
 };
 

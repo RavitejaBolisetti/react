@@ -16,7 +16,7 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, onFieldsChange } = props;
+    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, onFieldsChange, formActionType } = props;
 
     const [customerForm] = Form.useForm();
     const [keyAccountForm] = Form.useForm();
@@ -99,7 +99,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            {!isViewModeVisible ? (
+            {!formActionType?.viewMode ? (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space style={{ display: 'flex' }} size="middle" direction="vertical">
