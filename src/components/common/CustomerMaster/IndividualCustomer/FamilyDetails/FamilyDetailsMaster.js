@@ -17,7 +17,6 @@ const FamilyDetailsBase = () => {
 
     const onSave = () => {
         let values = familyForm.getFieldsValue();
-        console.log(values, 'VALUES');
         setShowForm(false);
         setEditedMode(false);
         //let index = familyDetailList?.findIndex(e => e.familyMembername === values.familyMembername && e.relationAge === values.relationAge);
