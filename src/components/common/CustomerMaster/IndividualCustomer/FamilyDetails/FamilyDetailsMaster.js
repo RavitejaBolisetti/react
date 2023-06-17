@@ -1,9 +1,9 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Form } from 'antd';
 import { AddEditForm } from './AddEditForm';
-import '../../Demo.css'
+import '../../Demo.css';
 
-const FamilyDetailsBase = () => {
+const FamilyDetailsBase = (props) => {
     const [familyForm] = Form.useForm();
     const [value, setValue] = useState(true);
     const selectRef = useRef();
@@ -15,18 +15,19 @@ const FamilyDetailsBase = () => {
     const [showForm, setShowForm] = useState(false);
     const [customerType, setCustomerType] = useState(null);
     const [editedMode, setEditedMode] = useState(false);
+    const { formActionType } = props;
 
     const onSave = () => {
         let values = familyForm.getFieldsValue();
-        console.log(values,'VALUES')
+        console.log(values, 'VALUES');
         setShowForm(false);
         setEditedMode(false);
         //let index = familyDetailList?.findIndex(e => e.familyMembername === values.familyMembername && e.relationAge === values.relationAge);
-        setFamilyDetailsList(()=> [values])
-    }
+        setFamilyDetailsList(() => [values]);
+    };
 
     const onFamilyFinish = (values) => {
-         setFamilyDetailsList((items) => [...items,values ]);
+        setFamilyDetailsList((items) => [...items, values]);
         familyForm.resetFields();
         setShowForm(false);
 
@@ -53,8 +54,9 @@ const FamilyDetailsBase = () => {
         setShowForm,
         customerType,
         onSave,
-        editedMode, 
+        editedMode,
         setEditedMode,
+        formActionType,
     };
 
     return (

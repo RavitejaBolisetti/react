@@ -75,16 +75,16 @@ const AddEditFormMain = (props) => {
                         return <IndividualAddressMaster {...commonModuleProps} />;
                     }
                     case 'Contacts': {
-                        return <IndividualContact />;
+                        return <IndividualContact {...commonModuleProps}/>;
                     }
                     case 'Family Details': {
-                        return <FamilyDetails />;
+                        return <FamilyDetails {...commonModuleProps} />;
                     }
                     case 'Account Related': {
                         return <IndividualAccountRelatedMaster {...commonModuleProps} />;
                     }
                     case 'Supporting Document': {
-                        return <SupportingDocument />;
+                        return <SupportingDocument {...commonModuleProps} />;
                     }
                     default: {
                         return <IndivisualCustomerDetailsMaster {...commonModuleProps} />;
@@ -100,16 +100,16 @@ const AddEditFormMain = (props) => {
                         return <CompanyProfile {...commonModuleProps} />;
                     }
                     case 'Address': {
-                        return <CompanyAddressMaster />;
+                        return <CompanyAddressMaster {...commonModuleProps} />;
                     }
                     case 'Contacts': {
-                        return <CompanyContact />;
+                        return <CompanyContact {...commonModuleProps} />;
                     }
                     case 'Account Related': {
                         return <AccountRelatedMaster {...commonModuleProps} />;
                     }
                     case 'Supporting Document': {
-                        return <SupportingDocument />;
+                        return <SupportingDocument {...commonModuleProps} />;
                     }
                     default: {
                         return <CompanyCustomerDetailsMaster {...commonModuleProps} />;

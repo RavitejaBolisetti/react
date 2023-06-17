@@ -7,7 +7,7 @@ import { ViewDetail } from './ViewAccountDetails';
 import styles from 'components/common/Common.module.css';
 
 const AccountRelatedBase = (props) => {
-    const { isViewModeVisible } = props;
+    const { isViewModeVisible, formActionType } = props;
 
     const viewProps = {
         styles,
@@ -15,7 +15,7 @@ const AccountRelatedBase = (props) => {
 
     return (
         <>
-            {!isViewModeVisible ? (
+            {!formActionType?.viewMode ? (
                 <Space direction="vertical" size="small" style={{ display: 'flex' }}>
                     <Card style={{ backgroundColor: '#F2F2F2' }}>
                         <AddEditForm {...props} />

@@ -20,7 +20,7 @@ export default function AdvanceFilter(props) {
                                         Individual
                                     </Button>
                                     <Button type={toggleButton === 'Firm/Company' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Firm/Company')}>
-                                        Firm/Company
+                                        Corporate
                                     </Button>
                                 </div>
                             </Col>

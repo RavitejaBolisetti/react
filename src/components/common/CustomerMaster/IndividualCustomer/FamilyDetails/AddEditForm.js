@@ -12,25 +12,10 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { value, selectRef, onFamilyFinish, onFinishFailed, familyForm, onChange, showForm, setShowForm } = props;
-    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode } = props;
-    const [activeKey, setactiveKey] = useState([null]);
+    const { onCloseAction, formActionType, familyDetailList, customerType, onSave, editedMode, setEditedMode } = props;
+    const [activeKey, setactiveKey] = useState([]);
 
-    const handleEdit = () => {
-    };
-
-//     const onCollapseChange = () => {
-//             // eslint-disable-next-line array-callback-return
-//             activeKey.forEach((item) => {
-//                 if (item !== values) {
-//                     newActivekeys.push(item);
-//                 }
-//             });
-//             setactiveKey(newActivekeys);
-//         } else {
-//             setactiveKey([...activeKey, values]);
-//         }
-//     };
-// }
+    const handleEdit = () => {};
 
     const addFunction = () => {
         setShowForm(true);
@@ -67,11 +52,11 @@ const AddEditFormMain = (props) => {
         onSave,
     };
 
-    console.log(editedMode,'EDITEDMODECHECL')
+    console.log(editedMode, 'EDITEDMODECHECL');
 
     return (
         <>
-            {!isViewModeVisible ? (
+            {!formActionType?.viewMode ? (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Card className="cardStyle">
@@ -107,7 +92,7 @@ const AddEditFormMain = (props) => {
                                                             <Typography className="heading">
                                                                 {item?.familyMembername} | {item?.relationship}
                                                             </Typography>
-                                                            <div className="flex red" style={{ margin: '0 0 0 1rem', cursor: 'pointer' }} onClick={()=>onEdit(item)}>
+                                                            <div className="flex red" style={{ margin: '0 0 0 1rem', cursor: 'pointer' }} onClick={() => onEdit(item)}>
                                                                 <FiEdit />
                                                                 <Typography className="red heading" style={{ fontSize: '14px', margin: '0 0 0 0.5rem' }}>
                                                                     Edit
@@ -119,7 +104,7 @@ const AddEditFormMain = (props) => {
                                                     </div>
                                                 }
                                                 key="1"
-                                                style={{backgroundColor:'rgba(0, 0, 0, 0.02)'}}
+                                                style={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
                                             >
                                                 {editedMode ? <FormContainer {...formProps} /> : <ViewDetail mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} familyMembername={item?.familyMembername} relationship={item?.relationship} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} />}
                                             </Panel>

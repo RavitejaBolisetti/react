@@ -14,7 +14,7 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 const { Text } = Typography;
 
-const IndividualContactMain = ({ isViewModeVisible }) => {
+const IndividualContactMain = ({ isViewModeVisible, formActionType }) => {
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -75,7 +75,7 @@ const IndividualContactMain = ({ isViewModeVisible }) => {
                         <Space>
                             <FaRegUserCircle className={styles.userCircle} />
                             <Text strong> Individual Contact</Text>
-                            {!isViewModeVisible && (
+                            {formActionType?.viewMode && (
                                 <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary">
                                     Add Contact
                                 </Button>
