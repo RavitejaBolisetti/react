@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 
-import { Row, Col, Collapse, Form, Space, Typography, Button, Divider } from 'antd';
-
+import { Collapse, Form, Space, Typography, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { FaRegUserCircle } from 'react-icons/fa';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import AddEditForm from './AddEditForm';
@@ -14,7 +12,8 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 const { Text } = Typography;
 
-const IndividualContactMain = ({ isViewModeVisible }) => {
+const ContactMain = ({ isViewModeVisible, toggleButton }) => {
+    console.log('isViewModeVisible', isViewModeVisible," toggleButton", toggleButton )
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -26,13 +25,12 @@ const IndividualContactMain = ({ isViewModeVisible }) => {
     };
 
     const onFinish = (value) => {
-        form.validatefields()
+        form.validateFields()
             .then((data) => console.log('data', data))
             .catch((error) => console.error(error));
 
         setContactData((prev) => {
             let formData = [...prev];
-
             if (value?.defaultaddress && formData?.length >= 1) {
                 formData?.forEach((contact) => {
                     if (contact?.defaultaddress === true) {
@@ -46,6 +44,11 @@ const IndividualContactMain = ({ isViewModeVisible }) => {
         });
         setShowAddEditForm(false);
         setIsEditing(false);
+    };
+
+    const deleteContactHandeler =(data) => {
+        console.log("delete Data", data)
+        // setContactData()
     };
 
     const addBtnContactHandeler = (e) => {
@@ -65,22 +68,16 @@ const IndividualContactMain = ({ isViewModeVisible }) => {
         form,
         isEditing,
         setIsEditing,
+        deleteContactHandeler,
     };
 
     return (
         <Space className={styles.accordianContainer} direction="vertical" size="middle" style={{ display: 'flex' }}>
-            <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <h2>Contacts</h2>
-                </Col>
-            </Row>
-            <Divider />
             <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
                 <Panel
                     header={
                         <Space>
-                            <FaRegUserCircle className={styles.userCircle} />
-                            <Text strong> Individual Contact</Text>
+                            <Text strong> {toggleButton + 'Contact' }</Text>
                             {!isViewModeVisible && (
                                 <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary">
                                     Add Contact
@@ -98,4 +95,4 @@ const IndividualContactMain = ({ isViewModeVisible }) => {
     );
 };
 
-export const IndividualContact = IndividualContactMain;
+export const IndividualContact = ContactMain;

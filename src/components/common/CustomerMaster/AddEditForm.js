@@ -59,6 +59,7 @@ const AddEditFormMain = (props) => {
         onCloseAction,
         isViewModeVisible,
         setIsViewModeVisible,
+        toggleButton,
         styles,
     };
 
@@ -76,7 +77,7 @@ const AddEditFormMain = (props) => {
                         return <IndividualAddressMaster {...commonModuleProps} />;
                     }
                     case 'Contacts': {
-                        return <IndividualContact />;
+                        return <IndividualContact {...commonModuleProps}/>;
                     }
                     case 'Family Details': {
                         return <FamilyDetails />;
@@ -105,7 +106,7 @@ const AddEditFormMain = (props) => {
                         return <CompanyAddressMaster />;
                     }
                     case 'Contacts': {
-                        return <CompanyContact />;
+                        return <CompanyContact {...commonModuleProps}/>;
                     }
                     case 'Account Related': {
                         return <AccountRelatedMaster {...commonModuleProps} />;
