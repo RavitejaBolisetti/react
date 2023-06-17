@@ -9,7 +9,7 @@ import { FormContainer } from './FormContainer';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onFamilyFinish, onFinishFailed, familyForm, onChange, showForm, setShowForm, setCustomerType, relationData } = props;
+    const { onFamilyFinish, onFinishFailed, familyForm, onChange, showForm, setShowForm, setCustomerType, relationData,editedId, setEditedId } = props;
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode } = props;
     const [activeKey, setactiveKey] = useState([null]);
 
@@ -35,6 +35,7 @@ const AddEditFormMain = (props) => {
     const addFunction = () => {
         setShowForm(true);
         setCustomerType('Yes');
+        setEditedId( () =>  editedId+1)
         familyForm.resetFields();
     };
 
@@ -44,7 +45,7 @@ const AddEditFormMain = (props) => {
             mnmCustomer: values?.mnmCustomer,
             customerId: values?.customerId,
             customerName: values?.customerName,
-            id: values?.id,
+            editedId: values?.editedId ,
             relationship: values?.relationship,
             dateOfBirth: values?.dateOfBirth,
             relationAge: values?.relationAge,
@@ -71,6 +72,7 @@ const AddEditFormMain = (props) => {
         onSave,
         customerType,
         relationData,
+        editedId,
     };
 
     return (

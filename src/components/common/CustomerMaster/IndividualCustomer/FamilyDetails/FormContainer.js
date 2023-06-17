@@ -1,13 +1,13 @@
 import React from 'react';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { Input, Select, DatePicker, Row, Col, Button, Form, Checkbox  } from 'antd';
+import { Input, Select, DatePicker, Row, Col, Button, Form } from 'antd';
 import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 const { TextArea } = Input;
 
 const FormBase = (props) => {
-    const { customerType, onSave, onFamilyFinish, onFinishFailed, familyForm, onChange, editedMode, relationData } = props;
+    const { customerType, onSave, onFamilyFinish, onFinishFailed, familyForm, onChange, editedId, relationData } = props;
     const type = [
         { name: 'Yes', key: 'Yes' },
         { name: 'No', key: 'No' },
@@ -25,8 +25,6 @@ const FormBase = (props) => {
         console.log(prop);
         age = 2023 - prop?.$y;
     };
-
-    console.log(props,'vvvvv')
 
     return (
         <Form form={familyForm} id="familyForm" autoComplete="off" layout="vertical" onFinish={onFamilyFinish} onFinishFailed={onFinishFailed} style={{ background: 'transparent' }}>
@@ -106,7 +104,7 @@ const FormBase = (props) => {
             </Row>
 
             <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                <Form.Item initialValue={editedMode} label="Generated ID" name="generatedId" />
+                <Form.Item initialValue={editedId} label="Generated ID" name="editedId" />
             </Col>
 
             <Row style={{ display: 'flex' }}>

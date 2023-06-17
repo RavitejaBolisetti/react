@@ -51,7 +51,7 @@ const FamilyDetailsBase = (props) => {
     const [showForm, setShowForm] = useState(false);
     const [customerType, setCustomerType] = useState('Yes');
     const [editedMode, setEditedMode] = useState(false);
-    const [generateId, setGenerateId] = useState(0);
+    const [editedId, setEditedId] = useState(0);
 
     useEffect(() => {
         if (userId && !isRelationDataLoaded && !isRelationLoading) {
@@ -71,19 +71,16 @@ const FamilyDetailsBase = (props) => {
         setCustomerType(value);
     };
 
-    const onSave = () => {
+    const onSave = (props) => {
         let values = familyForm.getFieldsValue();
-        console.log(values,'VALUESSS')
-        
-        // setFamilyDetailsList((items) => [...items, { ...values}]);
-       
+        setFamilyDetailsList((items) => [...items, { ...values }]);
+
         const upd_obj = familyDetailList?.map((obj) => {
-            if (obj?.id === values?.id) {
+            if (obj?.editedId === values?.editedId) {
                 obj.customerName = values?.customerName;
                 obj.relationAge = values?.relationAge;
                 obj.relationship = values?.relationship;
                 obj.remarks = values?.remarks;
-                //obj.generatedrId = false;
             }
             return obj;
         });
@@ -93,7 +90,7 @@ const FamilyDetailsBase = (props) => {
         setEditedMode(false);
 
         familyForm.resetFields();
-        
+
         if (values?.mnmCustomer === 'Yes') {
             setCustomerType(true);
         } else if (values?.mnmCustomer === 'No') {
@@ -101,16 +98,22 @@ const FamilyDetailsBase = (props) => {
         }
     };
 
-    const onFamilyFinish = (values) => {     
-      
-    };
+    const onFamilyFinish = (values) => {};
 
     const onFinishFailed = (errorInfo) => {
         return;
     };
 
+
     useEffect(() => {
-        if (familyData?.length > 0) setFamilyDetailsList(() => [...familyData]);
+        if (familyData?.length > 0) {
+            setFamilyDetailsList(familyData?.map((object) => {
+                setEditedId( () =>  editedId + 1)
+                return { ...object, editedId: editedId };
+            })
+            )
+        }
+        // setFamilyDetailsList((values) => [...values, { ...arrWithColor}]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [familyData]);
 
@@ -128,6 +131,8 @@ const FamilyDetailsBase = (props) => {
         setEditedMode,
         setCustomerType,
         relationData,
+        editedId,
+        setEditedId,
     };
 
     return <AddEditForm {...formProps} />;
