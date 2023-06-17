@@ -73,13 +73,17 @@ const FamilyDetailsBase = (props) => {
 
     const onSave = () => {
         let values = familyForm.getFieldsValue();
-
+        console.log(values,'VALUESSS')
+        
+        // setFamilyDetailsList((items) => [...items, { ...values}]);
+       
         const upd_obj = familyDetailList?.map((obj) => {
-            if (obj?.customerId === values?.customerId) {
+            if (obj?.id === values?.id) {
                 obj.customerName = values?.customerName;
                 obj.relationAge = values?.relationAge;
                 obj.relationship = values?.relationship;
                 obj.remarks = values?.remarks;
+                //obj.generatedrId = false;
             }
             return obj;
         });
@@ -87,19 +91,18 @@ const FamilyDetailsBase = (props) => {
         setFamilyDetailsList([...upd_obj]);
         setShowForm(false);
         setEditedMode(false);
-    };
 
-    const onFamilyFinish = (values) => {
-        setGenerateId(() => generateId + 1);
-        setFamilyDetailsList((items) => [...items, { ...values, id: generateId }]);
         familyForm.resetFields();
-        setShowForm(false);
-
+        
         if (values?.mnmCustomer === 'Yes') {
             setCustomerType(true);
         } else if (values?.mnmCustomer === 'No') {
             setCustomerType(false);
         }
+    };
+
+    const onFamilyFinish = (values) => {     
+      
     };
 
     const onFinishFailed = (errorInfo) => {

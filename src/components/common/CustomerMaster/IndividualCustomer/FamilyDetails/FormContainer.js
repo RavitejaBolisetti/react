@@ -1,37 +1,39 @@
 import React from 'react';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { Input, Select, DatePicker, Row, Col, Button, Form } from 'antd';
+import { Input, Select, DatePicker, Row, Col, Button, Form, Checkbox  } from 'antd';
 import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 const { TextArea } = Input;
 
 const FormBase = (props) => {
-    const { customerType, onSave, onFamilyFinish, onFinishFailed, familyForm, onChange, editedMode,relationData } = props;
+    const { customerType, onSave, onFamilyFinish, onFinishFailed, familyForm, onChange, editedMode, relationData } = props;
     const type = [
-        { name: 'Yes', key: "Yes" },
-        { name: 'No', key: "No" },
+        { name: 'Yes', key: 'Yes' },
+        { name: 'No', key: 'No' },
     ];
 
     let customer;
-    if( customerType === "Yes" ){
+    if (customerType === 'Yes') {
         customer = true;
-    } else if (customerType === "No"){
+    } else if (customerType === 'No') {
         customer = false;
     }
 
     let age;
-    const onDateChange = (prop) =>{
+    const onDateChange = (prop) => {
         console.log(prop);
-        age = 2023 - prop?.$y
-    }
+        age = 2023 - prop?.$y;
+    };
+
+    console.log(props,'vvvvv')
 
     return (
         <Form form={familyForm} id="familyForm" autoComplete="off" layout="vertical" onFinish={onFamilyFinish} onFinishFailed={onFinishFailed} style={{ background: 'transparent' }}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={"Yes"} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
-                        <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange} className={styles.inputBox} allowClear >
+                    <Form.Item initialValue={'Yes'} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
+                        <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange} className={styles.inputBox} allowClear>
                             {type?.map((item) => (
                                 <Option key={'mc' + item?.key} value={item?.key}>
                                     {item?.name}
@@ -83,11 +85,11 @@ const FormBase = (props) => {
                     </Col>
                 ) : null}
 
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>
                         <DatePicker format="YYYY-MM-DD" onChange={onDateChange} style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} />
                     </Form.Item>
-                </Col>
+                </Col> */}
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={null} label="Age" name="relationAge" rules={[validateRequiredInputField('Age')]}>
@@ -102,23 +104,19 @@ const FormBase = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
-            {!customer ? (
-                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item  label="Customer ID" name="customerId">
-                        <Input  placeholder={preparePlaceholderText('Customer ID')} className={styles.inputBox} />
-                    </Form.Item>
-                </Col>
-            ) : null}
-            {editedMode && (
-                <Row style={{ display: 'flex' }}>
-                    <Button type="primary" onClick={ ()=> onSave(props)}>
-                        Save
-                    </Button>
-                    <Button type="primary" style={{ margin: '0 0 0 1rem' }}>
-                        Reset
-                    </Button>
-                </Row>
-            )}
+
+            <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                <Form.Item initialValue={editedMode} label="Generated ID" name="generatedId" />
+            </Col>
+
+            <Row style={{ display: 'flex' }}>
+                <Button type="primary" onClick={() => onSave(props)}>
+                    Save
+                </Button>
+                <Button type="primary" style={{ margin: '0 0 0 1rem' }}>
+                    Reset
+                </Button>
+            </Row>
 
             <Form.Item>
                 <Button form="familyForm" type="primary" htmlType="submit">
