@@ -1500,13 +1500,13 @@
     margin-inline-end: 0;
 }
 
-.drawerBodyRight :global .ant-steps .ant-steps-item-process.ant-steps-item-custom .ant-steps-item-icon>.ant-steps-icon {
+/* .drawerBodyRight :global .ant-steps .ant-steps-item-process.ant-steps-item-custom .ant-steps-item-icon>.ant-steps-icon {
     color: #70C922;
 }
 
 .drawerBodyRight :global .ant-steps .ant-steps-item-wait.ant-steps-item-custom .ant-steps-item-icon>.ant-steps-icon {
     color: #b5b5b6;
-}
+} */
 
 .drawerBodyRight :global .ant-steps .ant-steps-item-container {
     margin-right: 5px;

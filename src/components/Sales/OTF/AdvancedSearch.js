@@ -23,35 +23,27 @@ export const AdvancedSearchFrom = (props) => {
         setAdvanceSearchVisible(false);
         form.resetFields();
     };
-    const { isDivisionDataLoaded } = props;
-    //const { departmentData } = props;
-
-    //const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
-    const handleDivisionChange = (division) => {
-        handleFilterChange('divisionCode');
-        //setFilteredDepartmentData(departmentData?.filter((i) => i?.parentKey === division));
-    };
 
     const onFinishFailed = () => {
         return;
     };
 
-    // const selectProps = {
-    //     optionFilterProp: 'children',
-    //     showSearch: true,
-    //     allowClear: true,
-    //     className: styles.headerSelectField,
-    // };
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+        className: styles.headerSelectField,
+    };
     return (
         <Form autoComplete="off" layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item  label="From Date" name="fromDate" >
+                    <Form.Item label="From Date" name="fromDate">
                         <DatePicker style={{ width: '100%' }} selected={startDate} onChange={(date) => setStartDate(date)} selectsStart maxDate={endDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item  label="To Date" name="toDate">
+                    <Form.Item label="To Date" name="toDate">
                         <DatePicker style={{ width: '100%' }} selected={endDate} onChange={(date) => setEndDate(date)} selectsEnd startDate={startDate} minDate={startDate} />
                     </Form.Item>
                 </Col>
@@ -59,11 +51,11 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item  label="OTF Status" name="orderStatus" >
-                        <Select className={styles.headerSelectField} showSearch loading={!isDivisionDataLoaded} placeholder="Select" allowClear onChange={handleDivisionChange}>
+                    <Form.Item label="OTF Status" name="orderStatus">
+                        <Select className={styles.headerSelectField} {...selectProps} placeholder="Select">
                             {otfStatusList?.map((item) => (
-                                <Option key={item?.key} value={item?.key}>
-                                    {item?.value}
+                                <Option key={item?.id} value={item?.id}>
+                                    {item?.title}
                                 </Option>
                             ))}
                         </Select>
