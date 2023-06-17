@@ -1,5 +1,5 @@
 import React from 'react';
-import { Space, Collapse, Typography, Descriptions } from 'antd';
+import { Space, Collapse, Typography, Descriptions, Divider } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FaRegUserCircle } from 'react-icons/fa';
 
@@ -15,17 +15,24 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
     const CompanyForm = {
-        companyName: 'Simran',
-        companyCode: 'S102',
-        ParentcompanyName: 'Vivek',
+        categorization: 'Simran',
+        category: 'S102',
+        customer: 'Vivek',
         panNumber: 'LPKPS8930R',
         gstinNumber: '2222',
-        membershipType: 'Gold',
     };
     const SocialForm = {
         m1mmfsl: 'MMFSL',
         facebookId: 'simran@facebook.com',
         twitterId: 'simran@twitter.com',
+    };
+
+    const keyAccountForm = {
+        accountCode: 'MMFSL',
+        accountName: 'Account Name',
+        segment: 'Segment',
+        clientName: 'simran',
+        mappingData: 'abcd',
     };
 
     return (
@@ -46,9 +53,7 @@ const ViewDetailMain = (props) => {
                     <Panel
                         header={
                             <div className={style.alignUser}>
-                                <FaRegUserCircle className={style.userCircle} />
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {' '}
                                     Company Information
                                 </Text>
                             </div>
@@ -56,12 +61,14 @@ const ViewDetailMain = (props) => {
                         key="1"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Firm/Company Name">{CompanyForm?.companyName}</Descriptions.Item>
-                            <Descriptions.Item label="Parent Firm/Company Code">{CompanyForm?.companyCode}</Descriptions.Item>
-                            <Descriptions.Item label="Parent Firm/Company Name">{CompanyForm?.ParentcompanyName}</Descriptions.Item>
                             <Descriptions.Item label="PAN">{CompanyForm?.panNumber}</Descriptions.Item>
                             <Descriptions.Item label="GSTIN">{CompanyForm?.gstinNumber}</Descriptions.Item>
-                            <Descriptions.Item label="Membership Type">{CompanyForm?.membershipType}</Descriptions.Item>
+                        </Descriptions>
+                        <Divider />
+                        <Descriptions {...viewProps}>
+                            <Descriptions.Item label="Usage/Application Categorization">{CompanyForm?.categorization}</Descriptions.Item>
+                            <Descriptions.Item label="Usage/Application Sub-Category">{CompanyForm?.category}</Descriptions.Item>
+                            <Descriptions.Item label="Customer Category">{CompanyForm?.customer}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>
@@ -81,10 +88,8 @@ const ViewDetailMain = (props) => {
                     <Panel
                         header={
                             <div className={style.alignUser}>
-                                <FaRegUserCircle className={style.userCircle} />
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {' '}
-                                    Key Account Details
+                                    Social Profiles
                                 </Text>
                             </div>
                         }
@@ -96,6 +101,92 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Twitter Link">{SocialForm?.twitterId}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
+                </Collapse>
+
+                <Collapse
+                    expandIcon={() => {
+                        if (activeKey.includes(3)) {
+                            return <MinusOutlined className={style.iconsColor} />;
+                        } else {
+                            return <PlusOutlined className={style.iconsColor} />;
+                        }
+                    }}
+                    activeKey={activeKey}
+                    onChange={() => onChange(3)}
+                    expandIconPosition="end"
+                >
+                    <Panel
+                        header={
+                            <div className={style.alignUser}>
+                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                    Key Account Details
+                                </Text>
+                            </div>
+                        }
+                        key="3"
+                    >
+                        <Descriptions {...viewProps}>
+                            <Descriptions.Item label="Account Code">{keyAccountForm?.accountCode}</Descriptions.Item>
+                            <Descriptions.Item label="Account Name">{keyAccountForm?.accountName}</Descriptions.Item>
+                            <Descriptions.Item label="Account Segment">{keyAccountForm?.segment}</Descriptions.Item>
+                            <Descriptions.Item label="Account Client Name">{keyAccountForm?.clientName}</Descriptions.Item>
+                            <Descriptions.Item label="Account Mapping Data">{keyAccountForm?.mappingData}</Descriptions.Item>
+                        </Descriptions>
+                    </Panel>
+                </Collapse>
+
+                <Collapse
+                    expandIcon={() => {
+                        if (activeKey.includes(4)) {
+                            return <MinusOutlined className={style.iconsColor} />;
+                        } else {
+                            return <PlusOutlined className={style.iconsColor} />;
+                        }
+                    }}
+                    activeKey={activeKey}
+                    onChange={() => onChange(4)}
+                    expandIconPosition="end"
+                >
+                    <Panel
+                        header={
+                            <div className={style.alignUser}>
+                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                    Authority Details(Who Knows Whom)
+                                </Text>
+                            </div>
+                        }
+                        key="4"
+                    >
+                        <Descriptions {...viewProps}>
+                            <Descriptions.Item label="Name Of Person">{keyAccountForm?.accountCode}</Descriptions.Item>
+                            <Descriptions.Item label="Position">{keyAccountForm?.accountName}</Descriptions.Item>
+                            <Descriptions.Item label="Company Name">{keyAccountForm?.segment}</Descriptions.Item>
+                            <Descriptions.Item label="Remarks">{keyAccountForm?.clientName}</Descriptions.Item>
+                        </Descriptions>
+                    </Panel>
+                </Collapse>
+                <Collapse
+                    expandIcon={() => {
+                        if (activeKey.includes(5)) {
+                            return <MinusOutlined className={style.iconsColor} />;
+                        } else {
+                            return <PlusOutlined className={style.iconsColor} />;
+                        }
+                    }}
+                    activeKey={activeKey}
+                    onChange={() => onChange(5)}
+                    expandIconPosition="end"
+                >
+                    <Panel
+                        header={
+                            <div className={style.alignUser}>
+                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                    Upload Customer Form
+                                </Text>
+                            </div>
+                        }
+                        key="5"
+                    ></Panel>
                 </Collapse>
             </Space>
         </div>

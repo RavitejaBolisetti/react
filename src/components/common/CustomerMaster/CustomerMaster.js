@@ -14,17 +14,25 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 const { Search } = Input;
 const { Option } = Select;
 
-const initialTableData = [{ customerId: 'SH1121', customerName: 'Deepak Palariya', customerType: 'C T 1', mobileNo: '9988122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber:"RG001", chassisNumber:"9912", vpin:"1212", type:"individual" },
-{ customerId: 'SH1122', customerName: 'Rohan S', customerType: 'C T 1', mobileNo: '8888122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber:"RG001", chassisNumber:"9912", vpin:"1212", type:"individual" },
-{ customerId: 'SH1123', customerName: 'Deepak 2', customerType: 'C T 1', mobileNo: '9909122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber:"RG001", chassisNumber:"9912", vpin:"1212", type:"individual" },
-{ customerId: 'SH1124', customerName: 'Rohan 2', customerType: 'C T 1', mobileNo: '9900122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber:"RG001", chassisNumber:"9912", vpin:"1212", type:"individual" },
-{ customerId: 'SH1125', customerName: 'Deepak 3', customerType: 'C T 1', mobileNo: '9988122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber:"RG001", chassisNumber:"9912", vpin:"1212", type:"company" }];
+const initialTableData = [
+    { customerId: 'SH1121', customerName: 'Deepak Palariya', customerType: 'C T 1', mobileNo: '9988122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber: 'RG001', chassisNumber: '9912', vpin: '1212', type: 'individual' },
+    { customerId: 'SH1122', customerName: 'Rohan S', customerType: 'C T 1', mobileNo: '8888122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber: 'RG001', chassisNumber: '9912', vpin: '1212', type: 'individual' },
+    { customerId: 'SH1123', customerName: 'Deepak 2', customerType: 'C T 1', mobileNo: '9909122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber: 'RG001', chassisNumber: '9912', vpin: '1212', type: 'individual' },
+    { customerId: 'SH1124', customerName: 'Rohan 2', customerType: 'C T 1', mobileNo: '9900122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber: 'RG001', chassisNumber: '9912', vpin: '1212', type: 'individual' },
+    { customerId: 'SH1125', customerName: 'Deepak 3', customerType: 'C T 1', mobileNo: '9988122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber: 'RG001', chassisNumber: '9912', vpin: '1212', type: 'company' },
+];
 
 const dealersData = ['Dealer 1', 'Dealer 2', 'Dealer 3', 'Dealer 4', 'Dealer 5', 'Dealer 6 '];
-const dealersDataList = [{"dealerId":"Customer ID", "dealerNm":"Customer ID", "type":"individual"}, {"dealerId":"Customer Name", "dealerNm":"Customer Name" , "type":"individual"},
-{"dealerId":"Mobile Number", "dealerNm":"Mobile Number", "type":"individual"}, {"dealerId":"Registration Number", "dealerNm":"Registration Number" , "type":"individual"},
-{"dealerId":"Chassis Number", "dealerNm":"Chassis Number", "type":"individual"}, {"dealerId":'VIN', "dealerNm":"VIN" , "type":"individual"},
- {"dealerId":"ABC", "dealerNm":"ABC", "type":"company"}, {"dealerId":"Company-1", "dealerNm":"Company-1", "type":"company"}];
+const dealersDataList = [
+    { dealerId: 'Customer ID', dealerNm: 'Customer ID', type: 'individual' },
+    { dealerId: 'Customer Name', dealerNm: 'Customer Name', type: 'individual' },
+    { dealerId: 'Mobile Number', dealerNm: 'Mobile Number', type: 'individual' },
+    { dealerId: 'Registration Number', dealerNm: 'Registration Number', type: 'individual' },
+    { dealerId: 'Chassis Number', dealerNm: 'Chassis Number', type: 'individual' },
+    { dealerId: 'VIN', dealerNm: 'VIN', type: 'individual' },
+    { dealerId: 'ABC', dealerNm: 'ABC', type: 'company' },
+    { dealerId: 'Company-1', dealerNm: 'Company-1', type: 'company' },
+];
 let showDealersDataList = dealersDataList.filter((d) => d.type === 'individual');
 
 const savePayload = {
@@ -436,10 +444,8 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
             setError(false);
         }
         setFilterString(value);
-        if(DealerSelected ==='Customer Name')
-            setData(initialTableData.filter((d) => d.customerName.includes(value) ));
-        if(DealerSelected ==='Mobile Number')
-            setData(initialTableData.filter((d) => d.mobileNo.includes(value) ));
+        if (DealerSelected === 'Customer Name') setData(initialTableData.filter((d) => d.customerName.includes(value)));
+        if (DealerSelected === 'Mobile Number') setData(initialTableData.filter((d) => d.mobileNo.includes(value)));
     };
 
     const handleChange = (selectedvalue) => {
@@ -455,7 +461,7 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     const handleClickCustomerType = (custType) => {
         showDealersDataList = dealersDataList.filter((d) => d.type === custType);
         //setCustomerType(custType);
-    }
+    };
 
     const formProps = {
         saveclick,
@@ -513,16 +519,14 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                    <Button className={styles.marR5} type={toggleButton === 'Individual' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Individual')}>
-                                        Individual
-                                    </Button>
-                                    <Button type={toggleButton === 'Firm/Company' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Firm/Company')}>
-                                        Firm/Company
-                                    </Button>
-                                </div>
-                            </Col>
+                            <div className={`${styles.userManagement} ${styles.headingToggle}`}>
+                                <Button className={styles.marR5} type={toggleButton === 'Individual' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Individual')}>
+                                    Individual
+                                </Button>
+                                <Button type={toggleButton === 'Firm/Company' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Firm/Company')}>
+                                    Firm/Company
+                                </Button>
+                            </div>
                             <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                                 <div className={styles.selectSearchBg}>
                                     <Select className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter" allowClear>

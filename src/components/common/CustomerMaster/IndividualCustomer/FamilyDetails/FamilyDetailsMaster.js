@@ -56,12 +56,7 @@ const FamilyDetailsBase = () => {
         setEditedMode,
     };
 
-    return (
-        <>
-            <h2>Family Details</h2>
-            <AddEditForm {...formProps} />
-        </>
-    );
+    return <AddEditForm {...formProps} />;
 };
 
 export const FamilyDetails = FamilyDetailsBase;

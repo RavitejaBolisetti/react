@@ -17,8 +17,8 @@ const { Panel } = Collapse;
 const expandIcon = ({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, formActionType, formData } = props;
-    const { isViewModeVisible, setIsViewModeVisible } = props;
+    const { onCloseAction, formData } = props;
+    const { isViewModeVisible, setIsViewModeVisible, formActionType } = props;
     const { toggleButton, settoggleButton } = props;
     const [moduleName, setmoduleName] = useState('Customer Details');
     const [leftTimeline, setleftTimeline] = useState({
@@ -49,6 +49,8 @@ const AddEditFormMain = (props) => {
         buttonData,
         setbuttonData,
         onCloseAction,
+        isViewModeVisible,
+        formActionType,
         handleButtonClick,
         formData,
         saveButtonName: leftTimeline?.CustomerDetails && formActionType === 'add' ? 'Create Customer Id' : 'Save',

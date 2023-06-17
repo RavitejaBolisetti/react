@@ -9,6 +9,7 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
+import { OTF_STATUS } from 'constants/OTFStatus';
 
 import { FilterIcon } from 'Icons';
 
@@ -17,23 +18,15 @@ const otfSearchList = [
     { id: 'Mobile No', value: 'Mobile No.' },
     { id: 'Customer Name', value: 'Customer Name' },
 ];
-const otfStatusList = [
-    { key: 'Invoiced', value: 'Invoiced' },
-    { key: 'Transferred', value: 'Transferred' },
-    { key: 'Cancelled', value: 'Cancelled' },
-    { key: 'Pending for Cancellation', value: 'Pending for Cancellation' },
-    { key: 'Alloted', value: 'Alloted' },
-    { key: 'Booked', value: 'Booked' },
-];
 
 const initialTableData = [
-    { otfNumber: 'OTF1121', otfDate: '1 Dec 2022', customerName: 'John', mobileNumber: '9988122299', model: 'Model', orderStatus: 'Booked' },
-    { otfNumber: 'OTF1131', otfDate: '1 Jan 2023', customerName: 'Michel', mobileNumber: '9977122299', model: 'Model', orderStatus: 'Cancelled' },
-    { otfNumber: 'OTF1131', otfDate: '1 Jan 2023', customerName: 'Michel', mobileNumber: '9999122299', model: 'Model', orderStatus: 'Invoiced' },
-    { otfNumber: 'OTF1131', otfDate: '1 Jan 2023', customerName: 'Michel', mobileNumber: '6988122299', model: 'Model', orderStatus: 'Transferred' },
-    { otfNumber: 'OTF1131', otfDate: '1 Jan 2023', customerName: 'Michel', mobileNumber: '7988122299', model: 'Model', orderStatus: 'Pending for Cancellation' },
-    { otfNumber: 'OTF1131', otfDate: '1 Jan 2023', customerName: 'Michel', mobileNumber: '9988122299', model: 'Model', orderStatus: 'Transferred' },
-    { otfNumber: 'OTF1124', otfDate: '1 Dec 2012', customerName: 'John', mobileNumber: '8988122299', model: 'Model', orderStatus: 'Alloted' },
+    { otfNumber: 'OTF1121', otfDate: '1 Dec 2022', customerName: 'John', mobileNumber: '9988122299', model: 'Model', orderStatus: 'Booked', status: 1 },
+    { otfNumber: 'OTF1122', otfDate: '1 Dec 2012', customerName: 'John', mobileNumber: '8988122299', model: 'Model', orderStatus: 'Alloted', status: 2 },
+    { otfNumber: 'OTF1123', otfDate: '1 Jan 2023', customerName: 'Michel', mobileNumber: '9977122299', model: 'Model', orderStatus: 'Cancelled', status: 3 },
+    { otfNumber: 'OTF1124', otfDate: '1 Jan 2023', customerName: 'Michel', mobileNumber: '9999122299', model: 'Model', orderStatus: 'Invoiced', status: 4 },
+    { otfNumber: 'OTF1125', otfDate: '1 Jan 2023', customerName: 'Michel', mobileNumber: '6988122299', model: 'Model', orderStatus: 'Delivered', status: 5 },
+    { otfNumber: 'OTF1126', otfDate: '1 Jan 2023', customerName: 'Michel', mobileNumber: '6988122299', model: 'Model', orderStatus: 'Transferred', status: 6 },
+    { otfNumber: 'OTF1127', otfDate: '1 Jan 2023', customerName: 'Michel', mobileNumber: '7988122299', model: 'Model', orderStatus: 'Pending for Cancellation', status: 7 },
 ];
 
 export const OtfMasterBase = (props) => {
@@ -54,7 +47,6 @@ export const OtfMasterBase = (props) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const [otfSearchvalue, setOtfSearchvalue] = useState();
     const [otfSearchSelected, setOtfSearchSelected] = useState('');
@@ -234,7 +226,6 @@ export const OtfMasterBase = (props) => {
         fetchPincodeDetail,
         dealerParentData,
         isPinCodeLoading,
-        forceUpdate,
         pinCodeShowLoading,
     };
 
@@ -256,11 +247,7 @@ export const OtfMasterBase = (props) => {
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
-            //const filterValue = type === 'text' ? value.target.value : value;
-
             if (name === 'code') {
-                // setFilteredDepartmentData(departmentData?.filter((i) => i?.patentKey === filterValue));
-                // advanceFilterForm.setFieldsValue({ departmentCode: undefined });
             }
         };
     const onAdvanceSearchCloseAction = () => {
@@ -303,7 +290,7 @@ export const OtfMasterBase = (props) => {
         setFilterString,
         form,
         setAdvanceSearchVisible,
-        otfStatusList,
+        otfStatusList: Object.values(OTF_STATUS),
     };
 
     return (
