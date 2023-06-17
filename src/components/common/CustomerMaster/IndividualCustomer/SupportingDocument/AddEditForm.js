@@ -8,7 +8,6 @@ import { withAuthToken } from 'utils/withAuthToken';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
-
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
@@ -20,16 +19,20 @@ const AddEditForm = (props) => {
     const [form] = Form.useForm();
     var accessTokenObj = JSON.parse(localStorage.getItem('Token:'));
 
-    
+    console.log('accessTokenObj', {
+        userId,
+        accessToken,
+        token,
+    });
+
+    const AuthStr = 'Bearer '.concat(token);
+    const headers = { Authorization: AuthStr, userId, accessToken: token, deviceType: 'W', deviceId: '' };
+
     const uploadProps = {
         name: 'file',
         multiple: true,
         action: 'https://apidev.mahindradealerrise.com/common/document/upload',
-        headers: {
-            userId,
-            accessToken,
-            token,
-        },
+        headers: headers,
         uploadTitle: 'Upload Your Profile Picture',
         uploadDescription: 'File type should be .png and .jpg and max file size to be 5MB',
         uploadBtnName: 'Upload File',
