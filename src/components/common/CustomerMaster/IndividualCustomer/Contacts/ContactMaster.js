@@ -1,7 +1,7 @@
 import { ContactDetails } from './../../Common/Contacts';
 
-const ContactMain = ({ isViewModeVisible, toggleButton }) => {
+const IndividualContact = ({ isViewModeVisible, toggleButton }) => {
     return <ContactDetails isViewModeVisible={isViewModeVisible} toggleButton={toggleButton} />;
 };
 
-export const IndividualContact = ContactMain;
+export default IndividualContact;
