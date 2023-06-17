@@ -16,9 +16,8 @@ const FamilyDetailsBase = () => {
 
     const onSave = () => {
         let values = familyForm.getFieldsValue();
-           
-        const upd_obj = familyDetailList?.map(obj => {
 
+        const upd_obj = familyDetailList?.map((obj) => {
             if (obj?.customerId === values?.customerId) {
                 obj.customerName = values?.customerName;
                 obj.relationAge = values?.relationAge;
@@ -26,10 +25,9 @@ const FamilyDetailsBase = () => {
                 obj.remarks = values?.remarks;
             }
             return obj;
-           }
-        )
+        });
 
-        setFamilyDetailsList([...upd_obj] )
+        setFamilyDetailsList([...upd_obj]);
         setShowForm(false);
         setEditedMode(false);
     };
