@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Collapse, Space, Card, Typography, Button, Divider } from 'antd';
+import { Collapse, Space, Card, Typography, Button, Divider, Row, Col } from 'antd';
 import styles from 'components/common/Common.module.css';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { ViewDetail } from './ViewFamilyDetails';
@@ -52,7 +52,6 @@ const AddEditFormMain = (props) => {
         onSave,
     };
 
-    console.log(editedMode, 'EDITEDMODECHECL');
 
     return (
         <>
