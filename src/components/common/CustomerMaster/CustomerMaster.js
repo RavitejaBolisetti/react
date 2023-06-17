@@ -202,7 +202,7 @@ const CustomerMasterMain = ({ saveData, userId, isDataLoaded, listShowLoading, s
             <AdvanceFilter {...advanceFilterProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />

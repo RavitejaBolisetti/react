@@ -35,7 +35,7 @@ export default function AdvanceFilter(props) {
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.advanceFilterClear}>
-                                <Button danger type="primary" icon={<PlusOutlined />} onClick={(e) => handleAdd({ buttonAction: FROM_ACTION_TYPE?.ADD, record: '' })}>
+                                <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleAdd({ buttonAction: FROM_ACTION_TYPE?.ADD, record: '' })}>
                                     Add
                                 </Button>
                             </Col>
