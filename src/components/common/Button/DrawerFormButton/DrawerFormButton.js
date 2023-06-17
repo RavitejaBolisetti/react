@@ -23,7 +23,7 @@ export const DrawerFormButton = ({ formData, id = 'form', onCloseAction, buttonD
 
             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
                 {buttonData?.saveBtn && (
-                    <Button form={id} loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                    <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                         {saveButtonName}
                     </Button>
                 )}
