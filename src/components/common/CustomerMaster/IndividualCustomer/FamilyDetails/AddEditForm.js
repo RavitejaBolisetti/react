@@ -9,7 +9,7 @@ import { FormContainer } from './FormContainer';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onFamilyFinish, onFinishFailed, familyForm, onChange, showForm, setShowForm, setCustomerType } = props;
+    const { onFamilyFinish, onFinishFailed, familyForm, onChange, showForm, setShowForm, setCustomerType, relationData } = props;
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode } = props;
     const [activeKey, setactiveKey] = useState([null]);
 
@@ -71,6 +71,7 @@ const AddEditFormMain = (props) => {
         editedMode,
         onSave,
         customerType,
+        relationData,
     };
 
     return (

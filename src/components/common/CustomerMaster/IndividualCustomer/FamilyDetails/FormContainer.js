@@ -7,15 +7,10 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const FormBase = (props) => {
-    const { customerType, onSave, onFamilyFinish, onFinishFailed, familyForm, onChange, editedMode } = props;
+    const { customerType, onSave, onFamilyFinish, onFinishFailed, familyForm, onChange, editedMode,relationData } = props;
     const type = [
         { name: 'Yes', key: "Yes" },
         { name: 'No', key: "No" },
-    ];
-
-    const relation = [
-        { name: 'Brother', key: 'BROTHER' },
-        { name: 'Sister', key: 'SISTER' },
     ];
 
     let customer;
@@ -25,8 +20,10 @@ const FormBase = (props) => {
         customer = false;
     }
 
+    let age;
     const onDateChange = (prop) =>{
-        console.log(prop)
+        console.log(prop);
+        age = 2023 - prop?.$y
     }
 
     return (
@@ -60,9 +57,9 @@ const FormBase = (props) => {
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
                             <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear disabled={customer}>
-                                {relation?.map((item) => (
+                                {relationData?.map((item) => (
                                     <Option key={'rel' + item?.key} value={item.key}>
-                                        {item?.name}
+                                        {item?.value}
                                     </Option>
                                 ))}
                             </Select>
@@ -76,9 +73,9 @@ const FormBase = (props) => {
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
                             <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear disabled={customer}>
-                                {relation?.map((item) => (
+                                {relationData?.map((item) => (
                                     <Option key={'rel' + item?.key} value={item.key}>
-                                        {item?.name}
+                                        {item?.value}
                                     </Option>
                                 ))}
                             </Select>
@@ -94,7 +91,7 @@ const FormBase = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={null} label="Age" name="relationAge" rules={[validateRequiredInputField('Age')]}>
-                        <Input maxLength={3} placeholder={preparePlaceholderText('Age')} disabled={customer} className={styles.inputBox} />
+                        <Input maxLength={3} placeholder={preparePlaceholderText('Age')} disabled={customer} className={styles.inputBox} value={age} />
                     </Form.Item>
                 </Col>
             </Row>
