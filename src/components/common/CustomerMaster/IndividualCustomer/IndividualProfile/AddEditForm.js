@@ -18,7 +18,7 @@ const { Text } = Typography;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { isViewModeVisible, formActionType } = props;
+    const { formActionType } = props;
     const { isReadOnly = false } = props;
     const [individualForm] = Form.useForm();
     const [uploadCustomerForm] = Form.useForm();

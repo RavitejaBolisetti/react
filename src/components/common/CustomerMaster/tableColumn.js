@@ -1,7 +1,4 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
-import { Tag } from 'antd';
-import { FaRegEye } from 'react-icons/fa';
-
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
