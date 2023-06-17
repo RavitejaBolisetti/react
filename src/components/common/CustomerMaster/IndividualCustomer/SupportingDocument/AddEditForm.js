@@ -14,13 +14,13 @@ const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { typeData, userId, accessToken, token } = props;
+    const { typeData, userId, token, accessToken } = props;
 
     const [form] = Form.useForm();
    
 
     const AuthStr = 'Bearer '.concat(token);
-    const headers = { Authorization: AuthStr, userId, accessToken: token, deviceType: 'W', deviceId: '' };
+    const headers = { Authorization: AuthStr, userId, accessToken, deviceType: 'W', deviceId: '' };
 
     const uploadProps = {
         // name: 'file',
