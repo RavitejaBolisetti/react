@@ -18,7 +18,7 @@ const { Panel } = Collapse;
 const expandIcon = ({ isActive }) => (isActive ? <FaChevronUp size={18} /> : <FaChevronDown size={18} />);
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, formActionType, formData, onFieldsChange, buttonData, setbuttonData } = props;
+    const { onCloseAction, formActionType, formData, onFieldsChange, buttonData, setButtonData, handleButtonClick } = props;
     const { isViewModeVisible, setIsViewModeVisible } = props;
     const { toggleButton, settoggleButton } = props;
     const [moduleName, setmoduleName] = useState('Customer Details');
@@ -44,14 +44,13 @@ const AddEditFormMain = (props) => {
         formActionType,
     };
 
-    const handleButtonClick = ({ buttonAction, record }) => {};
     const customerMasterBtnProps = {
         buttonData,
-        setbuttonData,
+        setButtonData,
         onCloseAction,
         handleButtonClick,
         formData,
-        saveButtonName: leftTimeline?.CustomerDetails && formActionType === 'add' ? 'Create Customer Id' : 'Save & Proceed',
+        saveButtonName: leftTimeline?.CustomerDetails && formActionType?.addMode ? 'Create Customer ID' : 'Save & Proceed',
     };
     const commonModuleProps = {
         onCloseAction,
@@ -59,6 +58,7 @@ const AddEditFormMain = (props) => {
         setIsViewModeVisible,
         styles,
         onFieldsChange,
+        formActionType,
     };
 
     const renderElement = () => {
