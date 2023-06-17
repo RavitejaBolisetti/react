@@ -25,6 +25,10 @@ const FormBase = (props) => {
         customer = false;
     }
 
+    const onDateChange = (prop) =>{
+        console.log(prop)
+    }
+
     return (
         <Form form={familyForm} id="familyForm" autoComplete="off" layout="vertical" onFinish={onFamilyFinish} onFinishFailed={onFinishFailed} style={{ background: 'transparent' }}>
             <Row gutter={20}>
@@ -84,7 +88,7 @@ const FormBase = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>
-                        <DatePicker format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} />
+                        <DatePicker format="YYYY-MM-DD" onChange={onDateChange} style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} />
                     </Form.Item>
                 </Col>
 
