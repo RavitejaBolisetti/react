@@ -170,19 +170,19 @@ const AddEditFormMain = (props) => {
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Do you want to contacted over whatsapp?" name="contactedOverWhatsapp" data-testid="contactedOverWhatsapp">
+                                            <Form.Item label="Do you want to contacted over whatsapp?" name="contactOnWhatsAppAllowed" data-testid="contactedOverWhatsapp">
                                                 <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Want to use Mobile no as whatsapp no?" name="useMobileNumber" data-testid="useMobileNumber">
+                                            <Form.Item label="Want to use Mobile no as whatsapp no?" name="contactAsMobileOnWhatApp" data-testid="useMobileNumber">
                                                 <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
                                             </Form.Item>
                                         </Col>
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Whatsapp Number" name="whatsappNumber" data-testid="whatsappNumber">
+                                            <Form.Item label="Whatsapp Number" name="whatsAppNumber" data-testid="whatsappNumber">
                                                 <Input placeholder={preparePlaceholderText('whatsapp number')} />
                                             </Form.Item>
                                         </Col>
