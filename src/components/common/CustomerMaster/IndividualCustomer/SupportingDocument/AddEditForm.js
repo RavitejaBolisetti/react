@@ -17,26 +17,20 @@ const AddEditForm = (props) => {
     const { typeData, userId, accessToken, token } = props;
 
     const [form] = Form.useForm();
-    var accessTokenObj = JSON.parse(localStorage.getItem('Token:'));
-
-    console.log('accessTokenObj', {
-        userId,
-        accessToken,
-        token,
-    });
+   
 
     const AuthStr = 'Bearer '.concat(token);
     const headers = { Authorization: AuthStr, userId, accessToken: token, deviceType: 'W', deviceId: '' };
 
     const uploadProps = {
-        name: 'file',
-        multiple: true,
-        action: 'https://apidev.mahindradealerrise.com/common/document/upload',
-        headers: headers,
-        data: { applicationId: 'app' },
-        uploadTitle: 'Upload Your Profile Picture',
-        uploadDescription: 'File type should be .png and .jpg and max file size to be 5MB',
-        uploadBtnName: 'Upload File',
+        // name: 'file',
+        multiple: false,
+        // action: 'https://apidev.mahindradealerrise.com/common/document/upload',
+        // // headers: headers,
+        // // data: { applicationId: 'app' },
+        // uploadTitle: 'Upload Your Profile Picture',
+        // uploadDescription: 'File type should be .png and .jpg and max file size to be 5MB',
+        // uploadBtnName: 'Upload File',
         onChange(info) {
             const { status } = info.file;
             if (status === 'done') {
@@ -52,6 +46,32 @@ const AddEditForm = (props) => {
             previewIcon: <FiEye onClick={(e) => console.log(e, 'custom removeIcon event')} />,
             removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
         },
+    };
+
+    const handleUpload = (options) => {
+        const { file, onSuccess, onError } = options;
+        const xhr = new XMLHttpRequest();
+        const formData = new FormData();
+        formData.append('applicationId', 'app');
+        formData.append('file', file);
+
+        xhr.open('POST', 'https://apidev.mahindradealerrise.com/common/document/upload', true);
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                onSuccess(xhr.response);
+            } else {
+                onError(xhr);
+            }
+        };
+        // xhr.setRequestHeader('X-Requested-With', '');
+
+        xhr.setRequestHeader('Authorization', AuthStr);
+        xhr.setRequestHeader('userId', userId);
+        xhr.setRequestHeader('accessToken', token);
+        xhr.setRequestHeader('deviceType', 'W');
+        xhr.setRequestHeader('deviceId', '');
+        // xhr.setRequestHeader(headers);
+        xhr.send(formData);
     };
 
     const selectProps = {
@@ -84,7 +104,7 @@ const AddEditForm = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.uploadDragger}>
-                        <Dragger {...uploadProps}>
+                        <Dragger customRequest={handleUpload} {...uploadProps}>
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                                 imageStyle={{
