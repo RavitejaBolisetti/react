@@ -12,6 +12,9 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { isLoaded: isRelationDataLoaded = false, isRelationLoading, paramdata: relationData = [] },
+            CustomerMaster:{
+                FamilyDetails:{ isLoaded: isFamilyLoaded = false, isLoading: isFamilyLoading, data: familyData = [] }
+            }
         },
     } = state;
 
@@ -21,7 +24,10 @@ const mapStateToProps = (state) => {
         userId,
         isRelationDataLoaded,
         isRelationLoading,
+        isFamilyLoaded,
+        isFamilyLoading,
         relationData: relationData && relationData[PARAM_MASTER.FAMLY_RELTN.id],
+        familyData,
     };
     return returnValue;
 };
@@ -40,8 +46,11 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
+
+
 const FamilyDetailsBase = (props) => {
-    const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading } = props;
+    const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading,isFamilyLoaded,isFamilyLoading, familyData} = props;
+    console.log(familyData)
     const [familyForm] = Form.useForm();
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -49,19 +58,40 @@ const FamilyDetailsBase = (props) => {
     const [editedMode, setEditedMode] = useState(false);
     const [generateId, setGenerateId] = useState(0);
 
+    const onSuccessAction = (res) => {
+        // refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // setRefershData(false);
+        // setShowDataLoading(false);
+    };
+
+    const onErrorAction = (message) => {
+        // resetData();
+        // showGlobalNotification({ message });
+        // setShowDataLoading(false);
+    };
+
     useEffect(() => {
         if (userId) {
             if (!isRelationDataLoaded && !isRelationLoading) {
                 fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: 'FAMLY_RELTN' });
             }
         }
-        if (userId) {
-            if (!isRelationDataLoaded && !isRelationLoading) {
-                fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId });
-            }
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isRelationDataLoaded]);
+
+    useEffect(() => {
+        if (userId &&!isFamilyLoaded ) {
+                fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, onSuccessAction, onErrorAction });
+            }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isFamilyLoaded]);
+
+    // const loadPinCodeDataList = () => {
+    //     if (userId && (filterString?.pincode || (filterString?.countryCode && filterString?.stateCode && filterString?.districtCode))) {
+    //         setShowDataLoading(true);
+    //         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+    //     }
+    // };
 
     const onChange = (value) => {
         setCustomerType(value);

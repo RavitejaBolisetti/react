@@ -1,5 +1,5 @@
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER_ } from 'constants/routingApi';
+import { BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER } from 'constants/routingApi';
 
 const PREFIX = 'FAMILY_DETAILS_'
 
@@ -9,8 +9,9 @@ export const RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT = PREFIX + 'LIST_APPLY_FI
 export const RECIEVE_DATA_DETAIL_ACTION_CONSTANT = PREFIX + 'RECIEVE_DETAIL_DATA';
 export const SAVE_DATA_ACTION_CONSTANT = PREFIX + 'SAVE_DATA';
 export const RESET_DATA_ACTION_CONSTANT = PREFIX + 'RESET_DATA';
+export const SAVE_FORM_DATA_LOADING_CONSTANT = PREFIX + 'SAVE_FORM_DATA_LOADING_CONSTANT';
 
-const baseURL = BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER_;
+const baseURL = BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER;
 
 export const familyDetailsDataActions = dataActions({
     baseURL,
@@ -21,4 +22,6 @@ export const familyDetailsDataActions = dataActions({
     RECIEVE_DATA_DETAIL_ACTION_CONSTANT,
     SAVE_DATA_ACTION_CONSTANT,
     RESET_DATA_ACTION_CONSTANT,
+    SAVE_FORM_DATA_LOADING_CONSTANT,
 });
+
