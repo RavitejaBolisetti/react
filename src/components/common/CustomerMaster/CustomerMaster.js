@@ -519,15 +519,23 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <div className={`${styles.userManagement} ${styles.headingToggle}`}>
+                            {/* <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                 <Button className={styles.marR5} type={toggleButton === 'Individual' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Individual')}>
                                     Individual
                                 </Button>
                                 <Button type={toggleButton === 'Firm/Company' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Firm/Company')}>
                                     Firm/Company
                                 </Button>
-                            </div>
-                            <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                            </div> */}
+                            <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.searchAndLabelAlign}>
+                                <div className={`${styles.userManagement} ${styles.headingToggle}`}>
+                                    <Button className={styles.marR5} type={toggleButton === 'Individual' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Individual')}>
+                                        Individual
+                                    </Button>
+                                    <Button type={toggleButton === 'Firm/Company' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Firm/Company')}>
+                                        Firm/Company
+                                    </Button>
+                                </div>
                                 <div className={styles.selectSearchBg}>
                                     <Select className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter" allowClear>
                                         {showDealersDataList?.map((item) => (
@@ -537,7 +545,7 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
                                     <Search placeholder="Search" value={DealerSearchvalue} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} className={styles.headerSearchField} />
                                 </div>
                             </Col>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.advanceFilterClear}>
+                            <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
                                 <Button danger type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
                                     Add
                                 </Button>

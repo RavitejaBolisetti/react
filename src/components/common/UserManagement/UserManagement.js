@@ -174,7 +174,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         console.log('UserManagementDealerData : ', UserManagementDealerData);
         setDealerData(UserManagementDealerData);
         if (Object.entries(UserManagementDealerData)?.length > 0) {
-           // setSearchdata([UserManagementDealerData]);
+            // setSearchdata([UserManagementDealerData]);
         }
     }, [UserManagementDealerData]);
     useEffect(() => {
@@ -394,7 +394,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     };
 
     const onFinish = (values, e) => {
-
         const requestData = {
             data: savePayload,
             setIsLoading: listShowLoading,
@@ -578,14 +577,14 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                                     </Button>
                                 </div>
                             </Col>
-                            <Col xs={24} sm={24} md={7} lg={7} xl={7} className={styles.padT5}>
+                            <Col xs={24} sm={24} md={7} lg={7} xl={7}>
                                 <Select className={styles.headerSelectField} onChange={handleChange} placeholder="Select" allowClear>
                                     {dealersData?.map((item) => (
                                         <Option value={item}>{item}</Option>
                                     ))}
                                 </Select>
                             </Col>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.padT5}>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Search placeholder="Search" value={DealerSearchvalue} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} disabled={disabled} className={styles.headerSearchField} />
                             </Col>
                         </Row>
