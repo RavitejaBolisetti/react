@@ -1,7 +1,8 @@
 import React from 'react';
-import { Space, Collapse, Typography, Descriptions, Divider } from 'antd';
+import { Space, Collapse, Typography, Descriptions, Divider, Row, Col } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FaRegUserCircle } from 'react-icons/fa';
+import Svg from 'assets/images/Filter.svg';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -87,6 +88,11 @@ const ViewDetailMain = (props) => {
                         key="1"
                     >
                         <Descriptions {...viewProps}>
+                            <div>
+                                <img src={Svg} alt="message icon" />
+                            </div>
+                            <br />
+                            <br />
                             <Descriptions.Item label="Date of Birth">{individualForm?.dateOfBirth}</Descriptions.Item>
                             <Descriptions.Item label="Gender">{individualForm?.gender}</Descriptions.Item>
                             <Descriptions.Item label="Maritial Status">{individualForm?.martialStatus}</Descriptions.Item>
@@ -102,11 +108,9 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Membership Type">{individualForm?.membershipType}</Descriptions.Item>
                             <Descriptions.Item label="PAN">{individualForm?.panNumber}</Descriptions.Item>
                             <Descriptions.Item label="GSTIN">{individualForm?.gstin}</Descriptions.Item>
-                           
                         </Descriptions>
-                        <Divider/>
                         <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Usage/Application Categorization">{individualForm?.usageCategorizationcategory}</Descriptions.Item>
+                            <Descriptions.Item label="Usage/Application Categorization">{individualForm?.usageCategorizationcategory}</Descriptions.Item>
                             <Descriptions.Item label="Usage/Application Sub-Category">{individualForm?.subCategory}</Descriptions.Item>
                             <Descriptions.Item label="Customer Category">{individualForm?.customerCategory}</Descriptions.Item>
                         </Descriptions>
@@ -129,7 +133,7 @@ const ViewDetailMain = (props) => {
                             <div className={styles.alignUser}>
                                 <FaRegUserCircle className={styles.userCircle} />
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                   Key Account Details
+                                    Key Account Details
                                 </Text>
                             </div>
                         }

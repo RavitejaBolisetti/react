@@ -1,7 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Form } from 'antd';
 import { AddEditForm } from './AddEditForm';
-import '../../Demo.css'
 
 const FamilyDetailsBase = () => {
     const [familyForm] = Form.useForm();
@@ -18,15 +17,14 @@ const FamilyDetailsBase = () => {
 
     const onSave = () => {
         let values = familyForm.getFieldsValue();
-        console.log(values,'VALUES')
         setShowForm(false);
         setEditedMode(false);
         //let index = familyDetailList?.findIndex(e => e.familyMembername === values.familyMembername && e.relationAge === values.relationAge);
-        setFamilyDetailsList(()=> [values])
-    }
+        setFamilyDetailsList(() => [values]);
+    };
 
     const onFamilyFinish = (values) => {
-         setFamilyDetailsList((items) => [...items,values ]);
+        setFamilyDetailsList((items) => [...items, values]);
         familyForm.resetFields();
         setShowForm(false);
 
@@ -53,16 +51,11 @@ const FamilyDetailsBase = () => {
         setShowForm,
         customerType,
         onSave,
-        editedMode, 
+        editedMode,
         setEditedMode,
     };
 
-    return (
-        <>
-            <h2>Family Details</h2>
-            <AddEditForm {...formProps} />
-        </>
-    );
+    return <AddEditForm {...formProps} />;
 };
 
 export const FamilyDetails = FamilyDetailsBase;

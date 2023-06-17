@@ -1,2 +1,2 @@
-import InvoiceDetailsMaster from './InvoiceDetailsMaster';
+import { InvoiceDetailsMaster } from './InvoiceDetailsMaster';
 export { InvoiceDetailsMaster };

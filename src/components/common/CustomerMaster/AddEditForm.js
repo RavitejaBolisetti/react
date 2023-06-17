@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Col, Row, Collapse, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-import './Demo.css'
 
-import { FaChevronDown } from 'react-icons/fa';
+import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import styles from 'components/common/Common.module.css';
 
 import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
@@ -15,11 +14,11 @@ import FormProgressBar from './FormProgressBar';
 import { DrawerFormButton } from '../Button';
 const { Panel } = Collapse;
 
-const expandIcon = ({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />;
+const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={18} /> : <SlArrowDown size={18} />);
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, formActionType, formData } = props;
-    const { isViewModeVisible, setIsViewModeVisible } = props;
+    const { onCloseAction, formData } = props;
+    const { isViewModeVisible, setIsViewModeVisible, formActionType } = props;
     const { toggleButton, settoggleButton } = props;
     const [moduleName, setmoduleName] = useState('Customer Details');
     const [leftTimeline, setleftTimeline] = useState({
@@ -50,6 +49,8 @@ const AddEditFormMain = (props) => {
         buttonData,
         setbuttonData,
         onCloseAction,
+        isViewModeVisible,
+        formActionType,
         handleButtonClick,
         formData,
         saveButtonName: leftTimeline?.CustomerDetails && formActionType === 'add' ? 'Create Customer Id' : 'Save',
@@ -58,6 +59,7 @@ const AddEditFormMain = (props) => {
         onCloseAction,
         isViewModeVisible,
         setIsViewModeVisible,
+        toggleButton,
         styles,
     };
 
@@ -75,7 +77,7 @@ const AddEditFormMain = (props) => {
                         return <IndividualAddressMaster {...commonModuleProps} />;
                     }
                     case 'Contacts': {
-                        return <IndividualContact />;
+                        return <IndividualContact {...commonModuleProps}/>;
                     }
                     case 'Family Details': {
                         return <FamilyDetails />;
@@ -104,7 +106,7 @@ const AddEditFormMain = (props) => {
                         return <CompanyAddressMaster />;
                     }
                     case 'Contacts': {
-                        return <CompanyContact />;
+                        return <CompanyContact {...commonModuleProps}/>;
                     }
                     case 'Account Related': {
                         return <AccountRelatedMaster {...commonModuleProps} />;

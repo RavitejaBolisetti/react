@@ -303,11 +303,12 @@ p {
 }
 
 .loginForm :global .ant-btn-primary:disabled {
-    color: #858585
+    color: #858585;
 }
 
 .loginForm :global .ant-btn-primary:disabled:hover {
-    color: #ffffff
+    color: #858585;
+    background: transparent;
 }
 
 .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:focus,
@@ -397,13 +398,17 @@ p {
 }
 
 .fielderror .registered {
-    display: flex !important;
-    align-items: center !important;
+    /* display: flex !important;
+    align-items: center !important; */
     padding: 0;
     color: #FF3E5B;
     font-size: 14px;
     line-height: 24px;
     font-weight: 500;
+}
+
+.fielderror .registered :global .ant-checkbox {
+    align-self: center;
 }
 
 .fielderror .registered :global .ant-checkbox:not(.ant-checkbox-checked)+span,

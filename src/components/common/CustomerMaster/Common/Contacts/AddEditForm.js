@@ -35,11 +35,12 @@ const AddEditForm = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
-    const { isReadOnly = false, onFinish, form } = props;
+    const { isReadOnly = false, onFinish, form, setShowAddEditForm } = props;
     const disabledProps = { disabled: isReadOnly };
 
-    const handleResetForm = () => {
+    const handleCancelFormEdit = () => {
         form.resetFields();
+        setShowAddEditForm(false);
     };
 
     const handleNumberValidation = (event) => {
@@ -85,7 +86,9 @@ const AddEditForm = (props) => {
                             <Form.Item label="Purpose of Contact" name="purposeOfContact">
                                 <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps}>
                                     {contactPurpose?.map((item) => (
-                                        <Option value={item.key}>{item.name}</Option>
+                                        <Option key={'ct' + item?.key} value={item.key}>
+                                            {item.name}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>
@@ -125,7 +128,9 @@ const AddEditForm = (props) => {
                             <Form.Item label="Gender" name="gender" rules={[validateRequiredSelectField('gender')]}>
                                 <Select placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
                                     {gender?.map((item) => (
-                                        <Option value={item.key}>{item.name}</Option>
+                                        <Option key={'ct' + item?.key} value={item.key}>
+                                            {item.name}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>
@@ -134,7 +139,9 @@ const AddEditForm = (props) => {
                             <Form.Item label="Title" name="contactNameTitle" rules={[validateRequiredSelectField('title')]}>
                                 <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('title')} {...disabledProps}>
                                     {title?.map((item) => (
-                                        <Option value={item?.key}>{item?.name}</Option>
+                                        <Option key={'ct' + item?.key} value={item?.key}>
+                                            {item?.name}
+                                        </Option>
                                     ))}
                                 </Select>
                             </Form.Item>
@@ -199,17 +206,13 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Row justify="left">
-                        <Col xs={2} sm={2} md={2} lg={2} xl={2}>
-                            <Button htmlType="submit" type="primary">
-                                Save
-                            </Button>
-                        </Col>
-                        <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                            <Button onClick={handleResetForm} danger>
-                                Reset
-                            </Button>
-                        </Col>
+                    <Row gutter={20} justify="left">
+                        <Button htmlType="submit" type="primary">
+                            Save
+                        </Button>
+                        <Button onClick={handleCancelFormEdit} danger>
+                            Cancel
+                        </Button>
                     </Row>
                 </Space>
             </Form>

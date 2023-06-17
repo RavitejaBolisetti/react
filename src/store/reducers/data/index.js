@@ -21,6 +21,7 @@ import { DealerHierarchy } from './dealer';
 import { PincodeDetails } from './pincodeDetails';
 import { LessorCompanyMaster } from './lessorCompanyMaster';
 import { OtfReports } from './otfReports';
+import { OTF } from './otf';
 import { SupportingDocument } from './supportingDocument';
 
 export const data = combineReducers({
@@ -46,5 +47,6 @@ export const data = combineReducers({
     PincodeDetails,
     LessorCompanyMaster,
     OtfReports,
+    OTF,
     SupportingDocument,
 });
