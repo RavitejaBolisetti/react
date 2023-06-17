@@ -3,7 +3,7 @@ import { Descriptions, Button, Space } from 'antd';
 import AddEditForm from './AddEditForm';
 
 const ViewDetailBase = (props) => {
-    const { formData, styles } = props;
+    const { formData, styles, deleteContactHandeler, isIndividualOrCompany } = props;
     const { setShowAddEditForm, setContactData, onFinish, form, isEditing, setIsEditing, index } = props;
 
     const viewProps = {
@@ -54,7 +54,7 @@ const ViewDetailBase = (props) => {
                         <Button type="primary" onClick={() => editContactHandeler({ formData, index })}>
                             Edit
                         </Button>
-                        <Button>Delete</Button>
+                        <Button danger onClick={() => deleteContactHandeler({ formData, index })}>Delete</Button>
                     </Space>
                 </>
             ) : (
