@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Col, Row, Collapse, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 
-import { FaChevronDown } from 'react-icons/fa';
+import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import styles from 'components/common/Common.module.css';
 
 import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
@@ -14,7 +14,7 @@ import FormProgressBar from './FormProgressBar';
 import { DrawerFormButton } from '../Button';
 const { Panel } = Collapse;
 
-const expandIcon = ({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />;
+const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={18} /> : <SlArrowDown size={18} />);
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, formData } = props;
