@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 
-import { Row, Col, Collapse, Form, Space, Typography, Button, Divider } from 'antd';
-
+import { Collapse, Form, Space, Typography, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { FaRegUserCircle } from 'react-icons/fa';
-
 import { expandIcon } from 'utils/accordianExpandIcon';
 import AddEditForm from './AddEditForm';
 import ViewContactList from './ViewContactList';
@@ -14,7 +12,7 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 const { Text } = Typography;
 
-const IndividualContactMain = ({ isViewModeVisible, formActionType }) => {
+const ContactMain = ({ isViewModeVisible, formActionType }) => {
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -26,13 +24,12 @@ const IndividualContactMain = ({ isViewModeVisible, formActionType }) => {
     };
 
     const onFinish = (value) => {
-        form.validatefields()
+        form.validateFields()
             .then((data) => console.log('data', data))
             .catch((error) => console.error(error));
 
         setContactData((prev) => {
             let formData = [...prev];
-
             if (value?.defaultaddress && formData?.length >= 1) {
                 formData?.forEach((contact) => {
                     if (contact?.defaultaddress === true) {
@@ -46,6 +43,11 @@ const IndividualContactMain = ({ isViewModeVisible, formActionType }) => {
         });
         setShowAddEditForm(false);
         setIsEditing(false);
+    };
+
+    const deleteContactHandeler = (data) => {
+        console.log('delete Data', data);
+        // setContactData()
     };
 
     const addBtnContactHandeler = (e) => {
@@ -65,6 +67,7 @@ const IndividualContactMain = ({ isViewModeVisible, formActionType }) => {
         form,
         isEditing,
         setIsEditing,
+        deleteContactHandeler,
     };
 
     return (
@@ -92,4 +95,4 @@ const IndividualContactMain = ({ isViewModeVisible, formActionType }) => {
     );
 };
 
-export const IndividualContact = IndividualContactMain;
+export const IndividualContact = ContactMain;

@@ -137,13 +137,21 @@
     -webkit-border-radius: 4px;
     padding: 4px;
     display: inline-block;
-    margin-left: 8px;
+    /* margin-left: 8px; */
     margin-right: 20px;
 }
 
 .contentHeaderBackground .headingToggle :global .ant-btn {
     height: 26px;
     padding: 2px 6px;
+}
+
+.contentHeaderBackground .selectSearchBg {
+    width: 63%;
+}
+
+.contentHeaderBackground .subheading .selectSearchBg {
+    width: 100%;
 }
 
 .autoCompleteContent :global .ant-input-search .ant-input:hover,
@@ -668,6 +676,9 @@
 
 .headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper {
     border: 0;
+}
+
+.selectSearchBg .headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper {
     height: 26px !important;
 }
 
@@ -702,6 +713,9 @@
     border-left: #ffffff;
     border-radius: 0px 3px 3px 0;
     margin-right: -1px;
+}
+
+.contentHeaderBackground .selectSearchBg :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     margin-top: -4px;
 }
 
@@ -1282,10 +1296,26 @@
     border-radius: 4px;
 }
 
-.selectSearchBg .headerSelectField {
+.contentHeaderBackground .subheading .selectSearchBg .headerSelectField {
     width: 30%;
     position: absolute;
     z-index: 99;
+}
+
+.contentHeaderBackground .subheading .selectSearchBg .headerSearchField {
+    width: 69%;
+    float: right;
+}
+
+.contentHeaderBackground .selectSearchBg .headerSelectField {
+    width: 25%;
+    position: absolute;
+    z-index: 99;
+}
+
+.contentHeaderBackground .selectSearchBg .headerSearchField {
+    width: 58%;
+    float: right;
 }
 
 .selectSearchBg :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
@@ -1307,11 +1337,6 @@
     font-size: 12px;
     font-weight: 500;
     line-height: 24px;
-}
-
-.selectSearchBg .headerSearchField {
-    width: 69%;
-    float: right;
 }
 
 .selectSearchBg .headerSearchField :global .ant-input-group {

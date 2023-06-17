@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Col, Row, Collapse, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
+import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 
 import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
 import { CompanyAddressMaster, CompanyProfile, CompanyContact, AccountRelatedMaster } from './FirmOrCompany';
@@ -14,7 +13,7 @@ import FormProgressBar from './FormProgressBar';
 import { DrawerFormButton } from '../Button';
 const { Panel } = Collapse;
 
-const expandIcon = ({ isActive }) => (isActive ? <FaChevronUp size={18} /> : <FaChevronDown size={18} />);
+const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={18} /> : <SlArrowDown size={18} />);
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, formActionType, formData, onFieldsChange, buttonData, setButtonData, handleButtonClick } = props;
@@ -57,6 +56,7 @@ const AddEditFormMain = (props) => {
         onCloseAction,
         isViewModeVisible,
         setIsViewModeVisible,
+        toggleButton,
         styles,
         onFieldsChange,
         formActionType,
@@ -76,7 +76,7 @@ const AddEditFormMain = (props) => {
                         return <IndividualAddressMaster {...commonModuleProps} />;
                     }
                     case 'Contacts': {
-                        return <IndividualContact {...commonModuleProps}/>;
+                        return <IndividualContact {...commonModuleProps} />;
                     }
                     case 'Family Details': {
                         return <FamilyDetails {...commonModuleProps} />;
