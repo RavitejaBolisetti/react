@@ -15,7 +15,7 @@ const FormBase = (props) => {
     ];
 
     return (
-        <Form form={familyForm} id="familyForm" autoComplete="off" layout="vertical" onFinish={onFamilyFinish} onFinishFailed={onFinishFailed} style={{ margin: '2rem', background: 'transparent' }}>
+        <Form form={familyForm} id="familyForm" autoComplete="off" layout="vertical" onFinish={onFamilyFinish} onFinishFailed={onFinishFailed} style={{  background: 'transparent' }}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={null} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
@@ -31,7 +31,7 @@ const FormBase = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={null} label="Customer ID" name="customerId">
-                        <Input maxLength={6} placeholder={preparePlaceholderText('Customer ID')} className={styles.inputBox} disabled={true} />
+                        <Input maxLength={6} placeholder={preparePlaceholderText('Customer ID')} className={styles.inputBox} disabled={!value} />
                     </Form.Item>
                 </Col>
 

@@ -1,3 +1,3 @@
-import SupportingDocument from './SupportingDocument';
+import { SupportingDocument } from './SupportingDocument';
 
 export { SupportingDocument };
