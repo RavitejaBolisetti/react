@@ -101,9 +101,7 @@ const FamilyDetailsBase = (props) => {
         }
     };
 
-    const onFamilyFinish = (values) => {
-        
-    };
+    const onFamilyFinish = (values) => {};
 
     const onFinishFailed = (errorInfo) => {
         return;
@@ -111,13 +109,17 @@ const FamilyDetailsBase = (props) => {
 
     useEffect(() => {
         if (familyData?.length > 0) {
-            setFamilyDetailsList(
-                familyData?.map((object) => {
-                    setEditedId(() => editedId + 1);
-                    return { ...object, editedId: editedId };
-                })
-            );
+            // setFamilyDetailsList(
+            //     familyData?.map((object) => {
+            //         setEditedId(() => editedId + 1)
+            //         return { ...object, editedId: editedId };
+            //     })
+            // );
+            for (let i = 0; i < familyData?.length; i++) {
+                setFamilyDetailsList(  (object) => [...object,{ ...familyData[i], editedId: i}] )
+            }
         }
+        setEditedId(() => familyData?.length)
         // setFamilyDetailsList((values) => [...values, { ...arrWithColor}]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [familyData]);

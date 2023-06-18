@@ -93,14 +93,14 @@ const AddEditFormMain = (props) => {
                             familyDetailList?.map((item) => (
                                 <Collapse
                                     expandIcon={() => {
-                                        if (activeKey.includes(item?.id ? item?.id : item?.generatedId)) {
+                                        if (activeKey.includes(item?.editedId)) {
                                             return <MinusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
                                         } else {
                                             return <PlusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
                                         }
                                     }}
                                     activeKey={activeKey}
-                                    onChange={() => onCollapseChange(item?.id ? item?.id : item?.generatedId)}
+                                    onChange={() => onCollapseChange(item?.editedId)}
                                     expandIconPosition="end"
                                     collapsible={editedMode ? 'disabled' : 'icon'}
                                 >
@@ -115,9 +115,10 @@ const AddEditFormMain = (props) => {
                                                         style={{ pointerEvents: editedMode ? 'none' : null }}
                                                         onClick={() => {
                                                             onEdit(item);
-                                                            if (!activeKey.includes(item?.id ? item?.id : item?.generatedId)) {
-                                                                onCollapseChange(item?.id ? item?.id : item?.generatedId);
-                                                            }
+                                                            onCollapseChange(item?.editedId)
+                                                            // if (activeKey.includes(item?.editedId)) {
+                                                            //     onCollapseChange(item?.editedId);
+                                                            // }
                                                         }}
                                                     >
                                                         <FiEdit color={editedMode ? 'grey' : '#ff3e5b'} style={{ margin: '0.25rem 0 0 0' }} />
@@ -128,7 +129,7 @@ const AddEditFormMain = (props) => {
                                                 {customerType ? <Typography>M&M user </Typography> : !customerType ? <Typography>Non-M&M user</Typography> : null}
                                             </Space>
                                         }
-                                        key={item?.id ? item?.id : item?.generatedId}
+                                        key={item?.editedId}
                                         style={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
                                     >
                                         {editedMode ? <FormContainer {...formProps} item /> : <ViewDetail mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} />}
