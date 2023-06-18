@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-
 import { bindActionCreators } from 'redux';
-
 import { Card } from 'antd';
 
-import { showGlobalNotification } from 'store/actions/notification';
-
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
+import { showGlobalNotification } from 'store/actions/notification';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import AddEditForm from './AddEditForm';
 
@@ -17,19 +14,17 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isDocumentDataLoaded = false, isDocumentDataLoading, data: configData = [], paramdata: typeData = [] },
-            SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data, isLoadingOnSave },
+            ConfigurableParameterEditing: { isLoaded: isDocumentDataLoaded = false, data: configData = [], paramdata: typeData = [] },
+            SupportingDocument: { isLoaded: isDataLoaded = false, isLoading },
         },
     } = state;
-
-    console.log('state', state);
 
     let returnValue = {
         userId,
         accessToken,
         token,
         configData,
-        typeData,
+        typeData: typeData && typeData[PARAM_MASTER.CUST_FILES.id],
         isDataLoaded,
         isLoading,
     };
@@ -44,7 +39,8 @@ const mapDispatchToProps = (dispatch) => ({
             configListShowLoading: configParamEditActions.listShowLoading,
 
             saveData: supportingDocumentDataActions.saveData,
-            supportingDocumentListShowLoading: supportingDocumentDataActions.listShowLoading,
+            uploadFile: supportingDocumentDataActions.uploadFile,
+            listShowLoading: supportingDocumentDataActions.listShowLoading,
 
             showGlobalNotification,
         },
@@ -53,19 +49,19 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupportingDocumentBase = (props) => {
-    const { supportingDocumentListShowLoading,saveData, isDataLoaded, isLoading, userId, accessToken, token, configData, typeData, configFetchList, configListShowLoading } = props;
+    const { listShowLoading, saveData, uploadFile, userId, accessToken, token, typeData, configFetchList, configListShowLoading } = props;
 
-    const [docId, setDocId] = useState('');
+    const [uploadedFile, setUploadedFile] = useState();
 
     useEffect(() => {
         if (userId) {
-            configFetchList({ setIsLoading: configListShowLoading, userId, parameterType: 'CUST_FILES' });
+            configFetchList({ setIsLoading: configListShowLoading, userId, parameterType: PARAM_MASTER?.CUST_FILES.id });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
     const onFinish = (values) => {
-        const data = { ...values, customerId: 'CUS001', status: true, docId: docId, id: '' };
+        const data = { ...values, customerId: 'CUS001', status: true, docId: uploadedFile?.docId, id: '' };
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
@@ -77,7 +73,7 @@ const SupportingDocumentBase = (props) => {
         const requestData = {
             data: data,
             method: 'post',
-            setIsLoading: supportingDocumentListShowLoading,
+            setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
@@ -89,6 +85,7 @@ const SupportingDocumentBase = (props) => {
     const onFinishFailed = () => {
         console.log('failed');
     };
+
     const formProps = {
         typeData,
         userId,
@@ -97,7 +94,10 @@ const SupportingDocumentBase = (props) => {
         saveData,
         onFinish,
         onFinishFailed,
-        setDocId,
+        setUploadedFile,
+        uploadFile,
+        listShowLoading,
+        showGlobalNotification,
     };
 
     return (
