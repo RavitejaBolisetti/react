@@ -129,7 +129,7 @@ const FamilyDetailsBase = (props) => {
         const requestData = {
             data: familyDetailList,
             method: 'post',
-            setIsLoading: isFamilyLoading,
+            setIsLoading: listFamilyDetailsShowLoading,
             userId,
             onError,
             onSuccess,
