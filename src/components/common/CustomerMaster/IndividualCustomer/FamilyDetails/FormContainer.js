@@ -115,12 +115,6 @@ const FormBase = (props) => {
                     Reset
                 </Button>
             </Row>
-
-            <Form.Item>
-                <Button form="familyForm" type="primary" htmlType="submit">
-                    Submit
-                </Button>
-            </Form.Item>
         </Form>
     );
 };

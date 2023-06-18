@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Collapse, Space, Card, Typography, Button, Divider } from 'antd';
+import { Collapse, Space, Card, Typography, Button, Divider,Form } from 'antd';
 import styles from 'components/common/Common.module.css';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { ViewDetail } from './ViewFamilyDetails';
@@ -88,7 +88,6 @@ const AddEditFormMain = (props) => {
                     {showForm || familyDetailList?.length > 0 ? <Divider /> : null}
                     <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
                         {showForm && <FormContainer {...formProps} />}
-                        {console.log(familyDetailList,'Trash')}
                         {familyDetailList?.length > 0 &&
                             familyDetailList?.map((item) => (
                                 <Collapse
@@ -141,6 +140,11 @@ const AddEditFormMain = (props) => {
             ) : (
                 <ViewDetail {...viewProps} />
             )}
+
+                <Button id="familyForm" form="familyForm" type="primary" htmlType="submit">
+                    Submit
+                </Button>
+
         </>
     );
 };
