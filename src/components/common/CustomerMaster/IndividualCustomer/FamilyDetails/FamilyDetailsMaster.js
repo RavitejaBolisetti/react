@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { familyDetailsDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetails';
+import { showGlobalNotification } from 'store/actions/notification';
 
 const mapStateToProps = (state) => {
     const {
@@ -39,13 +40,16 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchFamilyDetailsList: familyDetailsDataActions.fetchList,
             listFamilyDetailsShowLoading: familyDetailsDataActions.listShowLoading,
+            saveData: familyDetailsDataActions.saveData,
+
+            showGlobalNotification,
         },
         dispatch
     ),
 });
 
 const FamilyDetailsBase = (props) => {
-    const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData } = props;
+    const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification,isFamilyLoading } = props;
     const [familyForm] = Form.useForm();
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -101,8 +105,39 @@ const FamilyDetailsBase = (props) => {
         }
     };
 
-    const onFamilyFinish = (values) => {
-        console.log(values,"finish")
+    const onFamilyFinish = () => {
+        const onSuccess = (res) => {
+            familyForm.resetFields();
+            //setShowDataLoading(true);
+
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId });
+
+            // setButtonData({ ...buttonData, formBtnActive: false });
+            // if (buttonData?.saveAndNewBtnClicked) {
+            //     setIsFormVisible(true);
+            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            // } else {
+            //     setIsFormVisible(false);
+            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            // }
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+        const requestData = {
+            data: familyDetailList,
+            method: 'post',
+            setIsLoading: isFamilyLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        console.log(requestData,'Final Submit')
+
+        saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -112,10 +147,10 @@ const FamilyDetailsBase = (props) => {
     useEffect(() => {
         if (familyData?.length > 0) {
             for (let i = 0; i < familyData?.length; i++) {
-                setFamilyDetailsList(  (object) => [...object,{ ...familyData[i], editedId: i}] )
+                setFamilyDetailsList((object) => [...object, { ...familyData[i], editedId: i }]);
             }
         }
-        setEditedId(() => familyData?.length)
+        setEditedId(() => familyData?.length);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [familyData]);
 

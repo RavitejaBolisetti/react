@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Collapse, Space, Card, Typography, Button, Divider,Form } from 'antd';
+import { Collapse, Space, Card, Typography, Button, Divider, Form } from 'antd';
 import styles from 'components/common/Common.module.css';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { ViewDetail } from './ViewFamilyDetails';
@@ -9,7 +9,7 @@ import { FormContainer } from './FormContainer';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onFamilyFinish, onFinishFailed, familyForm, onChange, showForm, setShowForm, setCustomerType, relationData,editedId, setEditedId } = props;
+    const { onFamilyFinish, onFinishFailed, familyForm, onChange, showForm, setShowForm, setCustomerType, relationData, editedId, setEditedId } = props;
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode } = props;
     const [activeKey, setactiveKey] = useState([null]);
 
@@ -35,7 +35,7 @@ const AddEditFormMain = (props) => {
     const addFunction = () => {
         setShowForm(true);
         setCustomerType('Yes');
-        setEditedId( () =>  editedId+1)
+        setEditedId(() => editedId + 1);
         familyForm.resetFields();
     };
 
@@ -45,7 +45,7 @@ const AddEditFormMain = (props) => {
             mnmCustomer: values?.mnmCustomer,
             customerId: values?.customerId,
             customerName: values?.customerName,
-            editedId: values?.editedId ,
+            editedId: values?.editedId,
             relationship: values?.relationship,
             dateOfBirth: values?.dateOfBirth,
             relationAge: values?.relationAge,
@@ -105,7 +105,7 @@ const AddEditFormMain = (props) => {
                                 >
                                     <Panel
                                         header={
-                                            <Space style={{ width: '100%',display:'flex',justifyContent:'space-between' }} size="large">
+                                            <Space style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }} size="large">
                                                 <Space>
                                                     <Typography>
                                                         {item?.customerName} | {item?.relationship}
@@ -114,7 +114,7 @@ const AddEditFormMain = (props) => {
                                                         style={{ pointerEvents: editedMode ? 'none' : null }}
                                                         onClick={() => {
                                                             onEdit(item);
-                                                            onCollapseChange(item?.editedId)
+                                                            onCollapseChange(item?.editedId);
                                                             // if (activeKey.includes(item?.editedId)) {
                                                             //     onCollapseChange(item?.editedId);
                                                             // }
@@ -141,10 +141,9 @@ const AddEditFormMain = (props) => {
                 <ViewDetail {...viewProps} />
             )}
 
-                <Button id="familyForm" form="familyForm" type="primary" htmlType="submit">
-                    Submit
-                </Button>
-
+            <Button onClick={() => onFamilyFinish()} type="primary" >
+                Submit
+            </Button>
         </>
     );
 };

@@ -103,8 +103,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
-    console.log(skuAttributes,'CONSOLE');
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -297,7 +295,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             onError,
             onSuccess,
         };
-        console.log(requestData,'ConsoleDatarequestData')
+
         saveData(requestData);
     };
 
