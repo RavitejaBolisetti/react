@@ -109,3 +109,4 @@ export const BASE_URL_OTF_INVOICE_DETAILS = BASE_URL + 'invoice';
 export const BASE_URL_OTF_DETAILS = BASE_URL_OTF + 'details';
 export const BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER = BASE_URL + 'customers//individual/familydetails';
 
+export const BASE_URL_INDIVIUAL_PROFILE_CUSTOMER_MASTER = BASE_URL + 'customers/individual/profile';
