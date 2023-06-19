@@ -16,9 +16,9 @@ const ViewDetailBase = (props) => {
 
     const renderCheckbox = (value) => {
         if (value) {
-            return <CheckSquareOutlined style={{ color: 'red' }} />;
+            return <CheckSquareOutlined />;
         } else {
-            return <CloseOutlined style={{ color: 'green' }} />;
+            return;
         }
     };
     return (
@@ -31,7 +31,8 @@ const ViewDetailBase = (props) => {
                     <Descriptions.Item label="Parts Discount">{formData?.partsDiscount}</Descriptions.Item>
                     <Descriptions.Item label="Labour Discount">{formData?.labourDiscount}</Descriptions.Item>
                     <Descriptions.Item label="Remarks">{formData?.remarks}</Descriptions.Item>
-                    <Descriptions.Item label="VIP Dealer">{renderCheckbox(formData?.vipDealerInd)}</Descriptions.Item>
+                    {/* <Descriptions.Item label="VIP Dealer">{renderCheckbox(formData?.vipDealerInd)}</Descriptions.Item> */}
+                    <div> {renderCheckbox(formData?.vipDealerInd)}VIP Dealer</div>
                 </Descriptions>
             </>
         </div>
