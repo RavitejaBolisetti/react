@@ -15,6 +15,7 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import DataTable from 'utils/dataTable/DataTable';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import { AddEditForm } from './AddEditForm';
 import styles from 'components/common/Common.module.css';
@@ -29,7 +30,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
         },
         customer: {
-            customerDetail: { isLoaded: isDataLoaded = false, isLoading, data },
+            customerDetail: { isLoaded: isDataLoaded = false, isLoading, data, filter: filterString = {} },
         },
     } = state;
 
@@ -44,6 +45,7 @@ const mapStateToProps = (state) => {
         isConfigDataLoaded,
         isConfigLoading,
         typeData: typeData && typeData[PARAM_MASTER.CUST_MST.id],
+        filterString,
     };
     return returnValue;
 };
@@ -57,6 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchList: customerDetailDataActions.fetchList,
             saveData: customerDetailDataActions.saveData,
+            setFilterString: customerDetailDataActions.setFilter,
             resetData: customerDetailDataActions.reset,
             listShowLoading: customerDetailDataActions.listShowLoading,
             showGlobalNotification,
@@ -66,13 +69,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerMasterMain = (props) => {
-    const { data, fetchList, userId, isLoading, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, fetchList, userId, isLoading, listShowLoading, showGlobalNotification, resetData, moduleTitle } = props;
     const { isConfigDataLoaded, isConfigLoading, typeData, listConfigShowLoading, fetchConfigList } = props;
 
+    const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
+
     const [form] = Form.useForm();
-
     const [showDataLoading, setShowDataLoading] = useState(true);
-
     const [refershData, setRefershData] = useState(false);
 
     const [filterString, setFilterString] = useState();
@@ -87,7 +90,6 @@ const CustomerMasterMain = (props) => {
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-    const [customerType, setCustomerType] = useState('Individual');
 
     const extraParams = [
         {
@@ -116,6 +118,12 @@ const CustomerMasterMain = (props) => {
         setShowDataLoading(false);
     };
 
+    const onErrorAction = (res) => {
+        showGlobalNotification({ message: res?.responseMessage });
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
+
     useEffect(() => {
         if (!isConfigDataLoaded && !isConfigLoading) {
             fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CUST_MST.id });
@@ -125,7 +133,8 @@ const CustomerMasterMain = (props) => {
 
     useEffect(() => {
         if (userId && customerType) {
-            fetchList({ setIsLoading: listShowLoading, extraParams, userId });
+            resetData();
+            fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -133,7 +142,7 @@ const CustomerMasterMain = (props) => {
 
     useEffect(() => {
         if (refershData && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -229,12 +238,19 @@ const CustomerMasterMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.searchAndLabelAlign}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                    <Button className={styles.marR5} type={customerType === 'Individual' ? 'primary' : 'link'} danger onClick={() => setCustomerType('Individual')}>
+                                    {Object.values(CUSTOMER_TYPE)?.map((item) => {
+                                        return (
+                                            <Button className={styles.marR5} type={customerType === item?.id ? 'primary' : 'link'} danger onClick={() => setCustomerType(item?.id)}>
+                                                {item?.title}
+                                            </Button>
+                                        );
+                                    })}
+                                    {/* <Button className={styles.marR5} type={customerType === 'Individual' ? 'primary' : 'link'} danger onClick={() => setCustomerType('Individual')}>
                                         Individual
                                     </Button>
                                     <Button type={customerType === 'Firm' ? 'primary' : 'link'} danger onClick={() => setCustomerType('Firm')}>
                                         Firm/Company
-                                    </Button>
+                                    </Button> */}
                                 </div>
                                 <div className={styles.selectSearchBg}>
                                     <Select {...selectProps} className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter">
