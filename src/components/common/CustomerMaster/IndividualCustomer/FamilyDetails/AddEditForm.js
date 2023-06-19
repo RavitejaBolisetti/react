@@ -38,10 +38,8 @@ const AddEditFormMain = (props) => {
         setEditedId(() => editedId + 1);
         familyForm.resetFields();
     };
-    // const newDatae = dayjs(props?.dateOfBirth, 'YYYY/MM/DD');
 
     const onEdit = (values) => {
-        console.log(values, '3KD');
         setEditedMode(true);
         setCustomerType(false);
         familyForm.setFieldsValue({
@@ -50,7 +48,7 @@ const AddEditFormMain = (props) => {
             customerName: values?.customerName,
             editedId: values?.editedId,
             relationship: values?.relationship,
-            dateOfBirth: dayjs(values?.dateOfBirth, 'YYYY/MM/DD'),
+            dateOfBirth: dayjs(values?.dateOfBirth),
             relationAge: values?.relationAge,
             remarks: values?.remarks,
         });
@@ -77,6 +75,8 @@ const AddEditFormMain = (props) => {
         relationData,
         editedId,
     };
+
+    console.log()
 
     return (
         <>

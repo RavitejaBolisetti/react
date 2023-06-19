@@ -85,18 +85,17 @@ const FamilyDetailsBase = (props) => {
         setCustomerType(value);
     };
 
-    const onSave = (props) => {
+    const onSave = () => {
         let values = familyForm.getFieldsValue();
-        console.log(values,'DOB')
-        setFamilyDetailsList((items) => [...items, { ...values, dateOfBirth :dayjs(values?.dateOfBirth,'YYYY/MM/DD') }]);
-        console.log(familyDetailList,'CONSOLE')
+        setFamilyDetailsList((items) => [...items, { ...values, dateOfBirth : typeof values?.dateOfBirth === 'object' ?  dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }]);
+
         if (editedMode) {
             const upd_obj = familyDetailList?.map((obj) => {
                 if (obj?.editedId === values?.editedId) {
                     obj.customerName = values?.customerName;
                     obj.relationAge = values?.relationAge;
                     obj.relationship = values?.relationship;
-                    obj.dateOfBirth = values?.dateOfBirth;
+                    obj.dateOfBirth = typeof values?.dateOfBirth === 'object' ?  dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth;
                     obj.remarks = values?.remarks;
                 }
                 return obj;
