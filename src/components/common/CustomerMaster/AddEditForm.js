@@ -9,6 +9,7 @@ import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMa
 import { CompanyAddressMaster, CompanyProfile, CompanyContact, AccountRelatedMaster } from './FirmOrCompany';
 import { CompanyCustomerDetailsMaster } from './FirmOrCompany';
 import { SupportingDocument } from './IndividualCustomer';
+import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import FormProgressBar from './FormProgressBar';
 import { DrawerFormButton } from '../Button';
@@ -65,7 +66,7 @@ const AddEditFormMain = (props) => {
 
     const renderElement = () => {
         switch (customerType) {
-            case 'Individual': {
+            case CUSTOMER_TYPE?.INDIVIDUAL.id: {
                 switch (moduleName) {
                     case 'Customer Details': {
                         return <IndivisualCustomerDetailsMaster {...commonModuleProps} />;
@@ -93,7 +94,7 @@ const AddEditFormMain = (props) => {
                     }
                 }
             }
-            case 'Firm': {
+            case CUSTOMER_TYPE?.FIRM.id: {
                 switch (moduleName) {
                     case 'Customer Details': {
                         return <CompanyCustomerDetailsMaster {...commonModuleProps} />;
