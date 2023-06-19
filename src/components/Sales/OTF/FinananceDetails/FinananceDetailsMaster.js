@@ -38,6 +38,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: otfFinanceDetailDataActions.fetchList,
             saveData: otfFinanceDetailDataActions.saveData,
+            resetData: otfFinanceDetailDataActions.reset,
             listShowLoading: otfFinanceDetailDataActions.listShowLoading,
             showGlobalNotification,
         },
