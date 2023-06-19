@@ -2,6 +2,7 @@ import React from 'react';
 import { Space, Collapse, Typography, Descriptions, Divider } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FaRegUserCircle } from 'react-icons/fa';
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -36,7 +37,7 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={`${style.viewContainer} ${style.hierarchyRightContaners}`}>
+        <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Collapse
                     expandIcon={() => {
@@ -64,7 +65,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="PAN">{CompanyForm?.panNumber}</Descriptions.Item>
                             <Descriptions.Item label="GSTIN">{CompanyForm?.gstinNumber}</Descriptions.Item>
                         </Descriptions>
-                        <Divider />
+                        {/* <Divider /> */}
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Usage/Application Categorization">{CompanyForm?.categorization}</Descriptions.Item>
                             <Descriptions.Item label="Usage/Application Sub-Category">{CompanyForm?.category}</Descriptions.Item>

@@ -23,6 +23,7 @@ import { LessorCompanyMaster } from './lessorCompanyMaster';
 import { OtfReports } from './otfReports';
 import { OTF } from './otf';
 import { SupportingDocument } from './supportingDocument';
+import { CustomerMaster } from './customerMaster'
 
 export const data = combineReducers({
     Menu,
@@ -49,4 +50,5 @@ export const data = combineReducers({
     OtfReports,
     OTF,
     SupportingDocument,
+    CustomerMaster,
 });

@@ -22,7 +22,7 @@ const { TextArea } = Input;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 
-const AddEditForm = ({ form, isVisible, formActionType, onCloseAction, setisVisible, isViewModeVisible, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable }) => {
+const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeVisible, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable ,formActionType}) => {
     const [companyInfoform] = Form.useForm();
     const [uploadCustomerForm] = Form.useForm();
     const [done, setDone] = useState();
@@ -110,7 +110,7 @@ const AddEditForm = ({ form, isVisible, formActionType, onCloseAction, setisVisi
     };
     return (
         <>
-            {!isViewModeVisible ? (
+            {!formActionType?.viewMode ? (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space style={{ display: 'flex' }} direction="vertical" size="middle" className={style.accordianContainer}>
