@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Button, Form, message, Typography, Row, Col, Space, Select, Input, Divider, Checkbox } from 'antd';
 import { BiLockAlt } from 'react-icons/bi';
+import { CheckOutlined } from '@ant-design/icons';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import UploadUtils from './UploadUtils';
+import UploadUtils from './../UploadUtils';
 
 import { contactPurpose, title, gender } from 'constants/modules/CustomerMaster/individualProfile';
 import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
@@ -13,7 +14,6 @@ import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
 import style from '../../../Common.module.css';
 
 const { Option } = Select;
-
 const uploadProps = {
     name: 'file',
     multiple: true,
@@ -32,14 +32,15 @@ const uploadProps = {
 };
 
 const AddEditForm = (props) => {
+    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
-    const { isReadOnly = false, onFinish, form, setShowAddEditForm } = props;
     const disabledProps = { disabled: isReadOnly };
 
     const handleCancelFormEdit = () => {
         form.resetFields();
+        setIsEditing(false);
         setShowAddEditForm(false);
     };
 
@@ -79,7 +80,7 @@ const AddEditForm = (props) => {
                         <Typography.Text strong>Add New Contact</Typography.Text>
                     </Row>
 
-                    <UploadUtils {...uploadProps} />
+                    <UploadUtils {...uploadProps} isViewModeVisible={isViewModeVisible} />
 
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -94,19 +95,23 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Mobile Number" name="contactMobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
+                            <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
                                 <Input
                                     maxLength={10}
                                     onChange={handleNumberValidation}
                                     placeholder={preparePlaceholderText('mobile number')}
                                     allowClear
-                                    enterButton="Send OTP"
+                                    // enterButton="Send OTP"
                                     size="small"
                                     suffix={
                                         <>
-                                            <Button loading={mobileLoader} onClick={showModal} style={{ marginRight: '-3px', borderColor: '#d9d9d9', color: '#B5B5B6' }}>
-                                                Send OTP
-                                            </Button>{' '}
+                                            {false ? (
+                                                <Button loading={mobileLoader} onClick={showModal} type="link">
+                                                    Validate
+                                                </Button>
+                                            ) : (
+                                                <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
+                                            )}
                                             <ValidateMobileNumberModal {...modalProps} />
                                         </>
                                     }
@@ -120,7 +125,7 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Relation" name="relationwithCustomer">
+                            <Form.Item label="Relation" name="relationCode">
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('relation')} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -136,7 +141,7 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Title" name="contactNameTitle" rules={[validateRequiredSelectField('title')]}>
+                            <Form.Item label="Title" name="title" rules={[validateRequiredSelectField('title')]}>
                                 <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('title')} {...disabledProps}>
                                     {title?.map((item) => (
                                         <Option key={'ct' + item?.key} value={item?.key}>
@@ -147,27 +152,27 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="First Name" name="contactNameFirstName" rules={[validateRequiredInputField('First Name')]}>
+                            <Form.Item label="First Name" name="firstName" rules={[validateRequiredInputField('First Name')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('first name')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Middle Name" name="contactNameMiddleName">
+                            <Form.Item label="Middle Name" name="middleName">
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('middle name')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Last/Surname" name="contactNameLastName">
+                            <Form.Item label="Last/Surname" name="lastName">
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="E-mail" name="contactEmail">
+                            <Form.Item label="E-mail" name="contactEmailId">
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('email id')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Alternate Email ID" name="alternativeEmail">
+                            <Form.Item label="Alternate Email ID" name="alternateEmailId">
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate email id')} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -175,22 +180,22 @@ const AddEditForm = (props) => {
                         <Divider />
 
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Facebook Link" name="facebook" rules={[validatFacebookProfileUrl('facebook')]}>
+                            <Form.Item label="Facebook Link" name="facebookId" rules={[validatFacebookProfileUrl('facebook')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('facebook link')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Twitter Link" name="twitter" rules={[validattwitterProfileUrl('twitter')]}>
+                            <Form.Item label="Twitter Link" name="twitterId" rules={[validattwitterProfileUrl('twitter')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Instagram Link" name="instagram" rules={[validatInstagramProfileUrl('instagram')]}>
+                            <Form.Item label="Instagram Link" name="instagramId" rules={[validatInstagramProfileUrl('instagram')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('instagram link')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Youtube Channel" name="youtube" rules={[validatYoutubeProfileUrl('Pincode')]}>
+                            <Form.Item label="Youtube Channel" name="youTubeChannel" rules={[validatYoutubeProfileUrl('Pincode')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('youtube channel')} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -201,19 +206,22 @@ const AddEditForm = (props) => {
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item valuePropName="checked" name="defaultaddress">
+                            <Form.Item valuePropName="checked" name="defaultContactIndicator">
                                 <Checkbox>Mark As Default</Checkbox>
                             </Form.Item>
                         </Col>
+                        <Form.Item hidden name="docId">
+                            <Input  />
+                        </Form.Item>
                     </Row>
-                    <Row gutter={20} justify="left">
+                    <Space>
                         <Button htmlType="submit" type="primary">
                             Save
                         </Button>
                         <Button onClick={handleCancelFormEdit} danger>
                             Cancel
                         </Button>
-                    </Row>
+                    </Space>
                 </Space>
             </Form>
         </>

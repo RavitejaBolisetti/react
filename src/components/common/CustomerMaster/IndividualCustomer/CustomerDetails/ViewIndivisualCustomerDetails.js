@@ -1,6 +1,7 @@
 import React from 'react';
 import { Space, Typography, Descriptions, Card, Divider } from 'antd';
 import { FaRegUserCircle } from 'react-icons/fa';
+import styles from 'components/common/Common.module.css';
 
 
 const { Text } = Typography;
@@ -16,7 +17,7 @@ const ViewDetailMain = (props) => {
     const customerForm = {
         mobileNumber: '8707023991',
         customerType: 'Individual',
-        title:'Mr.',
+        title: 'Mr.',
         firstName: 'Arvind',
         middleName: 'Pal',
         lastName: 'Singh',
@@ -31,7 +32,7 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Card
                     header={
