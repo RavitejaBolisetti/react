@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form } from 'antd';
+
 import { AddEditForm } from './AddEditForm';
-import { bindActionCreators } from 'redux';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { familyDetailsDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetails';
@@ -49,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const FamilyDetailsBase = (props) => {
-    const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification,isFamilyLoading } = props;
+    const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, isFamilyLoading } = props;
     const [familyForm] = Form.useForm();
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -108,19 +109,9 @@ const FamilyDetailsBase = (props) => {
     const onFamilyFinish = () => {
         const onSuccess = (res) => {
             familyForm.resetFields();
-            //setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId });
-
-            // setButtonData({ ...buttonData, formBtnActive: false });
-            // if (buttonData?.saveAndNewBtnClicked) {
-            //     setIsFormVisible(true);
-            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            // } else {
-            //     setIsFormVisible(false);
-            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            // }
         };
 
         const onError = (message) => {
@@ -134,8 +125,6 @@ const FamilyDetailsBase = (props) => {
             onError,
             onSuccess,
         };
-
-        console.log(requestData,'Final Submit')
 
         saveData(requestData);
     };

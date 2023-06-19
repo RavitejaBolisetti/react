@@ -25,7 +25,6 @@ const ViewDetailBase = (props) => {
 
                         <Descriptions.Item label="Date of Birth">
                             {props?.dateOfBirth?.$D}-{props?.dateOfBirth?.$M}-{props?.dateOfBirth?.$y}
-                            {/* {props?.dateOfBirth} */}
                         </Descriptions.Item>
 
                         <Descriptions.Item label="Age">{props?.relationAge}</Descriptions.Item>
