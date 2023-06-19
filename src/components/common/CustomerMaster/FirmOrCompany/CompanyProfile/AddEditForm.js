@@ -23,11 +23,17 @@ const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlin
 const AddEditForm = ({ form, isVisible, onCloseAction, onFinish, onFinishFailed, setisVisible, isViewModeVisible, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable, formActionType, customerMasterBtnProps }) => {
     const [companyInfoform] = Form.useForm();
     const [uploadCustomerForm] = Form.useForm();
+    const [socialProfileForm] = Form.useForm();
+    const [keyDetailForm] = Form.useForm();
+    const [authorityForm] = Form.useForm();
     const [done, setDone] = useState();
     const [activeKey, setactiveKey] = useState([1]);
 
     const [FinalFormData, setFinalFormData] = useState({
         companyInfoform: [],
+        socialProfileForm: [],
+        keyDetailForm: [],
+        authorityForm: [],
         uploadCustomerForm: [],
     });
 
@@ -271,7 +277,7 @@ const AddEditForm = ({ form, isVisible, onCloseAction, onFinish, onFinishFailed,
                                         }
                                     >
                                         <Divider />
-                                        <Form form={form} layout="vertical">
+                                        <Form form={socialProfileForm} layout="vertical">
                                             <Row gutter={20}>
                                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                     <Form.Item label="M1-MMFSL" initialValue={formData?.mmfsl} name="mmfsl">
@@ -308,7 +314,7 @@ const AddEditForm = ({ form, isVisible, onCloseAction, onFinish, onFinishFailed,
                                         }
                                     >
                                         <Divider />
-                                        <Form form={form} layout="vertical">
+                                        <Form form={keyDetailForm} layout="vertical">
                                             <Row gutter={20}>
                                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                     <Form.Item label="Account Code" initialValue={formData?.keyAccountDetails.accountCode} name="keyAccountDetails.accountCode">
@@ -357,7 +363,7 @@ const AddEditForm = ({ form, isVisible, onCloseAction, onFinish, onFinishFailed,
                                         }
                                     >
                                         <Divider />
-                                        <Form form={form} layout="vertical">
+                                        <Form form={authorityForm} layout="vertical">
                                             <Row gutter={20}>
                                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                     <Form.Item label="Name Of Person" initialValue={formData?.authorityRequest.personName} name="authorityRequest.personName" rules={[validateRequiredInputField('authorityRequest.personName')]}>
@@ -452,7 +458,7 @@ const AddEditForm = ({ form, isVisible, onCloseAction, onFinish, onFinishFailed,
                                         </Button>
                                     </Col>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Button type="primary" onClick={onFinish} className={styles.floatRight}>
+                                        <Button type="primary" htmlType="submit" className={styles.floatRight}>
                                             Save & Proceed
                                         </Button>
                                     </Col>

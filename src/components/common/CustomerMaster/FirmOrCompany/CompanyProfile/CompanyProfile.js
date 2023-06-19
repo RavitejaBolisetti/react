@@ -66,7 +66,8 @@ const CompanyProfileBase = ({ listShowLoading, saveData, formActionType, userId,
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAppCategoryDataLoaded]);
 
-    const onFinish = (values, e) => {
+    const onFinish = (values) => {
+        console.log('values', values);
         const recordId = formData?.id || '';
         const data = { ...values, id: recordId };
 
