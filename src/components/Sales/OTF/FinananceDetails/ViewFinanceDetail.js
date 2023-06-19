@@ -12,13 +12,13 @@ const ViewDetailMain = (props) => {
     const financeForm = {
         financier: 'HDFC',
         branch: 'Noida',
-        filenumber: 'FA12123',
-        loanamoount: '1500000',
+        fileNumber: 'FA12123',
+        loanAmount: '1500000',
         emi: '60',
-        financedone: 'Yes',
-        dorecived: 'Yes',
-        donumber: '121121212123',
-        dodate: '12/09/2022',
+        financeDone: 'Yes',
+        doReceived: 'Yes',
+        doNumber: '121121212123',
+        doDate: '12/09/2022',
     };
 
     return (
@@ -26,13 +26,13 @@ const ViewDetailMain = (props) => {
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Financier">{financeForm?.financier}</Descriptions.Item>
                 <Descriptions.Item label="Branch">{financeForm?.branch}</Descriptions.Item>
-                <Descriptions.Item label="File Number">{financeForm?.filenumber}</Descriptions.Item>
-                <Descriptions.Item label="Loan Amount">{financeForm?.loanamoount}</Descriptions.Item>
+                <Descriptions.Item label="File Number">{financeForm?.fileNumber}</Descriptions.Item>
+                <Descriptions.Item label="Loan Amount">{financeForm?.loanAmount}</Descriptions.Item>
                 <Descriptions.Item label="EMI">{financeForm?.emi}</Descriptions.Item>
-                <Descriptions.Item label="Finance Done">{financeForm?.financedone}</Descriptions.Item>
-                <Descriptions.Item label="D.O. Recived">{financeForm?.dorecived}</Descriptions.Item>
-                <Descriptions.Item label="D.O. Number">{financeForm?.donumber}</Descriptions.Item>
-                <Descriptions.Item label="D.O. Date">{financeForm?.dodate}</Descriptions.Item>
+                <Descriptions.Item label="Finance Done">{financeForm?.financeDone}</Descriptions.Item>
+                <Descriptions.Item label="D.O. Recived">{financeForm?.doReceived}</Descriptions.Item>
+                <Descriptions.Item label="D.O. Number">{financeForm?.doNumber}</Descriptions.Item>
+                <Descriptions.Item label="D.O. Date">{financeForm?.doDate}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

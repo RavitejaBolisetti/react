@@ -58,7 +58,7 @@ const AddEditFormMain = (props) => {
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="File Number" name="filenumber" data-testid="usageCategorization">
+                                            <Form.Item label="File Number" name="fileNumber" data-testid="usageCategorization">
                                                 <Input placeholder={preparePlaceholderText('file number')}></Input>
                                             </Form.Item>
                                         </Col>
@@ -66,7 +66,7 @@ const AddEditFormMain = (props) => {
 
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Loan Amount" name="loanamoount" data-testid="usageCategorization">
+                                            <Form.Item label="Loan Amount" name="loanAmount" data-testid="usageCategorization">
                                                 <Input placeholder={preparePlaceholderText('loan amount')}></Input>
                                             </Form.Item>
                                         </Col>
@@ -76,7 +76,7 @@ const AddEditFormMain = (props) => {
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Finance Done" name="financedone" data-testid="CustomerCategory">
+                                            <Form.Item label="Finance Done" name="financeDone" data-testid="CustomerCategory">
                                                 <Select disabled={false} loading={false} placeholder="Select" allowClear>
                                                     <Option value="financedone1">Yes</Option>
                                                     <Option value="financedone2">No</Option>
@@ -86,24 +86,23 @@ const AddEditFormMain = (props) => {
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="D.O. Recived" name="dorecived" data-testid="CustomerCategory">
+                                            <Form.Item label="D.O. Recived" name="doReceived" data-testid="CustomerCategory">
                                                 <Select disabled={false} loading={false} placeholder="Select" allowClear onChange={handleDOChange}>
                                                     <Option value="dorecived1">Yes</Option>
                                                     <Option value="dorecived2">No</Option>
-                                                    <Option value="dorecived3">NA</Option>
                                                 </Select>
                                             </Form.Item>
                                         </Col>
                                         {selected === 'dorecived1' && (
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="D.O. Number" name="donumber" data-testid="customerType">
+                                                <Form.Item label="D.O. Number" name="doNumber" data-testid="customerType">
                                                     <Input placeholder={preparePlaceholderText('d.o. number')}></Input>
                                                 </Form.Item>
                                             </Col>
                                         )}
                                         {selected === 'dorecived1' && (
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item label="D.O. Date" name="dodate" data-testid="CustomerCategory">
+                                                <Form.Item label="D.O. Date" name="doDate" data-testid="CustomerCategory">
                                                     <DatePicker placeholder={preparePlaceholderSelect('date')} style={datePickerStyle} disabledDate={(date) => date > dayjs()} />
                                                 </Form.Item>
                                             </Col>
