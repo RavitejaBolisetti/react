@@ -6,6 +6,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { otfLoyaltySchemeDataActions } from 'store/actions/data/otf/loyaltyAndScheme';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { CardSkeleton } from 'components/common/Skeleton';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -91,9 +92,15 @@ const LoyaltySchemeMasterMain = (props) => {
         isLoyaltySchemeDataLoaded,
     };
     return (
-        <div className={styles.drawerCustomerMaster}>
-            <AddEditForm {...LoyaltySchemeMasterProps} />
-        </div>
+        <>
+            {isLoyaltySchemeDataLoaded ? (
+                <div className={styles.drawerCustomerMaster}>
+                    <AddEditForm {...LoyaltySchemeMasterProps} />
+                </div>
+            ) : (
+                <CardSkeleton />
+            )}
+        </>
     );
 };
 export const LoyaltySchemeMaster = connect(mapStateToProps, mapDispatchToProps)(LoyaltySchemeMasterMain);

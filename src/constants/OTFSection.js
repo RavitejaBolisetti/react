@@ -31,9 +31,9 @@ export const OTF_SECTION = {
         id: 8,
         title: 'Referrals',
     },
-    LOYALITY_SCHEME: {
+    LOYALTY_SCHEME: {
         id: 9,
-        title: 'Loyality scheme',
+        title: 'Loyalty Scheme',
     },
     INVOICE_INFORMATION: {
         id: 10,
