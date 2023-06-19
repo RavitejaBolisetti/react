@@ -56,6 +56,8 @@ const CompanyProfileBase = ({ listShowLoading, saveData }) => {
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
+    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
@@ -105,6 +107,8 @@ const CompanyProfileBase = ({ listShowLoading, saveData }) => {
     const formProps = {
         handleButtonClick,
         onFinish,
+        isViewModeVisible,
+        setIsViewModeVisible,
     };
 
     return (
