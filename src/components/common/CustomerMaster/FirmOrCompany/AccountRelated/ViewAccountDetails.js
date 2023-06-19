@@ -1,6 +1,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 import { CheckSquareOutlined, CloseOutlined } from '@ant-design/icons';
+import styles from 'components/common/Common.module.css';
 
 const ViewDetailBase = (props) => {
     const { styles, formData } = props;
@@ -19,7 +20,7 @@ const ViewDetailBase = (props) => {
         }
     };
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={styles.viewDrawerContainer}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Credit Limit">{formData?.creditAmount}</Descriptions.Item>

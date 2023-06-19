@@ -101,8 +101,6 @@ export const AccountRelatedBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isLoaded]);
 
- 
-
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
@@ -196,7 +194,7 @@ export const AccountRelatedBase = (props) => {
 
     return (
         <>
-            {!isViewModeVisible ? (
+            {!formActionType?.viewMode ? (
                 <Space direction="vertical" size="small" style={{ display: 'flex' }}>
                     <Card style={{ backgroundColor: '#F2F2F2' }}>
                         <AddEditForm {...formProps} />

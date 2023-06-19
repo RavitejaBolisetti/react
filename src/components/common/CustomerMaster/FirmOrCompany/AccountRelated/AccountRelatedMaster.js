@@ -17,7 +17,6 @@ import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewAccountDetails';
 import { AddEditForm } from './AddEditForm';
 
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -57,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AccountRelatedBase = (props) => {
-    const { saveData, fetchList, userId, listShowLoading, isViewModeVisible, isLoaded, data, showGlobalNotification, moduleTitle } = props;
+    const { saveData, fetchList, userId, listShowLoading, isLoaded, data, showGlobalNotification, moduleTitle } = props;
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [refershData, setRefershData] = useState(false);
@@ -121,7 +120,6 @@ export const AccountRelatedBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
 
@@ -197,7 +195,7 @@ export const AccountRelatedBase = (props) => {
 
     return (
         <>
-            {!isViewModeVisible ? (
+            {!formActionType?.viewMode ? (
                 <Space direction="vertical" size="small" style={{ display: 'flex' }}>
                     <Card style={{ backgroundColor: '#F2F2F2' }}>
                         <AddEditForm {...formProps} />
