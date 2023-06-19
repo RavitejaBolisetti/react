@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { InvoiceDetail } from './invoiceDetails';
+import { InvoiceDetail } from './invoiceDetail';
 import { FinanceDetail } from './financeDetail';
 import { OtfDetails } from './otfDetails';
 
