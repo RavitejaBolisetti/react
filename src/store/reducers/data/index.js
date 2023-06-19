@@ -49,6 +49,6 @@ export const data = combineReducers({
     LessorCompanyMaster,
     OtfReports,
     OTF,
-    SupportingDocument,
     CustomerMaster,
+    SupportingDocument,
 });

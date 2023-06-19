@@ -4,7 +4,7 @@ import { CheckSquareOutlined, CloseOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
 
 const ViewDetailBase = (props) => {
-    const { styles } = props;
+    const { styles, formData } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -12,34 +12,25 @@ const ViewDetailBase = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
 
-    const formData = {
-        limitAmt: '2100000',
-        limitDays: '80',
-        outstandingAmt: '1700000',
-        partsDiscount: '30',
-        laborDiscount: '25',
-        remarks: 'Loren Ispum Dummy Text 1',
-        vipDealerInd: true,
-    };
-
     const renderCheckbox = (value) => {
         if (value) {
-            return <CheckSquareOutlined style={{ color: 'red' }} />;
+            return <CheckSquareOutlined />;
         } else {
-            return <CloseOutlined style={{ color: 'green' }} />;
+            return;
         }
     };
     return (
         <div className={styles.viewDrawerContainer}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Credit Limit">{formData?.limitAmt}</Descriptions.Item>
-                    <Descriptions.Item label="Credit Limit Days">{formData?.limitDays}</Descriptions.Item>
+                    <Descriptions.Item label="Credit Limit">{formData?.creditAmount}</Descriptions.Item>
+                    <Descriptions.Item label="Credit Limit Days">{formData?.creditDays}</Descriptions.Item>
                     <Descriptions.Item label="Outstanding Amount">{formData?.outstandingAmt}</Descriptions.Item>
                     <Descriptions.Item label="Parts Discount">{formData?.partsDiscount}</Descriptions.Item>
-                    <Descriptions.Item label="Labour Discount">{formData?.laborDiscount}</Descriptions.Item>
+                    <Descriptions.Item label="Labour Discount">{formData?.labourDiscount}</Descriptions.Item>
                     <Descriptions.Item label="Remarks">{formData?.remarks}</Descriptions.Item>
-                    <Descriptions.Item label="VIP Dealer">{renderCheckbox(formData?.vipDealerInd)}</Descriptions.Item>
+                    {/* <Descriptions.Item label="VIP Dealer">{renderCheckbox(formData?.vipDealerInd)}</Descriptions.Item> */}
+                    <div> {renderCheckbox(formData?.vipDealerInd)}VIP Dealer</div>
                 </Descriptions>
             </>
         </div>
