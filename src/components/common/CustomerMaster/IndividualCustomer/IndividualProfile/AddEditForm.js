@@ -1,4 +1,4 @@
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Empty } from 'antd';
+import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Empty } from 'antd';
 import { useEffect, useState } from 'react';
 import Svg from 'assets/images/Filter.svg';
 
@@ -18,54 +18,15 @@ const { Text } = Typography;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { formActionType } = props;
+    const { formActionType, onIndiviualFinish, individualForm, indiviualData, onFieldsChange } = props;
     const { isReadOnly = false } = props;
-    const [individualForm] = Form.useForm();
     const [uploadCustomerForm] = Form.useForm();
-    const [FinalFormData, setFinalFormData] = useState({
-        individualForm: [],
-        uploadCustomerForm: [],
-    });
-    const [individualFormValues, setIndividualFormValues] = useState();
-    const [uploadCustomerFormValues, setUploadCustomerFormValues] = useState();
+
     const [done, setDone] = useState();
     const [customer, setCustomer] = useState(false);
 
-    useEffect(() => {
-        setFinalFormData({ ...FinalFormData, individualForm: individualFormValues, uploadCustomerForm: uploadCustomerFormValues });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [done]);
-
     const [activeKey, setactiveKey] = useState([1]);
 
-    const onFinish = () => {
-        const individualFormValues = individualForm.getFieldsValue();
-
-        const uploadCustomerFormValues = uploadCustomerForm.getFieldsValue();
-
-        individualForm
-            .validateFields()
-            .then(() => {
-                uploadCustomerForm
-                    .validateFields()
-                    .then(() => {
-                        setIndividualFormValues(individualFormValues);
-                        setUploadCustomerFormValues(uploadCustomerFormValues);
-                        setDone(!done);
-                    })
-                    .catch(() => {
-                        console.log('error');
-                        setactiveKey([3]);
-                    });
-            })
-            .catch(() => {
-                setactiveKey([1]);
-            });
-    };
-    const onFinishFailed = () => {
-        individualForm.validateFields();
-        uploadCustomerForm.validateFields();
-    };
     const onCustomerCategoryChange = (values) => {
         setCustomer(values);
     };
@@ -121,31 +82,30 @@ const AddEditForm = (props) => {
     return (
         <>
             {!formActionType?.viewMode ? (
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Space direction="vertical" size="small" className={styles.accordianContainer}>
-                            <Collapse
-                                expandIcon={() => {
-                                    if (activeKey.includes(1)) {
-                                        return <MinusOutlined className={styles.iconsColor} />;
-                                    } else {
-                                        return <PlusOutlined className={styles.iconsColor} />;
-                                    }
-                                }}
-                                activeKey={activeKey}
-                                onChange={() => onChange(1)}
-                                expandIconPosition="end"
-                            >
-                                <Panel
-                                    header={
-                                        <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                            Individual Information
-                                        </Text>
-                                    }
-                                    key="1"
+                <Form autoComplete="off" id="form" layout="vertical" form={individualForm} onFieldsChange={onFieldsChange} onFinishFailed={onIndiviualFinish}>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Space direction="vertical" size="small" className={styles.accordianContainer}>
+                                <Collapse
+                                    expandIcon={() => {
+                                        if (activeKey.includes(1)) {
+                                            return <MinusOutlined className={styles.iconsColor} />;
+                                        } else {
+                                            return <PlusOutlined className={styles.iconsColor} />;
+                                        }
+                                    }}
+                                    activeKey={activeKey}
+                                    onChange={() => onChange(1)}
+                                    expandIconPosition="end"
                                 >
-                                    <Divider />
-                                    <Form autoComplete="off" layout="vertical" form={individualForm} onFinishFailed={onFinishFailed}>
+                                    <Panel
+                                        header={
+                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                                Individual Information
+                                            </Text>
+                                        }
+                                        key="1"
+                                    >
                                         <Row gutter={16}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                 <div className={styles.uploadDragger}>
@@ -356,32 +316,29 @@ const AddEditForm = (props) => {
                                                 </Row>
                                             </>
                                         )}
-                                    </Form>
-                                </Panel>
-                            </Collapse>
+                                    </Panel>
+                                </Collapse>
 
-                            <Collapse
-                                expandIcon={() => {
-                                    if (activeKey.includes(2)) {
-                                        return <MinusOutlined className={styles.iconsColor} />;
-                                    } else {
-                                        return <PlusOutlined className={styles.iconsColor} />;
-                                    }
-                                }}
-                                activeKey={activeKey}
-                                onChange={() => onChange(2)}
-                                expandIconPosition="end"
-                            >
-                                <Panel
-                                    header={
-                                        <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                            Social Profile
-                                        </Text>
-                                    }
-                                    key="2"
+                                <Collapse
+                                    expandIcon={() => {
+                                        if (activeKey.includes(2)) {
+                                            return <MinusOutlined className={styles.iconsColor} />;
+                                        } else {
+                                            return <PlusOutlined className={styles.iconsColor} />;
+                                        }
+                                    }}
+                                    activeKey={activeKey}
+                                    onChange={() => onChange(2)}
+                                    expandIconPosition="end"
                                 >
-                                    <Divider />
-                                    <Form autoComplete="off" layout="vertical" form={uploadCustomerForm}>
+                                    <Panel
+                                        header={
+                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                                Social Profile
+                                            </Text>
+                                        }
+                                        key="2"
+                                    >
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="M1-MMFSL" name="mmfsl">
@@ -420,31 +377,28 @@ const AddEditForm = (props) => {
                                                 </Form.Item>
                                             </Col>
                                         </Row>
-                                    </Form>
-                                </Panel>
-                            </Collapse>
-                            <Collapse
-                                expandIcon={() => {
-                                    if (activeKey.includes(3)) {
-                                        return <MinusOutlined className={styles.iconsColor} />;
-                                    } else {
-                                        return <PlusOutlined className={styles.iconsColor} />;
-                                    }
-                                }}
-                                activeKey={activeKey}
-                                onChange={() => onChange(3)}
-                                expandIconPosition="end"
-                            >
-                                <Panel
-                                    header={
-                                        <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                            Key Account details
-                                        </Text>
-                                    }
-                                    key="3"
+                                    </Panel>
+                                </Collapse>
+                                <Collapse
+                                    expandIcon={() => {
+                                        if (activeKey.includes(3)) {
+                                            return <MinusOutlined className={styles.iconsColor} />;
+                                        } else {
+                                            return <PlusOutlined className={styles.iconsColor} />;
+                                        }
+                                    }}
+                                    activeKey={activeKey}
+                                    onChange={() => onChange(3)}
+                                    expandIconPosition="end"
                                 >
-                                    <Divider />
-                                    <Form autoComplete="off" layout="vertical" form={uploadCustomerForm}>
+                                    <Panel
+                                        header={
+                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                                Key Account details
+                                            </Text>
+                                        }
+                                        key="3"
+                                    >
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Account Code" name="accountCode" initialValue={'CFG464787'}>
@@ -477,31 +431,28 @@ const AddEditForm = (props) => {
                                                 </Form.Item>
                                             </Col>
                                         </Row>
-                                    </Form>
-                                </Panel>
-                            </Collapse>
-                            <Collapse
-                                expandIcon={() => {
-                                    if (activeKey.includes(4)) {
-                                        return <MinusOutlined className={styles.iconsColor} />;
-                                    } else {
-                                        return <PlusOutlined className={styles.iconsColor} />;
-                                    }
-                                }}
-                                activeKey={activeKey}
-                                onChange={() => onChange(4)}
-                                expandIconPosition="end"
-                            >
-                                <Panel
-                                    header={
-                                        <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                            Authority Details (Who Knowns Whom)
-                                        </Text>
-                                    }
-                                    key="4"
+                                    </Panel>
+                                </Collapse>
+                                <Collapse
+                                    expandIcon={() => {
+                                        if (activeKey.includes(4)) {
+                                            return <MinusOutlined className={styles.iconsColor} />;
+                                        } else {
+                                            return <PlusOutlined className={styles.iconsColor} />;
+                                        }
+                                    }}
+                                    activeKey={activeKey}
+                                    onChange={() => onChange(4)}
+                                    expandIconPosition="end"
                                 >
-                                    <Divider />
-                                    <Form autoComplete="off" layout="vertical" form={uploadCustomerForm}>
+                                    <Panel
+                                        header={
+                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                                Authority Details (Who Knowns Whom)
+                                            </Text>
+                                        }
+                                        key="4"
+                                    >
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Name of Person" name="personName">
@@ -528,59 +479,58 @@ const AddEditForm = (props) => {
                                                 </Form.Item>
                                             </Col>
                                         </Row>
-                                    </Form>
-                                </Panel>
-                            </Collapse>
+                                    </Panel>
+                                </Collapse>
 
-                            <Collapse
-                                expandIcon={() => {
-                                    if (activeKey.includes(5)) {
-                                        return <MinusOutlined className={styles.iconsColor} />;
-                                    } else {
-                                        return <PlusOutlined className={styles.iconsColor} />;
-                                    }
-                                }}
-                                activeKey={activeKey}
-                                onChange={() => onChange(5)}
-                                expandIconPosition="end"
-                            >
-                                <Panel
-                                    header={
-                                        <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                            Upload Customer Form
-                                        </Text>
-                                    }
-                                    key="5"
+                                <Collapse
+                                    expandIcon={() => {
+                                        if (activeKey.includes(5)) {
+                                            return <MinusOutlined className={styles.iconsColor} />;
+                                        } else {
+                                            return <PlusOutlined className={styles.iconsColor} />;
+                                        }
+                                    }}
+                                    activeKey={activeKey}
+                                    onChange={() => onChange(5)}
+                                    expandIconPosition="end"
                                 >
-                                    <Divider />
-                                    <Form autoComplete="off" layout="vertical">
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Checkbox value="customerConsent">I Consent to share my details with Mahindra & Mahindra. </Checkbox>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Dragger {...uploadProps} className={styles.uploadContainer}>
-                                                    <div>
-                                                        <img src={Svg} alt="" />
-                                                    </div>
-                                                    <div className={styles.uploadtext}>
-                                                        Click or drop your file here to upload the signed and <br /> scanned customer form.
-                                                    </div>
-                                                    <div>File type should be png, jpg or pdf and max file size to be 5Mb</div>
-                                                    <Button {...disabledProps} type="primary" style={{ marginLeft: '30px', marginTop: '16px' }}>
-                                                        Upload File
-                                                    </Button>
-                                                </Dragger>
-                                            </Col>
-                                        </Row>
-                                    </Form>
-                                </Panel>
-                            </Collapse>
-                        </Space>
-                    </Col>
-                </Row>
+                                    <Panel
+                                        header={
+                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                                Upload Customer Form
+                                            </Text>
+                                        }
+                                        key="5"
+                                    >
+                                        <Form autoComplete="off" layout="vertical">
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                    <Checkbox value="customerConsent">I Consent to share my details with Mahindra & Mahindra. </Checkbox>
+                                                </Col>
+                                            </Row>
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                    <Dragger {...uploadProps} className={styles.uploadContainer}>
+                                                        <div>
+                                                            <img src={Svg} alt="" />
+                                                        </div>
+                                                        <div className={styles.uploadtext}>
+                                                            Click or drop your file here to upload the signed and <br /> scanned customer form.
+                                                        </div>
+                                                        <div>File type should be png, jpg or pdf and max file size to be 5Mb</div>
+                                                        <Button {...disabledProps} type="primary" style={{ marginLeft: '30px', marginTop: '16px' }}>
+                                                            Upload File
+                                                        </Button>
+                                                    </Dragger>
+                                                </Col>
+                                            </Row>
+                                        </Form>
+                                    </Panel>
+                                </Collapse>
+                            </Space>
+                        </Col>
+                    </Row>
+                </Form>
             ) : (
                 <ViewDetail {...viewProps} />
             )}
