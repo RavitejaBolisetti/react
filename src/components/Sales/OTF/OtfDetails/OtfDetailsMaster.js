@@ -50,7 +50,7 @@ const OtfDetailsMasterBase = (props) => {
     
     const [form] = Form.useForm();
     
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState(otfData);
 
     const extraParams = [
         {
@@ -72,18 +72,21 @@ const OtfDetailsMasterBase = (props) => {
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
-            setFormData(otfData)
         }
+        setFormData(otfData)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
-    const onFinish = () => {};
+    const onFinish = (values) => {
+        console.log("values",values)
+    };
 
     const onFinishFailed = () => {};
 
     const formProps = {
         ...props,
         form,
+        formData,
         onFinish,
         onFinishFailed,
         fetchList,
