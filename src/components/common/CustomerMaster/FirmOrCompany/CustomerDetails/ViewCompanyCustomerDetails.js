@@ -1,8 +1,7 @@
 import React from 'react';
 import { Card, Descriptions, Divider } from 'antd';
-import { Col, Row, Button, Space, Collapse, Typography } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { FaRegUserCircle } from 'react-icons/fa';
+import { Space, Collapse, Typography } from 'antd';
+
 
 const { Panel } = Collapse;
 const { Text } = Typography;

@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 
 import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button } from 'antd';
 
@@ -10,8 +9,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ViewIndivisualCustomerDetails } from './ViewIndivisualCustomerDetails';
 
 import styles from 'components/common/Common.module.css';
-import { memberShip, title } from 'constants/modules/CustomerMaster/individualProfile';
-import { PARAM_MASTER } from 'constants/paramMaster';
+
 
 const { Text } = Typography;
 const { Option } = Select;
