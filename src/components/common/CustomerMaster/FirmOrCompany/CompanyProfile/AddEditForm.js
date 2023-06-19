@@ -20,10 +20,7 @@ const { TextArea } = Input;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 
-const AddEditForm = (props) => {
-    const { form, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable } = props;
-    const { onCloseAction, isViewModeVisible, setIsViewModeVisible } = props;
-    const { onFinish } = props;
+const AddEditForm = ({ form, isVisible, onCloseAction, onFinish,setisVisible, isViewModeVisible, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable ,formActionType}) => {
     const [companyInfoform] = Form.useForm();
     const [uploadCustomerForm] = Form.useForm();
     const [done, setDone] = useState();
@@ -67,7 +64,7 @@ const AddEditForm = (props) => {
     };
 
     const handleEdit = () => {
-        setIsViewModeVisible(false);
+        // setIsViewModeVisible(false);
     };
 
     const uploadProps = {
@@ -103,9 +100,7 @@ const AddEditForm = (props) => {
     };
     return (
         <>
-            {/* <Form autoComplete="off" form={form} id="myForm" layout="vertical" onFinish={onFinish}> */}
-            {/* onFinishFailed={onFinishFailed} onFieldsChange={handleFormFieldChange} */}
-            {!isViewModeVisible ? (
+            {!formActionType?.viewMode ? (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space style={{ display: 'flex' }} direction="vertical" size="middle" className={style.accordianContainer}>

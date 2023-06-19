@@ -175,7 +175,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Row gutter={0}>
+            <Row gutter={0}> 
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

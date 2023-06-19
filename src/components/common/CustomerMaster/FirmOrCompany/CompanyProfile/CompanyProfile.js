@@ -111,12 +111,7 @@ const CompanyProfileBase = ({ listShowLoading, saveData }) => {
         setIsViewModeVisible,
     };
 
-    return (
-        <>
-            <h2>Company Profile</h2>
-            <AddEditForm {...formProps} />
-        </>
-    );
+    return <AddEditForm {...formProps} />;
 };
 
 export const CompanyProfile = connect(mapStateToProps, mapDispatchToProps)(CompanyProfileBase);
