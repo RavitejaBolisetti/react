@@ -19,7 +19,7 @@ const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={18} /> : <SlAr
 const AddEditFormMain = (props) => {
     const { onCloseAction, formData } = props;
     const { isViewModeVisible, setIsViewModeVisible, formActionType } = props;
-    const { toggleButton, settoggleButton } = props;
+    const { customerType, setCustomerType } = props;
     const [moduleName, setmoduleName] = useState('Customer Details');
     const [leftTimeline, setleftTimeline] = useState({
         CustomerDetails: true,
@@ -35,8 +35,8 @@ const AddEditFormMain = (props) => {
     const TimelineProps = {
         leftTimeline,
         setleftTimeline,
-        toggleButton,
-        settoggleButton,
+        customerType,
+        setCustomerType,
         setmoduleName,
         moduleName,
     };
@@ -59,12 +59,12 @@ const AddEditFormMain = (props) => {
         onCloseAction,
         isViewModeVisible,
         setIsViewModeVisible,
-        toggleButton,
+        customerType,
         styles,
     };
 
     const renderElement = () => {
-        switch (toggleButton) {
+        switch (customerType) {
             case 'Individual': {
                 switch (moduleName) {
                     case 'Customer Details': {

@@ -87,13 +87,13 @@ const CustomerMasterMain = (props) => {
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-    const [toggleButton, settoggleButton] = useState('Individual');
+    const [customerType, setCustomerType] = useState('Individual');
 
     const extraParams = [
         {
             key: 'customerType',
             title: 'Customer Type',
-            value: toggleButton,
+            value: customerType,
             canRemove: true,
         },
         {
@@ -124,12 +124,12 @@ const CustomerMasterMain = (props) => {
     }, [isConfigDataLoaded, userId]);
 
     useEffect(() => {
-        if (userId && toggleButton) {
+        if (userId && customerType) {
             fetchList({ setIsLoading: listShowLoading, extraParams, userId });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [toggleButton, userId]);
+    }, [customerType, userId]);
 
     useEffect(() => {
         if (refershData && userId) {
@@ -205,7 +205,7 @@ const CustomerMasterMain = (props) => {
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
         tableData: data,
-        toggleButton,
+        customerType,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -229,10 +229,10 @@ const CustomerMasterMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.searchAndLabelAlign}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                    <Button className={styles.marR5} type={toggleButton === 'Individual' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Individual')}>
+                                    <Button className={styles.marR5} type={customerType === 'Individual' ? 'primary' : 'link'} danger onClick={() => setCustomerType('Individual')}>
                                         Individual
                                     </Button>
-                                    <Button type={toggleButton === 'Firm/Company' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Firm')}>
+                                    <Button type={customerType === 'Firm' ? 'primary' : 'link'} danger onClick={() => setCustomerType('Firm')}>
                                         Firm/Company
                                     </Button>
                                 </div>
