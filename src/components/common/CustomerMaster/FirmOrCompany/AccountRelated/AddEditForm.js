@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React } from 'react';
 import { Row, Col, Form, Input, Checkbox, Button } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -7,10 +7,8 @@ import { validateNumberWithTwoDecimalPlaces, validationNumber, valueBetween0to10
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, onFinish, onFinishFailed } = props;
+    const { form, formData, onFinish, onFinishFailed } = props;
     const { buttonData, setButtonData } = props;
-
-    const { setIsViewModeVisible } = props;
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -18,16 +16,6 @@ const AddEditFormMain = (props) => {
 
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
-    };
-
-    const handleEdit = () => {
-        setIsViewModeVisible(false);
-    };
-
-    const viewProps = {
-        onCloseAction,
-        handleEdit,
-        formData,
     };
 
     return (

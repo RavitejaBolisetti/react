@@ -17,7 +17,6 @@ import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewAccountDetails';
 import { AddEditForm } from './AddEditForm';
 
-import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
     const {
@@ -61,15 +60,12 @@ export const AccountRelatedBase = (props) => {
     const { saveData, fetchList, userId, listShowLoading, isViewModeVisible, isLoaded, data, showGlobalNotification, moduleTitle } = props;
 
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
 
     const [form] = Form.useForm();
 
     const [formData, setFormData] = useState([]);
-    const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -107,11 +103,6 @@ export const AccountRelatedBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isLoaded]);
 
-    const handleReferesh = () => {
-        setShowDataLoading(true);
-        setRefershData(!refershData);
-    };
-
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
@@ -131,7 +122,6 @@ export const AccountRelatedBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            // fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
 

@@ -1,33 +1,3 @@
-// import { AddEditForm } from './AddEditForm';
-// import { ViewDetail } from '../../IndividualCustomer/AccountRelated/ViewIndividualAccountDetails';
-// import styles from 'components/common/Common.module.css';
-
-// const AccountRelatedBase = (props) => {
-//     const { onCloseAction, isViewModeVisible } = props;
-
-//     const viewProps = {
-//         styles,
-//     };
-
-//     return (
-//         <>
-//             {!isViewModeVisible ? (
-//                 <Space direction="vertical" size="small" style={{ display: 'flex' }}>
-//                     <Card style={{ backgroundColor: '#F2F2F2' }}>
-//                         <AddEditForm {...props} />
-//                     </Card>
-//                 </Space>
-//             ) : (
-//                 <Card style={{ backgroundColor: '#F2F2F2' }}>
-//                     <ViewDetail {...viewProps} />
-//                 </Card>
-//             )}
-//         </>
-//     );
-// };
-
-// export const IndividualAccountRelatedMaster = AccountRelatedBase;
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Space, Form, Card } from 'antd';
@@ -93,7 +63,6 @@ export const AccountRelatedBase = (props) => {
     const [form] = Form.useForm();
 
     const [formData, setFormData] = useState([]);
-    const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
@@ -132,10 +101,7 @@ export const AccountRelatedBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isLoaded]);
 
-    const handleReferesh = () => {
-        setShowDataLoading(true);
-        setRefershData(!refershData);
-    };
+ 
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
@@ -155,7 +121,6 @@ export const AccountRelatedBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
 
