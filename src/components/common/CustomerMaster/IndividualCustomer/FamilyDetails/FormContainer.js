@@ -42,11 +42,17 @@ const FormBase = (props) => {
                 </Col>
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={null} label="Customer ID" name="customerId">
+                        <Form.Item initialValue={'CUS1686811036620'} label="Customer ID" name="customerId">
                             <Input maxLength={6} placeholder={preparePlaceholderText('Customer ID')} className={styles.inputBox} />
                         </Form.Item>
                     </Col>
-                ) : null}
+                ) : (
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                        <Form.Item initialValue={'CUS1686811036620'} label="Customer ID" name="customerId">
+                            <Input maxLength={6} placeholder={preparePlaceholderText('Customer ID')} className={styles.inputBox} />
+                        </Form.Item>
+                    </Col>
+                )}
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={null} label="Customer Name" name="customerName" rules={[validateRequiredInputField('Customer Name')]}>
@@ -55,7 +61,7 @@ const FormBase = (props) => {
                 </Col>
                 {!customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
+                        <Form.Item initialValue={null} label="Relationship" name="relationCode" rules={[validateRequiredSelectField('Relationship')]}>
                             <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear disabled={customer}>
                                 {relationData?.map((item) => (
                                     <Option key={'rel' + item?.key} value={item.key}>
@@ -71,7 +77,7 @@ const FormBase = (props) => {
             <Row gutter={20}>
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
+                        <Form.Item initialValue={null} label="Relationship" name="relationCode" rules={[validateRequiredSelectField('Relationship')]}>
                             <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear disabled={customer}>
                                 {relationData?.map((item) => (
                                     <Option key={'rel' + item?.key} value={item.key}>
@@ -83,11 +89,11 @@ const FormBase = (props) => {
                     </Col>
                 ) : null}
 
-                {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>
-                        <DatePicker format="YYYY-MM-DD" onChange={onDateChange} style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} />
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item initialValue={"2002-12-12"} label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>
+                        {/* <DatePicker format="YYYY-MM-DD" onChange={onDateChange} style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} /> */}
                     </Form.Item>
-                </Col> */}
+                </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={null} label="Age" name="relationAge" rules={[validateRequiredInputField('Age')]}>
@@ -98,13 +104,24 @@ const FormBase = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item label="Remark" name="remarks">
-                        <TextArea rows={2} maxLength={250} placeholder={preparePlaceholderText('Remark')} />
+                        <TextArea rows={2} maxLength={250} placeholder={preparePlaceholderText('Remark')} disabled={customer} />
                     </Form.Item>
                 </Col>
             </Row>
 
             <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                 <Form.Item initialValue={editedId} label="Generated ID" name="editedId" />
+            </Col>
+
+            {/* <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                <Form.Item initialValue={true} label="Generated ID" name="activeIndicator" />
+            </Col> */}
+
+            <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                <Form.Item initialValue={""} label="Generated ID" name="id" />
+            </Col>
+            <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                <Form.Item initialValue={""} label="Generated ID" name="relationCustomerId" />
             </Col>
 
             <Row style={{ display: 'flex' }}>
