@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 
+import { InvoiceDetail } from './invoiceDetails';
 import { FinanceDetail } from './financeDetail';
-import { InvoiceDetail } from './invoiceDetail';
+import { OtfDetails } from './otfDetails';
 
 export const OTF = combineReducers({
-    FinanceDetail,
     InvoiceDetail,
+    FinanceDetail,
+    OtfDetails,
 });

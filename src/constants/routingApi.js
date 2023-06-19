@@ -104,5 +104,7 @@ export const BASE_URL_TERM_CONDITION_MANUFACTURER_CHANGE_HISTORY = BASE_URL + 'a
 export const BASE_URL_OTF_REPORTS = BASE_URL + 'customreports/otf/names';
 export const BASE_URL_OTF_DOWNLAOD_REPORT = BASE_URL + 'customreports/otf/register';
 
-export const BASE_URL_OTF_INVOICE = BASE_URL + 'otf/invoice';
+export const BASE_URL_OTF = BASE_URL + 'otf/';
+export const BASE_URL_OTF_INVOICE_DETAILS = BASE_URL + 'invoice';
 export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';
+export const BASE_URL_OTF_DETAILS = BASE_URL_OTF + 'details';
