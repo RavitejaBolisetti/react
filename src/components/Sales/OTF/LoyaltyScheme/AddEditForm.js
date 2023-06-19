@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
@@ -9,10 +9,32 @@ import { Col, Input, Form, Row, Card } from 'antd';
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { formActionType, formData, form, onFinishFailed, onFinish } = props;
-
+    const { formActionType, formData, form, formdata, setformdata, onFinishFailed, onFinish } = props;
+    useEffect(() => {
+        if (formdata) {
+            form.setFieldsValue({
+                customerId: formdata?.customerCode,
+                customerName: formdata?.customerName,
+                make: formdata?.vehicleManufactureCode,
+                modelGroup: formdata?.vehicleModelCode,
+                variant: formdata?.variantDescription,
+                oldRegNumber: formdata?.registrationNumber,
+                oldChassisNumber: formdata?.oldChassisNumber,
+                dob: formdata?.customerDOB,
+                relationship: formdata?.relationCode,
+                year: formdata?.registrationYear,
+                month: formdata?.registrationMonth,
+                usage: formdata?.vehicleUsage,
+                schemeName: formdata?.schemeName,
+                schemeAmount: formdata?.schemeBase,
+                remarks: formdata?.remarks,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formdata]);
     const viewProps = {
         styles,
+        customerForm: formdata,
     };
 
     return !formActionType?.viewMode ? (
@@ -41,7 +63,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item name="modelGroup" label="Model Group" initialValue={formData?.modelGroup} rules={[validateRequiredInputField('Model Group')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Model Group')} disabled={true}/>
+                            <Input maxLength={6} placeholder={preparePlaceholderText('Model Group')} disabled={true} />
                         </Form.Item>
                     </Col>
 
@@ -81,7 +103,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item name="year" label="Year Of Registration" initialValue={formData?.year} rules={[validateRequiredInputField('Year Of Registration')]}>
-                            <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('year of registration')}  />
+                            <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('year of registration')} />
                         </Form.Item>
                     </Col>
 
@@ -101,7 +123,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item name="schemeName" label="Scheme Name" initialValue={formData?.schemeName} rules={[validateRequiredInputField('schemeName')]}>
-                            <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('scheme name')}  />
+                            <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('scheme name')} />
                         </Form.Item>
                     </Col>
 
