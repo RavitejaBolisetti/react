@@ -1,7 +1,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 
-const AccessoriesInformationCard = () => {
+const ViewDetailMain = ({ name, data }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -12,12 +12,11 @@ const AccessoriesInformationCard = () => {
     return (
         <>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Type">{'Accessories type'}</Descriptions.Item>
-                <Descriptions.Item label="Selling Price">{'4567'}</Descriptions.Item>
-                <Descriptions.Item label="MRP">{'6543'}</Descriptions.Item>
+                <Descriptions.Item label={name}>{data?.name}</Descriptions.Item>
+                <Descriptions.Item label={name + ' Rate'}>{data?.price}</Descriptions.Item>
             </Descriptions>
         </>
     );
 };
 
-export default AccessoriesInformationCard;
+export const ViewDetail = ViewDetailMain;
