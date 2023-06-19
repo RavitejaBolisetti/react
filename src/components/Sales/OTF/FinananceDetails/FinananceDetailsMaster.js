@@ -9,6 +9,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { AddEditForm } from './AddEditForm';
+import { ViewDetail } from './ViewDetail';
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -51,13 +53,12 @@ export const FinananceDetailsMasterBase = (props) => {
 
     const [form] = Form.useForm();
 
-    const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: true };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
@@ -91,12 +92,10 @@ export const FinananceDetailsMasterBase = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
-        setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
-        record && setFormData(record);
         setIsFormVisible(true);
     };
 
@@ -175,11 +174,12 @@ export const FinananceDetailsMasterBase = (props) => {
         handleButtonClick,
     };
 
-    return (
-        <>
-            <AddEditForm {...formProps} />
-        </>
-    );
+    const viewProps = {
+        formData: data,
+        styles,
+    };
+
+    return <>{formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}</>;
 };
 
 const FinananceDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(FinananceDetailsMasterBase);

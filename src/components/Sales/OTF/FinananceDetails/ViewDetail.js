@@ -9,18 +9,6 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-    // const financeForm = {
-    //     financier: 'HDFC',
-    //     branch: 'Noida',
-    //     fileNumber: 'FA12123',
-    //     loanAmount: '1500000',
-    //     emi: '60',
-    //     financeDone: 'Yes',
-    //     doReceived: 'Yes',
-    //     doNumber: '121121212123',
-    //     doDate: '12/09/2022',
-    // };
-
     return (
         <Card className={styles.drawerCardView} style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
             <Descriptions {...viewProps}>

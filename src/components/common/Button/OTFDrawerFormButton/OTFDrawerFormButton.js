@@ -1,9 +1,9 @@
 import { Button, Row, Col } from 'antd';
 import React from 'react';
 import { OTF_FORM_ACTION_TYPE } from 'constants/otfActionType';
-import styles from './DrawerFormButton.module.css';
+import styles from './OTFDrawerFormButton.module.css';
 
-const otfDrawerButtons = ({ buttonData, id = { edit: 'edit', transfer: 'transfer', cancel: 'cancelOTF', allot: 'allot', unallot: 'unallot', invoice: 'invoice', deliverynote: 'deliveryNote', Next: 'myform' }, loader, onCloseAction, handleButtonClick, formData }) => {
+const OTFDrawerFormButton = ({ buttonData, id = { edit: 'edit', transfer: 'transfer', cancel: 'cancelOTF', allot: 'allot', unallot: 'unallot', invoice: 'invoice', deliverynote: 'deliveryNote', Next: 'myform' }, loader, onCloseAction, handleButtonClick, formData }) => {
     return (
         <Row gutter={20} className={styles.formFooter}>
             <Col xs={24} sm={2} md={2} lg={2} xl={2}>
@@ -11,6 +11,7 @@ const otfDrawerButtons = ({ buttonData, id = { edit: 'edit', transfer: 'transfer
                     Close
                 </Button>
             </Col>
+
             <Col xs={24} sm={22} md={22} lg={22} xl={22} className={styles.footerBtnRight}>
                 {buttonData?.editBtn && (
                     <Button type="primary" form={id?.edit} onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.EDIT, record: formData })}>
@@ -65,4 +66,5 @@ const otfDrawerButtons = ({ buttonData, id = { edit: 'edit', transfer: 'transfer
         </Row>
     );
 };
-export const Otfbuttons = otfDrawerButtons;
+
+export default OTFDrawerFormButton;
