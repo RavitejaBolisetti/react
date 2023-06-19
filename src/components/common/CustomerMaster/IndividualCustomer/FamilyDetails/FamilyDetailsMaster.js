@@ -72,7 +72,7 @@ const FamilyDetailsBase = (props) => {
 
     useEffect(() => {
         if (userId && !isFamilyLoaded) {
-            fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, extraParams });
+            fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId,  });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isFamilyLoaded]);
