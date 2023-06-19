@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Collapse, Form, Space, Typography, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-
+import { FaRegUserCircle } from 'react-icons/fa';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import AddEditForm from './AddEditForm';
 import ViewContactList from './ViewContactList';
@@ -100,7 +100,7 @@ const ContactMain = ({ isViewModeVisible, toggleButton }) => {
     };
 
     return (
-        <Space className={styles.accordianContainer} direction="vertical" size="middle" style={{ display: 'flex' }}>
+        <>
             <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
                 <Panel
                     header={
@@ -119,7 +119,7 @@ const ContactMain = ({ isViewModeVisible, toggleButton }) => {
                     <ViewContactList {...formProps} />
                 </Panel>
             </Collapse>
-        </Space>
+        </>
     );
 };
 

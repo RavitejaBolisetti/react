@@ -1,6 +1,5 @@
 import { Button, Row, Col, Input, Select } from 'antd';
 import { FilterIcon } from 'Icons';
-import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;

@@ -27,6 +27,10 @@ export const PARAM_MASTER = {
         id: 'FAMLY_RELTN',
         title: 'FAMLY_RELTN',
     },
+    TITLE: {
+        id: 'TITLE',
+        title: 'TITLE',
+    },
     PRC_TYP: {
         id: 'PRC_TYP',
         title: 'Price Type',

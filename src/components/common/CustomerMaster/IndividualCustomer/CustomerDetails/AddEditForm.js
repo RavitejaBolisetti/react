@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Card, Divider, Switch } from 'antd';
+import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch } from 'antd';
 
 import { FaRegUserCircle } from 'react-icons/fa';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import { validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -15,11 +14,10 @@ import { memberShip, title } from 'constants/modules/CustomerMaster/individualPr
 
 const { Text } = Typography;
 const { Option } = Select;
-const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible, setIsViewModeVisible } = props;
-    
+    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, onFieldsChange, formActionType } = props;
+
     const [customerForm] = Form.useForm();
     const [keyAccountForm] = Form.useForm();
     const [authorityForm] = Form.useForm();
@@ -68,7 +66,6 @@ const AddEditFormMain = (props) => {
             });
     };
 
-
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
@@ -87,9 +84,9 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const onFinishFailed = () =>{
+    const onFinishFailed = () => {
         return;
-    }
+    };
 
     const viewProps = {
         activeKey,
@@ -102,7 +99,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            {!isViewModeVisible ? (
+            {!formActionType?.viewMode ? (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space style={{ display: 'flex' }} size="middle" direction="vertical">
@@ -116,7 +113,7 @@ const AddEditFormMain = (props) => {
                                     </div>
                                 }
                             >
-                                <Form autoComplete="off" layout="vertical" form={customerForm} onFinishFailed={onFinishFailed}>
+                                <Form id="form" onFinish={onFinish} autoComplete="off" layout="vertical" form={customerForm} onFieldsChange={onFieldsChange} onFinishFailed={onFinishFailed}>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Mobile Number" name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
@@ -133,7 +130,7 @@ const AddEditFormMain = (props) => {
                                     </Row>
                                     <Divider />
                                     <div className={styles.cardInsideBox}>
-                                        <Text style={{ fontSize:'16px'}} strong>
+                                        <Text style={{ fontSize: '16px' }} strong>
                                             Customer Name
                                         </Text>
                                         <Divider />
@@ -173,19 +170,19 @@ const AddEditFormMain = (props) => {
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Do you want to contacted over whatsapp?" name="contactedOverWhatsapp" data-testid="contactedOverWhatsapp">
+                                            <Form.Item label="Do you want to contacted over whatsapp?" name="contactOnWhatsAppAllowed" data-testid="contactedOverWhatsapp">
                                                 <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Want to use Mobile no as whatsapp no?" name="useMobileNumber" data-testid="useMobileNumber">
+                                            <Form.Item label="Want to use Mobile no as whatsapp no?" name="contactAsMobileOnWhatApp" data-testid="useMobileNumber">
                                                 <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
                                             </Form.Item>
                                         </Col>
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Whatsapp Number" name="whatsappNumber" data-testid="whatsappNumber">
+                                            <Form.Item label="Whatsapp Number" name="whatsAppNumber" data-testid="whatsappNumber">
                                                 <Input placeholder={preparePlaceholderText('whatsapp number')} />
                                             </Form.Item>
                                         </Col>

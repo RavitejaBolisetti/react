@@ -1,6 +1,7 @@
 import React from 'react';
 import { Descriptions, Button, Space } from 'antd';
 import AddEditForm from './AddEditForm';
+import styles from 'components/common/Common.module.css';
 
 const ViewDetailBase = (props) => {
     const { formData, styles, deleteContactHandeler } = props;
@@ -22,7 +23,7 @@ const ViewDetailBase = (props) => {
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={styles.viewDrawerContainer}>
             {!isEditing ? (
                 <>
                     <Descriptions {...viewProps}>

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Col, Row, Collapse, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-
-import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import styles from 'components/common/Common.module.css';
+import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 
 import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
 import { CompanyAddressMaster, CompanyProfile, CompanyContact, AccountRelatedMaster } from './FirmOrCompany';
@@ -17,10 +16,11 @@ const { Panel } = Collapse;
 const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={18} /> : <SlArrowDown size={18} />);
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, formData } = props;
-    const { isViewModeVisible, setIsViewModeVisible, formActionType } = props;
+    const { onCloseAction, formActionType, formData, onFieldsChange, buttonData, setButtonData, handleButtonClick } = props;
+    const { isViewModeVisible, setIsViewModeVisible } = props;
     const { toggleButton, settoggleButton } = props;
     const [moduleName, setmoduleName] = useState('Customer Details');
+    const [Activekey, setActivekey] = useState([1]);
     const [leftTimeline, setleftTimeline] = useState({
         CustomerDetails: true,
         IndividualProfile: false,
@@ -39,21 +39,18 @@ const AddEditFormMain = (props) => {
         settoggleButton,
         setmoduleName,
         moduleName,
+        formActionType,
     };
-    const [buttonData, setbuttonData] = useState({
-        closeBtn: true,
-        saveBtn: true,
-    });
-    const handleButtonClick = ({ buttonAction, record }) => {};
+
     const customerMasterBtnProps = {
         buttonData,
-        setbuttonData,
+        setButtonData,
         onCloseAction,
         isViewModeVisible,
         formActionType,
         handleButtonClick,
         formData,
-        saveButtonName: leftTimeline?.CustomerDetails && formActionType === 'add' ? 'Create Customer Id' : 'Save',
+        saveButtonName: leftTimeline?.CustomerDetails && formActionType?.addMode ? 'Create Customer ID' : 'Save & Proceed',
     };
     const commonModuleProps = {
         onCloseAction,
@@ -61,6 +58,8 @@ const AddEditFormMain = (props) => {
         setIsViewModeVisible,
         toggleButton,
         styles,
+        onFieldsChange,
+        formActionType,
     };
 
     const renderElement = () => {
@@ -77,22 +76,21 @@ const AddEditFormMain = (props) => {
                         return <IndividualAddressMaster {...commonModuleProps} />;
                     }
                     case 'Contacts': {
-                        return <IndividualContact {...commonModuleProps}/>;
+                        return <IndividualContact {...commonModuleProps} />;
                     }
                     case 'Family Details': {
-                        return <FamilyDetails />;
+                        return <FamilyDetails {...commonModuleProps} />;
                     }
                     case 'Account Related': {
                         return <IndividualAccountRelatedMaster {...commonModuleProps} />;
                     }
                     case 'Supporting Document': {
-                        return <SupportingDocument />;
+                        return <SupportingDocument {...commonModuleProps} />;
                     }
                     default: {
                         return <IndivisualCustomerDetailsMaster {...commonModuleProps} />;
                     }
                 }
-                break;
             }
             case 'Firm/Company': {
                 switch (moduleName) {
@@ -103,22 +101,21 @@ const AddEditFormMain = (props) => {
                         return <CompanyProfile {...commonModuleProps} />;
                     }
                     case 'Address': {
-                        return <CompanyAddressMaster />;
+                        return <CompanyAddressMaster {...commonModuleProps} />;
                     }
                     case 'Contacts': {
-                        return <CompanyContact {...commonModuleProps}/>;
+                        return <CompanyContact {...commonModuleProps} />;
                     }
                     case 'Account Related': {
                         return <AccountRelatedMaster {...commonModuleProps} />;
                     }
                     case 'Supporting Document': {
-                        return <SupportingDocument />;
+                        return <SupportingDocument {...commonModuleProps} />;
                     }
                     default: {
                         return <CompanyCustomerDetailsMaster {...commonModuleProps} />;
                     }
                 }
-                break;
             }
             default: {
                 return;
@@ -132,7 +129,7 @@ const AddEditFormMain = (props) => {
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Collapse bordered={true} defaultActiveKey={['1']} expandIcon={expandIcon}>
+                            <Collapse onChange={() => (Activekey.includes(1) ? setActivekey([]) : setActivekey([1]))} bordered={true} activeKey={Activekey} expandIcon={expandIcon}>
                                 <Panel
                                     header={
                                         <>
