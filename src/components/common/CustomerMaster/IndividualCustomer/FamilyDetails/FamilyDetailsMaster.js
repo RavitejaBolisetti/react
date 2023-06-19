@@ -51,7 +51,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const FamilyDetailsBase = (props) => {
-    const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, fetchFamilyDetailSaveList, listFamilyDetailSaveShowLoading } = props;
+    const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, fetchFamilyDetailSaveList, } = props;
     const [familyForm] = Form.useForm();
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -124,7 +124,7 @@ const FamilyDetailsBase = (props) => {
                 id: 'b528ea89-6431-4d26-a9c4-355975068f94',
                 mnmCustomer: 'No',
                 customerId: 'CUS1686811036620',
-                relationCustomerId: null,
+                relationCustomerId: "",
                 customerName: 'CCCCC',
                 // relationship: 'No Relation',
                 relationCode: 'BH',
@@ -148,7 +148,7 @@ const FamilyDetailsBase = (props) => {
         const requestData = {
             data: editData,
             method: 'post',
-            setIsLoading: listFamilyDetailSaveShowLoading,
+            setIsLoading: listFamilyDetailsShowLoading,
             userId,
             onError,
             onSuccess,
