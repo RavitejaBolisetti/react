@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             CustomerMaster: {
-                IndividualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading: isIndiviualLoading, data: indiviualData = [] },
+                IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading: isIndiviualLoading, data: indiviualData = [] },
             },
         },
     } = state;
