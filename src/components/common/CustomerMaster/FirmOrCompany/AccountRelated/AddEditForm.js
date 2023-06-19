@@ -1,5 +1,5 @@
-import { React } from 'react';
-import { Row, Col, Form, Input, Checkbox } from 'antd';
+import { React, useState } from 'react';
+import { Row, Col, Form, Input, Checkbox, Button } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateNumberWithTwoDecimalPlaces, validationNumber, valueBetween0to100 } from 'utils/validation';
@@ -7,12 +7,33 @@ import { validateNumberWithTwoDecimalPlaces, validationNumber, valueBetween0to10
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const [formData] = props;
-    const [form] = Form.useForm();
+    const { form, formData, onCloseAction, onFinish, onFinishFailed } = props;
+    const { buttonData, setButtonData } = props;
+
+    const { setIsViewModeVisible } = props;
+    const [selected, setSelected] = useState();
+
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
+
+    const handleFormFieldChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
+
+    const handleEdit = () => {
+        setIsViewModeVisible(false);
+    };
+
+    const viewProps = {
+        onCloseAction,
+        handleEdit,
+        formData,
+    };
 
     return (
         <>
-            <Form form={form} id="myForm" autoComplete="off" layout="vertical">
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Credit Limit" name="creditAmount" initialValue={formData?.creditAmount} rules={[validateNumberWithTwoDecimalPlaces('credit limit amount')]}>
@@ -27,7 +48,7 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Outstanding Amount" initialValue={formData?.outstandingAmt} name="outstandingAmt" rules={[validateNumberWithTwoDecimalPlaces('outstanding amount')]}>
+                        <Form.Item label="Outstanding Amount" initialValue={formData?.outstandingAmount} name="outstandingAmount" rules={[validateNumberWithTwoDecimalPlaces('outstanding amount')]}>
                             <Input placeholder={preparePlaceholderText('amount')} />
                         </Form.Item>
                     </Col>
@@ -57,6 +78,11 @@ const AddEditFormMain = (props) => {
                         <Form.Item valuePropName="checked" name="vipDealerInd">
                             <Checkbox>VIP Dealer</Checkbox>
                         </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                        <Button htmlType="Submit">Submit </Button>
                     </Col>
                 </Row>
             </Form>

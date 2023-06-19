@@ -3,7 +3,7 @@ import React from 'react';
 import { Row, Col, Button, Space, Card } from 'antd';
 
 import { AddEditForm } from './AddEditForm';
-import { ViewDetail } from '../../FirmOrCompany/AccountRelated/ViewAccountDetails';
+import { ViewDetail } from '../../IndividualCustomer/AccountRelated/ViewIndividualAccountDetails';
 import styles from 'components/common/Common.module.css';
 
 const AccountRelatedBase = (props) => {

@@ -1,37 +1,3 @@
-// import React from 'react';
-
-// import { Col, Row, Button, Space, Card } from 'antd';
-// import { AddEditForm } from './AddEditForm';
-// import { ViewDetail } from './ViewAccountDetails';
-
-// import styles from 'components/common/Common.module.css';
-
-// const AccountRelatedBase = (props) => {
-//     const { onCloseAction, isViewModeVisible } = props;
-
-//     const viewProps = {
-//         styles,
-//     };
-
-//     return (
-//         <>
-//             {!isViewModeVisible ? (
-//                 <Space direction="vertical" size="small" style={{ display: 'flex' }}>
-//                     <Card style={{ backgroundColor: '#F2F2F2' }}>
-//                         <AddEditForm {...props} />
-//                     </Card>
-//                 </Space>
-//             ) : (
-//                 <Card style={{ backgroundColor: '#F2F2F2' }}>
-//                     <ViewDetail {...viewProps} />
-//                 </Card>
-//             )}
-//         </>
-//     );
-// };
-
-// export const AccountRelatedMaster = AccountRelatedBase;
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Space, Form, Card } from 'antd';
@@ -44,7 +10,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';
 
 import styles from 'components/common/Common.module.css';
@@ -59,7 +24,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             CUSTOMERMASTER: {
-                CorporateAccounts: { isLoaded: isDataLoaded = false, isLoading, data: accountsData = [] },
+                CorporateAccounts: { isLoaded = false, isLoading, data },
             },
         },
     } = state;
@@ -70,8 +35,8 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isDataLoaded,
-        accountsData,
+        isLoaded,
+        data,
         isLoading,
         moduleTitle,
     };
@@ -93,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AccountRelatedBase = (props) => {
-    const { accountsData, saveData, fetchList, userId, isDataLoaded, listShowLoading, resetData, showGlobalNotification, moduleTitle, isViewModeVisible } = props;
+    const { saveData, fetchList, userId, listShowLoading, isViewModeVisible, isLoaded, data, showGlobalNotification, moduleTitle } = props;
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
@@ -116,10 +81,6 @@ export const AccountRelatedBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const viewProps = {
-        styles,
-    };
-
     const selectedCustomer = 'CUS1686812277115';
     const extraParams = [
         {
@@ -140,11 +101,11 @@ export const AccountRelatedBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId && !isDataLoaded) {
+        if (userId && !isLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, errorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded]);
+    }, [userId, isLoaded]);
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -163,14 +124,16 @@ export const AccountRelatedBase = (props) => {
     };
 
     const onFinish = (values) => {
-        let data = { ...values };
+        const data = { ...values, customerId: 'CUS1686815155017' };
+        console.log(form.getFieldValue(), 'KARTIK ');
 
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
 
+            // fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
@@ -187,19 +150,19 @@ export const AccountRelatedBase = (props) => {
         };
 
         const requestData = {
-            data: accountsData,
+            data: data,
             method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
         };
-
+        console.log(requestData, 'KARTIK Gupta');
         saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        return;
     };
 
     const onCloseAction = () => {
@@ -220,7 +183,7 @@ export const AccountRelatedBase = (props) => {
 
     const formProps = {
         form,
-        formData,
+        formData: data['0'],
         formActionType,
         setFormActionType,
         onFinish,
@@ -228,18 +191,19 @@ export const AccountRelatedBase = (props) => {
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
-        tableData: searchData,
+        tableData: data,
 
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
         buttonData,
-
         setButtonData,
         handleButtonClick,
     };
-
-    const title = 'State Name';
+    const viewProps = {
+        formData: data['0'],
+        styles,
+    };
 
     return (
         <>
