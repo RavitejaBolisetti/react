@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Collapse, Form, Space, Typography, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-
+import { FaRegUserCircle } from 'react-icons/fa';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import AddEditForm from './AddEditForm';
 import ViewContactList from './ViewContactList';
@@ -13,42 +13,68 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ContactMain = ({ isViewModeVisible, toggleButton }) => {
-    console.log('isViewModeVisible', isViewModeVisible," toggleButton", toggleButton )
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [editingData, setEditingData] = useState({});
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-    const onFinish = (value) => {
-        form.validateFields()
-            .then((data) => console.log('data', data))
-            .catch((error) => console.error(error));
+    console.log('isEditing', isEditing);
 
-        setContactData((prev) => {
-            let formData = [...prev];
-            if (value?.defaultaddress && formData?.length >= 1) {
-                formData?.forEach((contact) => {
-                    if (contact?.defaultaddress === true) {
-                        contact.defaultaddress = false;
-                    }
-                });
-                return [...formData, value];
-            } else {
-                return [...prev, { ...value }];
-            }
-        });
+    const onFinish = (value) => {
+        console.log('onSave ', value, 'isEditing', isEditing);
+        if (isEditing) {
+            console.log(' isEditing block')
+            setContactData((prev) => {
+                let formData = [...prev];
+                // if (value?.defaultaddress && formData?.length > 1) {
+                    formData?.forEach((contact) => {
+                        if (contact?.defaultaddress === true) {
+                            contact.defaultaddress = false;
+                        }
+                    });
+                    const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
+                    console.log("index", index)
+                    formData.splice(index, 1, { ...value });
+                    return [...formData];
+                // } else {
+                //     return [...prev, { ...value }];
+                // }
+            });
+        } else {
+            setContactData((prev) => {
+                let formData = [...prev];
+                if (value?.defaultaddress && formData?.length >= 1) {
+                    formData?.forEach((contact) => {
+                        if (contact?.defaultaddress === true) {
+                            contact.defaultaddress = false;
+                        }
+                    });
+                    return [...formData, value];
+                } else {
+                    return [...prev, { ...value }];
+                }
+            });
+        }
         setShowAddEditForm(false);
         setIsEditing(false);
+        setEditingData({});
+        form.resetFieldsValue();
     };
 
-    const deleteContactHandeler =(data) => {
-        console.log("delete Data", data)
-        // setContactData()
+    const deleteContactHandeler = (data) => {
+        console.log('delete Data', data);
+        setContactData((prev) => {
+            const updatedList = [...prev];
+            const index = prev?.findIndex((el) => el?.contactMobileNumber === data?.contactMobileNumber && el?.contactNameFirstName === data?.contactNameFirstName);
+            updatedList.splice(index, 1);
+            return [...updatedList];
+        });
     };
 
     const addBtnContactHandeler = (e) => {
@@ -69,15 +95,17 @@ const ContactMain = ({ isViewModeVisible, toggleButton }) => {
         isEditing,
         setIsEditing,
         deleteContactHandeler,
+        isViewModeVisible,
+        setEditingData,
     };
 
     return (
-        <Space className={styles.accordianContainer} direction="vertical" size="middle" style={{ display: 'flex' }}>
+        <>
             <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
                 <Panel
                     header={
                         <Space>
-                            <Text strong> {toggleButton + 'Contact' }</Text>
+                            <Text strong> {toggleButton === 'Individual' ? 'Individual Contact' : 'Company Contact'}</Text>
                             {!isViewModeVisible && (
                                 <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary">
                                     Add Contact
@@ -87,11 +115,11 @@ const ContactMain = ({ isViewModeVisible, toggleButton }) => {
                     }
                     key="1"
                 >
-                    {(showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />}
+                    {!isViewModeVisible && (showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />}
                     <ViewContactList {...formProps} />
                 </Panel>
             </Collapse>
-        </Space>
+        </>
     );
 };
 

@@ -1,10 +1,8 @@
 import React from 'react';
 import { Descriptions } from 'antd';
-import AddEditForm from './AddEditForm';
 
 const ViewIndividualAddressDetailsBase = (props) => {
-    const { formData, styles, deleteContactHandeler, isIndividualOrCompany } = props;
-    const { setShowAddEditForm, setContactData, onFinish, form, isEditing, setIsEditing, index } = props;
+    const { formData, styles } = props;
 
     const viewProps = {
         bordered: false,
@@ -13,16 +11,8 @@ const ViewIndividualAddressDetailsBase = (props) => {
         column: { xxl: 3, xl: 3, lg: 3, md: 3, sm: 1, xs: 1 },
     };
 
-    const formProps = {
-        setShowAddEditForm,
-        setContactData,
-        onFinish,
-        form,
-        ...props,
-    };
-
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={styles.viewDrawerContainer}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Address Type">{formData?.addressType}</Descriptions.Item>
@@ -38,7 +28,6 @@ const ViewIndividualAddressDetailsBase = (props) => {
                     <Descriptions.Item>{formData?.defaultaddress}</Descriptions.Item>
                 </Descriptions>
             </>
-
         </div>
     );
 };

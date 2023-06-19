@@ -22,6 +22,8 @@ import { PincodeDetails } from './pincodeDetails';
 import { LessorCompanyMaster } from './lessorCompanyMaster';
 import { OtfReports } from './otfReports';
 import { OTF } from './otf';
+import { CustomerMaster } from './customerMaster';
+import { SupportingDocument } from './supportingDocument';
 
 export const data = combineReducers({
     Menu,
@@ -47,4 +49,6 @@ export const data = combineReducers({
     LessorCompanyMaster,
     OtfReports,
     OTF,
+    CustomerMaster,
+    SupportingDocument,
 });

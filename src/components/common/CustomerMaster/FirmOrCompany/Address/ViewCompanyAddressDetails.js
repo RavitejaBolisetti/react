@@ -1,5 +1,6 @@
 import React from 'react';
 import { Descriptions } from 'antd';
+import styles from 'components/common/Common.module.css';
 
 const ViewCompanyAddressDetailsBase = ({ formData, styles }) => {
     const viewProps = {
@@ -10,7 +11,7 @@ const ViewCompanyAddressDetailsBase = ({ formData, styles }) => {
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={styles.viewDrawerContainer}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Address Type">{formData?.addressType}</Descriptions.Item>
@@ -23,7 +24,7 @@ const ViewCompanyAddressDetailsBase = ({ formData, styles }) => {
                     <Descriptions.Item label="State">{formData?.state}</Descriptions.Item>
                     <Descriptions.Item label="Contact Name">{formData?.contactpersonName}</Descriptions.Item>
                     <Descriptions.Item label="Contact Mobile">{formData?.contactmobilenumber}</Descriptions.Item>
-                    <Descriptions.Item >{formData?.defaultaddress}</Descriptions.Item>
+                    <Descriptions.Item>{formData?.defaultaddress}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>
