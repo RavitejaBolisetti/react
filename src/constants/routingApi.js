@@ -104,5 +104,5 @@ export const BASE_URL_TERM_CONDITION_MANUFACTURER_CHANGE_HISTORY = BASE_URL + 'a
 export const BASE_URL_OTF_REPORTS = BASE_URL + 'customreports/otf/names';
 export const BASE_URL_OTF_DOWNLAOD_REPORT = BASE_URL + 'customreports/otf/register';
 
-export const BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER = BASE_URL + 'customers//individual/familydetails?customerId=CUS1686811036620';
+export const BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER = BASE_URL + 'customers//individual/familydetails';
 export const BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER_SAVE = BASE_URL + 'customers//individual/familydetails';

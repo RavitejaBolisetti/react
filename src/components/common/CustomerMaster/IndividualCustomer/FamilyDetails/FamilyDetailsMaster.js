@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { familyDetailsDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetails';
-import { familyDetailSaveDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetailSave';
 import { showGlobalNotification } from 'store/actions/notification';
 
 const mapStateToProps = (state) => {
@@ -32,8 +31,6 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
-//
-
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
@@ -44,9 +41,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchFamilyDetailsList: familyDetailsDataActions.fetchList,
             listFamilyDetailsShowLoading: familyDetailsDataActions.listShowLoading,
 
-            fetchFamilyDetailSaveList: familyDetailSaveDataActions.fetchList,
-            listFamilyDetailSaveShowLoading: familyDetailSaveDataActions.listShowLoading,
-            saveData: familyDetailSaveDataActions.saveData,
+            saveData: familyDetailsDataActions.saveData,
 
             showGlobalNotification,
         },
@@ -72,55 +67,19 @@ const FamilyDetailsBase = (props) => {
 
     useEffect(() => {
         if (userId && !isFamilyLoaded) {
-            fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId,  });
+            fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId,extraParams  });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isFamilyLoaded]);
 
-    // const extraParams = [
-    //     {
-    //         key: 'countryCode',
-    //         title: 'Country',
-    //         value: filterString?.countryCode,
-    //         name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
-    //         canRemove: false,
-    //     },
-    //     {
-    //         key: 'stateCode',
-    //         title: 'State',
-    //         value: filterString?.stateCode,
-    //         name: filteredStateData?.find((i) => i?.key === filterString?.stateCode)?.value,
-    //         canRemove: false,
-    //     },
-    //     {
-    //         key: 'districtCode',
-    //         title: 'District',
-    //         value: filterString?.districtCode,
-    //         name: filteredDistrictData?.find((i) => i?.key === filterString?.districtCode)?.value,
-    //         canRemove: false,
-    //     },
-    //     {
-    //         key: 'tehsilCode',
-    //         title: 'Tehsil',
-    //         value: filterString?.tehsilCode,
-    //         name: filteredTehsilData?.find((i) => i?.key === filterString?.tehsilCode)?.value,
-    //         canRemove: false,
-    //     },
-    //     {
-    //         key: 'cityCode',
-    //         title: 'City',
-    //         value: filterString?.cityCode,
-    //         name: filteredCityData?.find((i) => i?.key === filterString?.cityCode)?.value,
-    //         canRemove: false,
-    //     },
-    //     {
-    //         key: 'pincode',
-    //         title: 'Pincode',
-    //         value: filterString?.pincode,
-    //         name: filterString?.pincode,
-    //         canRemove: true,
-    //     },
-    // ];
+    const extraParams = [
+        {
+            key: 'customerId',
+            title: 'Country',
+            value: 'CUS1686811036620',
+            name: 'customerId',
+        },
+    ];
 
     const onChange = (value) => {
         setCustomerType(value);
@@ -178,7 +137,8 @@ const FamilyDetailsBase = (props) => {
         const onSuccess = (res) => {
             familyForm.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchFamilyDetailSaveList({ setIsLoading: listFamilyDetailSaveShowLoading, userId });
+            // fetchFamilyDetailSaveList({ setIsLoading: listFamilyDetailSaveShowLoading, userId });
+            fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId });
         };
 
         const onError = (message) => {
