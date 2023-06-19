@@ -11,7 +11,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewAddressList = (props) => {
-    const { form, setShowAddEditForm, showAddEditForm, setAddressData, onFinish, setIsEditing, isEditing, styles, addressData, formData, isViewModeVisible, onCheckClick, index } = props;
+    const { form, setShowAddEditForm, showAddEditForm, setAddressData, onFinish, setIsEditing, isEditing, styles, addressData, formData, isViewModeVisible, onCheckClick, index, setEditingData } = props;
 
 
     const [openAccordian, setOpenAccordian] = useState('');
@@ -79,13 +79,6 @@ const ViewAddressList = (props) => {
                                             <Divider type="vertical" />
                                             <Text type="secondary">{data?.addressType}</Text>
                                         </Col>
-
-                                        {/* <Space>
-                                            <Button type="primary" onClick={() => editContactHandeler({ formData, index })}>
-                                                Edit
-                                            </Button>
-                                            
-                                        </Space> */}
                                     </Row>
                                 }
                             >

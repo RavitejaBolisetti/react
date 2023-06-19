@@ -38,6 +38,7 @@ const IndividualAddressMasterBase = ({ isViewModeVisible, toggleButton, props })
     const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [editingData, setEditingData] = useState({});
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
@@ -63,6 +64,7 @@ const IndividualAddressMasterBase = ({ isViewModeVisible, toggleButton, props })
         });
         setShowAddEditForm(false);
         setIsEditing(false);
+        setEditingData({});
     };
 
     const addAddressHandeler = (e) => {
@@ -83,6 +85,7 @@ const IndividualAddressMasterBase = ({ isViewModeVisible, toggleButton, props })
         form,
         isEditing,
         setIsEditing,
+        setEditingData,
     };
 
     return (
