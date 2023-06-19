@@ -3,11 +3,12 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { Input, Select, DatePicker, Row, Col, Button, Form } from 'antd';
 import styles from 'components/common/Common.module.css';
+
 const { Option } = Select;
-const { TextArea } = Input;
+const { TextArea, Search } = Input;
 
 const FormBase = (props) => {
-    const { customerType, onSave, onFamilyFinish, onFinishFailed, familyForm, onChange, editedId, relationData } = props;
+    const { customerType, onSave, onFamilyFinish, onFinishFailed, familyForm, onChange, editedId, relationData, onSearch } = props;
     const type = [
         { name: 'Yes', key: 'Yes' },
         { name: 'No', key: 'No' },
@@ -22,10 +23,8 @@ const FormBase = (props) => {
 
     let age;
     const onDateChange = (prop) => {
-        console.log(prop, 'DOB');
         age = 2023 - prop?.$y;
     };
-
 
     return (
         <Form form={familyForm} id="familyForm" autoComplete="off" layout="vertical" onFinish={onFamilyFinish} onFinishFailed={onFinishFailed} style={{ background: 'transparent' }}>
@@ -44,7 +43,7 @@ const FormBase = (props) => {
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={null} label="Customer Id" name="relationCustomerId">
-                            <Input className={styles.inputBox} />
+                            <Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch}  enterButton />
                         </Form.Item>
                     </Col>
                 ) : null}

@@ -372,7 +372,7 @@
 
 .inputBox {
     border-radius: 4px;
-    height: 36px;
+    height: 36px !important;
 }
 
 .treemenu {
@@ -1527,6 +1527,8 @@
     color: #0B0B0C;
 }
 
+
+
 .drawerBodyRight :global .ant-steps {
     display: inline;
     line-height: 0px;
@@ -1708,10 +1710,10 @@
     line-height: 24px;
 }
 
-.drawerBodyRight :global .ant-input {
+/* .drawerBodyRight :global .ant-input {
     height: 36px;
     border-radius: 4px;
-}
+} */
 
 .drawerBodyRight :global .ant-input-disabled,
 .drawerBodyRight :global .ant-input[disabled],
@@ -1768,19 +1770,47 @@
 
 .drawerBodyRight :global .ant-checkbox+span {
     padding-inline-start: 4px;
-    color: #ff3e5b;
+    color: #0B0B0C;
     font-size: 14px;
     font-weight: 500;
     line-height: 23px;
 }
 
-.drawerBodyRight :global .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled) .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
-    border: 1px solid #ff3e5b;
+.drawerBodyRight :global .ant-checkbox-wrapper:hover span {
+    color: #ff3e5b;
 }
 
-.drawerBodyRight :global .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
-    background-color: #ff3e5b !important;
+
+.drawerBodyRight :global .ant-checkbox-checked:checked {
+    background-color: transparent !important;
 }
+
+.drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
+    width: 18px;
+    height: 18px;
+    background-color: transparent;
+}
+
+.drawerBodyRight :global .ant-checkbox-wrapper-checked:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
+.drawerBodyRight :global .ant-checkbox-checked:not(.ant-checkbox-disabled):hover .ant-checkbox-inner {
+    background-color: transparent !important;
+}
+
+.drawerBodyRight :global .ant-checkbox .ant-checkbox-inner:after {
+    top: 48%;
+    inset-inline-start: 35%;
+    width: 4px;
+    height: 7px;
+    border: 1px solid red;
+    border-top: 0;
+    border-inline-start: 0;
+}
+
+.drawerBodyRight :global .ant-checkbox-checked:after {
+    border: 1px solid #ff3e5b !important;
+    background-color: transparent !important;
+}
+
 
 .userCircle {
     color: #ff3e5b !important;

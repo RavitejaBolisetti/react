@@ -1,159 +1,49 @@
 import React from 'react';
-import { Descriptions } from 'antd';
-import { Col, Row, Button, Space, Collapse, Typography } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { FaRegUserCircle } from 'react-icons/fa';
+import { Card, Descriptions, Divider } from 'antd';
+import { Space, Collapse, Typography } from 'antd';
+
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, onChange, styles, handleEdit, onCloseAction } = props;
+    const { fromData, styles } = props;
     const viewProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-    const customerForm = {
-        customerType: 'uttar pradesh',
-        corporateCode: 'ssss',
-        CustomerCategory: '12312',
-        usageCategorization: 'Delhi',
-        usageCategorizationcategory: true,
-    };
-    const AuthorityForm = {
-        companyName: 'uttar pradesh',
-        personName: 'ssss',
-        postion: '12312',
-        remarks: 'Delhi',
-    };
-    const keyAccountForm = {
-        accountClientName: 'uttar pradesh',
-        accountCode: 'ssss',
-        accountMappingDate: '12312',
-        accountName: 'Delhi',
-        accountSegment: true,
-    };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(1)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(1)}
-                    expandIconPosition="end"
+                <Card
+                    header={
+                        <div className={styles.alignUser}>
+                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                Customer Information
+                            </Text>
+                        </div>
+                    }
                 >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {' '}
-                                    Customer Information
-                                </Text>
-                            </div>
-                        }
-                        key="1"
-                    >
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Customer Type">{customerForm?.customerType}</Descriptions.Item>
-                            <Descriptions.Item label="corporate Code">{customerForm?.corporateCode}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Category">{customerForm?.CustomerCategory}</Descriptions.Item>
-                            <Descriptions.Item label="Usage Categorization">{customerForm?.usageCategorization}</Descriptions.Item>
-                            <Descriptions.Item label="usage Categorization Category">{customerForm?.usageCategorizationcategory ? 'Active' : 'Inactive'}</Descriptions.Item>
-                        </Descriptions>
-                    </Panel>
-                </Collapse>
-
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(2)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(2)}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {' '}
-                                    Key Account Details
-                                </Text>
-                            </div>
-                        }
-                        key="2"
-                    >
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Account Client Name">{keyAccountForm?.accountClientName}</Descriptions.Item>
-                            <Descriptions.Item label="Account Code">{keyAccountForm?.accountCode}</Descriptions.Item>
-                            <Descriptions.Item label="Account Mapping Date">{keyAccountForm?.accountMappingDate}</Descriptions.Item>
-                            <Descriptions.Item label="Account Name">{keyAccountForm?.accountName}</Descriptions.Item>
-                            <Descriptions.Item label="Account Segment">{keyAccountForm?.accountSegment ? 'Active' : 'Inactive'}</Descriptions.Item>
-                        </Descriptions>
-                    </Panel>
-                </Collapse>
-
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(3)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(3)}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {' '}
-                                    Authority Details
-                                </Text>
-                            </div>
-                        }
-                        key="3"
-                    >
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Company Name">{AuthorityForm?.companyName}</Descriptions.Item>
-                            <Descriptions.Item label="Person Name">{AuthorityForm?.personName}</Descriptions.Item>
-                            <Descriptions.Item label="Postion">{AuthorityForm?.postion}</Descriptions.Item>
-                            <Descriptions.Item label="Remarks">{AuthorityForm?.remarks}</Descriptions.Item>
-                        </Descriptions>
-                    </Panel>
-                </Collapse>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                        <Button danger onClick={onCloseAction}>
-                            Cancel
-                        </Button>
-                    </Col>
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                        <Button type="primary" onClick={handleEdit} className={styles.floatRight}>
-                            Edit
-                        </Button>
-                    </Col>
-                </Row>
+                    <Descriptions {...viewProps}>
+                        <Descriptions.Item label="Mobile Number">{fromData?.mobileNumber}</Descriptions.Item>
+                        <Descriptions.Item label="Customer Type">{fromData?.corporateCode}</Descriptions.Item>
+                        <Divider />
+                        <Descriptions.Item label="Company Name">{fromData?.compantName}</Descriptions.Item>
+                        <Descriptions.Item label="Parent Company Code">{fromData?.parentCompanyCode}</Descriptions.Item>
+                        <Divider />
+                        <Descriptions.Item label="Corporate Type">{fromData?.corporateType}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Name">{fromData?.corporateName}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Code">{fromData?.corporateCode}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Category">{fromData?.corporateCategory}</Descriptions.Item>
+                        <Descriptions.Item label="Membership Type">{fromData?.membershipType}</Descriptions.Item>
+                    </Descriptions>
+                </Card>
             </Space>
         </div>
     );
 };
 
-export const ViewDetail = ViewDetailMain;
+export const ViewCompanyCustomerDetails = ViewDetailMain;

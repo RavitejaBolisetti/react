@@ -57,6 +57,7 @@ const FamilyDetailsBase = (props) => {
     const [customerType, setCustomerType] = useState('Yes');
     const [editedMode, setEditedMode] = useState(false);
     const [editedId, setEditedId] = useState(0);
+    const [searchValue, setSearchValue] = useState('CUS1686811036620');
 
     useEffect(() => {
         if (userId && !isRelationDataLoaded && !isRelationLoading) {
@@ -72,31 +73,40 @@ const FamilyDetailsBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isFamilyLoaded]);
 
+    useEffect(() => {
+        fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, extraParams });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchValue]);
+
     const extraParams = [
         {
             key: 'customerId',
             title: 'Customer',
-            value: 'CUS1686811036620',
+            value: searchValue,
             name: 'customerId',
         },
-    ];
+    ]; 
 
     const onChange = (value) => {
         setCustomerType(value);
     };
 
-    const onSave = (props) => {
+    const onSearch = (value) => {
+        console.log(value, 'Onsearch');
+        setSearchValue(value);
+    };
+
+    const onSave = () => {
         let values = familyForm.getFieldsValue();
-        console.log(values,'DOB')
-        setFamilyDetailsList((items) => [...items, { ...values, dateOfBirth :dayjs(values?.dateOfBirth,'YYYY/MM/DD') }]);
-        console.log(familyDetailList,'CONSOLE')
+        setFamilyDetailsList((items) => [...items, { ...values, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }]);
+
         if (editedMode) {
             const upd_obj = familyDetailList?.map((obj) => {
                 if (obj?.editedId === values?.editedId) {
                     obj.customerName = values?.customerName;
                     obj.relationAge = values?.relationAge;
                     obj.relationship = values?.relationship;
-                    obj.dateOfBirth = values?.dateOfBirth;
+                    obj.dateOfBirth = typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth;
                     obj.remarks = values?.remarks;
                 }
                 return obj;
@@ -118,7 +128,7 @@ const FamilyDetailsBase = (props) => {
     };
 
     const onFamilyFinish = () => {
-        let data = [...familyDetailList]
+        let data = [...familyDetailList];
         //let data = [{ customerId: 'CUS1686811036620', customerName: 'English Boy', dateOfBirth: '2002-12-12', editedId: 9, id: '', mnmCustomer: 'No', relationAge: '8', relationCode: 'C', relationCustomerId: '', remarks: 'Double' }];
         // let editData = [
         //     {

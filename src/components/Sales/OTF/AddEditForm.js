@@ -8,7 +8,6 @@ import { OTF_SECTION } from 'constants/OTFSection';
 import { CustomerDetailsMaster } from './CustomerDetails';
 import { SchemeDetailsMaster } from './SchemeDetails';
 import { InsuranceDetailsMaster } from './InsuranceDetails';
-import { Otfbuttons } from 'components/common/Button';
 import { VehicleDetailsMaster } from './VehicleDetails';
 import { FinananceDetailsMaster } from './FinananceDetails';
 import { LoyaltySchemeMaster } from './LoyaltyScheme';
@@ -17,6 +16,7 @@ import { ExchangeVehiclesMaster } from './ExchangeVehicles';
 import { AddOnDetailsMaster } from './AddOnDetails';
 import { OtfDetailsMaster } from './OtfDetails';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
+import { OTFDrawerFormButton } from 'components/common/Button';
 
 import OTFStatusBar from './utils/OTFStatusBar';
 import { MovetoNextForm } from './utils/OTFUtils';
@@ -202,7 +202,7 @@ const AddEditFormMain = (props) => {
                             </Row>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Otfbuttons {...otfButtonProps} />
+                            <OTFDrawerFormButton {...otfButtonProps} />
                         </Col>
                     </Row>
                 </Col>

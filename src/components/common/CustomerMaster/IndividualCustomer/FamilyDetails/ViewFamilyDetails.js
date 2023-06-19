@@ -1,5 +1,6 @@
 import React from 'react';
 import { Descriptions, Card, Space } from 'antd';
+import dayjs from 'dayjs';
 
 const ViewDetailBase = (props) => {
     const { customerType } = props;
@@ -11,7 +12,7 @@ const ViewDetailBase = (props) => {
         column: { xxl: 3, xl: 3, lg: 3, md: 2, sm: 1, xs: 1 },
     };
 
-    console.log(props,"propsprops")
+    console.log(props,'CHECKING')
 
     return (
         <div>
@@ -27,7 +28,7 @@ const ViewDetailBase = (props) => {
                         <Descriptions.Item label="Relationship">{props?.relationship}</Descriptions.Item>
 
                         <Descriptions.Item label="Date of Birth">
-                            {props?.dateOfBirth}
+                            {typeof props?.dateOfBirth === 'object' ?  dayjs(props?.dateOfBirth).format('YYYY-MM-DD') : props?.dateOfBirth}
                         </Descriptions.Item>
 
                         <Descriptions.Item label="Age">{props?.relationAge}</Descriptions.Item>

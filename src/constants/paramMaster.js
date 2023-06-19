@@ -23,6 +23,38 @@ export const PARAM_MASTER = {
         id: 'PIN_CATG',
         title: 'PIN_CATG',
     },
+    CUST_TYPE: {
+        id: 'CUST_TYPE',
+        title: 'CUST_TYPE',
+    },
+    CUST_FILES: {
+        id: 'CUST_FILES',
+        title: 'CUST_FILES',
+    },
+    FAMLY_RELTN: {
+        id: 'FAMLY_RELTN',
+        title: 'FAMLY_RELTN',
+    },
+    CUST_MST: {
+        id: 'CUST_MST',
+        title: 'CUST_MST',
+    },
+    TITLE: {
+        id: 'TITLE',
+        title: 'TITLE',
+    },
+    CORP_TYPE: {
+        id: 'CORP_TYPE',
+        title: 'CORP_TYPE',
+    },
+    MEM_TYPE: {
+        id: 'MEM_TYPE',
+        title: 'MEM_TYPE',
+    },
+    CORP_CATE: {
+        id: 'CORP_CATE',
+        title: 'CORP_CATE',
+    },
     PRC_TYP: {
         id: 'PRC_TYP',
         title: 'Price Type',
@@ -42,13 +74,5 @@ export const PARAM_MASTER = {
     REF: {
         id: 'REF',
         title: 'Referral',
-    },
-    FAMLY_RELTN: {
-        id: 'FAMLY_RELTN',
-        title: 'FAMLY_RELTN',
-    },
-    TITLE: {
-        id: 'TITLE',
-        title: 'TITLE',
     },
 };

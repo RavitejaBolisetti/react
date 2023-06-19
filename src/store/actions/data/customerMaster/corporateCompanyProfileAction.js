@@ -1,8 +1,8 @@
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_OTF_INVOICE_DETAILS as baseURL } from 'constants/routingApi';
+import { BASE_URL_CORPORATE_COMPANY_PROFILE as baseURL } from 'constants/routingApi';
 
-const PREFIX = 'OTF_INVOICE_';
-const moduleName = 'Invoice Information';
+const PREFIX = 'COMPANY_PROFILE_';
+const moduleName = 'Company Profile';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';
@@ -12,7 +12,7 @@ export const RECIEVE_DATA_DETAIL_ACTION_CONSTANT = PREFIX + 'RECIEVE_DETAIL_DATA
 export const SAVE_DATA_ACTION_CONSTANT = PREFIX + 'SAVE_DATA';
 export const RESET_DATA_ACTION_CONSTANT = PREFIX + 'RESET_DATA';
 
-export const otfInvoiceDetailsDataActions = dataActions({
+export const corporateCompanyProfileDataActions = dataActions({
     baseURL,
     moduleName,
     RECEIVE_DATA_LOADING_ACTION_CONSTANT,

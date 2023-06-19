@@ -10,7 +10,7 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { onFamilyFinish, onFinishFailed, familyForm, onChange, showForm, setShowForm, setCustomerType, relationData, editedId, setEditedId } = props;
-    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode } = props;
+    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode, onSearch } = props;
     const [activeKey, setactiveKey] = useState([null]);
 
     const handleEdit = () => {
@@ -38,10 +38,8 @@ const AddEditFormMain = (props) => {
         setEditedId(() => editedId + 1);
         familyForm.resetFields();
     };
-    // const newDatae = dayjs(props?.dateOfBirth, 'YYYY/MM/DD');
 
     const onEdit = (values) => {
-        console.log(values, '3KD');
         setEditedMode(true);
         setCustomerType(false);
         familyForm.setFieldsValue({
@@ -50,7 +48,7 @@ const AddEditFormMain = (props) => {
             customerName: values?.customerName,
             editedId: values?.editedId,
             relationship: values?.relationship,
-            dateOfBirth: dayjs(values?.dateOfBirth, 'YYYY/MM/DD'),
+            dateOfBirth: dayjs(values?.dateOfBirth),
             relationAge: values?.relationAge,
             remarks: values?.remarks,
         });
@@ -76,6 +74,7 @@ const AddEditFormMain = (props) => {
         customerType,
         relationData,
         editedId,
+        onSearch,
     };
 
     return (

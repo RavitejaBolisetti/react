@@ -1,13 +1,13 @@
 import React from 'react';
-import { Col, Row, Button, Space, Collapse, Typography, Descriptions, Card, Divider } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { Space, Typography, Descriptions, Card, Divider } from 'antd';
 import { FaRegUserCircle } from 'react-icons/fa';
+import styles from 'components/common/Common.module.css';
 
-const { Panel } = Collapse;
+
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, onChange, styles, handleEdit, onCloseAction } = props;
+    const { styles, formData } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -17,7 +17,7 @@ const ViewDetailMain = (props) => {
     const customerForm = {
         mobileNumber: '8707023991',
         customerType: 'Individual',
-        title:'Mr.',
+        title: 'Mr.',
         firstName: 'Arvind',
         middleName: 'Pal',
         lastName: 'Singh',
@@ -32,7 +32,7 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Card
                     header={
@@ -45,48 +45,38 @@ const ViewDetailMain = (props) => {
                     }
                 >
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Mobile Number">{customerForm?.mobileNumber}</Descriptions.Item>
-                        <Descriptions.Item label="Customer Type">{customerForm?.customerType}</Descriptions.Item>
-                        <Divider/>
-                        
+                        <Descriptions.Item label="Mobile Number">{formData?.mobileNumber}</Descriptions.Item>
+                        <Descriptions.Item label="Customer Type">{formData?.customerType}</Descriptions.Item>
+                        <Divider />
 
                         <Card>
                             <div className={`${styles.cardInsideBox} ${styles.customerName}`}>
                                 <Text className={styles.customerName}>Customer Name</Text>
                                 <Divider />
-                                {customerForm?.title}
+                                {formData?.title}
                                 <span className={styles.nameSpacing}></span>
-                                {customerForm?.firstName}
+                                {formData?.firstName}
                                 <span className={styles.nameSpacing}></span>
-                                {customerForm.middleName}
+                                {formData.middleName}
                                 <span className={styles.nameSpacing}></span>
-                                {customerForm.lastName}
+                                {formData.lastName}
                             </div>
                         </Card>
                         <br />
                         <br />
-                        <Descriptions.Item label="Email Id">{customerForm?.emailId}</Descriptions.Item>
-                        <Descriptions.Item label="Do you want to contact over whatsapp?">{customerForm?.corporateName}</Descriptions.Item>
-                        <Descriptions.Item label="Customer Category">{customerForm?.corporateName}</Descriptions.Item>
-                        <Descriptions.Item label="usage Categorization Category">{customerForm?.usageCategorizationcategory ? 'Active' : 'Inactive'}</Descriptions.Item>
+                        <Descriptions.Item label="Email Id">{formData?.emailId}</Descriptions.Item>
+                        <Descriptions.Item label="Do you want to contact over whatsapp?">{formData?.corporateName}</Descriptions.Item>
+                        <Descriptions.Item label="Whatsapp Number">{formData?.whatsappNumber}</Descriptions.Item>
+                        <Divider />
+                        <Descriptions.Item label="Corporate Type">{formData?.corporateType}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Name">{formData?.corporateName}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Category">{formData?.corporateCategory}</Descriptions.Item>
+                        <Descriptions.Item label="Membership Type">{formData?.membershipTypeType}</Descriptions.Item>
                     </Descriptions>
                 </Card>
-
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                        <Button danger onClick={onCloseAction}>
-                            Cancel
-                        </Button>
-                    </Col>
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                        <Button type="primary" onClick={handleEdit} className={styles.floatRight}>
-                            Edit
-                        </Button>
-                    </Col>
-                </Row>
             </Space>
         </div>
     );
 };
 
-export const ViewDetail = ViewDetailMain;
+export const ViewIndivisualCustomerDetails = ViewDetailMain;
