@@ -8,7 +8,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewAddressList = (formProps) => {
-    const { styles, contactData, formData, isViewModeVisible } = formProps;
+    const { styles, contactData, formData, isViewModeVisible, formActionType } = formProps;
     const [openAccordian, setOpenAccordian] = useState('');
 
     const handleCollapse = (key) => {
@@ -23,7 +23,7 @@ const ViewAddressList = (formProps) => {
 
     return (
         <div>
-            {!isViewModeVisible
+            {!formActionType?.viewMode
                 ? contactData?.length > 0 &&
                   contactData?.map((data, i) => {
                       return (

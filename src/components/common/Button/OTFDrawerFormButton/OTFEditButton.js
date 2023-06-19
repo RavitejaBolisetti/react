@@ -2,9 +2,9 @@ import React from 'react';
 import { Button, Row, Col } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import styles from './DrawerFormButton.module.css';
+import styles from './OTFDrawerFormButton.module.css';
 
-export const DrawerFormButton = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave }) => {
+const OTFEditButton = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave }) => {
     return (
         <Row gutter={20} className={styles.formFooter}>
             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
@@ -43,3 +43,5 @@ export const DrawerFormButton = ({ formData, onCloseAction, buttonData, setButto
         </Row>
     );
 };
+
+export default OTFEditButton;

@@ -8,10 +8,11 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const [form] = Form.useForm();
+    const { onFieldsChange } = props;
 
     return (
         <>
-            <Form form={form} id="myForm" autoComplete="off" layout="vertical">
+            <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFieldsChange={onFieldsChange}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Credit Limit" name="limitAmt" rules={[validateNumberWithTwoDecimalPlaces('credit limit amount')]}>

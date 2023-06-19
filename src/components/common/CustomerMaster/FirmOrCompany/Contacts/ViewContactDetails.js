@@ -1,5 +1,6 @@
 import React from 'react';
 import { Descriptions, Row, Col, Button } from 'antd';
+import styles from 'components/common/Common.module.css';
 
 const ViewDetailBase = ({ formData, styles }) => {
     const viewProps = {
@@ -10,11 +11,11 @@ const ViewDetailBase = ({ formData, styles }) => {
     };
 
     const editContactHandeler = (data) => {
-        console.log('formData',formData)
+        console.log('formData', formData);
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={styles.viewDrawerContainer}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Purpose of Contact">{formData?.purposeOfContact}</Descriptions.Item>
@@ -38,7 +39,9 @@ const ViewDetailBase = ({ formData, styles }) => {
                 </Descriptions>
                 <Row justify="left">
                     <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
-                        <Button type="primary" onClick={() => editContactHandeler(formData)}>Edit</Button>
+                        <Button type="primary" onClick={() => editContactHandeler(formData)}>
+                            Edit
+                        </Button>
                     </Col>
                     <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
                         <Button>Delete</Button>

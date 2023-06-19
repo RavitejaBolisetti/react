@@ -10,7 +10,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, titleData } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, typeData } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
 
     const handleFormValueChange = () => {
@@ -72,7 +72,7 @@ const AddEditFormMain = (props) => {
                                     }}
                                     {...selectProps}
                                 >
-                                    {titleData?.map((item) => (
+                                    {typeData?.map((item) => (
                                         <Option key={item?.key} value={item?.key}>
                                             {item?.value}
                                         </Option>

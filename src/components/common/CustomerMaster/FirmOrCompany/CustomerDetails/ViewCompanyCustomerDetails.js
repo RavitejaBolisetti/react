@@ -3,6 +3,7 @@ import { Descriptions } from 'antd';
 import { Col, Row, Button, Space, Collapse, Typography } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FaRegUserCircle } from 'react-icons/fa';
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -37,7 +38,7 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Collapse
                     expandIcon={() => {
@@ -54,7 +55,7 @@ const ViewDetailMain = (props) => {
                     <Panel
                         header={
                             <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
+                                {/* <FaRegUserCircle className={styles.userCircle} /> */}
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     {' '}
                                     Customer Information
@@ -88,7 +89,7 @@ const ViewDetailMain = (props) => {
                     <Panel
                         header={
                             <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
+                                {/* <FaRegUserCircle className={styles.userCircle} /> */}
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     {' '}
                                     Key Account Details
@@ -122,7 +123,7 @@ const ViewDetailMain = (props) => {
                     <Panel
                         header={
                             <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
+                                {/* <FaRegUserCircle className={styles.userCircle} /> */}
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     {' '}
                                     Authority Details
@@ -139,7 +140,7 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </Panel>
                 </Collapse>
-                <Row gutter={20}>
+                {/* <Row gutter={20}>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                         <Button danger onClick={onCloseAction}>
                             Cancel
@@ -150,7 +151,7 @@ const ViewDetailMain = (props) => {
                             Edit
                         </Button>
                     </Col>
-                </Row>
+                </Row> */}
             </Space>
         </div>
     );

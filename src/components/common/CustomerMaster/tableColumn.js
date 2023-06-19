@@ -1,5 +1,4 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
-
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
@@ -9,14 +8,13 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Customer ID',
             dataIndex: 'customerId',
             width: '14%',
+            sorter: false,
         }),
-
         tblPrepareColumns({
             title: 'Customer Name',
             dataIndex: 'customerName',
             width: '14%',
         }),
-
         tblPrepareColumns({
             title: 'Customer Type',
             dataIndex: 'customerType',

@@ -27,4 +27,28 @@ export const PARAM_MASTER = {
         id: 'CUST_MST',
         title: 'CUST_MST',
     },
+    TITLE: {
+        id: 'TITLE',
+        title: 'TITLE',
+    },
+    PRC_TYP: {
+        id: 'PRC_TYP',
+        title: 'Price Type',
+    },
+    SALE_TYP: {
+        id: 'SALE_TYP',
+        title: 'Sales Type',
+    },
+    FNC_ARNGD: {
+        id: 'FNC_ARNGD',
+        title: 'Finance Arranged By',
+    },
+    DLVR_AT: {
+        id: 'DLVR_AT',
+        title: 'Delivery AT',
+    },
+    REF: {
+        id: 'REF',
+        title: 'Referral',
+    },
 };

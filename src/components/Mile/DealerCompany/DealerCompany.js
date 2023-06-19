@@ -13,7 +13,6 @@ import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
 import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
-import { dealerCompanyLovDataActions } from 'store/actions/data/dealer/dealerCompanyLov';
 
 const mapStateToProps = (state) => {
     const {
@@ -22,7 +21,6 @@ const mapStateToProps = (state) => {
             DealerHierarchy: {
                 DealerCompany: { isLoaded: isDataLoaded = false, isLoading, data = [] },
                 DealerParent: { isLoaded: isDealerParentDataLoaded = false, isLoading: isDealerParentDataLoading = false, data: dealerParentData = [] },
-                DealerCompanyLov: { isLoaded: isDealerLovDataLoaded = false, isLoading: isDealerLovDataLoading = false, data: dealerLovData = [] },
             },
             Geo: {
                 Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
@@ -38,10 +36,6 @@ const mapStateToProps = (state) => {
         isDealerParentDataLoaded,
         isDealerParentDataLoading,
         dealerParentData,
-
-        isDealerLovDataLoaded,
-        isDealerLovDataLoading,
-        dealerLovData,
 
         isPinCodeDataLoaded,
         pincodeData,
@@ -66,9 +60,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchPincodeDetail: geoPincodeDataActions.fetchList,
             pinCodeShowLoading: geoPincodeDataActions.listShowLoading,
 
-            fetchLovList: dealerCompanyLovDataActions.fetchList,
-            listLovShowLoading: dealerCompanyLovDataActions.listShowLoading,
-
             showGlobalNotification,
         },
         dispatch
@@ -77,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const DealerCompanyBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isPinCodeLoading, pinCodeShowLoading } = props;
-    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail, fetchLovList, isDealerLovDataLoaded, listLovShowLoading, dealerLovData } = props;
+    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail, fetchLovList, isDealerLovDataLoaded, listLovShowLoading } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -263,7 +254,6 @@ export const DealerCompanyBase = (props) => {
         isPinCodeLoading,
         forceUpdate,
         pinCodeShowLoading,
-        dealerLovData,
     };
 
     const tableProps = {
