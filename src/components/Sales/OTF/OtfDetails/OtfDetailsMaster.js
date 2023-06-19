@@ -12,7 +12,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -24,12 +23,15 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    console.log('state', state);
     const moduleTitle = 'OTF Details';
 
     let returnValue = {
         userId,
+        isConfigDataLoaded,
+        isConfigLoading,
+        typeData,
         isDataLoaded,
+
         otfData,
         isLoading,
         moduleTitle,
@@ -41,6 +43,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            fetchConfigList: configParamEditActions.fetchList,
+            listConfigShowLoading: configParamEditActions.listShowLoading,
+
             fetchList: otfDetailsDataActions.fetchList,
             saveData: otfDetailsDataActions.saveData,
             resetData: otfDetailsDataActions.reset,
@@ -52,7 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const OtfDetailsMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, isDataLoaded, otfData, isLoading } = props;
+    const { fetchList, saveData, listShowLoading, userId, fetchConfigList, listConfigShowLoading, isConfigDataLoaded, isConfigLoading, typeData, isDataLoaded, otfData, isLoading } = props;
 
     const [form] = Form.useForm();
 
@@ -74,6 +79,17 @@ const OtfDetailsMasterBase = (props) => {
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
+    useEffect(() => {
+        if (!isConfigDataLoaded && userId) {
+            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.PRC_TYP?.id, userId });
+            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.SALE_TYP?.id, userId });
+            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.FNC_ARNGD?.id, userId });
+            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.DLVR_AT?.id, userId });
+            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.REF?.id, userId });
+            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.PRC_TYP?.id, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isConfigDataLoaded, userId]);
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -120,6 +136,7 @@ const OtfDetailsMasterBase = (props) => {
         onFinish,
         onFinishFailed,
         fetchList,
+        typeData,
 
         userId,
         isDataLoaded,

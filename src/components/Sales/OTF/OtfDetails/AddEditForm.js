@@ -14,7 +14,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 function AddEditForm(props) {
-    const { form, formData, formActionType, onFinish, onFinishFailed } = props;
+    const { form, formData, formActionType, onFinish, onFinishFailed, typeData } = props;
     const innitValue = dayjs(formData?.initialPromiseDeliveryDate, 'YYYY/MM/DD');
     const expectedValue = dayjs(formData?.custExpectedDeliveryDate, 'YYYY/MM/DD');
 
@@ -40,18 +40,14 @@ function AddEditForm(props) {
                             </Col>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                 <Form.Item initialValue={formData?.saleType} name="saleType" label="Sale Type">
-                                    <Select placeholder="Select" showSearch allowClear>
-                                        <Option value="GST">GST</Option>
-                                    </Select>
+                                    <Select placeholder="Select" showSearch allowClear options={typeData['SALE_TYP']} fieldNames={{ label: 'value', value: 'key' }} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                 <Form.Item initialValue={formData?.priceType} label="Price Type" name="priceType" rules={[validateRequiredInputField('Initial Promise Delivery Date')]}>
-                                    <Select placeholder="Select" showSearch allowClear>
-                                        <Option value="Price Type">Price Type</Option>
-                                    </Select>
+                                    <Select placeholder="Select" showSearch allowClear options={typeData['PRC_TYP']} fieldNames={{ label: 'value', value: 'key' }} />
                                 </Form.Item>
                             </Col>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -80,16 +76,14 @@ function AddEditForm(props) {
                             </Col>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                 <Form.Item initialValue={formData?.deliveryAt} label="Delivery At" name="deliveryAt" rules={[validateRequiredInputField('Delivery At')]}>
-                                    <Select placeholder="Select" showSearch allowClear>
-                                        <Option value="deliveryAt">deliveryAt</Option>
-                                    </Select>
+                                    <Select placeholder="Select" showSearch allowClear options={typeData['DLVR_AT']} fieldNames={{ label: 'value', value: 'key' }} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                 <Form.Item initialValue={formData?.referral} label="Referral" name="referral" rules={[validateRequiredInputField('Referral')]}>
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('Referral')} disabled={formActionType?.editMode ? true : false} />
+                                    <Select placeholder="Select" showSearch allowClear options={typeData['REF']} fieldNames={{ label: 'value', value: 'key' }} />
                                 </Form.Item>
                             </Col>
 
@@ -118,9 +112,7 @@ function AddEditForm(props) {
                             </Col>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                 <Form.Item initialValue={formData?.financeArrangedBy} name="financeArrangedBy" label="Finance Arranged By" rules={[validateRequiredSelectField('Finance Arranged By')]}>
-                                    <Select placeholder="Select" showSearch allowClear>
-                                        <Option value="financeArrangedBy">financeArrangedBy</Option>
-                                    </Select>
+                                    <Select placeholder="Select" showSearch allowClear options={typeData['FNC_ARNGD']} fieldNames={{ label: 'value', value: 'key' }} />
                                 </Form.Item>
                             </Col>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
