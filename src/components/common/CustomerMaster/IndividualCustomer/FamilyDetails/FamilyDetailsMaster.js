@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
-//?customerId=CUS1686811036620
+//
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
