@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-import { Collapse, Form, Space, Typography, Button } from 'antd';
+import { Collapse, Divider, Form, Space, Typography, Button } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
-import {FaRegUserCircle } from 'react-icons/fa'
+import { FaRegUserCircle } from 'react-icons/fa'
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 
@@ -32,55 +32,79 @@ const { Text } = Typography;
 //     },
 // ];
 
-const IndividualAddressMasterBase = (props) => {
+const IndividualAddressMasterBase = ({ isViewModeVisible, toggleButton, props }) => {
     const [form] = Form.useForm();
-    const [contactData, setContactData] = useState([]);
+    const [addressData, setAddressData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
-    const [editedMode, setEditedMode] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     const onFinish = (value) => {
-        setContactData((prev) => [...prev, { ...value }]);
+        form.validateFields()
+            .then((data) => console.log('data', data))
+            .catch((error) => console.error(error));
+
+        setAddressData((prev) => {
+            let formData = [...prev];
+            if (value?.defaultaddress && formData?.length >= 1) {
+                formData?.forEach((address) => {
+                    if (address?.defaultaddress === true) {
+                        address.defaultaddress = false;
+                    }
+                });
+                return [...formData, value];
+            } else {
+                return [...prev, { ...value }];
+            }
+        });
         setShowAddEditForm(false);
+        setIsEditing(false);
     };
 
-    const addContactHandeler = (e) => {
+    const addAddressHandeler = (e) => {
         e.stopPropagation();
         form.resetFields();
         setShowAddEditForm(true);
         setOpenAccordian('1');
     };
 
+
     const formProps = {
+        setShowAddEditForm,
+        showAddEditForm,
         styles,
-        contactData,
-        setContactData,
+        addressData,
+        setAddressData,
         onFinish,
         form,
-        editedMode,
-        setEditedMode,
-        ...props,
+        isEditing,
+        setIsEditing,
     };
 
     return (
         <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
             <Panel
                 header={
-                    <Space>
-                        <FaRegUserCircle className={styles.userCircle} />
-                        <Text strong> Individual Address</Text>{' '}
-                        <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
-                            Add Address
-                        </Button>
-                    </Space>
+                    <>
+                        <Space>
+                            <Text strong> {toggleButton + ' Address'}</Text>
+                            {!isViewModeVisible && (
+                                <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary">
+                                    Add
+                                </Button>
+                            )}
+                        </Space>
+                        <Divider type="vertical" />
+                    </>
                 }
                 key="1"
+
             >
-                {showAddEditForm && <AddEditForm {...formProps} />}
+                {(showAddEditForm || !addressData?.length > 0) && <AddEditForm {...formProps} />}
                 <ViewAddressList {...formProps} />
             </Panel>
         </Collapse>
