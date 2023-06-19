@@ -42,5 +42,8 @@ export const PARAM_MASTER = {
     REF: {
         id: 'REF',
         title: 'Referral',
+    FAMLY_RELTN: {
+        id: 'FAMLY_RELTN',
+        title: 'FAMLY_RELTN',
     },
 };

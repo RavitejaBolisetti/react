@@ -107,4 +107,5 @@ export const BASE_URL_OTF_DOWNLAOD_REPORT = BASE_URL + 'customreports/otf/regist
 export const BASE_URL_OTF = BASE_URL + 'otf/';
 export const BASE_URL_OTF_INVOICE_DETAILS = BASE_URL + 'invoice';
 export const BASE_URL_OTF_DETAILS = BASE_URL_OTF + 'details';
+export const BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER = BASE_URL + 'customers//individual/familydetails';
 
