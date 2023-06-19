@@ -6,13 +6,19 @@ import AddEditForm from './AddEditForm';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { showGlobalNotification } from 'store/actions/notification';
+
+import { PARAM_MASTER } from 'constants/paramMaster';
+
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
+            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
+
             OTF: {
                 OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
             },

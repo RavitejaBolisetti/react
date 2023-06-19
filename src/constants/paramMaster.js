@@ -23,4 +23,8 @@ export const PARAM_MASTER = {
         id: 'PIN_CATG',
         title: 'PIN_CATG',
     },
+    PRC_TYP : {
+        id : 'PRC_TYP',
+        title : 'Price Type'
+    }
 };
