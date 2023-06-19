@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form } from 'antd';
+
 import { AddEditForm } from './AddEditForm';
-import { bindActionCreators } from 'redux';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { familyDetailsDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetails';
@@ -60,7 +61,7 @@ const FamilyDetailsBase = (props) => {
 
     useEffect(() => {
         if (userId && !isRelationDataLoaded && !isRelationLoading) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: 'FAMLY_RELTN' });
+            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.FAMLY_RELTN.id });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isRelationDataLoaded]);
@@ -126,7 +127,7 @@ const FamilyDetailsBase = (props) => {
                 relationCustomerId: null,
                 customerName: 'CCCCC',
                 // relationship: 'No Relation',
-                relationCode: "BH",
+                relationCode: 'BH',
                 dateOfBirth: '2002-12-12',
                 relationAge: '20',
                 remarks: 'ff',
@@ -152,8 +153,6 @@ const FamilyDetailsBase = (props) => {
             onError,
             onSuccess,
         };
-
-        console.log(requestData, 'Final Submit');
 
         saveData(requestData);
     };
