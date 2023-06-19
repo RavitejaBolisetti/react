@@ -7,7 +7,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, onChange, style } = props;
+    const { activeKey, onChange, style, formData } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -61,8 +61,8 @@ const ViewDetailMain = (props) => {
                         key="1"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="PAN">{CompanyForm?.panNumber}</Descriptions.Item>
-                            <Descriptions.Item label="GSTIN">{CompanyForm?.gstinNumber}</Descriptions.Item>
+                            <Descriptions.Item label="PAN">{formData?.panNumber}</Descriptions.Item>
+                            <Descriptions.Item label="GSTIN">{formData?.gstinNumber}</Descriptions.Item>
                         </Descriptions>
                         <Divider />
                         <Descriptions {...viewProps}>

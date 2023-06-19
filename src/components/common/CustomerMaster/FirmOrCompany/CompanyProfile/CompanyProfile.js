@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
 import { showGlobalNotification } from 'store/actions/notification';
 import AddEditForm from './AddEditForm';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { btnVisiblity } from 'utils/btnVisiblity';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { corporateCompanyProfileDataActions } from 'store/actions/data/customerMaster/corporateCompanyProfileAction';
 
@@ -13,18 +13,22 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
+            ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, paramdata: appCategoryData = [] },
             // CompanyProfile: { isLoaded: isDataLoaded = false, data: DealerTermsConditionsData, isLoading, isLoadingOnSave, isFormDataLoaded },
         },
         common: {
             LeftSideBar: { collapsed = false },
         },
     } = state;
+    console.log('Redux State:', state);
 
     const moduleTitle = 'Company Profile';
 
     let returnValue = {
         collapsed,
         userId,
+        isAppCategoryDataLoaded,
+        appCategoryData,
         // isDataLoaded,
         // isLoading,
         // isLoadingOnSave,
@@ -38,7 +42,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchProductList: corporateCompanyProfileDataActions.fetchList,
+            fetchApplicationCategorization: configParamEditActions.fetchList,
             resetData: corporateCompanyProfileDataActions.reset,
             listShowLoading: corporateCompanyProfileDataActions.listShowLoading,
 
@@ -49,31 +53,18 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const CompanyProfileBase = ({ listShowLoading, saveData }) => {
+const CompanyProfileBase = ({ listShowLoading, saveData, formActionType, userId, fetchApplicationCategorization, isAppCategoryDataLoaded, appCategoryData, formData }) => {
     const [form] = Form.useForm();
-    const [formActionType, setFormActionType] = useState('');
-    const [formData, setFormData] = useState({});
+    // const [formActionType, setFormActionType] = useState('');
+    // const [formData, setFormData] = useState({});
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+    // const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormData([]);
-
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, saveAndNewBtn: false }));
-
-        record && setFormData(record);
-        // setIsFormVisible(true);
-    };
-
-    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
+    useEffect(() => {
+        fetchApplicationCategorization({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.GEO_TEH_CAT.id });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isAppCategoryDataLoaded]);
 
     const onFinish = (values, e) => {
         const recordId = formData?.id || '';
@@ -105,10 +96,13 @@ const CompanyProfileBase = ({ listShowLoading, saveData }) => {
     };
 
     const formProps = {
-        handleButtonClick,
+        // handleButtonClick,
         onFinish,
-        isViewModeVisible,
-        setIsViewModeVisible,
+
+        // isViewModeVisible,
+        // setIsViewModeVisible,
+        formActionType,
+        appCategoryData,
     };
 
     return <AddEditForm {...formProps} />;

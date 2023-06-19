@@ -2,7 +2,7 @@ import { React, useEffect, useState } from 'react';
 
 import { Col, Input, Collapse, Row, Button, Space, Form, Select, Upload, message, Checkbox, Divider, Typography } from 'antd';
 
-import { validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField, validatePanField, validateGSTIN, validatFacebookProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 import style from 'components/common/Common.module.css';
 import styles from 'components/Auth/Auth.module.css';
 
@@ -20,7 +20,7 @@ const { TextArea } = Input;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 
-const AddEditForm = ({ form, isVisible, onCloseAction, onFinish,setisVisible, isViewModeVisible, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable ,formActionType}) => {
+const AddEditForm = ({ form, isVisible, onCloseAction, onFinish, setisVisible, isViewModeVisible, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable, formActionType }) => {
     const [companyInfoform] = Form.useForm();
     const [uploadCustomerForm] = Form.useForm();
     const [done, setDone] = useState();
@@ -164,13 +164,13 @@ const AddEditForm = ({ form, isVisible, onCloseAction, onFinish,setisVisible, is
 
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="PAN" initialValue={formData?.panNumber} name="panNumber">
+                                                <Form.Item label="PAN" initialValue={formData?.panNumber} name="panNumber" rules={[validatePanField('panNumber'), validateRequiredInputField('panNumber')]}>
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('PAN')} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="GSTIN" initialValue={formData?.gstin} name="gstin">
+                                                <Form.Item label="GSTIN" initialValue={formData?.gstin} name="gstin" rules={[validateGSTIN('gstin'), validateRequiredInputField('panNumber')]}>
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('GSTIN')} />
                                                 </Form.Item>
                                             </Col>
@@ -279,13 +279,13 @@ const AddEditForm = ({ form, isVisible, onCloseAction, onFinish,setisVisible, is
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Facebook Link" initialValue={formData?.facebookLink} name="facebookLink">
+                                                <Form.Item label="Facebook Link" initialValue={formData?.facebookLink} name="facebookLink" rules={[validatFacebookProfileUrl('facebookLink')]}>
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Twitter Link" initialValue={formData?.twitterLink} name="twitterLink">
+                                                <Form.Item label="Twitter Link" initialValue={formData?.twitterLink} name="twitterLink" rules={[validattwitterProfileUrl('twitterLink')]}>
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
                                                 </Form.Item>
                                             </Col>
@@ -359,7 +359,7 @@ const AddEditForm = ({ form, isVisible, onCloseAction, onFinish,setisVisible, is
                                     <Form form={form} layout="vertical">
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Name Of Person" initialValue={formData?.authorityRequest.personName} name="authorityRequest.personName">
+                                                <Form.Item label="Name Of Person" initialValue={formData?.authorityRequest.personName} name="authorityRequest.personName" rules={[validateRequiredInputField('authorityRequest.personName')]}>
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Name Of Person')} />
                                                 </Form.Item>
                                             </Col>
@@ -371,7 +371,7 @@ const AddEditForm = ({ form, isVisible, onCloseAction, onFinish,setisVisible, is
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Company Name" initialValue={formData?.authorityRequest.companyName} name="authorityRequest.companyName">
+                                                <Form.Item label="Company Name" initialValue={formData?.authorityRequest.companyName} name="authorityRequest.companyName" rules={[validateRequiredInputField('authorityRequest.companyName')]}>
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Company Name')} />
                                                 </Form.Item>
                                             </Col>
