@@ -1,116 +1,165 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider, Select } from 'antd';
-import { tblPrepareColumns } from 'utils/tableCloumn';
-import DataTable from 'utils/dataTable/DataTable';
-import { AddEditForm } from './AddEditForm';
-import { FiEdit } from 'react-icons/fi';
-import styles from 'components/common/Common.module.css';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { bindActionCreators } from 'redux';
+import { Button, Col, Row, Input, Form, Empty, ConfigProvider, Select } from 'antd';
 
-import AdvanceFilter from './AdvanceFilter';
-import { ListDataTable } from 'utils/ListDataTable';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
+import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
+import { showGlobalNotification } from 'store/actions/notification';
+
+import { PlusOutlined } from '@ant-design/icons';
+
 import { tableColumn } from './tableColumn';
+
 import { btnVisiblity } from 'utils/btnVisiblity';
+import DataTable from 'utils/dataTable/DataTable';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { PARAM_MASTER } from 'constants/paramMaster';
+import { CUSTOMER_TYPE } from 'constants/CustomerType';
+
+import { AddEditForm } from './AddEditForm';
+import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
 const { Option } = Select;
 
-const initialTableData = [
-    { customerId: 'SH1121', customerName: 'Deepak Palariya', customerType: 'C T 1', mobileNo: '9988122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber: 'RG001', chassisNumber: '9912', vpin: '1212', type: 'individual' },
-    { customerId: 'SH1122', customerName: 'Rohan S', customerType: 'C T 1', mobileNo: '8888122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber: 'RG001', chassisNumber: '9912', vpin: '1212', type: 'individual' },
-    { customerId: 'SH1123', customerName: 'Deepak 2', customerType: 'C T 1', mobileNo: '9909122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber: 'RG001', chassisNumber: '9912', vpin: '1212', type: 'individual' },
-    { customerId: 'SH1124', customerName: 'Rohan 2', customerType: 'C T 1', mobileNo: '9900122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber: 'RG001', chassisNumber: '9912', vpin: '1212', type: 'individual' },
-    { customerId: 'SH1125', customerName: 'Deepak 3', customerType: 'C T 1', mobileNo: '9988122299', emailAddress: 'dp@gmail.com', membershipType: 'M T', registrationNumber: 'RG001', chassisNumber: '9912', vpin: '1212', type: 'company' },
-];
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
+        },
+        customer: {
+            customerDetail: { isLoaded: isDataLoaded = false, isLoading, data, filter: filterString = {} },
+        },
+    } = state;
 
-const dealersData = ['Dealer 1', 'Dealer 2', 'Dealer 3', 'Dealer 4', 'Dealer 5', 'Dealer 6 '];
-const dealersDataList = [
-    { dealerId: 'Customer ID', dealerNm: 'Customer ID', type: 'individual' },
-    { dealerId: 'Customer Name', dealerNm: 'Customer Name', type: 'individual' },
-    { dealerId: 'Mobile Number', dealerNm: 'Mobile Number', type: 'individual' },
-    { dealerId: 'Registration Number', dealerNm: 'Registration Number', type: 'individual' },
-    { dealerId: 'Chassis Number', dealerNm: 'Chassis Number', type: 'individual' },
-    { dealerId: 'VIN', dealerNm: 'VIN', type: 'individual' },
-    { dealerId: 'ABC', dealerNm: 'ABC', type: 'company' },
-    { dealerId: 'Company-1', dealerNm: 'Company-1', type: 'company' },
-];
-let showDealersDataList = dealersDataList.filter((d) => d.type === 'individual');
+    const moduleTitle = 'Customer';
 
-const CustomerMasterMain = ({ saveData, userId, isDataLoaded, listShowLoading, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
+    let returnValue = {
+        userId,
+        isDataLoaded,
+        data,
+        isLoading,
+        moduleTitle,
+        isConfigDataLoaded,
+        isConfigLoading,
+        typeData: typeData && typeData[PARAM_MASTER.CUST_MST.id],
+        filterString,
+    };
+    return returnValue;
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchConfigList: configParamEditActions.fetchList,
+            listConfigShowLoading: configParamEditActions.listShowLoading,
+
+            fetchList: customerDetailDataActions.fetchList,
+            saveData: customerDetailDataActions.saveData,
+            setFilterString: customerDetailDataActions.setFilter,
+            resetData: customerDetailDataActions.reset,
+            listShowLoading: customerDetailDataActions.listShowLoading,
+            showGlobalNotification,
+        },
+        dispatch
+    ),
+});
+
+const CustomerMasterMain = (props) => {
+    const { data, fetchList, userId, isLoading, listShowLoading, showGlobalNotification, resetData, moduleTitle } = props;
+    const { isConfigDataLoaded, isConfigLoading, typeData, listConfigShowLoading, fetchConfigList } = props;
+
+    const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
+
     const [form] = Form.useForm();
+    const [showDataLoading, setShowDataLoading] = useState(true);
+    const [refershData, setRefershData] = useState(false);
 
-    const [isFormVisible, setIsFormVisible] = useState(false);
-    const [drawer, setDrawer] = useState(false);
-    const [formData, setFormData] = useState({});
-    const [showDataLoading, setShowDataLoading] = useState(false);
-    const [searchData, setSearchdata] = useState();
     const [filterString, setFilterString] = useState();
-    const [selectedRecord, setSelectedRecord] = useState(null);
-    const [saveBtn, setSaveBtn] = useState(false);
-    const [saveclick, setsaveclick] = useState();
-    const [saveandnewclick, setsaveandnewclick] = useState();
-    const [DealerSearchvalue, setDealerSearchvalue] = useState();
-    const [DealerSelected, setDealerSelected] = useState();
-    const [isFormBtnActive, setFormBtnActive] = useState(false);
-    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
-    const [showSaveBtn, setShowSaveBtn] = useState(true);
-    const [data, setData] = useState(initialTableData);
-    const [error, setError] = useState(false);
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, closeBtn: false, formBtnActive: false };
+    const [isFormVisible, setIsFormVisible] = useState(false);
+
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-    console.log('buttonData', buttonData);
-    const [toggleButton, settoggleButton] = useState('Individual');
-    const moduleTitle = 'Customer Details';
 
-    const onFieldsChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
+    const extraParams = [
+        {
+            key: 'customerType',
+            title: 'Customer Type',
+            value: customerType,
+            canRemove: true,
+        },
+        {
+            key: 'searchType',
+            title: 'Type',
+            value: filterString?.searchType,
+            canRemove: true,
+        },
+        {
+            key: 'searchParam',
+            title: 'Value',
+            value: filterString?.searchParam,
+            canRemove: true,
+        },
+    ];
+
+    const onSuccessAction = (res) => {
+        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
+
+    const onErrorAction = (res) => {
+        showGlobalNotification({ message: res?.responseMessage });
+        setRefershData(false);
+        setShowDataLoading(false);
     };
 
     useEffect(() => {
-        if (DealerSelected?.length > 0 && DealerSelected !== undefined) {
-            setError(false);
+        if (!isConfigDataLoaded && !isConfigLoading) {
+            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CUST_MST.id });
         }
-        if (DealerSelected === undefined) {
-            setDealerSearchvalue('');
-            setError(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isConfigDataLoaded, userId]);
+
+    useEffect(() => {
+        if (userId && customerType) {
+            resetData();
+            fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
         }
-    }, [DealerSearchvalue, DealerSelected]);
-    const handleButtonVisibility = (buttonAction) => {
-        switch (buttonAction) {
-            case ADD_ACTION: {
-                setButtonData({ ...buttonData, editBtn: false, saveBtn: true, closeBtn: true, formBtnActive: false });
-                break;
-            }
-            case EDIT_ACTION: {
-                setButtonData({ ...buttonData, editBtn: false, saveBtn: true, closeBtn: true, formBtnActive: false });
-                break;
-            }
-            case VIEW_ACTION: {
-                setButtonData({ ...buttonData, editBtn: true, saveBtn: false, closeBtn: true, formBtnActive: false });
-                break;
-            }
-            default: {
-                setButtonData({ ...buttonData, editBtn: false, saveBtn: true, closeBtn: true, formBtnActive: false });
-                break;
-            }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [customerType, userId]);
+
+    useEffect(() => {
+        if (refershData && userId) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, refershData]);
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
-        setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        handleButtonVisibility(buttonAction);
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
-        record && setFormData(record);
         setIsFormVisible(true);
+    };
+
+    const onFinish = (values, e) => {};
+
+    const onFinishFailed = (errorInfo) => {
+        form.validateFields().then((values) => {});
     };
 
     const tableProps = {
@@ -119,90 +168,126 @@ const CustomerMasterMain = ({ saveData, userId, isDataLoaded, listShowLoading, s
         tableColumn: tableColumn(handleButtonClick),
     };
 
-    const onSuccess = (res) => {
-        listShowLoading(false);
+    const onChange = (sorter, filters) => {
         form.resetFields();
-        setSelectedRecord({});
-        if (saveclick === true) {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        } else {
-            setIsFormVisible(false);
-
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'topRight' });
-        }
     };
 
     const onSearchHandle = (value) => {
-        console.log('This is the searched Value : ', value);
-        setDealerSearchvalue(value);
-        if (value === '') {
-            return;
-        }
-        if (DealerSearchvalue?.length > 0 && DealerSelected?.length > 0 && DealerSelected !== undefined) {
-            // /fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue, FetchError });
-        }
-        if (value === 'B6G431') {
-            setError(true);
-        } else if (value === 'B6G433') {
-            setError(false);
-        }
-        setFilterString(value);
-        if (DealerSelected === 'Customer Name') setData(initialTableData.filter((d) => d.customerName.includes(value)));
-        if (DealerSelected === 'Mobile Number') setData(initialTableData.filter((d) => d.mobileNo.includes(value)));
+        setRefershData(!refershData);
+        setShowDataLoading(true);
     };
 
     const handleChange = (selectedvalue) => {
-        setDealerSelected(selectedvalue);
-    };
-    const ChangeSearchHandler = (event) => {
-        if (event.target.value === undefined) {
-            setError(false);
-        }
-        setDealerSearchvalue(event.target.value);
+        setFilterString({ searchType: selectedvalue });
     };
 
-    const handleClickCustomerType = (custType) => {
-        showDealersDataList = dealersDataList.filter((d) => d.type === custType);
-        //setCustomerType(custType);
+    const onChangeHandle = (event) => {
+        if (event.target.value === undefined) {
+            return false;
+        }
+        setFilterString({ ...filterString, searchParam: event.target.value });
     };
+
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setButtonData({ ...defaultBtnVisiblity });
+    };
+
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add New';
+        }
+    }, [formActionType]);
 
     const formProps = {
-        saveclick,
-        onFieldsChange,
-        buttonData,
-        setButtonData,
-        setsaveclick,
-        isVisible: isFormVisible,
-        isViewModeVisible,
-        setIsViewModeVisible,
         form,
         formActionType,
-        titleOverride: formActionType?.addMode ? 'Add New Customer' : (formActionType?.viewMode ? 'View ' : 'Edit ').concat(moduleTitle),
-        onCloseAction: () => setIsFormVisible(false),
-        toggleButton,
-        settoggleButton,
+        setFormActionType,
+        onFinish,
+        onFinishFailed,
+        isVisible: isFormVisible,
+        onCloseAction,
+        titleOverride: drawerTitle.concat(moduleTitle),
+        tableData: data,
+        customerType,
+
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        buttonData,
+
+        setButtonData,
         handleButtonClick,
     };
 
-    const advanceFilterProps = {
-        titleOverride: 'Advance Filters',
-        showDealersDataList,
-        DealerSearchvalue,
-        ChangeSearchHandler,
-        onSearchHandle,
-        handleChange,
-        settoggleButton,
-        toggleButton,
-        handleAdd: handleButtonClick,
-        FROM_ACTION_TYPE,
+    const selectProps = {
+        optionFilterProp: 'children',
+        allowClear: true,
+        className: styles.headerSelectField,
     };
-
     return (
         <>
-            <AdvanceFilter {...advanceFilterProps} />
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <div className={styles.contentHeaderBackground}>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.searchAndLabelAlign}>
+                                <div className={`${styles.userManagement} ${styles.headingToggle}`}>
+                                    {Object.values(CUSTOMER_TYPE)?.map((item) => {
+                                        return (
+                                            <Button className={styles.marR5} type={customerType === item?.id ? 'primary' : 'link'} danger onClick={() => setCustomerType(item?.id)}>
+                                                {item?.title}
+                                            </Button>
+                                        );
+                                    })}
+                                    {/* <Button className={styles.marR5} type={customerType === 'Individual' ? 'primary' : 'link'} danger onClick={() => setCustomerType('Individual')}>
+                                        Individual
+                                    </Button>
+                                    <Button type={customerType === 'Firm' ? 'primary' : 'link'} danger onClick={() => setCustomerType('Firm')}>
+                                        Firm/Company
+                                    </Button> */}
+                                </div>
+                                <div className={styles.selectSearchBg}>
+                                    <Select {...selectProps} className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter">
+                                        {typeData?.map((item) => (
+                                            <Option key={'pnc' + item?.key} value={item?.key}>
+                                                {item?.value}
+                                            </Option>
+                                        ))}
+                                    </Select>
+                                    <Search placeholder="Search" value={filterString?.searchParam} onChange={onChangeHandle} allowClear onSearch={onSearchHandle} className={styles.headerSearchField} />
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
+                                <Button danger type="primary" icon={<PlusOutlined />}>
+                                    Add
+                                </Button>
+                            </Col>
+                        </Row>
+                    </div>
+                </Col>
+            </Row>
+
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
+                    <ConfigProvider
+                        renderEmpty={() => (
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={<span> No record found.</span>}
+                            ></Empty>
+                        )}
+                    >
+                        <DataTable isLoading={showDataLoading} {...tableProps} onChange={onChange} />
+                    </ConfigProvider>
                 </Col>
             </Row>
             <AddEditForm {...formProps} />
@@ -210,4 +295,4 @@ const CustomerMasterMain = ({ saveData, userId, isDataLoaded, listShowLoading, s
     );
 };
 
-export const CustomerMaster = connect(null, null)(CustomerMasterMain);
+export const CustomerMaster = connect(mapStateToProps, mapDispatchToProps)(CustomerMasterMain);

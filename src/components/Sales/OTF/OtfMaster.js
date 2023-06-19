@@ -113,6 +113,7 @@ export const OtfMasterBase = (props) => {
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         record && setFormData(record);
+
         setIsFormVisible(true);
     };
 

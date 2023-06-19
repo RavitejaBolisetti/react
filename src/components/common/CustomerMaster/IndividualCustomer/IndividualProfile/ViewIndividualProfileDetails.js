@@ -3,6 +3,7 @@ import { Space, Collapse, Typography, Descriptions, Divider, Row, Col } from 'an
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FaRegUserCircle } from 'react-icons/fa';
 import Svg from 'assets/images/Filter.svg';
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -32,14 +33,13 @@ const ViewDetailMain = (props) => {
         mmfsl: 'mfsl001',
         drivingLicenseNumber: 'UP1620195565156',
         gstin: '29GGGGG1314R9Z6',
-        usageCategorizationcategory:'Application Category',
-        subCategory:'Sub Category',
+        usageCategorizationcategory: 'Application Category',
+        subCategory: 'Sub Category',
         customerCategory: 'Common',
-        religion:'hindu',
-
+        religion: 'hindu',
     };
     const socialMedia = {
-        mmfsl:'ps@mahindra.com',
+        mmfsl: 'ps@mahindra.com',
         facebookId: 'facebook@286',
         twitterId: 'twitter@234',
         instagramId: 'insta@123',
@@ -52,16 +52,16 @@ const ViewDetailMain = (props) => {
         accountSegement: 'Individual',
         accountClientName: 'Pal Singh',
         accountMappingDate: '12-11-2022',
-    }
+    };
     const authorityDetails = {
         nameOfPerson: 'Pal Singh',
         position: 'Manager',
         companyName: 'Koncept',
         remarks: 'This is remarks',
-    }
+    };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Collapse
                     expandIcon={() => {

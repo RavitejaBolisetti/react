@@ -1,8 +1,7 @@
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_OTF_INVOICE_DETAILS as baseURL } from 'constants/routingApi';
+import { BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER_SAVE } from 'constants/routingApi';
 
-const PREFIX = 'OTF_INVOICE_';
-const moduleName = 'Invoice Information';
+const PREFIX = 'FAMILY_DETAILS_'
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';
@@ -12,9 +11,11 @@ export const RECIEVE_DATA_DETAIL_ACTION_CONSTANT = PREFIX + 'RECIEVE_DETAIL_DATA
 export const SAVE_DATA_ACTION_CONSTANT = PREFIX + 'SAVE_DATA';
 export const RESET_DATA_ACTION_CONSTANT = PREFIX + 'RESET_DATA';
 
-export const otfInvoiceDetailsDataActions = dataActions({
+const baseURL = BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER_SAVE;
+
+export const familyDetailSaveDataActions = dataActions({
     baseURL,
-    moduleName,
+    moduleName: 'Family Details',
     RECEIVE_DATA_LOADING_ACTION_CONSTANT,
     RECEIVE_DATA_ACTION_CONSTANT,
     RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT,
@@ -23,3 +24,4 @@ export const otfInvoiceDetailsDataActions = dataActions({
     SAVE_DATA_ACTION_CONSTANT,
     RESET_DATA_ACTION_CONSTANT,
 });
+

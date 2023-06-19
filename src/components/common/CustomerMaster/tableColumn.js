@@ -20,23 +20,26 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             dataIndex: 'customerType',
             width: '14%',
         }),
+
         tblPrepareColumns({
             title: 'Mobile No.',
-            dataIndex: 'mobileNo',
+            dataIndex: 'mobileNumber',
             width: '14%',
         }),
+
         tblPrepareColumns({
             title: 'Email Address',
-            dataIndex: 'emailAddress',
+            dataIndex: 'emailId',
             width: '14%',
         }),
+
         tblPrepareColumns({
             title: 'Membership Type',
             dataIndex: 'membershipType',
-            width: '20%',
+            width: '14%',
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%', fixed: 'right', EditIcon: false })
+        tblActionColumn({ styles, handleButtonClick, width: '10%' })
     );
 
     return tableColumn;

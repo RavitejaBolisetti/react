@@ -1,3 +1,3 @@
-import OtfDetailsMaster from './OtfDetailsMaster';
+import {OtfDetailsMaster} from './OtfDetailsMaster';
 
 export { OtfDetailsMaster };
