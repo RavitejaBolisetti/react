@@ -7,6 +7,7 @@ import { AddEditForm } from './AddEditForm';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { familyDetailsDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetails';
+import { familyDetailSaveDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetailSave';
 import { showGlobalNotification } from 'store/actions/notification';
 
 const mapStateToProps = (state) => {
@@ -32,6 +33,8 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
+//
+
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
@@ -41,7 +44,10 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchFamilyDetailsList: familyDetailsDataActions.fetchList,
             listFamilyDetailsShowLoading: familyDetailsDataActions.listShowLoading,
-            saveData: familyDetailsDataActions.saveData,
+
+            fetchFamilyDetailSaveList: familyDetailSaveDataActions.fetchList,
+            listFamilyDetailSaveShowLoading: familyDetailSaveDataActions.listShowLoading,
+            saveData: familyDetailSaveDataActions.saveData,
 
             showGlobalNotification,
         },
@@ -50,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const FamilyDetailsBase = (props) => {
-    const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, isFamilyLoading } = props;
+    const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, fetchFamilyDetailSaveList, listFamilyDetailSaveShowLoading } = props;
     const [familyForm] = Form.useForm();
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -71,6 +77,51 @@ const FamilyDetailsBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isFamilyLoaded]);
+
+    // const extraParams = [
+    //     {
+    //         key: 'countryCode',
+    //         title: 'Country',
+    //         value: filterString?.countryCode,
+    //         name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
+    //         canRemove: false,
+    //     },
+    //     {
+    //         key: 'stateCode',
+    //         title: 'State',
+    //         value: filterString?.stateCode,
+    //         name: filteredStateData?.find((i) => i?.key === filterString?.stateCode)?.value,
+    //         canRemove: false,
+    //     },
+    //     {
+    //         key: 'districtCode',
+    //         title: 'District',
+    //         value: filterString?.districtCode,
+    //         name: filteredDistrictData?.find((i) => i?.key === filterString?.districtCode)?.value,
+    //         canRemove: false,
+    //     },
+    //     {
+    //         key: 'tehsilCode',
+    //         title: 'Tehsil',
+    //         value: filterString?.tehsilCode,
+    //         name: filteredTehsilData?.find((i) => i?.key === filterString?.tehsilCode)?.value,
+    //         canRemove: false,
+    //     },
+    //     {
+    //         key: 'cityCode',
+    //         title: 'City',
+    //         value: filterString?.cityCode,
+    //         name: filteredCityData?.find((i) => i?.key === filterString?.cityCode)?.value,
+    //         canRemove: false,
+    //     },
+    //     {
+    //         key: 'pincode',
+    //         title: 'Pincode',
+    //         value: filterString?.pincode,
+    //         name: filterString?.pincode,
+    //         canRemove: true,
+    //     },
+    // ];
 
     const onChange = (value) => {
         setCustomerType(value);
@@ -107,20 +158,37 @@ const FamilyDetailsBase = (props) => {
     };
 
     const onFamilyFinish = () => {
+        // let data = [...familyDetailList]
+        let data = [{ customerId: 'CUS1686811036620', customerName: 'English Boy', dateOfBirth: '2002-12-12', editedId: 9, id: '', mnmCustomer: 'No', relationAge: '8', relationCode: 'C', relationCustomerId: '', remarks: 'Double' }];
+        let editData = [
+            {
+                id: 'b528ea89-6431-4d26-a9c4-355975068f94',
+                mnmCustomer: 'No',
+                customerId: 'CUS1686811036620',
+                relationCustomerId: null,
+                customerName: 'CCCCC',
+                // relationship: 'No Relation',
+                relationCode: 'BH',
+                dateOfBirth: '2002-12-12',
+                relationAge: '20',
+                remarks: 'ff',
+                activeIndicator: true,
+                editedId: 0,
+            },
+        ];
         const onSuccess = (res) => {
             familyForm.resetFields();
-
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId });
+            fetchFamilyDetailSaveList({ setIsLoading: listFamilyDetailSaveShowLoading, userId });
         };
 
         const onError = (message) => {
             showGlobalNotification({ message });
         };
         const requestData = {
-            data: familyDetailList,
+            data: editData,
             method: 'post',
-            setIsLoading: listFamilyDetailsShowLoading,
+            setIsLoading: listFamilyDetailSaveShowLoading,
             userId,
             onError,
             onSuccess,
