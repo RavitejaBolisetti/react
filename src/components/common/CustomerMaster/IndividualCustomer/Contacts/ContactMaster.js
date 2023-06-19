@@ -1,4 +1,4 @@
-import { ContactDetails } from './../../Common/Contacts';
+import { ContactDetails } from '../../Common';
 
 const ContactMain = ({ isViewModeVisible, toggleButton }) => {
     return <ContactDetails isViewModeVisible={isViewModeVisible} toggleButton={toggleButton} />;

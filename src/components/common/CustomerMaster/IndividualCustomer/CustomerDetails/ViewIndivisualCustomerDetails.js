@@ -65,8 +65,8 @@ const ViewDetailMain = (props) => {
                         </Card>
                         <br />
                         <br />
-
-                        <Descriptions.Item label="Customer Name">{customerForm?.corporateName}</Descriptions.Item>
+                        <Descriptions.Item label="Email Id">{customerForm?.emailId}</Descriptions.Item>
+                        <Descriptions.Item label="Do you want to contact over whatsapp?">{customerForm?.corporateName}</Descriptions.Item>
                         <Descriptions.Item label="Customer Category">{customerForm?.corporateName}</Descriptions.Item>
                         <Descriptions.Item label="usage Categorization Category">{customerForm?.usageCategorizationcategory ? 'Active' : 'Inactive'}</Descriptions.Item>
                     </Descriptions>
