@@ -17,19 +17,6 @@ const AddEditForm = (props) => {
 
     showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File uploaded successfuly' });
 
-    const onChange = (info) => {
-        const { status } = info.file;
-
-        if (status !== 'uploading') {
-            console.log(info.file, info.fileList);
-        }
-        if (status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully.`);
-        } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    };
-
     const onDrop = (e) => {
         console.log('Dropped files', e.dataTransfer.files);
     };
@@ -43,28 +30,29 @@ const AddEditForm = (props) => {
     };
 
     const uploadProps = {
-        onChange,
         onDrop,
         showUploadList,
+        onChange: (info) => {
+            const { status } = info.file;
+
+            if (status !== 'uploading') {
+                setUploadedFile(info?.file?.response?.data?.docId);
+            }
+            if (status === 'done') {
+                message.success(`${info.file.name} file uploaded successfully.`);
+            } else if (status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
     };
 
     const handleUpload = (options) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File uploaded successfuly' });
-        return false;
-        const { file } = options;
+        const { file, onSuccess, onError } = options;
+
         const data = new FormData();
         data.append('applicationId', 'app');
         data.append('file', file);
-
-        const onSuccess = (res) => {
-            setUploadedFile(res.data);
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage || 'File uploaded successfuly' });
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message, placement: 'bottomRight' });
-        };
-
+       
         const requestData = {
             data: data,
             method: 'post',
@@ -89,8 +77,8 @@ const AddEditForm = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item label="Document Type" name="documentTypeId" placeholder={preparePlaceholderSelect('document type')} rules={[validateRequiredSelectField('document type')]}>
-                        <Select className={styles.headerSelectField} loading={!(typeData?.CUST_FILES?.length !== 0)} placeholder="Select" {...selectProps}>
-                            {typeData?.CUST_FILES?.map((item) => (
+                        <Select className={styles.headerSelectField} loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps}>
+                            {typeData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}
                                 </Option>

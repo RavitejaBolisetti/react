@@ -31,7 +31,7 @@ supportingDocumentDataActions.uploadFile = withAuthToken((params) => ({ token, a
     setIsLoading(true);
 
     const onSuccessAction = (res) => {
-        onSuccess(res);
+        onSuccess(res.data);
     };
 
     const apiCallParams = {
@@ -44,8 +44,6 @@ supportingDocumentDataActions.uploadFile = withAuthToken((params) => ({ token, a
         onSuccess: onSuccessAction,
         onError,
         onTimeout: () => onError('Request timed out, Please try again'),
-        // onUnAuthenticated: () => dispatch(doLogout()),
-        // onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
         postRequest: () => setIsLoading(false),
     };
 

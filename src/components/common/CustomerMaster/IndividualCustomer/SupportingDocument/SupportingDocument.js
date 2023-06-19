@@ -23,6 +23,7 @@ const mapStateToProps = (state) => {
         userId,
         accessToken,
         token,
+        isDocumentDataLoaded,
         configData,
         typeData: typeData && typeData[PARAM_MASTER.CUST_FILES.id],
         isDataLoaded,
@@ -61,7 +62,8 @@ const SupportingDocumentBase = (props) => {
     }, [userId]);
 
     const onFinish = (values) => {
-        const data = { ...values, customerId: 'CUS001', status: true, docId: uploadedFile?.docId, id: '' };
+        const data = { ...values, customerId: 'CUS001', status: true, docId: uploadedFile, id: '' };
+
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
