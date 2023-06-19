@@ -5,7 +5,7 @@ import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { ViewDetail } from './ViewFamilyDetails';
 import { FiEdit } from 'react-icons/fi';
 import { FormContainer } from './FormContainer';
-
+import dayjs from 'dayjs';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
@@ -38,16 +38,19 @@ const AddEditFormMain = (props) => {
         setEditedId(() => editedId + 1);
         familyForm.resetFields();
     };
+    // const newDatae = dayjs(props?.dateOfBirth, 'YYYY/MM/DD');
 
     const onEdit = (values) => {
+        console.log(values, '3KD');
         setEditedMode(true);
+        setCustomerType(false);
         familyForm.setFieldsValue({
             mnmCustomer: values?.mnmCustomer,
             customerId: values?.customerId,
             customerName: values?.customerName,
             editedId: values?.editedId,
             relationship: values?.relationship,
-            dateOfBirth: values?.dateOfBirth,
+            dateOfBirth: dayjs(values?.dateOfBirth, 'YYYY/MM/DD'),
             relationAge: values?.relationAge,
             remarks: values?.remarks,
         });
@@ -81,7 +84,7 @@ const AddEditFormMain = (props) => {
                 <Card className="">
                     <Space align="center" size={30}>
                         <Typography>Family Details</Typography>
-                        <Button type="primary" icon={<PlusOutlined />} onClick={addFunction} disabled={showForm}>
+                        <Button type="primary" icon={<PlusOutlined />} onClick={addFunction} disabled={showForm || editedMode}>
                             Add
                         </Button>
                     </Space>
@@ -141,7 +144,7 @@ const AddEditFormMain = (props) => {
                 <ViewDetail {...viewProps} />
             )}
 
-            <Button onClick={() => onFamilyFinish()} type="primary" >
+            <Button onClick={() => onFamilyFinish()} type="primary">
                 Submit
             </Button>
         </>

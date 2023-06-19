@@ -22,9 +22,10 @@ const FormBase = (props) => {
 
     let age;
     const onDateChange = (prop) => {
-        console.log(prop);
+        console.log(prop, 'DOB');
         age = 2023 - prop?.$y;
     };
+
 
     return (
         <Form form={familyForm} id="familyForm" autoComplete="off" layout="vertical" onFinish={onFamilyFinish} onFinishFailed={onFinishFailed} style={{ background: 'transparent' }}>
@@ -42,17 +43,11 @@ const FormBase = (props) => {
                 </Col>
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={'CUS1686811036620'} label="Customer ID" name="customerId">
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Customer ID')} className={styles.inputBox} />
+                        <Form.Item initialValue={null} label="Customer Id" name="relationCustomerId">
+                            <Input className={styles.inputBox} />
                         </Form.Item>
                     </Col>
-                ) : (
-                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                        <Form.Item initialValue={'CUS1686811036620'} label="Customer ID" name="customerId">
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Customer ID')} className={styles.inputBox} />
-                        </Form.Item>
-                    </Col>
-                )}
+                ) : null}
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={null} label="Customer Name" name="customerName" rules={[validateRequiredInputField('Customer Name')]}>
@@ -90,8 +85,8 @@ const FormBase = (props) => {
                 ) : null}
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={"2002-12-12"} label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>
-                        {/* <DatePicker format="YYYY-MM-DD" onChange={onDateChange} style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} /> */}
+                    <Form.Item  label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>
+                        <DatePicker format="YYYY-MM-DD" onChange={onDateChange} style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} />
                     </Form.Item>
                 </Col>
 
@@ -118,10 +113,10 @@ const FormBase = (props) => {
             </Col> */}
 
             <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                <Form.Item initialValue={""} label="Generated ID" name="id" />
+                <Form.Item initialValue={props?.id ? props?.id : null} label="ID" name="id" />
             </Col>
             <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                <Form.Item initialValue={""} label="Generated ID" name="relationCustomerId" />
+                <Form.Item initialValue={'CUS1686811036620'} label="Customer Id" name="customerId" />
             </Col>
 
             <Row style={{ display: 'flex' }}>

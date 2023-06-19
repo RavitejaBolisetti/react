@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form } from 'antd';
-
 import { AddEditForm } from './AddEditForm';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { familyDetailsDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetails';
 import { showGlobalNotification } from 'store/actions/notification';
+import dayjs from 'dayjs';
 
 const mapStateToProps = (state) => {
     const {
@@ -41,7 +41,6 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchFamilyDetailsList: familyDetailsDataActions.fetchList,
             listFamilyDetailsShowLoading: familyDetailsDataActions.listShowLoading,
-
             saveData: familyDetailsDataActions.saveData,
 
             showGlobalNotification,
@@ -51,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const FamilyDetailsBase = (props) => {
-    const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, fetchFamilyDetailSaveList, } = props;
+    const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, fetchFamilyDetailSaveList } = props;
     const [familyForm] = Form.useForm();
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -68,7 +67,7 @@ const FamilyDetailsBase = (props) => {
 
     useEffect(() => {
         if (userId && !isFamilyLoaded) {
-            fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId,extraParams  });
+            fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isFamilyLoaded]);
@@ -76,7 +75,7 @@ const FamilyDetailsBase = (props) => {
     const extraParams = [
         {
             key: 'customerId',
-            title: 'Country',
+            title: 'Customer',
             value: 'CUS1686811036620',
             name: 'customerId',
         },
@@ -88,14 +87,16 @@ const FamilyDetailsBase = (props) => {
 
     const onSave = (props) => {
         let values = familyForm.getFieldsValue();
-        setFamilyDetailsList((items) => [...items, { ...values }]);
-
+        console.log(values,'DOB')
+        setFamilyDetailsList((items) => [...items, { ...values, dateOfBirth :dayjs(values?.dateOfBirth,'YYYY/MM/DD') }]);
+        console.log(familyDetailList,'CONSOLE')
         if (editedMode) {
             const upd_obj = familyDetailList?.map((obj) => {
                 if (obj?.editedId === values?.editedId) {
                     obj.customerName = values?.customerName;
                     obj.relationAge = values?.relationAge;
                     obj.relationship = values?.relationship;
+                    obj.dateOfBirth = values?.dateOfBirth;
                     obj.remarks = values?.remarks;
                 }
                 return obj;
@@ -117,28 +118,27 @@ const FamilyDetailsBase = (props) => {
     };
 
     const onFamilyFinish = () => {
-        // let data = [...familyDetailList]
-        let data = [{ customerId: 'CUS1686811036620', customerName: 'English Boy', dateOfBirth: '2002-12-12', editedId: 9, id: '', mnmCustomer: 'No', relationAge: '8', relationCode: 'C', relationCustomerId: '', remarks: 'Double' }];
-        let editData = [
-            {
-                id: 'b528ea89-6431-4d26-a9c4-355975068f94',
-                mnmCustomer: 'No',
-                customerId: 'CUS1686811036620',
-                relationCustomerId: "",
-                customerName: 'CCCCC',
-                // relationship: 'No Relation',
-                relationCode: 'BH',
-                dateOfBirth: '2002-12-12',
-                relationAge: '20',
-                remarks: 'ff',
-                activeIndicator: true,
-                editedId: 0,
-            },
-        ];
+        let data = [...familyDetailList]
+        //let data = [{ customerId: 'CUS1686811036620', customerName: 'English Boy', dateOfBirth: '2002-12-12', editedId: 9, id: '', mnmCustomer: 'No', relationAge: '8', relationCode: 'C', relationCustomerId: '', remarks: 'Double' }];
+        // let editData = [
+        //     {
+        //         id: '3486c5c7-1e03-42cd-9e91-94444cfe59c9',
+        //         mnmCustomer: 'No',
+        //         customerId: 'CUS1686811036620',
+        //         relationCustomerId: '',
+        //         customerName: 'AMan X',
+        //         // relationship: 'No Relation',
+        //         relationCode: 'BH',
+        //         dateOfBirth: '2002-12-12',
+        //         relationAge: '20',
+        //         remarks: 'ff',
+        //         activeIndicator: true,
+        //         editedId: 0,
+        //     },
+        // ];
         const onSuccess = (res) => {
             familyForm.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            // fetchFamilyDetailSaveList({ setIsLoading: listFamilyDetailSaveShowLoading, userId });
             fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId });
         };
 
@@ -146,7 +146,7 @@ const FamilyDetailsBase = (props) => {
             showGlobalNotification({ message });
         };
         const requestData = {
-            data: editData,
+            data: data,
             method: 'post',
             setIsLoading: listFamilyDetailsShowLoading,
             userId,

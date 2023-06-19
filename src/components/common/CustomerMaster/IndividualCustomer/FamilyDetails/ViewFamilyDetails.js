@@ -10,6 +10,9 @@ const ViewDetailBase = (props) => {
         layout: 'vertical',
         column: { xxl: 3, xl: 3, lg: 3, md: 2, sm: 1, xs: 1 },
     };
+
+    console.log(props,"propsprops")
+
     return (
         <div>
             <Space direction="vertical" size="middle">
@@ -24,7 +27,7 @@ const ViewDetailBase = (props) => {
                         <Descriptions.Item label="Relationship">{props?.relationship}</Descriptions.Item>
 
                         <Descriptions.Item label="Date of Birth">
-                            {props?.dateOfBirth?.$D}-{props?.dateOfBirth?.$M}-{props?.dateOfBirth?.$y}
+                            {props?.dateOfBirth}
                         </Descriptions.Item>
 
                         <Descriptions.Item label="Age">{props?.relationAge}</Descriptions.Item>
