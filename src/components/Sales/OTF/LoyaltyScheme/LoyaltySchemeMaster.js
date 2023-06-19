@@ -88,6 +88,7 @@ const LoyaltySchemeMasterMain = (props) => {
         LoyaltySchemeData,
         formdata,
         setformdata,
+        isLoyaltySchemeDataLoaded,
     };
     return (
         <div className={styles.drawerCustomerMaster}>
