@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form } from 'antd';
 
 import AddEditForm from './AddEditForm';
@@ -47,8 +47,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 const OtfDetailsMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, isDataLoaded, otfData, isLoading } = props;
-
+    
     const [form] = Form.useForm();
+    
+    const [formData, setFormData] = useState({});
 
     const extraParams = [
         {
@@ -70,6 +72,7 @@ const OtfDetailsMasterBase = (props) => {
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
+            setFormData(otfData)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
