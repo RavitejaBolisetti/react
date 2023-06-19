@@ -1,5 +1,5 @@
 import React from 'react';
-import { Descriptions } from 'antd';
+import { Card, Descriptions } from 'antd';
 import { Col, Row, Button, Space, Collapse, Typography } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FaRegUserCircle } from 'react-icons/fa';
@@ -39,39 +39,23 @@ const ViewDetailMain = (props) => {
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(1)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(1)}
-                    expandIconPosition="end"
+                <Card
+                    header={
+                        <div className={styles.alignUser}>
+                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                Customer Information
+                            </Text>
+                        </div>
+                    }
                 >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {' '}
-                                    Customer Information
-                                </Text>
-                            </div>
-                        }
-                        key="1"
-                    >
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Customer Type">{customerForm?.customerType}</Descriptions.Item>
-                            <Descriptions.Item label="corporate Code">{customerForm?.corporateCode}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Category">{customerForm?.CustomerCategory}</Descriptions.Item>
-                            <Descriptions.Item label="Usage Categorization">{customerForm?.usageCategorization}</Descriptions.Item>
-                            <Descriptions.Item label="usage Categorization Category">{customerForm?.usageCategorizationcategory ? 'Active' : 'Inactive'}</Descriptions.Item>
-                        </Descriptions>
-                    </Panel>
-                </Collapse>
+                    <Descriptions {...viewProps}>
+                        <Descriptions.Item label="Mobile Number">{customerForm?.mobileNumber}</Descriptions.Item>
+                        <Descriptions.Item label="corporate Code">{customerForm?.corporateCode}</Descriptions.Item>
+                        <Descriptions.Item label="Customer Category">{customerForm?.CustomerCategory}</Descriptions.Item>
+                        <Descriptions.Item label="Usage Categorization">{customerForm?.usageCategorization}</Descriptions.Item>
+                        <Descriptions.Item label="usage Categorization Category">{customerForm?.usageCategorizationcategory ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    </Descriptions>
+                </Card>
 
                 <Collapse
                     expandIcon={() => {

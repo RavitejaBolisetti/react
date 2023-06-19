@@ -6,13 +6,15 @@ import { connect } from 'react-redux';
 import { Form } from 'antd';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { showGlobalNotification } from 'store/actions/notification';
+
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             CustomerMaster: {
-                CustomerDetails:{isLoaded: isCustomerDetailsDataLoaded = false, isCustomerDetailsLoading, data = [] }
+                CustomerDetails:{isLoaded: isDataLoaded = false, isLoading,  data: customerDetailsData = []  }
             },
             ConfigurableParameterEditing: { isLoaded: isRelationDataLoaded = false, isRelationLoading, paramdata: relationData = [] },
         },
@@ -24,10 +26,10 @@ let returnValue = {
     isRelationDataLoaded,
     isRelationLoading,
 
-    isCustomerDetailsDataLoaded,
-    isCustomerDetailsLoading,
-    data,
-    relationData: relationData && relationData[PARAM_MASTER.FAMLY_RELTN.id],
+    isDataLoaded,
+    isLoading,
+    customerDetailsData,
+    relationData: relationData && relationData[PARAM_MASTER.CUSTOMER_TYPE.id],
 };
 return returnValue;
 };
@@ -38,8 +40,10 @@ const mapDispatchToProps = (dispatch) => ({
             fetchConfigList: configParamEditActions.fetchList,
             listConfigShowLoading: configParamEditActions.listShowLoading,
 
-            fetchCustomerDetailsList: customerDetailsDataActions.fetchList,
-            listCustomerDetailsShowLoading: customerDetailsDataActions.listShowLoading,
+            fetchList: customerDetailsDataActions.fetchList,
+            listShowLoading: customerDetailsDataActions.listShowLoading,
+            showGlobalNotification,
+
         },
         dispatch
     ),
@@ -48,27 +52,35 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 const CompanyCustomerDetailsMasterBase = (props) => {
-    const { userId, isCustomerDetailsDataLoaded, isCustomerDetailsLoading,isRelationDataLoaded,isRelationLoading, data, relationData,fetchConfigList, listConfigShowLoading, fetchCustomerDetailsList, listCustomerDetailsShowLoading } = props;
+    const { userId, isDataLoaded, isLoading,isRelationDataLoaded,isRelationLoading, showGlobalNotification,customerDetailsData, relationData,fetchConfigList, listConfigShowLoading, fetchList, listShowLoading } = props;
     const [customerDetailsFrom] = Form.useForm();
     const [customerDetailsList, setCustomerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [customerType, setCustomerType] = useState('Yes');
     const [editedMode, setEditedMode] = useState(false);
     const [generateId, setGenerateId] = useState(0);
+    const onSuccessAction = (res) => {
+    };
+    const selectedId = 'CUS1686916772052';
+
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
 
     useEffect(() => {
         if (userId) {
             if (!isRelationDataLoaded && !isRelationLoading) {
-                fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: 'FAMLY_RELTN' });
+                fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: '' });
             }
         }
         if (userId) {
-            if (!isCustomerDetailsDataLoaded && !isCustomerDetailsLoading) {
-                fetchCustomerDetailsList({ setIsLoading: listCustomerDetailsShowLoading, userId });
+            if (!isDataLoaded && !isLoading && userId) {
+
+                fetchList({ setIsLoading: listShowLoading, userId,onSuccessAction ,extraParams,onErrorAction});
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isCustomerDetailsDataLoaded]);
+    }, [userId, isDataLoaded]);
 
     const onChange = (value) => {
         setCustomerType(value);
@@ -83,6 +95,14 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         customerDetailsFrom.resetFields();
         setShowForm(false);
     };
+    const extraParams = [
+        {
+            key: 'customerId',
+            title: 'customerId',
+            value: selectedId,
+            name: 'Customer Id',
+        },
+    ];
     const onFinishFailed = (errorInfo) => {
         return;
     };
@@ -101,7 +121,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         setEditedMode,
         setCustomerType,
         relationData,
-        data,
+        customerDetailsData,
     };
 
 
