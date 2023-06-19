@@ -52,15 +52,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 const CompanyCustomerDetailsMasterBase = (props) => {
-    const { userId, isDataLoaded, isLoading,isRelationDataLoaded,isRelationLoading, showGlobalNotification,customerDetailsData, relationData,fetchConfigList, listConfigShowLoading, fetchList, listShowLoading } = props;
+    const { userId, isDataLoaded, isLoading, isRelationDataLoaded, isRelationLoading, showGlobalNotification, customerDetailsData, relationData, fetchConfigList, listConfigShowLoading, fetchList, listShowLoading } = props;
     const [customerDetailsFrom] = Form.useForm();
     const [customerDetailsList, setCustomerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [customerType, setCustomerType] = useState('Yes');
     const [editedMode, setEditedMode] = useState(false);
     const [generateId, setGenerateId] = useState(0);
-    const onSuccessAction = (res) => {
-    };
+    const onSuccessAction = (res) => {};
     const selectedId = 'CUS1686916772052';
 
     const onErrorAction = (message) => {
@@ -75,8 +74,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         }
         if (userId) {
             if (!isDataLoaded && !isLoading && userId) {
-
-                fetchList({ setIsLoading: listShowLoading, userId,onSuccessAction ,extraParams,onErrorAction});
+                fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,13 +122,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         customerDetailsData,
     };
 
-
-    return (
-        <>
-            <h2>Customer Details</h2>
-            <AddEditForm {...formProps} />
-        </>
-    );
+    return <AddEditForm {...props} />;
 };
-
 export const CompanyCustomerDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(CompanyCustomerDetailsMasterBase);

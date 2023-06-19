@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import { Form } from 'antd';
 import { AddEditForm } from './AddEditForm';
 
-const FamilyDetailsBase = () => {
+const FamilyDetailsBase = (props) => {
     const [familyForm] = Form.useForm();
     const [value, setValue] = useState(true);
     const selectRef = useRef();
@@ -14,6 +14,7 @@ const FamilyDetailsBase = () => {
     const [showForm, setShowForm] = useState(false);
     const [customerType, setCustomerType] = useState(null);
     const [editedMode, setEditedMode] = useState(false);
+    const { formActionType } = props;
 
     const onSave = () => {
         let values = familyForm.getFieldsValue();
@@ -53,6 +54,7 @@ const FamilyDetailsBase = () => {
         onSave,
         editedMode,
         setEditedMode,
+        formActionType,
     };
 
     return <AddEditForm {...formProps} />;

@@ -26,5 +26,9 @@ export const PARAM_MASTER = {
     CUSTOMER_TYPE:{
         id:'CUSTOMER_TYPE',
         title:'CUSTOMER_TYPE',
-    }
+    },
+    TITLE: {
+        id: 'TITLE',
+        title: 'TITLE',
+    },
 };

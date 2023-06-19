@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Collapse, Form, Space, Typography, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-
+import { FaRegUserCircle } from 'react-icons/fa';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import AddEditForm from './AddEditForm';
 import ViewContactList from './ViewContactList';
@@ -12,8 +12,7 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 const { Text } = Typography;
 
-const ContactMain = ({ isViewModeVisible, toggleButton }) => {
-    console.log('isViewModeVisible', isViewModeVisible," toggleButton", toggleButton )
+const ContactMain = ({ isViewModeVisible, formActionType }) => {
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -46,8 +45,8 @@ const ContactMain = ({ isViewModeVisible, toggleButton }) => {
         setIsEditing(false);
     };
 
-    const deleteContactHandeler =(data) => {
-        console.log("delete Data", data)
+    const deleteContactHandeler = (data) => {
+        console.log('delete Data', data);
         // setContactData()
     };
 
@@ -72,13 +71,14 @@ const ContactMain = ({ isViewModeVisible, toggleButton }) => {
     };
 
     return (
-        <Space className={styles.accordianContainer} direction="vertical" size="middle" style={{ display: 'flex' }}>
+        <>
             <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
                 <Panel
                     header={
                         <Space>
-                            <Text strong> {toggleButton + 'Contact' }</Text>
-                            {!isViewModeVisible && (
+                            <FaRegUserCircle className={styles.userCircle} />
+                            <Text strong> Individual Contact</Text>
+                            {formActionType?.viewMode && (
                                 <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary">
                                     Add Contact
                                 </Button>
@@ -91,7 +91,7 @@ const ContactMain = ({ isViewModeVisible, toggleButton }) => {
                     <ViewContactList {...formProps} />
                 </Panel>
             </Collapse>
-        </Space>
+        </>
     );
 };
 

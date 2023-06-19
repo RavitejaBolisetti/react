@@ -1811,12 +1811,12 @@
 }
 
 .activeForm {
-    color: #ff3e5b;
+    color: #ff3e5b !important;
 }
 
-/* .inactiveForm {
+.inactiveForm {
     color: #00a310;
-} */
+}
 
 .drawerCardView :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
     padding-bottom: 0px;

@@ -58,8 +58,6 @@ const CompanyContactMain = ({ isViewModeVisible }) => {
     };
 
     return (
-        <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-            <h2>Contacts</h2>
             <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
                 <Panel
                     header={
@@ -77,11 +75,9 @@ const CompanyContactMain = ({ isViewModeVisible }) => {
                 >
                     {(showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />}
                    {
-                //    viewMode &&
                     <ViewContactList {...formProps} />}
                 </Panel>
             </Collapse>
-        </Space>
     );
 };
 

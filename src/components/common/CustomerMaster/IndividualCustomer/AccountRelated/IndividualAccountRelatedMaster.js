@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Row, Col, Button, Space, Card } from 'antd';
+import { Space, Card } from 'antd';
 
 import { AddEditForm } from './AddEditForm';
-import { ViewDetail } from '../../FirmOrCompany/AccountRelated/ViewAccountDetails';
+import { ViewDetail } from './ViewIndividualAccountDetails';
 import styles from 'components/common/Common.module.css';
 
 const AccountRelatedBase = (props) => {
-    const { onCloseAction, isViewModeVisible } = props;
+    const { isViewModeVisible, formActionType } = props;
 
     const viewProps = {
         styles,
@@ -15,7 +15,7 @@ const AccountRelatedBase = (props) => {
 
     return (
         <>
-            {!isViewModeVisible ? (
+            {!formActionType?.viewMode ? (
                 <Space direction="vertical" size="small" style={{ display: 'flex' }}>
                     <Card style={{ backgroundColor: '#F2F2F2' }}>
                         <AddEditForm {...props} />
