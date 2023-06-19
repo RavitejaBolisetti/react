@@ -66,7 +66,7 @@ const FamilyDetailsBase = (props) => {
 
     useEffect(() => {
         if (userId && !isRelationDataLoaded && !isRelationLoading) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: 'FAMLY_RELTN' });
+            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.FAMLY_RELTN.id });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isRelationDataLoaded]);
@@ -77,51 +77,6 @@ const FamilyDetailsBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isFamilyLoaded]);
-
-    // const extraParams = [
-    //     {
-    //         key: 'countryCode',
-    //         title: 'Country',
-    //         value: filterString?.countryCode,
-    //         name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
-    //         canRemove: false,
-    //     },
-    //     {
-    //         key: 'stateCode',
-    //         title: 'State',
-    //         value: filterString?.stateCode,
-    //         name: filteredStateData?.find((i) => i?.key === filterString?.stateCode)?.value,
-    //         canRemove: false,
-    //     },
-    //     {
-    //         key: 'districtCode',
-    //         title: 'District',
-    //         value: filterString?.districtCode,
-    //         name: filteredDistrictData?.find((i) => i?.key === filterString?.districtCode)?.value,
-    //         canRemove: false,
-    //     },
-    //     {
-    //         key: 'tehsilCode',
-    //         title: 'Tehsil',
-    //         value: filterString?.tehsilCode,
-    //         name: filteredTehsilData?.find((i) => i?.key === filterString?.tehsilCode)?.value,
-    //         canRemove: false,
-    //     },
-    //     {
-    //         key: 'cityCode',
-    //         title: 'City',
-    //         value: filterString?.cityCode,
-    //         name: filteredCityData?.find((i) => i?.key === filterString?.cityCode)?.value,
-    //         canRemove: false,
-    //     },
-    //     {
-    //         key: 'pincode',
-    //         title: 'Pincode',
-    //         value: filterString?.pincode,
-    //         name: filterString?.pincode,
-    //         canRemove: true,
-    //     },
-    // ];
 
     const onChange = (value) => {
         setCustomerType(value);

@@ -26,5 +26,5 @@ export const PARAM_MASTER = {
     FAMLY_RELTN: {
         id: 'FAMLY_RELTN',
         title: 'FAMLY_RELTN',
-    }
+    },
 };
