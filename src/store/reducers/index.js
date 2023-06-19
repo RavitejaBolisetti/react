@@ -5,6 +5,7 @@ import { authPages } from './authPages';
 import { common } from './common';
 import { data } from './data';
 import { notification } from './notification';
+import { customer } from './customer';
 
 const appReducer = combineReducers({
     auth,
@@ -12,6 +13,7 @@ const appReducer = combineReducers({
     common,
     data,
     notification,
+    customer,
 });
 
 export const rootReducer = (state, action) => {

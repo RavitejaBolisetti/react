@@ -27,6 +27,10 @@ export const PARAM_MASTER = {
         id: 'FAMLY_RELTN',
         title: 'FAMLY_RELTN',
     },
+    CUST_MST: {
+        id: 'CUST_MST',
+        title: 'CUST_MST',
+    },
     TITLE: {
         id: 'TITLE',
         title: 'TITLE',
