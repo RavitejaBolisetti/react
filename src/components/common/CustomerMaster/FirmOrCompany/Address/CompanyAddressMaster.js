@@ -51,12 +51,12 @@ const CompanyAddressMasterBase = ({ isViewModeVisible, toggleButton, props }) =>
             setAddressData((prev) => {
                 let formData = [...prev];
                 // if (value?.defaultaddress && formData?.length > 1) {
-                    formData?.forEach((contact) => {
-                        if (contact?.defaultaddress === true) {
-                            contact.defaultaddress = false;
+                    formData?.forEach((address) => {
+                        if (address?.defaultaddress === true) {
+                            address.defaultaddress = true;
                         }
                     });
-                    const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode);
+                    const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode && el?.defaultaddress === editingData?.defaultaddress);
                     console.log("index", index)
                     formData.splice(index, 1, { ...value });
                     return [...formData];
@@ -68,9 +68,9 @@ const CompanyAddressMasterBase = ({ isViewModeVisible, toggleButton, props }) =>
             setAddressData((prev) => {
                 let formData = [...prev];
                 if (value?.defaultaddress && formData?.length >= 1) {
-                    formData?.forEach((contact) => {
-                        if (contact?.defaultaddress === true) {
-                            contact.defaultaddress = false;
+                    formData?.forEach((address) => {
+                        if (address?.defaultaddress === true) {
+                            address.defaultaddress = false;
                         }
                     });
                     return [...formData, value];
