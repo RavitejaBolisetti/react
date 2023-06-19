@@ -47,9 +47,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 const OtfDetailsMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, isDataLoaded, otfData, isLoading } = props;
-    
+
     const [form] = Form.useForm();
-    
+
     const [formData, setFormData] = useState(otfData);
 
     const extraParams = [
@@ -73,12 +73,36 @@ const OtfDetailsMasterBase = (props) => {
         if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
         }
-        setFormData(otfData)
+        setFormData(otfData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
     const onFinish = (values) => {
-        console.log("values",values)
+        const recordId = formData?.id || '';
+        const data = { ...values, id: recordId };
+
+        const onSuccess = (res) => {
+            form.resetFields();
+
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+        };
+
+        fetchList({ setIsLoading: listShowLoading, userId });
+
+        const onError = (message) => {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
+        };
+
+        const requestData = {
+            data: [data],
+            method: 'post',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveData(requestData);
     };
 
     const onFinishFailed = () => {};

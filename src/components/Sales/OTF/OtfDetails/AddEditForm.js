@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Row, Col, Input, Form, Select, DatePicker, Switch, Card } from 'antd';
+import { Row, Col, Input, Form, Select, DatePicker, Switch, Card, Button } from 'antd';
+
 import dayjs from 'dayjs';
 
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
@@ -133,6 +134,13 @@ function AddEditForm(props) {
                                 <Form.Item initialValue={formActionType?.editMode ? formData?.loyalityScheme : true} labelAlign="left" wrapperCol={{ span: 24 }} name="loyalityScheme" label="Loyality Scheme" valuePropName="checked">
                                     <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                                 </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={20}>
+                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                <Button htmlType="submit" type="primary">
+                                    Submit
+                                </Button>
                             </Col>
                         </Row>
                     </Form>
