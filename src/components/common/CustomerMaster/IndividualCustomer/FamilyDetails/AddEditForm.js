@@ -10,7 +10,7 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { onFamilyFinish, onFinishFailed, familyForm, onChange, showForm, setShowForm, setCustomerType, relationData, editedId, setEditedId } = props;
-    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode } = props;
+    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode, onSearch } = props;
     const [activeKey, setactiveKey] = useState([null]);
 
     const handleEdit = () => {
@@ -74,9 +74,10 @@ const AddEditFormMain = (props) => {
         customerType,
         relationData,
         editedId,
+        onSearch,
     };
 
-    console.log()
+    console.log();
 
     return (
         <>
