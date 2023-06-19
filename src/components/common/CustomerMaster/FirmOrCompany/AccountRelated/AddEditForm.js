@@ -11,7 +11,6 @@ const AddEditFormMain = (props) => {
     const { buttonData, setButtonData } = props;
 
     const { setIsViewModeVisible } = props;
-    const [selected, setSelected] = useState();
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
