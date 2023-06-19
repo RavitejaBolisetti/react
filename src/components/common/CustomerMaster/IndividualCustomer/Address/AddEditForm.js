@@ -25,6 +25,7 @@ const AddEditForm = (props) => {
     };
 
     const handleCancelFormEdit = () => {
+        setIsEditing(false);
         setShowAddEditForm(false);
     };
 
