@@ -23,12 +23,24 @@ export const PARAM_MASTER = {
         id: 'PIN_CATG',
         title: 'PIN_CATG',
     },
-    CUSTOMER_TYPE:{
-        id:'CUSTOMER_TYPE',
-        title:'CUSTOMER_TYPE',
+    CUST_TYPE: {
+        id: 'CUST_TYPE',
+        title: 'CUST_TYPE',
     },
     TITLE: {
         id: 'TITLE',
         title: 'TITLE',
+    },
+    CORP_TYPE: {
+        id: 'CORP_TYPE',
+        title: 'CORP_TYPE',
+    },
+    MEM_TYPE: {
+        id: 'MEM_TYPE',
+        title: 'MEM_TYPE',
+    },
+    CORP_CATE: {
+        id: 'CORP_CATE',
+        title: 'CORP_CATE',
     },
 };

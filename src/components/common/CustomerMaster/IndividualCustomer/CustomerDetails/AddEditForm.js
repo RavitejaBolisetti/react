@@ -1,92 +1,26 @@
 import React, { useState, useEffect } from 'react';
 
-import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch } from 'antd';
+import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button } from 'antd';
 
 import { FaRegUserCircle } from 'react-icons/fa';
 
 import { validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { ViewDetail } from './ViewIndivisualCustomerDetails';
+import { ViewIndivisualCustomerDetails } from './ViewIndivisualCustomerDetails';
 
 import styles from 'components/common/Common.module.css';
 import { memberShip, title } from 'constants/modules/CustomerMaster/individualProfile';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, onFieldsChange, formActionType } = props;
+    const { onCloseAction,form, setIsViewModeVisible, onChange, onFinish, onFinishFailed, onFieldsChange, formActionType, configurableTypedata } = props;
+    const { activeKey, setactiveKey } = props;
 
-    const [customerForm] = Form.useForm();
-    const [keyAccountForm] = Form.useForm();
-    const [authorityForm] = Form.useForm();
-    const [FinalFormData, setFinalFormData] = useState({
-        customerForm: [],
-        keyAccountForm: [],
-        authorityForm: [],
-    });
-    const [customerFormValues, setcustomerForm] = useState();
-    const [keyAccountFormValues, setkeyAccountFormValues] = useState();
-    const [authorityFormValues, setauthorityFormValues] = useState();
-    const [done, setDone] = useState();
 
-    useEffect(() => {
-        setFinalFormData({ ...FinalFormData, customerForm: customerFormValues, keyAccountForm: keyAccountFormValues, authorityForm: authorityFormValues });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [done]);
-
-    const [activeKey, setactiveKey] = useState([1]);
-
-    const handleEdit = () => {
-        setIsViewModeVisible(false);
-    };
-    const onFinish = () => {
-        const customerFormValues = customerForm.getFieldsValue();
-        const keyAccountFormValues = keyAccountForm.getFieldsValue();
-        const authorityFormValues = authorityForm.getFieldsValue();
-
-        customerForm
-            .validateFields()
-            .then(() => {
-                authorityForm
-                    .validateFields()
-                    .then(() => {
-                        setcustomerForm(customerFormValues);
-                        setauthorityFormValues(authorityFormValues);
-                        setkeyAccountFormValues(keyAccountFormValues);
-                        setDone(!done);
-                    })
-                    .catch(() => {
-                        setactiveKey([3]);
-                    });
-            })
-            .catch(() => {
-                setactiveKey([1]);
-            });
-    };
-
-    const onChange = (values) => {
-        const isPresent = activeKey.includes(values);
-
-        if (isPresent) {
-            const newActivekeys = [];
-
-            // eslint-disable-next-line array-callback-return
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setactiveKey(newActivekeys);
-        } else {
-            setactiveKey([...activeKey, values]);
-        }
-    };
-
-    const onFinishFailed = () => {
-        return;
-    };
 
     const viewProps = {
         activeKey,
@@ -94,7 +28,6 @@ const AddEditFormMain = (props) => {
         onChange,
         styles,
         onCloseAction,
-        handleEdit,
     };
 
     return (
@@ -113,18 +46,16 @@ const AddEditFormMain = (props) => {
                                     </div>
                                 }
                             >
-                                <Form id="form" onFinish={onFinish} autoComplete="off" layout="vertical" form={customerForm} onFieldsChange={onFieldsChange} onFinishFailed={onFinishFailed}>
+                                <Form id="form" onFinish={onFinish} autoComplete="off" layout="vertical" form={form} onFieldsChange={onFieldsChange} onFinishFailed={onFinishFailed}>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Mobile Number" name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
-                                                <Input placeholder={preparePlaceholderText('mobile number')} />
+                                                <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10}/>
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                                                <Select placeholder="Select" disabled={false} loading={false} allowClear>
-                                                    <Option value="customerType">Corporate</Option>
-                                                </Select>
+                                                <Select placeholder="Select" disabled={false} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
                                             </Form.Item>
                                         </Col>
                                     </Row>
@@ -136,12 +67,8 @@ const AddEditFormMain = (props) => {
                                         <Divider />
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                                                <Form.Item label="Title" name="title" data-testid="title" rules={[validateRequiredSelectField('title')]}>
-                                                    <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                                        {title?.map((item) => (
-                                                            <Option key={'ti' + item.key}>{item.name}</Option>
-                                                        ))}
-                                                    </Select>
+                                                <Form.Item label="Title" name="titleCode" data-testid="title" rules={[validateRequiredSelectField('title')]}>
+                                                    <Select placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['TITLE']}></Select>
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={6} lg={6} xl={6}>
@@ -191,9 +118,7 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Corporate Type" name="corporateType" data-testid="corporateType">
-                                                <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                                    <Option value="corporateType">Listed</Option>
-                                                </Select>
+                                                <Select disabled={false} loading={false} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']} allowClear></Select>
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -210,20 +135,19 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Corporate Category" name="corporateCategory" data-testid="corporateCategory">
-                                                <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                                    <Option value="corporateCategory">Corporate Category 1</Option>
-                                                </Select>
+                                                <Select disabled={false} loading={false} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_CATE']} allowClear></Select>
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Membership Type" name="membershipType" data-testid="membershipType" rules={[validateRequiredSelectField('membership type')]}>
-                                                <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                                    {memberShip?.map((item) => (
-                                                        <Option key={'memb' + item.key}>{item.name}</Option>
-                                                    ))}
-                                                </Select>
+                                                <Select disabled={false} loading={false} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['MEM_TYPE']} allowClear></Select>
                                             </Form.Item>
                                         </Col>
+                                    </Row>
+                                    <Row>
+                                        <Button htmlType="submit" danger>
+                                            Submit
+                                        </Button>
                                     </Row>
                                 </Form>
                             </Card>
@@ -231,7 +155,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
             ) : (
-                <ViewDetail {...viewProps} />
+                <ViewIndivisualCustomerDetails {...viewProps} />
             )}
         </>
     );
