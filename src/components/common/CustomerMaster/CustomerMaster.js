@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider, Select } from 'antd';
+
+import { customerDetailDataActions } from 'store/actions/custmer/customerDetail';
+import { showGlobalNotification } from 'store/actions/notification';
+
 import { IoBanOutline } from 'react-icons/io5';
 import { PlusOutlined } from '@ant-design/icons';
-import { tblPrepareColumns } from 'utils/tableCloumn';
-import DataTable from 'utils/dataTable/DataTable';
-import { AddEditForm } from './AddEditForm';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
-import styles from 'components/common/Common.module.css';
+
+import { tblPrepareColumns } from 'utils/tableCloumn';
+import DataTable from 'utils/dataTable/DataTable';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
+import { AddEditForm } from './AddEditForm';
+import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -96,6 +103,41 @@ const savePayload = {
         },
     ],
 };
+
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        customer: {
+            customerDetail: { isLoaded: isDataLoaded = false, isLoading, data },
+        },
+    } = state;
+
+    const moduleTitle = 'Customer';
+
+    let returnValue = {
+        userId,
+
+        isDataLoaded,
+        data,
+        isLoading,
+        moduleTitle,
+    };
+    return returnValue;
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchList: customerDetailDataActions.fetchList,
+            saveData: customerDetailDataActions.saveData,
+            resetData: customerDetailDataActions.reset,
+            listShowLoading: customerDetailDataActions.listShowLoading,
+            showGlobalNotification,
+        },
+        dispatch
+    ),
+});
 
 const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeData, hierarchyAttributeFetchList, saveDealerDetails, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
     const [form] = Form.useForm();
@@ -636,4 +678,4 @@ const CustomerMasterMain = ({ saveData, userId, productHierarchyData, attributeD
     );
 };
 
-export const CustomerMaster = connect(null, null)(CustomerMasterMain);
+export const CustomerMaster = connect(mapStateToProps, mapDispatchToProps)(CustomerMasterMain);
