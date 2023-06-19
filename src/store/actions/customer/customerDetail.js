@@ -1,5 +1,5 @@
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_CUSTOMER_MASTER as baseURL } from 'constants/routingApi';
+import { BASE_URL_CUSTOMER_MASTER_LIST as baseURL } from 'constants/routingApi';
 
 const PREFIX = 'CUSTOMER_';
 const moduleName = 'Customer Master';
@@ -13,7 +13,7 @@ export const SAVE_DATA_ACTION_CONSTANT = PREFIX + 'SAVE_DATA';
 export const RESET_DATA_ACTION_CONSTANT = PREFIX + 'RESET_DATA';
 
 export const customerDetailDataActions = dataActions({
-    baseURL,
+    baseURL: baseURL,
     moduleName,
     RECEIVE_DATA_LOADING_ACTION_CONSTANT,
     RECEIVE_DATA_ACTION_CONSTANT,

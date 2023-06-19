@@ -38,6 +38,7 @@ export const BASE_URL_ROLE = BASE_URL_DEALER_MANPOWER + '/roles';
 export const BASE_URL_CUSTOMER_MASTER = BASE_URL + 'customers';
 export const BASE_URL_PARTY_MASTER = BASE_URL_CUSTOMER_MASTER + '/partymaster';
 export const BASE_URL_LESSOR_COMPANY_MASTER = BASE_URL_CUSTOMER_MASTER + '/lessorcompany';
+export const BASE_URL_CUSTOMER_MASTER_LIST = BASE_URL + 'customers/search';
 
 export const BASE_URL_GEO_GRAPHY_CHANGE_HISTORY = BASE_URL + 'geochangehistory';
 export const BASE_URL_ROLE_MANAGEMENT = BASE_URL + 'application/roles';

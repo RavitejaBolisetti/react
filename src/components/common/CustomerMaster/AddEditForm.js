@@ -77,7 +77,7 @@ const AddEditFormMain = (props) => {
                         return <IndividualAddressMaster {...commonModuleProps} />;
                     }
                     case 'Contacts': {
-                        return <IndividualContact {...commonModuleProps}/>;
+                        return <IndividualContact {...commonModuleProps} />;
                     }
                     case 'Family Details': {
                         return <FamilyDetails />;
@@ -92,9 +92,8 @@ const AddEditFormMain = (props) => {
                         return <IndivisualCustomerDetailsMaster {...commonModuleProps} />;
                     }
                 }
-                break;
             }
-            case 'Firm/Company': {
+            case 'Firm': {
                 switch (moduleName) {
                     case 'Customer Details': {
                         return <CompanyCustomerDetailsMaster {...commonModuleProps} />;
@@ -106,7 +105,7 @@ const AddEditFormMain = (props) => {
                         return <CompanyAddressMaster />;
                     }
                     case 'Contacts': {
-                        return <CompanyContact {...commonModuleProps}/>;
+                        return <CompanyContact {...commonModuleProps} />;
                     }
                     case 'Account Related': {
                         return <AccountRelatedMaster {...commonModuleProps} />;
@@ -118,7 +117,6 @@ const AddEditFormMain = (props) => {
                         return <CompanyCustomerDetailsMaster {...commonModuleProps} />;
                     }
                 }
-                break;
             }
             default: {
                 return;
