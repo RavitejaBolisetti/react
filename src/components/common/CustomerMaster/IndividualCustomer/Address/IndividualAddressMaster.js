@@ -15,28 +15,29 @@ import AddEditForm from './AddEditForm';
 const { Panel } = Collapse;
 const { Text } = Typography;
 
-const formData = [
-    {
-        id: '076da86e-010c-445c-ac6c-6b905ca29338',
-        addressType: '9876543856',
-        address: 'offers',
-        address2: 'brother',
-        pincode: '09:00AM',
-        tehsil: '06:00AM',
-        city: 'mr',
-        district: 'jhon',
-        state: 'little',
-        contactpersonName: 'hashn',
-        contactmobilenumber: 'Male',
-        defaultaddress: true,
-    },
-];
+// const formData = [
+//     {
+//         id: '076da86e-010c-445c-ac6c-6b905ca29338',
+//         addressType: '9876543856',
+//         address: 'offers',
+//         address2: 'brother',
+//         pincode: '09:00AM',
+//         tehsil: '06:00AM',
+//         city: 'mr',
+//         district: 'jhon',
+//         state: 'little',
+//         contactpersonName: 'hashn',
+//         contactmobilenumber: 'Male',
+//         defaultaddress: true,
+//     },
+// ];
 
 const IndividualAddressMasterBase = (props) => {
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
+    const [editedMode, setEditedMode] = useState(false);
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
@@ -58,9 +59,10 @@ const IndividualAddressMasterBase = (props) => {
         styles,
         contactData,
         setContactData,
-        formData,
         onFinish,
         form,
+        editedMode,
+        setEditedMode,
         ...props,
     };
 

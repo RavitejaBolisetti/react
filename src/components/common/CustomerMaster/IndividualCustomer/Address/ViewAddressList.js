@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { ViewIndividualAddressDetails } from './ViewIndividualAddressDetails';
 import { Collapse, Space, Typography, Row, Col, Checkbox, Divider } from 'antd';
 import { FaRegUserCircle } from 'react-icons/fa';
+import { FiEdit } from 'react-icons/fi';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewAddressList = (formProps) => {
-    const { styles, contactData, formData, isViewModeVisible } = formProps;
+    const { form, setEditedMode, styles, contactData, formData, isViewModeVisible } = formProps;
     const [openAccordian, setOpenAccordian] = useState('');
 
     const handleCollapse = (key) => {
@@ -19,6 +20,23 @@ const ViewAddressList = (formProps) => {
         console.log('event', event);
         event.preventDefault();
         event.stopPropagation();
+    };
+
+    
+    const onEdit = (values) => {
+        setEditedMode(true);
+        form.setFieldsValue({
+            addressType: values?.addressType,
+            address: values?.address,
+            address2: values?.address2,
+            pincode: values?.pincode,
+            tehsil: values?.tehsil,
+            city: values?.city,
+            district: values?.district,
+            state: values?.state,
+            contactpersonName: values?.contactpersonName,
+            contactmobilenumber: values?.contactmobilenumber,
+        });
     };
 
     return (
@@ -35,6 +53,12 @@ const ViewAddressList = (formProps) => {
                                               <Space>
                                                   <FaRegUserCircle className={styles.userCircle} />
                                                   <Text strong> {`${data?.addressType ? data?.addressType : ''} `}</Text>
+                                                  <Space style={{ cursor: 'pointer' }} onClick={() => onEdit(data)}>
+                                                        <FiEdit />
+                                                        <Typography className="red heading" style={{ fontSize: '14px', margin: '0 0 0 0.5rem' }}>
+                                                            Edit
+                                                        </Typography>
+                                                    </Space>
                                               </Space>
                                           </Col>
                                           <Col xs={8} sm={8} md={8} lg={8} xl={8}>
