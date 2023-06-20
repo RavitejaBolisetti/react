@@ -1,11 +1,16 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   Copyright (c) 2023 
  *   All rights reserved.
- *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
  */
 import React from 'react';
-import { Space, Typography, Descriptions, Card, Divider } from 'antd';
+import { Space, Typography, Descriptions, Card, Divider, Col, Row, Button } from 'antd';
 import { FaRegUserCircle } from 'react-icons/fa';
+import { BiTimeFive } from 'react-icons/bi';
+
 
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
@@ -16,7 +21,7 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-
+    console.log(formData,'FORMDATA');
     return (
         <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
@@ -37,15 +42,29 @@ const ViewDetailMain = (props) => {
 
                         <Card>
                             <div className={`${styles.cardInsideBox} ${styles.customerName}`}>
-                                <Text className={styles.customerName}>Customer Name</Text>
-                                <Divider />
-                                {formData?.title}
-                                <span className={styles.nameSpacing}></span>
-                                {formData?.firstName}
-                                <span className={styles.nameSpacing}></span>
-                                {formData.middleName}
-                                <span className={styles.nameSpacing}></span>
-                                {formData.lastName}
+                                <Row>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                        <Text className={styles.customerName}>Customer Name</Text>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
+                                        <Button type="link" icon={<BiTimeFive />}>
+                                            View History
+                                        </Button>
+                                    </Col>
+                                    <Divider />
+                                    {formData?.title}
+                                    <span className={styles.nameSpacing}></span>
+                                    {formData?.firstName}
+                                    <span className={styles.nameSpacing}></span>
+                                    {formData?.middleName}
+                                    <span className={styles.nameSpacing}></span>
+                                    {formData?.lastName}
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                        <Button type="link" icon={<BiTimeFive />}>
+                                            View History
+                                        </Button>
+                                    </Col>
+                                </Row>
                             </div>
                         </Card>
                         <br />
