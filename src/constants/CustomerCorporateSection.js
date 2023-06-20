@@ -1,4 +1,4 @@
-export const CUSTOMER_FIRM_SECTION = {
+export const CUSTOMER_CORPORATE_SECTION = {
     CUSTOMER_DETAILS: {
         id: 1,
         title: 'Customer Details',

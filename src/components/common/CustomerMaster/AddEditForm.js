@@ -11,7 +11,7 @@ import { SupportingDocument } from './IndividualCustomer';
 import { LeftSidebar } from './LeftSidebar';
 
 import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection';
-import { CUSTOMER_FIRM_SECTION } from 'constants/CustomerFirmSection';
+import { CUSTOMER_CORPORATE_SECTION } from 'constants/CustomerCorporateSection';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import { DrawerFormButton } from '../Button';
@@ -20,11 +20,11 @@ const AddEditFormMain = (props) => {
     const { onCloseAction, formData } = props;
     const { isViewModeVisible, setIsViewModeVisible, formActionType } = props;
     const { customerType, setCustomerType } = props;
-    const [currentSection, setCurrentSection] = useState(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_FIRM_SECTION.CUSTOMER_DETAILS.id);
+    const [currentSection, setCurrentSection] = useState(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id);
     const [section, setSection] = useState();
 
     useEffect(() => {
-        const sectionList = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_FIRM_SECTION;
+        const sectionList = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION;
         const section = Object.values(sectionList)?.find((i) => i.id === currentSection);
         setSection(section);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -103,24 +103,24 @@ const AddEditFormMain = (props) => {
                     }
                 }
             }
-            case CUSTOMER_TYPE?.FIRM.id: {
+            case CUSTOMER_TYPE?.CORPORATE.id: {
                 switch (currentSection) {
-                    case CUSTOMER_FIRM_SECTION?.CUSTOMER_DETAILS.id: {
+                    case CUSTOMER_CORPORATE_SECTION?.CUSTOMER_DETAILS.id: {
                         return <CompanyCustomerDetailsMaster {...commonModuleProps} />;
                     }
-                    case CUSTOMER_FIRM_SECTION?.COMPANY_RPOFILE.id: {
+                    case CUSTOMER_CORPORATE_SECTION?.COMPANY_RPOFILE.id: {
                         return <CompanyProfile {...commonModuleProps} />;
                     }
-                    case CUSTOMER_FIRM_SECTION?.ADDRESS.id: {
+                    case CUSTOMER_CORPORATE_SECTION?.ADDRESS.id: {
                         return <CompanyAddressMaster />;
                     }
-                    case CUSTOMER_FIRM_SECTION?.CONTACTS.id: {
+                    case CUSTOMER_CORPORATE_SECTION?.CONTACTS.id: {
                         return <CompanyContact {...commonModuleProps} />;
                     }
-                    case CUSTOMER_FIRM_SECTION?.ACCOUNT_RELATED.id: {
+                    case CUSTOMER_CORPORATE_SECTION?.ACCOUNT_RELATED.id: {
                         return <AccountRelatedMaster {...commonModuleProps} />;
                     }
-                    case CUSTOMER_FIRM_SECTION?.CUSTOMER_INDIVIDUAL_SECTION.id: {
+                    case CUSTOMER_CORPORATE_SECTION?.CUSTOMER_INDIVIDUAL_SECTION.id: {
                         return <SupportingDocument />;
                     }
                     default: {
@@ -156,7 +156,6 @@ const AddEditFormMain = (props) => {
                     </Row>
                 </Col>
             </Row>
-        
         </>
     );
 };
