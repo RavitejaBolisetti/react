@@ -65,7 +65,7 @@
 .contentHeaderBackground {
     background-color: #f4f4f4;
     border: 1px solid #e8e8e8;
-    padding: 18px 20px !important;
+    padding: 8px 20px !important;
     margin-bottom: 20px;
     border-radius: 8px !important;
     font-weight: 500;
@@ -141,9 +141,10 @@
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     padding: 4px;
-    display: inline-block;
+    display: flex;
+    flex-wrap: nowrap;
     /* margin-left: 8px; */
-    margin-right: 20px;
+    margin-right: 16px;
 }
 
 .contentHeaderBackground .headingToggle :global .ant-btn {
