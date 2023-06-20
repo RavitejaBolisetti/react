@@ -1,7 +1,9 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 
-const ViewIndividualAddressDetailsBase = ({ formData, styles }) => {
+const ViewIndividualAddressDetailsBase = (props) => {
+    const { formData, styles } = props;
+
     const viewProps = {
         bordered: false,
         colon: false,
@@ -10,7 +12,7 @@ const ViewIndividualAddressDetailsBase = ({ formData, styles }) => {
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={styles.viewDrawerContainer}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Address Type">{formData?.addressType}</Descriptions.Item>

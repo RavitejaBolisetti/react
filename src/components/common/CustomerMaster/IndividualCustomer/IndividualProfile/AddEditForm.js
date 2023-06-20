@@ -8,7 +8,6 @@ import { applicationCategory, applicationSubCategory, customerCategory, gender, 
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
-import { FaRegUserCircle } from 'react-icons/fa';
 import { ViewDetail } from './ViewIndividualProfileDetails';
 import { FiTrash } from 'react-icons/fi';
 
@@ -19,7 +18,7 @@ const { Text } = Typography;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { isViewModeVisible } = props;
+    const { formActionType } = props;
     const { isReadOnly = false } = props;
     const [individualForm] = Form.useForm();
     const [uploadCustomerForm] = Form.useForm();
@@ -121,7 +120,7 @@ const AddEditForm = (props) => {
     const disabledProps = { disabled: isReadOnly };
     return (
         <>
-            {!isViewModeVisible ? (
+            {!formActionType?.viewMode ? (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space direction="vertical" size="small" className={styles.accordianContainer}>
@@ -139,12 +138,9 @@ const AddEditForm = (props) => {
                             >
                                 <Panel
                                     header={
-                                        <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
-                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                                Individual Information
-                                            </Text>
-                                        </div>
+                                        <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                            Individual Information
+                                        </Text>
                                     }
                                     key="1"
                                 >
@@ -378,12 +374,9 @@ const AddEditForm = (props) => {
                             >
                                 <Panel
                                     header={
-                                        <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
-                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                                Social Profile
-                                            </Text>
-                                        </div>
+                                        <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                            Social Profile
+                                        </Text>
                                     }
                                     key="2"
                                 >
@@ -444,12 +437,9 @@ const AddEditForm = (props) => {
                             >
                                 <Panel
                                     header={
-                                        <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
-                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                                Key Account details
-                                            </Text>
-                                        </div>
+                                        <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                            Key Account details
+                                        </Text>
                                     }
                                     key="3"
                                 >
@@ -504,12 +494,9 @@ const AddEditForm = (props) => {
                             >
                                 <Panel
                                     header={
-                                        <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
-                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                                Authority Details (Who Knowns Whom)
-                                            </Text>
-                                        </div>
+                                        <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                            Authority Details (Who Knowns Whom)
+                                        </Text>
                                     }
                                     key="4"
                                 >
@@ -559,12 +546,9 @@ const AddEditForm = (props) => {
                             >
                                 <Panel
                                     header={
-                                        <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
-                                            <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                                Upload Customer Form
-                                            </Text>
-                                        </div>
+                                        <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
+                                            Upload Customer Form
+                                        </Text>
                                     }
                                     key="5"
                                 >

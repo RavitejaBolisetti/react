@@ -1,20 +1,32 @@
 import React, { useState, useRef } from 'react';
-import { Col, Checkbox, Row, Button, Form, Input, Select, Space } from 'antd';
+
+import { Row, Col, Checkbox, Button, Form, Input, Select, Space } from 'antd';
+
 import { SearchOutlined } from '@ant-design/icons';
+
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace, validatePincodeField } from 'utils/validation';
+
+let index = 0;
 
 const AddEditForm = (props) => {
-    const { onFinish, form } = props;
-    const items = ['Office', 'Residence', 'Permanent', 'Other']
+    const { isReadOnly = false, onFinish, form, setShowAddEditForm, setIsEditing } = props;
+
+    const [items, setItems] = useState(['Office', 'Residence', 'Permanent', 'Other']);
     const [name, setName] = useState('');
+
     const inputRef = useRef(null);
     const onNameChange = (event) => {
         setName(event.target.value);
     };
 
-    const handleReset = () => {
-        form.resetFields();
+    const handleOther = (key) => {
+        // setIsOther(key === 4);
+    };
+
+    const handleCancelFormEdit = () => {
+        setIsEditing(false);
+        setShowAddEditForm(false);
     };
 
     return (
@@ -24,6 +36,7 @@ const AddEditForm = (props) => {
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type')]}>
                             <Select
+                                onChange={handleOther}
                                 placeholder={preparePlaceholderSelect('address Type')}
                                 dropdownRender={(menu) => (
                                     <>
@@ -59,7 +72,7 @@ const AddEditForm = (props) => {
                 </Row>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Pincode" name="pincode" rules={[validateRequiredSelectField('pincode')]}>
+                        <Form.Item label="Pincode" name="pincode" rules={[validatePincodeField('pincode')]}>
                             <Input suffix={<SearchOutlined />} placeholder="Search" />
                         </Form.Item>
                     </Col>
@@ -116,8 +129,8 @@ const AddEditForm = (props) => {
                             <Button form="myAdd" key="submit" htmlType="submit" type="primary">
                                 Save
                             </Button>
-                            <Button onClick={handleReset} ghost type="primary">
-                                Reset
+                            <Button onClick={handleCancelFormEdit} ghost type="primary">
+                                Cancel
                             </Button>
                         </Space>
                     </Col>
