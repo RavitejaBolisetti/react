@@ -15,8 +15,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { btnVisiblity } from 'utils/btnVisiblity';
 
-
-
 import { CustomerFormButton } from '../../CustomerFormButton';
 import AddEditForm from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
@@ -63,7 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupportingDocumentBase = (props) => {
-    const { uploadFile, accessToken, token, configFetchList, configListShowLoading } = props;
+    const { isDocumentDataLoaded, uploadFile, accessToken, token, configFetchList, configListShowLoading } = props;
 
     const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsData, section, fetchConfigList, listConfigShowLoading, fetchList, listShowLoading, moduleTitle, typeData, saveData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
@@ -77,16 +75,13 @@ const SupportingDocumentBase = (props) => {
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-    const selectedId = 'CUS1686916772052';
-
-
 
     useEffect(() => {
-        if (userId) {
+        if (userId && !isDocumentDataLoaded) {
             configFetchList({ setIsLoading: configListShowLoading, userId, parameterType: PARAM_MASTER?.CUST_FILES.id });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, isDocumentDataLoaded]);
 
     const onFinish = (values) => {
         const data = { ...values, customerId: 'CUS001', status: true, docId: uploadedFile, id: '' };
@@ -136,7 +131,7 @@ const SupportingDocumentBase = (props) => {
         uploadFile,
         listShowLoading,
         showGlobalNotification,
-       
+
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,

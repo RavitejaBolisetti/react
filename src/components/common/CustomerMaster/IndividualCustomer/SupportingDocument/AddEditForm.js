@@ -19,7 +19,6 @@ const { Dragger } = Upload;
 const AddEditForm = (props) => {
     const { typeData, userId,setUploadedFile, uploadFile, listShowLoading, showGlobalNotification } = props;
 
-    showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File uploaded successfuly' });
 
     const onDrop = (e) => {
         console.log('Dropped files', e.dataTransfer.files);
