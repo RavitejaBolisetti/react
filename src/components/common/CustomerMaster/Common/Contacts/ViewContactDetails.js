@@ -1,11 +1,15 @@
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 import React from 'react';
-import { Descriptions, Button, Space } from 'antd';
+import { Descriptions } from 'antd';
 import AddEditForm from './AddEditForm';
 import styles from 'components/common/Common.module.css';
 
 const ViewDetailBase = (props) => {
-    const { formData, styles, deleteContactHandeler } = props;
-    const { setShowAddEditForm, setContactData, onFinish, form, isEditing, index, editContactHandeler } = props;
+    const { formData, styles } = props;
+    const { setShowAddEditForm, setContactData, onFinish, form, isEditing } = props;
 
     const viewProps = {
         bordered: false,

@@ -115,6 +115,15 @@ const SupportingDocumentBase = (props) => {
         console.log('failed');
     };
 
+    const handleButtonClick = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        setFormData([]);
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        record && setFormData(record);
+        setIsFormVisible(true);
+    };
+
     const formProps = {
         typeData,
         userId,
@@ -127,22 +136,14 @@ const SupportingDocumentBase = (props) => {
         uploadFile,
         listShowLoading,
         showGlobalNotification,
+       
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        buttonData,
         setButtonData,
-        buttonData
+        handleButtonClick,
     };
-
-    
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormData([]);
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        record && setFormData(record);
-        setIsFormVisible(true);
-    };
-
-
- 
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
