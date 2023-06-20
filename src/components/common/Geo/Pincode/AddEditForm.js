@@ -1,24 +1,18 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Switch } from 'antd';
-
 import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-
 import styles from 'components/common/Common.module.css';
-
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
     const { stateData, districtData, tehsilData, cityData, typeData } = props;
-
     const { buttonData, setButtonData, handleButtonClick } = props;
-
     const [filteredStateData, setFilteredStateData] = useState(stateData?.filter((i) => i?.parentKey === defaultCountry));
     const [filteredDistrictData, setFilteredDistrictData] = useState(districtData?.filter((i) => i?.parentKey === formData?.stateCode));
     const [filteredCityData, setFilteredCityData] = useState(cityData?.filter((i) => i?.parentKey === formData?.districtCode));

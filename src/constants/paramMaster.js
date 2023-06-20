@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 export const PARAM_MASTER = {
     CFG_PARAM: {
         id: 'CFG_PARAM',
@@ -22,6 +27,10 @@ export const PARAM_MASTER = {
     PIN_CATG: {
         id: 'PIN_CATG',
         title: 'PIN_CATG',
+    },
+    CUST_TYPE: {
+        id: 'CUST_TYPE',
+        title: 'CUST_TYPE',
     },
     CUST_FILES: {
         id: 'CUST_FILES',
@@ -50,6 +59,18 @@ export const PARAM_MASTER = {
     CUST_CAT: {
         id: 'CUS_CAT',
         title: 'CUS_CAT',
+    },
+    CORP_TYPE: {
+        id: 'CORP_TYPE',
+        title: 'CORP_TYPE',
+    },
+    MEM_TYPE: {
+        id: 'MEM_TYPE',
+        title: 'MEM_TYPE',
+    },
+    CORP_CATE: {
+        id: 'CORP_CATE',
+        title: 'CORP_CATE',
     },
     PRC_TYP: {
         id: 'PRC_TYP',

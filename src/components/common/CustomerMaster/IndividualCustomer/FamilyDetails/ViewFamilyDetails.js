@@ -14,8 +14,6 @@ const ViewDetailBase = (props) => {
 
     console.log(props,'CHECKING')
 
-
-
     return (
         <div>
             <Space direction="vertical" size="middle">

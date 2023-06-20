@@ -38,31 +38,51 @@ const IndividualAddressMasterBase = ({ isViewModeVisible, toggleButton, props })
     const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [editingData, setEditingData] = useState({});
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     const onFinish = (value) => {
-        form.validateFields()
-            .then((data) => console.log('data', data))
-            .catch((error) => console.error(error));
-
-        setAddressData((prev) => {
-            let formData = [...prev];
-            if (value?.defaultaddress && formData?.length >= 1) {
-                formData?.forEach((address) => {
-                    if (address?.defaultaddress === true) {
-                        address.defaultaddress = false;
-                    }
-                });
-                return [...formData, value];
-            } else {
-                return [...prev, { ...value }];
-            }
-        });
+        console.log('onSave ', value, 'isEditing', isEditing);
+        if (isEditing) {
+            console.log(' isEditing block')
+            setAddressData((prev) => {
+                let formData = [...prev];
+                // if (value?.defaultaddress && formData?.length > 1) {
+                    formData?.forEach((contact) => {
+                        if (contact?.defaultaddress === true) {
+                            contact.defaultaddress = false;
+                        }
+                    });
+                    const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode);
+                    console.log("index", index)
+                    formData.splice(index, 1, { ...value });
+                    return [...formData];
+                // } else {
+                //     return [...prev, { ...value }];
+                // }
+            });
+        } else {
+            setAddressData((prev) => {
+                let formData = [...prev];
+                if (value?.defaultaddress && formData?.length >= 1) {
+                    formData?.forEach((contact) => {
+                        if (contact?.defaultaddress === true) {
+                            contact.defaultaddress = false;
+                        }
+                    });
+                    return [...formData, value];
+                } else {
+                    return [...prev, { ...value }];
+                }
+            });
+        }
         setShowAddEditForm(false);
         setIsEditing(false);
+        setEditingData({});
+        form.resetFieldsValue();
     };
 
     const addAddressHandeler = (e) => {
@@ -83,6 +103,7 @@ const IndividualAddressMasterBase = ({ isViewModeVisible, toggleButton, props })
         form,
         isEditing,
         setIsEditing,
+        setEditingData,
     };
 
     return (

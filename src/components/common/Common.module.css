@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 @import url('./global.css');
 
 .marR5 {
@@ -1514,8 +1519,8 @@
 
 .drawerBodyRight {
     padding: 20px;
-    height: calc(100vh - 60px);
-    max-height: calc(100vh - 60px);
+    height: calc(100vh - 120px);
+    max-height: calc(100vh - 120px);
     overflow: hidden;
     overflow-y: overlay;
 }
@@ -1770,19 +1775,47 @@
 
 .drawerBodyRight :global .ant-checkbox+span {
     padding-inline-start: 4px;
-    color: #ff3e5b;
+    color: #0B0B0C;
     font-size: 14px;
     font-weight: 500;
     line-height: 23px;
 }
 
-.drawerBodyRight :global .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled) .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
-    border: 1px solid #ff3e5b;
+.drawerBodyRight :global .ant-checkbox-wrapper:hover span {
+    color: #ff3e5b;
 }
 
-.drawerBodyRight :global .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
-    background-color: #ff3e5b !important;
+
+.drawerBodyRight :global .ant-checkbox-checked:checked {
+    background-color: transparent !important;
 }
+
+.drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
+    width: 18px;
+    height: 18px;
+    background-color: transparent;
+}
+
+.drawerBodyRight :global .ant-checkbox-wrapper-checked:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
+.drawerBodyRight :global .ant-checkbox-checked:not(.ant-checkbox-disabled):hover .ant-checkbox-inner {
+    background-color: transparent !important;
+}
+
+.drawerBodyRight :global .ant-checkbox .ant-checkbox-inner:after {
+    top: 48%;
+    inset-inline-start: 35%;
+    width: 4px;
+    height: 7px;
+    border: 1px solid red;
+    border-top: 0;
+    border-inline-start: 0;
+}
+
+.drawerBodyRight :global .ant-checkbox-checked:after {
+    border: 1px solid #ff3e5b !important;
+    background-color: transparent !important;
+}
+
 
 .userCircle {
     color: #ff3e5b !important;
@@ -1858,6 +1891,14 @@
 
 .nameSpacing {
     margin: 0 0 0 0.25rem;
+}
+
+.cursorNotAllowed {
+    cursor: not-allowed;
+}
+
+.cursorPointer {
+    cursor: pointer;
 }
 
 @media (max-width: 768px) {

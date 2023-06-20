@@ -64,7 +64,6 @@ export const InvoiceDetailsMasterBase = (props) => {
         setactiveKey([]);
         setactiveKey([values]);
     };
-
     const extraParams = [
         {
             key: 'otfNumber',

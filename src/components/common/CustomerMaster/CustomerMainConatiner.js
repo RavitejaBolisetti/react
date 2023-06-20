@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
 
@@ -11,20 +16,20 @@ import { SupportingDocument } from './IndividualCustomer';
 import { LeftSidebar } from './LeftSidebar';
 
 import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection';
-import { CUSTOMER_FIRM_SECTION } from 'constants/CustomerFirmSection';
+import { CUSTOMER_CORPORATE_SECTION } from 'constants/CustomerCorporateSection';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import { DrawerFormButton } from '../Button';
 
-const AddEditFormMain = (props) => {
+const CustomerMainConatinerMain = (props) => {
     const { onCloseAction, formData } = props;
-    const { isViewModeVisible, setIsViewModeVisible, formActionType } = props;
+    const { isViewModeVisible, setIsViewModeVisible, formActionType, buttonData, setButtonData } = props;
     const { customerType, setCustomerType } = props;
-    const [currentSection, setCurrentSection] = useState(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_FIRM_SECTION.CUSTOMER_DETAILS.id);
+    const [currentSection, setCurrentSection] = useState(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id);
     const [section, setSection] = useState();
 
     useEffect(() => {
-        const sectionList = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_FIRM_SECTION;
+        const sectionList = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION;
         const section = Object.values(sectionList)?.find((i) => i.id === currentSection);
         setSection(section);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,16 +53,18 @@ const AddEditFormMain = (props) => {
         currentSection,
         customerType,
         setCustomerType,
+        formActionType,
+        buttonData,
     };
 
-    const [buttonData, setbuttonData] = useState({
-        closeBtn: true,
-        saveBtn: true,
-    });
+    // const [buttonData, setbuttonData] = useState({
+    //     closeBtn: true,
+    //     saveBtn: true,
+    // });
     const handleButtonClick = ({ buttonAction, record }) => {};
     const customerMasterBtnProps = {
         buttonData,
-        setbuttonData,
+        setButtonData,
         onCloseAction,
         isViewModeVisible,
         formActionType,
@@ -103,24 +110,24 @@ const AddEditFormMain = (props) => {
                     }
                 }
             }
-            case CUSTOMER_TYPE?.FIRM.id: {
+            case CUSTOMER_TYPE?.CORPORATE.id: {
                 switch (currentSection) {
-                    case CUSTOMER_FIRM_SECTION?.CUSTOMER_DETAILS.id: {
+                    case CUSTOMER_CORPORATE_SECTION?.CUSTOMER_DETAILS.id: {
                         return <CompanyCustomerDetailsMaster {...commonModuleProps} />;
                     }
-                    case CUSTOMER_FIRM_SECTION?.COMPANY_RPOFILE.id: {
+                    case CUSTOMER_CORPORATE_SECTION?.COMPANY_RPOFILE.id: {
                         return <CompanyProfile {...commonModuleProps} />;
                     }
-                    case CUSTOMER_FIRM_SECTION?.ADDRESS.id: {
+                    case CUSTOMER_CORPORATE_SECTION?.ADDRESS.id: {
                         return <CompanyAddressMaster />;
                     }
-                    case CUSTOMER_FIRM_SECTION?.CONTACTS.id: {
+                    case CUSTOMER_CORPORATE_SECTION?.CONTACTS.id: {
                         return <CompanyContact {...commonModuleProps} />;
                     }
-                    case CUSTOMER_FIRM_SECTION?.ACCOUNT_RELATED.id: {
+                    case CUSTOMER_CORPORATE_SECTION?.ACCOUNT_RELATED.id: {
                         return <AccountRelatedMaster {...commonModuleProps} />;
                     }
-                    case CUSTOMER_FIRM_SECTION?.CUSTOMER_INDIVIDUAL_SECTION.id: {
+                    case CUSTOMER_CORPORATE_SECTION?.CUSTOMER_INDIVIDUAL_SECTION.id: {
                         return <SupportingDocument />;
                     }
                     default: {
@@ -146,7 +153,7 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                     <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.drawerBodyRight}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <h2>{section?.title}</h2>
                             <div className={styles.marginBottom60}>{renderElement()}</div>
                         </Col>
@@ -160,4 +167,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, { width: '90%', footer: null });
+export const CustomerMainConatiner = withDrawer(CustomerMainConatinerMain, { width: '90%', footer: null });

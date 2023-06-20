@@ -106,10 +106,19 @@ export const BASE_URL_TERM_CONDITION_MANUFACTURER_CHANGE_HISTORY = BASE_URL + 'a
 export const BASE_URL_OTF_REPORTS = BASE_URL + 'customreports/otf/names';
 export const BASE_URL_OTF_DOWNLAOD_REPORT = BASE_URL + 'customreports/otf/register';
 
+export const BASE_URL_OTF_INVOICE_DETAILS = BASE_URL + 'otf/invoice';
+
+export const BASE_URL_CUSTOMER_MASTER_CUSTOMER_DETAILS = BASE_URL + 'customers/corporate';
+export const BASE_URL_CUSTOMER_MASTER_CUSTOMER_DETAILS_INDIVIDUAL = BASE_URL + 'customers/individual';
 export const BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER = BASE_URL + 'customers//individual/familydetails';
 export const BASE_URL_OTF = BASE_URL + 'otf/';
 export const BASE_URL_OTF_INVOICE = BASE_URL + 'invoice';
 export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';
 export const BASE_URL_CORPORATE_COMPANY_PROFILE = BASE_URL + 'customers/corporate/profile';
 export const BASE_URL_OTF_DETAILS = BASE_URL_OTF + 'details';
+
+export const BASE_URL_INDIVIUAL_PROFILE_CUSTOMER_MASTER = BASE_URL + 'customers/individual/profile';
 export const BASE_URL_DOCUMENT_UPLOAD = BASE_URL + 'common/document/upload';
+
+export const BASE_URL_CUSTOMER_MASTER_ACCOUNTS_RELATED_CORPORATE = BASE_URL + 'customers/corporate/accounts';
+export const BASE_URL_CUSTOMER_MASTER_ACCOUNTS_RELATED_INDIVISUAL = BASE_URL + 'customers/individual/accounts';
