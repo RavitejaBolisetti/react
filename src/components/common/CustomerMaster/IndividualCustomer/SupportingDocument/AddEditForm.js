@@ -1,5 +1,9 @@
+/*
+ *   Copyright (c) 2023
+ *   All rights reserved.
+ */
 import React from 'react';
-import { Row, Col, Form, Select, Input, message, Upload, Button, Empty } from 'antd';
+import { Row, Col, Form, Select, Input, message, Upload, Button, Empty, Card } from 'antd';
 
 import { FiEye, FiTrash } from 'react-icons/fi';
 
@@ -12,8 +16,7 @@ const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { typeData, userId, onFinish, onFinishFailed, setUploadedFile, uploadFile, listShowLoading, showGlobalNotification } = props;
-    const [form] = Form.useForm();
+    const { typeData, userId,setUploadedFile, uploadFile, listShowLoading, showGlobalNotification } = props;
 
     showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File uploaded successfuly' });
 
@@ -52,7 +55,7 @@ const AddEditForm = (props) => {
         const data = new FormData();
         data.append('applicationId', 'app');
         data.append('file', file);
-       
+
         const requestData = {
             data: data,
             method: 'post',
@@ -73,7 +76,7 @@ const AddEditForm = (props) => {
     };
 
     return (
-        <Form form={form} autoComplete="off" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Card>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item label="Document Type" name="documentTypeId" placeholder={preparePlaceholderSelect('document type')} rules={[validateRequiredSelectField('document type')]}>
@@ -120,10 +123,7 @@ const AddEditForm = (props) => {
                     </div>
                 </Col>
             </Row>
-            <Button htmlType="submit" type="primary">
-                Submit
-            </Button>
-        </Form>
+        </Card>
     );
 };
 
