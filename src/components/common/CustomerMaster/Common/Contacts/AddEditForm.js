@@ -7,7 +7,7 @@ import { Button, Form, message, Typography, Row, Col, Space, Select, Input, Divi
 import { BiLockAlt } from 'react-icons/bi';
 import { CheckOutlined } from '@ant-design/icons';
 
-import { validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
+import { validateLettersWithWhitespaces, validateEmailField, validateAlphanumericWithSpace, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import UploadUtils from './../UploadUtils';
@@ -91,8 +91,8 @@ const AddEditForm = (props) => {
                             <Form.Item label="Purpose of Contact" name="purposeOfContact">
                                 <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                     {typeData?.PURPOSE?.map((item) => (
-                                        <Option key={'ct' + item?.key} value={item.key}>
-                                            {item.value}
+                                        <Option key={'ct' + item?.key} value={item?.key}>
+                                            {item?.value}
                                         </Option>
                                     ))}
                                 </Select>
@@ -124,16 +124,16 @@ const AddEditForm = (props) => {
                         </Col>
 
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Alternate Mobile Number" name="alternativeMobileNumber">
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate mobile number')} {...disabledProps} />
+                            <Form.Item label="Alternate Mobile Number" name="alternativeMobileNumber" rules={[validateMobileNoField('alternate mobile number')]}>
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate mobile number')}  {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Relation" name="relationCode">
                                 <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                     {typeData?.FAMLY_RELTN?.map((item) => (
-                                        <Option key={'ct' + item?.key} value={item.key}>
-                                            {item.value}
+                                        <Option key={'ct' + item?.key} value={item?.key}>
+                                            {item?.value}
                                         </Option>
                                     ))}
                                 </Select>
@@ -162,27 +162,27 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="First Name" name="firstName" rules={[validateRequiredInputField('First Name')]}>
+                            <Form.Item label="First Name" name="firstName" rules={[validateRequiredInputField('First Name'), validateLettersWithWhitespaces('First Name')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('first name')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Middle Name" name="middleName">
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('middle name')} {...disabledProps} />
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('middle name')} rules={[validateLettersWithWhitespaces('middle name')]} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Last/Surname" name="lastName">
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} rules={[validateLettersWithWhitespaces('last name')]} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="E-mail" name="contactEmailId">
+                            <Form.Item label="E-mail" name="contactEmailId" rules={[validateEmailField('E-mail')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('email id')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Alternate Email ID" name="alternateEmailId">
+                            <Form.Item label="Alternate Email ID" name="alternateEmailId" rules={[validateEmailField('E-mail')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate email id')} {...disabledProps} />
                             </Form.Item>
                         </Col>

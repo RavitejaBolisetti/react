@@ -1,3 +1,7 @@
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 export const validateRequiredInputField = (fieldName, lowercase = true) => ({
     required: true,
     message: 'Please enter ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
