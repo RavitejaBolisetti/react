@@ -78,6 +78,8 @@ const CustomerMasterMain = (props) => {
     const { filterString, setFilterString } = props;
 
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
+    const [selectedCustomer, setSelectedCustomer] = useState();
+    console.log('🚀 ~ file: CustomerMaster.js:82 ~ CustomerMasterMain ~ selectedCustomer:', selectedCustomer);
 
     const [form] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -87,7 +89,6 @@ const CustomerMasterMain = (props) => {
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    console.log('🚀 ~ file: CustomerMaster.js:90 ~ CustomerMasterMain ~ buttonData:', buttonData);
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
@@ -160,7 +161,7 @@ const CustomerMasterMain = (props) => {
         setSelectedRowData(record);
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-
+        setSelectedCustomer(record);
         setIsFormVisible(true);
     };
 
@@ -234,6 +235,8 @@ const CustomerMasterMain = (props) => {
         defaultFormActionType,
         defaultBtnVisiblity,
         selectedRowData,
+        selectedCustomer,
+        setSelectedCustomer,
     };
 
     const selectProps = {

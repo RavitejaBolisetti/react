@@ -144,7 +144,7 @@ const AddEditForm = (props) => {
                                     }
                                     key="1"
                                 >
-                                    <Divider />
+                                    {/* <Divider /> */}
                                     <Form autoComplete="off" layout="vertical" form={individualForm} onFinishFailed={onFinishFailed}>
                                         <Row gutter={16}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>

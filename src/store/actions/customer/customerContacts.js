@@ -3,10 +3,11 @@
  *   All rights reserved.
  */
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_CUSTOMER_MASTER_LIST as baseURL } from 'constants/routingApi';
+import { BASE_URL_CUSTOMER_MASTER_FIRM_CONTACT, BASE_URL_CUSTOMER_MASTER_NDIVIDUAL_CONTACT } from 'constants/routingApi';
 
-const PREFIX = 'CUSTOMER_';
+const PREFIX = 'CUSTOMER_CONTACTS_';
 const moduleName = 'Customer Master';
+const baseURL = BASE_URL_CUSTOMER_MASTER_FIRM_CONTACT;
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';
