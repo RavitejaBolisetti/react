@@ -119,6 +119,7 @@ export const BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER = BASE_URL + 'customers//ind
 export const BASE_URL_CUSTOMER_MASTER_NDIVIDUAL_CONTACT = BASE_URL + 'customers/individual/contacts';
 export const BASE_URL_CUSTOMER_MASTER_FIRM_CONTACT = BASE_URL + 'customers/corporate/contacts';
 
+export const BASE_URL_FAMILY_DETAIL_SEARCH = BASE_URL + 'customers/individual';
 export const BASE_URL_OTF = BASE_URL + 'otf/';
 export const BASE_URL_OTF_INVOICE = BASE_URL + 'invoice';
 export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';
