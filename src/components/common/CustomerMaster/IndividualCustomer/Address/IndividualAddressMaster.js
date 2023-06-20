@@ -77,9 +77,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const IndividualAddressMasterBase = (props) => {
-    const { isViewModeVisible, isAddDataLoaded, isAddressLoaded, addressIndData, isAddLoading, saveData, listConfigShowLoading, fetchConfigList, addData } = props
+    const { selectedRowData, isViewModeVisible, isAddDataLoaded, isAddressLoaded, addressIndData, isAddLoading, saveData, listConfigShowLoading, fetchConfigList, addData } = props
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, resetData, pincodeData, userId, fetchList, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-
     const [form] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -103,7 +102,7 @@ const IndividualAddressMasterBase = (props) => {
         {
             key: 'customerId',
             title: 'customerId',
-            value: selectedCustomer,
+            value: selectedRowData?.customerId,
             name: 'Customer ID',
         },
     ];
@@ -124,13 +123,6 @@ const IndividualAddressMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAddressLoaded]);
 
-    // useEffect(() => {
-    //     if (userId && !isFamilyLoaded) {
-    //         fetchPincodeDetail({ setIsLoading: listFamilyDetailsShowLoading, userId, extraParams });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [searchValue]);
-
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
@@ -147,42 +139,8 @@ const IndividualAddressMasterBase = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-    const onFinish = (value) => {
-        let data = { ...value };
-        console.log(addressData,'VERRRRR')
-
-        // console.log('onSave ', value, 'isEditing', isEditing);
-        if (isEditing) {
-            setAddressData((prev) => {
-                let formData = [...prev];
-                // if (value?.defaultaddress && formData?.length > 1) {
-                formData?.forEach((contact) => {
-                    if (contact?.defaultaddress === true) {
-                        contact.defaultaddress = false;
-                    }
-                });
-                const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode);
-                formData.splice(index, 1, { ...value });
-                return [...formData];
-                // } else {
-                //     return [...prev, { ...value }];
-                // }
-            });
-        } else {
-            setAddressData((prev) => {
-                let formData = [...prev];
-                if (value?.defaultaddress && formData?.length >= 1) {
-                    formData?.forEach((contact) => {
-                        if (contact?.defaultaddress === true) {
-                            contact.defaultaddress = false;
-                        }
-                    });
-                    return [...formData, value];
-                } else {
-                    return [...prev, { ...value }];
-                }
-            });
-        }
+    const onFinish = () => {
+        let data = { customerId: selectedRowData?.customerId, customerAddress: addressData };
 
         const onSuccess = (res) => {
             form.resetFields();

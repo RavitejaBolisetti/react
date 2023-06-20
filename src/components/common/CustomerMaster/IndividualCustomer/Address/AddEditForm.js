@@ -24,9 +24,7 @@ const AddEditForm = (props) => {
     const [options, setOptions] = useState(false);
     /*visiblity of drawer   */
     const [isVisible, setIsVisible] = useState(true);
-
-
-
+    const [pinSearchData, setPinSearchData] = useState({});
     const [items, setItems] = useState(['Office', 'Residence', 'Permanent', 'Other']);
     const [name, setName] = useState('');
 
@@ -65,10 +63,17 @@ const AddEditForm = (props) => {
         if (selectedPinCode) {
             form.setFieldsValue({
                 pinCode: selectedPinCode?.pinCode,
-                state: selectedPinCode?.stateName,
-                city: selectedPinCode?.cityName,
-                tehsil: selectedPinCode?.tehsilName,
-                district: selectedPinCode?.districtName,
+                stateCode: selectedPinCode?.stateName,
+                cityCode: selectedPinCode?.cityName,
+                tehsilCode: selectedPinCode?.tehsilName,
+                districtCode: selectedPinCode?.districtName,
+            });
+            setPinSearchData({
+                pinCode: selectedPinCode?.pinCode,
+                stateCode: selectedPinCode?.stateCode,
+                cityCode: selectedPinCode?.cityCode,
+                tehsilCode: selectedPinCode?.tehsilCode,
+                districtCode: selectedPinCode?.districtCode,
             });
             forceUpdate();
         }
@@ -116,20 +121,16 @@ const AddEditForm = (props) => {
         if (isEditing) {
             setAddressData((prev) => {
                 let formData = [...prev];
-                // if (value?.defaultaddress && formData?.length > 1) {
                 formData?.forEach((contact) => {
                     if (contact?.defaultaddress === true) {
                         contact.defaultaddress = false;
                     }
                 });
                 const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode);
-                formData.splice(index, 1, { ...value });
-                // setIsEditing(false);
+                formData.splice(index, 1, { ...value, ...pinSearchData });
 
                 return [...formData];
-                // } else {
-                //     return [...prev, { ...value }];
-                // }
+
             });
         } else {
             setAddressData((prev) => {
@@ -140,12 +141,13 @@ const AddEditForm = (props) => {
                             contact.defaultaddress = false;
                         }
                     });
-                    return [...formData, value];
+                    return [...formData, { ...value, ...pinSearchData }];
                 } else {
-                    return [...prev, { ...value }];
+                    return [...prev, { ...value, ...pinSearchData }];
                 }
             });
         }
+        setPinSearchData({})
         setShowAddEditForm(false);
         setIsEditing(false);
         setEditingData({});
@@ -161,26 +163,7 @@ const AddEditForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type')]}>
-                            {/* <Select
-                                onChange={handleOther}
-                                placeholder={preparePlaceholderSelect('address Type')}
-                                dropdownRender={(menu) => (
-                                    <>
-                                        {menu}
-                                        <Space
-                                            style={{
-                                                padding: '0 8px 4px',
-                                            }}
-                                        >
-                                            <Input placeholder="enter type" ref={inputRef} value={name} onChange={onNameChange} allowClear />
-                                        </Space>
-                                    </>
-                                )}
-                                options={addData.map((item) => ({
-                                    label: item,
-                                    value: item,
-                                }))}
-                            /> */}
+
                             <Select placeholder={preparePlaceholderSelect('address type')}>
                                 {addData?.map((item) => (
                                     <Option value={item?.key} >{item?.value}</Option>
@@ -213,13 +196,13 @@ const AddEditForm = (props) => {
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={formData?.tehsil} label="Tehsil" name="tehsil" >
+                        <Form.Item initialValue={formData?.tehsil} label="Tehsil" name="tehsilCode" >
                             <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('tehsil')} maxLength={6} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="City" initialValue={formData?.city} name="city">
+                        <Form.Item label="City" initialValue={formData?.city} name="cityCode">
                             <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('city')} maxLength={50} />
                         </Form.Item>
                     </Col>
@@ -227,18 +210,18 @@ const AddEditForm = (props) => {
                 </Row>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="District" initialValue={formData?.district} name="district">
+                        <Form.Item label="District" initialValue={formData?.district} name="districtCode">
                             <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('district')} maxLength={50} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={formData?.state} label="State" name="state">
+                        <Form.Item initialValue={formData?.state} label="State" name="stateCode">
                             <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('state')} maxLength={50} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Contact Name" name="contactName" rules={validateLettersWithWhitespaces('mobile number')}>
+                        <Form.Item label="Contact Name" name="contactName" rules={[validateLettersWithWhitespaces('mobile number')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
                         </Form.Item>
                     </Col>
@@ -246,14 +229,20 @@ const AddEditForm = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Contact Mobile" name="mobileNumber" rules={validateMobileNoField('mobile number')}>
+                        <Form.Item label="Contact Mobile" name="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
                         </Form.Item>
                     </Col>
                 </Row>
+                <Form.Item hidden name="id" initialValue={''} >
+                    <Input />
+                </Form.Item>
+                <Form.Item hidden name="status" initialValue={false} >
+                    <Input />
+                </Form.Item>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item valuePropName="checked" name="deafultAddressIndicator">
+                        <Form.Item valuePropName="checked" name="deafultAddressIndicator" initialValue={false}>
                             <Checkbox>Mark As Default</Checkbox>
                         </Form.Item>
                     </Col>
@@ -272,7 +261,7 @@ const AddEditForm = (props) => {
                     </Col>
                 </Row>
             </Form>
-           
+
         </>
     );
 };
