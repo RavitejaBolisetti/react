@@ -35,7 +35,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                                        <Select placeholder="Select" disabled={false} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
+                                        <Select placeholder="Select" disabled={false} loading={false} allowClear fieldNames={{ label: 'value', value: 'value' }} options={configurableTypedata['CUST_TYPE']}></Select>
                                     </Form.Item>
                                 </Col>
                             </Row>
