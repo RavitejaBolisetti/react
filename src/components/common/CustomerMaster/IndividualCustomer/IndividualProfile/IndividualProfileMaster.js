@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 const IndividualProfileBase = (props) => {
-    const { userId, fetchIndiviualList, onFieldsChange, listIndiviualShowLoading, isIndiviualProfileLoaded, indiviualData, saveData, showGlobalNotification } = props;
+    const { userId, fetchIndiviualList, onFieldsChange, listIndiviualShowLoading, isIndiviualProfileLoaded, formActionType, indiviualData, saveData, showGlobalNotification } = props;
     const [indiviualForm] = Form.useForm();
 
     useEffect(() => {
@@ -61,7 +61,7 @@ const IndividualProfileBase = (props) => {
     ];
     const onIndiviualFinish = (values) => {
         console.log(values, 'ssss');
-        let data = [...values];
+        let data = { ...values };
 
         const onSuccess = (res) => {
             indiviualForm.resetFields();
@@ -84,11 +84,17 @@ const IndividualProfileBase = (props) => {
         saveData(requestData);
     };
 
+    const onFinishFailed = (errorInfo) => {
+        indiviualForm.validateFields().then((values) => {});
+    };
     const formProps = {
         indiviualForm,
         onIndiviualFinish,
         indiviualData,
         onFieldsChange,
+        onFinishFailed,
+        props,
+        formActionType,
     };
     return (
         <>

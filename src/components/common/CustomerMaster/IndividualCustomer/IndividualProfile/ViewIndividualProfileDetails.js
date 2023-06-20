@@ -32,14 +32,17 @@ const ViewDetailMain = (props) => {
         mmfsl: 'mfsl001',
         drivingLicenseNumber: 'UP1620195565156',
         gstin: '29GGGGG1314R9Z6',
-        usageCategorizationcategory:'Application Category',
-        subCategory:'Sub Category',
+        usageCategorizationcategory: 'Application Category',
+        subCategory: 'Sub Category',
         customerCategory: 'Common',
-        religion:'hindu',
-
+        religion: 'hindu',
+        buisnessDetails: 'details',
+        vehicleDetails: 'deployment',
+        keyRole: 'role details',
+        routeDetails: 'Route',
     };
     const socialMedia = {
-        mmfsl:'ps@mahindra.com',
+        mmfsl: 'ps@mahindra.com',
         facebookId: 'facebook@286',
         twitterId: 'twitter@234',
         instagramId: 'insta@123',
@@ -52,13 +55,13 @@ const ViewDetailMain = (props) => {
         accountSegement: 'Individual',
         accountClientName: 'Pal Singh',
         accountMappingDate: '12-11-2022',
-    }
+    };
     const authorityDetails = {
         nameOfPerson: 'Pal Singh',
         position: 'Manager',
         companyName: 'Koncept',
         remarks: 'This is remarks',
-    }
+    };
 
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
@@ -78,7 +81,6 @@ const ViewDetailMain = (props) => {
                     <Panel
                         header={
                             <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     {' '}
                                     Individual Information
@@ -96,7 +98,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Date of Birth">{individualForm?.dateOfBirth}</Descriptions.Item>
                             <Descriptions.Item label="Gender">{individualForm?.gender}</Descriptions.Item>
                             <Descriptions.Item label="Maritial Status">{individualForm?.martialStatus}</Descriptions.Item>
-                            <Descriptions.Item label="Anniversary Date">{individualForm?.weddingAnniversary}</Descriptions.Item>
+                            <Descriptions.Item label="Wedding Anniversary Date">{individualForm?.weddingAnniversary}</Descriptions.Item>
                             <Descriptions.Item label="Occupation">{individualForm?.occuption}</Descriptions.Item>
                             <Descriptions.Item label="Annual Income">{individualForm?.annualIncome}</Descriptions.Item>
                             <Descriptions.Item label="Driving License No.">{individualForm?.drivingLicenseNumber}</Descriptions.Item>
@@ -105,7 +107,6 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Vehicle Used">{individualForm?.vehicleUsed}</Descriptions.Item>
                             <Descriptions.Item label="Mother Tongue">{individualForm?.preferredLanguage}</Descriptions.Item>
                             <Descriptions.Item label="Religion">{individualForm?.religion}</Descriptions.Item>
-                            <Descriptions.Item label="Membership Type">{individualForm?.membershipType}</Descriptions.Item>
                             <Descriptions.Item label="PAN">{individualForm?.panNumber}</Descriptions.Item>
                             <Descriptions.Item label="GSTIN">{individualForm?.gstin}</Descriptions.Item>
                         </Descriptions>
@@ -113,6 +114,47 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Usage/Application Categorization">{individualForm?.usageCategorizationcategory}</Descriptions.Item>
                             <Descriptions.Item label="Usage/Application Sub-Category">{individualForm?.subCategory}</Descriptions.Item>
                             <Descriptions.Item label="Customer Category">{individualForm?.customerCategory}</Descriptions.Item>
+                        </Descriptions>
+                        {individualForm?.customerCategory == 'Fleet' ? (
+                            <Descriptions {...viewProps}>
+                                <Descriptions.Item label="Business Details">{individualForm?.buisnessDetails}</Descriptions.Item>
+                                <Descriptions.Item label="Vehicle Deployment Detail">{individualForm?.vehicleDetails}</Descriptions.Item>
+                                <Descriptions.Item label="Key Role Details">{individualForm?.keyRole}</Descriptions.Item>
+                                <Descriptions.Item label="Major Route Details">{individualForm?.routeDetails}</Descriptions.Item>
+                            </Descriptions>
+                        ) : null}
+                    </Panel>
+                </Collapse>
+                <Collapse
+                    expandIcon={() => {
+                        if (activeKey.includes(5)) {
+                            return <MinusOutlined className={styles.iconsColor} />;
+                        } else {
+                            return <PlusOutlined className={styles.iconsColor} />;
+                        }
+                    }}
+                    activeKey={activeKey}
+                    onChange={() => onChange(5)}
+                    expandIconPosition="end"
+                >
+                    <Panel
+                        header={
+                            <div className={styles.alignUser}>
+                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                    {' '}
+                                    Social Profile
+                                </Text>
+                            </div>
+                        }
+                        key="5"
+                    >
+                        <Descriptions {...viewProps}>
+                            <Descriptions.Item label="M1-MMFSL">{socialMedia?.mmfsl}</Descriptions.Item>
+                            <Descriptions.Item label="Facebook Link">{socialMedia?.facebookId}</Descriptions.Item>
+                            <Descriptions.Item label="Twitter Link">{socialMedia?.twitterId}</Descriptions.Item>
+                            <Descriptions.Item label="Instagram Link">{socialMedia?.instagramId}</Descriptions.Item>
+                            <Descriptions.Item label="Youtube Channel">{socialMedia?.youtubeChannel}</Descriptions.Item>
+                            <Descriptions.Item label="Team BHP Link">{socialMedia?.teamBhp}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>
@@ -131,7 +173,6 @@ const ViewDetailMain = (props) => {
                     <Panel
                         header={
                             <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     Key Account Details
                                 </Text>
@@ -163,7 +204,6 @@ const ViewDetailMain = (props) => {
                     <Panel
                         header={
                             <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     Authority Details (Who Knows Whom)
                                 </Text>
@@ -176,41 +216,6 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Position">{authorityDetails?.position}</Descriptions.Item>
                             <Descriptions.Item label="Company Name">{authorityDetails?.companyName}</Descriptions.Item>
                             <Descriptions.Item label="Remarks">{authorityDetails?.remarks}</Descriptions.Item>
-                        </Descriptions>
-                    </Panel>
-                </Collapse>
-
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(5)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(5)}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <FaRegUserCircle className={styles.userCircle} />
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {' '}
-                                    Social Profile
-                                </Text>
-                            </div>
-                        }
-                        key="5"
-                    >
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="M1-MMFSL">{socialMedia?.mmfsl}</Descriptions.Item>
-                            <Descriptions.Item label="Facebook Link">{socialMedia?.facebookId}</Descriptions.Item>
-                            <Descriptions.Item label="Twitter Link">{socialMedia?.twitterId}</Descriptions.Item>
-                            <Descriptions.Item label="Instagram Link">{socialMedia?.instagramId}</Descriptions.Item>
-                            <Descriptions.Item label="Youtube Channel">{socialMedia?.youtubeChannel}</Descriptions.Item>
-                            <Descriptions.Item label="Team BHP Link">{socialMedia?.teamBhp}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>

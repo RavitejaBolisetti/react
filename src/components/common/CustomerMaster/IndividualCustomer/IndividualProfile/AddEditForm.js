@@ -18,7 +18,7 @@ const { Text } = Typography;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { formActionType, onIndiviualFinish, individualForm, indiviualData, onFieldsChange } = props;
+    const { formActionType, onIndiviualFinish, individualForm, indiviualData, onFieldsChange, onFinishFailed } = props;
     const { isReadOnly = false } = props;
     const [uploadCustomerForm] = Form.useForm();
 
@@ -82,7 +82,7 @@ const AddEditForm = (props) => {
     return (
         <>
             {!formActionType?.viewMode ? (
-                <Form autoComplete="off" id="form" layout="vertical" form={individualForm} onFieldsChange={onFieldsChange} onFinishFailed={onIndiviualFinish}>
+                <Form autoComplete="off" id="form" layout="vertical" form={individualForm} onFieldsChange={onFieldsChange} onFinish={onIndiviualFinish} onFinishFailed={onFinishFailed}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Space direction="vertical" size="small" className={styles.accordianContainer}>
@@ -475,7 +475,7 @@ const AddEditForm = (props) => {
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                 <Form.Item label="Remarks" name="remarks">
-                                                    <TextArea placeholder={preparePlaceholderText('remarks')} showCount maxLength={100} autoSize={{ minRows: 2, maxRows: 5 }} />
+                                                    <TextArea placeholder={preparePlaceholderText('remarks')} showCount maxLength={100} autoSize={{ minRows: 1, maxRows: 1 }} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
@@ -530,6 +530,10 @@ const AddEditForm = (props) => {
                             </Space>
                         </Col>
                     </Row>
+
+                    <Button htmlType="submit" type="primary">
+                        Submit
+                    </Button>
                 </Form>
             ) : (
                 <ViewDetail {...viewProps} />
