@@ -5,9 +5,8 @@
  */
 import React from 'react';
 import { Card, Descriptions, Divider } from 'antd';
-import { Space, Collapse, Typography } from 'antd';
+import { Space, Typography } from 'antd';
 
-const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
