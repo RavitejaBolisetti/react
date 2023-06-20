@@ -92,4 +92,12 @@ export const PARAM_MASTER = {
         id: 'REF',
         title: 'Referral',
     },
+    GENDER_CD: {
+        id: 'GENDER_CD',
+        title: 'GENDER_CD'
+    },
+    PURPOSE: {
+        id: 'PURPOSE',
+        title: 'PURPOSE',
+    },
 };

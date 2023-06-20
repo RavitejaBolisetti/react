@@ -47,6 +47,7 @@ const AddEditFormMain = (props) => {
     };
 
     const onEdit = (values) => {
+        console.log(values, 'EDIT VALUES ');
         setEditedMode(true);
         setCustomerType(false);
         familyForm.setFieldsValue({
@@ -55,7 +56,8 @@ const AddEditFormMain = (props) => {
             customerName: values?.customerName,
             editedId: values?.editedId,
             relationship: values?.relationship,
-            dateOfBirth: dayjs(values?.dateOfBirth),
+            relationCode: values?.relationCode,
+            dateOfBirth: typeof values?.dateOfBirth === 'object' ? values?.dateOfBirth : dayjs(values?.dateOfBirth),
             relationAge: values?.relationAge,
             remarks: values?.remarks,
         });
@@ -124,9 +126,6 @@ const AddEditFormMain = (props) => {
                                                         onClick={() => {
                                                             onEdit(item);
                                                             onCollapseChange(item?.editedId);
-                                                            // if (activeKey.includes(item?.editedId)) {
-                                                            //     onCollapseChange(item?.editedId);
-                                                            // }
                                                         }}
                                                     >
                                                         <FiEdit color={editedMode ? 'grey' : '#ff3e5b'} style={{ margin: '0.25rem 0 0 0' }} />
