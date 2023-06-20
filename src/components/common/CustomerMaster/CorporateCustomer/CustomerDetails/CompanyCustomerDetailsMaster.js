@@ -1,42 +1,55 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useEffect, useMemo, useState } from 'react';
-import { AddEditForm } from './AddEditForm';
-import { customerDetailsDataActions } from 'store/actions/data/customerMaster/customerDetails';
+import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Form } from 'antd';
+
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { PARAM_MASTER } from 'constants/paramMaster';
+import { customerDetailsDataActions } from 'store/actions/data/customerMaster/customerDetails';
 import { showGlobalNotification } from 'store/actions/notification';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
+import { ViewDetail } from './ViewDetail';
+import { AddEditForm } from './AddEditForm';
+import { CustomerFormButton } from '../../CustomerFormButton';
+
 import { btnVisiblity } from 'utils/btnVisiblity';
 
+import { PARAM_MASTER } from 'constants/paramMaster';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             CustomerMaster: {
-                CustomerDetails:{isLoaded: isDataLoaded = false, isLoading,  data: customerDetailsData = []  }
+                CustomerDetails: { isLoaded: isDataLoaded = false, isLoading, data: customerDetailsData = [] },
             },
             ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isTypeDataLoading, paramdata: typeData = [] },
         },
     } = state;
-    console.log(state,'CSSTATE');
+
     const moduleTitle = 'Customer Details';
 
-let returnValue = {
-    userId,
-    isTypeDataLoaded,
-    isTypeDataLoading,
-    moduleTitle,
+    let returnValue = {
+        userId,
+        isTypeDataLoaded,
+        isTypeDataLoading,
+        moduleTitle,
 
-    isDataLoaded,
-    isLoading,
-    customerDetailsData,
-    typeData: typeData,
+        isDataLoaded,
+        isLoading,
+        customerDetailsData,
+        typeData: typeData,
+    };
+    return returnValue;
 };
-return returnValue;
-};
+
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
@@ -46,33 +59,29 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchList: customerDetailsDataActions.fetchList,
             listShowLoading: customerDetailsDataActions.listShowLoading,
-            saveData:customerDetailsDataActions.saveData,
-            resetData:customerDetailsDataActions.reset,
+            saveData: customerDetailsDataActions.saveData,
+            resetData: customerDetailsDataActions.reset,
             showGlobalNotification,
-
         },
         dispatch
     ),
 });
 
-
-
 const CompanyCustomerDetailsMasterBase = (props) => {
-    const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsData, relationData, fetchConfigList, listConfigShowLoading, fetchList, form, listShowLoading,moduleTitle, typeData,saveData } = props;
-    const [customerDetailsForm] = Form.useForm();
+    const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsData, section, fetchConfigList, listConfigShowLoading, fetchList, listShowLoading, moduleTitle, typeData, saveData } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+
+    const [form] = Form.useForm();
+
     const [customerDetailsList, setCustomerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [customerType, setCustomerType] = useState('Yes');
     const [editedMode, setEditedMode] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [generateId, setGenerateId] = useState(0);
-    const [configurableTypedata,setConfigurableTypedata]=useState({})
+    const [configurableTypedata, setConfigurableTypedata] = useState({});
     const [formData, setFormData] = useState();
     const [refershData, setRefershData] = useState(false);
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
     const [showDataLoading, setShowDataLoading] = useState(true);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
@@ -83,6 +92,13 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+
+    // const customerMasterBtnProps = {
+    //     buttonData,
+    //     setButtonData,
+    //     formData,
+    //     handleButtonClick
+    // };
 
     useEffect(() => {
         if (userId) {
@@ -126,8 +142,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const onFinish = (values) => {
         const data = { ...values, customerId: 'CUS1686815155017' };
-
-        console.log( 'Aman',customerDetailsForm.getFieldsValue());
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -180,8 +194,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         }
     }, [formActionType]);
 
-
-
     const extraParams = [
         {
             key: 'customerId',
@@ -190,9 +202,9 @@ const CompanyCustomerDetailsMasterBase = (props) => {
             name: 'Customer Id',
         },
     ];
- 
+
     const formProps = {
-        form:customerDetailsForm,
+        form,
         onChange,
         buttonData,
         onFinish,
@@ -212,8 +224,35 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         customerDetailsData,
         configurableTypedata,
         handleButtonClick,
+        styles,
     };
 
-    return <AddEditForm {...formProps} />;
+    const viewProps = {
+        onChange,
+        onCloseAction,
+        styles,
+    };
+
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
+
+    return (
+        <>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Row gutter={20} className={styles.drawerBodyRight}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <h2>{section?.title}</h2>
+                        {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <CustomerFormButton {...props} />
+                    </Col>
+                </Row>
+            </Form>
+        </>
+    );
 };
 export const CompanyCustomerDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(CompanyCustomerDetailsMasterBase);
