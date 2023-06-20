@@ -5,23 +5,25 @@ import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FiEdit } from 'react-icons/fi';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'components/common/Common.module.css';
 
 import { DataTable } from 'utils/dataTable';
 import { taxDetailsColumn, optionalServicesColumns } from './tablecolumn';
-import { ActiveText,dynamicExpandIcon } from 'utils/accordianExpandIcon';
+import { ActiveText, dynamicExpandIcon } from 'utils/accordianExpandIcon';
 const { Text } = Typography;
 
 const { Option } = Select;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { activeKey, formData, onChange, setactiveKey, formActionType, setIsViewModeVisible } = props;
+    const { activeKey, formData, onChange, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
     const [form] = Form.useForm();
 
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [openAccordian, setOpenAccordian] = useState();
+    const [optionsServicesMapping,setoptionsServicesMapping]=useState([{}])
     const disabledProp = { disabled: true };
     useEffect(() => {
         if (formActionType?.editMode && formData) {
@@ -75,9 +77,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item label="Vehicle Usage Type" name="usageType" data-testid="usageType" rules={[validateRequiredSelectField('vehicle usage Type')]}>
-                                            <Select placeholder="Select" allowClear>
-                                                <Option value="usageType">usageType</Option>
-                                            </Select>
+                                            <Select placeholder="Select Vehicle Usage Type" allowClear options={typeData[PARAM_MASTER.VEHCL_TYPE.id]} fieldNames={{ label: 'value', value: 'key' }} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -201,8 +201,6 @@ const AddEditFormMain = (props) => {
                             }
                             key="3"
                         >
-                            <Divider />
-
                             <DataTable tableColumn={optionalServicesColumns} tableData={formData['optionalServices']} removePagination={true} />
                         </Panel>
                     </Collapse>

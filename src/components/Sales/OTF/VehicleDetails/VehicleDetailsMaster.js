@@ -112,6 +112,7 @@ const VehicleDetailsMasterMain = (props) => {
         activeKey,
         setactiveKey,
         onChange,
+        typeData,
     };
     const viewProps = {
         activeKey,
