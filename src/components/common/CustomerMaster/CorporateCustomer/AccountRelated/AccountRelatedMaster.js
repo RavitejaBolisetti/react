@@ -21,13 +21,11 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            CUSTOMERMASTER: {
+            CustomerMaster: {
                 CorporateAccounts: { isLoaded = false, isLoading, data },
             },
         },
     } = state;
-
-    console.log(state);
 
     const moduleTitle = 'Accounts Related';
 

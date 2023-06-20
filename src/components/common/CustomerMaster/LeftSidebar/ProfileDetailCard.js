@@ -1,5 +1,10 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
-import { Collapse, Space } from 'antd';
+import { Collapse, Space, Avatar } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 
 const { Panel } = Collapse;
@@ -12,12 +17,13 @@ const ProfileDetailCard = (props) => {
                 header={
                     <>
                         <Space direction="vertical">
-                            <p>
-                                Name - <span>John Michael</span>
-                            </p>
-                            <p>
-                                <span>4962946</span>
-                            </p>
+                            <Avatar size={80}>JM</Avatar>
+                            <div>
+                                <p>
+                                    <span>John Michael</span>
+                                </p>
+                                <p>4962946</p>
+                            </div>
                         </Space>
                     </>
                 }

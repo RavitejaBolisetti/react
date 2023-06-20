@@ -1,9 +1,12 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { Card, Descriptions, Divider } from 'antd';
-import { Space, Collapse, Typography } from 'antd';
+import { Space, Typography } from 'antd';
 
-
-const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
@@ -46,4 +49,4 @@ const ViewDetailMain = (props) => {
     );
 };
 
-export const ViewCompanyCustomerDetails = ViewDetailMain;
+export const ViewDetail = ViewDetailMain;
