@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 
 /*
  *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
@@ -23,6 +28,7 @@ const ViewDetailMain = (props) => {
         <Card style={{ backgroundColor: '#F2F2F2' }}>
             <div className={styles.viewDrawerContainer}>
                 <Descriptions {...viewProps}>
+                
                     <Descriptions.Item label="Mobile Number">{formData?.mobileNumber}</Descriptions.Item>
                     <Descriptions.Item label="Customer Type">{formData?.corporateCode}</Descriptions.Item>
                     <Divider />

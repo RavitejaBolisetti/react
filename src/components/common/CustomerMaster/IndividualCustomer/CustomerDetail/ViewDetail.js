@@ -10,6 +10,7 @@ import React from 'react';
 import { Space, Typography, Descriptions, Card, Divider, Col, Row, Button } from 'antd';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { BiTimeFive } from 'react-icons/bi';
+import { FiEdit } from 'react-icons/fi';
 
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
@@ -58,9 +59,9 @@ const ViewDetailMain = (props) => {
                                     {formData?.middleName}
                                     <span className={styles.nameSpacing}></span>
                                     {formData?.lastName}
-                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Button type="link" icon={<BiTimeFive />}>
-                                            View History
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
+                                        <Button type="link" icon={<FiEdit />}>
+                                            Edit
                                         </Button>
                                     </Col>
                                 </Row>
