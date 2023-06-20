@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const IndividualAddressMasterBase = (props) => {
-    const { isViewModeVisible, isAddDataLoaded, isAddressLoaded, isAddLoading, saveData, listConfigShowLoading, fetchConfigList, addData } = props
+    const { isViewModeVisible, isAddDataLoaded, isAddressLoaded, addressIndData, isAddLoading, saveData, listConfigShowLoading, fetchConfigList, addData } = props
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, resetData, pincodeData, userId, fetchList, isDataLoaded, listShowLoading, showGlobalNotification } = props;
 
     const [form] = Form.useForm();
@@ -149,6 +149,7 @@ const IndividualAddressMasterBase = (props) => {
 
     const onFinish = (value) => {
         let data = { ...value };
+        console.log(addressData,'VERRRRR')
 
         // console.log('onSave ', value, 'isEditing', isEditing);
         if (isEditing) {

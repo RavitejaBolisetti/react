@@ -5,7 +5,7 @@ import { Row, Col, Checkbox, Button, Form, Input, Select, Space, AutoComplete } 
 import { SearchOutlined } from '@ant-design/icons';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace, validatePincodeField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace, validatePincodeField, validateMobileNoField, validateLettersWithWhitespaces } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
@@ -238,7 +238,7 @@ const AddEditForm = (props) => {
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Contact Name" name="contactName">
+                        <Form.Item label="Contact Name" name="contactName" rules={validateLettersWithWhitespaces('mobile number')}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
                         </Form.Item>
                     </Col>
@@ -246,7 +246,7 @@ const AddEditForm = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Contact Mobile" name="mobileNumber">
+                        <Form.Item label="Contact Mobile" name="mobileNumber" rules={validateMobileNoField('mobile number')}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
                         </Form.Item>
                     </Col>
