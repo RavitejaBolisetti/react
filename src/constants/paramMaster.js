@@ -1,3 +1,7 @@
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 export const PARAM_MASTER = {
     CFG_PARAM: {
         id: 'CFG_PARAM',
@@ -74,5 +78,13 @@ export const PARAM_MASTER = {
     REF: {
         id: 'REF',
         title: 'Referral',
+    },
+    GENDER_CD: {
+        id: 'GENDER_CD',
+        title: 'GENDER_CD'
+    },
+    PURPOSE: {
+        id: 'PURPOSE',
+        title: 'PURPOSE',
     },
 };
