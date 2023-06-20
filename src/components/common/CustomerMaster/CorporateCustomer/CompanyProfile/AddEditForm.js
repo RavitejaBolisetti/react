@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import { React, useEffect, useState } from 'react';
 
 import { Col, Input, Collapse, Row, Button, Space, Form, Select, Upload, message, Checkbox, Divider, Typography } from 'antd';
@@ -21,19 +26,12 @@ const { Text } = Typography;
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 
 const AddEditFormMain = (props) => {
-    const { form, onCloseAction, onFinish, onFinishFailed, appCategoryData, formData, formActionType } = props;
-    const [companyInfoform] = Form.useForm();
-    const [uploadCustomerForm] = Form.useForm();
-    const [socialProfileForm] = Form.useForm();
-    const [keyDetailForm] = Form.useForm();
-    const [authorityForm] = Form.useForm();
+    const { appCategoryData, formData } = props;
 
     const [done, setDone] = useState();
     const [activeKey, setactiveKey] = useState([1]);
 
     const [FinalFormData, setFinalFormData] = useState({
-        // companyInfoform: [],
-        // socialProfileForm: [],
         keyDetailForm: {
             accountCode: '',
             accountName: '',
@@ -76,10 +74,6 @@ const AddEditFormMain = (props) => {
         setCustomerCategory(value);
     };
 
-    const handleEdit = () => {
-        // setIsViewModeVisible(false);
-    };
-
     const uploadProps = {
         name: 'file',
         multiple: false,
@@ -97,16 +91,8 @@ const AddEditFormMain = (props) => {
         },
     };
 
-    const handleFormFieldChange = () => {
-        // authorityForm.validateFields().then((values) => {
-        //     const personName = values.personName;
-        // });
-        // setButtonData({ ...buttonData, formBtnActive: true });
-    };
-
     return (
         <>
-            {/* <Form autoComplete="off" form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} onFieldsChange={handleFormFieldChange}> */}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space style={{ display: 'flex' }} direction="vertical" size="middle" className={style.accordianContainer}>
@@ -127,7 +113,6 @@ const AddEditFormMain = (props) => {
                                 header={
                                     <>
                                         <div className={style.alignUser}>
-                                            {/* <BiUserCircle className={style.userCircle} /> */}
                                             <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>
                                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                                     Company Information
@@ -139,8 +124,6 @@ const AddEditFormMain = (props) => {
                                 key="1"
                             >
                                 <Divider />
-
-                                {/* <Form autoComplete="off" layout="vertical" form={companyInfoform}> */}
 
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -233,7 +216,6 @@ const AddEditFormMain = (props) => {
                                 header={
                                     <>
                                         <div className={style.alignUser}>
-                                            {/* <BiUserCircle className={style.userCircle} /> */}
                                             <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>
                                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                                     Social Profiles
@@ -244,7 +226,6 @@ const AddEditFormMain = (props) => {
                                 }
                             >
                                 <Divider />
-                                {/* <Form form={socialProfileForm} layout="vertical"> */}
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="M1-MMFSL" initialValue={formData?.mmfsl} name="mmfsl">
@@ -274,7 +255,6 @@ const AddEditFormMain = (props) => {
                                 header={
                                     <>
                                         <div className={style.alignUser}>
-                                            {/* <BiUserCircle className={style.userCircle} /> */}
                                             <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>
                                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                                     Key Account Details
@@ -285,7 +265,6 @@ const AddEditFormMain = (props) => {
                                 }
                             >
                                 <Divider />
-                                {/* <Form form={keyDetailForm} layout="vertical" onFieldsChange={handleFormFieldChange}> */}
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Account Code" initialValue={formData?.accountCode} name="accountCode">
@@ -327,19 +306,17 @@ const AddEditFormMain = (props) => {
                                 header={
                                     <>
                                         <div className={style.alignUser}>
-                                            {/* <BiUserCircle className={style.userCircle} /> */}
                                             <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>
                                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                                     {' '}
                                                     Authority Details(Who Knows Whom)
                                                 </Text>
                                             </div>
-                                        </div>{' '}
+                                        </div>
                                     </>
                                 }
                             >
                                 <Divider />
-                                {/* <Form form={authorityForm} layout="vertical" onFieldsChange={handleFormFieldChange}> */}
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Name Of Person" initialValue={formData?.personName} name="personName" rules={[validateRequiredInputField('authorityRequest.personName')]}>
@@ -388,18 +365,16 @@ const AddEditFormMain = (props) => {
                                 header={
                                     <>
                                         <div className={style.alignUser}>
-                                            {/* <BiUserCircle className={style.userCircle} /> */}
                                             <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>
                                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                                     Upload Customer Form
                                                 </Text>
                                             </div>
-                                        </div>{' '}
+                                        </div>
                                     </>
                                 }
                             >
                                 <Divider />
-                                {/* <Form autoComplete="off" layout="vertical" form={uploadCustomerForm}> */}
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item initialValue={formData?.customerConsent} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="customerConsent">
@@ -408,7 +383,6 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
-                                    {' '}
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.uploadContainer}>
                                         <Dragger {...uploadProps}>
                                             <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
@@ -425,28 +399,13 @@ const AddEditFormMain = (props) => {
                                             </p>
                                             <Button danger>Upload File</Button>
                                         </Dragger>
-                                    </Col>{' '}
+                                    </Col>
                                 </Row>
-                                {/* </Form> */}
                             </Panel>
                         </Collapse>
-
-                        {/* <Row gutter={20}>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Button danger onClick={onCloseAction}>
-                                        Cancel
-                                    </Button>
-                                </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Button type="primary" htmlType="submit" className={styles.floatRight}>
-                                        Save & Proceed
-                                    </Button>
-                                </Col>
-                            </Row> */}
                     </Space>
                 </Col>
             </Row>
-            {/* </Form> */}
         </>
     );
 };
