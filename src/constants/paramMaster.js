@@ -27,4 +27,16 @@ export const PARAM_MASTER = {
         id: 'TITLE',
         title: 'TITLE',
     },
+    CUST_APP_CAT: {
+        id: 'APP_CAT',
+        title: 'APP_CAT',
+    },
+    CUST_APP_SUB_CAT: {
+        id: 'APP_SUB_CAT',
+        title: 'APP_SUB_CAT',
+    },
+    CUST_CAT: {
+        id: 'CUS_CAT',
+        title: 'CUS_CAT',
+    },
 };

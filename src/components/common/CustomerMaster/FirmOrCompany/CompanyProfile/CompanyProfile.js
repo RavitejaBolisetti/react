@@ -35,6 +35,7 @@ const mapStateToProps = (state) => {
         // isFormDataLoaded,
         moduleTitle,
     };
+    console.log('App data:', appCategoryData);
     return returnValue;
 };
 
@@ -43,6 +44,8 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchApplicationCategorization: configParamEditActions.fetchList,
+            fetchApplicationSubCategory: configParamEditActions.fetchList,
+            fetchCustomerCategory: configParamEditActions.fetchList,
             resetData: corporateCompanyProfileDataActions.reset,
             listShowLoading: corporateCompanyProfileDataActions.listShowLoading,
 
@@ -53,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const CompanyProfileBase = ({ listShowLoading, saveData, formActionType, userId, fetchApplicationCategorization, isAppCategoryDataLoaded, appCategoryData, formData }) => {
+const CompanyProfileBase = ({ listShowLoading, saveData, formActionType, userId, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, isAppCategoryDataLoaded, appCategoryData, formData }) => {
     const [form] = Form.useForm();
     // const [formActionType, setFormActionType] = useState('');
     // const [formData, setFormData] = useState({});
@@ -62,14 +65,16 @@ const CompanyProfileBase = ({ listShowLoading, saveData, formActionType, userId,
     // const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     useEffect(() => {
-        fetchApplicationCategorization({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.GEO_TEH_CAT.id });
+        fetchApplicationCategorization({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_CAT.id });
+        fetchApplicationSubCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_SUB_CAT.id });
+        fetchCustomerCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_CAT.id });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAppCategoryDataLoaded]);
 
     const onFinish = (values) => {
-        console.log('values', values);
         const recordId = formData?.id || '';
-        const data = { ...values, id: recordId };
+        const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
+        const data = { ...rest, customerId: 'CUS1686810869696', keyAccountDetails: { customerId: 'CUS1686810869696', accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { customerId: 'CUS1686810869696', personName: values.personName, postion: values.postion, companyName: values.companyName }, id: recordId };
 
         const onSuccess = (res) => {
             listShowLoading(false);
