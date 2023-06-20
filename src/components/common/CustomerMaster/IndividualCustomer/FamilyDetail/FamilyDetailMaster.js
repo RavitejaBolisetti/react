@@ -220,7 +220,7 @@ const FamilyDetailMasterBase = (props) => {
             relationAge: GetAge(familySearchData?.dateOfBirth),
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [middleWare]);    
+    }, [familySearchData]);    
 
     const formProps = {
         form,
