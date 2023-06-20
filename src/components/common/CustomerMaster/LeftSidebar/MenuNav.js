@@ -30,7 +30,7 @@ const MenuNav = (props) => {
     };
 
     const items = Object.values(profileOptions)?.map((i) => ({
-        dot: addMode && !i.enableOnAdd ? <BsRecordCircleFill className={className(i)} color={'#B5B5B'} /> : i.id === currentSection ? <BsRecordCircleFill className={`${styles.activeForm} ${className(i)}`} /> : <FaCheckCircle className={className(i)} />,
+        dot: addMode && !i.enableOnAdd ? <BsRecordCircleFill className={className(i)} color={'grey'} /> : i.id === currentSection ? <BsRecordCircleFill className={`${styles.activeForm} ${className(i)}`} /> : <FaCheckCircle className={className(i)} />,
         children: (
             <div style={{ margin: '10px 0px' }} className={className(i)} onClick={() => onHandle(i)}>
                 {i.title}

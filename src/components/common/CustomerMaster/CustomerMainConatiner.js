@@ -6,9 +6,6 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
 
-import styles from 'components/common/Common.module.css';
-import { withDrawer } from 'components/withDrawer';
-
 import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
 import { CompanyAddressMaster, CompanyProfile, CompanyContact, AccountRelatedMaster } from './FirmOrCompany';
 import { CompanyCustomerDetailsMaster } from './FirmOrCompany';
@@ -19,14 +16,13 @@ import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection
 import { CUSTOMER_CORPORATE_SECTION } from 'constants/CustomerCorporateSection';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
-import { DrawerFormButton } from '../Button';
+import { withDrawer } from 'components/withDrawer';
+import styles from 'components/common/Common.module.css';
 
 const CustomerMainConatinerMain = (props) => {
-    const { onCloseAction, formData } = props;
-    const { isViewModeVisible, setIsViewModeVisible, formActionType, buttonData, setButtonData } = props;
-    const { customerType, setCustomerType } = props;
-    const [currentSection, setCurrentSection] = useState(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id);
+    const { customerType } = props;
     const [section, setSection] = useState();
+    const [currentSection, setCurrentSection] = useState(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id);
 
     useEffect(() => {
         const sectionList = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION;
@@ -35,49 +31,11 @@ const CustomerMainConatinerMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection]);
 
-    const [leftTimeline, setleftTimeline] = useState({
-        CustomerDetails: true,
-        IndividualProfile: false,
-        CompanyProfile: false,
-        Address: false,
-        Contacts: false,
-        FamilyDetails: false,
-        AccountRelated: false,
-        SupportingDocument: false,
-    });
-
-    const LeftSidebarProps = {
-        leftTimeline,
-        setleftTimeline,
-        setCurrentSection,
+    const myProps = {
+        ...props,
+        section,
         currentSection,
-        customerType,
-        setCustomerType,
-        formActionType,
-        buttonData,
-    };
-
-    // const [buttonData, setbuttonData] = useState({
-    //     closeBtn: true,
-    //     saveBtn: true,
-    // });
-    const handleButtonClick = ({ buttonAction, record }) => {};
-    const customerMasterBtnProps = {
-        buttonData,
-        setButtonData,
-        onCloseAction,
-        isViewModeVisible,
-        formActionType,
-        handleButtonClick,
-        formData,
-        saveButtonName: leftTimeline?.CustomerDetails && formActionType === 'add' ? 'Create Customer Id' : 'Save',
-    };
-    const commonModuleProps = {
-        onCloseAction,
-        isViewModeVisible,
-        setIsViewModeVisible,
-        customerType,
-        styles,
+        setCurrentSection,
     };
 
     const renderElement = () => {
@@ -85,53 +43,53 @@ const CustomerMainConatinerMain = (props) => {
             case CUSTOMER_TYPE?.INDIVIDUAL.id: {
                 switch (currentSection) {
                     case CUSTOMER_INDIVIDUAL_SECTION?.CUSTOMER_DETAILS.id: {
-                        return <IndivisualCustomerDetailsMaster {...commonModuleProps} />;
+                        return <IndivisualCustomerDetailsMaster {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.INDIVIDUAL_PROFILE.id: {
-                        return <IndividualProfileMaster {...commonModuleProps} />;
+                        return <IndividualProfileMaster {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.ADDRESS.id: {
-                        return <IndividualAddressMaster {...commonModuleProps} />;
+                        return <IndividualAddressMaster {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.CONTACTS.id: {
-                        return <IndividualContact {...commonModuleProps} />;
+                        return <IndividualContact {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.FAMILY_DETAILS.id: {
                         return <FamilyDetails />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.ACCOUNT_RELATED.id: {
-                        return <IndividualAccountRelatedMaster {...commonModuleProps} />;
+                        return <IndividualAccountRelatedMaster {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.SUPPORTING_DOCUMENT.id: {
                         return <SupportingDocument />;
                     }
                     default: {
-                        return <IndivisualCustomerDetailsMaster {...commonModuleProps} />;
+                        return <IndivisualCustomerDetailsMaster {...myProps} />;
                     }
                 }
             }
             case CUSTOMER_TYPE?.CORPORATE.id: {
                 switch (currentSection) {
                     case CUSTOMER_CORPORATE_SECTION?.CUSTOMER_DETAILS.id: {
-                        return <CompanyCustomerDetailsMaster {...commonModuleProps} />;
+                        return <CompanyCustomerDetailsMaster {...myProps} />;
                     }
                     case CUSTOMER_CORPORATE_SECTION?.COMPANY_RPOFILE.id: {
-                        return <CompanyProfile {...commonModuleProps} />;
+                        return <CompanyProfile {...myProps} />;
                     }
                     case CUSTOMER_CORPORATE_SECTION?.ADDRESS.id: {
                         return <CompanyAddressMaster />;
                     }
                     case CUSTOMER_CORPORATE_SECTION?.CONTACTS.id: {
-                        return <CompanyContact {...commonModuleProps} />;
+                        return <CompanyContact {...myProps} />;
                     }
                     case CUSTOMER_CORPORATE_SECTION?.ACCOUNT_RELATED.id: {
-                        return <AccountRelatedMaster {...commonModuleProps} />;
+                        return <AccountRelatedMaster {...myProps} />;
                     }
                     case CUSTOMER_CORPORATE_SECTION?.CUSTOMER_INDIVIDUAL_SECTION.id: {
                         return <SupportingDocument />;
                     }
                     default: {
-                        return <CompanyCustomerDetailsMaster {...commonModuleProps} />;
+                        return <CompanyCustomerDetailsMaster {...myProps} />;
                     }
                 }
             }
@@ -147,18 +105,14 @@ const CustomerMainConatinerMain = (props) => {
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <LeftSidebar {...LeftSidebarProps} />
+                            <LeftSidebar {...myProps} />
                         </Col>
                     </Row>
                 </Col>
                 <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <h2>{section?.title}</h2>
                             <div className={styles.marginBottom60}>{renderElement()}</div>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <DrawerFormButton {...customerMasterBtnProps} />
                         </Col>
                     </Row>
                 </Col>

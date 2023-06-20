@@ -4,7 +4,6 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useMemo, useState } from 'react';
-import { AddEditForm } from './AddEditForm';
 import { customerDetailsDataActions } from 'store/actions/data/customerMaster/customerDetails';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -14,6 +13,10 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { showGlobalNotification } from 'store/actions/notification';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
+import styles from 'components/common/Common.module.css';
+
+import { ViewDetail } from './ViewDetail';
+import { AddEditForm } from './AddEditForm';
 
 const mapStateToProps = (state) => {
     const {
@@ -60,7 +63,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyCustomerDetailsMasterBase = (props) => {
-    const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsData, relationData, fetchConfigList, listConfigShowLoading, fetchList, form, listShowLoading, moduleTitle, typeData, saveData } = props;
+    const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsData, section, fetchConfigList, listConfigShowLoading, fetchList, form, listShowLoading, moduleTitle, typeData, saveData } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+
     const [customerDetailsForm] = Form.useForm();
     const [customerDetailsList, setCustomerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -70,10 +75,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const [configurableTypedata, setConfigurableTypedata] = useState({});
     const [formData, setFormData] = useState();
     const [refershData, setRefershData] = useState(false);
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
     const [showDataLoading, setShowDataLoading] = useState(true);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
@@ -211,8 +213,20 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         customerDetailsData,
         configurableTypedata,
         handleButtonClick,
+        styles,
     };
 
-    return <AddEditForm {...formProps} />;
+    const viewProps = {
+        onChange,
+        onCloseAction,
+        styles,
+    };
+
+    return (
+        <>
+            <h2>{section?.title}</h2>
+            {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+        </>
+    );
 };
 export const CompanyCustomerDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(CompanyCustomerDetailsMasterBase);

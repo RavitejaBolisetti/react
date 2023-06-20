@@ -91,8 +91,6 @@ const CustomerMasterMain = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    console.log('buttonData', buttonData, 'formActionType', formActionType);
-
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
@@ -233,6 +231,8 @@ const CustomerMasterMain = (props) => {
 
         setButtonData,
         handleButtonClick,
+        defaultFormActionType,
+        defaultBtnVisiblity,
     };
 
     const selectProps = {
