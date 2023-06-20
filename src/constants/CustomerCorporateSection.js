@@ -3,15 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const CUSTOMER_INDIVIDUAL_SECTION = {
+export const CUSTOMER_CORPORATE_SECTION = {
     CUSTOMER_DETAILS: {
         id: 1,
         title: 'Customer Details',
         enableOnAdd: true,
     },
-    INDIVIDUAL_PROFILE: {
+    COMPANY_RPOFILE: {
         id: 2,
-        title: 'Individual Profile',
+        title: 'Company Profile',
         enableOnAdd: false,
     },
     ADDRESS: {
@@ -24,18 +24,13 @@ export const CUSTOMER_INDIVIDUAL_SECTION = {
         title: 'Contacts',
         enableOnAdd: false,
     },
-    FAMILY_DETAILS: {
-        id: 5,
-        title: 'Family Details',
-        enableOnAdd: false,
-    },
     ACCOUNT_RELATED: {
-        id: 6,
+        id: 5,
         title: 'Account Related',
         enableOnAdd: false,
     },
     SUPPORTING_DOCUMENT: {
-        id: 7,
+        id: 6,
         title: 'Supporting Document',
         enableOnAdd: false,
     },

@@ -1,6 +1,7 @@
 /*
- *   Copyright (c) 2023 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 export const PARAM_MASTER = {
     CFG_PARAM: {
@@ -46,6 +47,18 @@ export const PARAM_MASTER = {
     TITLE: {
         id: 'TITLE',
         title: 'TITLE',
+    },
+    CUST_APP_CAT: {
+        id: 'APP_CAT',
+        title: 'APP_CAT',
+    },
+    CUST_APP_SUB_CAT: {
+        id: 'APP_SUB_CAT',
+        title: 'APP_SUB_CAT',
+    },
+    CUST_CAT: {
+        id: 'CUS_CAT',
+        title: 'CUS_CAT',
     },
     CORP_TYPE: {
         id: 'CORP_TYPE',
