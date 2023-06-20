@@ -1517,22 +1517,26 @@
     margin-inline-start: 4px;
 }
 
+/* .drawerRightMainContainer {
+    border: 1px solid red;
+} */
+
 .drawerBodyRight {
-    padding: 20px;
-    height: calc(100vh - 120px);
-    max-height: calc(100vh - 120px);
+    padding: 30px 40px;
+    height: calc(100vh - 60px);
+    max-height: calc(100vh - 60px);
     overflow: hidden;
     overflow-y: overlay;
 }
 
-.drawerBodyRight .drawerBodyHeading {
+.drawerBodyRight h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
     font-size: 24px;
     font-weight: 700;
     line-height: 36px;
     color: #0B0B0C;
 }
-
-
 
 .drawerBodyRight :global .ant-steps {
     display: inline;
@@ -1590,6 +1594,46 @@
     padding: 20px 30px;
     background-color: #f2f2f2;
     border-radius: 8px;
+}
+
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-label>label {
+    color: #545454;
+    font-size: 14px;
+    line-height: 23px;
+    font-weight: 400;
+    margin-bottom: 6px;
+}
+
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input {
+    height: 36px;
+    padding: 5px 12px;
+    border-color: #B5B5B6;
+    color: #0B0B0C;
+    border-radius: 4px;
+}
+
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input::placeholder {
+    color: #B5B5B6;
+    font-size: 14px;
+    line-height: 23px;
+    font-weight: 400;
+}
+
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector {
+    padding: 5px 12px;
+    border-color: #B5B5B6;
+    color: #0B0B0C;
+}
+
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector .ant-select-selection-item,
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector .ant-select-selection-placeholder {
+    line-height: 23px;
+}
+
+.drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-color: #E6E6E6;
 }
 
 .drawerBodyRight :global .ant-table-wrapper table {
@@ -1724,7 +1768,7 @@
 .drawerBodyRight :global .ant-input[disabled],
 .drawerBodyRight :global .ant-input-disabled:hover,
 .drawerBodyRight :global .ant-input[disabled]:hover {
-    border-color: #e6e6e6;
+    border-color: #e6e6e6 !important;
 }
 
 .drawerBodyRight :global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
