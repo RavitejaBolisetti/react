@@ -1441,6 +1441,7 @@
 .drawerBodyLeft :global .ant-avatar {
     background: #e6e6e6;
     border: 1px solid #b5b5b6;
+    float:left;
 }
 .drawerBodyLeft :global .ant-avatar .ant-avatar-string{
     color: #0B0B0C;
@@ -1468,6 +1469,7 @@
     font-weight: 500;
     line-height: 24px;
     margin-left: 10px;
+    float:left;
 }
 
 .drawerBodyLeft :global .ant-timeline {

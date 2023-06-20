@@ -8,7 +8,7 @@ import { Collapse, Space, Avatar } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 
 const { Panel } = Collapse;
-const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={18} /> : <SlArrowDown size={18} />);
+const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={13} /> : <SlArrowDown size={13} />);
 
 const ProfileDetailCard = (props) => {
     return (
