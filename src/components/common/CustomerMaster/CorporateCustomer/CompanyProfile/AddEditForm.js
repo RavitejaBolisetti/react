@@ -136,7 +136,7 @@ const AddEditFormMain = (props) => {
                                         <>
                                             <div className={style.alignUser}>
                                                 {/* <BiUserCircle className={style.userCircle} /> */}
-                                                <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Company Information</div>
+                                                <div className={style.collapseable}> Company Information</div>
                                             </div>{' '}
                                         </>
                                     }
@@ -238,7 +238,7 @@ const AddEditFormMain = (props) => {
                                         <>
                                             <div className={style.alignUser}>
                                                 {/* <BiUserCircle className={style.userCircle} /> */}
-                                                <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Social Profiles</div>
+                                                <div className={style.collapseable}> Social Profiles</div>
                                             </div>{' '}
                                         </>
                                     }
@@ -275,7 +275,7 @@ const AddEditFormMain = (props) => {
                                         <>
                                             <div className={style.alignUser}>
                                                 {/* <BiUserCircle className={style.userCircle} /> */}
-                                                <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Key Account Details</div>
+                                                <div className={style.collapseable}> Key Account Details</div>
                                             </div>{' '}
                                         </>
                                     }
@@ -324,7 +324,7 @@ const AddEditFormMain = (props) => {
                                         <>
                                             <div className={style.alignUser}>
                                                 {/* <BiUserCircle className={style.userCircle} /> */}
-                                                <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Authority Details(Who Knows Whom)</div>
+                                                <div className={style.collapseable}> Authority Details(Who Knows Whom)</div>
                                             </div>{' '}
                                         </>
                                     }
@@ -380,7 +380,7 @@ const AddEditFormMain = (props) => {
                                         <>
                                             <div className={style.alignUser}>
                                                 {/* <BiUserCircle className={style.userCircle} /> */}
-                                                <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Upload Customer Form</div>
+                                                <div className={style.collapseable}> Upload Customer Form</div>
                                             </div>{' '}
                                         </>
                                     }
