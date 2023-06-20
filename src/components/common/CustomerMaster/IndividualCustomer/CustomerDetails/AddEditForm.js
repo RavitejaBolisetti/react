@@ -1,3 +1,7 @@
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 
 import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Empty, message } from 'antd';
 
@@ -13,8 +17,10 @@ import styles from 'components/common/Common.module.css';
 import { useState } from 'react';
 import Dragger from 'antd/es/upload/Dragger';
 import { FiTrash } from 'react-icons/fi';
-import { BiLockAlt } from 'react-icons/bi';
+import { BiLockAlt, BiTimeFive } from 'react-icons/bi';
 import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
+import { NameChangeHistory } from './NameChangeHistory';
+import { isVisible } from '@testing-library/user-event/dist/utils';
 
 
 const { Text } = Typography;
@@ -26,6 +32,7 @@ const AddEditFormMain = (props) => {
     const [mobileLoader, setmobileLoader] = useState(false);
     const { buttonData, setButtonData } = props;
     const [isEnabled, setIsEnabled] = useState(false);
+    const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const Random = () => {
         return;
     };
@@ -101,6 +108,14 @@ const AddEditFormMain = (props) => {
         styles,
         onCloseAction,
     };
+    const changeHistoryClose = () => {
+        setIsHistoryVisible(false);
+    };
+
+    const changeHistoryProps = {
+        isVisible: isHistoryVisible,
+        onCloseAction: changeHistoryClose,
+    };
 
 
    
@@ -155,14 +170,18 @@ const AddEditFormMain = (props) => {
                                     </Row>
                                     <Divider />
                                     <div className={styles.cardInsideBox}>
-                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Text style={{ fontSize: '16px' }} strong>
-                                                Customer Name
-                                            </Text>
-                                        </Col>
-                                        <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{textAlign:'right'}}>
-                                            <Button type="link">View History</Button>
-                                        </Col>
+                                        <Row>
+                                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                                <Text style={{ fontSize: '16px' }} strong>
+                                                    Customer Name
+                                                </Text>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
+                                                <Button type="link" icon={<BiTimeFive />}>
+                                                    View History
+                                                </Button>
+                                            </Col>
+                                        </Row>
 
                                         <Divider />
                                         <Row gutter={20}>
@@ -297,6 +316,7 @@ const AddEditFormMain = (props) => {
                             </Space>
                         </Col>
                     </Row>
+                    <NameChangeHistory {...changeHistoryProps} />
                 </>
             )}
         </Form>

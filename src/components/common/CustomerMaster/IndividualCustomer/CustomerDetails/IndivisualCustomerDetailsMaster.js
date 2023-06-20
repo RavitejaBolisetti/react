@@ -15,6 +15,7 @@ import { customerDetailsIndividualDataActions } from 'store/actions/data/custome
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { corporateLovDataActions } from 'store/actions/data/customerMaster/corporateLov';
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 
 const mapStateToProps = (state) => {
     const {
@@ -53,6 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchConfigList: configParamEditActions.fetchList,
             listConfigShowLoading: configParamEditActions.listShowLoading,
+
 
             fetchCorporateLovList: corporateLovDataActions.fetchList,
             listCorporateLovShowLoading: corporateLovDataActions.listShowLoading,
@@ -216,6 +218,7 @@ const IndivisualCustomerDetailsMasterBase = (props) => {
         titleOverride: drawerTitle.concat(moduleTitle),
         saveData,
         onChange,
+        corporateLovData,
         setFormActionType,
         onFinishFailed,
         handleButtonClick,

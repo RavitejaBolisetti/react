@@ -1,7 +1,13 @@
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 import React from 'react';
-import { Space, Typography, Descriptions, Card, Divider } from 'antd';
+import { Space, Typography, Descriptions, Card, Divider, Col, Row, Button } from 'antd';
 import { FaRegUserCircle } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
+import { NameChangeHistory } from './NameChangeHistory';
+import { BiTimeFive } from 'react-icons/bi';
 
 
 const { Text } = Typography;
@@ -16,7 +22,6 @@ const ViewDetailMain = (props) => {
     };
     console.log(formData,'FORMDATA');
     return (
-        
         <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Card
@@ -36,15 +41,29 @@ const ViewDetailMain = (props) => {
 
                         <Card>
                             <div className={`${styles.cardInsideBox} ${styles.customerName}`}>
-                                <Text className={styles.customerName}>Customer Name</Text>
-                                <Divider />
-                                {formData?.title}
-                                <span className={styles.nameSpacing}></span>
-                                {formData?.firstName}
-                                <span className={styles.nameSpacing}></span>
-                                {formData?.middleName}
-                                <span className={styles.nameSpacing}></span>
-                                {formData?.lastName}
+                                <Row>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                        <Text className={styles.customerName}>Customer Name</Text>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
+                                        <Button type="link" icon={<BiTimeFive />}>
+                                            View History
+                                        </Button>
+                                    </Col>
+                                    <Divider />
+                                    {formData?.title}
+                                    <span className={styles.nameSpacing}></span>
+                                    {formData?.firstName}
+                                    <span className={styles.nameSpacing}></span>
+                                    {formData?.middleName}
+                                    <span className={styles.nameSpacing}></span>
+                                    {formData?.lastName}
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                        <Button type="link" icon={<BiTimeFive />}>
+                                            View History
+                                        </Button>
+                                    </Col>
+                                </Row>
                             </div>
                         </Card>
                         <br />
