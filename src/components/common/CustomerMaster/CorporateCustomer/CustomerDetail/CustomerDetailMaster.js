@@ -111,8 +111,12 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         if (typeData) {
             setConfigurableTypedata({ CUST_TYPE: typeData['CUST_TYPE'], CORP_TYPE: typeData['CORP_TYPE'], CORP_CATE: typeData['CORP_CATE'], TITLE: typeData['TITLE'], MEM_TYPE: typeData['MEM_TYPE'] });
         }
+        if(customerDetailsData && isDataLoaded)
+        {
+            setFormData(customerDetailsData)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [typeData]);
+    }, [typeData,customerDetailsData,isDataLoaded]);
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -194,6 +198,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const formProps = {
         form,
+        formData,
         buttonData,
         onFinish,
         onCloseAction,
@@ -205,13 +210,13 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         setShowForm,
         formActionType,
         typeData,
-        customerDetailsData,
         configurableTypedata,
         handleButtonClick,
         styles,
     };
 
     const viewProps = {
+        formData:customerDetailsData,
         onCloseAction,
         styles,
     };
