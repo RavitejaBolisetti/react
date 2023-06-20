@@ -20,7 +20,9 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, paramdata: appCategoryData = [] },
-            // CompanyProfile: { isLoaded: isDataLoaded = false, data: DealerTermsConditionsData, isLoading, isLoadingOnSave, isFormDataLoaded },
+            CustomerMaster: {
+                CompanyProfile: { isLoaded: isDataLoaded = false, data: companyProfileData = [] },
+            },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -35,13 +37,13 @@ const mapStateToProps = (state) => {
         userId,
         isAppCategoryDataLoaded,
         appCategoryData,
-        // isDataLoaded,
+        isDataLoaded,
+        companyProfileData,
         // isLoading,
         // isLoadingOnSave,
         // isFormDataLoaded,
         moduleTitle,
     };
-    console.log('App data:', appCategoryData);
     return returnValue;
 };
 
@@ -55,6 +57,8 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: corporateCompanyProfileDataActions.reset,
             listShowLoading: corporateCompanyProfileDataActions.listShowLoading,
 
+            fetchCompanyProfileData: corporateCompanyProfileDataActions.fetchList,
+
             saveData: corporateCompanyProfileDataActions.saveData,
             showGlobalNotification,
         },
@@ -63,8 +67,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyProfileBase = (props) => {
-    const { listShowLoading, section, saveData, userId, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, isAppCategoryDataLoaded, appCategoryData } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+    const { listShowLoading, section, saveData, userId, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, fetchCompanyProfileData, isAppCategoryDataLoaded, appCategoryData, isDataLoaded, companyProfileData } = props;
+    const { selectedCustomerId, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
     const [form] = Form.useForm();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [customerType, setCustomerType] = useState('Yes');
@@ -78,7 +82,27 @@ const CompanyProfileBase = (props) => {
         fetchApplicationSubCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_SUB_CAT.id });
         fetchCustomerCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_CAT.id });
         // eslint-disable-next-line react-hooks/exhaustive-deps
+        // console.log('Record:', selectedCustomerId);
     }, [userId, isAppCategoryDataLoaded]);
+
+    const extraParams = [
+        {
+            key: 'customerId',
+            title: 'customerId',
+            value: selectedCustomerId,
+            name: 'customerId',
+        },
+    ];
+
+    useEffect(() => {
+        fetchCompanyProfileData({ setIsLoading: listShowLoading, userId, extraParams });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType?.viewMode]);
+
+    useEffect(() => {
+        setFormData(companyProfileData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, companyProfileData]);
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
@@ -144,6 +168,7 @@ const CompanyProfileBase = (props) => {
     const formProps = {
         handleButtonClick,
         buttonData,
+        onChange,
         onFinish,
         formActionType,
         appCategoryData,
@@ -154,6 +179,7 @@ const CompanyProfileBase = (props) => {
         onChange,
         onCloseAction,
         styles,
+        formData
     };
 
     const handleFormValueChange = () => {

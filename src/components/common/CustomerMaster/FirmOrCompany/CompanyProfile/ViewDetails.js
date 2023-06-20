@@ -1,39 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Space, Collapse, Typography, Descriptions, Divider } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { FaRegUserCircle } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, onChange, style, formData } = props;
+    const { style, formData } = props;
+    const [activeKey, setactiveKey] = useState([1]);
     const viewProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-    const CompanyForm = {
-        categorization: 'Simran',
-        category: 'S102',
-        customer: 'Vivek',
-        panNumber: 'LPKPS8930R',
-        gstinNumber: '2222',
-    };
-    const SocialForm = {
-        m1mmfsl: 'MMFSL',
-        facebookId: 'simran@facebook.com',
-        twitterId: 'simran@twitter.com',
-    };
 
-    const keyAccountForm = {
-        accountCode: 'MMFSL',
-        accountName: 'Account Name',
-        segment: 'Segment',
-        clientName: 'simran',
-        mappingData: 'abcd',
+    const onChange = (values) => {
+        const isPresent = activeKey.includes(values);
+
+        if (isPresent) {
+            const newActivekeys = [];
+
+            activeKey.forEach((item) => {
+                if (item !== values) {
+                    newActivekeys.push(item);
+                }
+            });
+            setactiveKey(newActivekeys);
+        } else {
+            setactiveKey([...activeKey, values]);
+        }
+        console.log('values', values);
     };
 
     return (
@@ -42,9 +40,9 @@ const ViewDetailMain = (props) => {
                 <Collapse
                     expandIcon={() => {
                         if (activeKey.includes(1)) {
-                            return <MinusOutlined className={style.iconsColor} />;
+                            return <MinusOutlined className={styles.iconsColor} />;
                         } else {
-                            return <PlusOutlined className={style.iconsColor} />;
+                            return <PlusOutlined className={styles.iconsColor} />;
                         }
                     }}
                     activeKey={activeKey}
@@ -53,7 +51,7 @@ const ViewDetailMain = (props) => {
                 >
                     <Panel
                         header={
-                            <div className={style.alignUser}>
+                            <div className={styles.alignUser}>
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     Company Information
                                 </Text>
@@ -67,9 +65,9 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                         {/* <Divider /> */}
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Usage/Application Categorization">{CompanyForm?.categorization}</Descriptions.Item>
-                            <Descriptions.Item label="Usage/Application Sub-Category">{CompanyForm?.category}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Category">{CompanyForm?.customer}</Descriptions.Item>
+                            <Descriptions.Item label="Usage/Application Categorization">{formData?.applicationCategorization}</Descriptions.Item>
+                            <Descriptions.Item label="Usage/Application Sub-Category">{formData?.applicationSubCategory}</Descriptions.Item>
+                            <Descriptions.Item label="Customer Category">{formData?.customerCategory}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>
@@ -77,9 +75,9 @@ const ViewDetailMain = (props) => {
                 <Collapse
                     expandIcon={() => {
                         if (activeKey.includes(2)) {
-                            return <MinusOutlined className={style.iconsColor} />;
+                            return <MinusOutlined className={styles.iconsColor} />;
                         } else {
-                            return <PlusOutlined className={style.iconsColor} />;
+                            return <PlusOutlined className={styles.iconsColor} />;
                         }
                     }}
                     activeKey={activeKey}
@@ -88,7 +86,7 @@ const ViewDetailMain = (props) => {
                 >
                     <Panel
                         header={
-                            <div className={style.alignUser}>
+                            <div className={styles.alignUser}>
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     Social Profiles
                                 </Text>
@@ -97,9 +95,9 @@ const ViewDetailMain = (props) => {
                         key="2"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="M1-MMFSL">{SocialForm?.m1mmfsl}</Descriptions.Item>
-                            <Descriptions.Item label="Facebook Link">{SocialForm?.facebookId}</Descriptions.Item>
-                            <Descriptions.Item label="Twitter Link">{SocialForm?.twitterId}</Descriptions.Item>
+                            <Descriptions.Item label="M1-MMFSL">{formData?.m1mmfsl}</Descriptions.Item>
+                            <Descriptions.Item label="Facebook Link">{formData?.facebookLink}</Descriptions.Item>
+                            <Descriptions.Item label="Twitter Link">{formData?.twitterLink}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>
@@ -107,9 +105,9 @@ const ViewDetailMain = (props) => {
                 <Collapse
                     expandIcon={() => {
                         if (activeKey.includes(3)) {
-                            return <MinusOutlined className={style.iconsColor} />;
+                            return <MinusOutlined className={styles.iconsColor} />;
                         } else {
-                            return <PlusOutlined className={style.iconsColor} />;
+                            return <PlusOutlined className={styles.iconsColor} />;
                         }
                     }}
                     activeKey={activeKey}
@@ -118,7 +116,7 @@ const ViewDetailMain = (props) => {
                 >
                     <Panel
                         header={
-                            <div className={style.alignUser}>
+                            <div className={styles.alignUser}>
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     Key Account Details
                                 </Text>
@@ -127,11 +125,11 @@ const ViewDetailMain = (props) => {
                         key="3"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Account Code">{keyAccountForm?.accountCode}</Descriptions.Item>
-                            <Descriptions.Item label="Account Name">{keyAccountForm?.accountName}</Descriptions.Item>
-                            <Descriptions.Item label="Account Segment">{keyAccountForm?.segment}</Descriptions.Item>
-                            <Descriptions.Item label="Account Client Name">{keyAccountForm?.clientName}</Descriptions.Item>
-                            <Descriptions.Item label="Account Mapping Data">{keyAccountForm?.mappingData}</Descriptions.Item>
+                            <Descriptions.Item label="Account Code">{formData?.keyAccountDetails.accountCode}</Descriptions.Item>
+                            <Descriptions.Item label="Account Name">{formData?.keyAccountDetails.accountName}</Descriptions.Item>
+                            <Descriptions.Item label="Account Segment">{formData?.keyAccountDetails.accountSegment}</Descriptions.Item>
+                            <Descriptions.Item label="Account Client Name">{formData?.keyAccountDetails.accountClientName}</Descriptions.Item>
+                            <Descriptions.Item label="Account Mapping Data">{formData?.keyAccountDetails.mappingData}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>
@@ -139,9 +137,9 @@ const ViewDetailMain = (props) => {
                 <Collapse
                     expandIcon={() => {
                         if (activeKey.includes(4)) {
-                            return <MinusOutlined className={style.iconsColor} />;
+                            return <MinusOutlined className={styles.iconsColor} />;
                         } else {
-                            return <PlusOutlined className={style.iconsColor} />;
+                            return <PlusOutlined className={styles.iconsColor} />;
                         }
                     }}
                     activeKey={activeKey}
@@ -150,7 +148,7 @@ const ViewDetailMain = (props) => {
                 >
                     <Panel
                         header={
-                            <div className={style.alignUser}>
+                            <div className={styles.alignUser}>
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     Authority Details(Who Knows Whom)
                                 </Text>
@@ -159,19 +157,19 @@ const ViewDetailMain = (props) => {
                         key="4"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Name Of Person">{keyAccountForm?.accountCode}</Descriptions.Item>
-                            <Descriptions.Item label="Position">{keyAccountForm?.accountName}</Descriptions.Item>
-                            <Descriptions.Item label="Company Name">{keyAccountForm?.segment}</Descriptions.Item>
-                            <Descriptions.Item label="Remarks">{keyAccountForm?.clientName}</Descriptions.Item>
+                            <Descriptions.Item label="Name Of Person">{formData?.authorityDetails[0].personName}</Descriptions.Item>
+                            <Descriptions.Item label="Position">{formData?.authorityDetails[0].postion}</Descriptions.Item>
+                            <Descriptions.Item label="Company Name">{formData?.authorityDetails[0].companyName}</Descriptions.Item>
+                            <Descriptions.Item label="Remarks">{formData?.authorityDetails[0].remarks}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>
                 <Collapse
                     expandIcon={() => {
                         if (activeKey.includes(5)) {
-                            return <MinusOutlined className={style.iconsColor} />;
+                            return <MinusOutlined className={styles.iconsColor} />;
                         } else {
-                            return <PlusOutlined className={style.iconsColor} />;
+                            return <PlusOutlined className={styles.iconsColor} />;
                         }
                     }}
                     activeKey={activeKey}
@@ -180,7 +178,7 @@ const ViewDetailMain = (props) => {
                 >
                     <Panel
                         header={
-                            <div className={style.alignUser}>
+                            <div className={styles.alignUser}>
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     Upload Customer Form
                                 </Text>

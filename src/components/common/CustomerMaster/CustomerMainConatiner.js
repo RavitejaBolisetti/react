@@ -20,7 +20,7 @@ import { withDrawer } from 'components/withDrawer';
 import styles from 'components/common/Common.module.css';
 
 const CustomerMainConatinerMain = (props) => {
-    const { customerType } = props;
+    const { customerType, selectedCustomerId } = props;
     const [section, setSection] = useState();
     const [currentSection, setCurrentSection] = useState(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id);
 
@@ -36,6 +36,7 @@ const CustomerMainConatinerMain = (props) => {
         section,
         currentSection,
         setCurrentSection,
+        selectedCustomerId,
     };
 
     const renderElement = () => {
