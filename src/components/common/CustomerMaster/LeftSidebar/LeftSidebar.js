@@ -13,7 +13,7 @@ const LeftSidebar = (props) => {
     return (
         <>
             {!addMode && <ProfileDetailCard {...props} />}
-            <div style={{ padding: '10px 10px 20px 10px' }}>
+            <div >
                 <MenuNav {...props} />
             </div>
         </>
