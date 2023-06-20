@@ -116,6 +116,8 @@ export const BASE_URL_OTF_INVOICE = BASE_URL + 'invoice';
 export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';
 export const BASE_URL_CORPORATE_COMPANY_PROFILE = BASE_URL + 'customers/corporate/profile';
 export const BASE_URL_OTF_DETAILS = BASE_URL_OTF + 'details';
+export const BASE_URL_OTF_VEHICLE_DETAILS = BASE_URL_OTF + 'vehicledetails';
+
 
 export const BASE_URL_INDIVIUAL_PROFILE_CUSTOMER_MASTER = BASE_URL + 'customers/individual/profile';
 export const BASE_URL_DOCUMENT_UPLOAD = BASE_URL + 'common/document/upload';

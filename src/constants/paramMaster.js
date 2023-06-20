@@ -75,4 +75,8 @@ export const PARAM_MASTER = {
         id: 'REF',
         title: 'Referral',
     },
+    VEHCL_TYPE: {
+        id: 'VEHCL_TYPE',
+        title: 'VEHCL_TYPE',
+    },
 };

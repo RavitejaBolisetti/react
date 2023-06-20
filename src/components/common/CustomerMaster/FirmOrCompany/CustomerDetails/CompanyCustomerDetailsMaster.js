@@ -21,7 +21,6 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isTypeDataLoading, paramdata: typeData = [] },
         },
     } = state;
-    console.log(state,'CSSTATE');
     const moduleTitle = 'Customer Details';
 
 let returnValue = {
