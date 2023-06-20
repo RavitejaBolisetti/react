@@ -16,9 +16,9 @@ import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import { DrawerFormButton } from '../Button';
 
-const { Panel } = Collapse;
-
-const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={18} /> : <SlArrowDown size={18} />);
+const AddEditFormMain = (props) => {
+    const { onCloseAction, formData } = props;
+    const { isViewModeVisible, setIsViewModeVisible, formActionType } = props;
     const { customerType, setCustomerType } = props;
     const [currentSection, setCurrentSection] = useState(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_FIRM_SECTION.CUSTOMER_DETAILS.id);
     const [section, setSection] = useState();
