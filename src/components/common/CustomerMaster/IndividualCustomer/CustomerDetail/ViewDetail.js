@@ -1,16 +1,15 @@
 /*
- *   Copyright (c) 2023 
+ *   Copyright (c) 2023
  *   All rights reserved.
  */
 /*
- *   Copyright (c) 2023 
+ *   Copyright (c) 2023
  *   All rights reserved.
  */
 import React from 'react';
 import { Space, Typography, Descriptions, Card, Divider, Col, Row, Button } from 'antd';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { BiTimeFive } from 'react-icons/bi';
-
 
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
@@ -21,7 +20,7 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-    console.log(formData,'FORMDATA');
+    console.log(formData, 'FORMDATA');
     return (
         <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">

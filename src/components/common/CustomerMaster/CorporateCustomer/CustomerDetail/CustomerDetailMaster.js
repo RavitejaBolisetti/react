@@ -75,8 +75,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const [customerDetailsList, setCustomerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
-    const [customerType, setCustomerType] = useState('Yes');
-    const [editedMode, setEditedMode] = useState(false);
+
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [configurableTypedata, setConfigurableTypedata] = useState({});
     const [formData, setFormData] = useState();
@@ -115,9 +114,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [typeData]);
 
-    const onChange = (value) => {
-        setCustomerType(value);
-    };
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
@@ -198,7 +194,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const formProps = {
         form,
-        onChange,
         buttonData,
         onFinish,
         onCloseAction,
@@ -208,10 +203,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         saveData,
         showForm,
         setShowForm,
-        customerType,
-        editedMode,
-        setEditedMode,
-        setCustomerType,
         formActionType,
         typeData,
         customerDetailsData,
@@ -221,7 +212,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     };
 
     const viewProps = {
-        onChange,
         onCloseAction,
         styles,
     };

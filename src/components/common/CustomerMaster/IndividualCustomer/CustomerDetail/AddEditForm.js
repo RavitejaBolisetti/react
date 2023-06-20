@@ -113,206 +113,195 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Form id="form" onFinish={onFinish} form={form} autoComplete="off" layout="vertical" onFieldsChange={handleFormFieldChange} onValuesChange={handleFormValueChange} onFinishFailed={onFinishFailed}>
-            {viewMode ? (
-                <ViewDetail {...viewProps} />
-            ) : (
-                <>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                                <Card
-                                    header={
-                                        <div className={styles.alignUser}>
-                                            <FaRegUserCircle className={styles.userCircle} />
-                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                Customer Information
-                                            </Text>
-                                            <Button htmlType="link">View History</Button>
-                                        </div>
-                                    }
-                                >
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
-                                                <Input
-                                                    placeholder={preparePlaceholderText('mobile number')}
-                                                    maxLength={10}
-                                                    onChange={handleNumberValidation}
-                                                    size="small"
-                                                    suffix={
-                                                        <>
-                                                            {false ? (
-                                                                <Button loading={mobileLoader} onClick={showModal} type="link">
-                                                                    Validate
-                                                                </Button>
-                                                            ) : (
-                                                                <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
-                                                            )}
-                                                            <ValidateMobileNumberModal {...modalProps} />
-                                                        </>
-                                                    }
-                                                />
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Customer Type" initialValue={formData?.customerType} name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                                                <Select placeholder="Select" loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-                                    <Divider />
-                                    <div className={styles.cardInsideBox}>
-                                        <Row>
-                                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                                <Text style={{ fontSize: '16px' }} strong>
-                                                    Customer Name
-                                                </Text>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                                                <Button type="link" icon={<BiTimeFive />}>
-                                                    View History
-                                                </Button>
-                                            </Col>
-                                        </Row>
-
-                                        <Divider />
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                                                <Form.Item label="Title" initialValue={formData?.titleCode} name="titleCode" data-testid="title" rules={[validateRequiredSelectField('title')]}>
-                                                    <Select placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['TITLE']}></Select>
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                                <Form.Item label="First Name" initialValue={formData?.firstName} name="firstName" data-testid="firstName" rules={[validateRequiredInputField('first name')]}>
-                                                    <Input placeholder={preparePlaceholderText('first name')} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                                <Form.Item label="Middle Name" initialValue={formData?.middleName} name="middleName" data-testid="middleName">
-                                                    <Input placeholder={preparePlaceholderText('middle name')} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                                <Form.Item label="Last Name" initialValue={formData?.lastName} name="lastName" data-testid="lastName">
-                                                    <Input placeholder={preparePlaceholderText('last name')} />
-                                                </Form.Item>
-                                            </Col>
-                                            {true && (
+        <>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Space style={{ display: 'flex' }} size="middle" direction="vertical">
+                        <Card
+                            header={
+                                <div className={styles.alignUser}>
+                                    <FaRegUserCircle className={styles.userCircle} />
+                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                        Customer Information
+                                    </Text>
+                                    <Button htmlType="link">View History</Button>
+                                </div>
+                            }
+                        >
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
+                                        <Input
+                                            placeholder={preparePlaceholderText('mobile number')}
+                                            maxLength={10}
+                                            onChange={handleNumberValidation}
+                                            size="small"
+                                            suffix={
                                                 <>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className={styles.uploadDragger}>
-                                                            <Dragger showUploadList={showUploadList} {...uploadProps}>
-                                                                <Empty
-                                                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                                                    imageStyle={{
-                                                                        height: 100,
-                                                                    }}
-                                                                    description={
-                                                                        <>
-                                                                            <span>
-                                                                                Click or drop your file here to upload the signed and <br />
-                                                                                scanned customer form.
-                                                                            </span>
-                                                                            <span>
-                                                                                <br />
-                                                                                File type should be png, jpg or pdf and max file size to be 5Mb
-                                                                            </span>
-                                                                        </>
-                                                                    }
-                                                                />
-
-                                                                <Button type="primary">Upload File</Button>
-                                                            </Dragger>
-                                                        </div>
-                                                    </Col>
-                                                    <Row gutter={20} style={{ marginTop: '10px', marginLeft: '3px' }}>
-                                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                                            <Button type="primary" htmlType={isHtmltype ? 'submit' : 'button'} onClick={isHtmltype ? Random : onFinish} className={styles.floatRight}>
-                                                                Save
-                                                            </Button>
-                                                        </Col>
-                                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                                            <Button danger>Cancel</Button>
-                                                        </Col>
-                                                    </Row>
+                                                    {false ? (
+                                                        <Button loading={mobileLoader} onClick={showModal} type="link">
+                                                            Validate
+                                                        </Button>
+                                                    ) : (
+                                                        <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
+                                                    )}
+                                                    <ValidateMobileNumberModal {...modalProps} />
                                                 </>
-                                            )}
-                                        </Row>
-                                    </div>
-                                    <Divider />
-
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Email ID" initialValue={formData?.emailId} name="emailId" data-testid="emailId" rules={[validateEmailField('email id')]}>
-                                                <Input placeholder={preparePlaceholderText('email id')} />
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Do you want to contacted over whatsapp?" initialValue={formData?.contactOnWhatsAppAllowed} name="contactOnWhatsAppAllowed" data-testid="contactedOverWhatsapp">
-                                                <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} />
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Want to use Mobile no as whatsapp no?" initialValue={formData?.contactAsMobileOnWhatApp} name="contactAsMobileOnWhatApp" data-testid="useMobileNumber">
-                                                <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Whatsapp Number" initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsappNumber" rules={[validateMobileNoField('whatsapp number')]}>
-                                                <Input placeholder={preparePlaceholderText('whatsapp number')} disabled={!isEnabled} />
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-                                    <Divider />
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Corporate Type" initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType">
-                                                <Select placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']} allowClear></Select>
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                                <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                                    {corporateLovData?.map((item) => (
-                                                        <Option key={item?.key} value={item?.key}>
-                                                            {item?.key}
-                                                        </Option>
-                                                    ))}
-                                                </Select>
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code">
-                                                <Input placeholder={preparePlaceholderText('parent company name')} disabled />
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Corporate Category" initialValue={formData?.corporateCategory} name="corporateCategory" data-testid="corporateCategory">
-                                                <Select disabled={false} loading={false} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_CATE']} allowClear></Select>
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Membership Type" initialValue={formData?.membershipType} name="membershipType" data-testid="membershipType" rules={[validateRequiredSelectField('membership type')]}>
-                                                <Select disabled={false} loading={false} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['MEM_TYPE']} allowClear></Select>
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Button htmlType="submit" danger>
-                                            Submit
+                                            }
+                                        />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Customer Type" initialValue={formData?.customerType} name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
+                                        <Select placeholder="Select" loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Divider />
+                            <div className={styles.cardInsideBox}>
+                                <Row>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                        <Text style={{ fontSize: '16px' }} strong>
+                                            Customer Name
+                                        </Text>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
+                                        <Button type="link" icon={<BiTimeFive />}>
+                                            View History
                                         </Button>
-                                    </Row>
-                                </Card>
-                            </Space>
-                        </Col>
-                    </Row>
-                    <NameChangeHistory {...changeHistoryProps} />
-                </>
-            )}
-        </Form>
+                                    </Col>
+                                </Row>
+
+                                <Divider />
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                        <Form.Item label="Title" initialValue={formData?.titleCode} name="titleCode" data-testid="title" rules={[validateRequiredSelectField('title')]}>
+                                            <Select placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['TITLE']}></Select>
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                                        <Form.Item label="First Name" initialValue={formData?.firstName} name="firstName" data-testid="firstName" rules={[validateRequiredInputField('first name')]}>
+                                            <Input placeholder={preparePlaceholderText('first name')} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                                        <Form.Item label="Middle Name" initialValue={formData?.middleName} name="middleName" data-testid="middleName">
+                                            <Input placeholder={preparePlaceholderText('middle name')} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                                        <Form.Item label="Last Name" initialValue={formData?.lastName} name="lastName" data-testid="lastName">
+                                            <Input placeholder={preparePlaceholderText('last name')} />
+                                        </Form.Item>
+                                    </Col>
+                                    {true && (
+                                        <>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <div className={styles.uploadDragger}>
+                                                    <Dragger showUploadList={showUploadList} {...uploadProps}>
+                                                        <Empty
+                                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                            imageStyle={{
+                                                                height: 100,
+                                                            }}
+                                                            description={
+                                                                <>
+                                                                    <span>
+                                                                        Click or drop your file here to upload the signed and <br />
+                                                                        scanned customer form.
+                                                                    </span>
+                                                                    <span>
+                                                                        <br />
+                                                                        File type should be png, jpg or pdf and max file size to be 5Mb
+                                                                    </span>
+                                                                </>
+                                                            }
+                                                        />
+
+                                                        <Button type="primary">Upload File</Button>
+                                                    </Dragger>
+                                                </div>
+                                            </Col>
+                                            <Row gutter={20} style={{ marginTop: '10px', marginLeft: '3px' }}>
+                                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                                    <Button type="primary" htmlType={isHtmltype ? 'submit' : 'button'} onClick={isHtmltype ? Random : onFinish} className={styles.floatRight}>
+                                                        Save
+                                                    </Button>
+                                                </Col>
+                                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                                    <Button danger>Cancel</Button>
+                                                </Col>
+                                            </Row>
+                                        </>
+                                    )}
+                                </Row>
+                            </div>
+                            <Divider />
+
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Email ID" initialValue={formData?.emailId} name="emailId" data-testid="emailId" rules={[validateEmailField('email id')]}>
+                                        <Input placeholder={preparePlaceholderText('email id')} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Do you want to contacted over whatsapp?" initialValue={formData?.contactOnWhatsAppAllowed} name="contactOnWhatsAppAllowed" data-testid="contactedOverWhatsapp">
+                                        <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Want to use Mobile no as whatsapp no?" initialValue={formData?.contactAsMobileOnWhatApp} name="contactAsMobileOnWhatApp" data-testid="useMobileNumber">
+                                        <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Whatsapp Number" initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsappNumber" rules={[validateMobileNoField('whatsapp number')]}>
+                                        <Input placeholder={preparePlaceholderText('whatsapp number')} disabled={!isEnabled} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Divider />
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Corporate Type" initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType">
+                                        <Select placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']} allowClear></Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                                        <Select disabled={false} loading={false} placeholder="Select" allowClear>
+                                            {corporateLovData?.map((item) => (
+                                                <Option key={item?.key} value={item?.key}>
+                                                    {item?.key}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code">
+                                        <Input placeholder={preparePlaceholderText('parent company name')} disabled />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Corporate Category" initialValue={formData?.corporateCategory} name="corporateCategory" data-testid="corporateCategory">
+                                        <Select disabled={false} loading={false} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_CATE']} allowClear></Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Membership Type" initialValue={formData?.membershipType} name="membershipType" data-testid="membershipType" rules={[validateRequiredSelectField('membership type')]}>
+                                        <Select disabled={false} loading={false} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['MEM_TYPE']} allowClear></Select>
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Card>
+                    </Space>
+                </Col>
+            </Row>
+            <NameChangeHistory {...changeHistoryProps} />
+        </>
     );
 };
 
