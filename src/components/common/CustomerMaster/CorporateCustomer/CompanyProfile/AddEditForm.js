@@ -14,7 +14,7 @@ import styles from 'components/Auth/Auth.module.css';
 import Svg from 'assets/images/Filter.svg';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -41,6 +41,8 @@ const AddEditFormMain = (props) => {
         },
         // uploadCustomerForm: [],
     });
+
+    console.log('Form Data:', formData);
 
     const [companyInfoValues, setCompanyInfoValues] = useState();
     const [uploadCustomerFormValues, setUploadCustomerFormValues] = useState();
@@ -141,9 +143,9 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Usage/Application Categorization" initialValue={formData?.applicationCategorization} name="applicationCategorization">
-                                            <Select maxLength={50} placeholder={preparePlaceholderText('Usage/Application Categorization')}>
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Usage/Application Categorization')}>
                                                 {appCategoryData.APP_CAT?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
+                                                    <Option key={'ap' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -153,9 +155,9 @@ const AddEditFormMain = (props) => {
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Usage/Application Sub-Category" initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
-                                            <Select maxLength={50} placeholder={preparePlaceholderText('Usage/Application Sub-Category')}>
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Usage/Application Sub-Category')}>
                                                 {appCategoryData.APP_SUB_CAT?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
+                                                    <Option key={'sc' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -165,7 +167,7 @@ const AddEditFormMain = (props) => {
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Customer Category" initialValue={formData?.customerCategory} name="customerCategory">
-                                            <Select maxLength={50} onChange={handleCategoryChange} placeholder={preparePlaceholderText('Customer Category')}>
+                                            <Select maxLength={50} onChange={handleCategoryChange} placeholder={preparePlaceholderSelect('Customer Category')}>
                                                 {appCategoryData.CUS_CAT?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
@@ -338,7 +340,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <Form.Item label="Remarks" initialValue={formData?.authorityRequest.remarks} name="authorityRequest.remarks">
+                                        <Form.Item label="Remarks" initialValue={formData?.remarks} name="authorityRequest.remarks">
                                             <TextArea maxLength={50} placeholder={preparePlaceholderText('Remarks')} />
                                         </Form.Item>
                                     </Col>
