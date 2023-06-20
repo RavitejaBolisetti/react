@@ -41,7 +41,7 @@
 :global .ant-input:hover,
 :global .ant-input:focus,
 :global .ant-input-focused {
-    border: 1px solid #0b0b0c !important;
+    border: 1px solid #0b0b0c;
     box-shadow: 0 0 0 2px rgba(255, 5, 5, 0);
 }
 
