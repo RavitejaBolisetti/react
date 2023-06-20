@@ -6,10 +6,8 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
 
-import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
-import { CompanyAddressMaster, CompanyProfile, CompanyContact, AccountRelatedMaster } from './FirmOrCompany';
-import { CompanyCustomerDetailsMaster } from './FirmOrCompany';
-import { SupportingDocument } from './IndividualCustomer';
+import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails, SupportingDocument } from './IndividualCustomer';
+import { CompanyAddressMaster, CompanyProfile, CompanyContact, AccountRelatedMaster, CompanyCustomerDetailsMaster } from './CorporateCustomer';
 import { LeftSidebar } from './LeftSidebar';
 
 import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection';

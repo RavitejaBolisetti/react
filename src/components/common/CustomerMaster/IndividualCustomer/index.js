@@ -6,3 +6,4 @@ import { FamilyDetails } from './FamilyDetails';
 import { SupportingDocument } from './SupportingDocument';
 import { IndividualContact } from './Contacts';
 export { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails, SupportingDocument };
+ 
