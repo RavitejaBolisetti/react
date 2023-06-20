@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 const SupportingDocumentBase = (props) => {
     const { isDocumentDataLoaded, uploadFile, accessToken, token, configFetchList, configListShowLoading } = props;
 
-    const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsData, section, fetchConfigList, listConfigShowLoading, fetchList, listShowLoading, moduleTitle, typeData, saveData } = props;
+    const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
 
     const [form] = Form.useForm();
