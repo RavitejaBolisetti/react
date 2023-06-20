@@ -166,8 +166,8 @@ const AddEditForm = ({ form, isVisible, onCloseAction, onFinish, onFinishFailed,
                                                 <Form.Item label="Usage/Application Categorization" initialValue={formData?.applicationCategorization} name="applicationCategorization">
                                                     <Select maxLength={50} placeholder={preparePlaceholderText('Usage/Application Categorization')}>
                                                         {appCategoryData.APP_CAT?.map((item) => (
-                                                            <Option key={'ct' + item.value} value={item.value}>
-                                                                {item.key}
+                                                            <Option key={'ct' + item.key} value={item.key}>
+                                                                {item.value}
                                                             </Option>
                                                         ))}
                                                     </Select>{' '}
@@ -178,8 +178,8 @@ const AddEditForm = ({ form, isVisible, onCloseAction, onFinish, onFinishFailed,
                                                 <Form.Item label="Usage/Application Sub-Category" initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
                                                     <Select maxLength={50} placeholder={preparePlaceholderText('Usage/Application Sub-Category')}>
                                                         {appCategoryData.APP_SUB_CAT?.map((item) => (
-                                                            <Option key={'ct' + item.value} value={item.value}>
-                                                                {item.key}
+                                                            <Option key={'ct' + item.key} value={item.key}>
+                                                                {item.value}
                                                             </Option>
                                                         ))}
                                                     </Select>{' '}
@@ -189,14 +189,16 @@ const AddEditForm = ({ form, isVisible, onCloseAction, onFinish, onFinishFailed,
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Customer Category" initialValue={formData?.customerCategory} name="customerCategory">
                                                     <Select maxLength={50} onChange={handleCategoryChange} placeholder={preparePlaceholderText('Customer Category')}>
-                                                        <Option>Select</Option>
-                                                        <Option value="common">Common</Option>
-                                                        <Option value="fleet">Fleet</Option>
+                                                        {appCategoryData.CUS_CAT?.map((item) => (
+                                                            <Option key={'ct' + item.key} value={item.key}>
+                                                                {item.value}
+                                                            </Option>
+                                                        ))}
                                                     </Select>{' '}
                                                 </Form.Item>
                                             </Col>
                                         </Row>
-                                        {customerCategory == 'fleet' && (
+                                        {customerCategory == 'CUS_CAT_2' && (
                                             <>
                                                 <Divider />
                                                 <Row gutter={20}>
@@ -351,7 +353,7 @@ const AddEditForm = ({ form, isVisible, onCloseAction, onFinish, onFinishFailed,
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
-                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                 <Form.Item label="Remarks" initialValue={formData?.authorityRequest.remarks} name="authorityRequest.remarks">
                                                     <TextArea maxLength={50} placeholder={preparePlaceholderText('Remarks')} />
                                                 </Form.Item>
