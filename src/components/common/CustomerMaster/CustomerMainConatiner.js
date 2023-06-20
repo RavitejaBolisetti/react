@@ -6,8 +6,8 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
 
-import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails, SupportingDocument } from './IndividualCustomer';
-import { CompanyAddressMaster, CompanyProfile, CompanyContact, AccountRelatedMaster, CompanyCustomerDetailsMaster } from './CorporateCustomer';
+import { IndivisualCustomerDetailMaster, IndividualProfileMaster, IndividualAddressMaster, IndividualContactMaster, IndividualFamilyDetailMaster, IndividualAccountRelatedMaster, IndividualSupportingDocument } from './IndividualCustomer';
+import { CorporateCustomerDetailMaster, CorporateCompanyProfileMaster, CorporateCompanyAddressMaster, CorporateContactMaster, CorporateAccountRelatedMaster } from './CorporateCustomer';
 import { LeftSidebar } from './LeftSidebar';
 
 import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection';
@@ -42,7 +42,7 @@ const CustomerMainConatinerMain = (props) => {
             case CUSTOMER_TYPE?.INDIVIDUAL.id: {
                 switch (currentSection) {
                     case CUSTOMER_INDIVIDUAL_SECTION?.CUSTOMER_DETAILS.id: {
-                        return <IndivisualCustomerDetailsMaster {...myProps} />;
+                        return <IndivisualCustomerDetailMaster {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.INDIVIDUAL_PROFILE.id: {
                         return <IndividualProfileMaster {...myProps} />;
@@ -51,44 +51,41 @@ const CustomerMainConatinerMain = (props) => {
                         return <IndividualAddressMaster {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.CONTACTS.id: {
-                        return <IndividualContact {...myProps} />;
+                        return <IndividualContactMaster {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.FAMILY_DETAILS.id: {
-                        return <FamilyDetails />;
+                        return <IndividualFamilyDetailMaster {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.ACCOUNT_RELATED.id: {
                         return <IndividualAccountRelatedMaster {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.SUPPORTING_DOCUMENT.id: {
-                        return <SupportingDocument />;
+                        return <IndividualSupportingDocument {...myProps} />;
                     }
                     default: {
-                        return <IndivisualCustomerDetailsMaster {...myProps} />;
+                        return <IndivisualCustomerDetailMaster {...myProps} />;
                     }
                 }
             }
             case CUSTOMER_TYPE?.CORPORATE.id: {
                 switch (currentSection) {
                     case CUSTOMER_CORPORATE_SECTION?.CUSTOMER_DETAILS.id: {
-                        return <CompanyCustomerDetailsMaster {...myProps} />;
+                        return <CorporateCustomerDetailMaster {...myProps} />;
                     }
                     case CUSTOMER_CORPORATE_SECTION?.COMPANY_RPOFILE.id: {
-                        return <CompanyProfile {...myProps} />;
+                        return <CorporateCompanyProfileMaster {...myProps} />;
                     }
                     case CUSTOMER_CORPORATE_SECTION?.ADDRESS.id: {
-                        return <CompanyAddressMaster />;
+                        return <CorporateCompanyAddressMaster {...myProps} />;
                     }
                     case CUSTOMER_CORPORATE_SECTION?.CONTACTS.id: {
-                        return <CompanyContact {...myProps} />;
+                        return <CorporateContactMaster {...myProps} />;
                     }
                     case CUSTOMER_CORPORATE_SECTION?.ACCOUNT_RELATED.id: {
-                        return <AccountRelatedMaster {...myProps} />;
-                    }
-                    case CUSTOMER_CORPORATE_SECTION?.CUSTOMER_INDIVIDUAL_SECTION.id: {
-                        return <SupportingDocument />;
+                        return <CorporateAccountRelatedMaster {...myProps} />;
                     }
                     default: {
-                        return <CompanyCustomerDetailsMaster {...myProps} />;
+                        return <CorporateCustomerDetailMaster {...myProps} />;
                     }
                 }
             }

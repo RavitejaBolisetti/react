@@ -1,21 +1,24 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { Space, Form, Card } from 'antd';
-
 import { bindActionCreators } from 'redux';
+import { Row, Col, Form } from 'antd';
 
 import { corporateAccountsRelatedDataActions } from 'store/actions/data/customerMaster/corporateAccountRelated';
-
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
 import { showGlobalNotification } from 'store/actions/notification';
 
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
 
-import styles from 'components/common/Common.module.css';
-
-import { ViewDetail } from './ViewAccountDetails';
+import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
+import { CustomerFormButton } from '../../CustomerFormButton';
+
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -54,7 +57,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AccountRelatedBase = (props) => {
-    const { saveData, fetchList, userId, listShowLoading, isLoaded, data, showGlobalNotification, moduleTitle } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, moduleTitle, isLoaded, data, saveData } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [refershData, setRefershData] = useState(false);
@@ -63,12 +67,6 @@ export const AccountRelatedBase = (props) => {
 
     const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
-
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -103,10 +101,8 @@ export const AccountRelatedBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-
         record && setFormData(record);
         setIsFormVisible(true);
     };
@@ -191,20 +187,23 @@ export const AccountRelatedBase = (props) => {
         styles,
     };
 
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
     return (
-        <>
-            {!formActionType?.viewMode ? (
-                <Space direction="vertical" size="small" style={{ display: 'flex' }}>
-                    <Card style={{ backgroundColor: '#F2F2F2' }}>
-                        <AddEditForm {...formProps} />
-                    </Card>
-                </Space>
-            ) : (
-                <Card style={{ backgroundColor: '#F2F2F2' }}>
-                    <ViewDetail {...viewProps} />
-                </Card>
-            )}
-        </>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Row gutter={20} className={styles.drawerBodyRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <h2>{section?.title} </h2>
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <CustomerFormButton {...props} />
+                </Col>
+            </Row>
+        </Form>
     );
 };
 
