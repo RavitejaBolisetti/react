@@ -25,7 +25,7 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, form, isHtmltype, onChange, formActionType: { viewMode, editMode } = undefined, onFinish, onFinishFailed, onFieldsChange, formActionType, configurableTypedata, formData, handleButtonClick, customerDetailsIndividualData, corporateLovData, fetchCorporate } = props;
+    const { onCloseAction, form, isHtmltype, onChange, formActionType: { viewMode } = undefined, onFinish, onFinishFailed, configurableTypedata, formData, corporateLovData } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
     const { buttonData, setButtonData } = props;

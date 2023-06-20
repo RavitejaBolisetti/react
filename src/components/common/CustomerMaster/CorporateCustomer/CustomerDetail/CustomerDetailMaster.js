@@ -93,13 +93,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         showGlobalNotification({ message });
     };
 
-    // const customerMasterBtnProps = {
-    //     buttonData,
-    //     setButtonData,
-    //     formData,
-    //     handleButtonClick
-    // };
-
     useEffect(() => {
         if (userId) {
             if (!isTypeDataLoaded && !isTypeDataLoading) {
