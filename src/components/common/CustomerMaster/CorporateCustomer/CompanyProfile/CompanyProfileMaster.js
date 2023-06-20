@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, paramdata: appCategoryData = [] },
             CustomerMaster: {
-                CompanyProfile: { isLoaded: isDataLoaded = false, data: companyProfileData = [] },
+                CompanyProfile: { isLoaded: isDataLoaded = false, data: customerProfileData = [] },
             },
         },
         common: {
@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
         isAppCategoryDataLoaded,
         appCategoryData,
         isDataLoaded,
-        companyProfileData,
+        customerProfileData,
         moduleTitle,
     };
     return returnValue;
@@ -68,48 +68,44 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyProfileBase = (props) => {
-    const { listShowLoading, section, saveData, userId, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, fetchCompanyProfileData, isAppCategoryDataLoaded, appCategoryData, isDataLoaded, companyProfileData } = props;
-    const { selectedCustomerId, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+    const { listShowLoading, section, saveData, userId, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, fetchCompanyProfileData, isAppCategoryDataLoaded, appCategoryData, isDataLoaded, customerProfileData } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, selectedCustomer } = props;
+
     const [form] = Form.useForm();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [customerType, setCustomerType] = useState('Yes');
-    const [formData, setFormData] = useState();
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     useEffect(() => {
-        fetchApplicationCategorization({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_CAT.id });
-        fetchApplicationSubCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_SUB_CAT.id });
-        fetchCustomerCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_CAT.id });
+        if (!isAppCategoryDataLoaded) {
+            fetchApplicationCategorization({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_CAT.id });
+            fetchApplicationSubCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_SUB_CAT.id });
+            fetchCustomerCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_CAT.id });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAppCategoryDataLoaded]);
 
-    const extraParams = [
-        {
-            key: 'customerId',
-            title: 'customerId',
-            value: selectedCustomerId,
-            name: 'customerId',
-        },
-    ];
-
     useEffect(() => {
-        fetchCompanyProfileData({ setIsLoading: listShowLoading, userId, extraParams });
+        if (userId && selectedCustomer) {
+            const extraParams = [
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: selectedCustomer?.customerId,
+                    name: 'customerId',
+                },
+            ];
+            fetchCompanyProfileData({ setIsLoading: listShowLoading, userId, extraParams });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType?.viewMode]);
-
-    useEffect(() => {
-        setFormData(companyProfileData);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, companyProfileData]);
+    }, [userId, selectedCustomer]);
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
-        setFormData([]);
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        record && setFormData(record);
         setIsFormVisible(true);
     };
 
@@ -118,7 +114,7 @@ const CompanyProfileBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.id || '';
+        const recordId = customerProfileData?.id || '';
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
         const data = { ...rest, customerId: 'CUS1686810869696', keyAccountDetails: { customerId: 'CUS1686810869696', accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { customerId: 'CUS1686810869696', personName: values.personName, postion: values.postion, companyName: values.companyName }, id: recordId };
 
@@ -169,13 +165,14 @@ const CompanyProfileBase = (props) => {
         formActionType,
         appCategoryData,
         styles,
+        formData: customerProfileData,
     };
 
     const viewProps = {
         onChange,
         onCloseAction,
         styles,
-        formData,
+        customerProfileData,
     };
 
     const handleFormValueChange = () => {
@@ -188,7 +185,7 @@ const CompanyProfileBase = (props) => {
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.box}>
                         <h2>{section?.title}</h2>
-                        {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                        {!formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                     </Col>
                 </Row>
                 <Row>

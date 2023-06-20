@@ -12,7 +12,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formData } = props;
+    const { customerProfileData } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const viewProps = {
         bordered: false,
@@ -36,7 +36,6 @@ const ViewDetailMain = (props) => {
         } else {
             setactiveKey([...activeKey, values]);
         }
-        console.log('values', values);
     };
 
     return (
@@ -65,14 +64,14 @@ const ViewDetailMain = (props) => {
                         key="1"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="PAN">{formData?.panNumber}</Descriptions.Item>
-                            <Descriptions.Item label="GSTIN">{formData?.gstinNumber}</Descriptions.Item>
+                            <Descriptions.Item label="PAN">{customerProfileData?.panNumber}</Descriptions.Item>
+                            <Descriptions.Item label="GSTIN">{customerProfileData?.gstinNumber}</Descriptions.Item>
                         </Descriptions>
 
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Usage/Application Categorization">{formData?.applicationCategorization}</Descriptions.Item>
-                            <Descriptions.Item label="Usage/Application Sub-Category">{formData?.applicationSubCategory}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Category">{formData?.customerCategory}</Descriptions.Item>
+                            <Descriptions.Item label="Usage/Application Categorization">{customerProfileData?.applicationCategorization}</Descriptions.Item>
+                            <Descriptions.Item label="Usage/Application Sub-Category">{customerProfileData?.applicationSubCategory}</Descriptions.Item>
+                            <Descriptions.Item label="Customer Category">{customerProfileData?.customerCategory}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>
@@ -100,9 +99,9 @@ const ViewDetailMain = (props) => {
                         key="2"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="M1-MMFSL">{formData?.m1mmfsl}</Descriptions.Item>
-                            <Descriptions.Item label="Facebook Link">{formData?.facebookLink}</Descriptions.Item>
-                            <Descriptions.Item label="Twitter Link">{formData?.twitterLink}</Descriptions.Item>
+                            <Descriptions.Item label="M1-MMFSL">{customerProfileData?.m1mmfsl}</Descriptions.Item>
+                            <Descriptions.Item label="Facebook Link">{customerProfileData?.facebookLink}</Descriptions.Item>
+                            <Descriptions.Item label="Twitter Link">{customerProfileData?.twitterLink}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>
@@ -129,13 +128,15 @@ const ViewDetailMain = (props) => {
                         }
                         key="3"
                     >
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Account Code">{formData?.keyAccountDetails.accountCode}</Descriptions.Item>
-                            <Descriptions.Item label="Account Name">{formData?.keyAccountDetails.accountName}</Descriptions.Item>
-                            <Descriptions.Item label="Account Segment">{formData?.keyAccountDetails.accountSegment}</Descriptions.Item>
-                            <Descriptions.Item label="Account Client Name">{formData?.keyAccountDetails.accountClientName}</Descriptions.Item>
-                            <Descriptions.Item label="Account Mapping Data">{formData?.keyAccountDetails.mappingData}</Descriptions.Item>
-                        </Descriptions>
+                        {customerProfileData?.keyAccountDetails && customerProfileData?.keyAccountDetails.length > 0 && (
+                            <Descriptions {...viewProps}>
+                                <Descriptions.Item label="Account Code">{customerProfileData?.keyAccountDetails?.accountCode}</Descriptions.Item>
+                                <Descriptions.Item label="Account Name">{customerProfileData?.keyAccountDetails?.accountName}</Descriptions.Item>
+                                <Descriptions.Item label="Account Segment">{customerProfileData?.keyAccountDetails?.accountSegment}</Descriptions.Item>
+                                <Descriptions.Item label="Account Client Name">{customerProfileData?.keyAccountDetails?.accountClientName}</Descriptions.Item>
+                                <Descriptions.Item label="Account Mapping Data">{customerProfileData?.keyAccountDetails?.mappingData}</Descriptions.Item>
+                            </Descriptions>
+                        )}
                     </Panel>
                 </Collapse>
 
@@ -161,12 +162,14 @@ const ViewDetailMain = (props) => {
                         }
                         key="4"
                     >
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Name Of Person">{formData?.authorityDetails[0].personName}</Descriptions.Item>
-                            <Descriptions.Item label="Position">{formData?.authorityDetails[0].postion}</Descriptions.Item>
-                            <Descriptions.Item label="Company Name">{formData?.authorityDetails[0].companyName}</Descriptions.Item>
-                            <Descriptions.Item label="Remarks">{formData?.authorityDetails[0].remarks}</Descriptions.Item>
-                        </Descriptions>
+                        {customerProfileData?.authorityDetails && customerProfileData?.authorityDetails.length > 0 && (
+                            <Descriptions {...viewProps}>
+                                <Descriptions.Item label="Name Of Person">{customerProfileData?.authorityDetails[0].personName}</Descriptions.Item>
+                                <Descriptions.Item label="Position">{customerProfileData?.authorityDetails[0].postion}</Descriptions.Item>
+                                <Descriptions.Item label="Company Name">{customerProfileData?.authorityDetails[0].companyName}</Descriptions.Item>
+                                <Descriptions.Item label="Remarks">{customerProfileData?.authorityDetails[0].remarks}</Descriptions.Item>
+                            </Descriptions>
+                        )}
                     </Panel>
                 </Collapse>
                 <Collapse
