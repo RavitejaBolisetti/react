@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 
 import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button } from 'antd';
 
@@ -6,19 +11,16 @@ import { FaRegUserCircle } from 'react-icons/fa';
 import { validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { ViewIndivisualCustomerDetails } from './ViewIndivisualCustomerDetails';
+import { ViewDetail } from './ViewDetail';
 
 import styles from 'components/common/Common.module.css';
-
 
 const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction,form, setIsViewModeVisible, onChange, onFinish, onFinishFailed, onFieldsChange, formActionType, configurableTypedata } = props;
+    const { onCloseAction, form, onChange, onFinish, onFinishFailed, onFieldsChange, formActionType, configurableTypedata } = props;
     const { activeKey, setactiveKey } = props;
-
-
 
     const viewProps = {
         activeKey,
@@ -48,7 +50,7 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Mobile Number" name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
-                                                <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10}/>
+                                                <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -153,7 +155,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
             ) : (
-                <ViewIndivisualCustomerDetails {...viewProps} />
+                <ViewDetail {...viewProps} />
             )}
         </>
     );

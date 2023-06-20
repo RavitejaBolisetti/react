@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
 
 import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails, SupportingDocument } from './IndividualCustomer';
-import { CompanyAddressMaster, CompanyProfile, CompanyContact, AccountRelatedMaster, CompanyCustomerDetailsMaster } from './CorporateCustomer';
+import { CompanyAddressMaster, CompanyProfile, CompanyContact, AccountRelatedMaster, CustomerDetailMaster } from './CorporateCustomer';
 import { LeftSidebar } from './LeftSidebar';
 
 import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection';
@@ -69,7 +69,7 @@ const CustomerMainConatinerMain = (props) => {
             case CUSTOMER_TYPE?.CORPORATE.id: {
                 switch (currentSection) {
                     case CUSTOMER_CORPORATE_SECTION?.CUSTOMER_DETAILS.id: {
-                        return <CompanyCustomerDetailsMaster {...myProps} />;
+                        return <CustomerDetailMaster {...myProps} />;
                     }
                     case CUSTOMER_CORPORATE_SECTION?.COMPANY_RPOFILE.id: {
                         return <CompanyProfile {...myProps} />;
@@ -87,7 +87,7 @@ const CustomerMainConatinerMain = (props) => {
                         return <SupportingDocument />;
                     }
                     default: {
-                        return <CompanyCustomerDetailsMaster {...myProps} />;
+                        return <CustomerDetailMaster {...myProps} />;
                     }
                 }
             }

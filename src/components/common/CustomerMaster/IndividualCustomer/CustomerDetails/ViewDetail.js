@@ -1,11 +1,13 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { Space, Typography, Descriptions, Card, Divider } from 'antd';
 import { FaRegUserCircle } from 'react-icons/fa';
-import styles from 'components/common/Common.module.css';
-
 
 const { Text } = Typography;
-
 const ViewDetailMain = (props) => {
     const { styles, formData } = props;
     const viewProps = {
@@ -13,22 +15,6 @@ const ViewDetailMain = (props) => {
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
-    };
-    const customerForm = {
-        mobileNumber: '8707023991',
-        customerType: 'Individual',
-        title: 'Mr.',
-        firstName: 'Arvind',
-        middleName: 'Pal',
-        lastName: 'Singh',
-        emailId: 'pal.arvind@gmail.com',
-        contactedOverWhatsapp: true,
-        useMobileNumber: 'false',
-        whatsappNumber: '8707023991',
-        corporateType: 'Non-Listed',
-        corporateCategory: 'C1',
-        corporateName: 'ABC',
-        membershipType: 'Gold',
     };
 
     return (
@@ -79,4 +65,4 @@ const ViewDetailMain = (props) => {
     );
 };
 
-export const ViewIndivisualCustomerDetails = ViewDetailMain;
+export const ViewDetail = ViewDetailMain;
