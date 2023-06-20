@@ -51,6 +51,22 @@ export const PARAM_MASTER = {
         id: 'CUS_CAT',
         title: 'CUS_CAT',
     },
+    GENDER_CD: {
+        id: 'GENDER_CD',
+        title: 'GENDER_CD',
+    },
+    MARITAL_STATUS: {
+        id: 'MARITAL_STATUS',
+        title: 'MARITAL_STATUS',
+    },
+    OCC_TYPE: {
+        id: 'OCC_TYPE',
+        title: 'OCC_TYPE',
+    },
+    ANL_INCM: {
+        id: 'ANL_INCM',
+        title: 'ANL_INCM',
+    },
     PRC_TYP: {
         id: 'PRC_TYP',
         title: 'Price Type',

@@ -42,13 +42,17 @@ const mapDispatchToProps = (dispatch) => ({
             fetchApplicationCategorization: configParamEditActions.fetchList,
             fetchApplicationSubCategory: configParamEditActions.fetchList,
             fetchCustomerCategory: configParamEditActions.fetchList,
+            fetchGenderCategory: configParamEditActions.fetchList,
+            fetchMartialStatus: configParamEditActions.fetchList,
+            fetchOccupationList: configParamEditActions.fetchList,
+            fetchAnnualIncome: configParamEditActions.fetchList,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 const IndividualProfileBase = (props) => {
-    const { userId, fetchIndiviualList, formData, onFieldsChange, listIndiviualShowLoading, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, isAppCategoryDataLoaded, appCategoryData, isIndiviualProfileLoaded, formActionType, indiviualData, saveData, showGlobalNotification } = props;
+    const { userId, fetchIndiviualList, formData, onFieldsChange, fetchAnnualIncome, fetchOccupationList, listIndiviualShowLoading, fetchGenderCategory, fetchMartialStatus, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, isAppCategoryDataLoaded, appCategoryData, isIndiviualProfileLoaded, formActionType, indiviualData, saveData, showGlobalNotification } = props;
     const [indiviualForm] = Form.useForm();
 
     useEffect(() => {
@@ -62,6 +66,10 @@ const IndividualProfileBase = (props) => {
         fetchApplicationCategorization({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_CAT.id });
         fetchApplicationSubCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_SUB_CAT.id });
         fetchCustomerCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_CAT.id });
+        fetchGenderCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.GENDER_CD.id });
+        fetchMartialStatus({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.MARITAL_STATUS.id });
+        fetchOccupationList({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.OCC_TYPE.id });
+        fetchAnnualIncome({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.ANL_INCM.id });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAppCategoryDataLoaded]);
 

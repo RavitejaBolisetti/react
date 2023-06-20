@@ -264,7 +264,7 @@ const CustomerMasterMain = (props) => {
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
-                                <Button danger type="primary" icon={<PlusOutlined />}>
+                                <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ADD })}>
                                     Add
                                 </Button>
                             </Col>

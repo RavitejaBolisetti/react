@@ -144,9 +144,9 @@ const AddEditForm = (props) => {
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Gender" name="gender" initialValue={formData?.gender} rules={[validateRequiredSelectField('gender')]}>
                                                     <Select value={null} placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
-                                                        {gender?.map((item) => (
-                                                            <Option key={'ge' + item.key} value={item.key}>
-                                                                {item.name}
+                                                        {appCategoryData.GENDER_CD?.map((item) => (
+                                                            <Option key={'ct' + item.key} value={item.key}>
+                                                                {item.value}
                                                             </Option>
                                                         ))}
                                                     </Select>
@@ -155,9 +155,9 @@ const AddEditForm = (props) => {
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Maritial Status" initialValue={formData?.maritialStatus} name="martialStatus">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('maritial status')} {...disabledProps}>
-                                                        {maritialStatus?.map((item) => (
-                                                            <Option key={'ms' + item.key} value={item.key}>
-                                                                {item.name}
+                                                        {appCategoryData.MARITAL_STATUS?.map((item) => (
+                                                            <Option key={'ct' + item.key} value={item.key}>
+                                                                {item.value}
                                                             </Option>
                                                         ))}
                                                     </Select>
@@ -173,9 +173,9 @@ const AddEditForm = (props) => {
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Occupation" initialValue={formData?.occupation} name="occupation">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('occupation')} {...disabledProps}>
-                                                        {occupation?.map((item) => (
-                                                            <Option key={'occ' + item.key} value={item.key}>
-                                                                {item.name}
+                                                        {appCategoryData.OCC_TYPE?.map((item) => (
+                                                            <Option key={'ct' + item.key} value={item.key}>
+                                                                {item.value}
                                                             </Option>
                                                         ))}
                                                     </Select>
@@ -184,8 +184,10 @@ const AddEditForm = (props) => {
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="Annual Income" initialValue={formData?.annualIncome} name="annualIncome">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
-                                                        {income?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
+                                                        {appCategoryData.ANL_INCM?.map((item) => (
+                                                            <Option key={'ct' + item.key} value={item.key}>
+                                                                {item.value}
+                                                            </Option>
                                                         ))}
                                                     </Select>
                                                 </Form.Item>
@@ -282,7 +284,6 @@ const AddEditForm = (props) => {
                                                                 {item.value}
                                                             </Option>
                                                         ))}
-                                                        
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
