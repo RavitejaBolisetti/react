@@ -4,19 +4,24 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useMemo, useState } from 'react';
-import { customerDetailsDataActions } from 'store/actions/data/customerMaster/customerDetails';
+import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Form } from 'antd';
+
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { PARAM_MASTER } from 'constants/paramMaster';
+import { customerDetailsDataActions } from 'store/actions/data/customerMaster/customerDetails';
 import { showGlobalNotification } from 'store/actions/notification';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { btnVisiblity } from 'utils/btnVisiblity';
-import styles from 'components/common/Common.module.css';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
+import { CustomerFormButton } from '../../CustomerFormButton';
+
+import { btnVisiblity } from 'utils/btnVisiblity';
+
+import { PARAM_MASTER } from 'constants/paramMaster';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -63,10 +68,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyCustomerDetailsMasterBase = (props) => {
-    const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsData, section, fetchConfigList, listConfigShowLoading, fetchList, form, listShowLoading, moduleTitle, typeData, saveData } = props;
+    const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsData, section, fetchConfigList, listConfigShowLoading, fetchList, listShowLoading, moduleTitle, typeData, saveData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
 
-    const [customerDetailsForm] = Form.useForm();
+    const [form] = Form.useForm();
+
     const [customerDetailsList, setCustomerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [customerType, setCustomerType] = useState('Yes');
@@ -86,6 +92,13 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+
+    // const customerMasterBtnProps = {
+    //     buttonData,
+    //     setButtonData,
+    //     formData,
+    //     handleButtonClick
+    // };
 
     useEffect(() => {
         if (userId) {
@@ -129,8 +142,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const onFinish = (values) => {
         const data = { ...values, customerId: 'CUS1686815155017' };
-
-        console.log('Aman', customerDetailsForm.getFieldsValue());
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -193,7 +204,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     ];
 
     const formProps = {
-        form: customerDetailsForm,
+        form,
         onChange,
         buttonData,
         onFinish,
@@ -222,10 +233,25 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         styles,
     };
 
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
+
     return (
         <>
-            <h2>{section?.title}</h2>
-            {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Row gutter={20} className={styles.drawerBodyRight}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <h2>{section?.title}</h2>
+                        {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <CustomerFormButton {...props} />
+                    </Col>
+                </Row>
+            </Form>
         </>
     );
 };

@@ -103,18 +103,10 @@ const CustomerMainConatinerMain = (props) => {
         <>
             <Row gutter={0}>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <LeftSidebar {...myProps} />
-                        </Col>
-                    </Row>
+                    <LeftSidebar {...myProps} />
                 </Col>
-                <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <div className={styles.marginBottom60}>{renderElement()}</div>
-                        </Col>
-                    </Row>
+                <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18} className={styles.drawerRightMainContainer}>
+                    <div className={styles.marginBottom60}>{renderElement()}</div>
                 </Col>
             </Row>
         </>
