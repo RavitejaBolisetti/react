@@ -166,4 +166,4 @@ const SupportingDocumentBase = (props) => {
     );
 };
 
-export const SupportingDocument = connect(mapStateToProps, mapDispatchToProps)(SupportingDocumentBase);
+export const SupportingDocumentMaster = connect(mapStateToProps, mapDispatchToProps)(SupportingDocumentBase);

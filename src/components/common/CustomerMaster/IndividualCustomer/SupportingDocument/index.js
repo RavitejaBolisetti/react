@@ -2,6 +2,6 @@
  *   Copyright (c) 2023 
  *   All rights reserved.
  */
-import { SupportingDocument } from './SupportingDocumentMaster';
+import { SupportingDocumentMaster } from './SupportingDocumentMaster';
 
-export { SupportingDocument };
+export { SupportingDocumentMaster };
