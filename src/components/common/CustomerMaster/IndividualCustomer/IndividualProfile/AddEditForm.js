@@ -1,4 +1,4 @@
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Empty } from 'antd';
+import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Empty, Divider } from 'antd';
 import { useEffect, useState } from 'react';
 import Svg from 'assets/images/Filter.svg';
 
@@ -166,7 +166,7 @@ const AddEditForm = (props) => {
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Anniversary Date" name="weddingAnniversary">
+                                                <Form.Item label=" Wedding Anniversary Date" name="weddingAnniversary">
                                                     <DatePicker className={styles.datepicker} disabled={isReadOnly} />
                                                 </Form.Item>
                                             </Col>
@@ -193,8 +193,8 @@ const AddEditForm = (props) => {
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="PAN" name="panNumber" rules={[validatePanField('pan')]}>
-                                                    <Input value={null} maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
+                                                <Form.Item label="Driving License No" name="drivingLicenseNumber" rules={[validateDrivingLicenseNo('driving license no ')]}>
+                                                    <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('driving license no')} {...disabledProps} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -240,19 +240,11 @@ const AddEditForm = (props) => {
 
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Membership Type" name="membershipType">
-                                                    <Select value={null} placeholder={preparePlaceholderSelect('membership type')} {...disabledProps}>
-                                                        {memberShip?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
-                                                        ))}
-                                                    </Select>
+                                                <Form.Item label="PAN" name="panNumber" rules={[validatePanField('pan')]}>
+                                                    <Input value={null} maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Driving License No" name="drivingLicenseNumber" rules={[validateDrivingLicenseNo('driving license no ')]}>
-                                                    <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('driving license no')} {...disabledProps} />
-                                                </Form.Item>
-                                            </Col>
+
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                 <Form.Item label="GSTIN" name="gstin" rules={[validateGSTIN('gstin')]}>
                                                     <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
@@ -288,8 +280,10 @@ const AddEditForm = (props) => {
                                                 </Form.Item>
                                             </Col>
                                         </Row>
+                                        
                                         {customer === 'fleet' && (
                                             <>
+                                            <Divider/>
                                                 <Row gutter={20}>
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                         <Form.Item label="Business Details" name="businessDetails">
