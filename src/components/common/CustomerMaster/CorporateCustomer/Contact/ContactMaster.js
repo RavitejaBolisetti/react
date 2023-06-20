@@ -5,8 +5,8 @@
  */
 import { ContactDetails } from './../../Common/Contacts';
 
-const ContactMasterMain = ({ isViewModeVisible, toggleButton }) => {
-    return <ContactDetails isViewModeVisible={isViewModeVisible} toggleButton={toggleButton} />;
+const ContactMasterMain = (props) => {
+    return <ContactDetails {...props} />;
 };
 
 export const ContactMaster = ContactMasterMain;

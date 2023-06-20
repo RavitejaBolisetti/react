@@ -1,20 +1,23 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState } from 'react';
-import { ViewCompanyAddressDetails } from './ViewCompanyAddressDetails';
-import { Button, Collapse, Modal, Space, Typography, Row, Col, Checkbox, Divider } from 'antd';
-import { FaRegUserCircle } from 'react-icons/fa';
+import { ViewDetail } from './ViewDetail';
+import { Button, Collapse, Space, Typography, Row, Col, Checkbox, Divider } from 'antd';
 import { BiLockAlt } from 'react-icons/bi';
 import { FiEdit } from 'react-icons/fi';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
-import AddEditForm from './AddEditForm';
+import { AddEditForm } from './AddEditForm';
 import { MarkAsDefaultModal } from './MarkAsDefaultModal';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewAddressList = (props) => {
-    const { form, setShowAddEditForm, showAddEditForm, setAddressData, onFinish, setIsEditing, isEditing, styles, addressData, formData, isViewModeVisible, onCheckClick, index, setEditingData } = props;
-
+    const { form, setShowAddEditForm, showAddEditForm, setAddressData, onFinish, setIsEditing, isEditing, styles, addressData, setEditingData } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,9 +25,6 @@ const ViewAddressList = (props) => {
     const showModal = () => {
         setIsModalOpen(true);
     };
-    // const handleOk = () => {
-    //     setIsModalOpen(false);
-    // };
 
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -42,9 +42,7 @@ const ViewAddressList = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-
     const handleCheckboxChange = (event) => {
-        console.log('event', event);
         event.preventDefault();
         event.stopPropagation();
     };
@@ -56,7 +54,6 @@ const ViewAddressList = (props) => {
         setEditingData(data);
         form.setFieldsValue(data);
     };
-
 
     const detailProps = {
         setShowAddEditForm,
@@ -111,11 +108,7 @@ const ViewAddressList = (props) => {
                                     </Row>
                                 }
                             >
-                                {!isEditing ? (
-                                    <ViewCompanyAddressDetails styles={styles} formData={data} index={i} {...detailProps} />
-                                ) : (
-                                    <AddEditForm {...formProps} />
-                                )}
+                                {!isEditing ? <ViewDetail styles={styles} formData={data} index={i} {...detailProps} /> : <AddEditForm {...formProps} />}
                             </Panel>
                         </Collapse>
                     );
