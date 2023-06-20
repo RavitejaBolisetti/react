@@ -17,7 +17,7 @@ const ProfileDetailCard = (props) => {
                 header={
                     <>
                         <Space direction="vertical">
-                            <Avatar size={80}>JM</Avatar>
+                            <Avatar size={60}>JM</Avatar>
                             <div>
                                 <p>
                                     <span>John Michael</span>
