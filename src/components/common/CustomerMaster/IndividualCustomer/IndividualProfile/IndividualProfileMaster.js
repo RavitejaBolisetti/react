@@ -4,6 +4,9 @@ import { Form } from 'antd';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
+import { PARAM_MASTER } from 'constants/paramMaster';
+
 import { showGlobalNotification } from 'store/actions/notification';
 import { indiviualProfileDataActions } from 'store/actions/data/customerMaster/individual/individualProfile/indiviualProfile';
 
@@ -14,6 +17,7 @@ const mapStateToProps = (state) => {
             CustomerMaster: {
                 IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading: isIndiviualLoading, data: indiviualData = [] },
             },
+            ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, paramdata: appCategoryData = [] },
         },
     } = state;
 
@@ -21,7 +25,8 @@ const mapStateToProps = (state) => {
         userId,
         isIndiviualProfileLoaded,
         isIndiviualLoading,
-
+        isAppCategoryDataLoaded,
+        appCategoryData,
         indiviualData,
     };
     return returnValue;
@@ -34,14 +39,16 @@ const mapDispatchToProps = (dispatch) => ({
             fetchIndiviualList: indiviualProfileDataActions.fetchList,
             listIndiviualShowLoading: indiviualProfileDataActions.listShowLoading,
             saveData: indiviualProfileDataActions.saveData,
-
+            fetchApplicationCategorization: configParamEditActions.fetchList,
+            fetchApplicationSubCategory: configParamEditActions.fetchList,
+            fetchCustomerCategory: configParamEditActions.fetchList,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 const IndividualProfileBase = (props) => {
-    const { userId, fetchIndiviualList, onFieldsChange, listIndiviualShowLoading, isIndiviualProfileLoaded, formActionType, indiviualData, saveData, showGlobalNotification } = props;
+    const { userId, fetchIndiviualList, formData, onFieldsChange, listIndiviualShowLoading, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, isAppCategoryDataLoaded, appCategoryData, isIndiviualProfileLoaded, formActionType, indiviualData, saveData, showGlobalNotification } = props;
     const [indiviualForm] = Form.useForm();
 
     useEffect(() => {
@@ -50,6 +57,13 @@ const IndividualProfileBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isIndiviualProfileLoaded]);
+
+    useEffect(() => {
+        fetchApplicationCategorization({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_CAT.id });
+        fetchApplicationSubCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_SUB_CAT.id });
+        fetchCustomerCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_CAT.id });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isAppCategoryDataLoaded]);
 
     const extraParams = [
         {
@@ -60,8 +74,9 @@ const IndividualProfileBase = (props) => {
         },
     ];
     const onIndiviualFinish = (values) => {
-        console.log(values, 'ssss');
-        let data = { ...values };
+        const recordId = formData?.id || '';
+        const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
+        const data = { ...rest, customerId: 'CUS1686810869696', keyAccountDetails: { customerId: 'CUS1686810869696', accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { customerId: 'CUS1686810869696', personName: values.personName, postion: values.postion, companyName: values.companyName }, id: recordId };
 
         const onSuccess = (res) => {
             indiviualForm.resetFields();
@@ -95,6 +110,8 @@ const IndividualProfileBase = (props) => {
         onFinishFailed,
         props,
         formActionType,
+        formData,
+        appCategoryData,
     };
     return (
         <>

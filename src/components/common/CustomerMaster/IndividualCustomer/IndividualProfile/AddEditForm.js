@@ -18,7 +18,7 @@ const { Text } = Typography;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { formActionType, onIndiviualFinish, individualForm, indiviualData, onFieldsChange, onFinishFailed } = props;
+    const { formActionType, onIndiviualFinish, individualForm, indiviualData, onFieldsChange, formData, onFinishFailed, appCategoryData } = props;
     const { isReadOnly = false } = props;
     const [uploadCustomerForm] = Form.useForm();
 
@@ -137,12 +137,12 @@ const AddEditForm = (props) => {
 
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('date')]}>
+                                                <Form.Item label="Date of Birth" initialValue={formData?.dateOfBirth} name="dateOfBirth" rules={[validateRequiredInputField('date')]}>
                                                     <DatePicker disabled={isReadOnly} className={styles.datepicker} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Gender" name="gender" rules={[validateRequiredSelectField('gender')]}>
+                                                <Form.Item label="Gender" name="gender" initialValue={formData?.gender} rules={[validateRequiredSelectField('gender')]}>
                                                     <Select value={null} placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
                                                         {gender?.map((item) => (
                                                             <Option key={'ge' + item.key} value={item.key}>
@@ -153,7 +153,7 @@ const AddEditForm = (props) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Maritial Status" name="martialStatus">
+                                                <Form.Item label="Maritial Status" initialValue={formData?.maritialStatus} name="martialStatus">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('maritial status')} {...disabledProps}>
                                                         {maritialStatus?.map((item) => (
                                                             <Option key={'ms' + item.key} value={item.key}>
@@ -166,12 +166,12 @@ const AddEditForm = (props) => {
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label=" Wedding Anniversary Date" name="weddingAnniversary">
+                                                <Form.Item label=" Wedding Anniversary Date" initialValue={formData?.weddingAnniversary} name="weddingAnniversary">
                                                     <DatePicker className={styles.datepicker} disabled={isReadOnly} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Occupation" name="occupation">
+                                                <Form.Item label="Occupation" initialValue={formData?.occupation} name="occupation">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('occupation')} {...disabledProps}>
                                                         {occupation?.map((item) => (
                                                             <Option key={'occ' + item.key} value={item.key}>
@@ -182,7 +182,7 @@ const AddEditForm = (props) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Annual Income" name="annualIncome">
+                                                <Form.Item label="Annual Income" initialValue={formData?.annualIncome} name="annualIncome">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
                                                         {income?.map((item) => (
                                                             <Option value={item.key}>{item.name}</Option>
@@ -193,24 +193,24 @@ const AddEditForm = (props) => {
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Driving License No" name="drivingLicenseNumber" rules={[validateDrivingLicenseNo('driving license no ')]}>
+                                                <Form.Item label="Driving License No" name="drivingLicenseNumber" initialValue={formData?.drivingLicenseNo} rules={[validateDrivingLicenseNo('driving license no ')]}>
                                                     <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('driving license no')} {...disabledProps} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Aadhar No." name="adharNumber" rules={[validateAadhar('aadhar')]}>
+                                                <Form.Item label="Aadhar No." name="adharNumber" initialValue={formData?.adharNumber} rules={[validateAadhar('aadhar')]}>
                                                     <Input value={null} maxLength={12} className={styles.inputBox} placeholder={preparePlaceholderText('aadhar number')} {...disabledProps} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Voter ID" name="voterid" rules={[validateVoterId('voter id')]}>
+                                                <Form.Item label="Voter ID" name="voterId" initialValue={formData?.voterId} rules={[validateVoterId('voter id')]}>
                                                     <Input value={null} maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('voter id')} {...disabledProps} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Vehicle Used" name="vehicleUsed">
+                                                <Form.Item label="Vehicle Used" initialValue={formData?.vehicleUsed} name="vehicleUsed">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('vehicle used')} {...disabledProps}>
                                                         {vehicle?.map((item) => (
                                                             <Option value={item.key}>{item.name}</Option>
@@ -219,7 +219,7 @@ const AddEditForm = (props) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Mother Tongue" name="preferredLanguage">
+                                                <Form.Item label="Mother Tongue" initialValue={formData?.preferredLamguage} name="preferredLanguage">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('mother tongue')} {...disabledProps}>
                                                         {tongue?.map((item) => (
                                                             <Option value={item.key}>{item.name}</Option>
@@ -228,7 +228,7 @@ const AddEditForm = (props) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Religion" name="religion">
+                                                <Form.Item label="Religion" initialValue={formData?.religion} name="religion">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('religion')} {...disabledProps}>
                                                         {religion?.map((item) => (
                                                             <Option value={item.key}>{item.name}</Option>
@@ -240,70 +240,77 @@ const AddEditForm = (props) => {
 
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="PAN" name="panNumber" rules={[validatePanField('pan')]}>
+                                                <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField('pan')]}>
                                                     <Input value={null} maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="GSTIN" name="gstin" rules={[validateGSTIN('gstin')]}>
+                                                <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin')]}>
                                                     <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Usage/Application Categorization" name="applicationCategorization">
+                                                <Form.Item label="Usage/Application Categorization" initialValue={formData?.applicationcategorization} name="applicationCategorization">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('usage/application category')} {...disabledProps}>
-                                                        {applicationCategory?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
+                                                        {appCategoryData.APP_CAT?.map((item) => (
+                                                            <Option key={'ct' + item.key} value={item.key}>
+                                                                {item.value}
+                                                            </Option>
                                                         ))}
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Usage/Application Sub-Category" name="applicationSubCategory">
+                                                <Form.Item label="Usage/Application Sub-Category" initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
-                                                        {applicationSubCategory?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
+                                                        {appCategoryData.APP_SUB_CAT?.map((item) => (
+                                                            <Option key={'ct' + item.key} value={item.key}>
+                                                                {item.value}
+                                                            </Option>
                                                         ))}
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Customer Category" name="customerCategory">
+                                                <Form.Item label="Customer Category" initialValue={formData?.customerCategory} name="customerCategory">
                                                     <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps} onChange={onCustomerCategoryChange}>
-                                                        {customerCategory?.map((item) => (
-                                                            <Option value={item.key}>{item.name}</Option>
+                                                        {appCategoryData.CUS_CAT?.map((item) => (
+                                                            <Option key={'ct' + item.key} value={item.key}>
+                                                                {item.value}
+                                                            </Option>
                                                         ))}
+                                                        
                                                     </Select>
                                                 </Form.Item>
                                             </Col>
                                         </Row>
-                                        
+
                                         {customer === 'fleet' && (
                                             <>
-                                            <Divider/>
+                                                <Divider />
                                                 <Row gutter={20}>
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="Business Details" name="businessDetails">
+                                                        <Form.Item label="Business Details" initialValue={formData?.businessDetails} name="businessDetails">
                                                             <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('business details')} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="Vehicle Deployment Details" name="vechileDeploymentDetails">
+                                                        <Form.Item label="Vehicle Deployment Details" initialValue={formData?.vehicleDeploymentDetails} name="vechileDeploymentDetails">
                                                             <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('vehicle deployment details')} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="Key Role Details" name="keyRoleDetails">
+                                                        <Form.Item label="Key Role Details" initialValue={formData?.keyRoleDetails} name="keyRoleDetails">
                                                             <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('key role details')} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                        <Form.Item label="Major Route Details" name="majorRouteDetails">
+                                                        <Form.Item label="Major Route Details" initialValue={formData?.majorRouteDetails} name="majorRouteDetails">
                                                             <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('major route details')} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
@@ -335,38 +342,38 @@ const AddEditForm = (props) => {
                                     >
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="M1-MMFSL" name="mmfsl">
+                                                <Form.Item label="M1-MMFSL" initialValue={formData?.mmfsl} name="mmfsl">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Facebook Link" name="facebookLink">
+                                                <Form.Item label="Facebook Link" initialValue={formData?.facebookLink} name="facebookLink">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Twitter Link" name="twitterLink">
+                                                <Form.Item label="Twitter Link" initialValue={formData?.twitterLink} name="twitterLink">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Instagram Link" name="instagramLink">
+                                                <Form.Item label="Instagram Link" initialValue={formData?.instagramLink} name="instagramLink">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Youtube Channel" name="youtubeChannelLink">
+                                                <Form.Item label="Youtube Channel" initialValue={formData?.youtubeChannelLink} name="youtubeChannelLink">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Team BHP Link" name="teamBhpLink">
+                                                <Form.Item label="Team BHP Link" initialValue={formData?.teamBhpLink} name="teamBhpLink">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
                                                 </Form.Item>
                                             </Col>
@@ -449,26 +456,26 @@ const AddEditForm = (props) => {
                                     >
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Name of Person" name="personName">
+                                                <Form.Item label="Name of Person" initialValue={formData?.personName} name="personName">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter name of person')} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Position" name="position">
+                                                <Form.Item label="Position" initialValue={formData?.position} name="position">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter position')} />
                                                 </Form.Item>
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Company Name" name="companyName">
+                                                <Form.Item label="Company Name" initialValue={formData?.companyName} name="companyName">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Enter company name')} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                <Form.Item label="Remarks" name="remarks">
+                                                <Form.Item label="Remarks" initialValue={formData?.remarks} name="remarks">
                                                     <TextArea placeholder={preparePlaceholderText('remarks')} showCount maxLength={100} autoSize={{ minRows: 1, maxRows: 1 }} />
                                                 </Form.Item>
                                             </Col>
