@@ -191,20 +191,6 @@ export const AccountRelatedBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
     return (
-        // <>
-        //     {!formActionType?.viewMode ? (
-        //         <Space direction="vertical" size="small" style={{ display: 'flex' }}>
-        //             <Card style={{ backgroundColor: '#F2F2F2' }}>
-        //                 <AddEditForm {...formProps} />
-        //             </Card>
-        //         </Space>
-        //     ) : (
-        //         <Card style={{ backgroundColor: '#F2F2F2' }}>
-        //             <ViewDetail {...viewProps} />
-        //         </Card>
-        //     )}
-        // </>
-
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
