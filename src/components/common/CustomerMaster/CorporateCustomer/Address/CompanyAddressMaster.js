@@ -20,7 +20,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const CompanyAddressMasterBase = (props) => {
-    const { section, isViewModeVisible, toggleButton } = props;
+    const { section, isViewModeVisible } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
 
     const [form] = Form.useForm();
@@ -35,9 +35,7 @@ const CompanyAddressMasterBase = (props) => {
     };
 
     const onFinish = (value) => {
-        console.log('onSave ', value, 'isEditing', isEditing);
         if (isEditing) {
-            console.log(' isEditing block');
             setAddressData((prev) => {
                 let formData = [...prev];
                 formData?.forEach((address) => {
@@ -46,7 +44,6 @@ const CompanyAddressMasterBase = (props) => {
                     }
                 });
                 const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode && el?.defaultaddress === editingData?.defaultaddress);
-                console.log('index', index);
                 formData.splice(index, 1, { ...value });
                 return [...formData];
             });
