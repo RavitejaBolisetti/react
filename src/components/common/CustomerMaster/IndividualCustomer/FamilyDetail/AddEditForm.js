@@ -47,7 +47,6 @@ const AddEditFormMain = (props) => {
     };
 
     const onEdit = (values) => {
-        console.log(values, 'EDIT VALUES ');
         setEditedMode(true);
         setCustomerType(false);
         familyForm.setFieldsValue({
@@ -148,10 +147,6 @@ const AddEditFormMain = (props) => {
             ) : (
                 <ViewDetail {...viewProps} />
             )}
-
-            <Button onClick={() => onFamilyFinish()} type="primary">
-                Submit
-            </Button>
         </>
     );
 };

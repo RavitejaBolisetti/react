@@ -54,13 +54,13 @@ const CustomerMainConatinerMain = (props) => {
                         return <IndividualContactMaster {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.FAMILY_DETAILS.id: {
-                        return <IndividualFamilyDetailMaster />;
+                        return <IndividualFamilyDetailMaster {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.ACCOUNT_RELATED.id: {
                         return <IndividualAccountRelatedMaster {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.SUPPORTING_DOCUMENT.id: {
-                        return <IndividualSupportingDocument />;
+                        return <IndividualSupportingDocument {...myProps} />;
                     }
                     default: {
                         return <IndivisualCustomerDetailMaster {...myProps} />;
@@ -76,7 +76,7 @@ const CustomerMainConatinerMain = (props) => {
                         return <CorporateCompanyProfileMaster {...myProps} />;
                     }
                     case CUSTOMER_CORPORATE_SECTION?.ADDRESS.id: {
-                        return <CorporateCompanyAddressMaster />;
+                        return <CorporateCompanyAddressMaster {...myProps} />;
                     }
                     case CUSTOMER_CORPORATE_SECTION?.CONTACTS.id: {
                         return <CorporateContactMaster {...myProps} />;

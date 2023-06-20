@@ -18,7 +18,7 @@ const { Option } = Select;
 const { TextArea, Search } = Input;
 
 const FormBase = (props) => {
-    const { customerType, onSave, onFamilyFinish, onFinishFailed, familyForm, onChange, editedId, relationData, onSearch } = props;
+    const { customerType, onSave, form, onChange, editedId, relationData, onSearch } = props;
 
     const type = [
         { name: 'Yes', key: 'Yes', value: 'Yes' },
@@ -35,13 +35,13 @@ const FormBase = (props) => {
     const onDateChange = (prop) => {
         let dateString = dayjs(prop).format('YYYY-MM-DD');
         let calAge1 = GetAge(dateString);
-        familyForm.setFieldsValue({
+        form.setFieldsValue({
             relationAge: calAge1,
         });
     };
 
     const getRelationCode = (props) => {
-        familyForm.setFieldsValue({
+        form.setFieldsValue({
             relationCode: props,
         });
     };
@@ -51,7 +51,7 @@ const FormBase = (props) => {
     };
 
     return (
-        <Form form={familyForm} id="familyForm" autoComplete="off" layout="vertical" onFinish={onFamilyFinish} onFinishFailed={onFinishFailed} style={{ background: 'transparent' }}>
+        <>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={'Yes'} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
@@ -128,18 +128,19 @@ const FormBase = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
+            <Row gutter={20}>
+                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                    <Form.Item initialValue={editedId} label="Generated ID" name="editedId" />
+                </Col>
 
-            <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                <Form.Item initialValue={editedId} label="Generated ID" name="editedId" />
-            </Col>
+                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                    <Form.Item initialValue={props?.id ? props?.id : null} label="ID" name="id" />
+                </Col>
 
-            <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                <Form.Item initialValue={props?.id ? props?.id : null} label="ID" name="id" />
-            </Col>
-
-            <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                <Form.Item initialValue={'CUS1686811036620'} label="Customer Id" name="customerId" />
-            </Col>
+                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                    <Form.Item initialValue={'CUS1686811036620'} label="Customer Id" name="customerId" />
+                </Col>
+            </Row>
 
             <Row style={{ display: 'flex' }}>
                 <Button type="primary" onClick={() => onSave(props)}>
@@ -150,7 +151,7 @@ const FormBase = (props) => {
                     Reset
                 </Button>
             </Row>
-        </Form>
+        </>
     );
 };
 
