@@ -11,18 +11,21 @@ const { Panel } = Collapse;
 const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={13} /> : <SlArrowDown size={13} />);
 
 const ProfileDetailCard = (props) => {
+    const { selectedCustomer } = props;
+    const fullName = selectedCustomer?.customerName.split('');
+    const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon}>
             <Panel
                 header={
                     <>
                         <Space direction="vertical">
-                            <Avatar size={60}>JM</Avatar>
+                            <Avatar size={60}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
                                 <p>
-                                    <span>John Michael</span>
+                                    <span>{selectedCustomer?.customerName}</span>
                                 </p>
-                                <p>4962946</p>
+                                <p>{selectedCustomer?.customerId}</p>
                             </div>
                         </Space>
                     </>
@@ -30,10 +33,10 @@ const ProfileDetailCard = (props) => {
                 key={1}
             >
                 <p>
-                    Customer Type: <span>Corporate</span>
+                    Customer Type: <span>{selectedCustomer?.customerType}</span>
                 </p>
                 <p>
-                    Mobile No.: <span>9893473843</span>
+                    Mobile No.: <span>{selectedCustomer?.mobileNumber}</span>
                 </p>
             </Panel>
         </Collapse>

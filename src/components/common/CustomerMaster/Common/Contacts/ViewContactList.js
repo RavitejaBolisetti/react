@@ -1,3 +1,7 @@
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 import React, { useState } from 'react';
 import { ViewDetail } from './ViewContactDetails';
 import { Collapse, Space, Typography, Row, Col, Checkbox, Divider, Button } from 'antd';
@@ -7,9 +11,9 @@ import { FiEdit } from 'react-icons/fi';
 const { Panel } = Collapse;
 const { Text } = Typography;
 
-const ViewContactList = (formProps) => {
-    const { styles, contactData, deleteContactHandeler, onCheckClick, setEditingData } = formProps;
-    const { setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, isEditing, setIsEditing } = formProps;
+const ViewContactList = (props) => {
+    const { styles, contactData, deleteContactHandeler, onCheckClick, setEditingData, typeData } = props;
+    const { setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, isEditing, setIsEditing } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
 
@@ -35,6 +39,7 @@ const ViewContactList = (formProps) => {
         setIsEditing,
         deleteContactHandeler,
         editContactHandeler,
+        typeData,
     };
 
     return (
