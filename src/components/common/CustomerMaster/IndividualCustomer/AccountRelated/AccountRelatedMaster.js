@@ -1,21 +1,22 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Space, Form, Card } from 'antd';
 
-import { bindActionCreators } from 'redux';
-
 import { indivisualAccountsRelatedDataActions } from 'store/actions/data/customerMaster/indivisualAccountRelated';
-
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
 import { showGlobalNotification } from 'store/actions/notification';
 
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
 
 import styles from 'components/common/Common.module.css';
 
-import { ViewDetail } from '../../IndividualCustomer/AccountRelated/ViewIndividualAccountDetails';
-
+import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 
 const mapStateToProps = (state) => {
@@ -54,7 +55,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const AccountRelatedBase = (props) => {
+export const AccountRelatedMasterBase = (props) => {
     const { saveData, fetchList, userId, listShowLoading, isViewModeVisible, isLoaded, data, showGlobalNotification, moduleTitle } = props;
 
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -209,4 +210,4 @@ export const AccountRelatedBase = (props) => {
     );
 };
 
-export const IndividualAccountRelatedMaster = connect(mapStateToProps, mapDispatchToProps)(AccountRelatedBase);
+export const AccountRelatedMaster = connect(mapStateToProps, mapDispatchToProps)(AccountRelatedMasterBase);

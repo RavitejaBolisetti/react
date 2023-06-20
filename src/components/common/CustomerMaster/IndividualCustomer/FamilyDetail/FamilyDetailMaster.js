@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -49,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const FamilyDetailsBase = (props) => {
+const FamilyDetailMasterBase = (props) => {
     const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, fetchFamilyDetailSaveList } = props;
     const [familyForm] = Form.useForm();
     const [familyDetailList, setFamilyDetailsList] = useState([]);
@@ -85,7 +90,7 @@ const FamilyDetailsBase = (props) => {
             value: searchValue,
             name: 'customerId',
         },
-    ]; 
+    ];
 
     const onChange = (value) => {
         setCustomerType(value);
@@ -98,8 +103,8 @@ const FamilyDetailsBase = (props) => {
 
     const onSave = () => {
         let values = familyForm.getFieldsValue();
-        let relationship = relationData?.find(element => element?.key === values?.relationCode);
-        setFamilyDetailsList((items) => [ { ...values,relationship:relationship?.value, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth },...items,]);
+        let relationship = relationData?.find((element) => element?.key === values?.relationCode);
+        setFamilyDetailsList((items) => [{ ...values, relationship: relationship?.value, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
 
         if (editedMode) {
             const upd_obj = familyDetailList?.map((obj) => {
@@ -132,20 +137,20 @@ const FamilyDetailsBase = (props) => {
         let data = [...familyDetailList];
         //let data = [{ customerId: 'CUS1686811036620', customerName: 'English Boy', dateOfBirth: '2002-12-12', editedId: 9, id: '', mnmCustomer: 'No', relationAge: '8', relationCode: 'C', relationCustomerId: '', remarks: 'Double' }];
         // let editData = [
-            // {
-            //     id: '3486c5c7-1e03-42cd-9e91-94444cfe59c9',
-            //     mnmCustomer: 'No',
-            //     customerId: 'CUS1686811036620',
-            //     relationCustomerId: '',
-            //     customerName: 'AMan X',
-            //     // relationship: 'No Relation',
-            //     relationCode: 'BH',
-            //     dateOfBirth: '2002-12-12',
-            //     relationAge: '20',
-            //     remarks: 'ff',
-            //     activeIndicator: true,
-            //     editedId: 0,
-            // },
+        // {
+        //     id: '3486c5c7-1e03-42cd-9e91-94444cfe59c9',
+        //     mnmCustomer: 'No',
+        //     customerId: 'CUS1686811036620',
+        //     relationCustomerId: '',
+        //     customerName: 'AMan X',
+        //     // relationship: 'No Relation',
+        //     relationCode: 'BH',
+        //     dateOfBirth: '2002-12-12',
+        //     relationAge: '20',
+        //     remarks: 'ff',
+        //     activeIndicator: true,
+        //     editedId: 0,
+        // },
         // ];
         const onSuccess = (res) => {
             familyForm.resetFields();
@@ -204,4 +209,4 @@ const FamilyDetailsBase = (props) => {
     return <AddEditForm {...formProps} />;
 };
 
-export const FamilyDetails = connect(mapStateToProps, mapDispatchToProps)(FamilyDetailsBase);
+export const FamilyDetailMaster = connect(mapStateToProps, mapDispatchToProps)(FamilyDetailMasterBase);

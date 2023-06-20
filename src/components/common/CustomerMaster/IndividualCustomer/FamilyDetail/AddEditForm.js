@@ -1,11 +1,18 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState } from 'react';
-import { Collapse, Space, Card, Typography, Button, Divider, Form } from 'antd';
-import styles from 'components/common/Common.module.css';
+import { Collapse, Space, Card, Typography, Button, Divider } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { ViewDetail } from './ViewFamilyDetails';
+import { ViewDetail } from './ViewDetail';
 import { FiEdit } from 'react-icons/fi';
 import { FormContainer } from './FormContainer';
 import dayjs from 'dayjs';
+
+import styles from 'components/common/Common.module.css';
+
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {

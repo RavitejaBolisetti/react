@@ -5,7 +5,6 @@
  */
 
 import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button } from 'antd';
-
 import { FaRegUserCircle } from 'react-icons/fa';
 
 import { validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';

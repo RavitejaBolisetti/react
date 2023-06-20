@@ -1,7 +1,12 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
-import { Space, Collapse, Typography, Descriptions, Divider } from 'antd';
+import { Space, Collapse, Typography, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { FaRegUserCircle } from 'react-icons/fa';
+
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
@@ -65,7 +70,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="PAN">{formData?.panNumber}</Descriptions.Item>
                             <Descriptions.Item label="GSTIN">{formData?.gstinNumber}</Descriptions.Item>
                         </Descriptions>
-                        {/* <Divider /> */}
+
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Usage/Application Categorization">{CompanyForm?.categorization}</Descriptions.Item>
                             <Descriptions.Item label="Usage/Application Sub-Category">{CompanyForm?.category}</Descriptions.Item>

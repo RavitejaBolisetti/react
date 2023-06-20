@@ -3,5 +3,10 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { AccountRelatedMaster } from './AccountRelatedMaster';
-export { AccountRelatedMaster };
+import { ContactDetails } from '../../Common';
+
+const ContactMaster = ({ isViewModeVisible, toggleButton }) => {
+    return <ContactDetails isViewModeVisible={isViewModeVisible} toggleButton={toggleButton} />;
+};
+
+export default ContactMaster;

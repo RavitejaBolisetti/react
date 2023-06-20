@@ -1,9 +1,13 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState } from 'react';
 
 import { Collapse, Divider, Form, Space, Typography, Button } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { FaRegUserCircle } from 'react-icons/fa'
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 
@@ -32,7 +36,7 @@ const { Text } = Typography;
 //     },
 // ];
 
-const IndividualAddressMasterBase = ({ isViewModeVisible, toggleButton, props }) => {
+const AddressMasterBase = ({ isViewModeVisible, toggleButton, props }) => {
     const [form] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -47,19 +51,19 @@ const IndividualAddressMasterBase = ({ isViewModeVisible, toggleButton, props })
     const onFinish = (value) => {
         console.log('onSave ', value, 'isEditing', isEditing);
         if (isEditing) {
-            console.log(' isEditing block')
+            console.log(' isEditing block');
             setAddressData((prev) => {
                 let formData = [...prev];
                 // if (value?.defaultaddress && formData?.length > 1) {
-                    formData?.forEach((contact) => {
-                        if (contact?.defaultaddress === true) {
-                            contact.defaultaddress = false;
-                        }
-                    });
-                    const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode);
-                    console.log("index", index)
-                    formData.splice(index, 1, { ...value });
-                    return [...formData];
+                formData?.forEach((contact) => {
+                    if (contact?.defaultaddress === true) {
+                        contact.defaultaddress = false;
+                    }
+                });
+                const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode);
+                console.log('index', index);
+                formData.splice(index, 1, { ...value });
+                return [...formData];
                 // } else {
                 //     return [...prev, { ...value }];
                 // }
@@ -92,7 +96,6 @@ const IndividualAddressMasterBase = ({ isViewModeVisible, toggleButton, props })
         setOpenAccordian('1');
     };
 
-
     const formProps = {
         setShowAddEditForm,
         showAddEditForm,
@@ -123,7 +126,6 @@ const IndividualAddressMasterBase = ({ isViewModeVisible, toggleButton, props })
                     </>
                 }
                 key="1"
-
             >
                 {(showAddEditForm || !addressData?.length > 0) && <AddEditForm {...formProps} />}
                 <ViewAddressList {...formProps} />
@@ -132,4 +134,4 @@ const IndividualAddressMasterBase = ({ isViewModeVisible, toggleButton, props })
     );
 };
 
-export const IndividualAddressMaster = IndividualAddressMasterBase;
+export const AddressMaster = AddressMasterBase;

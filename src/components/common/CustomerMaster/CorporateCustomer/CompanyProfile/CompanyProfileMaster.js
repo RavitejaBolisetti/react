@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
 import { showGlobalNotification } from 'store/actions/notification';
-import { ViewDetail } from './ViewDetails';
+import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 
@@ -173,4 +173,4 @@ const CompanyProfileBase = (props) => {
     );
 };
 
-export const CompanyProfile = connect(mapStateToProps, mapDispatchToProps)(CompanyProfileBase);
+export const CompanyProfileMaster = connect(mapStateToProps, mapDispatchToProps)(CompanyProfileBase);

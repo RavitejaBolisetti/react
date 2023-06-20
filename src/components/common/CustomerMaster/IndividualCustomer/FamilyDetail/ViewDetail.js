@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { Descriptions, Card, Space } from 'antd';
 import dayjs from 'dayjs';
@@ -12,7 +17,7 @@ const ViewDetailBase = (props) => {
         column: { xxl: 3, xl: 3, lg: 3, md: 2, sm: 1, xs: 1 },
     };
 
-    console.log(props,'CHECKING')
+    console.log(props, 'CHECKING');
 
     return (
         <div>
@@ -27,9 +32,7 @@ const ViewDetailBase = (props) => {
 
                         <Descriptions.Item label="Relationship">{props?.relationship}</Descriptions.Item>
 
-                        <Descriptions.Item label="Date of Birth">
-                            {typeof props?.dateOfBirth === 'object' ?  dayjs(props?.dateOfBirth).format('YYYY-MM-DD') : props?.dateOfBirth}
-                        </Descriptions.Item>
+                        <Descriptions.Item label="Date of Birth">{typeof props?.dateOfBirth === 'object' ? dayjs(props?.dateOfBirth).format('YYYY-MM-DD') : props?.dateOfBirth}</Descriptions.Item>
 
                         <Descriptions.Item label="Age">{props?.relationAge}</Descriptions.Item>
                         <Descriptions.Item label="" />
