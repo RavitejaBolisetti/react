@@ -12,42 +12,69 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 const { Text } = Typography;
 
-const ContactMain = ({ isViewModeVisible, formActionType }) => {
+const ContactMain = ({ isViewModeVisible, toggleButton }) => {
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [editingData, setEditingData] = useState({});
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-    const onFinish = (value) => {
-        form.validateFields()
-            .then((data) => console.log('data', data))
-            .catch((error) => console.error(error));
+    console.log('isEditing', isEditing);
 
-        setContactData((prev) => {
-            let formData = [...prev];
-            if (value?.defaultaddress && formData?.length >= 1) {
-                formData?.forEach((contact) => {
-                    if (contact?.defaultaddress === true) {
-                        contact.defaultaddress = false;
-                    }
-                });
-                return [...formData, value];
-            } else {
-                return [...prev, { ...value }];
-            }
-        });
+    const onFinish = (value) => {
+        console.log('onSave ', value, 'isEditing', isEditing);
+        if (isEditing) {
+            console.log(' isEditing block')
+            setContactData((prev) => {
+                let formData = [...prev];
+                // if (value?.defaultaddress && formData?.length > 1) {
+                    formData?.forEach((contact) => {
+                        if (contact?.defaultaddress === true) {
+                            contact.defaultaddress = false;
+                        }
+                    });
+                    const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
+                    console.log("index", index)
+                    formData.splice(index, 1, { ...value });
+                    return [...formData];
+                // } else {
+                //     return [...prev, { ...value }];
+                // }
+            });
+        } else {
+            setContactData((prev) => {
+                let formData = [...prev];
+                if (value?.defaultaddress && formData?.length >= 1) {
+                    formData?.forEach((contact) => {
+                        if (contact?.defaultaddress === true) {
+                            contact.defaultaddress = false;
+                        }
+                    });
+                    return [...formData, value];
+                } else {
+                    return [...prev, { ...value }];
+                }
+            });
+        }
         setShowAddEditForm(false);
         setIsEditing(false);
+        setEditingData({});
+        form.resetFieldsValue();
     };
 
     const deleteContactHandeler = (data) => {
         console.log('delete Data', data);
-        // setContactData()
+        setContactData((prev) => {
+            const updatedList = [...prev];
+            const index = prev?.findIndex((el) => el?.contactMobileNumber === data?.contactMobileNumber && el?.contactNameFirstName === data?.contactNameFirstName);
+            updatedList.splice(index, 1);
+            return [...updatedList];
+        });
     };
 
     const addBtnContactHandeler = (e) => {
@@ -68,6 +95,8 @@ const ContactMain = ({ isViewModeVisible, formActionType }) => {
         isEditing,
         setIsEditing,
         deleteContactHandeler,
+        isViewModeVisible,
+        setEditingData,
     };
 
     return (
@@ -76,9 +105,8 @@ const ContactMain = ({ isViewModeVisible, formActionType }) => {
                 <Panel
                     header={
                         <Space>
-                            <FaRegUserCircle className={styles.userCircle} />
-                            <Text strong> Individual Contact</Text>
-                            {formActionType?.viewMode && (
+                            <Text strong> {toggleButton === 'Individual' ? 'Individual Contact' : 'Company Contact'}</Text>
+                            {!isViewModeVisible && (
                                 <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary">
                                     Add Contact
                                 </Button>
@@ -87,7 +115,7 @@ const ContactMain = ({ isViewModeVisible, formActionType }) => {
                     }
                     key="1"
                 >
-                    {(showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />}
+                    {!isViewModeVisible && (showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />}
                     <ViewContactList {...formProps} />
                 </Panel>
             </Collapse>

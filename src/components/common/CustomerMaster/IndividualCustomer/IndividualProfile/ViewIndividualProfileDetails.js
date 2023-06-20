@@ -3,6 +3,7 @@ import { Space, Collapse, Typography, Descriptions, Divider, Row, Col } from 'an
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FaRegUserCircle } from 'react-icons/fa';
 import Svg from 'assets/images/Filter.svg';
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -64,7 +65,7 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Collapse
                     expandIcon={() => {

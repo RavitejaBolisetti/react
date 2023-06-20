@@ -23,6 +23,34 @@ export const PARAM_MASTER = {
         id: 'PIN_CATG',
         title: 'PIN_CATG',
     },
+    CUST_FILES: {
+        id: 'CUST_FILES',
+        title: 'CUST_FILES',
+    },
+    FAMLY_RELTN: {
+        id: 'FAMLY_RELTN',
+        title: 'FAMLY_RELTN',
+    },
+    CUST_MST: {
+        id: 'CUST_MST',
+        title: 'CUST_MST',
+    },
+    TITLE: {
+        id: 'TITLE',
+        title: 'TITLE',
+    },
+    CUST_APP_CAT: {
+        id: 'APP_CAT',
+        title: 'APP_CAT',
+    },
+    CUST_APP_SUB_CAT: {
+        id: 'APP_SUB_CAT',
+        title: 'APP_SUB_CAT',
+    },
+    CUST_CAT: {
+        id: 'CUS_CAT',
+        title: 'CUS_CAT',
+    },
     PRC_TYP: {
         id: 'PRC_TYP',
         title: 'Price Type',

@@ -22,10 +22,8 @@ const FormBase = (props) => {
 
     let age;
     const onDateChange = (prop) => {
-        console.log(prop, 'DOB');
         age = 2023 - prop?.$y;
     };
-
 
     return (
         <Form form={familyForm} id="familyForm" autoComplete="off" layout="vertical" onFinish={onFamilyFinish} onFinishFailed={onFinishFailed} style={{ background: 'transparent' }}>

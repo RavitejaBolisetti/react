@@ -14,7 +14,7 @@ export default function AdvanceFilter(props) {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                            <Col xs={24} sm={24} md={5} lg={5} xl={5}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                     <Button className={styles.marR5} type={toggleButton === 'Individual' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Individual')}>
                                         Individual
@@ -24,7 +24,7 @@ export default function AdvanceFilter(props) {
                                     </Button>
                                 </div>
                             </Col>
-                            <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                 <div className={styles.selectSearchBg}>
                                     <Select className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter" allowClear>
                                         {showDealersDataList?.map((item) => (
@@ -34,7 +34,7 @@ export default function AdvanceFilter(props) {
                                     <Search placeholder="Search" value={DealerSearchvalue} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} className={styles.headerSearchField} />
                                 </div>
                             </Col>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.advanceFilterClear}>
+                            <Col xs={24} sm={24} md={7} lg={7} xl={7} className={styles.advanceFilterClear}>
                                 <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleAdd({ buttonAction: FROM_ACTION_TYPE?.ADD, record: '' })}>
                                     Add
                                 </Button>

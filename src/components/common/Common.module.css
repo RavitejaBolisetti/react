@@ -372,7 +372,7 @@
 
 .inputBox {
     border-radius: 4px;
-    height: 36px;
+    height: 36px !important;
 }
 
 .treemenu {
@@ -1527,6 +1527,8 @@
     color: #0B0B0C;
 }
 
+
+
 .drawerBodyRight :global .ant-steps {
     display: inline;
     line-height: 0px;
@@ -1708,10 +1710,10 @@
     line-height: 24px;
 }
 
-.drawerBodyRight :global .ant-input {
+/* .drawerBodyRight :global .ant-input {
     height: 36px;
     border-radius: 4px;
-}
+} */
 
 .drawerBodyRight :global .ant-input-disabled,
 .drawerBodyRight :global .ant-input[disabled],
