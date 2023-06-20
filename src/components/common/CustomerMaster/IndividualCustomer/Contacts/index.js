@@ -1,2 +1,2 @@
-import { IndividualContact } from './ContactMaster';
+import IndividualContact from './ContactMaster';
 export { IndividualContact };

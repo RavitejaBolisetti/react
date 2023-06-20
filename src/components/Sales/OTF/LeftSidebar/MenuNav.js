@@ -12,8 +12,8 @@ const MenuNav = (props) => {
         setCurrentSection(key);
     };
 
-    const timeLineItem = Object.values(OTF_SECTION)?.map((i) => ({ dot: i.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />, children: <p onClick={() => onHandle(i.id)}>{i.title}</p> }));
-    return <Timeline items={timeLineItem} />;
+    const items = Object.values(OTF_SECTION)?.map((i) => ({ dot: i.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />, children: <p onClick={() => onHandle(i.id)}>{i.title}</p> }));
+    return <Timeline items={items} />;
 };
 
 export default MenuNav;

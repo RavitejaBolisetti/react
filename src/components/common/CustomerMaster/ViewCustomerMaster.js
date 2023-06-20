@@ -15,7 +15,7 @@ const ViewCustomerMasterMain = ({ formData, styles, DealerSearchvalue, handleCol
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={styles.viewDrawerContainer}>
             <>
                 <Descriptions {...viewProps}>
                     {/* <Descriptions.Item label="Role ID">{formData?.roleId}</Descriptions.Item>
