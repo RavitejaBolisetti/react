@@ -166,7 +166,7 @@ const CompanyProfileBase = (props) => {
     const viewProps = {
         onCloseAction,
         styles,
-        customerProfileData,
+        formData: customerProfileData,
     };
 
     const handleFormValueChange = () => {
@@ -179,7 +179,7 @@ const CompanyProfileBase = (props) => {
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.box}>
                         <h2>{section?.title}</h2>
-                        {!formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                        {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                     </Col>
                 </Row>
                 <Row>
