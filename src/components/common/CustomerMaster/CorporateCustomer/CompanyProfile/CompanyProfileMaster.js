@@ -73,7 +73,7 @@ const CompanyProfileBase = (props) => {
 
     const [form] = Form.useForm();
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [customerType, setCustomerType] = useState('Yes');
+
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
@@ -107,10 +107,6 @@ const CompanyProfileBase = (props) => {
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
         setIsFormVisible(true);
-    };
-
-    const onChange = (value) => {
-        setCustomerType(value);
     };
 
     const onFinish = (values) => {
@@ -160,7 +156,6 @@ const CompanyProfileBase = (props) => {
     const formProps = {
         handleButtonClick,
         buttonData,
-        onChange,
         onFinish,
         formActionType,
         appCategoryData,
@@ -169,7 +164,6 @@ const CompanyProfileBase = (props) => {
     };
 
     const viewProps = {
-        onChange,
         onCloseAction,
         styles,
         customerProfileData,
