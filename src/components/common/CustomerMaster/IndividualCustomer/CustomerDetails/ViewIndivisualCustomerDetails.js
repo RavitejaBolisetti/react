@@ -14,24 +14,9 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-    const customerForm = {
-        mobileNumber: '8707023991',
-        customerType: 'Individual',
-        title: 'Mr.',
-        firstName: 'Arvind',
-        middleName: 'Pal',
-        lastName: 'Singh',
-        emailId: 'pal.arvind@gmail.com',
-        contactedOverWhatsapp: true,
-        useMobileNumber: 'false',
-        whatsappNumber: '8707023991',
-        corporateType: 'Non-Listed',
-        corporateCategory: 'C1',
-        corporateName: 'ABC',
-        membershipType: 'Gold',
-    };
-
+    console.log(formData,'FORMDATA');
     return (
+        
         <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Card
@@ -57,9 +42,9 @@ const ViewDetailMain = (props) => {
                                 <span className={styles.nameSpacing}></span>
                                 {formData?.firstName}
                                 <span className={styles.nameSpacing}></span>
-                                {formData.middleName}
+                                {formData?.middleName}
                                 <span className={styles.nameSpacing}></span>
-                                {formData.lastName}
+                                {formData?.lastName}
                             </div>
                         </Card>
                         <br />

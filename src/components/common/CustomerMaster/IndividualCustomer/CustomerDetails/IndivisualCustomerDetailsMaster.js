@@ -9,14 +9,15 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
-
+import { corporateLovDataActions } from 'store/actions/data/customerMaster/corporateLov';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             CustomerMaster: {
-                CustomerDetailsIndividual:{isLoaded: isDataLoaded = false, isLoading,  data: customerDetailsIndividualData = []  }
+                CustomerDetailsIndividual:{isLoaded: isDataLoaded = false, isLoading,  data: customerDetailsIndividualData = []  },
+                CorporateLov: {isLoaded: isCorporateLovDataLoaded = false, isloading: isCorporateLovLoading, data: corporateLovData = []}
             },
             ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isTypeDataLoading, paramdata: typeData = [] },
         },
@@ -34,6 +35,10 @@ let returnValue = {
     isLoading,
     customerDetailsIndividualData,
     typeData: typeData,
+
+    isCorporateLovDataLoaded,
+    isCorporateLovLoading,
+    corporateLovData,
 };
 return returnValue;
 };
@@ -43,6 +48,9 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchConfigList: configParamEditActions.fetchList,
             listConfigShowLoading: configParamEditActions.listShowLoading,
+
+            fetchCorporateLovList: corporateLovDataActions.fetchList,
+            listCorporateLovShowLoading: corporateLovDataActions.listShowLoading,
 
             fetchList: customerDetailsIndividualDataActions.fetchList,
             listShowLoading: customerDetailsIndividualDataActions.listShowLoading,
@@ -58,7 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 const IndivisualCustomerDetailsMasterBase = (props) => {
-    const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsIndividualData, typeData, saveData, fetchConfigList, listConfigShowLoading, fetchList, listShowLoading, moduleTitle } = props;
+    const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsIndividualData, typeData, saveData, fetchConfigList, listConfigShowLoading, fetchList, listShowLoading, moduleTitle, fetchCorporateLovList, isCorporateLovLoading, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
     const [form] = Form.useForm();
     const [customerDetailsList, setCustomerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -80,6 +88,7 @@ const IndivisualCustomerDetailsMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
    
     const selectedCustomer = 'CUS1686812277115';
+
 
     const extraParams = [
         {
@@ -109,6 +118,9 @@ const IndivisualCustomerDetailsMasterBase = (props) => {
                 console.log('api call');
                 fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
             }
+            if (userId && !isCorporateLovDataLoaded) {
+                fetchCorporateLovList({ setIsLoading: listCorporateLovShowLoading, userId });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded]);
@@ -135,9 +147,11 @@ const IndivisualCustomerDetailsMasterBase = (props) => {
         record && setFormData(record);
         setIsFormVisible(true);
     };
+    
 
     const onFinish = (values) => {
-        const data = { ...values, customerId: 'CUS1686815155017' };
+       console.log(formData,'FORMDATA')
+        const data = { ...values, customerId: 'CUS1686812277115' };
 
         console.log(form.getFieldValue(), 'Aman ');
 
@@ -170,6 +184,7 @@ const IndivisualCustomerDetailsMasterBase = (props) => {
 
         console.log(requestData, 'Aman');
         saveData(requestData);
+        console.log('buttonClick',buttonData)
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -191,7 +206,7 @@ const IndivisualCustomerDetailsMasterBase = (props) => {
             return 'Add ';
         }
     }, [formActionType]);
-
+    console.log(formData,'FORMDATA222');
     const formProps = {
         formActionType,
         formData,
@@ -206,6 +221,7 @@ const IndivisualCustomerDetailsMasterBase = (props) => {
         handleButtonClick,
         customerDetailsList,
         showForm,
+        fetchCorporateLovList,
         setShowForm,
         customerType,
         editedMode,
