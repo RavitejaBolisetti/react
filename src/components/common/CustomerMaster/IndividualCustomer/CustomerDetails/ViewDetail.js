@@ -2,16 +2,17 @@
  *   Copyright (c) 2023 
  *   All rights reserved.
  */
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 import React from 'react';
 import { Space, Typography, Descriptions, Card, Divider, Col, Row, Button } from 'antd';
 import { FaRegUserCircle } from 'react-icons/fa';
-import styles from 'components/common/Common.module.css';
-import { NameChangeHistory } from './NameChangeHistory';
 import { BiTimeFive } from 'react-icons/bi';
 
 
 const { Text } = Typography;
-
 const ViewDetailMain = (props) => {
     const { styles, formData } = props;
     const viewProps = {
@@ -83,4 +84,4 @@ const ViewDetailMain = (props) => {
     );
 };
 
-export const ViewIndivisualCustomerDetails = ViewDetailMain;
+export const ViewDetail = ViewDetailMain;

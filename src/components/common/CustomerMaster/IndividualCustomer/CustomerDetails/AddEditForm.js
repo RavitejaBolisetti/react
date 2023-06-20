@@ -2,6 +2,11 @@
  *   Copyright (c) 2023 
  *   All rights reserved.
  */
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 
 import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Empty, message } from 'antd';
 
@@ -11,7 +16,6 @@ import { CheckOutlined } from '@ant-design/icons';
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { ViewIndivisualCustomerDetails } from './ViewIndivisualCustomerDetails';
 
 import styles from 'components/common/Common.module.css';
 import { useState } from 'react';
@@ -20,7 +24,7 @@ import { FiTrash } from 'react-icons/fi';
 import { BiLockAlt, BiTimeFive } from 'react-icons/bi';
 import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
 import { NameChangeHistory } from './NameChangeHistory';
-import { isVisible } from '@testing-library/user-event/dist/utils';
+import { ViewDetail } from './ViewDetail';
 
 
 const { Text } = Typography;
@@ -122,7 +126,7 @@ const AddEditFormMain = (props) => {
     return (
         <Form id="form" onFinish={onFinish} form={form} autoComplete="off" layout="vertical" onFieldsChange={handleFormFieldChange} onValuesChange={handleFormValueChange} onFinishFailed={onFinishFailed}>
             {viewMode ? (
-                <ViewIndivisualCustomerDetails {...viewProps} />
+                <ViewDetail {...viewProps} />
             ) : (
                 <>
                     <Row gutter={20}>
