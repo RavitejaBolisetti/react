@@ -135,7 +135,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="GSTIN" initialValue={formData?.gstin} name="gstin" rules={[validateGSTIN('gstin'), validateRequiredInputField('panNumber')]}>
+                                        <Form.Item label="GSTIN" initialValue={formData?.gstinNumber} name="gstin" rules={[validateGSTIN('gstin'), validateRequiredInputField('panNumber')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('GSTIN')} />
                                         </Form.Item>
                                     </Col>
@@ -230,7 +230,7 @@ const AddEditFormMain = (props) => {
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="M1-MMFSL" initialValue={formData?.mmfsl} name="mmfsl">
+                                        <Form.Item label="M1-MMFSL" initialValue={formData?.m1mmfsl} name="mmfsl">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
                                         </Form.Item>
                                     </Col>
