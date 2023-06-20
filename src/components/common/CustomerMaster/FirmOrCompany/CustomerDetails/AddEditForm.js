@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import { Col, Input, Form, Row, Select, Space, Divider, Card, Button } from 'antd';
 import { validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -31,7 +36,7 @@ const AddEditFormMain = (props) => {
         <>
             {!formActionType?.viewMode ? (
                 <>
-                    <Row gutter={20} className={styles.drawerBodyRight1}>
+                    <Row gutter={20} className={styles.drawerBodyRight}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Space style={{ display: 'flex' }} size="middle" direction="vertical">
                                 <Card

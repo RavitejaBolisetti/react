@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
 
@@ -16,9 +21,9 @@ import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import { DrawerFormButton } from '../Button';
 
-const AddEditFormMain = (props) => {
+const CustomerMainConatinerMain = (props) => {
     const { onCloseAction, formData } = props;
-    const { isViewModeVisible, setIsViewModeVisible, formActionType } = props;
+    const { isViewModeVisible, setIsViewModeVisible, formActionType, buttonData, setButtonData } = props;
     const { customerType, setCustomerType } = props;
     const [currentSection, setCurrentSection] = useState(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id);
     const [section, setSection] = useState();
@@ -48,16 +53,18 @@ const AddEditFormMain = (props) => {
         currentSection,
         customerType,
         setCustomerType,
+        formActionType,
+        buttonData,
     };
 
-    const [buttonData, setbuttonData] = useState({
-        closeBtn: true,
-        saveBtn: true,
-    });
+    // const [buttonData, setbuttonData] = useState({
+    //     closeBtn: true,
+    //     saveBtn: true,
+    // });
     const handleButtonClick = ({ buttonAction, record }) => {};
     const customerMasterBtnProps = {
         buttonData,
-        setbuttonData,
+        setButtonData,
         onCloseAction,
         isViewModeVisible,
         formActionType,
@@ -150,9 +157,9 @@ const AddEditFormMain = (props) => {
                             <h2>{section?.title}</h2>
                             <div className={styles.marginBottom60}>{renderElement()}</div>
                         </Col>
-                        {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <DrawerFormButton {...customerMasterBtnProps} />
-                        </Col> */}
+                        </Col>
                     </Row>
                 </Col>
             </Row>
@@ -160,4 +167,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, { width: '90%', footer: null });
+export const CustomerMainConatiner = withDrawer(CustomerMainConatinerMain, { width: '90%', footer: null });

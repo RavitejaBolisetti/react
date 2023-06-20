@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useEffect, useMemo, useState } from 'react';
 import { AddEditForm } from './AddEditForm';
 import { bindActionCreators } from 'redux';
@@ -10,32 +15,31 @@ import { customerDetailsIndividualDataActions } from 'store/actions/data/custome
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
 
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             CustomerMaster: {
-                CustomerDetailsIndividual:{isLoaded: isDataLoaded = false, isLoading,  data: customerDetailsIndividualData = []  }
+                CustomerDetailsIndividual: { isLoaded: isDataLoaded = false, isLoading, data: customerDetailsIndividualData = [] },
             },
             ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isTypeDataLoading, paramdata: typeData = [] },
         },
     } = state;
-    console.log(state,'CSSTATE');
+
     const moduleTitle = 'Customer Details';
 
-let returnValue = {
-    userId,
-    isTypeDataLoaded,
-    isTypeDataLoading,
-    moduleTitle,
+    let returnValue = {
+        userId,
+        isTypeDataLoaded,
+        isTypeDataLoading,
+        moduleTitle,
 
-    isDataLoaded,
-    isLoading,
-    customerDetailsIndividualData,
-    typeData: typeData,
-};
-return returnValue;
+        isDataLoaded,
+        isLoading,
+        customerDetailsIndividualData,
+        typeData: typeData,
+    };
+    return returnValue;
 };
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
@@ -49,13 +53,10 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: customerDetailsIndividualDataActions.saveData,
             resetData: customerDetailsIndividualDataActions.reset,
             showGlobalNotification,
-
         },
         dispatch
     ),
 });
-
-
 
 const IndivisualCustomerDetailsMasterBase = (props) => {
     const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsIndividualData, typeData, saveData, fetchConfigList, listConfigShowLoading, fetchList, listShowLoading, moduleTitle } = props;
@@ -73,12 +74,10 @@ const IndivisualCustomerDetailsMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [showDataLoading, setShowDataLoading] = useState(true);
-;
-
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-   
+
     const selectedCustomer = 'CUS1686812277115';
 
     const extraParams = [
@@ -106,12 +105,12 @@ const IndivisualCustomerDetailsMasterBase = (props) => {
         }
         if (userId) {
             if (!isDataLoaded && !isLoading && userId) {
-                console.log('api call');
                 fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded]);
+
     useEffect(() => {
         if (typeData) {
             setConfigurableTypedata({ CUST_TYPE: typeData['CUST_TYPE'], CORP_TYPE: typeData['CORP_TYPE'], CORP_CATE: typeData['CORP_CATE'], TITLE: typeData['TITLE'], MEM_TYPE: typeData['MEM_TYPE'] });
