@@ -16,8 +16,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
-
-import { ViewDetail } from './ViewDetail';
+import { GetAge } from 'utils/getAge'
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 
@@ -75,8 +74,8 @@ const FamilyDetailMasterBase = (props) => {
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
 
     const [form] = Form.useForm();
-    const [formData, setFormData] = useState([]);
-    const [activeKey, setactiveKey] = useState([null]);
+    // const [formData, setFormData] = useState([]);
+    // const [activeKey, setactiveKey] = useState([null]);
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [customerType, setCustomerType] = useState('Yes');
@@ -123,10 +122,10 @@ const FamilyDetailMasterBase = (props) => {
     useEffect(() => {
         fetchFamilySearchList({ setIsLoading: listFamilySearchLoading, userId, extraParams: searchParams });
         form.setFieldsValue({
-            relationCustomerId: familySearchData?.customerId,
+            //relationCustomerId: familySearchData?.customerId,
             customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
             dateOfBirth: dayjs(familySearchData?.dateOfBirth),
-            relationAge: familySearchData?.relationAge,
+            relationAge: GetAge(familySearchData?.dateOfBirth),
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue]);
@@ -142,10 +141,10 @@ const FamilyDetailMasterBase = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
-        setFormData([]);
+        // setFormData([]);
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        record && setFormData(record);
+        // record && setFormData(record);
     };
 
     const onSave = () => {

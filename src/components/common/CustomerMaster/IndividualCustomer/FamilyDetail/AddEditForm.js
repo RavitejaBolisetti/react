@@ -16,7 +16,7 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onFamilyFinish, onFinishFailed, familyForm, onChange, showForm, setShowForm, setCustomerType, relationData, editedId, setEditedId } = props;
+    const { onFinish, onFinishFailed, form, onChange, showForm, setShowForm, setCustomerType, relationData, editedId, setEditedId } = props;
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode, onSearch } = props;
     const [activeKey, setactiveKey] = useState([null]);
 
@@ -43,13 +43,13 @@ const AddEditFormMain = (props) => {
         setShowForm(true);
         setCustomerType('Yes');
         setEditedId(() => editedId + 1);
-        familyForm.resetFields();
+        form.resetFields();
     };
 
     const onEdit = (values) => {
         setEditedMode(true);
         setCustomerType(false);
-        familyForm.setFieldsValue({
+        form.setFieldsValue({
             mnmCustomer: values?.mnmCustomer,
             customerId: values?.customerId,
             customerName: values?.customerName,
@@ -73,9 +73,9 @@ const AddEditFormMain = (props) => {
     };
 
     const formProps = {
-        onFamilyFinish,
+        onFinish,
         onFinishFailed,
-        familyForm,
+        form,
         onChange,
         editedMode,
         onSave,

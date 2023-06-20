@@ -80,7 +80,7 @@ const FormBase = (props) => {
                 {!customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
-                            <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear disabled={customer} onChange={getRelationCode}>
+                            <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear onChange={getRelationCode}>
                                 {relationData?.map((item) => (
                                     <Option key={'rel' + item?.key} value={item.value}>
                                         {item?.value}
@@ -96,7 +96,7 @@ const FormBase = (props) => {
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
-                            <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear disabled={customer} onChange={getRelationCode}>
+                            <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear onChange={getRelationCode}>
                                 {relationData?.map((item) => (
                                     <Option key={'rel' + item?.key} value={item.key}>
                                         {item?.value}
@@ -138,7 +138,7 @@ const FormBase = (props) => {
                 </Col>
 
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item initialValue={'CUS1686811036620'} label="Customer Id" name="customerId" />
+                    <Form.Item label="Customer Id" name="customerId" />
                 </Col>
             </Row>
 
@@ -148,7 +148,7 @@ const FormBase = (props) => {
                 </Button>
 
                 <Button type="primary" style={{ margin: '0 0 0 1rem' }}>
-                    Reset
+                    Cancel
                 </Button>
             </Row>
         </>
