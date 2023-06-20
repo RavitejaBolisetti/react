@@ -81,7 +81,8 @@ const FamilyDetailMasterBase = (props) => {
     const [customerType, setCustomerType] = useState('Yes');
     const [editedMode, setEditedMode] = useState(false);
     const [editedId, setEditedId] = useState(0);
-    const [searchValue, setSearchValue] = useState('CUS1686811036620');
+    const [searchValue, setSearchValue] = useState(null);
+    const [ middleWare, setMiddleWare ] = useState(true);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -121,12 +122,7 @@ const FamilyDetailMasterBase = (props) => {
 
     useEffect(() => {
         fetchFamilySearchList({ setIsLoading: listFamilySearchLoading, userId, extraParams: searchParams });
-        form.setFieldsValue({
-            //relationCustomerId: familySearchData?.customerId,
-            customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
-            dateOfBirth: dayjs(familySearchData?.dateOfBirth),
-            relationAge: GetAge(familySearchData?.dateOfBirth),
-        });
+        setMiddleWare( () => !middleWare )
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue]);
 
@@ -136,7 +132,7 @@ const FamilyDetailMasterBase = (props) => {
 
     const onSearch = (value) => {
         console.log(value, 'OnSearchValue');
-        setSearchValue(value);
+        // setMiddleWare(value);
     };
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
@@ -215,6 +211,16 @@ const FamilyDetailMasterBase = (props) => {
         setEditedId(() => familyData?.length);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [familyData]);
+
+    useEffect(() => {
+        form.setFieldsValue({
+            //relationCustomerId: familySearchData?.customerId,
+            customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
+            dateOfBirth: dayjs(familySearchData?.dateOfBirth),
+            relationAge: GetAge(familySearchData?.dateOfBirth),
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [middleWare]);    
 
     const formProps = {
         form,
