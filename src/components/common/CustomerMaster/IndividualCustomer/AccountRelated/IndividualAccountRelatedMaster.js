@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            CUSTOMERMASTER: {
+            CustomerMaster: {
                 IndivisualAccounts: { isLoaded = false, isLoading, data },
             },
         },

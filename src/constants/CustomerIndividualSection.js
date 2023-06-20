@@ -17,7 +17,7 @@ export const CUSTOMER_INDIVIDUAL_SECTION = {
     },
     FAMILY_DETAILS: {
         id: 5,
-        title: 'Account Related',
+        title: 'Family Details',
     },
     ACCOUNT_RELATED: {
         id: 6,

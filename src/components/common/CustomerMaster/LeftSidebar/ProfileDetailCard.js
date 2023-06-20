@@ -1,5 +1,5 @@
 import React from 'react';
-import { Collapse, Space } from 'antd';
+import { Collapse, Space, Avatar } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 
 const { Panel } = Collapse;
@@ -12,12 +12,13 @@ const ProfileDetailCard = (props) => {
                 header={
                     <>
                         <Space direction="vertical">
-                            <p>
-                                Name - <span>John Michael</span>
-                            </p>
-                            <p>
-                                <span>4962946</span>
-                            </p>
+                            <Avatar size={80}>JM</Avatar>
+                            <div>
+                                <p>
+                                    <span>John Michael</span>
+                                </p>
+                                <p>4962946</p>
+                            </div>
                         </Space>
                     </>
                 }
