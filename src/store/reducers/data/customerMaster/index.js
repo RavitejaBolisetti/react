@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { IndiviualProfile } from './individual/indiviualProfile';
 import { FamilyDetails } from './individual/familyDetails';
-
+import { FamilyDetailSearch } from './individual/familyDetailSearch';
 import { CorporateAccounts } from './corporateAccountRelated';
 import { IndivisualAccounts } from './indivisualAccountRelated';
 
@@ -14,6 +14,7 @@ export const CustomerMaster = combineReducers({
     CustomerDetails,
     CustomerDetailsIndividual,
     FamilyDetails,
+    FamilyDetailSearch,
     CorporateAccounts,
     IndivisualAccounts,
     CorporateLov,

@@ -1,3 +1,6 @@
+import dayjs from 'dayjs';
+import { GetAge } from './getAge'
+
 export const validateRequiredInputField = (fieldName, lowercase = true) => ({
     required: true,
     message: 'Please enter ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
@@ -182,3 +185,14 @@ export const validateVoterId = (fieldName) => ({
     pattern: /^([a-zA-Z]){3}\d{7}$/,
     mesage: 'Please enter valid ' + fieldName,
 });
+
+export const ageGreator18 = (value) => {
+    let dateString = dayjs(value).format('YYYY-MM-DD');
+    let calAge = GetAge(dateString);
+
+    if (calAge < 16) {
+        return Promise.reject('your age should be 16 or greater');
+    } else {
+        return Promise.resolve('');
+    }
+};
