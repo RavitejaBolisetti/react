@@ -1514,8 +1514,8 @@
 
 .drawerBodyRight {
     padding: 20px;
-    height: calc(100vh - 60px);
-    max-height: calc(100vh - 60px);
+    height: calc(100vh - 120px);
+    max-height: calc(100vh - 120px);
     overflow: hidden;
     overflow-y: overlay;
 }

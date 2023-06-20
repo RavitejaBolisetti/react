@@ -146,13 +146,13 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                     <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.drawerBodyRight}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <h2>{section?.title}</h2>
                             <div className={styles.marginBottom60}>{renderElement()}</div>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <DrawerFormButton {...customerMasterBtnProps} />
-                        </Col>
+                        </Col> */}
                     </Row>
                 </Col>
             </Row>
