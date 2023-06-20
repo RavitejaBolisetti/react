@@ -84,6 +84,9 @@ const CustomerMainConatinerMain = (props) => {
                     case CUSTOMER_CORPORATE_SECTION?.ACCOUNT_RELATED.id: {
                         return <CorporateAccountRelatedMaster {...myProps} />;
                     }
+                    case CUSTOMER_CORPORATE_SECTION?.SUPPORTING_DOCUMENT.id: {
+                        return <IndividualSupportingDocument {...myProps} />;
+                    }
                     default: {
                         return <CorporateCustomerDetailMaster {...myProps} />;
                     }
