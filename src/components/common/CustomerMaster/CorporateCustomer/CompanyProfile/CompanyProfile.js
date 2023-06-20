@@ -173,13 +173,14 @@ const CompanyProfileBase = (props) => {
         formActionType,
         appCategoryData,
         styles,
+        formData,
     };
 
     const viewProps = {
         onChange,
         onCloseAction,
         styles,
-        formData
+        formData,
     };
 
     const handleFormValueChange = () => {

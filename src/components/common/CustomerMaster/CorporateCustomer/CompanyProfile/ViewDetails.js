@@ -124,13 +124,13 @@ const ViewDetailMain = (props) => {
                         }
                         key="3"
                     >
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Account Code">{formData?.keyAccountDetails.accountCode}</Descriptions.Item>
-                            <Descriptions.Item label="Account Name">{formData?.keyAccountDetails.accountName}</Descriptions.Item>
-                            <Descriptions.Item label="Account Segment">{formData?.keyAccountDetails.accountSegment}</Descriptions.Item>
-                            <Descriptions.Item label="Account Client Name">{formData?.keyAccountDetails.accountClientName}</Descriptions.Item>
-                            <Descriptions.Item label="Account Mapping Data">{formData?.keyAccountDetails.mappingData}</Descriptions.Item>
-                        </Descriptions>
+                        {/* <Descriptions {...viewProps}>
+                            <Descriptions.Item label="Account Code">{formData?.keyAccountDetails[0].accountCode}</Descriptions.Item>
+                            <Descriptions.Item label="Account Name">{formData?.keyAccountDetails[0].accountName}</Descriptions.Item>
+                            <Descriptions.Item label="Account Segment">{formData?.keyAccountDetails[0].accountSegment}</Descriptions.Item>
+                            <Descriptions.Item label="Account Client Name">{formData?.keyAccountDetails[0].accountClientName}</Descriptions.Item>
+                            <Descriptions.Item label="Account Mapping Date">{formData?.keyAccountDetails[0].accountMappingDate}</Descriptions.Item>
+                        </Descriptions> */}
                     </Panel>
                 </Collapse>
 
@@ -156,12 +156,12 @@ const ViewDetailMain = (props) => {
                         }
                         key="4"
                     >
-                        <Descriptions {...viewProps}>
+                        {/* <Descriptions {...viewProps}>
                             <Descriptions.Item label="Name Of Person">{formData?.authorityDetails[0].personName}</Descriptions.Item>
                             <Descriptions.Item label="Position">{formData?.authorityDetails[0].postion}</Descriptions.Item>
                             <Descriptions.Item label="Company Name">{formData?.authorityDetails[0].companyName}</Descriptions.Item>
                             <Descriptions.Item label="Remarks">{formData?.authorityDetails[0].remarks}</Descriptions.Item>
-                        </Descriptions>
+                        </Descriptions> */}
                     </Panel>
                 </Collapse>
                 <Collapse
