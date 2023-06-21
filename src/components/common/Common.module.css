@@ -327,7 +327,8 @@
 }
 
 .uploadDragger :global .ant-upload-wrapper .ant-upload-drag {
-    border: 1px dashed rgba(52, 44, 44, 0.53);
+    border: 1px dashed #B5B5B5;
+    margin-bottom: 12px;
 }
 
 .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
@@ -353,6 +354,10 @@
 .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon,
 .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon:hover {
     color: black;
+}
+
+.contactDivider {
+    margin-bottom: 12px !important;
 }
 
 .drawerFooterButtons button {
@@ -1859,7 +1864,13 @@
     margin-bottom: 0;
 }
 
-.drawerBodyRight :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-divider-horizontal {
+/* .drawerBodyRight :global .ant-collapse .ant-collapse-item-active .ant-collapse-header-text .ant-btn-primary {
+    color: #B5B5B6;
+    background-color: #E6E6E6;
+    box-shadow: 0 2px 0 rgba(255, 5, 5, 0.06);
+} */
+
+.drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-divider-horizontal {
     margin-top: 0;
     margin-bottom: 20px;
 }
