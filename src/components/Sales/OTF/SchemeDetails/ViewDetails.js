@@ -71,7 +71,6 @@ const ViewDetailMain = (props) => {
                             }
                             key={schemeForm?.id}
                         >
-                            <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Scheme Type">{schemeForm?.schemeType}</Descriptions.Item>
                                 <Descriptions.Item label="Scheme Category">{schemeForm?.schemeCategory}</Descriptions.Item>

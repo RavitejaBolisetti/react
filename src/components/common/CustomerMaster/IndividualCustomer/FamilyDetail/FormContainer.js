@@ -15,10 +15,10 @@ import dayjs from 'dayjs';
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
-const { TextArea, Search } = Input;
+const { TextArea } = Input;
 
 const FormBase = (props) => {
-    const { customerType, onSave, form, onChange, editedId, relationData, onSearch } = props;
+    const { customerType, onSave, form, onChange, editedId, relationData, onSearch,isSearchLoading } = props;
 
     const type = [
         { name: 'Yes', key: 'Yes', value: 'Yes' },
@@ -67,7 +67,7 @@ const FormBase = (props) => {
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={null} label="Customer Id" name="relationCustomerId">
-                            <Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton />
+                            <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading}/>
                         </Form.Item>
                     </Col>
                 ) : null}
@@ -98,7 +98,7 @@ const FormBase = (props) => {
                         <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
                             <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear onChange={getRelationCode}>
                                 {relationData?.map((item) => (
-                                    <Option key={'rel' + item?.key} value={item.key}>
+                                    <Option key={'rel' + item?.key} value={item.value}>
                                         {item?.value}
                                     </Option>
                                 ))}

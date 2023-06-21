@@ -16,8 +16,8 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onFinish, onFinishFailed, form, onChange, showForm, setShowForm, setCustomerType, relationData, editedId, setEditedId } = props;
-    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode, onSearch } = props;
+    const { onFinish, onFinishFailed, form, onChange, showForm, setShowForm, setCustomerType, relationData, editedId, setEditedId,listFamilySearchLoading } = props;
+    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode, onSearch, isSearchLoading } = props;
     const [activeKey, setactiveKey] = useState([null]);
 
     const handleEdit = () => {
@@ -83,6 +83,7 @@ const AddEditFormMain = (props) => {
         relationData,
         editedId,
         onSearch,
+        isSearchLoading,
     };
 
     return (
