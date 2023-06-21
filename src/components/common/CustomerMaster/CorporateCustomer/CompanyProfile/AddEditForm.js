@@ -12,6 +12,8 @@ import style from 'components/common/Common.module.css';
 import styles from 'components/Auth/Auth.module.css';
 
 import Svg from 'assets/images/Filter.svg';
+import { FiEye, FiTrash } from 'react-icons/fi';
+
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -26,7 +28,8 @@ const { Text } = Typography;
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 
 const AddEditFormMain = (props) => {
-    const { appCategoryData, formData, form } = props;
+    const { appCategoryData, listShowLoading, userId, formData, form } = props;
+    const { uploadListShowLoading, uploadFile, setUploadedFile } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -63,25 +66,55 @@ const AddEditFormMain = (props) => {
         console.log('values', values);
     };
 
-    const handleCategoryChange = (value) => {
-        setCustomerCategory(value);
+    const onDrop = (e) => {
+        console.log('Dropped files', e.dataTransfer.files);
     };
 
     const uploadProps = {
-        name: 'file',
-        multiple: false,
-        action: '',
-        progress: { strokeWidth: 10 },
-        success: { percent: 100 },
-        onChange(info) {
+        showUploadList: {
+            showRemoveIcon: true,
+            showDownloadIcon: true,
+            previewIcon: <FiEye onClick={(e) => console.log(e, 'custom removeIcon event')} />,
+            removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
+            showProgress: true,
+        },
+        progress: { strokeWidth: 3, showInfo: true },
+
+        onDrop,
+        onChange: (info, event) => {
             const { status } = info.file;
 
-            if (status === 'done') {
+            if (status === 'uploading') {
+            } else if (status === 'done') {
+                setUploadedFile(info?.file?.response?.docId);
                 message.success(`${info.file.name} file uploaded successfully.`);
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }
         },
+    };
+
+    const handleUpload = (options) => {
+        const { file, onSuccess, onError } = options;
+
+        const data = new FormData();
+        data.append('applicationId', 'app');
+        data.append('file', file);
+
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: uploadListShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        uploadFile(requestData);
+    };
+
+    const handleCategoryChange = (value) => {
+        setCustomerCategory(value);
     };
 
     return (
@@ -214,7 +247,7 @@ const AddEditFormMain = (props) => {
                                                     Social Profiles
                                                 </Text>
                                             </div>
-                                        </div>{' '}
+                                        </div>
                                     </>
                                 }
                             >
@@ -377,7 +410,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.uploadContainer}>
-                                        <Dragger {...uploadProps}>
+                                        <Dragger customRequest={handleUpload} {...uploadProps}>
                                             <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
                                                 <img src={Svg} alt="" />
                                             </p>

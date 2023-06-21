@@ -6,7 +6,6 @@
 
 import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Empty, message } from 'antd';
 
-import { FaRegUserCircle } from 'react-icons/fa';
 import { CheckOutlined } from '@ant-design/icons';
 
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -19,19 +18,17 @@ import { FiTrash } from 'react-icons/fi';
 import { BiLockAlt, BiTimeFive } from 'react-icons/bi';
 import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
 import { NameChangeHistory } from './NameChangeHistory';
-import { ViewDetail } from './ViewDetail';
 
 const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, isHtmltype, onFinish, configurableTypedata, formData, corporateLovData ,formActionType} = props;
+    const { form, configurableTypedata, formData, corporateLovData, formActionType } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
-    const [mobileField, setMobileField] = useState(false);
-    const [whatsappField, setWhatsappField] = useState(false);
+    const[corporateType, setCorporateType] = useState();
     const Random = () => {
         return;
     };
@@ -43,10 +40,6 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-
-    const handleWhatsappToggle = () => {
-        setWhatsappField(mobileField)
-    }
 
     const handleToggle = () => {
         setIsEnabled(!isEnabled);
@@ -72,6 +65,21 @@ const AddEditFormMain = (props) => {
         setIsModalOpen(false);
         setmobileLoader(false);
     };
+    const handleCorporateChange = (value) => {
+        setCorporateType(value);
+    };
+    const copyWhatsNo = (props) =>{
+        if(props){
+            let number = form.getFieldsValue();
+            form.setFieldsValue({
+                whatsAppNumber : number?.mobileNumber,
+            })
+        } else {
+            form.setFieldsValue({
+                whatsAppNumber : null,
+            })
+        }
+    }
     const modalProps = {
         isVisible: isModalOpen,
         icon: <BiLockAlt />,
@@ -85,6 +93,7 @@ const AddEditFormMain = (props) => {
         showDownloadIcon: true,
         previewIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
     };
+
     const uploadProps = {
         name: 'file',
         multiple: false,
@@ -94,7 +103,6 @@ const AddEditFormMain = (props) => {
 
         onChange(info) {
             const { status } = info.file;
-
             if (status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully.`);
             } else if (status === 'error') {
@@ -121,10 +129,9 @@ const AddEditFormMain = (props) => {
                             <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
                                 <Input
                                     placeholder={preparePlaceholderText('mobile number')}
+                                    onChange={handleNumberValidation}
                                     maxLength={10}
-                                    onChange={(e) => setMobileField(e.target.value, handleNumberValidation)}
                                     size="small"
-                                    value={mobileField}
                                     suffix={
                                         <>
                                             {false ? (
@@ -240,14 +247,14 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Want to use Mobile no as whatsapp no?" initialValue={formData?.contactAsMobileOnWhatApp} name="contactAsMobileOnWhatApp" data-testid="useMobileNumber">
-                                <Switch checkedChildren="Yes" unCheckedChildren="No" onClick={handleWhatsappToggle} onChange={(checked) => (checked ? 1 : 0)} />
+                                <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={copyWhatsNo} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Whatsapp Number" initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsappNumber" rules={[validateMobileNoField('whatsapp number')]}>
-                                <Input value={whatsappField} onChange={(e, checked) => setWhatsappField(e.target.value, checked ? 1 : 0)} placeholder={preparePlaceholderText('whatsapp number')} disabled={!isEnabled} />
+                                <Input onChange={(checked) => (checked ? 1 : 0)} placeholder={preparePlaceholderText('whatsapp number')} disabled={!isEnabled} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -255,25 +262,35 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Corporate Type" initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType">
-                                <Select placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']} allowClear></Select>
+                                <Select placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']} onChange={handleCorporateChange} allowClear></Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                    {corporateLovData?.map((item) => (
-                                        <Option key={item?.key} value={item?.key}>
-                                            {item?.key}
-                                        </Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code">
-                                <Input placeholder={preparePlaceholderText('parent company name')} disabled />
-                            </Form.Item>
-                        </Col>
+                        {corporateType === 'LIS' ? (
+                            <>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                                        <Select disabled={false} loading={false} placeholder="Select" allowClear>
+                                            {corporateLovData?.map((item) => (
+                                                <Option key={'lv' + item?.key} value={item?.key}>
+                                                    {item?.value}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code">
+                                        <Input placeholder={preparePlaceholderText('parent company name')} disabled />
+                                    </Form.Item>
+                                </Col>
+                            </>
+                        ) : (
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                                    <Input placeholder={preparePlaceholderText('corporate name')} />
+                                </Form.Item>
+                            </Col>
+                        )}
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Corporate Category" initialValue={formData?.corporateCategory} name="corporateCategory" data-testid="corporateCategory">
                                 <Select disabled={false} loading={false} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_CATE']} allowClear></Select>
