@@ -133,4 +133,6 @@ export const BASE_URL_INDIVIUAL_PROFILE_CUSTOMER_MASTER = BASE_URL + 'customers/
 
 export const BASE_URL_CUSTOMER_MASTER_ACCOUNTS_RELATED_CORPORATE = BASE_URL + 'customers/corporate/accounts';
 export const BASE_URL_CUSTOMER_MASTER_ACCOUNTS_RELATED_INDIVISUAL = BASE_URL + 'customers/individual/accounts';
-export const BASE_URL_INDIVIDUAL_NAME_CHANGE_HISTORY = BASE_URL + 'customers/individual/name/changehistory;';
+
+export const BASE_URL_OTF_SEARCH_LIST = BASE_URL_OTF + 'search';
+export const BASE_URL_INDIVIDUAL_NAME_CHANGE_HISTORY = BASE_URL + 'customers/individual/name/changehistory';

@@ -120,6 +120,10 @@ export const PARAM_MASTER = {
         id: 'REF',
         title: 'Referral',
     },
+    OTF_SER: {
+        id: 'OTF_SER',
+        title: 'Referral',
+    },
     PURPOSE: {
         id: 'PURPOSE',
         title: 'PURPOSE',

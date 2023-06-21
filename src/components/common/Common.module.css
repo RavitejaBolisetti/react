@@ -186,7 +186,61 @@
     margin-bottom: 20px;
     padding: 0;
 }
-
+.tableProduct .success{
+    padding: 2px 6px;
+    background: #EEFCD2;
+    border: 1px solid #70C922;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: #70C922;
+}
+.tableProduct .error{
+    padding: 2px 6px;
+    background: #FEE3D4;
+    border: 1px solid #ED302D;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: #ED302D;
+}
+.tableProduct .warning{
+    padding: 2px 6px;
+    background: #FEF3D2;
+    border: 1px solid #F99C22;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: #F99C22;
+}
+.tableProduct .info{
+    padding: 2px 6px;
+    background: #D3EDFE;    
+    border: 1px solid #2782F9;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: #2782F9;
+}   
+.tableProduct .violet{
+    padding: 2px 6px;
+    background: #F3EAFF;
+    border: 1px solid #9747FF;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: #9747FF;
+}
 /* .tableProduct :global .ant-table-thead tr th {
     text-align: center;
 } */
