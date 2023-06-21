@@ -12,7 +12,7 @@ import { validateEmailField, validateMobileNoField, validateRequiredInputField, 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Dragger from 'antd/es/upload/Dragger';
 import { FiTrash } from 'react-icons/fi';
 import { BiLockAlt, BiTimeFive } from 'react-icons/bi';
@@ -24,22 +24,12 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, configurableTypedata, formData, corporateLovData, formActionType } = props;
+    console.log('formData', formData);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
-    const[corporateType, setCorporateType] = useState();
-    const Random = () => {
-        return;
-    };
-
-    useEffect(() => {
-        form.setFieldsValue({
-            ...formData,
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
-
+    const [corporateType, setCorporateType] = useState();
 
     const handleToggle = () => {
         setIsEnabled(!isEnabled);
@@ -65,21 +55,24 @@ const AddEditFormMain = (props) => {
         setIsModalOpen(false);
         setmobileLoader(false);
     };
+
     const handleCorporateChange = (value) => {
         setCorporateType(value);
     };
-    const copyWhatsNo = (props) =>{
-        if(props){
+
+    const copyWhatsNo = (props) => {
+        if (props) {
             let number = form.getFieldsValue();
             form.setFieldsValue({
-                whatsAppNumber : number?.mobileNumber,
-            })
+                whatsAppNumber: number?.mobileNumber,
+            });
         } else {
             form.setFieldsValue({
-                whatsAppNumber : null,
-            })
+                whatsAppNumber: null,
+            });
         }
-    }
+    };
+
     const modalProps = {
         isVisible: isModalOpen,
         icon: <BiLockAlt />,
@@ -87,6 +80,7 @@ const AddEditFormMain = (props) => {
         closable: false,
         onCloseAction: handleCancel,
     };
+
     const showUploadList = {
         showRemoveIcon: false,
         showPreviewIcon: true,

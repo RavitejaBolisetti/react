@@ -76,7 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
 const CustomerDetailMasterBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, form } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
-    const { sectionName, currentSection, setCurrentSection, selectedCustomer } = props;
+    const { sectionName, currentSection, setCurrentSection, selectedCustomer, selectedCustomerId } = props;
 
     const { isDataLoaded, isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
 
@@ -92,6 +92,12 @@ const CustomerDetailMasterBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+
+    const onSuccessAction = (res) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setShowDataLoading(false);
+    };
+
     useEffect(() => {
         if (userId && !isTypeDataLoaded && !isTypeDataLoading) {
             fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CUST_TYPE.id });
@@ -110,21 +116,20 @@ const CustomerDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isCorporateLovDataLoaded]);
 
-
     useEffect(() => {
-        if (!isDataLoaded && userId) {
+        if (userId && selectedCustomerId) {
             const extraParams = [
                 {
                     key: 'customerId',
                     title: 'customerId',
-                    value: selectedCustomer?.customerId,
+                    value: selectedCustomerId,
                     name: 'Customer ID',
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded, selectedCustomer]);
+    }, [userId, selectedCustomerId]);
 
     useEffect(() => {
         if (typeData) {
@@ -132,11 +137,6 @@ const CustomerDetailMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [typeData]);
-
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        setShowDataLoading(false);
-    };
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();

@@ -82,6 +82,7 @@ const CustomerMasterMain = (props) => {
 
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
     const [selectedCustomer, setSelectedCustomer] = useState();
+    const [selectedCustomerId, setSelectedCustomerId] = useState();
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -184,6 +185,7 @@ const CustomerMasterMain = (props) => {
 
         if (buttonAction === VIEW_ACTION || !formVisible) {
             setSelectedCustomer(record);
+            record && setSelectedCustomerId(record?.customerId);
             defaultSection && setCurrentSection(defaultSection);
         }
     };
@@ -260,6 +262,7 @@ const CustomerMasterMain = (props) => {
         defaultFormActionType,
         defaultBtnVisiblity,
         selectedCustomer,
+        selectedCustomerId,
         setSelectedCustomer,
         section,
         currentSection,
