@@ -6,6 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace, validatePincodeField, validateMobileNoField, validateLettersWithWhitespaces } from 'utils/validation';
+import { addressType } from 'constants/modules/CustomerMaster/individualProfile';
 
 import styles from 'components/common/Common.module.css';
 
@@ -165,8 +166,8 @@ const AddEditForm = (props) => {
                         <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type')]}>
 
                             <Select placeholder={preparePlaceholderSelect('address type')}>
-                                {addData?.map((item) => (
-                                    <Option value={item?.key} >{item?.value}</Option>
+                                {addressType?.map((item) => (
+                                    <Option  key={'ct' + item?.key} value={item?.key} >{item?.name}</Option>
                                 )
 
                                 )}
