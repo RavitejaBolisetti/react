@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 export const PARAM_MASTER = {
     CFG_PARAM: {
         id: 'CFG_PARAM',
@@ -43,6 +48,46 @@ export const PARAM_MASTER = {
         id: 'TITLE',
         title: 'TITLE',
     },
+    CUST_APP_CAT: {
+        id: 'APP_CAT',
+        title: 'APP_CAT',
+    },
+    CUST_APP_SUB_CAT: {
+        id: 'APP_SUB_CAT',
+        title: 'APP_SUB_CAT',
+    },
+    CUST_CAT: {
+        id: 'CUS_CAT',
+        title: 'CUS_CAT',
+    },
+    GENDER_CD: {
+        id: 'GENDER_CD',
+        title: 'GENDER_CD',
+    },
+    MARITAL_STATUS: {
+        id: 'MARITAL_STATUS',
+        title: 'MARITAL_STATUS',
+    },
+    OCC_TYPE: {
+        id: 'OCC_TYPE',
+        title: 'OCC_TYPE',
+    },
+    Annual_Income: {
+        id: 'Annual_Income',
+        title: 'Annual_Income',
+    },
+    Vehicle_Used: {
+        id: 'Vehicle_Used',
+        title: 'Vehicle_Used',
+    },
+    MOTHER_TOUNGE: {
+        id: 'MOTHER_TOUNGE',
+        title: 'MOTHER_TOUNGE',
+    },
+    RELGION: {
+        id: 'RELGION',
+        title: 'RELGION',
+    },
     CORP_TYPE: {
         id: 'CORP_TYPE',
         title: 'CORP_TYPE',
@@ -78,5 +123,9 @@ export const PARAM_MASTER = {
     OTF_SER: {
         id: 'OTF_SER',
         title: 'Referral',
+    },
+    PURPOSE: {
+        id: 'PURPOSE',
+        title: 'PURPOSE',
     },
 };
