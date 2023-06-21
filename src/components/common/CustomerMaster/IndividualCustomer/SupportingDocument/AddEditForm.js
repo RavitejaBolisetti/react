@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { Row, Col, Form, Select, Input, message, Upload, Button, Empty } from 'antd';
 
@@ -21,25 +26,32 @@ const AddEditForm = (props) => {
         console.log('Dropped files', e.dataTransfer.files);
     };
 
-    const showUploadList = {
-        showRemoveIcon: true,
-        showPreviewIcon: true,
-        showDownloadIcon: false,
-        previewIcon: <FiEye onClick={(e) => console.log(e, 'custom removeIcon event')} />,
-        removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
-    };
-
     const uploadProps = {
+        showUploadList: {
+            showRemoveIcon: true,
+            showDownloadIcon: true,
+            previewIcon: <FiEye onClick={(e) => console.log(e, 'custom removeIcon event')} />,
+            removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
+            showProgress: true,
+        },
+        progress: { strokeWidth: 3, showInfo: true },
+
         onDrop,
-        showUploadList,
-        onChange: (info) => {
+        onChange: (info, event) => {
             const { status } = info.file;
 
-            if (status !== 'uploading') {
-                setUploadedFile(info?.file?.response?.data?.docId);
-            }
-            if (status === 'done') {
+            console.log('event', event);
+            if (status === 'uploading') {
+                console.log(' uploading info.file.loaded', info.file.loaded);
+                console.log(' uploading info.file.total', info.file.total);
+                console.log(' uploading info.file.percent', info.file.percent);
+            } else if (status === 'done') {
+                setUploadedFile(info?.file?.response?.docId);
                 message.success(`${info.file.name} file uploaded successfully.`);
+                console.log('done info.file.loaded', info.file.loaded);
+                console.log('done info.file.total', info.file.total);
+                console.log('done info.file.total', info.file.total);
+                console.log('done info.file.percent', info.file.percent);
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }
@@ -52,7 +64,7 @@ const AddEditForm = (props) => {
         const data = new FormData();
         data.append('applicationId', 'app');
         data.append('file', file);
-       
+
         const requestData = {
             data: data,
             method: 'post',
@@ -95,7 +107,7 @@ const AddEditForm = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.uploadDragger}>
-                        <Dragger customRequest={handleUpload} {...uploadProps}>
+                        <Dragger customRequest={handleUpload}  {...uploadProps}>
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                                 imageStyle={{

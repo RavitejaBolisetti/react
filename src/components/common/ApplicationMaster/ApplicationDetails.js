@@ -1,3 +1,7 @@
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 import React, { Fragment, useEffect } from 'react';
 import { Input, Form, Col, Row, Switch, Select } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';

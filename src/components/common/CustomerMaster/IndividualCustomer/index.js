@@ -1,8 +1,14 @@
-import { IndivisualCustomerDetailsMaster } from './CustomerDetails';
-import { IndividualAddressMaster } from './Address';
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+import { CustomerDetailMaster as IndivisualCustomerDetailMaster } from './CustomerDetail';
 import { IndividualProfileMaster } from './IndividualProfile';
-import { IndividualAccountRelatedMaster } from './AccountRelated';
-import { FamilyDetails } from './FamilyDetails';
-import { SupportingDocument } from './SupportingDocument';
-import { IndividualContact } from './Contacts';
-export { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails, SupportingDocument };
+import { AddressMaster as IndividualAddressMaster } from './Address';
+import { ContactMaster as IndividualContactMaster } from './Contact';
+import { FamilyDetailMaster as IndividualFamilyDetailMaster } from './FamilyDetail';
+import { AccountRelatedMaster as IndividualAccountRelatedMaster } from './AccountRelated';
+import { SupportingDocument as IndividualSupportingDocument } from './SupportingDocument';
+
+export { IndivisualCustomerDetailMaster, IndividualProfileMaster, IndividualAddressMaster, IndividualContactMaster, IndividualFamilyDetailMaster, IndividualAccountRelatedMaster, IndividualSupportingDocument };

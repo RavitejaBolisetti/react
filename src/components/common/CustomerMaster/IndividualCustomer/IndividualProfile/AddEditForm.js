@@ -1,10 +1,15 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+import React, { useState } from 'react';
 import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Empty, Divider } from 'antd';
-import { useEffect, useState } from 'react';
 import Svg from 'assets/images/Filter.svg';
 
 import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { applicationCategory, applicationSubCategory, customerCategory, gender, income, maritialStatus, memberShip, occupation, religion, tongue, vehicle } from 'constants/modules/CustomerMaster/individualProfile';
+import { religion, tongue, vehicle } from 'constants/modules/CustomerMaster/individualProfile';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
@@ -18,11 +23,8 @@ const { Text } = Typography;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { formActionType, onIndiviualFinish, individualForm, indiviualData, onFieldsChange, formData, onFinishFailed, appCategoryData } = props;
+    const { formActionType, onIndiviualFinish, individualForm, onFieldsChange, formData, onFinishFailed, appCategoryData } = props;
     const { isReadOnly = false } = props;
-    const [uploadCustomerForm] = Form.useForm();
-
-    const [done, setDone] = useState();
     const [customer, setCustomer] = useState(false);
 
     const [activeKey, setactiveKey] = useState([1]);

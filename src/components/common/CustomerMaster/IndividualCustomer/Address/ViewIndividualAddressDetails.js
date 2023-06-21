@@ -1,8 +1,9 @@
 import React from 'react';
 import { Descriptions } from 'antd';
-import styles from 'components/common/Common.module.css';
 
-const ViewIndividualAddressDetailsBase = ({ formData, styles }) => {
+const ViewIndividualAddressDetailsBase = (props) => {
+    const { formData, styles } = props;
+
     const viewProps = {
         bordered: false,
         colon: false,
