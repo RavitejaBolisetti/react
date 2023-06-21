@@ -74,7 +74,7 @@ const ViewDetailMain = (props) => {
                         </div>
                     }
                 >
-                    <Descriptions>
+                    <Descriptions {...viewProps}>
                         <Descriptions.Item label="Mobile Number">{formData?.mobileNumber}</Descriptions.Item>
                         <Descriptions.Item label="Customer Type">{formData?.customerType}</Descriptions.Item>
                     </Descriptions>
@@ -92,25 +92,25 @@ const ViewDetailMain = (props) => {
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.customerName}>
                                 <Text>
                                     {formData?.title}
-                                    <span className={styles.nameSpacing}></span>
+                                    <span>&nbsp;</span>
                                     {formData?.firstName}
-                                    <span className={styles.nameSpacing}></span>
+                                    <span>&nbsp;</span>
                                     {formData?.middleName}
-                                    <span className={styles.nameSpacing}></span>
+                                    <span>&nbsp;</span>
                                     {formData?.lastName}
                                 </Text>
                                 <Tag color="success">Approved</Tag>
                             </Col>
                         </Row>
                     </div>
-                    <Descriptions>
+                    <Descriptions {...viewProps}>
                         <Descriptions.Item label="Email Id">{formData?.emailId}</Descriptions.Item>
                         <Descriptions.Item label="Do you want to contact over whatsapp?">{formData?.corporateName}</Descriptions.Item>
                         <Descriptions />
                         <Descriptions.Item label="Want to use Mobile no as whatsapp no?">{formData?.whatsappNumber}</Descriptions.Item>
                         <Descriptions.Item label="Whatsapp Number">{formData?.whatsappNumber}</Descriptions.Item>
                     </Descriptions>
-                    <Descriptions>
+                    <Descriptions {...viewProps}>
                         <Descriptions.Item label="Corporate Type">{formData?.corporateType}</Descriptions.Item>
                         <Descriptions.Item label="Corporate Name">{formData?.corporateName}</Descriptions.Item>
                         <Descriptions.Item label="Corporate Category">{formData?.corporateCategory}</Descriptions.Item>
