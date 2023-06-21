@@ -10,8 +10,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 
 const OptionServicesFormMain = (props) => {
-    const { handleCancel } = props;
-    const [optionForm] = Form.useForm();
+    const { handleCancel,optionForm } = props;
 
     const onFinish = (values) => {
         console.log('values', values);

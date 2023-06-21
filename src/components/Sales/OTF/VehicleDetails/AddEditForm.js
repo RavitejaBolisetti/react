@@ -26,6 +26,7 @@ const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
     const { activeKey, formData, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
     const [form] = Form.useForm();
+    const [optionForm] = Form.useForm();
 
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [openAccordian, setOpenAccordian] = useState();
@@ -67,7 +68,7 @@ const AddEditFormMain = (props) => {
         });
     };
     const addContactHandeler = (e) => {
-        form.resetFields();
+        optionForm.resetFields();
         setOpenAccordian('3');
         setIsReadOnly(true);
     };
@@ -76,6 +77,7 @@ const AddEditFormMain = (props) => {
     };
     const OptionServicesFormProps = {
         handleCancel,
+        optionForm,
     };
 
     return (
