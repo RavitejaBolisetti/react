@@ -73,6 +73,16 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Usage/Application Sub-Category">{formData?.applicationSubCategory}</Descriptions.Item>
                             <Descriptions.Item label="Customer Category">{formData?.customerCategory}</Descriptions.Item>
                         </Descriptions>
+                        {formData?.customerCategory == 'Fleet' && (
+                            <>
+                                <Descriptions {...viewProps}>
+                                    <Descriptions.Item label="Business Details">{formData?.businessDetails}</Descriptions.Item>
+                                    <Descriptions.Item label="Vehicle Deployment Detail">{formData?.vechileDeploymentDetails}</Descriptions.Item>
+                                    <Descriptions.Item label="Key Role Details">{formData?.keyRouteDetails}</Descriptions.Item>
+                                    <Descriptions.Item label="Major Route Details">{formData?.majorRouteDetails}</Descriptions.Item>
+                                </Descriptions>
+                            </>
+                        )}
                     </Panel>
                 </Collapse>
 
