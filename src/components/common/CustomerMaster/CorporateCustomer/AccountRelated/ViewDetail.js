@@ -30,7 +30,7 @@ const ViewDetailBase = (props) => {
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Credit Limit">{formData?.creditAmount}</Descriptions.Item>
                         <Descriptions.Item label="Credit Limit Days">{formData?.creditDays}</Descriptions.Item>
-                        <Descriptions.Item label="Outstanding Amount">{formData?.outstandingAmt}</Descriptions.Item>
+                        <Descriptions.Item label="Outstanding Amount">{formData?.outstandingAmount}</Descriptions.Item>
                         <Descriptions.Item label="Parts Discount">{formData?.partsDiscount}</Descriptions.Item>
                         <Descriptions.Item label="Labour Discount">{formData?.labourDiscount}</Descriptions.Item>
                         <Descriptions.Item label="Remarks">{formData?.remarks}</Descriptions.Item>
