@@ -83,6 +83,7 @@ const CustomerMasterMain = (props) => {
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
     const [selectedCustomer, setSelectedCustomer] = useState();
     const [selectedCustomerId, setSelectedCustomerId] = useState();
+    const [shouldResetForm, setShouldResetForm] = useState(false);
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -227,6 +228,8 @@ const CustomerMasterMain = (props) => {
         setFormActionType(defaultFormActionType);
         setButtonData(defaultBtnVisiblity);
         setSelectedCustomer();
+        setSelectedCustomerId();
+        setShouldResetForm(true);
     };
 
     const drawerTitle = useMemo(() => {
@@ -268,6 +271,7 @@ const CustomerMasterMain = (props) => {
         currentSection,
         sectionName,
         setCurrentSection,
+        shouldResetForm,
     };
 
     const selectProps = {

@@ -24,7 +24,6 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, configurableTypedata, formData, corporateLovData, formActionType } = props;
-    console.log('formData', formData);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
