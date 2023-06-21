@@ -51,6 +51,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: indiviualProfileDataActions.fetchList,
             listIndiviualShowLoading: indiviualProfileDataActions.listShowLoading,
             saveData: indiviualProfileDataActions.saveData,
+
             fetchApplicationCategorization: configParamEditActions.fetchList,
             fetchApplicationSubCategory: configParamEditActions.fetchList,
             fetchCustomerCategory: configParamEditActions.fetchList,
@@ -59,6 +60,9 @@ const mapDispatchToProps = (dispatch) => ({
             fetchOccupationList: configParamEditActions.fetchList,
             fetchAnnualIncome: configParamEditActions.fetchList,
             fetchVehicleUsed: configParamEditActions.fetchList,
+            fetchMotherTongue: configParamEditActions.fetchList,
+            fetchReligionList: configParamEditActions.fetchList,
+
             showGlobalNotification,
         },
         dispatch
