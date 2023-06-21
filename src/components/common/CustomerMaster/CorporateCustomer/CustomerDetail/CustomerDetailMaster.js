@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
             CustomerMaster: {
                 CustomerDetails: { isLoaded: isDataLoaded = false, isLoading, data: customerDetailsData = [] },
                 Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
-                CustomerParentCompany: {isLoaded: isCustomerParentCompanyDataLoaded = false, isCustomerParentCompanyLoading, data: customerParentCompanyData = []}
+                CustomerParentCompany: { isLoaded: isCustomerParentCompanyDataLoaded = false, isCustomerParentCompanyLoading, data: customerParentCompanyData = [] },
             },
             ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isTypeDataLoading, paramdata: typeData = [] },
         },
@@ -88,7 +88,7 @@ const mapDispatchToProps = (dispatch) => ({
 const CompanyCustomerDetailsMasterBase = (props) => {
     const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsData, section, fetchConfigList, listConfigShowLoading, fetchList, listShowLoading, moduleTitle, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, corporateLovData, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, isCustomerParentCompanyDataLoaded, customerParentCompanyData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
-    const { sectionName, currentSection, setCurrentSection, selectedCustomer } = props;
+    const { sectionName, currentSection, setCurrentSection, selectedCustomer, setSelectedCustomer, handleButtonClick } = props;
 
     const [form] = Form.useForm();
 
@@ -141,12 +141,11 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         if (typeData) {
             setConfigurableTypedata({ CUST_TYPE: typeData['CUST_TYPE'], CORP_TYPE: typeData['CORP_TYPE'], CORP_CATE: typeData['CORP_CATE'], TITLE: typeData['TITLE'], MEM_TYPE: typeData['MEM_TYPE'] });
         }
-        if(customerDetailsData && isDataLoaded)
-        {
-            setFormData(customerDetailsData)
+        if (customerDetailsData && isDataLoaded) {
+            setFormData(customerDetailsData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [typeData,customerDetailsData,isDataLoaded]);
+    }, [typeData, customerDetailsData, isDataLoaded]);
     useEffect(() => {
         if (!isDataLoaded && userId) {
             const extraParams = [
@@ -159,9 +158,9 @@ const CompanyCustomerDetailsMasterBase = (props) => {
                 {
                     key: 'parentCompanyCode',
                     title: 'parentCompanyCode',
-                    value: "",
+                    value: '',
                     name: 'parentCompanyCode',
-                }
+                },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
         }
@@ -178,14 +177,14 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormData([]);
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        record && setFormData(record);
-        setIsFormVisible(true);
-    };
+    // const handleButtonClick = ({ record = null, buttonAction }) => {
+    //     form.resetFields();
+    //     setFormData([]);
+    //     setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+    //     setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+    //     record && setFormData(record);
+    //     setIsFormVisible(true);
+    // };
 
     const onFinish = (values) => {
         const recordId = customerDetailsData?.id || '';
@@ -198,6 +197,8 @@ const CompanyCustomerDetailsMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
             const section = Object.values(sectionName)?.find((i) => i.id > currentSection);
             section && setCurrentSection(section?.id);
+            section && setSelectedCustomer(res?.data);
+
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -248,7 +249,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         {
             key: 'customerId',
             title: 'customerId',
-            value:  selectedCustomer?.customerId,
+            value: selectedCustomer?.customerId,
             name: 'Customer Id',
         },
     ];
@@ -275,7 +276,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     };
 
     const viewProps = {
-        formData:customerDetailsData,
+        formData: customerDetailsData,
         onCloseAction,
         styles,
     };

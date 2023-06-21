@@ -12,8 +12,8 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { configurableTypedata , formData,form,corporateLovData, handeSearchParentCompName} = props;
-    const[corporateType, setCorporateType] = useState();
+    const { configurableTypedata, formData, form, corporateLovData, formActionType: { editMode } = undefined } = props;
+    const [corporateType, setCorporateType] = useState();
     useEffect(() => {
         form.setFieldsValue({
             ...formData,
@@ -30,12 +30,12 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.mobileNumber} label="Mobile Number" name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
-                            <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} suffix={<BiEdit className={styles.icon} size={18} />} disabled />
+                            <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} suffix={<BiEdit className={styles.icon} size={18} />} disabled={editMode} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                            <Select placeholder="Select" disabled={false} loading={false} allowClear fieldNames={{ label: 'value', value: 'value' }} options={configurableTypedata['CUST_TYPE']}></Select>
+                            <Select placeholder="Select" disabled={false} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -49,7 +49,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.parentCompanyCode} label="Parent Company Code" name="parentCompanyCode" data-testid="parentCode" rules={[validateRequiredInputField('parent company code')]}>
-                            <Input placeholder={preparePlaceholderText('parent company code')} disabled />
+                            <Input placeholder={preparePlaceholderText('parent company code')} disabled={editMode} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -62,43 +62,43 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.corporateType} label="Corporate Type" name="corporateType" data-testid="corporateType">
-                            <Select placeholder="Select" disabled={false} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']} onChange={handleCorporateChange} ></Select>
+                            <Select placeholder="Select" disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']} onChange={handleCorporateChange}></Select>
                         </Form.Item>
                     </Col>
                     {corporateType === 'LIS' ? (
-                            <>
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                        <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                            {corporateLovData?.map((item) => (
-                                                <Option key={'lv' + item?.key} value={item?.key}>
-                                                    {item?.value}
-                                                </Option>
-                                            ))}
-                                        </Select>
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code">
-                                        <Input placeholder={preparePlaceholderText('parent company name')} disabled />
-                                    </Form.Item>
-                                </Col>
-                            </>
-                        ) : (
+                        <>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                    <Input placeholder={preparePlaceholderText('corporate name')} />
+                                    <Select disabled={editMode} loading={false} placeholder="Select" allowClear>
+                                        {corporateLovData?.map((item) => (
+                                            <Option key={'lv' + item?.key} value={item?.key}>
+                                                {item?.value}
+                                            </Option>
+                                        ))}
+                                    </Select>
                                 </Form.Item>
                             </Col>
-                        )}
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code">
+                                    <Input placeholder={preparePlaceholderText('parent company name')} disabled />
+                                </Form.Item>
+                            </Col>
+                        </>
+                    ) : (
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                                <Input placeholder={preparePlaceholderText('corporate name')} />
+                            </Form.Item>
+                        </Col>
+                    )}
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.corporateCategory} label="Corporate Category" name="corporateCategory" data-testid="corporateCategory">
-                            <Select placeholder="Select" disabled={false} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_CATE']} disabled></Select>
+                            <Select placeholder="Select" disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_CATE']}></Select>
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.membershipType} label="Membership Type" name="membershipType" data-testid="membershipType" rules={[validateRequiredSelectField('membership type')]}>
-                            <Select placeholder="Select" disabled={false} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['MEM_TYPE']}></Select>
+                            <Select placeholder="Select" disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['MEM_TYPE']}></Select>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -108,4 +108,3 @@ const AddEditFormMain = (props) => {
 };
 
 export const AddEditForm = AddEditFormMain;
-
