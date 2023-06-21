@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Empty, Divider } from 'antd';
 import Svg from 'assets/images/Filter.svg';
+import dayjs from 'dayjs';
 
 import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -26,7 +27,7 @@ const AddEditFormMain = (props) => {
     const { isReadOnly = false } = props;
     const [customer, setCustomer] = useState(false);
 
-    const [activeKey, setactiveKey] = useState([1]);
+    const [activeKey, setActiveKey] = useState([1]);
 
     console.log('formData', formData);
 
@@ -44,9 +45,9 @@ const AddEditFormMain = (props) => {
                     newActivekeys.push(item);
                 }
             });
-            setactiveKey(newActivekeys);
+            setActiveKey(newActivekeys);
         } else {
-            setactiveKey([...activeKey, values]);
+            setActiveKey([...activeKey, values]);
         }
     };
 
@@ -150,8 +151,8 @@ const AddEditFormMain = (props) => {
 
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Date of Birth" initialValue={formData?.dateOfBirth} name="dateOfBirth" rules={[validateRequiredInputField('date')]}>
-                                            <DatePicker disabled={isReadOnly} className={styles.datepicker} />
+                                        <Form.Item label="Date of Birth" initialValue={dayjs(formData?.dateOfBirth)} name="dateOfBirth" rules={[validateRequiredInputField('date')]}>
+                                            <DatePicker format="DD-MM-YYYY" disabled={isReadOnly} className={styles.datepicker} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -208,7 +209,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Driving License No" name="image" initialValue={formData?.image} rules={[validateDrivingLicenseNo('driving license no ')]}>
+                                        <Form.Item label="Driving License No" name="drivingLicenseNumber" initialValue={formData?.drivingLicenseNumber} rules={[validateDrivingLicenseNo('driving license no ')]}>
                                             <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('driving license no')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
@@ -422,32 +423,32 @@ const AddEditFormMain = (props) => {
                             >
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Code" name="accountCode" initialValue={'CFG464787'}>
+                                        <Form.Item label="Account Code" name="accountCode" initialValue={formData?.accountCode}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter account code')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Name" name="accountName" initialValue={'Koncept'}>
+                                        <Form.Item label="Account Name" name="accountName" initialValue={formData?.accountName}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Segement" name="accountSegment" initialValue={'Individual'}>
+                                        <Form.Item label="Account Segement" name="accountSegment" initialValue={formData?.accountSegment}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} disabled />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Client Name" name="accountClientName" initialValue={'Pal Singh'}>
+                                        <Form.Item label="Account Client Name" name="accountClientName" initialValue={formData?.accountClientName}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Mapping Date" name="accountMappingDate" initialValue={'12-11-2022'}>
+                                        <Form.Item label="Account Mapping Date" name="accountMappingDate" initialValue={formData?.accountMappingDate}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
                                         </Form.Item>
                                     </Col>
@@ -526,7 +527,9 @@ const AddEditFormMain = (props) => {
                                 <Form autoComplete="off" layout="vertical">
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Checkbox value="customerConsent">I Consent to share my details with Mahindra & Mahindra. </Checkbox>
+                                            <Checkbox value="customerConsent" name="customerConsent">
+                                                I Consent to share my details with Mahindra & Mahindra.{' '}
+                                            </Checkbox>
                                         </Col>
                                     </Row>
                                     <Row gutter={20}>
