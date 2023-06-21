@@ -1521,7 +1521,7 @@
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item-tail {
-    inset-block-start: 9px;
+    inset-block-start: 14px;
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item-head-custom {
@@ -1649,7 +1649,9 @@
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input-disabled,
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input[disabled] {
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input[disabled],
+.drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-disabled,
+.drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input[disabled] {
     color: #858585;
     background-color: #e6e6e6;
     border-color: #858585;
@@ -1779,8 +1781,8 @@
     margin-left: 10px;
 } */
 
-.drawerBodyRight :global .ant-collapse > .ant-collapse-item > .ant-collapse-header {
-    padding: 20px 30px;
+.drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
+    padding: 16px 20px;
     background: #f2f2f2;
     border-radius: 8px;
     /* border: 1px solid #f2f2f2; */
@@ -1788,6 +1790,7 @@
 
 .drawerBodyRight :global .ant-collapse > .ant-collapse-item-active > .ant-collapse-header {
     border-radius: 8px 8px 0 0;
+    padding: 20px 30px;
 }
 
 .drawerBodyRight :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-typography {
@@ -1857,6 +1860,11 @@
 }
 
 .drawerBodyRight :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-divider-horizontal {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
     margin-top: 0;
     margin-bottom: 20px;
 }
@@ -1936,13 +1944,97 @@
     border-color: #e6e6e6;
 }
 
-.viewDrawerContainer :global .ant-descriptions-view table tbody tr th {
+.viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions:first-child {
+    border-bottom: 1px solid #E6E6E6;
+}
+
+.viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions:not(:first-child) {
+    border-top: 1px solid #E6E6E6;
+    padding-top: 20px;
+}
+
+.viewDrawerContainer :global .ant-descriptions .ant-descriptions-view table {
+    border-spacing: 0;
+}
+
+.viewDrawerContainer :global .ant-descriptions .ant-descriptions-view table tbody tr th {
     padding: 0 !important;
 }
 
-.viewDrawerContainer :global .ant-descriptions-view table tbody tr td {
+.viewDrawerContainer :global .ant-descriptions .ant-descriptions-view table tbody tr td {
     padding: 0 !important;
     padding-bottom: 20px !important;
+}
+
+.viewDrawerContainer :global .ant-space {
+    gap: 10px !important;
+}
+
+.viewDrawerContainer :global .ant-space .ant-collapse {
+    margin-bottom: 0;
+}
+
+/* .viewDrawerContainer :global .ant-collapse .ant-collapse-content .ant-descriptions:first-child {
+    padding-top: 0px;
+    border-top: none;
+} */
+
+/* .viewDrawerContainer :global .ant-space .ant-space-item:last-child {
+    border: 0;
+    margin-bottom: 50px;
+} */
+
+.viewDrawerContainer .cardInsideBox :global .ant-typography {
+    color: #0B0B0C;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.viewDrawerContainer .cardInsideBox :global .ant-btn {
+    padding: 0;
+}
+
+.viewDrawerContainer .cardInsideBox :global .ant-btn span:last-child {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 23px;
+    vertical-align: text-bottom;
+}
+
+.viewDrawerContainer .cardInsideBox :global .ant-divider-horizontal {
+    margin-top: 2px !important;
+    margin-bottom: 12px !important;
+}
+
+.viewDrawerContainer .cardInsideBox .customerName :global .ant-tag-success {
+    margin-left: 22px;
+    /* height: 20px; */
+    padding: 0 8px;
+    vertical-align: bottom;
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: center;
+}
+
+.cardInsideBox {
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    color: #0b0b0c;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.customerName {
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    padding: 10px 20px;
+    color: #0B0B0C;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
 }
 
 .userCircle {

@@ -1,9 +1,10 @@
 /*
- *   Copyright (c) 2023 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import dayjs from 'dayjs';
-import { GetAge } from './getAge'
+import { GetAge } from './getAge';
 
 export const validateRequiredInputField = (fieldName, lowercase = true) => ({
     required: true,

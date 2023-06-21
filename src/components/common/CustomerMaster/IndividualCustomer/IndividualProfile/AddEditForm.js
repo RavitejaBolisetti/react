@@ -27,7 +27,7 @@ const AddEditFormMain = (props) => {
     const { isReadOnly = false } = props;
     const [customer, setCustomer] = useState(false);
 
-    const [activeKey, setactiveKey] = useState([1]);
+    const [activeKey, setActiveKey] = useState([1]);
 
     console.log('formData', formData);
 
@@ -45,9 +45,9 @@ const AddEditFormMain = (props) => {
                     newActivekeys.push(item);
                 }
             });
-            setactiveKey(newActivekeys);
+            setActiveKey(newActivekeys);
         } else {
-            setactiveKey([...activeKey, values]);
+            setActiveKey([...activeKey, values]);
         }
     };
 
@@ -151,7 +151,7 @@ const AddEditFormMain = (props) => {
 
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Date of Birth" initialValue={dayjs(formData?.dateOfBirth)} name="dateOfBirth" rules={[validateRequiredInputField('date')]}>
+                                        <Form.Item label="Date of Birth" initialValue={dayjs(formData?.dateOfBirth)} name="dateOfBirth" >
                                             <DatePicker format="DD-MM-YYYY" disabled={isReadOnly} className={styles.datepicker} />
                                         </Form.Item>
                                     </Col>
@@ -214,7 +214,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Aadhar No." name="adharNumber" initialValue={formData?.adharNumber} rules={[validateAadhar('aadhar')]}>
+                                        <Form.Item label="Aadhar No." name="adharNumber" initialValue={formData?.adharNumber} rules={[validateAadhar('aadhar')],[validateRequiredInputField('aadhar')]}>
                                             <Input value={null} maxLength={12} className={styles.inputBox} placeholder={preparePlaceholderText('aadhar number')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
@@ -262,13 +262,13 @@ const AddEditFormMain = (props) => {
 
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField('pan')]}>
+                                        <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField('pan')],[validateRequiredInputField('pan')]}>
                                             <Input value={null} maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin')]}>
+                                        <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin')],[validateRequiredInputField('gstin')]}>
                                             <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
@@ -477,7 +477,7 @@ const AddEditFormMain = (props) => {
                             >
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Name of Person" initialValue={formData?.personName} name="personName">
+                                        <Form.Item label="Name of Person" initialValue={formData?.personName} name="personName" rules={[validateRequiredInputField('Name of Person')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter name of person')} />
                                         </Form.Item>
                                     </Col>
@@ -489,7 +489,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Company Name" initialValue={formData?.companyName} name="companyName">
+                                        <Form.Item label="Company Name" initialValue={formData?.companyName} name="companyName" rules={[validateRequiredInputField('Company Name')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter company name')} />
                                         </Form.Item>
                                     </Col>

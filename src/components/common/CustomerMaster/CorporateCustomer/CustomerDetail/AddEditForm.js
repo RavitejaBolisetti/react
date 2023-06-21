@@ -12,13 +12,17 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { configurableTypedata , formData,form} = props;
+    const { configurableTypedata , formData,form,corporateLovData, handeSearchParentCompName} = props;
+    const[corporateType, setCorporateType] = useState();
     useEffect(() => {
         form.setFieldsValue({
             ...formData,
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
+    const handleCorporateChange = (value) => {
+        setCorporateType(value);
+    };
 
     return (
         <Space direction="vertical" size="small" style={{ display: 'flex' }}>
@@ -58,21 +62,35 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.corporateType} label="Corporate Type" name="corporateType" data-testid="corporateType">
-                            <Select placeholder="Select" disabled={false} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']}></Select>
+                            <Select placeholder="Select" disabled={false} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']} onChange={handleCorporateChange} ></Select>
                         </Form.Item>
                     </Col>
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={formData?.corporateName} label="Corporate Name" name="corporateName" data-testid="corporateName">
-                            <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                <Option value="corporateName">Corporate ABC</Option>
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code">
-                            <Input placeholder={preparePlaceholderText('parent company name')} disabled />
-                        </Form.Item>
-                    </Col>
+                    {corporateType === 'LIS' ? (
+                            <>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                                        <Select disabled={false} loading={false} placeholder="Select" allowClear>
+                                            {corporateLovData?.map((item) => (
+                                                <Option key={'lv' + item?.key} value={item?.key}>
+                                                    {item?.value}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code">
+                                        <Input placeholder={preparePlaceholderText('parent company name')} disabled />
+                                    </Form.Item>
+                                </Col>
+                            </>
+                        ) : (
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                                    <Input placeholder={preparePlaceholderText('corporate name')} />
+                                </Form.Item>
+                            </Col>
+                        )}
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.corporateCategory} label="Corporate Category" name="corporateCategory" data-testid="corporateCategory">
                             <Select placeholder="Select" disabled={false} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_CATE']} disabled></Select>

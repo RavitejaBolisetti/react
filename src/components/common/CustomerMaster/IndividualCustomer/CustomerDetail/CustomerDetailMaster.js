@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Row, Col, Form } from 'antd';
@@ -20,6 +20,8 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
+
+import { InputSkeleton } from 'components/common/Skeleton';
 
 import styles from 'components/common/Common.module.css';
 
@@ -51,6 +53,7 @@ const mapStateToProps = (state) => {
     };
     return returnValue;
 };
+
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
@@ -73,19 +76,19 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerDetailMasterBase = (props) => {
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
-    const { sectionName, currentSection, setCurrentSection, selectedCustomer } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, isLoading, resetData, form } = props;
 
-    const { isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
-    const [form] = Form.useForm();
+    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+    const { sectionName, currentSection, setCurrentSection, selectedCustomer, selectedCustomerId } = props;
+
+    const { isDataLoaded, shouldResetForm, isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
+    console.log('🚀 ~ file: CustomerDetailMaster.js:83 ~ CustomerDetailMasterBase ~ shouldResetForm:', shouldResetForm, data);
 
     const [showForm, setShowForm] = useState(false);
-
     const [configurableTypedata, setConfigurableTypedata] = useState({});
-    const [refershData, setRefershData] = useState(false);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
+
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
@@ -93,6 +96,19 @@ const CustomerDetailMasterBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+
+    const onSuccessAction = (res) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setShowDataLoading(false);
+    };
+
+    useEffect(() => {
+        form.setFieldsValue({ ...data });
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data]);
 
     useEffect(() => {
         if (userId && !isTypeDataLoaded && !isTypeDataLoading) {
@@ -113,19 +129,19 @@ const CustomerDetailMasterBase = (props) => {
     }, [userId, isCorporateLovDataLoaded]);
 
     useEffect(() => {
-        if (!isDataLoaded && !isLoading && userId && selectedCustomer?.length > 0) {
+        if (userId && selectedCustomerId) {
             const extraParams = [
                 {
                     key: 'customerId',
                     title: 'customerId',
-                    value: selectedCustomer?.customerId,
+                    value: selectedCustomerId,
                     name: 'Customer ID',
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded, selectedCustomer]);
+    }, [userId, selectedCustomerId]);
 
     useEffect(() => {
         if (typeData) {
@@ -134,12 +150,6 @@ const CustomerDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [typeData]);
 
-    const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        setRefershData(false);
-        setShowDataLoading(false);
-    };
-
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
@@ -147,7 +157,7 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, customerId: 'CUS1686812277115' };
+        const data = { ...values, customerId: selectedCustomer?.customerId };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -181,16 +191,10 @@ const CustomerDetailMasterBase = (props) => {
         return;
     };
 
-    const onCloseAction = () => {
-        form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity });
-    };
-
     const formProps = {
         formActionType,
         form,
         onFinish,
-        onCloseAction,
         saveData,
         corporateLovData,
         setFormActionType,
@@ -219,12 +223,22 @@ const CustomerDetailMasterBase = (props) => {
         ...props,
         saveButtonName: formActionType?.addMode ? 'Create Customer ID' : 'Save & Next',
     };
+
+    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;
+    const formSkeleton = (
+        <Row>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <InputSkeleton height={'100vh'} />
+            </Col>
+        </Row>
+    );
+
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <h2>{section?.title} </h2>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    <h2>{section?.title}</h2>
+                    {isLoading ? formSkeleton : formContainer}
                 </Col>
             </Row>
             <Row>
