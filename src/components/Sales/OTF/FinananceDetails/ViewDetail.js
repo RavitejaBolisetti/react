@@ -17,7 +17,7 @@ const ViewDetailMain = (props) => {
                 <Descriptions.Item label="File Number">{formData?.fileNumber}</Descriptions.Item>
                 <Descriptions.Item label="Loan Amount">{formData?.loanAmount}</Descriptions.Item>
                 <Descriptions.Item label="EMI">{formData?.emi}</Descriptions.Item>
-                <Descriptions.Item label="Finance Done">{formData?.financeDone}</Descriptions.Item>
+                {/* <Descriptions.Item label="Finance Done">{formData?.financeDone}</Descriptions.Item> */}
                 <Descriptions.Item label="D.O. Recived">{formData?.doReceived}</Descriptions.Item>
                 <Descriptions.Item label="D.O. Number">{formData?.doNumber}</Descriptions.Item>
                 <Descriptions.Item label="D.O. Date">{formData?.doDate}</Descriptions.Item>

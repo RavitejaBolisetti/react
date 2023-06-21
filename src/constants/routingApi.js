@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 
+ *   Copyright (c) 2023
  *   All rights reserved.
  */
 export const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -121,8 +121,9 @@ export const BASE_URL_CUSTOMER_MASTER_FIRM_CONTACT = BASE_URL + 'customers/corpo
 
 export const BASE_URL_FAMILY_DETAIL_SEARCH = BASE_URL + 'customers/individual';
 export const BASE_URL_OTF = BASE_URL + 'otf/';
-export const BASE_URL_OTF_INVOICE = BASE_URL + 'invoice';
+export const BASE_URL_OTF_INVOICE = BASE_URL + 'otf/invoice';
 export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';
+export const BASE_URL_OTF_FINANCE_LOV = BASE_URL + 'otf/financiers/lov';
 export const BASE_URL_CORPORATE_COMPANY_PROFILE = BASE_URL + 'customers/corporate/profile';
 export const BASE_URL_OTF_DETAILS = BASE_URL_OTF + 'details';
 
@@ -131,4 +132,4 @@ export const BASE_URL_DOCUMENT_UPLOAD = BASE_URL + 'common/document/upload';
 
 export const BASE_URL_CUSTOMER_MASTER_ACCOUNTS_RELATED_CORPORATE = BASE_URL + 'customers/corporate/accounts';
 export const BASE_URL_CUSTOMER_MASTER_ACCOUNTS_RELATED_INDIVISUAL = BASE_URL + 'customers/individual/accounts';
-export const BASE_URL_INDIVIDUAL_NAME_CHANGE_HISTORY = BASE_URL + 'customers/individual/name/changehistory;'
+export const BASE_URL_INDIVIDUAL_NAME_CHANGE_HISTORY = BASE_URL + 'customers/individual/name/changehistory;';
