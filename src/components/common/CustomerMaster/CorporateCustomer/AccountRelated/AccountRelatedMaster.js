@@ -134,7 +134,7 @@ export const AccountRelatedBase = (props) => {
 
         const requestData = {
             data: data,
-            method: 'post',
+            method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -165,7 +165,7 @@ export const AccountRelatedBase = (props) => {
 
     const formProps = {
         form,
-        formData: data['0'],
+        formData: data,
         formActionType,
         setFormActionType,
         onFinish,
@@ -183,7 +183,7 @@ export const AccountRelatedBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        formData: data['0'],
+        formData: data,
         styles,
     };
 
