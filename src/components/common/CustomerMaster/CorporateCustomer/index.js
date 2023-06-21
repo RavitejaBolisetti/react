@@ -9,5 +9,5 @@ import { CompanyAddressMaster as CorporateCompanyAddressMaster } from './Address
 import { ContactMaster as CorporateContactMaster } from './Contact';
 import { AccountRelatedMaster as CorporateAccountRelatedMaster } from './AccountRelated';
 import { SupportingDocumentMaster as IndividualSupportingDocument } from './SupportingDocument';
-
+ 
 export { CorporateCustomerDetailMaster, CorporateCompanyProfileMaster, CorporateCompanyAddressMaster, CorporateContactMaster, CorporateAccountRelatedMaster, IndividualSupportingDocument };
