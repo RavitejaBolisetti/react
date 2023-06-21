@@ -11,7 +11,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FiEdit } from 'react-icons/fi';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { OptionServicesForm } from './OptionServicesForm';
+import { OptionServicesForm } from './optionServicesForm';
 import styles from 'components/common/Common.module.css';
 
 import { DataTable } from 'utils/dataTable';
