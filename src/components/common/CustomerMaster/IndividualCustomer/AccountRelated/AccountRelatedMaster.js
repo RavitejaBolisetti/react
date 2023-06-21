@@ -74,7 +74,7 @@ export const AccountRelatedMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const indivisualCustomer = 'CUS123';
+    const indivisualCustomer = 'CUS1687196336704';
     const extraParams = [
         {
             key: 'customerId',
@@ -113,7 +113,7 @@ export const AccountRelatedMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, customerId: 'CUS123' };
+        const data = { ...values, customerId: 'CUS1687196336704' };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -170,7 +170,7 @@ export const AccountRelatedMasterBase = (props) => {
 
     const formProps = {
         form,
-        formData: data,
+        formData: data[0],
         formActionType,
         setFormActionType,
         onFinish,
@@ -188,7 +188,7 @@ export const AccountRelatedMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        formData: data,
+        formData: data[0],
         styles,
     };
 
