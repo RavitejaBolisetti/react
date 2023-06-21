@@ -121,10 +121,10 @@ const AddressMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAddDataLoaded]);
     
-    useEffect(() => {
-        setAddressData(addressIndData[0]?.customerAddress);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[addressIndData])
+    // useEffect(() => {
+    //     setAddressData(addressIndData?.customerAddress);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // },[addressIndData])
 
     useEffect(() => {
         if (userId && !isAddressLoaded) {

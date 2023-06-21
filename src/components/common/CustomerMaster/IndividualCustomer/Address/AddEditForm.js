@@ -117,42 +117,55 @@ const AddEditForm = (props) => {
     };
 
     const handleSave = () => {
-        const value = form.getFieldsValue();
+        form.validateFields().then(() => {
+            const value = form.getFieldsValue();
 
-        if (isEditing) {
-            setAddressData((prev) => {
-                let formData = [...prev];
-                formData?.forEach((contact) => {
-                    if (contact?.defaultaddress === true) {
-                        contact.defaultaddress = false;
-                    }
-                });
-                const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode);
-                formData.splice(index, 1, { ...value, ...pinSearchData });
+            if (isEditing) {
+                setAddressData((prev) => {
+                    let formData = [...prev];
+                    console.log('formData', formData)
 
-                return [...formData];
 
-            });
-        } else {
-            setAddressData((prev) => {
-                let formData = [...prev];
-                if (value?.defaultaddress && formData?.length >= 1) {
                     formData?.forEach((contact) => {
                         if (contact?.defaultaddress === true) {
                             contact.defaultaddress = false;
                         }
                     });
-                    return [...formData, { ...value, ...pinSearchData }];
-                } else {
-                    return [...prev, { ...value, ...pinSearchData }];
-                }
-            });
-        }
-        setPinSearchData({})
-        setShowAddEditForm(false);
-        setIsEditing(false);
-        setEditingData({});
-        form.setFieldsValue();
+                    const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode);
+                    formData.splice(index, 1, { ...value, ...pinSearchData });
+
+                    return [...formData];
+
+                });
+            } else {
+                setAddressData((prev) => {
+                    let formData = [...prev];
+                    console.log('formData', formData)
+
+
+                    if (value?.defaultaddress && formData?.length >= 1) {
+                        formData?.forEach((contact) => {
+                            if (contact?.defaultaddress === true) {
+                                contact.defaultaddress = false;
+                            }
+                        });
+                        return [...formData, { ...value, ...pinSearchData }];
+                    } else {
+                        return [...prev, { ...value, ...pinSearchData }];
+                    }
+                });
+            }
+            setPinSearchData({})
+            setShowAddEditForm(false);
+            setIsEditing(false);
+            setEditingData({});
+            form.setFieldsValue();
+
+        }).catch((err) => {
+            console.log('err', err)
+
+        })
+
     }
 
 
@@ -167,7 +180,7 @@ const AddEditForm = (props) => {
 
                             <Select placeholder={preparePlaceholderSelect('address type')}>
                                 {addressType?.map((item) => (
-                                    <Option  key={'ct' + item?.key} value={item?.key} >{item?.name}</Option>
+                                    <Option key={'ct' + item?.key} value={item?.key} >{item?.name}</Option>
                                 )
 
                                 )}
@@ -222,7 +235,7 @@ const AddEditForm = (props) => {
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Contact Name" name="contactName" rules={[validateLettersWithWhitespaces('mobile number')]}>
+                        <Form.Item label="Contact Name" name="contactName" rules={[validateLettersWithWhitespaces('contact name')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
                         </Form.Item>
                     </Col>
@@ -231,7 +244,7 @@ const AddEditForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Contact Mobile" name="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
+                            <Input maxLength={50} placeholder={preparePlaceholderText('mobile number')} />
                         </Form.Item>
                     </Col>
                 </Row>
