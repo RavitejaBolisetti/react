@@ -1,25 +1,53 @@
-import React from 'react';
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+import React, { useEffect } from 'react';
 import { Space, Collapse, Typography, Divider, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import style from 'utils/PasswordStrengthMeter/PasswordStrengthMeter.module.css';
+import styles from 'components/common/Common.module.css';
+
 import { addToolTip } from 'utils/customMenuLink';
 import { DataTable } from 'utils/dataTable';
-import { taxDetailsColumn, optionalServicesColumns } from './tablecolumn';
+import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, onChange, styles, columns, data, formData, optionalData, optionalColumns } = props;
+    const { activeKey, onChange, tooltTipText, settooltTipText, modelData, styles, columns, data, formData, optionalData, optionalColumns } = props;
     const viewProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-
-    const text = 'Color - RED Seating Capacity - 7 Fuel - Diesel Variant - XUV 500 Name - XUV';
+    useEffect(() => {
+        if (modelData?.length > 0) {
+            settooltTipText(
+                <div>
+                    <p>
+                        Color:<span>{modelData['0']['color']}</span>
+                    </p>
+                    <p>
+                        Seating<span>{modelData['0']['seatingCapacity']}</span>
+                    </p>
+                    <p>
+                        Fuel<span>{modelData['0']['fuel']}</span>
+                    </p>
+                    <p>
+                        Variant<span>{modelData['0']['variant']}</span>
+                    </p>
+                    <p>
+                        Name<span>{modelData['0']['name']}</span>
+                    </p>
+                </div>
+            );
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [modelData]);
 
     return (
         <Space direction="vertical" size="middle" className={styles.accordianContainer}>
@@ -50,7 +78,7 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label="Vehicle Usage Type ">{formData?.vehicleUsageType ? formData?.vehicleUsageType : 'null'}</Descriptions.Item>
                         <Descriptions.Item label="Model">
                             {formData?.model}
-                            {addToolTip(text, 'bottom', '#20232C', style.infoTooltipDesign)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                            {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                         </Descriptions.Item>
                         <Descriptions.Item label="Model Code">{formData?.modelCode}</Descriptions.Item>
                         <Descriptions.Item label="Available Stock">{formData?.availableStock}</Descriptions.Item>

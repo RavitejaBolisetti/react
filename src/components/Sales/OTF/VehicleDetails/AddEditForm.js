@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Divider } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
@@ -6,11 +11,11 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FiEdit } from 'react-icons/fi';
 import { PARAM_MASTER } from 'constants/paramMaster';
-
+import { OptionServicesForm } from './OptionServicesForm';
 import styles from 'components/common/Common.module.css';
 
 import { DataTable } from 'utils/dataTable';
-import { taxDetailsColumn, optionalServicesColumns } from './tablecolumn';
+import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 import { ActiveText, dynamicExpandIcon } from 'utils/accordianExpandIcon';
 const { Text } = Typography;
 
@@ -18,12 +23,12 @@ const { Option } = Select;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { activeKey, formData, onChange, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
+    const { activeKey, formData, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
     const [form] = Form.useForm();
 
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [openAccordian, setOpenAccordian] = useState();
-    const [optionsServicesMapping,setoptionsServicesMapping]=useState([{}])
+    const [optionsServicesMapping, setoptionsServicesMapping] = useState([{}]);
     const disabledProp = { disabled: true };
     useEffect(() => {
         if (formActionType?.editMode && formData) {
@@ -57,6 +62,12 @@ const AddEditFormMain = (props) => {
         setOpenAccordian('3');
         setIsReadOnly(true);
     };
+    const handleCancel = () => {
+        setIsReadOnly(false);
+    };
+    const OptionServicesFormProps = {
+        handleCancel,
+    };
 
     return (
         <Row gutter={20}>
@@ -82,9 +93,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item label="Model" name="model" data-testid="model">
-                                            <Select placeholder="Select" allowClear>
-                                                <Option value="model">customerType</Option>
-                                            </Select>
+                                            <Select placeholder="Select" allowClear options={ProductHierarchyData} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -201,6 +210,7 @@ const AddEditFormMain = (props) => {
                             }
                             key="3"
                         >
+                            {isReadOnly && <OptionServicesForm {...OptionServicesFormProps} />}
                             <DataTable tableColumn={optionalServicesColumns} tableData={formData['optionalServices']} removePagination={true} />
                         </Panel>
                     </Collapse>

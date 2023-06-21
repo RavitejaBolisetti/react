@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Typography, Space, Collapse } from 'antd';
 
@@ -5,6 +10,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+
 import { showGlobalNotification } from 'store/actions/notification';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -21,6 +28,7 @@ const mapStateToProps = (state) => {
                 VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: VehicleDetailsData = [] },
             },
             ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isTypeDataLoading, paramdata: typeData = [] },
+            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: ProductHierarchyData = [] },
         },
     } = state;
 
@@ -34,6 +42,8 @@ const mapStateToProps = (state) => {
         moduleTitle,
         typeData: typeData,
         isTypeDataLoaded,
+        ProductHierarchyData,
+        isProductHierarchyDataLoaded,
     };
     return returnValue;
 };
@@ -43,6 +53,8 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: otfvehicleDetailsDataActions.fetchList,
+            fetchProductLov: productHierarchyDataActions.fetchFilteredList,
+            ProductLovLoading: productHierarchyDataActions.listShowLoading,
             fetchconfigList: configParamEditActions.fetchList,
             configLoading: configParamEditActions.listShowLoading,
             listShowLoading: otfvehicleDetailsDataActions.listShowLoading,
@@ -54,9 +66,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { VehicleDetailsData, formActionType, typeData, fetchList, isTypeDataLoaded, resetData, configLoading, fetchconfigList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { VehicleDetailsData, fetchProductLov, ProductLovLoading, isProductHierarchyDataLoaded, ProductHierarchyData, formActionType, typeData, fetchList, isTypeDataLoaded, resetData, configLoading, fetchconfigList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const [activeKey, setactiveKey] = useState([1]);
-    const [formData, setformData] = useState([{}]);
+    const [formData, setformData] = useState({});
+    const [modelData, setmodelData] = useState();
+    const [tooltTipText, settooltTipText] = useState();
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -68,6 +82,7 @@ const VehicleDetailsMasterMain = (props) => {
     };
     const loadDependendData = () => {
         fetchconfigList({ setIsLoading: configLoading, userId, onErrorAction, parameterType: PARAM_MASTER.VEHCL_TYPE.id });
+        fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
     };
 
     const extraParams = [
@@ -106,6 +121,14 @@ const VehicleDetailsMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isTypeDataLoaded, isDataLoaded]);
+    useEffect(() => {
+        if (ProductHierarchyData && isProductHierarchyDataLoaded && userId) {
+            console.log('ProductHierarchyData', ProductHierarchyData);
+            setmodelData(ProductHierarchyData?.filter((element) => element?.prodctCode === VehicleDetailsData?.model));
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ProductHierarchyData, isProductHierarchyDataLoaded, userId]);
     const formProps = {
         formData,
         formActionType,
@@ -113,6 +136,7 @@ const VehicleDetailsMasterMain = (props) => {
         setactiveKey,
         onChange,
         typeData,
+        ProductHierarchyData,
     };
     const viewProps = {
         activeKey,
@@ -120,6 +144,10 @@ const VehicleDetailsMasterMain = (props) => {
         onChange,
         styles,
         formData,
+        ProductHierarchyData,
+        modelData,
+        tooltTipText,
+        settooltTipText,
     };
 
     return (
