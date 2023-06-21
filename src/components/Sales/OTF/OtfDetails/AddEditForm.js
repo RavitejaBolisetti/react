@@ -56,7 +56,7 @@ function AddEditForm(props) {
                                 </Form.Item>
                             </Col>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item initialValue={formData?.saleConsultant} name="salesConsultant" label="Sales Consultant" rules={[validateRequiredSelectField('Sales Consultant')]}>
+                                <Form.Item initialValue={formData?.saleConsultant} name="saleConsultant" label="Sales Consultant" rules={[validateRequiredSelectField('Sales Consultant')]}>
                                     <Select placeholder="Select" showSearch allowClear>
                                         <Option value="salesConsultant">salesConsultant</Option>
                                     </Select>
@@ -103,8 +103,7 @@ function AddEditForm(props) {
                                 <Form.Item
                                     initialValue={formData?.modeOfPAyment}
                                     label="Mode Of Payment"
-                                    name="modeOfPAyment
-"
+                                    name="modeOfPAyment"
                                     rules={[validateRequiredInputField('Mode Of Payment')]}
                                 >
                                     <Input maxLength={50} placeholder={preparePlaceholderText('Mode Of Payment')} disabled={formActionType?.editMode ? true : false} />
@@ -116,14 +115,14 @@ function AddEditForm(props) {
                                 </Form.Item>
                             </Col>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item initialValue={formActionType?.editMode ? formData?.exchange : true} labelAlign="left" wrapperCol={{ span: 24 }} name="exchange" label="Exchange" valuePropName="checked">
+                                <Form.Item initialValue={formActionType?.editMode ? (formData?.exchange === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="exchange" label="Exchange" valuePropName="checked">
                                     <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item initialValue={formActionType?.editMode ? formData?.loyalityScheme : true} labelAlign="left" wrapperCol={{ span: 24 }} name="loyalityScheme" label="Loyality Scheme" valuePropName="checked">
+                                <Form.Item initialValue={formActionType?.editMode ? (formData?.loyaltyScheme === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="loyaltyScheme" label="Loyality Scheme" valuePropName="checked">
                                     <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                                 </Form.Item>
                             </Col>

@@ -92,7 +92,6 @@ const CustomerMasterMain = (props) => {
 
     const [form] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
-
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
@@ -175,12 +174,7 @@ const CustomerMasterMain = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
         form.resetFields();
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-
-        setIsFormVisible(true);
-
         if (buttonAction === NEXT_ACTION) {
-            const section = Object.values(sectionName)?.find((i) => i.id > currentSection);
             section && setCurrentSection(section?.id);
         }
 
@@ -253,7 +247,6 @@ const CustomerMasterMain = (props) => {
         titleOverride: drawerTitle.concat(moduleTitle),
         tableData: data,
         customerType,
-
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,

@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 import { Row, Col, Collapse, Form, Space, Typography, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -11,6 +11,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { customerDetailDataActions } from 'store/actions/customer/customerContacts';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -65,18 +67,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const extraParams = [
-    {
-        key: 'customerId',
-        title: 'customerId',
-        value: 'CUS1686833188888',
-        name: 'customerId',
-    },
-];
-
 const ContactMain = (props) => {
     const { section, userId, isViewModeVisible, toggleButton, fetchConfigList, resetData, listConfigShowLoading, fetchContactDetailsList, customerData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData, isConfigDataLoaded, isConfigLoading } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+    const { buttonData, setButtonData, selectedCustomer, formActionType, setFormActionType, defaultBtnVisiblity } = props;
 
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
@@ -84,18 +77,29 @@ const ContactMain = (props) => {
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-    console.log('typeData', typeData, 'customerData', customerData?.customerContact);
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+
+    const extraParams = [
+        {
+            key: 'customerId',
+            title: 'customerId',
+            value: 'CUS1686833188888',
+            // value: selectedCustomer?.customerId,
+            name: 'customerId',
+        },
+    ];
+
 
     useEffect(() => {
         if (userId && !isCustomerDataLoaded && !isConfigLoading) {
             fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
-        } else if (userId && customerData?.length) {
-            setContactData(customerData[0]?.customerContact);
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, customerData]);
+    }, [userId]);
 
     useEffect(() => {
         if (userId && !isConfigDataLoaded && !isConfigLoading) {
@@ -106,6 +110,13 @@ const ContactMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
+
+    useEffect(() => {
+        if (userId && customerData?.customerContact?.length) {
+            setContactData(customerData?.customerContact);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [customerData]);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -120,11 +131,10 @@ const ContactMain = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-    const onFinish = (value) => {
+    const onSaveFormData = (value) => {
         if (isEditing) {
             setContactData((prev) => {
                 let formData = [...prev];
-                // if (value?.defaultaddress && formData?.length > 1) {
                 formData?.forEach((contact) => {
                     if (contact?.defaultaddress === true) {
                         contact.defaultaddress = false;
@@ -133,9 +143,6 @@ const ContactMain = (props) => {
                 const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
                 formData.splice(index, 1, { ...value });
                 return [...formData];
-                // } else {
-                //     return [...prev, { ...value }];
-                // }
             });
         } else {
             setContactData((prev) => {
@@ -163,7 +170,6 @@ const ContactMain = (props) => {
     };
 
     const deleteContactHandeler = (data) => {
-        console.log('delete Data', data);
         setContactData((prev) => {
             const updatedList = [...prev];
             const index = prev?.findIndex((el) => el?.contactMobileNumber === data?.contactMobileNumber && el?.contactNameFirstName === data?.contactNameFirstName);
@@ -171,6 +177,19 @@ const ContactMain = (props) => {
             return [...updatedList];
         });
     };
+
+    const onCheckdefaultAddClick = (e, value) => {
+        e.stopPropagation();
+        setContactData((prev) => {
+            let updetedData = prev?.map((contact) => ({...contact, defaultContactIndicator: false}));
+            const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.mobileNumber === value?.mobileNumber && el?.FirstName === value?.FirstName);
+            updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked});
+            return [...updetedData];
+        });
+        forceUpdate();
+    };
+
+    console.log('contactData', contactData)
 
     const addBtnContactHandeler = (e) => {
         e.stopPropagation();
@@ -184,7 +203,7 @@ const ContactMain = (props) => {
         showAddEditForm,
         setContactData,
         contactData,
-        onFinish,
+        onFinish: onSaveFormData,
         styles,
         form,
         isEditing,
@@ -193,13 +212,15 @@ const ContactMain = (props) => {
         isViewModeVisible,
         setEditingData,
         typeData,
+        onCheckdefaultAddClick,
     };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
-    return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+
+    return (<>
+        {/* <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSaveFormData} onFinishFailed={onFinishFailed}> */}
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title} </h2>
@@ -228,7 +249,8 @@ const ContactMain = (props) => {
                     <CustomerFormButton {...props} />
                 </Col>
             </Row>
-        </Form>
+        {/* </Form> */}
+        </>
     );
 };
 
