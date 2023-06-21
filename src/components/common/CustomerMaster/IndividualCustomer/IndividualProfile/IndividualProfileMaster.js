@@ -75,7 +75,7 @@ const IndividualProfileBase = (props) => {
     const [form] = Form.useForm();
 
     const [formData, setFormData] = useState([]);
-    const [activeKey, setactiveKey] = useState([1]);
+    const [activeKey, setActiveKey] = useState([1]);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -201,6 +201,7 @@ const IndividualProfileBase = (props) => {
         formData: indiviualData,
         styles,
         activeKey,
+        setActiveKey,
     };
 
     const handleFormValueChange = () => {

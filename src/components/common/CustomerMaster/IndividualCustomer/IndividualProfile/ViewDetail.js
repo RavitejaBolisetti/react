@@ -14,7 +14,23 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, onChange, styles } = props;
+    const { activeKey, setActiveKey, styles } = props;
+    const onChange = (values) => {
+        const isPresent = activeKey.includes(values);
+
+        if (isPresent) {
+            const newActivekeys = [];
+
+            activeKey.forEach((item) => {
+                if (item !== values) {
+                    newActivekeys.push(item);
+                }
+            });
+            setActiveKey(newActivekeys);
+        } else {
+            setActiveKey([...activeKey, values]);
+        }
+    };
     const viewProps = {
         bordered: false,
         colon: false,

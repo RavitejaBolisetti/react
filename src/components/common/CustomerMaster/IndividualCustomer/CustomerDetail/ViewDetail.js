@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Descriptions, Card, Divider, Col, Row, Button } from 'antd';
+import { Typography, Space, Descriptions, Card, Divider, Tag, Col, Row, Button } from 'antd';
 import { BiTimeFive } from 'react-icons/bi';
 import { FiEdit } from 'react-icons/fi';
 
@@ -19,7 +19,7 @@ const ViewDetailMain = (props) => {
                 <Card
                     header={
                         <div className={styles.alignUser}>
-                            <FaRegUserCircle className={styles.userCircle} />
+                            {/* <FaRegUserCircle className={styles.userCircle} /> */}
                             <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                 Customer Information
                             </Text>
@@ -41,27 +41,28 @@ const ViewDetailMain = (props) => {
                                 </Button>
                             </Col>
                             <Divider />
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                {formData?.title}
-                                <span className={styles.nameSpacing}></span>
-                                {formData?.firstName}
-                                <span className={styles.nameSpacing}></span>
-                                {formData?.middleName}
-                                <span className={styles.nameSpacing}></span>
-                                {formData?.lastName}
-                            </Col>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                                <Button type="link" icon={<FiEdit />}>
-                                    Edit
-                                </Button>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.customerName}>
+                                <Text>
+                                    {formData?.title}
+                                    <span className={styles.nameSpacing}></span>
+                                    {formData?.firstName}
+                                    <span className={styles.nameSpacing}></span>
+                                    {formData?.middleName}
+                                    <span className={styles.nameSpacing}></span>
+                                    {formData?.lastName}
+                                </Text>
+                                <Tag color="success">Approved</Tag>
                             </Col>
                         </Row>
                     </div>
-                    <Descriptions>
+                    <Descriptions {...viewProps}>
                         <Descriptions.Item label="Email Id">{formData?.emailId}</Descriptions.Item>
                         <Descriptions.Item label="Do you want to contact over whatsapp?">{formData?.corporateName}</Descriptions.Item>
+                        <Descriptions />
+                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?">{formData?.whatsappNumber}</Descriptions.Item>
                         <Descriptions.Item label="Whatsapp Number">{formData?.whatsappNumber}</Descriptions.Item>
-                        <Divider />
+                    </Descriptions>
+                    <Descriptions {...viewProps}>
                         <Descriptions.Item label="Corporate Type">{formData?.corporateType}</Descriptions.Item>
                         <Descriptions.Item label="Corporate Name">{formData?.corporateName}</Descriptions.Item>
                         <Descriptions.Item label="Corporate Category">{formData?.corporateCategory}</Descriptions.Item>
