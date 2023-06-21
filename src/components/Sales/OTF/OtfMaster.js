@@ -17,6 +17,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
+import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
+
 
 import { FilterIcon } from 'Icons';
 
@@ -68,6 +70,8 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: otfDetailsDataActions.reset,
             listShowLoading: otfDetailsDataActions.listShowLoading,
             showGlobalNotification,
+
+
         },
         dispatch
     ),
@@ -100,6 +104,30 @@ export const OtfMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
+    const extraParams = [
+        {
+            key: 'searchType',
+            title: 'Type',
+            value: filterString?.searchType,
+            canRemove: true,
+        },{
+            key: 'searchParam',
+            title: 'Value',
+            value: filterString?.searchParam,
+            canRemove: true,
+        },{
+            key: 'pageSize',
+            title: 'Value',
+            value: 9,
+            canRemove: true,
+        },{
+            key: 'pageNumber',
+            title: 'Value',
+            value: 1,
+            canRemove: true,
+        }
+    ];
+
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
@@ -115,7 +143,12 @@ export const OtfMasterBase = (props) => {
         showGlobalNotification(message);
     };
 
-   
+    useEffect(() => {
+        if (userId) {
+            //fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [refershData, userId]);
 
     // useEffect(() => {
     //     if (!isDataLoaded && userId) {
@@ -178,19 +211,17 @@ export const OtfMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        if (value?.trim()?.length >= 3) {
-            setFilterString({ ...filterString, advanceFilter: false, keyword: value });
-        }
-
-        if (otfSearchSelected !== undefined && otfSearchSelected && otfSearchSelected?.length > 0) console.log('otfSearchSelected', otfSearchSelected);
-
         if (value === '') {
             return;
         }
+        if (value?.trim()?.length >= 3) {
+            //setFilterString({ ...filterString, searchParam: value });
+        }
 
-        if (otfSearchSelected === 'OTF No') setOtfSearchResult(initialTableData.filter((data) => data.otfNumber.includes(value)));
-        else if (otfSearchSelected === 'Mobile No') setOtfSearchResult(initialTableData.filter((data) => data.mobileNumber.includes(value)));
-        else if (otfSearchSelected === 'Customer Name') setOtfSearchResult(initialTableData.filter((data) => data.customerName.includes(value)));
+        // if (otfSearchSelected !== undefined && otfSearchSelected && otfSearchSelected?.length > 0) console.log('otfSearchSelected', otfSearchSelected);
+        // if (otfSearchSelected === 'OTF No') setOtfSearchResult(initialTableData.filter((data) => data.otfNumber.includes(value)));
+        // else if (otfSearchSelected === 'Mobile No') setOtfSearchResult(initialTableData.filter((data) => data.mobileNumber.includes(value)));
+        // else if (otfSearchSelected === 'Customer Name') setOtfSearchResult(initialTableData.filter((data) => data.customerName.includes(value)));
     };
 
     const handleResetFilter = (e) => {
@@ -292,13 +323,18 @@ export const OtfMasterBase = (props) => {
     };
 
     const handleOTFChange = (selectedvalue) => {
+        setFilterString({ searchType: selectedvalue });
         setOtfSearchSelected(selectedvalue); // will use this on search data.
         setOtfSearchResult(initialTableData); // Set All data which is coming from API.
         setOtfSearchvalue(''); // Cleared search value
     };
 
     const ChangeSearchHandler = (event) => {
-        setOtfSearchvalue(event.target.value);
+        if (event.target.value === undefined) {
+            return false;
+        }
+        setFilterString({ ...filterString, searchParam: event.target.value });
+        //setOtfSearchvalue(event.target.value);
     };
 
     const handleFilterChange =
