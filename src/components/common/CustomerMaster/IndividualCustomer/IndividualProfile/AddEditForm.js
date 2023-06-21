@@ -423,32 +423,32 @@ const AddEditFormMain = (props) => {
                             >
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Code" name="accountCode" initialValue={'CFG464787'}>
+                                        <Form.Item label="Account Code" name="accountCode" initialValue={formData?.accountCode}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter account code')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Name" name="accountName" initialValue={'Koncept'}>
+                                        <Form.Item label="Account Name" name="accountName" initialValue={formData?.accountName}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Segement" name="accountSegment" initialValue={'Individual'}>
+                                        <Form.Item label="Account Segement" name="accountSegment" initialValue={formData?.accountSegment}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} disabled />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Client Name" name="accountClientName" initialValue={'Pal Singh'}>
+                                        <Form.Item label="Account Client Name" name="accountClientName" initialValue={formData?.accountClientName}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Mapping Date" name="accountMappingDate" initialValue={'12-11-2022'}>
+                                        <Form.Item label="Account Mapping Date" name="accountMappingDate" initialValue={formData?.accountMappingDate}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
                                         </Form.Item>
                                     </Col>
