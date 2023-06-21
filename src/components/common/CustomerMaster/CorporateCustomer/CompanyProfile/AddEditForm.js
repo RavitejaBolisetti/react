@@ -247,7 +247,7 @@ const AddEditFormMain = (props) => {
                                                     Social Profiles
                                                 </Text>
                                             </div>
-                                        </div>{' '}
+                                        </div>
                                     </>
                                 }
                             >
