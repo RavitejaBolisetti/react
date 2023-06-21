@@ -103,7 +103,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                             }
                             key={1}
                         >
-                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnInvoice()} tableData={invoiceData && invoiceData[0]?.invoiceDetails} />
+                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnInvoice()} tableData={invoiceData?.invoiceDetails} />
                         </Panel>
                     </Collapse>
                     <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
@@ -117,7 +117,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                             }
                             key={2}
                         >
-                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnDelivery()} tableData={invoiceData && invoiceData[0]?.deliveryDetails} />
+                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />
                         </Panel>
                     </Collapse>
                 </Space>

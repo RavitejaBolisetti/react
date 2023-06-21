@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
@@ -60,6 +60,8 @@ export const AccountRelatedMasterBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, moduleTitle, isLoaded, data, saveData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
 
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
+
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [refershData, setRefershData] = useState(false);
 
@@ -72,7 +74,7 @@ export const AccountRelatedMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const indivisualCustomer = 'CUS123';
+    const indivisualCustomer = 'CUS1687196336704';
     const extraParams = [
         {
             key: 'customerId',
@@ -89,6 +91,7 @@ export const AccountRelatedMasterBase = (props) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
+        forceUpdate();
     };
 
     useEffect(() => {
@@ -110,12 +113,13 @@ export const AccountRelatedMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, customerId: 'CUS123' };
-        console.log(form.getFieldValue(), 'Shikhar');
+        const data = { ...values, customerId: 'CUS1687196336704' };
 
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
+
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, errorAction });
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
 
@@ -141,7 +145,6 @@ export const AccountRelatedMasterBase = (props) => {
             onError,
             onSuccess,
         };
-        console.log(requestData, 'KARTIK ');
         saveData(requestData);
     };
 
@@ -167,7 +170,7 @@ export const AccountRelatedMasterBase = (props) => {
 
     const formProps = {
         form,
-        formData: data['0'],
+        formData: data[0],
         formActionType,
         setFormActionType,
         onFinish,
@@ -185,7 +188,7 @@ export const AccountRelatedMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        formData: data['0'],
+        formData: data[0],
         styles,
     };
 
