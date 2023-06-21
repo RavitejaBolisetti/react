@@ -3,8 +3,8 @@ export const CUSTOMER_TYPE = {
         id: 'individual',
         title: 'Individual',
     },
-    FIRM: {
-        id: 'firm',
-        title: 'Firm/Company',
+    CORPORATE: {
+        id: 'corporate',
+        title: 'Corporate',
     },
 };

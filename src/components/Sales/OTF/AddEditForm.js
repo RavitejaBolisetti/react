@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
@@ -175,7 +180,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Row gutter={0}> 
+            <Row gutter={0}>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

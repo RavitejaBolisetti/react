@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -8,16 +13,15 @@ import { customerDetailDataActions } from 'store/actions/customer/customerDetail
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { PlusOutlined } from '@ant-design/icons';
-
 import { tableColumn } from './tableColumn';
 
 import { btnVisiblity } from 'utils/btnVisiblity';
-import DataTable from 'utils/dataTable/DataTable';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
-import { AddEditForm } from './AddEditForm';
+import DataTable from 'utils/dataTable/DataTable';
+import { CustomerMainConatiner } from './CustomerMainConatiner';
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
@@ -71,15 +75,19 @@ const mapDispatchToProps = (dispatch) => ({
 const CustomerMasterMain = (props) => {
     const { data, fetchList, userId, isLoading, listShowLoading, showGlobalNotification, resetData, moduleTitle } = props;
     const { isConfigDataLoaded, isConfigLoading, typeData, listConfigShowLoading, fetchConfigList } = props;
+    const { filterString, setFilterString } = props;
 
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
+    const [selectedCustomer, setSelectedCustomer] = useState();
+    console.log('🚀 ~ file: CustomerMaster.js:82 ~ CustomerMasterMain ~ selectedCustomer:', selectedCustomer);
 
     const [form] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [refershData, setRefershData] = useState(false);
 
-    const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
+
+    const [selectedCustomerId, setSelectedCustomerId] = useState('');
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -91,13 +99,17 @@ const CustomerMasterMain = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const extraParams = [
+    const defaultExtraParam = [
         {
             key: 'customerType',
             title: 'Customer Type',
             value: customerType,
             canRemove: true,
         },
+    ];
+
+    const extraParams = [
+        ...defaultExtraParam,
         {
             key: 'searchType',
             title: 'Type',
@@ -125,7 +137,7 @@ const CustomerMasterMain = (props) => {
     };
 
     useEffect(() => {
-        if (!isConfigDataLoaded && !isConfigLoading) {
+        if (!isConfigDataLoaded && !isConfigLoading && userId) {
             fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CUST_MST.id });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -134,9 +146,8 @@ const CustomerMasterMain = (props) => {
     useEffect(() => {
         if (userId && customerType) {
             resetData();
-            fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, extraParams: defaultExtraParam, userId, onSuccessAction, onErrorAction });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType, userId]);
 
@@ -149,10 +160,9 @@ const CustomerMasterMain = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
-
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-
+        setSelectedCustomer(record);
         setIsFormVisible(true);
     };
 
@@ -191,7 +201,8 @@ const CustomerMasterMain = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
+        setFormActionType(defaultFormActionType);
+        setButtonData(defaultBtnVisiblity);
     };
 
     const drawerTitle = useMemo(() => {
@@ -200,11 +211,11 @@ const CustomerMasterMain = (props) => {
         } else if (formActionType?.editMode) {
             return 'Edit ';
         } else {
-            return 'Add New';
+            return 'Add New ';
         }
     }, [formActionType]);
 
-    const formProps = {
+    const containerProps = {
         form,
         formActionType,
         setFormActionType,
@@ -223,6 +234,10 @@ const CustomerMasterMain = (props) => {
 
         setButtonData,
         handleButtonClick,
+        defaultFormActionType,
+        defaultBtnVisiblity,
+        selectedCustomer,
+        setSelectedCustomer,
     };
 
     const selectProps = {
@@ -245,15 +260,9 @@ const CustomerMasterMain = (props) => {
                                             </Button>
                                         );
                                     })}
-                                    {/* <Button className={styles.marR5} type={customerType === 'Individual' ? 'primary' : 'link'} danger onClick={() => setCustomerType('Individual')}>
-                                        Individual
-                                    </Button>
-                                    <Button type={customerType === 'Firm' ? 'primary' : 'link'} danger onClick={() => setCustomerType('Firm')}>
-                                        Firm/Company
-                                    </Button> */}
                                 </div>
                                 <div className={styles.selectSearchBg}>
-                                    <Select {...selectProps} className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter">
+                                    <Select {...selectProps} value={filterString?.searchType} className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter">
                                         {typeData?.map((item) => (
                                             <Option key={'pnc' + item?.key} value={item?.key}>
                                                 {item?.value}
@@ -264,7 +273,7 @@ const CustomerMasterMain = (props) => {
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
-                                <Button danger type="primary" icon={<PlusOutlined />}>
+                                <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                     Add
                                 </Button>
                             </Col>
@@ -290,7 +299,7 @@ const CustomerMasterMain = (props) => {
                     </ConfigProvider>
                 </Col>
             </Row>
-            <AddEditForm {...formProps} />
+            <CustomerMainConatiner {...containerProps} />
         </>
     );
 };
