@@ -163,6 +163,7 @@ const CompanyProfileBase = (props) => {
         formActionType,
         appCategoryData,
         styles,
+        form,
         formData: customerProfileData,
     };
 
