@@ -60,10 +60,10 @@ const ViewDetailMain = (props) => {
                     </div>
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Email Id">{formData?.emailId}</Descriptions.Item>
-                        <Descriptions.Item label="Do you want to contact over whatsapp?">{formData?.corporateName}</Descriptions.Item>
+                        <Descriptions.Item label="Do you want to contact over whatsapp?">{formData?.whatsappCommunicationIndicator}</Descriptions.Item>
                         <Descriptions />
-                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?">{formData?.whatsappNumber}</Descriptions.Item>
-                        <Descriptions.Item label="Whatsapp Number">{formData?.whatsappNumber}</Descriptions.Item>
+                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?">{formData?.mobileNumberAsWhatsappNumber}</Descriptions.Item>
+                        <Descriptions.Item label="Whatsapp Number">{formData?.whatsAppNumber}</Descriptions.Item>
                     </Descriptions>
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Corporate Type">{formData?.corporateType}</Descriptions.Item>
