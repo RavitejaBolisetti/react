@@ -16,16 +16,16 @@ const ViewIndividualAddressDetailsBase = (props) => {
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Address Type">{formData?.addressType}</Descriptions.Item>
-                    <Descriptions.Item label="Address Line 1">{formData?.address}</Descriptions.Item>
-                    <Descriptions.Item label="Address Line 2">{formData?.address2}</Descriptions.Item>
-                    <Descriptions.Item label="Pincode">{formData?.pincode}</Descriptions.Item>
-                    <Descriptions.Item label="Tehsil">{formData?.tehsil}</Descriptions.Item>
-                    <Descriptions.Item label="City">{formData?.city}</Descriptions.Item>
-                    <Descriptions.Item label="District">{formData?.district}</Descriptions.Item>
-                    <Descriptions.Item label="State">{formData?.state}</Descriptions.Item>
-                    <Descriptions.Item label="Contact Name">{formData?.contactpersonName}</Descriptions.Item>
-                    <Descriptions.Item label="Contact Mobile">{formData?.contactmobilenumber}</Descriptions.Item>
-                    <Descriptions.Item>{formData?.defaultaddress}</Descriptions.Item>
+                    <Descriptions.Item label="Address Line 1">{formData?.addressLine1}</Descriptions.Item>
+                    <Descriptions.Item label="Address Line 2">{formData?.addressLine2}</Descriptions.Item>
+                    <Descriptions.Item label="Pincode">{formData?.pinCode}</Descriptions.Item>
+                    <Descriptions.Item label="Tehsil">{formData?.tehsilCode}</Descriptions.Item>
+                    <Descriptions.Item label="City">{formData?.cityCode}</Descriptions.Item>
+                    <Descriptions.Item label="District">{formData?.districtCode}</Descriptions.Item>
+                    <Descriptions.Item label="State">{formData?.stateCode}</Descriptions.Item>
+                    <Descriptions.Item label="Contact Name">{formData?.contactName}</Descriptions.Item>
+                    <Descriptions.Item label="Contact Mobile">{formData?.mobileNumber}</Descriptions.Item>
+                    <Descriptions.Item>{formData?.deafultAddressIndicator}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>
