@@ -233,7 +233,7 @@ productHierarchyDataActions.fetchAttributeNameList = withAuthToken((params) => (
     axiosAPICall(apiCallParams);
 });
 productHierarchyDataActions.fetchFilteredList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data } = params;
+    const { setIsLoading, data, extraparams } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
@@ -248,7 +248,7 @@ productHierarchyDataActions.fetchFilteredList = withAuthToken((params) => ({ tok
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_PRODUCT_HIERARCHY + '/lov',
+        url: BASE_URL_PRODUCT_HIERARCHY + '/lov' + (extraparams ? '?' + extraparams['0']['key'] + '=' + extraparams['0']['value'] : ''),
         token,
         accessToken,
         userId,

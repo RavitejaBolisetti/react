@@ -42,25 +42,26 @@
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
 }
-.tooltipTextAlign {
+.tooltipAlign {
     display: flex;
-    flex-direction: column;
-    width: 225px;
-    border: #2782f9;
-    height: 124px;
+    align-items: center;
 }
-.tooltipTextAlign > p {
+.tooltipAlign > svg {
+    margin-left: 5px;
+    color: #2782f9;
+}
+.toolTip :global .ant-tooltip-content .ant-tooltip-inner p {
     padding-left: 12px !important;
 }
 .toolTip :global .ant-tooltip-content {
     border: 1px solid #2782f9 !important;
     background: #d3edfe;
     border-radius: 4px;
+    width: 225px;
 }
 .toolTip :global .ant-tooltip-arrow::before {
     background: #2782f9;
 }
-
 
 .content :global .ant-tree-show-line .ant-tree-switcher-line-icon svg {
     width: 1.25em;
@@ -589,8 +590,8 @@
     padding: 12px 20px;
 }
 
-.accordianContainer :global .ant-collapse>.ant-collapse-item.ant-collapse-item-active>.ant-collapse-header {
-    color: #0B0B0C;
+.accordianContainer :global .ant-collapse > .ant-collapse-item.ant-collapse-item-active > .ant-collapse-header {
+    color: #0b0b0c;
     background: #f2f2f2;
     border-radius: 7px 7px 0 0;
 }
@@ -1465,7 +1466,7 @@
 }
 
 .drawerBodyLeft :global .ant-avatar .ant-avatar-string {
-    color: #0B0B0C;
+    color: #0b0b0c;
     font-size: 26px;
     font-weight: 600;
 }
@@ -1544,10 +1545,10 @@
     font-size: 24px;
     color: #70c922;
 }
-.drawerBodyLeft :global .ant-timeline .ant-timeline-item-head-custom{
+.drawerBodyLeft :global .ant-timeline .ant-timeline-item-head-custom {
     inset-block-start: 0px;
 }
-.drawerBodyLeft :global .ant-timeline .ant-timeline-item-content{
+.drawerBodyLeft :global .ant-timeline .ant-timeline-item-content {
     inset-block-start: -13px;
 }
 .drawerBodyLeft :global .ant-progress.ant-progress-status-success .ant-progress-bg {
@@ -1620,8 +1621,8 @@
     width: 80px;
 }
 
-.drawerBodyRight :global .ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title,
-.drawerBodyRight :global .ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
+.drawerBodyRight :global .ant-steps .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title,
+.drawerBodyRight :global .ant-steps .ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title {
     color: #0b0b0c;
     font-size: 10px;
     font-weight: 500;
@@ -1641,7 +1642,7 @@
     border-radius: 8px;
 }
 
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-label>label {
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-label > label {
     color: #545454;
     font-size: 14px;
     line-height: 23px;
@@ -1652,24 +1653,24 @@
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input {
     height: 36px;
     padding: 5px 12px;
-    border-color: #B5B5B6;
-    color: #0B0B0C;
+    border-color: #b5b5b6;
+    color: #0b0b0c;
     border-radius: 4px;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input:hover {
-    border-color: #0B0B0C;
+    border-color: #0b0b0c;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input-disabled,
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input[disabled] {
     color: #858585;
-    background-color: #E6E6E6;
+    background-color: #e6e6e6;
     border-color: #858585;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input::placeholder {
-    color: #B5B5B6;
+    color: #b5b5b6;
     font-size: 14px;
     line-height: 23px;
     font-weight: 400;
@@ -1677,18 +1678,18 @@
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector {
     padding: 5px 12px;
-    border-color: #B5B5B6;
+    border-color: #b5b5b6;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector .ant-select-selection-item {
     font-size: 14px;
     line-height: 23px;
     font-weight: 400;
-    color: #0B0B0C;
+    color: #0b0b0c;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector .ant-select-selection-placeholder {
-    color: #B5B5B6;
+    color: #b5b5b6;
     font-size: 14px;
     line-height: 23px;
     font-weight: 400;
@@ -1697,7 +1698,7 @@
 .drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
     margin-top: 0;
     margin-bottom: 20px;
-    border-color: #E6E6E6;
+    border-color: #e6e6e6;
 }
 
 .drawerBodyRight :global .ant-table-wrapper table {
@@ -1839,7 +1840,7 @@
     color: #ff3e5b;
 }
 
-.drawerBodyRight :global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item-active>.ant-collapse-header .ant-collapse-expand-icon {
+.drawerBodyRight :global .ant-collapse.ant-collapse-icon-position-end > .ant-collapse-item-active > .ant-collapse-header .ant-collapse-expand-icon {
     color: #ff3e5b;
     /* color: #b5b5b6; */
     /* pointer-events: none; */
@@ -1923,7 +1924,7 @@
     border: 1px solid #ff3e5b !important;
     background-color: transparent !important;
 }
-.drawerBodyRight .collapseable{
+.drawerBodyRight .collapseable {
     padding-left: 0px;
     padding-top: 3px;
 }
@@ -1941,9 +1942,11 @@
     align-items: center;
 }
 
-
 .iconsColor {
     color: #ff3e5b !important;
+}
+.activeTextColor {
+    color: #b5b5b6 !important;
 }
 
 .ExchangeCard {
@@ -1961,7 +1964,7 @@
 .activeForm {
     color: #ff3e5b !important;
 }
-.ant-timeline-item-tail{}
+
 .inactiveForm {
     color: #00a310;
 }

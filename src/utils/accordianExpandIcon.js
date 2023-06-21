@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
@@ -10,7 +15,7 @@ export const ActiveText = (isActive, ExpandIcon, InactiveIcon, activeText = 'Edi
     return (
         <div>
             {dynamicExpandIcon(isActive, ExpandIcon, InactiveIcon, activeText, inactiveText)}
-            {isActive ? activeText : inactiveText}
+            {isActive ? <div className={styles.activeTextColor}>{activeText}</div> : inactiveText}
         </div>
     );
 };

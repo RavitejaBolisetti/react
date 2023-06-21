@@ -26,22 +26,23 @@ const ViewDetailMain = (props) => {
     };
     useEffect(() => {
         if (modelData?.length > 0) {
+            console.log('modelData', modelData);
             settooltTipText(
                 <div>
                     <p>
-                        Color:<span>{modelData['0']['color']}</span>
+                        Color - <span>{modelData['0']['color']}</span>
                     </p>
                     <p>
-                        Seating<span>{modelData['0']['seatingCapacity']}</span>
+                        Seating - <span>{modelData['0']['seatingCapacity']}</span>
                     </p>
                     <p>
-                        Fuel<span>{modelData['0']['fuel']}</span>
+                        Fuel - <span>{modelData['0']['fuel']}</span>
                     </p>
                     <p>
-                        Variant<span>{modelData['0']['variant']}</span>
+                        Variant - <span>{modelData['0']['variant']}</span>
                     </p>
                     <p>
-                        Name<span>{modelData['0']['name']}</span>
+                        Name - <span>{modelData['0']['name']}</span>
                     </p>
                 </div>
             );
@@ -77,8 +78,10 @@ const ViewDetailMain = (props) => {
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Vehicle Usage Type ">{formData?.vehicleUsageType ? formData?.vehicleUsageType : 'null'}</Descriptions.Item>
                         <Descriptions.Item label="Model">
-                            {formData?.model}
-                            {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                            <div className={styles.tooltipAlign}>
+                                {formData?.model}
+                                {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                            </div>
                         </Descriptions.Item>
                         <Descriptions.Item label="Model Code">{formData?.modelCode}</Descriptions.Item>
                         <Descriptions.Item label="Available Stock">{formData?.availableStock}</Descriptions.Item>

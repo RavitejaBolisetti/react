@@ -13,6 +13,7 @@ import { FiEdit } from 'react-icons/fi';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { OptionServicesForm } from './optionServicesForm';
 import styles from 'components/common/Common.module.css';
+import dayjs from 'dayjs';
 
 import { DataTable } from 'utils/dataTable';
 import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
@@ -39,7 +40,8 @@ const AddEditFormMain = (props) => {
                 availableStock: formData?.availableStock,
                 vehicleAllocatedStatus: formData?.vehicleAllocationStatus,
                 poNumber: formData?.ponumber,
-                poDate: formData?.podate,
+                poDate: formData?.podate?.substr(0, 10),
+                poDate: dayjs(formData?.podate?.substr(0, 10)).format('DD/MM/YYYY'),
                 poStatus: formData?.postatus,
                 soNumber: formData?.sonumber,
                 soStatus: formData?.sostatus,
@@ -54,10 +56,17 @@ const AddEditFormMain = (props) => {
     }, [formData]);
 
     const handleCollapse = (key) => {
+        if (key !== 3 && isReadOnly) {
+            setIsReadOnly(false);
+        }
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
+    const onHandleSelect = (values) => {
+        form.setFieldsValue({
+            modelCode: values,
+        });
+    };
     const addContactHandeler = (e) => {
-        e.stopPropagation();
         form.resetFields();
         setOpenAccordian('3');
         setIsReadOnly(true);
@@ -93,7 +102,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item label="Model" name="model" data-testid="model">
-                                            <Select placeholder="Select" allowClear options={ProductHierarchyData} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                                            <Select onSelect={onHandleSelect} placeholder="Select" allowClear options={ProductHierarchyData} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
