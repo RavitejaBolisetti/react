@@ -1,9 +1,9 @@
 /*
- *   Copyright (c) 2023 
+ *   Copyright (c) 2023
  *   All rights reserved.
  */
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_CUSTOMER_MASTER_FIRM_CONTACT, BASE_URL_CUSTOMER_MASTER_NDIVIDUAL_CONTACT } from 'constants/routingApi';
+import { BASE_URL_CUSTOMER_MASTER_FIRM_CONTACT } from 'constants/routingApi';
 
 const PREFIX = 'CUSTOMER_CONTACTS_';
 const moduleName = 'Customer Master';

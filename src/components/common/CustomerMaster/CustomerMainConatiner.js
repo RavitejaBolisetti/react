@@ -18,7 +18,7 @@ import { withDrawer } from 'components/withDrawer';
 import styles from 'components/common/Common.module.css';
 
 const CustomerMainConatinerMain = (props) => {
-    const { customerType } = props;
+    const { customerType, selectedCustomerId } = props;
     const [section, setSection] = useState();
     const [currentSection, setCurrentSection] = useState(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id);
 
@@ -34,6 +34,7 @@ const CustomerMainConatinerMain = (props) => {
         section,
         currentSection,
         setCurrentSection,
+        selectedCustomerId,
     };
 
     const renderElement = () => {
@@ -53,13 +54,13 @@ const CustomerMainConatinerMain = (props) => {
                         return <IndividualContactMaster {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.FAMILY_DETAILS.id: {
-                        return <IndividualFamilyDetailMaster />;
+                        return <IndividualFamilyDetailMaster {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.ACCOUNT_RELATED.id: {
                         return <IndividualAccountRelatedMaster {...myProps} />;
                     }
                     case CUSTOMER_INDIVIDUAL_SECTION?.SUPPORTING_DOCUMENT.id: {
-                        return <IndividualSupportingDocument />;
+                        return <IndividualSupportingDocument {...myProps} />;
                     }
                     default: {
                         return <IndivisualCustomerDetailMaster {...myProps} />;
@@ -75,13 +76,16 @@ const CustomerMainConatinerMain = (props) => {
                         return <CorporateCompanyProfileMaster {...myProps} />;
                     }
                     case CUSTOMER_CORPORATE_SECTION?.ADDRESS.id: {
-                        return <CorporateCompanyAddressMaster />;
+                        return <CorporateCompanyAddressMaster {...myProps} />;
                     }
                     case CUSTOMER_CORPORATE_SECTION?.CONTACTS.id: {
                         return <CorporateContactMaster {...myProps} />;
                     }
                     case CUSTOMER_CORPORATE_SECTION?.ACCOUNT_RELATED.id: {
                         return <CorporateAccountRelatedMaster {...myProps} />;
+                    }
+                    case CUSTOMER_CORPORATE_SECTION?.SUPPORTING_DOCUMENT.id: {
+                        return <IndividualSupportingDocument {...myProps} />;
                     }
                     default: {
                         return <CorporateCustomerDetailMaster {...myProps} />;

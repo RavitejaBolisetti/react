@@ -6,13 +6,23 @@
 import React, { useState, useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Form } from 'antd';
-import { AddEditForm } from './AddEditForm';
-import { PARAM_MASTER } from 'constants/paramMaster';
+import { Form, Row, Col } from 'antd';
+
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { familyDetailsDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetails';
 import { familyDetailSearchDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetailSearch';
 import { showGlobalNotification } from 'store/actions/notification';
+import { PARAM_MASTER } from 'constants/paramMaster';
+
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { btnVisiblity } from 'utils/btnVisiblity';
+
+import { ViewDetail } from './ViewDetail';
+import { AddEditForm } from './AddEditForm';
+import { CustomerFormButton } from '../../CustomerFormButton';
+
+import styles from 'components/common/Common.module.css';
+
 import dayjs from 'dayjs';
 
 const mapStateToProps = (state) => {
@@ -61,14 +71,22 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const FamilyDetailMasterBase = (props) => {
-    const { userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, fetchFamilySearchList, listFamilySearchLoading, familySearchData } = props;
-    const [familyForm] = Form.useForm();
+    const { section, userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, fetchFamilySearchList, listFamilySearchLoading, familySearchData } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+
+    const [form] = Form.useForm();
+    const [formData, setFormData] = useState([]);
+    const [activeKey, setactiveKey] = useState([null]);
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [customerType, setCustomerType] = useState('Yes');
     const [editedMode, setEditedMode] = useState(false);
     const [editedId, setEditedId] = useState(0);
     const [searchValue, setSearchValue] = useState('CUS1686811036620');
+
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const extraParams = [
         {
@@ -104,7 +122,7 @@ const FamilyDetailMasterBase = (props) => {
 
     useEffect(() => {
         fetchFamilySearchList({ setIsLoading: listFamilySearchLoading, userId, extraParams: searchParams });
-        familyForm.setFieldsValue({
+        form.setFieldsValue({
             relationCustomerId: familySearchData?.customerId,
             customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
             dateOfBirth: dayjs(familySearchData?.dateOfBirth),
@@ -122,8 +140,16 @@ const FamilyDetailMasterBase = (props) => {
         setSearchValue(value);
     };
 
+    const handleButtonClick = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        setFormData([]);
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        record && setFormData(record);
+    };
+
     const onSave = () => {
-        let values = familyForm.getFieldsValue();
+        let values = form.getFieldsValue();
         setFamilyDetailsList((items) => [{ ...values, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
 
         if (editedMode) {
@@ -145,7 +171,7 @@ const FamilyDetailMasterBase = (props) => {
         setShowForm(false);
         setEditedMode(false);
 
-        familyForm.resetFields();
+        form.resetFields();
 
         if (values?.mnmCustomer === 'Yes') {
             setCustomerType(true);
@@ -154,10 +180,10 @@ const FamilyDetailMasterBase = (props) => {
         }
     };
 
-    const onFamilyFinish = () => {
+    const onFinish = () => {
         let data = [...familyDetailList];
         const onSuccess = (res) => {
-            familyForm.resetFields();
+            form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId });
         };
@@ -192,9 +218,9 @@ const FamilyDetailMasterBase = (props) => {
     }, [familyData]);
 
     const formProps = {
-        familyForm,
+        form,
         onChange,
-        onFamilyFinish,
+        onFinish,
         onFinishFailed,
         familyDetailList,
         showForm,
@@ -208,9 +234,33 @@ const FamilyDetailMasterBase = (props) => {
         editedId,
         setEditedId,
         onSearch,
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        buttonData,
+        setButtonData,
+        handleButtonClick,
     };
 
-    return <AddEditForm {...formProps} />;
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
+    return (
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Row gutter={20} className={styles.drawerBodyRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <h2>{section?.title} </h2>
+                    {/* {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />} */}
+                    <AddEditForm {...formProps} />
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <CustomerFormButton {...props} />
+                </Col>
+            </Row>
+        </Form>
+    );
 };
 
 export const FamilyDetailMaster = connect(mapStateToProps, mapDispatchToProps)(FamilyDetailMasterBase);

@@ -87,6 +87,8 @@ const CustomerMasterMain = (props) => {
 
     const [isFormVisible, setIsFormVisible] = useState(false);
 
+    const [selectedCustomerId, setSelectedCustomerId] = useState('');
+
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
