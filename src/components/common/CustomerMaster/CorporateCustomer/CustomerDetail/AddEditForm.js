@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { configurableTypedata , formData,form,corporateLovData} = props;
+    const { configurableTypedata , formData,form,corporateLovData, handeSearchParentCompName} = props;
     const[corporateType, setCorporateType] = useState();
     useEffect(() => {
         form.setFieldsValue({
@@ -48,7 +48,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.parentCompanyCode} label="Parent Company Code" name="parentCompanyCode" data-testid="parentCode" rules={[validateRequiredInputField('parent company code')]}>
-                            <Input placeholder={preparePlaceholderText('parent company code')} />
+                            <Input onChange={handeSearchParentCompName} placeholder={preparePlaceholderText('parent company code')} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
