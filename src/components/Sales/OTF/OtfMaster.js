@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useReducer, useMemo } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -11,6 +13,11 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { OTF_STATUS } from 'constants/OTFStatus';
 
+import { showGlobalNotification } from 'store/actions/notification';
+
+
+import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
+
 import { FilterIcon } from 'Icons';
 
 const otfSearchList = [
@@ -20,8 +27,8 @@ const otfSearchList = [
 ];
 
 const initialTableData = [
-    { otfNumber: 'OTF1121', otfDate: '1 Dec 2022', customerName: 'John', mobileNumber: '9988122299', model: 'Model', orderStatus: 'Booked', status: 1 },
-    { otfNumber: 'OTF1122', otfDate: '1 Dec 2012', customerName: 'John', mobileNumber: '8988122299', model: 'Model', orderStatus: 'Alloted', status: 2 },
+    { otfNumber: 'OTF001', otfDate: '1 Dec 2022', customerName: 'John', mobileNumber: '9988122299', model: 'Model', orderStatus: 'Booked', status: 1 },
+    { otfNumber: 'OTF002', otfDate: '1 Dec 2012', customerName: 'John', mobileNumber: '8988122299', model: 'Model', orderStatus: 'Alloted', status: 2 },
     { otfNumber: 'OTF1123', otfDate: '1 Jan 2023', customerName: 'Michel', mobileNumber: '9977122299', model: 'Model', orderStatus: 'Cancelled', status: 3 },
     { otfNumber: 'OTF1124', otfDate: '1 Jan 2023', customerName: 'Michel', mobileNumber: '9999122299', model: 'Model', orderStatus: 'Invoiced', status: 4 },
     { otfNumber: 'OTF1125', otfDate: '1 Jan 2023', customerName: 'Michel', mobileNumber: '6988122299', model: 'Model', orderStatus: 'Delivered', status: 5 },
@@ -29,9 +36,45 @@ const initialTableData = [
     { otfNumber: 'OTF1127', otfDate: '1 Jan 2023', customerName: 'Michel', mobileNumber: '7988122299', model: 'Model', orderStatus: 'Pending for Cancellation', status: 7 },
 ];
 
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            OTF: {
+                OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
+            },
+        },
+    } = state;
+    const moduleTitle = 'OTF Details';
+
+    let returnValue = {
+        userId,
+
+        isDataLoaded,
+
+        otfData,
+        isLoading,
+        moduleTitle,
+    };
+    return returnValue;
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchList: otfDetailsDataActions.fetchList,
+            saveData: otfDetailsDataActions.saveData,
+            resetData: otfDetailsDataActions.reset,
+            listShowLoading: otfDetailsDataActions.listShowLoading,
+            showGlobalNotification,
+        },
+        dispatch
+    ),
+});
+
 export const OtfMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isPinCodeLoading, pinCodeShowLoading } = props;
-    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail } = props;
+    const { fetchList, saveData, listShowLoading, userId, isDataLoaded, otfData, isLoading } = props;
 
     const [form] = Form.useForm();
     const [otfSearchResult, setOtfSearchResult] = useState(initialTableData);
@@ -39,6 +82,7 @@ export const OtfMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
+    const [isNewDataLoading, setIsNewDataLoading] = useState(false);
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
@@ -67,38 +111,45 @@ export const OtfMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
-    useEffect(() => {
-        if (userId && !isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
-        }
-        if (userId && !isDealerParentDataLoaded) {
-            fetchDealerParentList({ setIsLoading: listDealerParentShowLoading, userId });
-        }
+    const errorAction = (message) => {
+        showGlobalNotification(message);
+    };
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded, isDealerParentDataLoaded]);
+   
 
-    useEffect(() => {
-        if (userId && refershData) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, refershData]);
+    // useEffect(() => {
+    //     if (!isDataLoaded && userId) {
+    //         fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
+    //     }
+    //     setFormData(otfData);
+    //     // forceUpdate();
 
-    useEffect(() => {
-        if (isDataLoaded && data && userId) {
-            if (filterString) {
-                const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyName) : true));
-                setSearchdata(filterDataItem);
-                setShowDataLoading(false);
-            } else {
-                setSearchdata(data);
-                setShowDataLoading(false);
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, data, userId]);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId]);
+
+  
+
+    // useEffect(() => {
+    //     if (userId && refershData) {
+    //         fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, refershData]);
+
+    // useEffect(() => {
+    //     if (isDataLoaded && data && userId) {
+    //         if (filterString) {
+    //             const keyword = filterString?.keyword;
+    //             const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyName) : true));
+    //             setSearchdata(filterDataItem);
+    //             setShowDataLoading(false);
+    //         } else {
+    //             setSearchdata(data);
+    //             setShowDataLoading(false);
+    //         }
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [filterString, isDataLoaded, data, userId]);
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -108,11 +159,20 @@ export const OtfMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
+        const extraParams = [
+            {
+                key: 'otfNumber',
+                title: 'otfNumber',
+                value: record?.otfNumber,
+                name: 'OTF Number',
+            },
+        ];
+        fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
+
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
-        record && setFormData(record);
 
         setIsFormVisible(true);
     };
@@ -210,6 +270,7 @@ export const OtfMasterBase = (props) => {
     const formProps = {
         form,
         formData,
+        setFormData,
         formActionType,
         setFormActionType,
         onFinish,
@@ -223,11 +284,6 @@ export const OtfMasterBase = (props) => {
         handleButtonClick,
         handleResetFilter,
         listShowLoading,
-        pincodeData,
-        fetchPincodeDetail,
-        dealerParentData,
-        isPinCodeLoading,
-        pinCodeShowLoading,
     };
 
     const tableProps = {
@@ -308,4 +364,4 @@ export const OtfMasterBase = (props) => {
     );
 };
 
-export const OtfMaster = connect(null, null)(OtfMasterBase);
+export const OtfMaster = connect(mapStateToProps, mapDispatchToProps)(OtfMasterBase);
