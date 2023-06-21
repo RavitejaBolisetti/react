@@ -1,14 +1,5 @@
-/*
- *   Copyright (c) 2023
- *   All rights reserved.
- */
-/*
- *   Copyright (c) 2023
- *   All rights reserved.
- */
 import React from 'react';
-import { Space, Typography, Descriptions, Card, Divider, Col, Row, Button } from 'antd';
-import { FaRegUserCircle } from 'react-icons/fa';
+import { Typography, Descriptions, Card, Divider, Col, Row, Button } from 'antd';
 import { BiTimeFive } from 'react-icons/bi';
 import { FiEdit } from 'react-icons/fi';
 
@@ -21,7 +12,7 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-    console.log(formData, 'FORMDATA');
+
     return (
         <Card style={{ backgroundColor: '#F2F2F2' }}>
             <div className={styles.viewDrawerContainer}>
