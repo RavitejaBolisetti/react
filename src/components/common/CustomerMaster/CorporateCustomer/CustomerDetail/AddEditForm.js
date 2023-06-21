@@ -6,7 +6,7 @@
 import { Col, Input, Form, Row, Select, Space, Divider, Card } from 'antd';
 import { validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BiEdit } from 'react-icons/bi';
 import styles from 'components/common/Common.module.css';
 const { Option } = Select;

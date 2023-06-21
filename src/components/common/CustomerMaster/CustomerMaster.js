@@ -92,12 +92,8 @@ const CustomerMasterMain = (props) => {
 
     const [form] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
-<<<<<<< HEAD
-
-=======
     const [refershData, setRefershData] = useState(false);
     const [selectedRowData, setSelectedRowData] = useState({});
->>>>>>> US-2139-Customer-Master-Address-New
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
@@ -179,12 +175,8 @@ const CustomerMasterMain = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
         form.resetFields();
-<<<<<<< HEAD
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
-=======
         setSelectedRowData(record);
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
->>>>>>> US-2139-Customer-Master-Address-New
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         setIsFormVisible(true);
