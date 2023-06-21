@@ -46,13 +46,16 @@ const mapDispatchToProps = (dispatch) => ({
             fetchMartialStatus: configParamEditActions.fetchList,
             fetchOccupationList: configParamEditActions.fetchList,
             fetchAnnualIncome: configParamEditActions.fetchList,
+            fetchVehicleUsed: configParamEditActions.fetchList,
+            fetchMotherTongue: configParamEditActions.fetchList,
+            fetchReligionList: configParamEditActions.fetchList,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 const IndividualProfileBase = (props) => {
-    const { userId, fetchIndiviualList, formData, onFieldsChange, fetchAnnualIncome, fetchOccupationList, listIndiviualShowLoading, fetchGenderCategory, fetchMartialStatus, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, isAppCategoryDataLoaded, appCategoryData, isIndiviualProfileLoaded, formActionType, indiviualData, saveData, showGlobalNotification } = props;
+    const { userId, fetchIndiviualList, formData, onFieldsChange, fetchVehicleUsed, fetchMotherTongue, fetchReligionList, fetchAnnualIncome, fetchOccupationList, listIndiviualShowLoading, fetchGenderCategory, fetchMartialStatus, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, isAppCategoryDataLoaded, appCategoryData, isIndiviualProfileLoaded, formActionType, indiviualData, saveData, showGlobalNotification } = props;
     const [indiviualForm] = Form.useForm();
 
     useEffect(() => {
@@ -69,7 +72,11 @@ const IndividualProfileBase = (props) => {
         fetchGenderCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.GENDER_CD.id });
         fetchMartialStatus({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.MARITAL_STATUS.id });
         fetchOccupationList({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.OCC_TYPE.id });
-        fetchAnnualIncome({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.ANL_INCM.id });
+        fetchAnnualIncome({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.Annual_Income.id });
+        fetchVehicleUsed({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.Vehicle_Used.id });
+        fetchMotherTongue({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.MOTHER_TOUNGE.id });
+        fetchReligionList({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.RELGION.id });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAppCategoryDataLoaded]);
 

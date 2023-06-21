@@ -63,9 +63,21 @@ export const PARAM_MASTER = {
         id: 'OCC_TYPE',
         title: 'OCC_TYPE',
     },
-    ANL_INCM: {
-        id: 'ANL_INCM',
-        title: 'ANL_INCM',
+    Annual_Income: {
+        id: 'Annual_Income',
+        title: 'Annual_Income',
+    },
+    Vehicle_Used: {
+        id: 'Vehicle_Used',
+        title: 'Vehicle_Used',
+    },
+    MOTHER_TOUNGE: {
+        id: 'MOTHER_TOUNGE',
+        title: 'MOTHER_TOUNGE',
+    },
+    RELGION: {
+        id: 'RELGION',
+        title: 'RELGION',
     },
     PRC_TYP: {
         id: 'PRC_TYP',
