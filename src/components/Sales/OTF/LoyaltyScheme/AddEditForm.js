@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useEffect } from 'react';
 
 import styles from 'components/common/Common.module.css';
@@ -15,13 +20,13 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 customerId: formdata?.customerCode,
                 customerName: formdata?.customerName,
-                make: formdata?.vehicleManufactureCode,
-                modelGroup: formdata?.vehicleModelCode,
-                variant: formdata?.variantDescription,
+                make: formdata?.make,
+                modelGroup: formdata?.vehicleModelGroup,
+                variant: formdata?.variantName,
                 oldRegNumber: formdata?.registrationNumber,
                 oldChassisNumber: formdata?.oldChassisNumber,
                 dob: formdata?.customerDOB,
-                relationship: formdata?.relationCode,
+                relationship: formdata?.relationName,
                 year: formdata?.registrationYear,
                 month: formdata?.registrationMonth,
                 usage: formdata?.vehicleUsage,

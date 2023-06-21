@@ -1,7 +1,13 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { Col, Row, Button, Space, Collapse, Typography, Descriptions, Card, Divider } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FaRegUserCircle } from 'react-icons/fa';
+
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -17,7 +23,7 @@ const ViewDetailMain = (props) => {
     const customerForm = {
         mobileNumber: '8707023991',
         customerType: 'Individual',
-        title:'Mr.',
+        title: 'Mr.',
         firstName: 'Arvind',
         middleName: 'Pal',
         lastName: 'Singh',
@@ -47,8 +53,7 @@ const ViewDetailMain = (props) => {
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Mobile Number">{customerForm?.mobileNumber}</Descriptions.Item>
                         <Descriptions.Item label="Customer Type">{customerForm?.customerType}</Descriptions.Item>
-                        <Divider/>
-                        
+                        <Divider />
 
                         <Card>
                             <div className={`${styles.cardInsideBox} ${styles.customerName}`}>

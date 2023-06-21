@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useEffect, useState } from 'react';
 import styles from 'components/common/Common.module.css';
 import { AddEditForm } from './AddEditForm';
@@ -77,7 +82,7 @@ const LoyaltySchemeMasterMain = (props) => {
     }, [isLoyaltySchemeDataLoaded, userId]);
     useEffect(() => {
         if (LoyaltySchemeData) {
-            setformdata(LoyaltySchemeData['0']);
+            setformdata(LoyaltySchemeData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [LoyaltySchemeData]);
