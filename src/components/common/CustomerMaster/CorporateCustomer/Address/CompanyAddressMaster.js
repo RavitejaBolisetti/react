@@ -10,7 +10,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 import ViewAddressList from './ViewAddressList';
-import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 

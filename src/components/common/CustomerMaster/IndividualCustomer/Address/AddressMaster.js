@@ -5,7 +5,7 @@
  */
 import React, { useState } from 'react';
 
-import { Collapse, Divider, Form, Space, Typography, Button } from 'antd';
+import { Row, Col, Collapse, Divider, Form, Space, Typography, Button } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -14,29 +14,15 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import styles from 'components/common/Common.module.css';
 
 import ViewAddressList from './ViewAddressList';
-import AddEditForm from './AddEditForm';
+import { AddEditForm } from './AddEditForm';
+import { CustomerFormButton } from '../../CustomerFormButton';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
-// const formData = [
-//     {
-//         id: '076da86e-010c-445c-ac6c-6b905ca29338',
-//         addressType: '9876543856',
-//         address: 'offers',
-//         address2: 'brother',
-//         pincode: '09:00AM',
-//         tehsil: '06:00AM',
-//         city: 'mr',
-//         district: 'jhon',
-//         state: 'little',
-//         contactpersonName: 'hashn',
-//         contactmobilenumber: 'Male',
-//         defaultaddress: true,
-//     },
-// ];
-
-const AddressMasterBase = ({ isViewModeVisible, toggleButton, props }) => {
+const AddressMasterBase = (props) => {
+    const { section, isViewModeVisible, toggleButton } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
     const [form] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -89,6 +75,10 @@ const AddressMasterBase = ({ isViewModeVisible, toggleButton, props }) => {
         form.resetFieldsValue();
     };
 
+    const onFinishFailed = (errorInfo) => {
+        return;
+    };
+
     const addAddressHandeler = (e) => {
         e.stopPropagation();
         form.resetFields();
@@ -109,28 +99,43 @@ const AddressMasterBase = ({ isViewModeVisible, toggleButton, props }) => {
         setEditingData,
     };
 
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
     return (
-        <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
-            <Panel
-                header={
-                    <>
-                        <Space>
-                            <Text strong> {toggleButton + ' Address'}</Text>
-                            {!isViewModeVisible && (
-                                <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary">
-                                    Add
-                                </Button>
-                            )}
-                        </Space>
-                        <Divider type="vertical" />
-                    </>
-                }
-                key="1"
-            >
-                {(showAddEditForm || !addressData?.length > 0) && <AddEditForm {...formProps} />}
-                <ViewAddressList {...formProps} />
-            </Panel>
-        </Collapse>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Row gutter={20} className={styles.drawerBodyRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <h2>{section?.title} </h2>
+                    <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
+                        <Panel
+                            header={
+                                <>
+                                    <Space>
+                                        <Text strong> {toggleButton + ' Address'}</Text>
+                                        {!isViewModeVisible && (
+                                            <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary">
+                                                Add
+                                            </Button>
+                                        )}
+                                    </Space>
+                                    <Divider type="vertical" />
+                                </>
+                            }
+                            key="1"
+                        >
+                            {(showAddEditForm || !addressData?.length > 0) && <AddEditForm {...formProps} />}
+                            <ViewAddressList {...formProps} />
+                        </Panel>
+                    </Collapse>
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <CustomerFormButton {...props} />
+                </Col>
+            </Row>
+        </Form>
     );
 };
 
