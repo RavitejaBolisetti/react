@@ -19,52 +19,6 @@ const ViewDetailMain = (props) => {
     };
     return (
         <div className={styles.viewDrawerContainer}>
-            {/* <Card style={{ backgroundColor: '#F2F2F2' }}>
-                <div className={styles.viewDrawerContainer}>
-                    <Descriptions>
-                        <Descriptions.Item label="Mobile Number">{formData?.mobileNumber}</Descriptions.Item>
-                        <Descriptions.Item label="Customer Type">{formData?.customerType}</Descriptions.Item>
-                    </Descriptions>
-                    <div className={styles.cardInsideBox}>
-                        <Row>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <Text>Customer Name</Text>
-                            </Col>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                                <Button type="link" icon={<BiTimeFive />}>
-                                    View History
-                                </Button>
-                            </Col>
-                            <Divider />
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                {formData?.title}
-                                <span className={styles.nameSpacing}></span>
-                                {formData?.firstName}
-                                <span className={styles.nameSpacing}></span>
-                                {formData?.middleName}
-                                <span className={styles.nameSpacing}></span>
-                                {formData?.lastName}
-                            </Col>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                                <Button type="link" icon={<FiEdit />}>
-                                    Edit
-                                </Button>
-                            </Col>
-                        </Row>
-                    </div>
-                    <Descriptions>
-                        <Descriptions.Item label="Email Id">{formData?.emailId}</Descriptions.Item>
-                        <Descriptions.Item label="Do you want to contact over whatsapp?">{formData?.contactOnWhatsAppAllowed}</Descriptions.Item>
-                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?">{formData?.contactAsMobileOnWhatApp}</Descriptions.Item>
-                        <Divider />
-                        <Descriptions.Item label="Corporate Type">{formData?.corporateType}</Descriptions.Item>
-                        <Descriptions.Item label="Corporate Name">{formData?.corporateName}</Descriptions.Item>
-                        <Descriptions.Item label="Corporate Category">{formData?.corporateCategory}</Descriptions.Item>
-                        <Descriptions.Item label="Membership Type">{formData?.membershipTypeType}</Descriptions.Item>
-                    </Descriptions>
-                </div>
-            </Card> */}
-
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Card
                     header={
