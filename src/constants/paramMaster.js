@@ -120,6 +120,14 @@ export const PARAM_MASTER = {
         id: 'REF',
         title: 'Referral',
     },
+    ADD_TYPE: {
+        id: 'ADD_TYPE',
+        title: 'ADD_TYPE',
+    },
+    GENDER_CD: {
+        id: 'GENDER_CD',
+        title: 'GENDER_CD'
+    },
     PURPOSE: {
         id: 'PURPOSE',
         title: 'PURPOSE',
