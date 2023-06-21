@@ -114,6 +114,8 @@ export const AccountRelatedBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, errorAction });
+
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
 
             setButtonData({ ...buttonData, formBtnActive: false });
