@@ -368,6 +368,7 @@ const AddEditFormMain = (props) => {
                                 }
                             >
                                 <Divider />
+                                <div className={style.uploadContainer}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item initialValue={formData?.customerConsent} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="customerConsent">
@@ -376,7 +377,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.uploadContainer}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} >
                                         <Dragger {...uploadProps}>
                                             <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
                                                 <img src={Svg} alt="" />
@@ -394,6 +395,7 @@ const AddEditFormMain = (props) => {
                                         </Dragger>
                                     </Col>
                                 </Row>
+                                </div>
                             </Panel>
                         </Collapse>
                     </Space>
