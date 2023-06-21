@@ -72,7 +72,7 @@ export const AccountRelatedBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const selectedCustomer = 'CUS1686812277115';
+    const selectedCustomer = 'CUS1687284719774';
     const extraParams = [
         {
             key: 'customerId',
@@ -108,12 +108,13 @@ export const AccountRelatedBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, customerId: 'CUS1686815155017' };
-        console.log(form.getFieldValue(), 'KARTIK ');
+        const data = { ...values, customerId: 'CUS1687284719774' };
 
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
+
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, errorAction });
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
 
@@ -139,7 +140,6 @@ export const AccountRelatedBase = (props) => {
             onError,
             onSuccess,
         };
-        console.log(requestData, 'KARTIK Gupta');
         saveData(requestData);
     };
 
@@ -165,7 +165,7 @@ export const AccountRelatedBase = (props) => {
 
     const formProps = {
         form,
-        formData: data['0'],
+        formData: data[0],
         formActionType,
         setFormActionType,
         onFinish,
@@ -183,7 +183,7 @@ export const AccountRelatedBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        formData: data['0'],
+        formData: data[0],
         styles,
     };
 

@@ -1,15 +1,7 @@
-/*
- *   Copyright (c) 2023
- *   All rights reserved.
- */
-/*
- *   Copyright (c) 2023
- *   All rights reserved.
- */
 import React from 'react';
-import { Space, Typography, Descriptions, Card, Divider, Col, Row, Button } from 'antd';
-import { FaRegUserCircle } from 'react-icons/fa';
+import { Typography, Descriptions, Card, Divider, Col, Row, Button } from 'antd';
 import { BiTimeFive } from 'react-icons/bi';
+import { FiEdit } from 'react-icons/fi';
 
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
@@ -37,37 +29,35 @@ const ViewDetailMain = (props) => {
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Mobile Number">{formData?.mobileNumber}</Descriptions.Item>
                         <Descriptions.Item label="Customer Type">{formData?.customerType}</Descriptions.Item>
-                        <Divider />
-
-                        <Card>
-                            <div className={`${styles.cardInsideBox} ${styles.customerName}`}>
-                                <Row>
-                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Text className={styles.customerName}>Customer Name</Text>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                                        <Button type="link" icon={<BiTimeFive />}>
-                                            View History
-                                        </Button>
-                                    </Col>
-                                    <Divider />
-                                    {formData?.title}
-                                    <span className={styles.nameSpacing}></span>
-                                    {formData?.firstName}
-                                    <span className={styles.nameSpacing}></span>
-                                    {formData?.middleName}
-                                    <span className={styles.nameSpacing}></span>
-                                    {formData?.lastName}
-                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Button type="link" icon={<BiTimeFive />}>
-                                            View History
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </div>
-                        </Card>
-                        <br />
-                        <br />
+                    </Descriptions>
+                    <div className={styles.cardInsideBox}>
+                        <Row>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                <Text>Customer Name</Text>
+                            </Col>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
+                                <Button type="link" icon={<BiTimeFive />}>
+                                    View History
+                                </Button>
+                            </Col>
+                            <Divider />
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                {formData?.title}
+                                <span className={styles.nameSpacing}></span>
+                                {formData?.firstName}
+                                <span className={styles.nameSpacing}></span>
+                                {formData?.middleName}
+                                <span className={styles.nameSpacing}></span>
+                                {formData?.lastName}
+                            </Col>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
+                                <Button type="link" icon={<FiEdit />}>
+                                    Edit
+                                </Button>
+                            </Col>
+                        </Row>
+                    </div>
+                    <Descriptions>
                         <Descriptions.Item label="Email Id">{formData?.emailId}</Descriptions.Item>
                         <Descriptions.Item label="Do you want to contact over whatsapp?">{formData?.corporateName}</Descriptions.Item>
                         <Descriptions.Item label="Whatsapp Number">{formData?.whatsappNumber}</Descriptions.Item>

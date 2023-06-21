@@ -14,7 +14,7 @@ import styles from 'components/Auth/Auth.module.css';
 import Svg from 'assets/images/Filter.svg';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -26,31 +26,24 @@ const { Text } = Typography;
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 
 const AddEditFormMain = (props) => {
-    const { appCategoryData, formData } = props;
+    const { appCategoryData, formData, form } = props;
 
-    const [done, setDone] = useState();
     const [activeKey, setactiveKey] = useState([1]);
 
-    const [FinalFormData, setFinalFormData] = useState({
-        keyDetailForm: {
-            accountCode: '',
-            accountName: '',
-        },
-        authorityForm: {
-            personName: '',
-        },
-        // uploadCustomerForm: [],
-    });
-
-    const [companyInfoValues, setCompanyInfoValues] = useState();
-    const [uploadCustomerFormValues, setUploadCustomerFormValues] = useState();
+    console.log('Form Data:', formData);
 
     const [customerCategory, setCustomerCategory] = useState();
 
+    // useEffect(() => {
+    //     setFinalFormData({ ...FinalFormData, keyAccountDetails: companyInfoValues, uploadCustomerForm: uploadCustomerFormValues });
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [done]);
     useEffect(() => {
-        setFinalFormData({ ...FinalFormData, keyAccountDetails: companyInfoValues, uploadCustomerForm: uploadCustomerFormValues });
+        form.setFieldsValue({
+            ...formData,
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [done]);
+    }, [formData]);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -133,7 +126,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="GSTIN" initialValue={formData?.gstin} name="gstin" rules={[validateGSTIN('gstin'), validateRequiredInputField('panNumber')]}>
+                                        <Form.Item label="GSTIN" initialValue={formData?.gstinNumber} name="gstin" rules={[validateGSTIN('gstin'), validateRequiredInputField('panNumber')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('GSTIN')} />
                                         </Form.Item>
                                     </Col>
@@ -141,9 +134,9 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Usage/Application Categorization" initialValue={formData?.applicationCategorization} name="applicationCategorization">
-                                            <Select maxLength={50} placeholder={preparePlaceholderText('Usage/Application Categorization')}>
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Usage/Application Categorization')}>
                                                 {appCategoryData.APP_CAT?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
+                                                    <Option key={'ap' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -153,9 +146,9 @@ const AddEditFormMain = (props) => {
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Usage/Application Sub-Category" initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
-                                            <Select maxLength={50} placeholder={preparePlaceholderText('Usage/Application Sub-Category')}>
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Usage/Application Sub-Category')}>
                                                 {appCategoryData.APP_SUB_CAT?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
+                                                    <Option key={'sc' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -165,7 +158,7 @@ const AddEditFormMain = (props) => {
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Customer Category" initialValue={formData?.customerCategory} name="customerCategory">
-                                            <Select maxLength={50} onChange={handleCategoryChange} placeholder={preparePlaceholderText('Customer Category')}>
+                                            <Select maxLength={50} onChange={handleCategoryChange} placeholder={preparePlaceholderSelect('Customer Category')}>
                                                 {appCategoryData.CUS_CAT?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
@@ -192,7 +185,7 @@ const AddEditFormMain = (props) => {
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Key Role Details" initialValue={formData?.KeyRoleDetails} name="KeyRoleDetails">
+                                                <Form.Item label="Key Role Details" initialValue={formData?.keyRouteDetails} name="KeyRoleDetails">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Key Role Details')} />
                                                 </Form.Item>
                                             </Col>
@@ -228,7 +221,7 @@ const AddEditFormMain = (props) => {
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="M1-MMFSL" initialValue={formData?.mmfsl} name="mmfsl">
+                                        <Form.Item label="M1-MMFSL" initialValue={formData?.m1mmfsl} name="mmfsl">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
                                         </Form.Item>
                                     </Col>
@@ -267,31 +260,31 @@ const AddEditFormMain = (props) => {
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Code" initialValue={formData?.accountCode} name="accountCode">
+                                        <Form.Item label="Account Code" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountCode} name="accountCode">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Code')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Name" initialValue={formData?.accountName} name="accountName">
+                                        <Form.Item label="Account Name" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountName} name="accountName">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Name')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Segment" initialValue={formData?.accountSegment} name="accountSegment">
+                                        <Form.Item label="Account Segment" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountSegment} name="accountSegment">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Segment')} disabled />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Client Name" initialValue={formData?.accountClientName} name="accountClientName">
+                                        <Form.Item label="Account Client Name" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountClientName} name="accountClientName">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Client Name')} disabled />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Mapping Date" initialValue={formData?.accountMappingDate} name="accountMappingDate">
+                                        <Form.Item label="Account Mapping Date" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountMappingDate} name="accountMappingDate">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Mapping Date')} disabled />
                                         </Form.Item>
                                     </Col>
@@ -319,26 +312,26 @@ const AddEditFormMain = (props) => {
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Name Of Person" initialValue={formData?.personName} name="personName" rules={[validateRequiredInputField('authorityRequest.personName')]}>
+                                        <Form.Item label="Name Of Person" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.personName} name="personName" rules={[validateRequiredInputField('authorityRequest.personName')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Name Of Person')} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Position" initialValue={formData?.postion} name="postion">
+                                        <Form.Item label="Position" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.postion} name="postion">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Position')} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Company Name" initialValue={formData?.companyName} name="companyName" rules={[validateRequiredInputField('authorityRequest.companyName')]}>
+                                        <Form.Item label="Company Name" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.companyName} name="companyName" rules={[validateRequiredInputField('authorityRequest.companyName')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Company Name')} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <Form.Item label="Remarks" initialValue={formData?.authorityRequest.remarks} name="authorityRequest.remarks">
+                                        <Form.Item label="Remarks" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.remarks} name="authorityRequest.remarks">
                                             <TextArea maxLength={50} placeholder={preparePlaceholderText('Remarks')} />
                                         </Form.Item>
                                     </Col>

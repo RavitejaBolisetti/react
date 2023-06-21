@@ -9,7 +9,7 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from './CustomerFormButton.module.css';
 
-export const CustomerFormButton = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave }) => {
+export const CustomerFormButton = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave }) => {
     return (
         <Row gutter={20} className={styles.formFooter}>
             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
@@ -27,21 +27,20 @@ export const CustomerFormButton = ({ formData, onCloseAction, buttonData, setBut
             </Col>
 
             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                {buttonData?.editBtn && (
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record: formData, formVisible: true })} type="primary">
+                        Edit
+                    </Button>
+                )}
+                {buttonData?.nextBtn && (
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record: formData })} type="primary">
+                        Next
+                    </Button>
+                )}
+
                 {buttonData?.saveBtn && (
                     <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                         {saveButtonName}
-                    </Button>
-                )}
-
-                {buttonData?.saveAndNewBtn && (
-                    <Button loading={isLoadingOnSave} htmlType="submit" disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: true })} type="primary">
-                        Save & Add New
-                    </Button>
-                )}
-
-                {buttonData?.editBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record: formData })} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
-                        Edit
                     </Button>
                 )}
             </Col>

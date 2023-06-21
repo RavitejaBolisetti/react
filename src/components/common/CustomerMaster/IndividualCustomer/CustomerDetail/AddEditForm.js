@@ -13,7 +13,7 @@ import { validateEmailField, validateMobileNoField, validateRequiredInputField, 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Dragger from 'antd/es/upload/Dragger';
 import { FiTrash } from 'react-icons/fi';
 import { BiLockAlt, BiTimeFive } from 'react-icons/bi';
@@ -25,7 +25,7 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, form, isHtmltype, onChange, formActionType: { viewMode } = undefined, onFinish, onFinishFailed, configurableTypedata, formData, corporateLovData } = props;
+    const { form, isHtmltype, onFinish, configurableTypedata, formData, corporateLovData } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
     const { buttonData, setButtonData } = props;
@@ -35,17 +35,17 @@ const AddEditFormMain = (props) => {
         return;
     };
 
+    useEffect(() => {
+        form.setFieldsValue({
+            ...formData,
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
+
     const handleToggle = () => {
         setIsEnabled(!isEnabled);
     };
 
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
-
-    const handleFormFieldChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
     const handleNumberValidation = (event) => {
         const Mno = event.target.value;
         const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
@@ -96,13 +96,7 @@ const AddEditFormMain = (props) => {
             }
         },
     };
-    const viewProps = {
-        isVisible: viewMode,
-        formData,
-        onChange,
-        styles,
-        onCloseAction,
-    };
+
     const changeHistoryClose = () => {
         setIsHistoryVisible(false);
     };
