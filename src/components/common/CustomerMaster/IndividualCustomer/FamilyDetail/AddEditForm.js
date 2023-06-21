@@ -16,7 +16,7 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onFinish, onFinishFailed, form, onChange, showForm, setShowForm, setCustomerType, relationData } = props;
+    const { onFinish, onFinishFailed, form, onChange, showForm, setShowForm, setCustomerType, relationData,familyData } = props;
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode, onSearch, isSearchLoading } = props;
     const [activeKey, setactiveKey] = useState([null]);
 
@@ -153,6 +153,7 @@ const AddEditFormMain = (props) => {
                                 </Collapse>
                             ))}
                     </Space>
+                    <Button type="primary" onClick={ () => onFinish()}>Submit</Button>
                 </Card>
             ) : (
                 <ViewDetail {...viewProps} />

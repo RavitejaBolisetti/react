@@ -41,8 +41,9 @@ const FormBase = (props) => {
     };
 
     const getRelationCode = (props) => {
+        let relationCode = relationData?.find((e) => e.value === props);
         form.setFieldsValue({
-            relationCode: props,
+            relationCode: relationCode?.key,
         });
     };
 
@@ -66,7 +67,7 @@ const FormBase = (props) => {
                 </Col>
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={null} label="Customer Id" name="relationCustomerId">
+                        <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
                             <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading} />
                         </Form.Item>
                     </Col>
@@ -134,7 +135,7 @@ const FormBase = (props) => {
                 </Col>
 
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item initialValue={props?.id ? props?.id : null} label="ID" name="id" />
+                    <Form.Item initialValue={props?.id ? props?.id : ''} label="ID" name="id" />
                 </Col>
 
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>

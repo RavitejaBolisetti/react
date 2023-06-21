@@ -144,7 +144,7 @@ const FamilyDetailMasterBase = (props) => {
 
     const onSave = () => {
         let values = form.getFieldsValue();
-        setFamilyDetailsList((items) => [{ ...values, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
+        setFamilyDetailsList((items) => [{ ...values, customerId: 'CUS1686811036620', dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
 
         if (editedMode) {
             const upd_obj = familyDetailList?.map((obj) => {
