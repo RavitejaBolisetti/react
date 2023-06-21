@@ -10,7 +10,7 @@ import { Row, Col, Form } from 'antd';
 
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
-import { corporateLovDataActions } from 'store/actions/data/customerMaster/corporateLov';
+import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
         data: {
             CustomerMaster: {
                 CustomerDetailsIndividual: { isLoaded: isDataLoaded = false, isLoading, data },
-                CorporateLov: { isLoaded: isCorporateLovDataLoaded = false, isloading: isCorporateLovLoading, data: corporateLovData = [] },
+                Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
             },
             ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isTypeDataLoading, paramdata: typeData = [] },
         },
@@ -58,13 +58,14 @@ const mapDispatchToProps = (dispatch) => ({
             fetchConfigList: configParamEditActions.fetchList,
             listConfigShowLoading: configParamEditActions.listShowLoading,
 
-            fetchCorporateLovList: corporateLovDataActions.fetchList,
-            listCorporateLovShowLoading: corporateLovDataActions.listShowLoading,
+            fetchCorporateLovList: corporateDataActions.fetchFilteredList,
+            listCorporateLovShowLoading: corporateDataActions.listShowLoading,
 
             fetchList: customerDetailsIndividualDataActions.fetchList,
             listShowLoading: customerDetailsIndividualDataActions.listShowLoading,
             saveData: customerDetailsIndividualDataActions.saveData,
             resetData: customerDetailsIndividualDataActions.reset,
+
             showGlobalNotification,
         },
         dispatch
@@ -74,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 const CustomerDetailMasterBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
-    const { sectionName, currentSection, setCurrentSection } = props;
+    const { sectionName, currentSection, setCurrentSection, selectedCustomer } = props;
 
     const { isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
     const [form] = Form.useForm();
@@ -89,41 +90,42 @@ const CustomerDetailMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const selectedCustomer = 'CUS1686812277115';
-
-    const extraParams = [
-        {
-            key: 'customerId',
-            title: 'customerId',
-            value: selectedCustomer,
-            name: 'Customer ID',
-        },
-    ];
-
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
 
     useEffect(() => {
-        if (userId) {
-            if (!isTypeDataLoaded && !isTypeDataLoading) {
-                fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CUST_TYPE.id });
-                fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CORP_TYPE.id });
-                fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CORP_CATE.id });
-                fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.TITLE.id });
-                fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.MEM_TYPE.id });
-            }
-        }
-        if (userId) {
-            if (!isDataLoaded && !isLoading && userId) {
-                fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
-            }
-            if (userId && !isCorporateLovDataLoaded) {
-                fetchCorporateLovList({ setIsLoading: listCorporateLovShowLoading, userId });
-            }
+        if (userId && !isTypeDataLoaded && !isTypeDataLoading) {
+            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CUST_TYPE.id });
+            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CORP_TYPE.id });
+            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CORP_CATE.id });
+            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.TITLE.id });
+            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.MEM_TYPE.id });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded]);
+    }, [userId, isTypeDataLoaded]);
+
+    useEffect(() => {
+        if (userId && !isCorporateLovDataLoaded) {
+            fetchCorporateLovList({ setIsLoading: listCorporateLovShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isCorporateLovDataLoaded]);
+
+    useEffect(() => {
+        if (!isDataLoaded && !isLoading && userId && selectedCustomer?.length > 0) {
+            const extraParams = [
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: selectedCustomer?.customerId,
+                    name: 'Customer ID',
+                },
+            ];
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isDataLoaded, selectedCustomer]);
 
     useEffect(() => {
         if (typeData) {

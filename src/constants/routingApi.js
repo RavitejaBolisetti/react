@@ -123,6 +123,7 @@ export const BASE_URL_FAMILY_DETAIL_SEARCH = BASE_URL + 'customers/individual';
 export const BASE_URL_OTF = BASE_URL + 'otf/';
 export const BASE_URL_OTF_INVOICE = BASE_URL + 'invoice';
 export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';
+export const BASE_URL_CORPORATE_COMPANY_LIST = BASE_URL + 'customers/corporate/firms';
 export const BASE_URL_CORPORATE_COMPANY_PROFILE = BASE_URL + 'customers/corporate/profile';
 export const BASE_URL_OTF_DETAILS = BASE_URL_OTF + 'details';
 
