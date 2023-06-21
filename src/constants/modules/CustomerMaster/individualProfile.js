@@ -75,3 +75,9 @@ export const customerCategory = [
     { key: 'common', name: 'Common' },
     { key: 'fleet', name: 'Fleet' },
 ];
+
+export const addressType = [
+    { key: 'Office', name: 'Office' },
+    { key: 'Residence', name: 'Residence' },
+    { key: 'Permanent', name: 'Permanent' },
+];

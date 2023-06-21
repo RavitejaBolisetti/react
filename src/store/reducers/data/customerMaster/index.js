@@ -11,6 +11,7 @@ import { CorporateAccounts } from './corporateAccountRelated';
 import { IndivisualAccounts } from './indivisualAccountRelated';
 import { CustomerDetails } from './customerDetails';
 import { CustomerDetailsIndividual } from './customerDetailsIndividual';
+import { AddressIndividual } from './individual/individualAddress';
 import { CompanyProfile } from './corporateCompanyProfile';
 import { CorporateLov } from './corporateLov';
 import { ChangeHistoryIndividualName } from './individual/nameChangeHistory';
@@ -24,6 +25,7 @@ export const CustomerMaster = combineReducers({
     CorporateAccounts,
     IndivisualAccounts,
     CompanyProfile,
+    AddressIndividual,
     CorporateLov,
     ChangeHistoryIndividualName,
 });
