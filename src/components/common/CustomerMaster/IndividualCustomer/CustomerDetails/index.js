@@ -1,2 +1,3 @@
 import { IndivisualCustomerDetailsMaster } from './IndivisualCustomerDetailsMaster';
-export { IndivisualCustomerDetailsMaster };
+import { NameChangeHistory } from './NameChangeHistory';
+export { IndivisualCustomerDetailsMaster,NameChangeHistory };

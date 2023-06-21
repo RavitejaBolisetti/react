@@ -255,4 +255,4 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         </>
     );
 };
-export const CompanyCustomerDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(CompanyCustomerDetailsMasterBase);
+export const CustomerDetailMaster = connect(mapStateToProps, mapDispatchToProps)(CompanyCustomerDetailsMasterBase);

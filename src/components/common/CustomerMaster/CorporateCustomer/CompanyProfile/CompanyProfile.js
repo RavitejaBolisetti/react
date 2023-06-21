@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -20,13 +25,11 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, paramdata: appCategoryData = [] },
-            // CompanyProfile: { isLoaded: isDataLoaded = false, data: DealerTermsConditionsData, isLoading, isLoadingOnSave, isFormDataLoaded },
         },
         common: {
             LeftSideBar: { collapsed = false },
         },
     } = state;
-    console.log('Redux State:', state);
 
     const moduleTitle = 'Company Profile';
 
@@ -35,13 +38,8 @@ const mapStateToProps = (state) => {
         userId,
         isAppCategoryDataLoaded,
         appCategoryData,
-        // isDataLoaded,
-        // isLoading,
-        // isLoadingOnSave,
-        // isFormDataLoaded,
         moduleTitle,
     };
-    console.log('App data:', appCategoryData);
     return returnValue;
 };
 
@@ -101,8 +99,6 @@ const CompanyProfileBase = (props) => {
         const onSuccess = (res) => {
             listShowLoading(false);
             form.resetFields();
-            // setSelectedRecord({});
-            // setIsFormVisible(false);
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
@@ -121,9 +117,7 @@ const CompanyProfileBase = (props) => {
 
         const requestData = {
             data: data,
-            // method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
-            // userId,
             onError,
             onSuccess,
         };

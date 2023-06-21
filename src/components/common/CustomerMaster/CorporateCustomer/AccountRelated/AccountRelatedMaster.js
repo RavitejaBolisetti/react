@@ -1,22 +1,23 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Space, Form, Card } from 'antd';
 
-import { bindActionCreators } from 'redux';
-
 import { corporateAccountsRelatedDataActions } from 'store/actions/data/customerMaster/corporateAccountRelated';
-
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
 import { showGlobalNotification } from 'store/actions/notification';
 
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
-
-import styles from 'components/common/Common.module.css';
 
 import { ViewDetail } from './ViewAccountDetails';
 import { AddEditForm } from './AddEditForm';
 
+import styles from 'components/common/Common.module.css';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },

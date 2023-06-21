@@ -1,11 +1,18 @@
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 import React from 'react';
-import { Space, Typography, Descriptions, Card, Divider } from 'antd';
+import { Space, Typography, Descriptions, Card, Divider, Col, Row, Button } from 'antd';
 import { FaRegUserCircle } from 'react-icons/fa';
-import styles from 'components/common/Common.module.css';
+import { BiTimeFive } from 'react-icons/bi';
 
 
 const { Text } = Typography;
-
 const ViewDetailMain = (props) => {
     const { styles, formData } = props;
     const viewProps = {
@@ -14,23 +21,7 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-    const customerForm = {
-        mobileNumber: '8707023991',
-        customerType: 'Individual',
-        title: 'Mr.',
-        firstName: 'Arvind',
-        middleName: 'Pal',
-        lastName: 'Singh',
-        emailId: 'pal.arvind@gmail.com',
-        contactedOverWhatsapp: true,
-        useMobileNumber: 'false',
-        whatsappNumber: '8707023991',
-        corporateType: 'Non-Listed',
-        corporateCategory: 'C1',
-        corporateName: 'ABC',
-        membershipType: 'Gold',
-    };
-
+    console.log(formData,'FORMDATA');
     return (
         <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
@@ -51,15 +42,29 @@ const ViewDetailMain = (props) => {
 
                         <Card>
                             <div className={`${styles.cardInsideBox} ${styles.customerName}`}>
-                                <Text className={styles.customerName}>Customer Name</Text>
-                                <Divider />
-                                {formData?.title}
-                                <span className={styles.nameSpacing}></span>
-                                {formData?.firstName}
-                                <span className={styles.nameSpacing}></span>
-                                {formData.middleName}
-                                <span className={styles.nameSpacing}></span>
-                                {formData.lastName}
+                                <Row>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                        <Text className={styles.customerName}>Customer Name</Text>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
+                                        <Button type="link" icon={<BiTimeFive />}>
+                                            View History
+                                        </Button>
+                                    </Col>
+                                    <Divider />
+                                    {formData?.title}
+                                    <span className={styles.nameSpacing}></span>
+                                    {formData?.firstName}
+                                    <span className={styles.nameSpacing}></span>
+                                    {formData?.middleName}
+                                    <span className={styles.nameSpacing}></span>
+                                    {formData?.lastName}
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                        <Button type="link" icon={<BiTimeFive />}>
+                                            View History
+                                        </Button>
+                                    </Col>
+                                </Row>
                             </div>
                         </Card>
                         <br />
@@ -79,4 +84,4 @@ const ViewDetailMain = (props) => {
     );
 };
 
-export const ViewIndivisualCustomerDetails = ViewDetailMain;
+export const ViewDetail = ViewDetailMain;

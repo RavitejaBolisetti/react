@@ -96,4 +96,12 @@ export const PARAM_MASTER = {
         id: 'ADD_TYPE',
         title: 'ADD_TYPE',
     },
+    GENDER_CD: {
+        id: 'GENDER_CD',
+        title: 'GENDER_CD'
+    },
+    PURPOSE: {
+        id: 'PURPOSE',
+        title: 'PURPOSE',
+    },
 };
