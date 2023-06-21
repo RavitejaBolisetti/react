@@ -27,7 +27,7 @@ const AddEditFormMain = (props) => {
     const { isReadOnly = false } = props;
     const [customer, setCustomer] = useState(false);
 
-    const [activeKey, setactiveKey] = useState([1]);
+    const [activeKey, setActiveKey] = useState([1]);
 
     console.log('formData', formData);
 
@@ -45,9 +45,9 @@ const AddEditFormMain = (props) => {
                     newActivekeys.push(item);
                 }
             });
-            setactiveKey(newActivekeys);
+            setActiveKey(newActivekeys);
         } else {
-            setactiveKey([...activeKey, values]);
+            setActiveKey([...activeKey, values]);
         }
     };
 

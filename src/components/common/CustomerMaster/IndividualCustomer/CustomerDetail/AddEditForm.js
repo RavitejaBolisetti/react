@@ -6,7 +6,6 @@
 
 import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Empty, message } from 'antd';
 
-import { FaRegUserCircle } from 'react-icons/fa';
 import { CheckOutlined } from '@ant-design/icons';
 
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -19,22 +18,18 @@ import { FiTrash } from 'react-icons/fi';
 import { BiLockAlt, BiTimeFive } from 'react-icons/bi';
 import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
 import { NameChangeHistory } from './NameChangeHistory';
-import { ViewDetail } from './ViewDetail';
 
 const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, isHtmltype, onFinish, configurableTypedata, formData, corporateLovData ,formActionType} = props;
+    const { form, configurableTypedata, formData, corporateLovData, formActionType } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [mobileField, setMobileField] = useState(false);
     const [whatsappField, setWhatsappField] = useState(false);
-    const Random = () => {
-        return;
-    };
 
     useEffect(() => {
         form.setFieldsValue({
@@ -43,10 +38,9 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-
     const handleWhatsappToggle = () => {
-        setWhatsappField(mobileField)
-    }
+        setWhatsappField(mobileField);
+    };
 
     const handleToggle = () => {
         setIsEnabled(!isEnabled);
@@ -85,6 +79,7 @@ const AddEditFormMain = (props) => {
         showDownloadIcon: true,
         previewIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
     };
+
     const uploadProps = {
         name: 'file',
         multiple: false,
@@ -94,7 +89,6 @@ const AddEditFormMain = (props) => {
 
         onChange(info) {
             const { status } = info.file;
-
             if (status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully.`);
             } else if (status === 'error') {

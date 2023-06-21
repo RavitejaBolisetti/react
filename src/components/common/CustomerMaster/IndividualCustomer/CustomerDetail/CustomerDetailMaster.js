@@ -73,19 +73,17 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerDetailMasterBase = (props) => {
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, form } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
     const { sectionName, currentSection, setCurrentSection, selectedCustomer } = props;
 
-    const { isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
-    const [form] = Form.useForm();
+    const { isDataLoaded, isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
 
     const [showForm, setShowForm] = useState(false);
-
     const [configurableTypedata, setConfigurableTypedata] = useState({});
-    const [refershData, setRefershData] = useState(false);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
+
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
@@ -113,7 +111,7 @@ const CustomerDetailMasterBase = (props) => {
     }, [userId, isCorporateLovDataLoaded]);
 
     useEffect(() => {
-        if (!isDataLoaded && !isLoading && userId && selectedCustomer?.length > 0) {
+        if (!isDataLoaded && userId) {
             const extraParams = [
                 {
                     key: 'customerId',
@@ -135,8 +133,7 @@ const CustomerDetailMasterBase = (props) => {
     }, [typeData]);
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        setRefershData(false);
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setShowDataLoading(false);
     };
 
@@ -147,7 +144,7 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, customerId: 'CUS1686812277115' };
+        const data = { ...values, customerId: selectedCustomer?.customerId };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -181,16 +178,10 @@ const CustomerDetailMasterBase = (props) => {
         return;
     };
 
-    const onCloseAction = () => {
-        form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity });
-    };
-
     const formProps = {
         formActionType,
         form,
         onFinish,
-        onCloseAction,
         saveData,
         corporateLovData,
         setFormActionType,

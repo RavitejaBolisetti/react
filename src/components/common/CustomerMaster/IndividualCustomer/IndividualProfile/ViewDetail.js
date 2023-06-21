@@ -12,7 +12,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { setactiveKey, activeKey, styles, formData } = props;
+    const { setActiveKey, activeKey, styles, formData } = props;
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -25,9 +25,9 @@ const ViewDetailMain = (props) => {
                     newActivekeys.push(item);
                 }
             });
-            setactiveKey(newActivekeys);
+            setActiveKey(newActivekeys);
         } else {
-            setactiveKey([...activeKey, values]);
+            setActiveKey([...activeKey, values]);
         }
     };
     const viewProps = {

@@ -224,6 +224,7 @@ const CustomerMasterMain = (props) => {
         setIsFormVisible(false);
         setFormActionType(defaultFormActionType);
         setButtonData(defaultBtnVisiblity);
+        setSelectedCustomer();
     };
 
     const drawerTitle = useMemo(() => {
