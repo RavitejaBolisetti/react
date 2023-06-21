@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
@@ -8,7 +13,6 @@ import { OTF_SECTION } from 'constants/OTFSection';
 import { CustomerDetailsMaster } from './CustomerDetails';
 import { SchemeDetailsMaster } from './SchemeDetails';
 import { InsuranceDetailsMaster } from './InsuranceDetails';
-import { Otfbuttons } from 'components/common/Button';
 import { VehicleDetailsMaster } from './VehicleDetails';
 import { FinananceDetailsMaster } from './FinananceDetails';
 import { LoyaltySchemeMaster } from './LoyaltyScheme';
@@ -17,6 +21,7 @@ import { ExchangeVehiclesMaster } from './ExchangeVehicles';
 import { AddOnDetailsMaster } from './AddOnDetails';
 import { OtfDetailsMaster } from './OtfDetails';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
+import { OTFDrawerFormButton } from 'components/common/Button';
 
 import OTFStatusBar from './utils/OTFStatusBar';
 import { MovetoNextForm } from './utils/OTFUtils';
@@ -202,7 +207,7 @@ const AddEditFormMain = (props) => {
                             </Row>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Otfbuttons {...otfButtonProps} />
+                            <OTFDrawerFormButton {...otfButtonProps} />
                         </Col>
                     </Row>
                 </Col>

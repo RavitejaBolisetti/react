@@ -13,6 +13,7 @@ const baseAPICall = (params) => {
         timeout: process.env.REACT_APP_API_CALL_TIMEOUT,
         method,
         url,
+        onUploadProgress: (progressEvent) => console.log('progressEvent', progressEvent.loaded),
     };
     if (data) {
         axiosConfig = {
@@ -23,7 +24,7 @@ const baseAPICall = (params) => {
 
     if (token) {
         const AuthStr = 'Bearer '.concat(token);
-        const headers = { Authorization: AuthStr, userId, accessToken: accessToken, deviceType: deviceType ||'W', deviceId: '' };
+        const headers = { Authorization: AuthStr, userId, accessToken: accessToken, deviceType: deviceType || 'W', deviceId: '' };
         axiosConfig = {
             ...axiosConfig,
             headers,
@@ -37,7 +38,7 @@ const baseAPICall = (params) => {
         onError && (displayErrorTitle ? onError({ title: errorTitle, message: Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }) : onError(errorMessage));
     };
 
-    const onUnAuthenticated = (message='') => {
+    const onUnAuthenticated = (message = '') => {
         clearLocalStorageData();
     };
 

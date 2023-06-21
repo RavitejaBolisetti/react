@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
-import { dealerParentTitleDataActions } from 'store/actions/data/dealer/dealerParentTitle';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
+
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -12,14 +13,15 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
+            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
             DealerHierarchy: {
                 DealerParent: { isLoaded: isDataLoaded = false, isLoading, data = [] },
-                DealerParentTitle: { isLoaded: isTitleDataLoaded = false, detailData: titleData = [] },
             },
         },
     } = state;
@@ -32,8 +34,9 @@ const mapStateToProps = (state) => {
         data,
         isLoading,
         moduleTitle,
-        isTitleDataLoaded,
-        titleData,
+        isConfigDataLoaded,
+        isConfigLoading,
+        typeData: typeData && typeData[PARAM_MASTER.TITLE.id],
     };
     return returnValue;
 };
@@ -42,11 +45,12 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            fetchConfigList: configParamEditActions.fetchList,
+            listConfigShowLoading: configParamEditActions.listShowLoading,
+
             fetchList: dealerParentDataActions.fetchList,
             saveData: dealerParentDataActions.saveData,
             listShowLoading: dealerParentDataActions.listShowLoading,
-
-            fetchTitleList: dealerParentTitleDataActions.fetchDetail,
 
             showGlobalNotification,
         },
@@ -55,7 +59,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DealerParentBase = (props) => {
-    const { data, saveData, fetchList, fetchTitleList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isTitleDataLoaded, titleData } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { isConfigDataLoaded, isConfigLoading, typeData, listConfigShowLoading, fetchConfigList } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -95,13 +100,11 @@ export const DealerParentBase = (props) => {
     }, [userId, isDataLoaded]);
 
     useEffect(() => {
-        if (userId) {
-            if (!isTitleDataLoaded) {
-                fetchTitleList({ setIsLoading: listShowLoading, userId, parameterType: 'TITLE', onSuccessAction, onErrorAction });
-            }
+        if (userId && !isConfigDataLoaded && !isConfigLoading) {
+            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.TITLE.id });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded]);
+    }, [userId, isConfigDataLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {
@@ -197,7 +200,6 @@ export const DealerParentBase = (props) => {
         };
 
         saveData(requestData);
-        //}
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -236,7 +238,7 @@ export const DealerParentBase = (props) => {
         setButtonData,
         handleButtonClick,
         handleResetFilter,
-        titleData,
+        typeData,
     };
 
     const tableProps = {

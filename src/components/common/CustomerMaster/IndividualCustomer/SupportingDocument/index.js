@@ -1,3 +1,7 @@
-import { SupportingDocument } from './SupportingDocument';
+/*
+ *   Copyright (c) 2023
+ *   All rights reserved.
+ */
+import { SupportingDocumentMaster } from './SupportingDocumentMaster';
 
-export { SupportingDocument };
+export { SupportingDocumentMaster };

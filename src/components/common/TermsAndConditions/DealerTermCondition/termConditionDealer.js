@@ -146,12 +146,12 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
-    useEffect(() => {
-        if (userId && refershData) {
-            fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refershData, userId]);
+    // useEffect(() => {
+    //     if (userId && refershData) {
+    //         fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [refershData, userId]);
 
     useEffect(() => {
         if (DealerTermsConditionsDataLoaded && DealerTermsConditionsData) {

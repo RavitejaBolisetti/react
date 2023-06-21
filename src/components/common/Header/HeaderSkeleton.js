@@ -1,3 +1,7 @@
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 import { Col, Row, Space } from 'antd';
 import React from 'react';
 import { InputSkeleton } from '../Skeleton';

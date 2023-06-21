@@ -4,7 +4,7 @@ import { Row, Col, Typography, Space, Collapse } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { otfInvoiceDetailsDataActions } from 'store/actions/data/otf/invoiceDetails';
+import { otfInvoiceDetailDataActions } from 'store/actions/data/otf/invoiceDetail';
 import { showGlobalNotification } from 'store/actions/notification';
 import { dynamicExpandIcon } from 'utils/accordianExpandIcon';
 import { DataTable } from 'utils/dataTable';
@@ -41,9 +41,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: otfInvoiceDetailsDataActions.fetchList,
-            resetData: otfInvoiceDetailsDataActions.reset,
-            listShowLoading: otfInvoiceDetailsDataActions.listShowLoading,
+            fetchList: otfInvoiceDetailDataActions.fetchList,
+            listShowLoading: otfInvoiceDetailDataActions.listShowLoading,
+            resetData: otfInvoiceDetailDataActions.reset,
             showGlobalNotification,
         },
         dispatch
@@ -64,7 +64,6 @@ export const InvoiceDetailsMasterBase = (props) => {
         setactiveKey([]);
         setactiveKey([values]);
     };
-
     const extraParams = [
         {
             key: 'otfNumber',
@@ -104,7 +103,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                             }
                             key={1}
                         >
-                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnInvoice()} tableData={invoiceData && invoiceData[0]?.invoiceDetails} />
+                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnInvoice()} tableData={invoiceData?.invoiceDetails} />
                         </Panel>
                     </Collapse>
                     <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
@@ -118,7 +117,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                             }
                             key={2}
                         >
-                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnDelivery()} tableData={invoiceData && invoiceData[0]?.deliveryDetails} />
+                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />
                         </Panel>
                     </Collapse>
                 </Space>
