@@ -1,9 +1,10 @@
 /*
- *   Copyright (c) 2023
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Collapse, Form, Space, Typography, Button } from 'antd';
+import { Row, Col, Collapse, Form, Space, Typography, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
@@ -17,14 +18,14 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import AddEditForm from './AddEditForm';
 import ViewContactList from './ViewContactList';
+import { CustomerFormButton } from '../../CustomerFormButton';
+
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const mapStateToProps = (state) => {
-    console.log('data', state);
-
     const {
         auth: { userId },
         customer: {
@@ -41,7 +42,6 @@ const mapStateToProps = (state) => {
         isConfigLoading,
         isCustomerDataLoaded,
         isCustomerDataLoading,
-        // typeData: typeData && typeData[PARAM_MASTER.FAMLY_RELTN.id],
         typeData: typeData,
         customerData,
     };
@@ -75,7 +75,10 @@ const extraParams = [
     },
 ];
 
-const ContactMain = ({ userId, isViewModeVisible, toggleButton, fetchConfigList, resetData, listConfigShowLoading, fetchContactDetailsList, customerData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData, isConfigDataLoaded, isConfigLoading }) => {
+const ContactMain = (props) => {
+    const { section, userId, isViewModeVisible, toggleButton, fetchConfigList, resetData, listConfigShowLoading, fetchContactDetailsList, customerData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData, isConfigDataLoaded, isConfigLoading } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -83,14 +86,14 @@ const ContactMain = ({ userId, isViewModeVisible, toggleButton, fetchConfigList,
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
 
-    console.log('typeData', typeData, "customerData", customerData?.customerContact);
+    console.log('typeData', typeData, 'customerData', customerData?.customerContact);
 
     useEffect(() => {
         if (userId && !isCustomerDataLoaded && !isConfigLoading) {
-            fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction })
-        } else if( userId && customerData?.length ) {
+            fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+        } else if (userId && customerData?.length) {
             setContactData(customerData[0]?.customerContact);
-        };
+        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, customerData]);
@@ -117,7 +120,6 @@ const ContactMain = ({ userId, isViewModeVisible, toggleButton, fetchConfigList,
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
-
 
     const onFinish = (value) => {
         if (isEditing) {
@@ -157,6 +159,10 @@ const ContactMain = ({ userId, isViewModeVisible, toggleButton, fetchConfigList,
         form.resetFieldsValue();
     };
 
+    const onFinishFailed = (errorInfo) => {
+        return;
+    };
+
     const deleteContactHandeler = (data) => {
         console.log('delete Data', data);
         setContactData((prev) => {
@@ -190,27 +196,40 @@ const ContactMain = ({ userId, isViewModeVisible, toggleButton, fetchConfigList,
         typeData,
     };
 
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
     return (
-        <>
-            <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
-                <Panel
-                    header={
-                        <Space>
-                            <Text strong> {toggleButton === 'Individual' ? 'Individual Contact' : 'Company Contact'}</Text>
-                            {!isViewModeVisible && (
-                                <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary">
-                                    Add Contact
-                                </Button>
-                            )}
-                        </Space>
-                    }
-                    key="1"
-                >
-                    {!isViewModeVisible && (showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />}
-                    <ViewContactList {...formProps} />
-                </Panel>
-            </Collapse>
-        </>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Row gutter={20} className={styles.drawerBodyRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <h2>{section?.title} </h2>
+                    <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
+                        <Panel
+                            header={
+                                <Space>
+                                    <Text strong> {toggleButton === 'Individual' ? 'Individual Contact' : 'Company Contact'}</Text>
+                                    {!isViewModeVisible && (
+                                        <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary">
+                                            Add Contact
+                                        </Button>
+                                    )}
+                                </Space>
+                            }
+                            key="1"
+                        >
+                            {!isViewModeVisible && (showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />}
+                            <ViewContactList {...formProps} />
+                        </Panel>
+                    </Collapse>{' '}
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <CustomerFormButton {...props} />
+                </Col>
+            </Row>
+        </Form>
     );
 };
 

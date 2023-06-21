@@ -1,8 +1,12 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { Descriptions } from 'antd';
-import styles from 'components/common/Common.module.css';
 
-const ViewCompanyAddressDetailsBase = ({ formData, styles }) => {
+const ViewDetailBase = ({ formData, styles }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -31,4 +35,4 @@ const ViewCompanyAddressDetailsBase = ({ formData, styles }) => {
     );
 };
 
-export const ViewCompanyAddressDetails = ViewCompanyAddressDetailsBase;
+export const ViewDetail = ViewDetailBase;

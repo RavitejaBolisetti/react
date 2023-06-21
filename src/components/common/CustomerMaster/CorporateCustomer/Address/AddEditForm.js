@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useRef } from 'react';
 
 import { Row, Col, Checkbox, Button, Form, Input, Select, Space } from 'antd';
@@ -9,7 +14,7 @@ import { validateRequiredInputField, validateRequiredSelectField, validateAlphan
 
 let index = 0;
 
-const AddEditForm = (props) => {
+const AddEditFormMain = (props) => {
     const { isReadOnly = false, onFinish, form, setShowAddEditForm, setIsEditing } = props;
 
     const [items, setItems] = useState(['Office', 'Residence', 'Permanent', 'Other']);
@@ -140,4 +145,4 @@ const AddEditForm = (props) => {
     );
 };
 
-export default AddEditForm;
+export const AddEditForm = AddEditFormMain;

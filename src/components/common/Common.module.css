@@ -1457,6 +1457,10 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 23px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 15ch;
 }
 
 .drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item p span {
@@ -1521,7 +1525,12 @@
     font-size: 24px;
     color: #70c922;
 }
-
+.drawerBodyLeft :global .ant-timeline .ant-timeline-item-head-custom{
+    inset-block-start: 0px;
+}
+.drawerBodyLeft :global .ant-timeline .ant-timeline-item-content{
+    inset-block-start: -13px;
+}
 .drawerBodyLeft :global .ant-progress.ant-progress-status-success .ant-progress-bg {
     background-color: #70c922 !important;
 }
@@ -1960,7 +1969,7 @@
 .activeForm {
     color: #ff3e5b !important;
 }
-
+.ant-timeline-item-tail{}
 .inactiveForm {
     color: #00a310;
 }
