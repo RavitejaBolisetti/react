@@ -6,8 +6,9 @@
 import { Col, Input, Form, Row, Select, Space, Divider, Card } from 'antd';
 import { validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { useEffect, useState } from 'react';
-
+import { useEffect } from 'react';
+import { BiEdit } from 'react-icons/bi';
+import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
@@ -29,7 +30,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.mobileNumber} label="Mobile Number" name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
-                            <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} />
+                            <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} suffix={<BiEdit className={styles.icon} size={18} />} disabled />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -48,7 +49,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.parentCompanyCode} label="Parent Company Code" name="parentCompanyCode" data-testid="parentCode" rules={[validateRequiredInputField('parent company code')]}>
-                            <Input onChange={handeSearchParentCompName} placeholder={preparePlaceholderText('parent company code')} />
+                            <Input placeholder={preparePlaceholderText('parent company code')} disabled />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -92,7 +93,7 @@ const AddEditFormMain = (props) => {
                         )}
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.corporateCategory} label="Corporate Category" name="corporateCategory" data-testid="corporateCategory">
-                            <Select placeholder="Select" disabled={false} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_CATE']}></Select>
+                            <Select placeholder="Select" disabled={false} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_CATE']} disabled></Select>
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
