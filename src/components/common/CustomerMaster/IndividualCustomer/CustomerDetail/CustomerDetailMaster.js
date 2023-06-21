@@ -51,6 +51,7 @@ const mapStateToProps = (state) => {
     };
     return returnValue;
 };
+
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
@@ -91,7 +92,6 @@ const CustomerDetailMasterBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-
     useEffect(() => {
         if (userId && !isTypeDataLoaded && !isTypeDataLoading) {
             fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CUST_TYPE.id });
@@ -109,6 +109,7 @@ const CustomerDetailMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isCorporateLovDataLoaded]);
+
 
     useEffect(() => {
         if (!isDataLoaded && userId) {

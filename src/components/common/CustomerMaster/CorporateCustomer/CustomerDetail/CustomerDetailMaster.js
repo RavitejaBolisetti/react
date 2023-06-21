@@ -134,7 +134,8 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, customerId: 'CUS1686815155017' };
+        const recordId = customerDetailsData?.id || '';
+        const data = { ...values, customerId: customerDetailsData.customerId, id: recordId };
 
         const onSuccess = (res) => {
             form.resetFields();
