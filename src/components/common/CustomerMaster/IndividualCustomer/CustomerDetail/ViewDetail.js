@@ -10,6 +10,7 @@ import { BiTimeFive } from 'react-icons/bi';
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
     const { styles, formData } = props;
+    console.log('🚀 ~ file: ViewDetail.js:13 ~ ViewDetailMain ~ formData:', formData);
     const viewProps = {
         bordered: false,
         colon: false,

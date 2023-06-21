@@ -76,15 +76,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerDetailMasterBase = (props) => {
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, isLoading, resetData, form } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form } = props;
 
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
     const { sectionName, currentSection, setCurrentSection, selectedCustomer, selectedCustomerId } = props;
 
-    const { isDataLoaded, shouldResetForm, isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
-    console.log('🚀 ~ file: CustomerDetailMaster.js:83 ~ CustomerDetailMasterBase ~ shouldResetForm:', shouldResetForm, data);
-
+    const { shouldResetForm, isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
     const [showForm, setShowForm] = useState(false);
+    const [formData, setFormData] = useState();
     const [configurableTypedata, setConfigurableTypedata] = useState({});
 
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -98,17 +97,21 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        setShowDataLoading(false);
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // setShowDataLoading(false);
     };
 
     useEffect(() => {
-        form.setFieldsValue({ ...data });
+        if (isDataLoaded) {
+            form.setFieldsValue({ ...data });
+            setFormData(data);
+            setShowDataLoading(false);
+        }
         return () => {
             resetData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);
+    }, [isDataLoaded, data]);
 
     useEffect(() => {
         if (userId && !isTypeDataLoaded && !isTypeDataLoading) {
@@ -205,13 +208,13 @@ const CustomerDetailMasterBase = (props) => {
         setShowForm,
         setButtonData,
         typeData,
-        formData: data,
+        formData,
         configurableTypedata,
         showDataLoading,
     };
 
     const viewProps = {
-        formData: data,
+        formData,
         styles,
     };
 
