@@ -10,6 +10,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { AddEditForm } from './AddEditForm';
+import { ViewDetail } from './ViewDetail';
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -56,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { saveData, fetchList, userId, listShowLoading, isLoaded, data, showGlobalNotification, moduleTitle, isFinanceLovDataLoaded, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading } = props;
+    const { saveData, fetchList, userId, listShowLoading, isLoaded, data, showGlobalNotification, moduleTitle, isFinanceLovDataLoaded, formActionType, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading } = props;
 
     const [form] = Form.useForm();
 
@@ -66,7 +68,7 @@ export const FinananceDetailsMasterBase = (props) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: true };
-    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+    // const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -79,6 +81,12 @@ export const FinananceDetailsMasterBase = (props) => {
             title: 'otfNumber',
             value: selectedOTP,
             name: 'OTF Number',
+        },
+        {
+            key: 'id',
+            title: 'id',
+            value: 'a0368e0e-ac87-4beb-b0f5-f4f8b69ff8f7',
+            name: 'OTF ID',
         },
     ];
 
@@ -110,7 +118,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values };
+        const data = { ...values, otfNumber: 'OTF001', id: 'a0368e0e-ac87-4beb-b0f5-f4f8b69ff8f7' };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -189,7 +197,12 @@ export const FinananceDetailsMasterBase = (props) => {
         handleButtonClick,
     };
 
-    return <AddEditForm {...formProps} />;
+    const viewProps = {
+        formData: data,
+        styles,
+    };
+
+    return <>{formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}</>;
 };
 
 const FinananceDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(FinananceDetailsMasterBase);
