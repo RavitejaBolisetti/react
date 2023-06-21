@@ -18,7 +18,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const FormBase = (props) => {
-    const { customerType, onSave, form, onChange, editedId, relationData, onSearch,isSearchLoading } = props;
+    const { customerType, onSave, form, onChange, relationData, onSearch, isSearchLoading } = props;
 
     const type = [
         { name: 'Yes', key: 'Yes', value: 'Yes' },
@@ -67,7 +67,7 @@ const FormBase = (props) => {
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={null} label="Customer Id" name="relationCustomerId">
-                            <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading}/>
+                            <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading} />
                         </Form.Item>
                     </Col>
                 ) : null}
@@ -130,7 +130,7 @@ const FormBase = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item initialValue={editedId} label="Generated ID" name="editedId" />
+                    <Form.Item label="Generated ID" name="editedId" />
                 </Col>
 
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
@@ -143,7 +143,7 @@ const FormBase = (props) => {
             </Row>
 
             <Row style={{ display: 'flex' }}>
-                <Button type="primary" onClick={() => onSave(props)}>
+                <Button type="primary" onClick={onSave}>
                     Save
                 </Button>
 

@@ -16,7 +16,7 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onFinish, onFinishFailed, form, onChange, showForm, setShowForm, setCustomerType, relationData, editedId, setEditedId,listFamilySearchLoading } = props;
+    const { onFinish, onFinishFailed, form, onChange, showForm, setShowForm, setCustomerType, relationData } = props;
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode, onSearch, isSearchLoading } = props;
     const [activeKey, setactiveKey] = useState([null]);
 
@@ -40,15 +40,23 @@ const AddEditFormMain = (props) => {
     };
 
     const addFunction = () => {
+        form.resetFields();
         setShowForm(true);
         setCustomerType('Yes');
-        setEditedId(() => editedId + 1);
-        form.resetFields();
+        let id = Math.floor(Math.random() * 100000000 + 1);
+        form.setFieldsValue({
+            editedId: id,
+        });
     };
 
     const onEdit = (values) => {
         setEditedMode(true);
-        setCustomerType(false);
+        if (values?.mnmCustomer === 'Yes') {
+            setCustomerType(true);
+        } else if (values?.mnmCustomer === 'No') {
+            setCustomerType(false);
+        }
+
         form.setFieldsValue({
             mnmCustomer: values?.mnmCustomer,
             customerId: values?.customerId,
@@ -81,7 +89,6 @@ const AddEditFormMain = (props) => {
         onSave,
         customerType,
         relationData,
-        editedId,
         onSearch,
         isSearchLoading,
     };
@@ -132,14 +139,14 @@ const AddEditFormMain = (props) => {
                                                         <Typography style={{ fontSize: '14px', margin: '0 0 0 0.5rem', color: editedMode ? 'grey' : '#ff3e5b' }}>Edit</Typography>
                                                     </Space>
                                                 </Space>
-
-                                                {customerType ? <Typography>M&M user </Typography> : !customerType ? <Typography>Non-M&M user</Typography> : null}
+                                                {console.log(item,'EACH_ITEM_PROP')}
+                                                {item?.mnmCustomer === "Yes" ? <Typography>M&M user </Typography> : item?.mnmCustomer === "No" ? <Typography>Non-M&M user</Typography> : null}
                                             </Space>
                                         }
                                         key={item?.editedId}
                                         style={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
                                     >
-                                        {editedMode ? <FormContainer {...formProps} item /> : <ViewDetail mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} />}
+                                        {editedMode ? <FormContainer {...formProps} item /> : <ViewDetail mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} />}
                                     </Panel>
                                 </Collapse>
                             ))}
