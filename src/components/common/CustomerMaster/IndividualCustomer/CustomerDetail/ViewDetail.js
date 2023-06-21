@@ -1,7 +1,13 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
-import { Typography, Descriptions, Card, Divider, Col, Row, Button } from 'antd';
+import { Typography, Descriptions, Card, Divider, Col, Row, Button, Space } from 'antd';
 import { BiTimeFive } from 'react-icons/bi';
 import { FiEdit } from 'react-icons/fi';
+import { FaRegUserCircle } from 'react-icons/fa';
 
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
