@@ -60,10 +60,6 @@ export const PARAM_MASTER = {
         id: 'CUS_CAT',
         title: 'CUS_CAT',
     },
-    GENDER_CD: {
-        id: 'GENDER_CD',
-        title: 'GENDER_CD',
-    },
     MARITAL_STATUS: {
         id: 'MARITAL_STATUS',
         title: 'MARITAL_STATUS',
@@ -126,7 +122,11 @@ export const PARAM_MASTER = {
     },
     GENDER_CD: {
         id: 'GENDER_CD',
-        title: 'GENDER_CD'
+        title: 'GENDER_CD',
+    },
+    OTF_SER: {
+        id: 'OTF_SER',
+        title: 'Referral',
     },
     PURPOSE: {
         id: 'PURPOSE',

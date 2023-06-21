@@ -18,6 +18,9 @@ import { tableColumn } from './tableColumn';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PARAM_MASTER } from 'constants/paramMaster';
+
+import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection';
+import { CUSTOMER_CORPORATE_SECTION } from 'constants/CustomerCorporateSection';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import DataTable from 'utils/dataTable/DataTable';
@@ -79,15 +82,15 @@ const CustomerMasterMain = (props) => {
 
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
     const [selectedCustomer, setSelectedCustomer] = useState();
-    console.log('🚀 ~ file: CustomerMaster.js:82 ~ CustomerMasterMain ~ selectedCustomer:', selectedCustomer);
+
+    const [section, setSection] = useState();
+    const [defaultSection, setDefaultSection] = useState();
+    const [currentSection, setCurrentSection] = useState();
+    const [sectionName, setSetionName] = useState();
 
     const [form] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [refershData, setRefershData] = useState(false);
-    const [selectedRowData, setSelectedRowData] = useState({});
     const [isFormVisible, setIsFormVisible] = useState(false);
-
-    const [selectedCustomerId, setSelectedCustomerId] = useState('');
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -98,6 +101,7 @@ const CustomerMasterMain = (props) => {
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
 
     const defaultExtraParam = [
         {
@@ -124,15 +128,29 @@ const CustomerMasterMain = (props) => {
         },
     ];
 
+    useEffect(() => {
+        const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
+        setDefaultSection(defaultSection);
+        setSection(defaultSection);
+        setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [customerType]);
+
+    useEffect(() => {
+        if (currentSection && sectionName) {
+            const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
+            setSection(section);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentSection, sectionName]);
+
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        setRefershData(false);
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setShowDataLoading(false);
     };
 
     const onErrorAction = (res) => {
         showGlobalNotification({ message: res?.responseMessage });
-        setRefershData(false);
         setShowDataLoading(false);
     };
 
@@ -151,20 +169,17 @@ const CustomerMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType, userId]);
 
-    useEffect(() => {
-        if (refershData && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, refershData]);
-
-    const handleButtonClick = ({ record = null, buttonAction }) => {
+    const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
         form.resetFields();
-        setSelectedRowData(record);
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        setSelectedCustomer(record);
-        setIsFormVisible(true);
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
+        if (buttonAction === NEXT_ACTION) {
+            section && setCurrentSection(section?.id);
+        }
+
+        if (buttonAction === VIEW_ACTION || !formVisible) {
+            setSelectedCustomer(record);
+            defaultSection && setCurrentSection(defaultSection);
+        }
     };
 
     const onFinish = (values, e) => {};
@@ -184,7 +199,6 @@ const CustomerMasterMain = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        setRefershData(!refershData);
         setShowDataLoading(true);
     };
 
@@ -230,15 +244,19 @@ const CustomerMasterMain = (props) => {
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
+        NEXT_ACTION,
         buttonData,
 
         setButtonData,
         handleButtonClick,
         defaultFormActionType,
         defaultBtnVisiblity,
-        selectedRowData,
         selectedCustomer,
         setSelectedCustomer,
+        section,
+        currentSection,
+        sectionName,
+        setCurrentSection,
     };
 
     const selectProps = {
