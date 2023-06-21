@@ -102,6 +102,8 @@ const CompanyProfileBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer]);
 
+    console.log('Cust id:', selectedCustomer);
+
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
@@ -112,7 +114,7 @@ const CompanyProfileBase = (props) => {
     const onFinish = (values) => {
         const recordId = customerProfileData?.id || '';
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
-        const data = { ...rest, customerId: 'CUS1686810869696', keyAccountDetails: { customerId: 'CUS1686810869696', accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { customerId: 'CUS1686810869696', personName: values.personName, postion: values.postion, companyName: values.companyName }, id: recordId };
+        const data = { ...rest, customerId: customerProfileData.customerId, keyAccountDetails: { customerId: customerProfileData.customerId, accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { customerId: customerProfileData.customerId, personName: values.personName, postion: values.postion, companyName: values.companyName }, id: recordId };
 
         const onSuccess = (res) => {
             listShowLoading(false);
@@ -135,6 +137,7 @@ const CompanyProfileBase = (props) => {
 
         const requestData = {
             data: data,
+            method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             onError,
             onSuccess,
@@ -160,6 +163,7 @@ const CompanyProfileBase = (props) => {
         formActionType,
         appCategoryData,
         styles,
+        form,
         formData: customerProfileData,
     };
 
