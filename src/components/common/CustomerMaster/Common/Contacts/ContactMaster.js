@@ -12,6 +12,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { customerDetailDataActions } from 'store/actions/customer/customerContacts';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -66,18 +68,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const extraParams = [
-    {
-        key: 'customerId',
-        title: 'customerId',
-        value: 'CUS1686833188888',
-        name: 'customerId',
-    },
-];
-
 const ContactMain = (props) => {
     const { section, userId, isViewModeVisible, toggleButton, fetchConfigList, resetData, listConfigShowLoading, fetchContactDetailsList, customerData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData, isConfigDataLoaded, isConfigLoading } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+    const { buttonData, setButtonData, selectedCustomer, formActionType, setFormActionType, defaultBtnVisiblity } = props;
 
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
@@ -86,17 +79,27 @@ const ContactMain = (props) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
 
-    console.log('typeData', typeData, 'customerData', customerData?.customerContact);
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+
+    const extraParams = [
+        {
+            key: 'customerId',
+            title: 'customerId',
+            value: 'CUS1686833188888',
+            // value: selectedCustomer?.customerId,
+            name: 'customerId',
+        },
+    ];
+
 
     useEffect(() => {
         if (userId && !isCustomerDataLoaded && !isConfigLoading) {
             fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
-        } else if (userId && customerData?.length) {
-            setContactData(customerData[0]?.customerContact);
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, customerData]);
+    }, [userId]);
 
     useEffect(() => {
         if (userId && !isConfigDataLoaded && !isConfigLoading) {
@@ -107,6 +110,13 @@ const ContactMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
+
+    useEffect(() => {
+        if (userId && customerData?.customerContact?.length) {
+            setContactData(customerData?.customerContact);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [customerData]);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -121,11 +131,10 @@ const ContactMain = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-    const onFinish = (value) => {
+    const onSaveFormData = (value) => {
         if (isEditing) {
             setContactData((prev) => {
                 let formData = [...prev];
-                // if (value?.defaultaddress && formData?.length > 1) {
                 formData?.forEach((contact) => {
                     if (contact?.defaultaddress === true) {
                         contact.defaultaddress = false;
@@ -134,9 +143,6 @@ const ContactMain = (props) => {
                 const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
                 formData.splice(index, 1, { ...value });
                 return [...formData];
-                // } else {
-                //     return [...prev, { ...value }];
-                // }
             });
         } else {
             setContactData((prev) => {
@@ -164,13 +170,27 @@ const ContactMain = (props) => {
     };
 
     const deleteContactHandeler = (data) => {
-        console.log('delete Data', data);
         setContactData((prev) => {
             const updatedList = [...prev];
             const index = prev?.findIndex((el) => el?.contactMobileNumber === data?.contactMobileNumber && el?.contactNameFirstName === data?.contactNameFirstName);
             updatedList.splice(index, 1);
             return [...updatedList];
         });
+    };
+
+    const onCheckdefaultAddClick = (e, value) => {
+        e.stopPropagation();
+        setContactData((prev) => {
+            let formData = [...prev];
+            formData?.forEach((contact) => {
+                if (contact?.defaultaddress === true) {
+                    contact.defaultaddress = false;
+                };
+            });
+            const index = formData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.mobileNumber === value?.mobileNumber && el?.FirstName === value?.FirstName);
+            formData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked});
+            return [...formData];
+        })
     };
 
     const addBtnContactHandeler = (e) => {
@@ -185,7 +205,7 @@ const ContactMain = (props) => {
         showAddEditForm,
         setContactData,
         contactData,
-        onFinish,
+        onSaveFormData,
         styles,
         form,
         isEditing,
@@ -194,13 +214,15 @@ const ContactMain = (props) => {
         isViewModeVisible,
         setEditingData,
         typeData,
+        onCheckdefaultAddClick,
     };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
+
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSaveFormData} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title} </h2>

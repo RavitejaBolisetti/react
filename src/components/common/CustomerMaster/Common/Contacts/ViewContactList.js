@@ -12,7 +12,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewContactList = (props) => {
-    const { styles, contactData, deleteContactHandeler, onCheckClick, setEditingData, typeData } = props;
+    const { styles, contactData, deleteContactHandeler, onCheckdefaultAddClick, setEditingData, typeData } = props;
     const { setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, isEditing, setIsEditing } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
@@ -61,7 +61,7 @@ const ViewContactList = (props) => {
                                             </Button>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                            <Checkbox valuePropName="checked" defaultChecked={data?.defaultContactIndicator} onClick={onCheckClick}>
+                                            <Checkbox valuePropName="checked" defaultChecked={data?.defaultContactIndicator} onClick={(e)=>onCheckdefaultAddClick(e,data)}>
                                                 Mark As Default
                                             </Checkbox>
                                             <Divider type="vertical" />
