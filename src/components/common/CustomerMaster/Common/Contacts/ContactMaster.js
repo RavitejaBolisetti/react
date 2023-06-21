@@ -205,7 +205,7 @@ const ContactMain = (props) => {
         showAddEditForm,
         setContactData,
         contactData,
-        onSaveFormData,
+        onFinish: onSaveFormData,
         styles,
         form,
         isEditing,
@@ -221,8 +221,8 @@ const ContactMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSaveFormData} onFinishFailed={onFinishFailed}>
+    return (<>
+        {/* <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSaveFormData} onFinishFailed={onFinishFailed}> */}
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title} </h2>
@@ -251,7 +251,8 @@ const ContactMain = (props) => {
                     <CustomerFormButton {...props} />
                 </Col>
             </Row>
-        </Form>
+        {/* </Form> */}
+        </>
     );
 };
 
