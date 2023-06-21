@@ -12,7 +12,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { customerProfileData, formData } = props;
+    const { formData } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const viewProps = {
         bordered: false,
@@ -73,7 +73,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Usage/Application Sub-Category">{formData?.applicationSubCategory}</Descriptions.Item>
                             <Descriptions.Item label="Customer Category">{formData?.customerCategory}</Descriptions.Item>
                         </Descriptions>
-                        {formData?.customerCategory == 'Fleet' && (
+                        {formData?.customerCategory === 'Fleet' && (
                             <>
                                 <Descriptions {...viewProps}>
                                     <Descriptions.Item label="Business Details">{formData?.businessDetails}</Descriptions.Item>

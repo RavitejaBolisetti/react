@@ -26,7 +26,7 @@ const { Text } = Typography;
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 
 const AddEditFormMain = (props) => {
-    const { appCategoryData, formData } = props;
+    const { appCategoryData, formData, form } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -38,6 +38,12 @@ const AddEditFormMain = (props) => {
     //     setFinalFormData({ ...FinalFormData, keyAccountDetails: companyInfoValues, uploadCustomerForm: uploadCustomerFormValues });
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [done]);
+    useEffect(() => {
+        form.setFieldsValue({
+            ...formData,
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -162,7 +168,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                {customerCategory == 'CUS_CAT_2' && (
+                                {customerCategory === 'CUS_CAT_2' && (
                                     <>
                                         <Divider />
                                         <Row gutter={20}>
@@ -254,31 +260,31 @@ const AddEditFormMain = (props) => {
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Code" initialValue={formData?.accountCode} name="accountCode">
+                                        <Form.Item label="Account Code" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountCode} name="accountCode">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Code')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Name" initialValue={formData?.accountName} name="accountName">
+                                        <Form.Item label="Account Name" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountName} name="accountName">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Name')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Segment" initialValue={formData?.accountSegment} name="accountSegment">
+                                        <Form.Item label="Account Segment" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountSegment} name="accountSegment">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Segment')} disabled />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Client Name" initialValue={formData?.accountClientName} name="accountClientName">
+                                        <Form.Item label="Account Client Name" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountClientName} name="accountClientName">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Client Name')} disabled />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Mapping Date" initialValue={formData?.accountMappingDate} name="accountMappingDate">
+                                        <Form.Item label="Account Mapping Date" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountMappingDate} name="accountMappingDate">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Mapping Date')} disabled />
                                         </Form.Item>
                                     </Col>
@@ -306,26 +312,26 @@ const AddEditFormMain = (props) => {
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Name Of Person" initialValue={formData?.personName} name="personName" rules={[validateRequiredInputField('authorityRequest.personName')]}>
+                                        <Form.Item label="Name Of Person" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.personName} name="personName" rules={[validateRequiredInputField('authorityRequest.personName')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Name Of Person')} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Position" initialValue={formData?.postion} name="postion">
+                                        <Form.Item label="Position" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.postion} name="postion">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Position')} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Company Name" initialValue={formData?.companyName} name="companyName" rules={[validateRequiredInputField('authorityRequest.companyName')]}>
+                                        <Form.Item label="Company Name" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.companyName} name="companyName" rules={[validateRequiredInputField('authorityRequest.companyName')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Company Name')} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <Form.Item label="Remarks" initialValue={formData?.remarks} name="authorityRequest.remarks">
+                                        <Form.Item label="Remarks" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.remarks} name="authorityRequest.remarks">
                                             <TextArea maxLength={50} placeholder={preparePlaceholderText('Remarks')} />
                                         </Form.Item>
                                     </Col>

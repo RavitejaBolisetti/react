@@ -22,11 +22,13 @@ const { Text } = Typography;
 const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData } = props;
+    const { formData, appCategoryData, userId, uploadDocumentFile, listDocumentShowLoading } = props;
     const { isReadOnly = false } = props;
     const [customer, setCustomer] = useState(false);
 
     const [activeKey, setActiveKey] = useState([1]);
+
+    console.log('formData', formData);
 
     const onCustomerCategoryChange = (values) => {
         setCustomer(values);
@@ -65,6 +67,25 @@ const AddEditFormMain = (props) => {
         },
     };
 
+    const handleUpload = (options) => {
+        const { file, onSuccess, onError } = options;
+
+        const data = new FormData();
+        data.append('applicationId', 'app');
+        data.append('file', file);
+
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listDocumentShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        uploadDocumentFile(requestData);
+    };
+
     const showUploadList = {
         showRemoveIcon: false,
         showPreviewIcon: true,
@@ -101,7 +122,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={16}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <div className={styles.uploadDragger}>
-                                            <Dragger showUploadList={showUploadList} {...uploadProps}>
+                                            <Dragger customRequest={handleUpload} {...uploadProps}>
                                                 <Empty
                                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
                                                     imageStyle={{
@@ -136,7 +157,7 @@ const AddEditFormMain = (props) => {
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Gender" name="gender" initialValue={formData?.gender} rules={[validateRequiredSelectField('gender')]}>
                                             <Select value={null} placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
-                                                {appCategoryData.GENDER_CD?.map((item) => (
+                                                {appCategoryData?.GENDER_CD?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
@@ -147,7 +168,7 @@ const AddEditFormMain = (props) => {
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Maritial Status" initialValue={formData?.maritialStatus} name="martialStatus">
                                             <Select value={null} placeholder={preparePlaceholderSelect('maritial status')} {...disabledProps}>
-                                                {appCategoryData.MARITAL_STATUS?.map((item) => (
+                                                {appCategoryData?.MARITAL_STATUS?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
@@ -165,7 +186,7 @@ const AddEditFormMain = (props) => {
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Occupation" initialValue={formData?.occuption} name="occuption">
                                             <Select value={null} placeholder={preparePlaceholderSelect('occupation')} {...disabledProps}>
-                                                {appCategoryData.OCC_TYPE?.map((item) => (
+                                                {appCategoryData?.OCC_TYPE?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
@@ -176,7 +197,7 @@ const AddEditFormMain = (props) => {
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Annual Income" initialValue={formData?.annualIncome} name="annualIncome">
                                             <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
-                                                {appCategoryData.Annual_Income?.map((item) => (
+                                                {appCategoryData?.Annual_Income?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
@@ -187,7 +208,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Driving License No" name="drivingLicenseNumber" initialValue={formData?.drivingLicenseNo} rules={[validateDrivingLicenseNo('driving license no ')]}>
+                                        <Form.Item label="Driving License No" name="image" initialValue={formData?.image} rules={[validateDrivingLicenseNo('driving license no ')]}>
                                             <Input value={null} maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('driving license no')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
@@ -206,7 +227,7 @@ const AddEditFormMain = (props) => {
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Vehicle Used" initialValue={formData?.vehicleUsed} name="vehicleUsed">
                                             <Select value={null} placeholder={preparePlaceholderSelect('vehicle used')} {...disabledProps}>
-                                                {appCategoryData.Vehicle_Used?.map((item) => (
+                                                {appCategoryData?.Vehicle_Used?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
@@ -217,7 +238,7 @@ const AddEditFormMain = (props) => {
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Mother Tongue" initialValue={formData?.preferredLamguage} name="preferredLanguage">
                                             <Select value={null} placeholder={preparePlaceholderSelect('mother tongue')} {...disabledProps}>
-                                                {appCategoryData.MOTHER_TOUNGE?.map((item) => (
+                                                {appCategoryData?.MOTHER_TOUNGE?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
@@ -228,7 +249,7 @@ const AddEditFormMain = (props) => {
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Religion" initialValue={formData?.religion} name="religion">
                                             <Select value={null} placeholder={preparePlaceholderSelect('religion')} {...disabledProps}>
-                                                {appCategoryData.RELGION?.map((item) => (
+                                                {appCategoryData?.RELGION?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
@@ -255,7 +276,7 @@ const AddEditFormMain = (props) => {
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Usage/Application Categorization" initialValue={formData?.applicationcategorization} name="applicationCategorization">
                                             <Select value={null} placeholder={preparePlaceholderSelect('usage/application category')} {...disabledProps}>
-                                                {appCategoryData.APP_CAT?.map((item) => (
+                                                {appCategoryData?.APP_CAT?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
@@ -266,7 +287,7 @@ const AddEditFormMain = (props) => {
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Usage/Application Sub-Category" initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
                                             <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
-                                                {appCategoryData.APP_SUB_CAT?.map((item) => (
+                                                {appCategoryData?.APP_SUB_CAT?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
@@ -277,7 +298,7 @@ const AddEditFormMain = (props) => {
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Customer Category" initialValue={formData?.customerCategory} name="customerCategory">
                                             <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps} onChange={onCustomerCategoryChange}>
-                                                {appCategoryData.CUS_CAT?.map((item) => (
+                                                {appCategoryData?.CUS_CAT?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
@@ -510,7 +531,7 @@ const AddEditFormMain = (props) => {
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Dragger {...uploadProps} className={styles.uploadContainer}>
+                                            <Dragger {...uploadProps} customRequest={handleUpload} className={styles.uploadContainer}>
                                                 <div>
                                                     <img src={Svg} alt="" />
                                                 </div>
