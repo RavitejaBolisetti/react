@@ -6,7 +6,6 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Collapse, Form, Space, Typography, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { expandIcon } from 'utils/accordianExpandIcon';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -204,7 +203,7 @@ const ContactMain = (props) => {
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title} </h2>
-                    <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
+                    <Collapse onChange={() => handleCollapse(1)} activeKey={openAccordian}>
                         <Panel
                             header={
                                 <Space>
