@@ -28,31 +28,16 @@ const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlin
 const AddEditFormMain = (props) => {
     const { appCategoryData, formData } = props;
 
-    const [done, setDone] = useState();
     const [activeKey, setactiveKey] = useState([1]);
-
-    const [FinalFormData, setFinalFormData] = useState({
-        keyDetailForm: {
-            accountCode: '',
-            accountName: '',
-        },
-        authorityForm: {
-            personName: '',
-        },
-        // uploadCustomerForm: [],
-    });
 
     console.log('Form Data:', formData);
 
-    const [companyInfoValues, setCompanyInfoValues] = useState();
-    const [uploadCustomerFormValues, setUploadCustomerFormValues] = useState();
-
     const [customerCategory, setCustomerCategory] = useState();
 
-    useEffect(() => {
-        setFinalFormData({ ...FinalFormData, keyAccountDetails: companyInfoValues, uploadCustomerForm: uploadCustomerFormValues });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [done]);
+    // useEffect(() => {
+    //     setFinalFormData({ ...FinalFormData, keyAccountDetails: companyInfoValues, uploadCustomerForm: uploadCustomerFormValues });
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [done]);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -194,7 +179,7 @@ const AddEditFormMain = (props) => {
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Key Role Details" initialValue={formData?.KeyRoleDetails} name="KeyRoleDetails">
+                                                <Form.Item label="Key Role Details" initialValue={formData?.keyRouteDetails} name="KeyRoleDetails">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Key Role Details')} />
                                                 </Form.Item>
                                             </Col>

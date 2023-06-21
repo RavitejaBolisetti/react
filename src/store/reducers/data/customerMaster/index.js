@@ -11,7 +11,7 @@ import { CorporateAccounts } from './corporateAccountRelated';
 import { IndivisualAccounts } from './indivisualAccountRelated';
 import { CustomerDetails } from './customerDetails';
 import { CustomerDetailsIndividual } from './customerDetailsIndividual';
-import { CompanyProfile } from './corporateCompanyProfileReducer';
+import { CompanyProfile } from './corporateCompanyProfile';
 import { CorporateLov } from './corporateLov';
 import { ChangeHistoryIndividualName } from './individual/nameChangeHistory';
 
