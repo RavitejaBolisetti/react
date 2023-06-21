@@ -1,27 +1,29 @@
-/*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
- *   All rights reserved.
- *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
- */
 import React, { useState } from 'react';
+import { ViewIndividualAddressDetails } from './ViewIndividualAddressDetails';
 import { Button, Collapse, Space, Typography, Row, Col, Checkbox, Divider } from 'antd';
-
+import { FaRegUserCircle } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
-import { AddEditForm } from './AddEditForm';
-import { ViewIndividualAddressDetails } from './ViewIndividualAddressDetails';
+import AddEditForm from './AddEditForm';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewAddressList = (props) => {
-    const { form, setShowAddEditForm, showAddEditForm, setAddressData, onFinish, setIsEditing, isEditing, styles, addressData, onCheckClick, setEditingData } = props;
+    const { form, setShowAddEditForm, showAddEditForm, setAddressData, onFinish, setIsEditing, isEditing, styles, addressData, formData, isViewModeVisible, onCheckClick, index, setEditingData } = props;
+
 
     const [openAccordian, setOpenAccordian] = useState('');
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
+    };
+
+    const handleCheckboxChange = (event) => {
+        console.log('event', event);
+        event.preventDefault();
+        event.stopPropagation();
     };
 
     const editContactHandeler = (e, data, i) => {
@@ -31,6 +33,7 @@ const ViewAddressList = (props) => {
         setEditingData(data);
         form.setFieldsValue(data);
     };
+
 
     const detailProps = {
         setShowAddEditForm,
@@ -79,7 +82,11 @@ const ViewAddressList = (props) => {
                                     </Row>
                                 }
                             >
-                                {!isEditing ? <ViewIndividualAddressDetails styles={styles} formData={data} index={i} {...detailProps} /> : <AddEditForm {...formProps} />}
+                                {!isEditing ? (
+                                    <ViewIndividualAddressDetails styles={styles} formData={data} index={i} {...detailProps} />
+                                ) : (
+                                    <AddEditForm {...formProps} />
+                                )}
                             </Panel>
                         </Collapse>
                     );

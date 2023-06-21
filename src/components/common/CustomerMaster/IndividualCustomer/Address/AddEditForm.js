@@ -267,4 +267,4 @@ const AddEditForm = (props) => {
     );
 };
 
-export const AddEditForm = AddEditFormMain;
+export default AddEditForm;
