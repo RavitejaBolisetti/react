@@ -11,7 +11,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewAddressList = (props) => {
-    const { form, setShowAddEditForm, showAddEditForm, setAddressData, onFinish, setIsEditing, isEditing, styles, addressData, formData, isViewModeVisible, onCheckClick, index, setEditingData } = props;
+    const { form, setShowAddEditForm, showAddEditForm, setAddressData, onSubmit, setIsEditing, isEditing, styles, addressData, formData, isViewModeVisible, onCheckClick, index, setEditingData } = props;
 
 
     const [openAccordian, setOpenAccordian] = useState('');
@@ -39,7 +39,7 @@ const ViewAddressList = (props) => {
         setShowAddEditForm,
         showAddEditForm,
         setAddressData,
-        onFinish,
+        onSubmit,
         form,
         isEditing,
         setIsEditing,
@@ -49,11 +49,11 @@ const ViewAddressList = (props) => {
     const formProps = {
         setShowAddEditForm,
         setAddressData,
-        onFinish,
+        onSubmit,
         form,
         ...props,
     };
-
+// console.log('addressData', addressData)
     return (
         <div>
             {addressData?.length > 0 &&

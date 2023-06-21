@@ -16,7 +16,7 @@ let index = 0;
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onFinish, form, setAddressData, isEditing, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined } = props;
+    const { isReadOnly = false, onSubmit, form, setAddressData, isEditing, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined } = props;
     const { typeData, forceUpdate, addData } = props;
     const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail } = props;
     const disabledProps = { disabled: editMode && formData?.partyCategory === 'Principal' ? true : false };
@@ -160,7 +160,7 @@ const AddEditForm = (props) => {
 
     return (
         <>
-            <Form form={form} id="myAdd" onFinish={onFinish} autoComplete="off" layout="vertical">
+            <Form form={form} id="myAdd" onFinish={onSubmit} autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type')]}>

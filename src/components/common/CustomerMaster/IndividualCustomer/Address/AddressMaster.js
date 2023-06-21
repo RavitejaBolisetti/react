@@ -120,6 +120,11 @@ const AddressMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAddDataLoaded]);
+    
+    useEffect(() => {
+        setAddressData(addressIndData[0]?.customerAddress);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[addressIndData])
 
     useEffect(() => {
         if (userId && !isAddressLoaded) {
@@ -144,13 +149,13 @@ const AddressMasterBase = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-    const onFinish = () => {
+    const onSubmit = () => {
         let data = { customerId: selectedRowData?.customerId, customerAddress: addressData };
 
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         };
 
         const onError = (message) => {
@@ -199,7 +204,7 @@ const AddressMasterBase = (props) => {
         styles,
         addressData,
         setAddressData,
-        onFinish,
+        onSubmit,
         onFinishFailed,
         onCloseAction,
         form,
@@ -207,7 +212,6 @@ const AddressMasterBase = (props) => {
         setIsEditing,
         setEditingData,
         editingData,
-
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
@@ -249,7 +253,7 @@ const AddressMasterBase = (props) => {
                 </Panel>
             </Collapse>
             <br></br>
-            <Button onClick={() => onFinish()} type="primary">
+            <Button onClick={() => onSubmit()} type="primary">
                 Submit
             </Button>
         </>
