@@ -109,7 +109,6 @@ export const AccountRelatedBase = (props) => {
 
     const onFinish = (values) => {
         const data = { ...values, customerId: 'CUS1686815155017' };
-        console.log(form.getFieldValue(), 'KARTIK ');
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -133,13 +132,12 @@ export const AccountRelatedBase = (props) => {
 
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
         };
-        console.log(requestData, 'KARTIK Gupta');
         saveData(requestData);
     };
 

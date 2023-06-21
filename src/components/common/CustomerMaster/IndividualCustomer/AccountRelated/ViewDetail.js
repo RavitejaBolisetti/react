@@ -25,8 +25,8 @@ const ViewDetailBase = (props) => {
         }
     };
     return (
-        <Card style={{ backgroundColor: '#F2F2F2' }}>
-            <div className={styles.viewDrawerContainer}>
+        <div className={styles.viewDrawerContainer}>
+            <Card>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Credit Limit">{formData?.creditAmount}</Descriptions.Item>
                     <Descriptions.Item label="Credit Limit Days">{formData?.creditDays}</Descriptions.Item>
@@ -37,8 +37,8 @@ const ViewDetailBase = (props) => {
                     {/* <Descriptions.Item label="VIP Dealer">{renderCheckbox(formData?.vipDealerInd)}</Descriptions.Item> */}
                     <div> {renderCheckbox(formData?.vipDealerInd)}VIP Dealer</div>
                 </Descriptions>
-            </div>
-        </Card>
+            </Card>
+        </div>
     );
 };
 

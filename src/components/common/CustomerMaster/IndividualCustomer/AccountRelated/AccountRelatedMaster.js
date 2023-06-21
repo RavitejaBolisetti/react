@@ -111,7 +111,6 @@ export const AccountRelatedMasterBase = (props) => {
 
     const onFinish = (values) => {
         const data = { ...values, customerId: 'CUS123' };
-        console.log(form.getFieldValue(), 'Shikhar');
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -135,13 +134,12 @@ export const AccountRelatedMasterBase = (props) => {
 
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
         };
-        console.log(requestData, 'KARTIK ');
         saveData(requestData);
     };
 
