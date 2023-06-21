@@ -75,8 +75,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const [customerDetailsList, setCustomerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
-    const [customerType, setCustomerType] = useState('Yes');
-    const [editedMode, setEditedMode] = useState(false);
+
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [configurableTypedata, setConfigurableTypedata] = useState({});
     const [formData, setFormData] = useState();
@@ -92,13 +91,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-
-    // const customerMasterBtnProps = {
-    //     buttonData,
-    //     setButtonData,
-    //     formData,
-    //     handleButtonClick
-    // };
 
     useEffect(() => {
         if (userId) {
@@ -119,12 +111,13 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         if (typeData) {
             setConfigurableTypedata({ CUST_TYPE: typeData['CUST_TYPE'], CORP_TYPE: typeData['CORP_TYPE'], CORP_CATE: typeData['CORP_CATE'], TITLE: typeData['TITLE'], MEM_TYPE: typeData['MEM_TYPE'] });
         }
+        if(customerDetailsData && isDataLoaded)
+        {
+            setFormData(customerDetailsData)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [typeData]);
+    }, [typeData,customerDetailsData,isDataLoaded]);
 
-    const onChange = (value) => {
-        setCustomerType(value);
-    };
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
@@ -205,7 +198,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const formProps = {
         form,
-        onChange,
+        formData,
         buttonData,
         onFinish,
         onCloseAction,
@@ -215,20 +208,15 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         saveData,
         showForm,
         setShowForm,
-        customerType,
-        editedMode,
-        setEditedMode,
-        setCustomerType,
         formActionType,
         typeData,
-        customerDetailsData,
         configurableTypedata,
         handleButtonClick,
         styles,
     };
 
     const viewProps = {
-        onChange,
+        formData:customerDetailsData,
         onCloseAction,
         styles,
     };

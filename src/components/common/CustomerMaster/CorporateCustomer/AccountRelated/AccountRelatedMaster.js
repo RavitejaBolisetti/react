@@ -6,7 +6,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Space, Form, Card } from 'antd';
+import { Row, Col, Form } from 'antd';
 
 import { corporateAccountsRelatedDataActions } from 'store/actions/data/customerMaster/corporateAccountRelated';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -14,10 +14,12 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
 
-import { ViewDetail } from './ViewAccountDetails';
+import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
+import { CustomerFormButton } from '../../CustomerFormButton';
 
 import styles from 'components/common/Common.module.css';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -55,7 +57,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AccountRelatedBase = (props) => {
-    const { saveData, fetchList, userId, listShowLoading, isLoaded, data, showGlobalNotification, moduleTitle } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, moduleTitle, isLoaded, data, saveData } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [refershData, setRefershData] = useState(false);
@@ -65,17 +68,11 @@ export const AccountRelatedBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const selectedCustomer = 'CUS1686812277115';
+    const selectedCustomer = 'CUS1687284719774';
     const extraParams = [
         {
             key: 'customerId',
@@ -104,21 +101,20 @@ export const AccountRelatedBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-
         record && setFormData(record);
         setIsFormVisible(true);
     };
 
     const onFinish = (values) => {
-        const data = { ...values, customerId: 'CUS1686815155017' };
-        console.log(form.getFieldValue(), 'KARTIK ');
+        const data = { ...values, customerId: 'CUS1687284719774' };
 
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
+
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, errorAction });
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
 
@@ -144,7 +140,6 @@ export const AccountRelatedBase = (props) => {
             onError,
             onSuccess,
         };
-        console.log(requestData, 'KARTIK Gupta');
         saveData(requestData);
     };
 
@@ -170,7 +165,7 @@ export const AccountRelatedBase = (props) => {
 
     const formProps = {
         form,
-        formData: data['0'],
+        formData: data[0],
         formActionType,
         setFormActionType,
         onFinish,
@@ -188,24 +183,27 @@ export const AccountRelatedBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        formData: data['0'],
+        formData: data[0],
         styles,
     };
 
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
     return (
-        <>
-            {!formActionType?.viewMode ? (
-                <Space direction="vertical" size="small" style={{ display: 'flex' }}>
-                    <Card style={{ backgroundColor: '#F2F2F2' }}>
-                        <AddEditForm {...formProps} />
-                    </Card>
-                </Space>
-            ) : (
-                <Card style={{ backgroundColor: '#F2F2F2' }}>
-                    <ViewDetail {...viewProps} />
-                </Card>
-            )}
-        </>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Row gutter={20} className={styles.drawerBodyRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <h2>{section?.title} </h2>
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <CustomerFormButton {...props} />
+                </Col>
+            </Row>
+        </Form>
     );
 };
 

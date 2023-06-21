@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Descriptions } from 'antd';
+import { Descriptions, Card } from 'antd';
 import { CheckSquareOutlined } from '@ant-design/icons';
 
 const ViewDetailBase = (props) => {
@@ -26,18 +26,18 @@ const ViewDetailBase = (props) => {
     };
     return (
         <div className={styles.viewDrawerContainer}>
-            <>
+            <Card>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Credit Limit">{formData?.creditAmount}</Descriptions.Item>
                     <Descriptions.Item label="Credit Limit Days">{formData?.creditDays}</Descriptions.Item>
-                    <Descriptions.Item label="Outstanding Amount">{formData?.outstandingAmt}</Descriptions.Item>
+                    <Descriptions.Item label="Outstanding Amount">{formData?.outstandingAmount}</Descriptions.Item>
                     <Descriptions.Item label="Parts Discount">{formData?.partsDiscount}</Descriptions.Item>
                     <Descriptions.Item label="Labour Discount">{formData?.labourDiscount}</Descriptions.Item>
                     <Descriptions.Item label="Remarks">{formData?.remarks}</Descriptions.Item>
                     {/* <Descriptions.Item label="VIP Dealer">{renderCheckbox(formData?.vipDealerInd)}</Descriptions.Item> */}
                     <div> {renderCheckbox(formData?.vipDealerInd)}VIP Dealer</div>
                 </Descriptions>
-            </>
+            </Card>
         </div>
     );
 };

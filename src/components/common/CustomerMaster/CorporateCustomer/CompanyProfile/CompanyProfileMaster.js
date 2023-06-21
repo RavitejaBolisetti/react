@@ -25,6 +25,9 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, paramdata: appCategoryData = [] },
+            CustomerMaster: {
+                CompanyProfile: { isLoaded: isDataLoaded = false, data: customerProfileData = [] },
+            },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -38,6 +41,8 @@ const mapStateToProps = (state) => {
         userId,
         isAppCategoryDataLoaded,
         appCategoryData,
+        isDataLoaded,
+        customerProfileData,
         moduleTitle,
     };
     return returnValue;
@@ -53,6 +58,8 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: corporateCompanyProfileDataActions.reset,
             listShowLoading: corporateCompanyProfileDataActions.listShowLoading,
 
+            fetchCompanyProfileData: corporateCompanyProfileDataActions.fetchList,
+
             saveData: corporateCompanyProfileDataActions.saveData,
             showGlobalNotification,
         },
@@ -61,40 +68,53 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyProfileBase = (props) => {
-    const { listShowLoading, section, saveData, userId, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, isAppCategoryDataLoaded, appCategoryData } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+    const { listShowLoading, section, saveData, userId, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, fetchCompanyProfileData, isAppCategoryDataLoaded, appCategoryData, isDataLoaded, customerProfileData } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, selectedCustomer } = props;
+
     const [form] = Form.useForm();
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [customerType, setCustomerType] = useState('Yes');
-    const [formData, setFormData] = useState();
+
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     useEffect(() => {
-        fetchApplicationCategorization({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_CAT.id });
-        fetchApplicationSubCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_SUB_CAT.id });
-        fetchCustomerCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_CAT.id });
+        if (!isAppCategoryDataLoaded) {
+            fetchApplicationCategorization({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_CAT.id });
+            fetchApplicationSubCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_SUB_CAT.id });
+            fetchCustomerCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_CAT.id });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAppCategoryDataLoaded]);
 
+    useEffect(() => {
+        if (userId && selectedCustomer) {
+            const extraParams = [
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: selectedCustomer?.customerId,
+                    name: 'customerId',
+                },
+            ];
+            fetchCompanyProfileData({ setIsLoading: listShowLoading, userId, extraParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedCustomer]);
+
+    console.log('Cust id:', selectedCustomer);
+
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
-        setFormData([]);
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        record && setFormData(record);
         setIsFormVisible(true);
     };
 
-    const onChange = (value) => {
-        setCustomerType(value);
-    };
-
     const onFinish = (values) => {
-        const recordId = formData?.id || '';
+        const recordId = customerProfileData?.id || '';
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
-        const data = { ...rest, customerId: 'CUS1686810869696', keyAccountDetails: { customerId: 'CUS1686810869696', accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { customerId: 'CUS1686810869696', personName: values.personName, postion: values.postion, companyName: values.companyName }, id: recordId };
+        const data = { ...rest, customerId: customerProfileData.customerId, keyAccountDetails: { customerId: customerProfileData.customerId, accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { customerId: customerProfileData.customerId, personName: values.personName, postion: values.postion, companyName: values.companyName }, id: recordId };
 
         const onSuccess = (res) => {
             listShowLoading(false);
@@ -117,6 +137,7 @@ const CompanyProfileBase = (props) => {
 
         const requestData = {
             data: data,
+            method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             onError,
             onSuccess,
@@ -142,12 +163,14 @@ const CompanyProfileBase = (props) => {
         formActionType,
         appCategoryData,
         styles,
+        form,
+        formData: customerProfileData,
     };
 
     const viewProps = {
-        onChange,
         onCloseAction,
         styles,
+        formData: customerProfileData,
     };
 
     const handleFormValueChange = () => {
