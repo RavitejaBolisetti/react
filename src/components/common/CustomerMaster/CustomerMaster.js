@@ -174,7 +174,12 @@ const CustomerMasterMain = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
         form.resetFields();
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+
+        setIsFormVisible(true);
+
         if (buttonAction === NEXT_ACTION) {
+            const section = Object.values(sectionName)?.find((i) => i.id > currentSection);
             section && setCurrentSection(section?.id);
         }
 
