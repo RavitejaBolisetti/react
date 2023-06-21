@@ -60,6 +60,34 @@ export const PARAM_MASTER = {
         id: 'CUS_CAT',
         title: 'CUS_CAT',
     },
+    GENDER_CD: {
+        id: 'GENDER_CD',
+        title: 'GENDER_CD',
+    },
+    MARITAL_STATUS: {
+        id: 'MARITAL_STATUS',
+        title: 'MARITAL_STATUS',
+    },
+    OCC_TYPE: {
+        id: 'OCC_TYPE',
+        title: 'OCC_TYPE',
+    },
+    Annual_Income: {
+        id: 'Annual_Income',
+        title: 'Annual_Income',
+    },
+    Vehicle_Used: {
+        id: 'Vehicle_Used',
+        title: 'Vehicle_Used',
+    },
+    MOTHER_TOUNGE: {
+        id: 'MOTHER_TOUNGE',
+        title: 'MOTHER_TOUNGE',
+    },
+    RELGION: {
+        id: 'RELGION',
+        title: 'RELGION',
+    },
     CORP_TYPE: {
         id: 'CORP_TYPE',
         title: 'CORP_TYPE',
