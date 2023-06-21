@@ -1513,7 +1513,7 @@
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item-tail {
-    inset-block-start: 9px;
+    inset-block-start: 14px;
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item-head-custom {
@@ -1624,7 +1624,7 @@
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input {
-    height: 36px;
+    /* height: 36px; */
     padding: 5px 12px;
     border-color: #B5B5B6;
     color: #0B0B0C;
@@ -1761,7 +1761,7 @@
 } */
 
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
-    padding: 20px 30px;
+    padding: 16px 20px;
     background: #f2f2f2;
     border-radius: 8px;
     /* border: 1px solid #f2f2f2; */
@@ -1769,6 +1769,7 @@
 
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item-active>.ant-collapse-header {
     border-radius: 8px 8px 0 0;
+    padding: 20px 30px;
 }
 
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-typography {
@@ -1833,6 +1834,11 @@
 }
 
 .drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-divider-horizontal {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
     margin-top: 0;
     margin-bottom: 20px;
 }
@@ -1941,6 +1947,16 @@
 .viewDrawerContainer :global .ant-space .ant-collapse {
     margin-bottom: 0;
 }
+
+/* .viewDrawerContainer :global .ant-collapse .ant-collapse-content .ant-descriptions:first-child {
+    padding-top: 0px;
+    border-top: none;
+} */
+
+/* .viewDrawerContainer :global .ant-space .ant-space-item:last-child {
+    border: 0;
+    margin-bottom: 50px;
+} */
 
 .viewDrawerContainer .cardInsideBox :global .ant-typography {
     color: #0B0B0C;
