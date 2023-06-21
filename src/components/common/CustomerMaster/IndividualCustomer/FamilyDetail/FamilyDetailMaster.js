@@ -145,7 +145,6 @@ const FamilyDetailMasterBase = (props) => {
     const onSave = () => {
         let values = form.getFieldsValue();
         setFamilyDetailsList((items) => [{ ...values, customerId: 'CUS1686811036620', dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
-
         if (editedMode) {
             const upd_obj = familyDetailList?.map((obj) => {
                 if (obj?.editedId === values?.editedId) {
@@ -179,7 +178,7 @@ const FamilyDetailMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId });
+            fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, extraParams });
         };
 
         const onError = (message) => {
@@ -204,7 +203,7 @@ const FamilyDetailMasterBase = (props) => {
     useEffect(() => {
         if (familyData?.length > 0) {
             for (let i = 0; i < familyData?.length; i++) {
-                setFamilyDetailsList((object) => [...object, { ...familyData[i], editedId: i }]);
+                setFamilyDetailsList((object) => [...object, { ...familyData[i], editedId: i ,relationCustomerId: familyData[i]?.relationCustomerId ? familyData[i]?.relationCustomerId  : ""}]);
             }
         }
         setEditedId(() => familyData?.length);
@@ -213,7 +212,6 @@ const FamilyDetailMasterBase = (props) => {
 
     useEffect(() => {
         form.setFieldsValue({
-            //relationCustomerId: familySearchData?.customerId,
             customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
             dateOfBirth: dayjs(familySearchData?.dateOfBirth),
             relationAge: GetAge(familySearchData?.dateOfBirth),

@@ -18,7 +18,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const FormBase = (props) => {
-    const { customerType, onSave, form, onChange, relationData, onSearch, isSearchLoading } = props;
+    const { customerType, onSave, form, onChange, relationData, onSearch, isSearchLoading, onCancel } = props;
 
     const type = [
         { name: 'Yes', key: 'Yes', value: 'Yes' },
@@ -71,7 +71,13 @@ const FormBase = (props) => {
                             <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading} />
                         </Form.Item>
                     </Col>
-                ) : null}
+                ) : (
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                        <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
+                            <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading} />
+                        </Form.Item>
+                    </Col>
+                )}
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={null} label="Customer Name" name="customerName" rules={[validateRequiredInputField('Customer Name')]}>
@@ -108,7 +114,7 @@ const FormBase = (props) => {
                     </Col>
                 ) : null}
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item label="Relation Code" name="relationCode" />
+                    <Form.Item initial label="Relation Code" name="relationCode" />
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>
@@ -139,7 +145,7 @@ const FormBase = (props) => {
                 </Col>
 
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item label="Customer Id" name="customerId" />
+                    <Form.Item initialValue={props?.customerId ? props?.customerId : ''} label="Customer Id" name="customerId" />
                 </Col>
             </Row>
 
@@ -148,7 +154,7 @@ const FormBase = (props) => {
                     Save
                 </Button>
 
-                <Button type="primary" style={{ margin: '0 0 0 1rem' }}>
+                <Button type="primary" onClick={onCancel} style={{ margin: '0 0 0 1rem' }}>
                     Cancel
                 </Button>
             </Row>

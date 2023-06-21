@@ -16,7 +16,7 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onFinish, onFinishFailed, form, onChange, showForm, setShowForm, setCustomerType, relationData,familyData } = props;
+    const { onFinish, onFinishFailed, form, onChange, showForm, setShowForm, setCustomerType, relationData } = props;
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode, onSearch, isSearchLoading } = props;
     const [activeKey, setactiveKey] = useState([null]);
 
@@ -51,13 +51,29 @@ const AddEditFormMain = (props) => {
 
     const onEdit = (values) => {
         setEditedMode(true);
-        setShowForm(true);
+        setShowForm(false);
         if (values?.mnmCustomer === 'Yes') {
             setCustomerType(true);
         } else if (values?.mnmCustomer === 'No') {
             setCustomerType(false);
         }
 
+        form.setFieldsValue({
+            mnmCustomer: values?.mnmCustomer,
+            customerId: values?.customerId,
+            customerName: values?.customerName,
+            editedId: values?.editedId,
+            relationship: values?.relationship,
+            relationCode: values?.relationCode,
+            dateOfBirth: typeof values?.dateOfBirth === 'object' ? values?.dateOfBirth : dayjs(values?.dateOfBirth),
+            relationAge: values?.relationAge,
+            remarks: values?.remarks,
+        });
+    };
+
+    const onCancel = (values) => {
+        setEditedMode(false);
+        setShowForm(false);
         form.setFieldsValue({
             mnmCustomer: values?.mnmCustomer,
             customerId: values?.customerId,
@@ -92,6 +108,7 @@ const AddEditFormMain = (props) => {
         relationData,
         onSearch,
         isSearchLoading,
+        onCancel,
     };
 
     return (
@@ -148,12 +165,14 @@ const AddEditFormMain = (props) => {
                                         key={item?.editedId}
                                         style={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
                                     >
-                                        {editedMode && showForm ? <FormContainer {...formProps} item /> : <ViewDetail mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} />}
+                                        {editedMode && !showForm ? <FormContainer {...formProps} item /> : <ViewDetail mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} />}
                                     </Panel>
                                 </Collapse>
                             ))}
                     </Space>
-                    <Button type="primary" onClick={ () => onFinish()}>Submit</Button>
+                    <Button type="primary" onClick={() => onFinish()}>
+                        Submit
+                    </Button>
                 </Card>
             ) : (
                 <ViewDetail {...viewProps} />
