@@ -77,6 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 const CustomerDetailMasterBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, moduleTitle, data, saveData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+    const { sectionName, currentSection, setCurrentSection } = props;
 
     const { isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
     const [form] = Form.useForm();
@@ -153,16 +154,17 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        console.log(formData, 'FORMDATA');
         const data = { ...values, customerId: 'CUS1686812277115' };
-
-        console.log(form.getFieldValue(), 'Aman ');
 
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
+
+            const section = Object.values(sectionName)?.find((i) => i.id > currentSection);
+            section && setCurrentSection(section?.id);
+
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -237,6 +239,11 @@ const CustomerDetailMasterBase = (props) => {
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
+
+    const myProps = {
+        ...props,
+        saveButtonName: formActionType?.addMode ? 'Create Customer ID' : 'Save & Next',
+    };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
@@ -247,7 +254,7 @@ const CustomerDetailMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CustomerFormButton {...props} />
+                    <CustomerFormButton {...myProps} />
                 </Col>
             </Row>
         </Form>

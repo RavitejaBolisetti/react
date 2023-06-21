@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Row, Col } from 'antd';
 
 import { IndivisualCustomerDetailMaster, IndividualProfileMaster, IndividualAddressMaster, IndividualContactMaster, IndividualFamilyDetailMaster, IndividualAccountRelatedMaster, IndividualSupportingDocument } from './IndividualCustomer';
@@ -18,23 +18,10 @@ import { withDrawer } from 'components/withDrawer';
 import styles from 'components/common/Common.module.css';
 
 const CustomerMainConatinerMain = (props) => {
-    const { customerType, selectedCustomerId } = props;
-    const [section, setSection] = useState();
-    const [currentSection, setCurrentSection] = useState(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id);
-
-    useEffect(() => {
-        const sectionList = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION;
-        const section = Object.values(sectionList)?.find((i) => i.id === currentSection);
-        setSection(section);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentSection]);
+    const { customerType, currentSection } = props;
 
     const myProps = {
         ...props,
-        section,
-        currentSection,
-        setCurrentSection,
-        selectedCustomerId,
     };
 
     const renderElement = () => {
