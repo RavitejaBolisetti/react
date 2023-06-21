@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 import { Row, Col, Collapse, Form, Space, Typography, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { expandIcon } from 'utils/accordianExpandIcon';
@@ -78,6 +78,7 @@ const ContactMain = (props) => {
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -181,17 +182,15 @@ const ContactMain = (props) => {
     const onCheckdefaultAddClick = (e, value) => {
         e.stopPropagation();
         setContactData((prev) => {
-            let formData = [...prev];
-            formData?.forEach((contact) => {
-                if (contact?.defaultaddress === true) {
-                    contact.defaultaddress = false;
-                };
-            });
-            const index = formData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.mobileNumber === value?.mobileNumber && el?.FirstName === value?.FirstName);
-            formData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked});
-            return [...formData];
-        })
+            let updetedData = prev?.map((contact) => ({...contact, defaultContactIndicator: false}));
+            const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.mobileNumber === value?.mobileNumber && el?.FirstName === value?.FirstName);
+            updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked});
+            return [...updetedData];
+        });
+        forceUpdate();
     };
+
+    console.log('contactData', contactData)
 
     const addBtnContactHandeler = (e) => {
         e.stopPropagation();

@@ -26,6 +26,7 @@ const ViewContactList = (props) => {
     };
 
     const handleCollapse = (key) => {
+        if(isEditing) return;
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
