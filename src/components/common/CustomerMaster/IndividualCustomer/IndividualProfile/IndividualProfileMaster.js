@@ -129,7 +129,7 @@ const IndividualProfileBase = (props) => {
     const onFinish = (values) => {
         const recordId = formData?.id || '';
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
-        const data = { ...rest, customerId: 'CUS1686810869696', keyAccountDetails: { customerId: 'CUS1686810869696', accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { customerId: 'CUS1686810869696', personName: values.personName, postion: values.postion, companyName: values.companyName }, id: recordId, customerFormDocId: 'd54902cf-a716-4ae9-b08c-23f9371013bc', customerConsent: 'true' };
+        const data = { ...rest, customerId: 'CUS1686810869696', keyAccountDetails: { customerId: 'CUS1686810869696', accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { customerId: 'CUS1686810869696', personName: values.personName, postion: values.postion, companyName: values.companyName, remarks: values.remarks, id: recordId }, id: recordId, customerFormDocId: 'd54902cf-a716-4ae9-b08c-23f9371013bc', customerConsent: 'true' };
 
         const onSuccess = (res) => {
             form.resetFields();

@@ -10,6 +10,7 @@ import { BiTimeFive } from 'react-icons/bi';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegUserCircle } from 'react-icons/fa';
 
+
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
     const { styles, formData } = props;
