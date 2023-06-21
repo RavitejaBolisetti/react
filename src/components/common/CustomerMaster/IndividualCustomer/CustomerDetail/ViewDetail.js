@@ -1,14 +1,5 @@
-/*
- *   Copyright (c) 2023
- *   All rights reserved.
- */
-/*
- *   Copyright (c) 2023
- *   All rights reserved.
- */
 import React from 'react';
-import { Space, Typography, Descriptions, Card, Divider, Col, Row, Button } from 'antd';
-import { FaRegUserCircle } from 'react-icons/fa';
+import { Typography, Descriptions, Card, Divider, Col, Row, Button } from 'antd';
 import { BiTimeFive } from 'react-icons/bi';
 import { FiEdit } from 'react-icons/fi';
 

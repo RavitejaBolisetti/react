@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useEffect, useState } from 'react';
 import { Col, Collapse, Row, Button, Space, Spin } from 'antd';
 import style from './../../common/Common.module.css';
@@ -64,7 +69,7 @@ const AddEditFormMain = ({
         return () => {
             setIsBtnDisabled(false);
         };
-        
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [finalFormdata?.applicationDetails?.accessableIndicator, finalFormdata?.applicationDetails?.documentNumRequired]);
 
@@ -100,7 +105,7 @@ const AddEditFormMain = ({
                         setCanFormSave={setCanFormSave}
                     />
 
-                    <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)}  activeKey={openAccordian}>
+                    <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
                         <Panel header={'Application Actions'} key="1">
                             <ApplicationActions actions={actions} setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setCanFormSave={setCanFormSave} />
                         </Panel>
