@@ -1,11 +1,24 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import dayjs from 'dayjs'
+import { Form, Row, Col } from 'antd';
+
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
-import { ViewDetail } from './ViewDetails';
-import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetails';
+import { ViewDetail } from './ViewDetail';
+import { InputSkeleton } from 'components/common/Skeleton';
+
+import { OTFStatusBar } from '../utils/OTFStatusBar';
+import { OTFFormButton } from '../OTFFormButton';
+
+import styles from 'components/common/Common.module.css';
+
+import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetail';
 
 const mapStateToProps = (state) => {
     const {
@@ -17,6 +30,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+    console.log('schemeData', schemeData);
     const moduleTitle = 'Scheme And Offer Details';
 
     let returnValue = {
@@ -43,18 +57,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SchemeDetailsMasterBase = (props) => {
-    const { schemeData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { schemeData, onCloseAction, fetchList, formActionType, userId, listShowLoading, showGlobalNotification } = props;
+    const { form, selectedOrderId, handleFormValueChange, section, isLoading } = props;
 
-    const extraParams = [
-        {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: 'OTF002',
-            name: 'OTF Number',
-        },
-    ];
-
-    const errorAction = (message) => {
+    const onErrorAction = (message) => {
         showGlobalNotification(message);
     };
 
@@ -63,28 +69,57 @@ const SchemeDetailsMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
+        if (userId && selectedOrderId) {
+            const extraParams = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOrderId,
+                    name: 'OTF Number',
+                },
+            ];
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, userId]);
+    }, [userId, selectedOrderId]);
 
-    // const viewProps = {
-    //     styles,
-    //     onCloseAction,
-    //     schemeData,
-    // };
-
-    const formProps = {
-        formActionType,
-        fetchList,
+    const viewProps = {
+        styles,
         onCloseAction,
+        schemeData,
     };
 
+    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...props} />;
+    const formSkeleton = (
+        <Row>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <InputSkeleton height={'100vh'} />
+            </Col>
+        </Row>
+    );
+
     return (
-        // <>{!formActionType?.viewMode ? schemeData[0]?.schemes?.map((item) => <AddEditForm {...formProps} schemeCategory={item?.schemeCategory} amount={item?.amount} description={item?.description} />) : <ViewDetail {...viewProps} />}</>
-        schemeData[0]?.schemes?.map((item) => <AddEditForm {...formProps} schemeType={item?.schemeType} schemeCategory={item?.schemeCategory} amount={item?.amount} description={item?.description} id={item?.id} schemeName={item?.schemeName} validFrom={dayjs(item?.validFrom)} validTo={dayjs(item?.validTo)} />)
-    ) 
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange}>
+            <Row gutter={20} className={styles.drawerBodyRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Row>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <h2>{section?.title}</h2>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <OTFStatusBar status={1} />
+                        </Col>
+                    </Row>
+                    {isLoading ? formSkeleton : formContainer}
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <OTFFormButton {...props} />
+                </Col>
+            </Row>
+        </Form>
+    );
 };
 
 export const SchemeDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(SchemeDetailsMasterBase);

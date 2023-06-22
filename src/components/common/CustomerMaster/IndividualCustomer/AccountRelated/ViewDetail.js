@@ -9,6 +9,7 @@ import { CheckSquareOutlined } from '@ant-design/icons';
 
 const ViewDetailBase = (props) => {
     const { styles, formData } = props;
+    console.log('🚀 ~ file: ViewDetail.js:12 ~ ViewDetailBase ~ Kuldeep:', formData);
 
     const viewProps = {
         bordered: false,

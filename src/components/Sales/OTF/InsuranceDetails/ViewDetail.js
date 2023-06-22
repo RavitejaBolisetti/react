@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Descriptions } from 'antd';
 
 const ViewDetailMain = (props) => {
-    const { styles, insuranceData } = props;
+    const { insuranceData } = props;
     const viewProps = {
         bordered: false,
         colon: false,
