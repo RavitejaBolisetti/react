@@ -118,24 +118,14 @@ export const AccountRelatedBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, customerId: 'CUS1687284719774' };
+        const data = { ...values, customerId: selectedCustomerId };
 
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-
             setButtonData({ ...buttonData, formBtnActive: false });
-            if (buttonData?.saveAndNewBtnClicked) {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            } else {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            }
         };
 
         const onError = (message) => {
