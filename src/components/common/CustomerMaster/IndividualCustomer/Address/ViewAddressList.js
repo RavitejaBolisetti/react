@@ -70,7 +70,7 @@ const ViewAddressList = (props) => {
                                         <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                                             <Space>
                                                 <Text strong> {`${data?.addressType ? data?.addressType : ''} `}</Text>
-                                                {formActionType?.editMode && ( <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing}>
+                                                {formActionType?.editMode && ( <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing} className={styles.buttonEdit}>
                                                     Edit{' '}
                                                 </Button> )}
                                             </Space>
