@@ -88,6 +88,7 @@ const IndividualProfileBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [activeKey, setActiveKey] = useState([1]);
     const [uploadedFile, setUploadedFile] = useState();
+    const [isBorder, setIsBorder]= useState(false);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -140,8 +141,8 @@ const IndividualProfileBase = (props) => {
         const data = {
             ...rest,
             customerId: selectedCustomerId,
-            keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode, accountName: values?.accountName, accountSegment: values?.accountSegment, accountClientName: values?.accountClientName, accountMappingDate: values?.accountMappingDate },
-            authorityRequest: { customerId: selectedCustomerId, personName: values.personName, postion: values.postion, companyName: values.companyName, remarks: values.remarks, id: recordId },
+            keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode || '', accountName: values?.accountName|| '', accountSegment: values?.accountSegment || '', accountClientName: values?.accountClientName || '', accountMappingDate: values?.accountMappingDate || '' },
+            authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
             id: recordId,
             profileFileDocId: uploadedFile ? uploadedFile : '',
             customerFormDocId: uploadedFile ? uploadedFile : '',
@@ -182,6 +183,7 @@ const IndividualProfileBase = (props) => {
 
     const onFinishFailed = (errorInfo) => {
         console.log('errorInfo', errorInfo);
+        setIsBorder(true);
     };
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
