@@ -19,7 +19,8 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, configurableTypedata, formData, corporateLovData, formActionType: { editMode } = undefined } = props;
+    const { form, configurableTypedata, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
+    console.log('🚀 ~ file: AddEditForm.js:23 ~ AddEditFormMain ~ customerType:', customerType, props);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
@@ -65,6 +66,12 @@ const AddEditFormMain = (props) => {
     const handleCancel = () => {
         setIsModalOpen(false);
         setmobileLoader(false);
+    };
+
+    const onHandleSelect = (value) => {
+        form.setFieldsValue({
+            corporateCode: value,
+        });
     };
 
     const modalProps = {
@@ -143,8 +150,8 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Customer Type" initialValue={formData?.customerType} name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer type')]}>
-                                <Select placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} allowClear options={configurableTypedata['CUST_TYPE']} disabled={editMode}></Select>
+                            <Form.Item initialValue={customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
+                                <Select disabled={true} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']} allowClear></Select>
                             </Form.Item>
                         </Col>
                     </Row>
@@ -266,19 +273,11 @@ const AddEditFormMain = (props) => {
                         {corporateType === 'LIS' ? (
                             <>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                        {corporateLovData?.map((item) => (
-                                            <Option key={'lv' + item?.key} value={item?.key}>
-                                                {item?.value}
-                                            </Option>
-                                        ))}
-                                    </Select>
                                     <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
-                                        <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                            <Select disabled={false} loading={false} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select>
-                                        </Form.Item>
+                                        <Select onSelect={onHandleSelect} disabled={false} loading={false} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select>
                                     </Form.Item>
                                 </Col>
+
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code" rules={[validateRequiredInputField('corporate name')]}>
                                         <Input placeholder={preparePlaceholderText('parent company name')} disabled />
