@@ -23,7 +23,7 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, configurableTypedata, formData, corporateLovData, formActionType: {editMode,viewMode}=undefined, } = props;
+    const { form, configurableTypedata, formData, corporateLovData, formActionType: { editMode, viewMode } = undefined } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
@@ -33,7 +33,6 @@ const AddEditFormMain = (props) => {
     const handleToggle = () => {
         setIsEnabled(!isEnabled);
     };
-
 
     const handleCorporateChange = (value) => {
         setCorporateType(value);
@@ -244,12 +243,12 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Do you want to contacted over whatsapp?" initialValue={formData?.whatsappCommunicationIndicator === 0 || 0 ? 0 : 1} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
-                                <Switch value={formData?.whatsappCommunicationIndicator  === 0 || 0 ? 0 : 1} checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} />
+                                <Switch value={formData?.whatsappCommunicationIndicator === 0 || 0 ? 0 : 1} checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Want to use Mobile no as whatsapp no?" initialValue={formData?.mobileNumberAsWhatsappNumber === 0 || 0 ? 0 : 1} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
-                                <Switch value={formData?.mobileNumberAsWhatsappNumber  === 0 || 0 ? 0 : 1} checkedChildren="Yes" unCheckedChildren="No" onChange={copyWhatsNo} />
+                                <Switch value={formData?.mobileNumberAsWhatsappNumber === 0 || 0 ? 0 : 1} checkedChildren="Yes" unCheckedChildren="No" onChange={copyWhatsNo} />
                             </Form.Item>
                         </Col>
                     </Row>

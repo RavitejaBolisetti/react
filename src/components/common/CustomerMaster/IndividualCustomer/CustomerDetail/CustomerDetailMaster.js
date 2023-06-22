@@ -78,7 +78,7 @@ const CustomerDetailMasterBase = (props) => {
     const { isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form } = props;
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, handleFormValueChange } = props;
 
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState();
@@ -202,10 +202,6 @@ const CustomerDetailMasterBase = (props) => {
     const viewProps = {
         formData,
         styles,
-    };
-
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const myProps = {
