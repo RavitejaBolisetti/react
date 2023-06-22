@@ -34,6 +34,23 @@ const AddEditFormMain = (props) => {
         setIsEnabled(!isEnabled);
     };
 
+
+    const handleCorporateChange = (value) => {
+        setCorporateType(value);
+    };
+
+    const copyWhatsNo = (props) => {
+        if (props) {
+            let number = form.getFieldsValue();
+            form.setFieldsValue({
+                whatsAppNumber: number?.mobileNumber,
+            });
+        } else {
+            form.setFieldsValue({
+                whatsAppNumber: null,
+            });
+        }
+    };
     const handleNumberValidation = (event) => {
         const Mno = event.target.value;
         const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
@@ -53,23 +70,6 @@ const AddEditFormMain = (props) => {
     const handleCancel = () => {
         setIsModalOpen(false);
         setmobileLoader(false);
-    };
-
-    const handleCorporateChange = (value) => {
-        setCorporateType(value);
-    };
-
-    const copyWhatsNo = (props) => {
-        if (props) {
-            let number = form.getFieldsValue();
-            form.setFieldsValue({
-                whatsAppNumber: number?.mobileNumber,
-            });
-        } else {
-            form.setFieldsValue({
-                whatsAppNumber: null,
-            });
-        }
     };
 
     const modalProps = {
@@ -119,30 +119,36 @@ const AddEditFormMain = (props) => {
                 <Card style={{ backgroundColor: '#F2F2F2' }}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
-                                <Input
-                                    placeholder={preparePlaceholderText('mobile number')}
-                                    onChange={handleNumberValidation}
-                                    maxLength={10}
-                                    size="small"
-                                    suffix={
-                                        <>
-                                            {false ? (
-                                                <Button loading={mobileLoader} onClick={showModal} type="link">
-                                                    Validate
-                                                </Button>
-                                            ) : (
-                                                <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
-                                            )}
-                                            <ValidateMobileNumberModal {...modalProps} />
-                                        </>
-                                    }
-                                />
-                            </Form.Item>
+                            {formActionType?.editMode ? (
+                                <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
+                                    <Input
+                                        placeholder={preparePlaceholderText('mobile number')}
+                                        onChange={handleNumberValidation}
+                                        maxLength={10}
+                                        size="small"
+                                        suffix={
+                                            <>
+                                                {false ? (
+                                                    <Button loading={mobileLoader} onClick={showModal} type="link">
+                                                        Validate
+                                                    </Button>
+                                                ) : (
+                                                    <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
+                                                )}
+                                                <ValidateMobileNumberModal {...modalProps} />
+                                            </>
+                                        }
+                                    />
+                                </Form.Item>
+                            ) : (
+                                <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
+                                    <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
+                                </Form.Item>
+                            )}
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                         <Form.Item label="Customer Type" initialValue={formData?.customerType} name="customerType" data-testid="customerType" >
-                                <Select placeholder="Select" disabled defaultValue={{label: 'Individual', value:'IND'}} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
+                            <Form.Item label="Customer Type" initialValue={formData?.customerType} name="customerType" data-testid="customerType">
+                                <Select placeholder="Select" disabled defaultValue={{ label: 'Individual', value: 'IND' }} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
                             </Form.Item>
                         </Col>
                     </Row>
