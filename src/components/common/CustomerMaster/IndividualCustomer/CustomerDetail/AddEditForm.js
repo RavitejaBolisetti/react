@@ -23,7 +23,7 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, configurableTypedata, formData, corporateLovData, formActionType } = props;
+    const { form, configurableTypedata, formData, corporateLovData, formActionType,customerType } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
@@ -141,8 +141,8 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Customer Type" initialValue={formData?.customerType} name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                                <Select placeholder="Select" loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
+                         <Form.Item label="Customer Type" initialValue={formData?.customerType} name="customerType" data-testid="customerType" >
+                                <Select placeholder="Select" disabled defaultValue={{label: 'Individual', value:'IND'}} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
                             </Form.Item>
                         </Col>
                     </Row>

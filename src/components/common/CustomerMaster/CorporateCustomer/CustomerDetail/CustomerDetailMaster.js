@@ -95,7 +95,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const [customerDetailsList, setCustomerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
-    const [isFormVisible, setIsFormVisible] = useState(false);
     const [configurableTypedata, setConfigurableTypedata] = useState({});
     const [formData, setFormData] = useState();
     const [refershData, setRefershData] = useState(false);
@@ -240,6 +239,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         handleButtonClick,
         styles,
         handeSearchParentCompName,
+        customerParentCompanyData,
     };
 
     const viewProps = {

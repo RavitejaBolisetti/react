@@ -12,7 +12,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { configurableTypedata, formData, form, corporateLovData, formActionType: { editMode } = undefined } = props;
+    const { configurableTypedata, formData, form, corporateLovData, formActionType: { editMode } = undefined,customerType } = props;
     const [corporateType, setCorporateType] = useState();
     useEffect(() => {
         form.setFieldsValue({
@@ -23,7 +23,6 @@ const AddEditFormMain = (props) => {
     const handleCorporateChange = (value) => {
         setCorporateType(value);
     };
-
     return (
         <Space direction="vertical" size="small" style={{ display: 'flex' }}>
             <Card style={{ backgroundColor: '#F2F2F2' }}>
@@ -34,8 +33,8 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={formData?.customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                            <Select placeholder="Select" disabled={false} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
+                        <Form.Item initialValue={customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
+                            <Select placeholder="Select" disabled allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
                         </Form.Item>
                     </Col>
                 </Row>
