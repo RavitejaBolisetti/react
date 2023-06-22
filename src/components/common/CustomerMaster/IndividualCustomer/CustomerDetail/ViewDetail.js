@@ -69,7 +69,7 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label="Corporate Type">{formData?.corporateType}</Descriptions.Item>
                         <Descriptions.Item label="Corporate Name">{formData?.corporateName}</Descriptions.Item>
                         <Descriptions.Item label="Corporate Category">{formData?.corporateCategory}</Descriptions.Item>
-                        <Descriptions.Item label="Membership Type">{formData?.membershipTypeType}</Descriptions.Item>
+                        <Descriptions.Item label="Membership Type">{formData?.membershipType}</Descriptions.Item>
                     </Descriptions>
                 </Card>
             </Space>

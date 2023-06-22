@@ -30,9 +30,9 @@ const ViewDetailMain = (props) => {
                 <Descriptions {...viewProps}>
                 
                     <Descriptions.Item label="Mobile Number">{formData?.mobileNumber}</Descriptions.Item>
-                    <Descriptions.Item label="Customer Type">{formData?.corporateCode}</Descriptions.Item>
+                    <Descriptions.Item label="Customer Type">{formData?.customerType}</Descriptions.Item>
                     <Divider />
-                    <Descriptions.Item label="Company Name">{formData?.compantName}</Descriptions.Item>
+                    <Descriptions.Item label="Company Name">{formData?.companyName}</Descriptions.Item>
                     <Descriptions.Item label="Parent Company Code">{formData?.parentCompanyCode}</Descriptions.Item>
                     <Divider />
                     <Descriptions.Item label="Corporate Type">{formData?.corporateType}</Descriptions.Item>

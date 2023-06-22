@@ -17,7 +17,7 @@ const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { typeData, userId,setUploadedFile, uploadFile, listShowLoading, showGlobalNotification } = props;
+    const { typeData, userId,setUploadedFile, uploadFile, listShowLoading } = props;
 
 
     const onDrop = (e) => {

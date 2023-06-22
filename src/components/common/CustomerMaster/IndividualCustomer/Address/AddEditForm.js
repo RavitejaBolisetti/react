@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useRef, useEffect } from 'react';
 
 import { Row, Col, Checkbox, Button, Form, Input, Select, Space, AutoComplete } from 'antd';
@@ -10,17 +15,15 @@ import { addressType } from 'constants/modules/CustomerMaster/individualProfile'
 
 import styles from 'components/common/Common.module.css';
 
-
 let index = 0;
 
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onSubmit, form, setAddressData, isEditing, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined } = props;
+    const { isReadOnly = false, onFinish, form, setAddressData, isEditing, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType } = props;
     const { typeData, forceUpdate, addData } = props;
-    const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail } = props;
-    const disabledProps = { disabled: editMode && formData?.partyCategory === 'Principal' ? true : false };
-
+    const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, handleFormValueChange } = props;
+    const disabledProps = { disabled: formActionType?.editMode && formData?.partyCategory === 'Principal' ? true : false };
 
     const [options, setOptions] = useState(false);
     /*visiblity of drawer   */
@@ -42,7 +45,7 @@ const AddEditForm = (props) => {
         // console.log('error');
     };
 
-    const onSuccessAction = () => { };
+    const onSuccessAction = () => {};
 
     useEffect(() => {
         const pinOption = pincodeData?.map((item) => ({
@@ -57,7 +60,6 @@ const AddEditForm = (props) => {
         setOptions();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible]);
-
 
     const handleOnSelect = (key) => {
         const selectedPinCode = pincodeData?.find((i) => i.id === key);
@@ -109,81 +111,73 @@ const AddEditForm = (props) => {
         });
     };
 
-
-
     const handleCancelFormEdit = () => {
         setIsEditing(false);
         setShowAddEditForm(false);
     };
 
     const handleSave = () => {
-        form.validateFields().then(() => {
-            const value = form.getFieldsValue();
+        form.validateFields()
+            .then(() => {
+                const value = form.getFieldsValue();
 
-            if (isEditing) {
-                setAddressData((prev) => {
-                    let formData = [...prev];
-                    console.log('formData', formData)
+                if (isEditing) {
+                    setAddressData((prev) => {
+                        let formData = [...prev];
+                        console.log('formData', formData);
 
-
-                    formData?.forEach((contact) => {
-                        if (contact?.defaultaddress === true) {
-                            contact.defaultaddress = false;
-                        }
-                    });
-                    const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode);
-                    formData.splice(index, 1, { ...value, ...pinSearchData });
-
-                    return [...formData];
-
-                });
-            } else {
-                setAddressData((prev) => {
-                    let formData = [...prev];
-                    console.log('formData', formData)
-
-
-                    if (value?.defaultaddress && formData?.length >= 1) {
                         formData?.forEach((contact) => {
                             if (contact?.defaultaddress === true) {
                                 contact.defaultaddress = false;
                             }
                         });
-                        return [...formData, { ...value, ...pinSearchData }];
-                    } else {
-                        return [...prev, { ...value, ...pinSearchData }];
-                    }
-                });
-            }
-            setPinSearchData({})
-            setShowAddEditForm(false);
-            setIsEditing(false);
-            setEditingData({});
-            form.setFieldsValue();
+                        const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode);
+                        formData.splice(index, 1, { ...value, ...pinSearchData });
 
-        }).catch((err) => {
-            console.log('err', err)
+                        return [...formData];
+                    });
+                } else {
+                    setAddressData((prev) => {
+                        let formData = [...prev];
+                        console.log('formData', formData);
 
-        })
-
-    }
-
+                        if (value?.defaultaddress && formData?.length >= 1) {
+                            formData?.forEach((contact) => {
+                                if (contact?.defaultaddress === true) {
+                                    contact.defaultaddress = false;
+                                }
+                            });
+                            return [...formData, { ...value, ...pinSearchData }];
+                        } else {
+                            return [...prev, { ...value, ...pinSearchData }];
+                        }
+                    });
+                }
+                setPinSearchData({});
+                setShowAddEditForm(false);
+                setIsEditing(false);
+                setEditingData({});
+                form.setFieldsValue();
+            })
+            .catch((err) => {
+                console.log('err', err);
+            });
+    };
 
     // console.log(addData,'VER')
 
     return (
         <>
-            <Form form={form} id="myAdd" onFinish={onSubmit} autoComplete="off" layout="vertical">
+            <Form form={form} id="myAdd" onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type')]}>
-
                             <Select placeholder={preparePlaceholderSelect('address type')}>
                                 {addressType?.map((item) => (
-                                    <Option key={'ct' + item?.key} value={item?.key} >{item?.name}</Option>
-                                )
-
-                                )}
+                                    <Option key={'ct' + item?.key} value={item?.key}>
+                                        {item?.name}
+                                    </Option>
+                                ))}
                             </Select>
                         </Form.Item>
                     </Col>
@@ -210,7 +204,7 @@ const AddEditForm = (props) => {
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={formData?.tehsil} label="Tehsil" name="tehsilCode" >
+                        <Form.Item initialValue={formData?.tehsil} label="Tehsil" name="tehsilCode">
                             <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('tehsil')} maxLength={6} />
                         </Form.Item>
                     </Col>
@@ -220,7 +214,6 @@ const AddEditForm = (props) => {
                             <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('city')} maxLength={50} />
                         </Form.Item>
                     </Col>
-
                 </Row>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -235,7 +228,7 @@ const AddEditForm = (props) => {
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Contact Name" name="contactName" rules={[validateLettersWithWhitespaces('contact name')]}>
+                        <Form.Item label="Contact Name" name="contactName" rules={[validatePincodeField('Pin Code'), validateLettersWithWhitespaces('contact name')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
                         </Form.Item>
                     </Col>
@@ -243,15 +236,15 @@ const AddEditForm = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Contact Mobile" name="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
+                        <Form.Item label="Contact Mobile" name="mobileNumber" rules={[validatePincodeField('Pin Code'), validateMobileNoField('mobile number')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('mobile number')} />
                         </Form.Item>
                     </Col>
                 </Row>
-                <Form.Item hidden name="id" initialValue={''} >
+                <Form.Item hidden name="id" initialValue={''}>
                     <Input />
                 </Form.Item>
-                <Form.Item hidden name="status" initialValue={false} >
+                <Form.Item hidden name="status" initialValue={false}>
                     <Input />
                 </Form.Item>
                 <Row gutter={20}>
@@ -262,20 +255,21 @@ const AddEditForm = (props) => {
                     </Col>
                 </Row>
                 <br></br>
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Space>
-                            <Button onClick={handleSave} key="submit" type="primary">
-                                Save
-                            </Button>
-                            <Button onClick={handleCancelFormEdit} ghost type="primary">
-                                Cancel
-                            </Button>
-                        </Space>
-                    </Col>
-                </Row>
+                {formActionType?.editMode && (
+                    <Row gutter={20}>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <Space>
+                                <Button onClick={handleSave} key="submit" type="primary">
+                                    Save
+                                </Button>
+                                <Button onClick={handleCancelFormEdit} ghost type="primary">
+                                    Cancel
+                                </Button>
+                            </Space>
+                        </Col>
+                    </Row>
+                )}
             </Form>
-
         </>
     );
 };
