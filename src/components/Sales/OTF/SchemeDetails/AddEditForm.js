@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, DatePicker, Space, Collapse, Typography } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
@@ -8,31 +8,13 @@ const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, setIsViewModeVisible, onFinishFailed, onFinish, form, schemeData } = props;
-    // const { buttonData, setButtonData } = props;
-
     const [customerForm] = Form.useForm();
-
-    // const handleFormValueChange = () => {
-    //     setButtonData({ ...buttonData, formBtnActive: true });
-    // };
-
-    // const handleFormFieldChange = () => {
-    //     setButtonData({ ...buttonData, formBtnActive: true });
-    // };
-
     const [activeKey, setactiveKey] = useState([1]);
-
-    const handleEdit = () => {
-        setIsViewModeVisible(false);
-    };
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
-
         if (isPresent) {
             const newActivekeys = [];
-
             activeKey.forEach((item) => {
                 if (item !== values) {
                     newActivekeys.push(item);
@@ -43,17 +25,6 @@ const AddEditFormMain = (props) => {
             setactiveKey([...activeKey, values]);
         }
     };
-
-    const viewProps = {
-        activeKey,
-        setactiveKey,
-        onChange,
-        styles,
-        onCloseAction,
-        handleEdit,
-    };
-
-    console.log(props,'ITEM')
 
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
@@ -105,18 +76,19 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                             </Row>
-                            {/* <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={props?.validFrom} label="Valid From" name="validFrom">
-                                                <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={props?.validTo} label="Valid To" name="validTo">
-                                                <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
-                                            </Form.Item>
-                                        </Col>
-                                    </Row> */}
+
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={props?.validFrom} label="Valid From" name="validFrom">
+                                        <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={props?.validTo} label="Valid To" name="validTo">
+                                        <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import dayjs from 'dayjs'
 import { showGlobalNotification } from 'store/actions/notification';
-import styles from 'components/common/Common.module.css';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetails';
 import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetails';
@@ -85,7 +85,7 @@ const SchemeDetailsMasterBase = (props) => {
 
     return (
         // <>{!formActionType?.viewMode ? schemeData[0]?.schemes?.map((item) => <AddEditForm {...formProps} schemeCategory={item?.schemeCategory} amount={item?.amount} description={item?.description} />) : <ViewDetail {...viewProps} />}</>
-        schemeData[0]?.schemes?.map((item) => <AddEditForm {...formProps} schemeType={item?.schemeType} schemeCategory={item?.schemeCategory} amount={item?.amount} description={item?.description} id={item?.id} schemeName={item?.schemeName} />)
+        schemeData[0]?.schemes?.map((item) => <AddEditForm {...formProps} schemeType={item?.schemeType} schemeCategory={item?.schemeCategory} amount={item?.amount} description={item?.description} id={item?.id} schemeName={item?.schemeName} validFrom={dayjs(item?.validFrom)} validTo={dayjs(item?.validTo)} />)
     ) 
 };
 
