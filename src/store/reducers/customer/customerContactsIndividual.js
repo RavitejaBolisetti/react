@@ -5,7 +5,7 @@
 import { crudDataReducer } from 'store/reducers/crud/crudData';
 import { RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, SAVE_DATA_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT } from 'store/actions/customer/customerContacts';
 
-export const customerContacts = crudDataReducer({
+export const customerContactsIndividual = crudDataReducer({
     RECEIVE_DATA_LOADING_ACTION_CONSTANT,
     RECEIVE_DATA_ACTION_CONSTANT,
     RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT,

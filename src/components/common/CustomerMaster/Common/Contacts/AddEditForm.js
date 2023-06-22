@@ -224,7 +224,7 @@ const AddEditForm = (props) => {
                     </Row>
                     {!formActionType?.viewMode && (
                         <Space>
-                            <Button htmlType="submit" type="primary">
+                            <Button onClick={onFinish} type="primary">
                                 Save
                             </Button>
                             <Button onClick={handleCancelFormEdit} danger>
