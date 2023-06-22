@@ -14,6 +14,7 @@ import { CgProfile } from 'react-icons/cg';
 import * as routing from 'constants/routing';
 import { setCollapsed } from 'store/actions/common/leftsidebar';
 import customMenuLink, { addToolTip } from 'utils/customMenuLink';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from './Header.module.css';
@@ -25,6 +26,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
 import IMG_ICON from 'assets/img/icon.png';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { HeadPhoneIcon, MenuArrow } from 'Icons';
 
@@ -33,6 +35,9 @@ const { confirm } = Modal;
 const mapStateToProps = (state) => {
     const {
         auth: { token, isLoggedIn, userId, passwordStatus },
+        data: {
+            ConfigurableParameterEditing: { isFilteredListLoaded: isTypeDataLoaded = false, isLoading: isTypeDataLoading },
+        },
         common: {
             Header: { data: loginUserData = [], isLoading, isLoaded: isDataLoaded = false },
             LeftSideBar: { collapsed = false },
@@ -48,6 +53,8 @@ const mapStateToProps = (state) => {
         userId,
         isLoading,
         collapsed,
+        isTypeDataLoaded,
+        isTypeDataLoading,
     };
 };
 const mapDispatchToProps = (dispatch) => ({
@@ -58,13 +65,17 @@ const mapDispatchToProps = (dispatch) => ({
             doLogout: doLogoutAPI,
             fetchData: headerDataActions.fetchData,
             listShowLoading: headerDataActions.listShowLoading,
+            fetchConfigList: configParamEditActions.fetchFilteredList,
+            listConfigShowLoading: configParamEditActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, isLoggedIn, userId }) => {
+const HeaderMain = (props) => {
+    const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId } = props;
+    const { fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading } = props;
     const navigate = useNavigate();
     const location = useLocation();
     const pagePath = location.pathname;
@@ -74,9 +85,6 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     const { firstName = '', lastName = '', dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
-
-    // const delarAvtarData = dealerName?.split(' ');
-    // const dealerAvatar = delarAvtarData && delarAvtarData.at(0).slice(0, 1) + (delarAvtarData.length > 1 ? delarAvtarData.at(-1).slice(0, 1) : '');
 
     useEffect(() => {
         if (confirms || isChangePasswordModalOpen) {
@@ -92,6 +100,13 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
+
+    useEffect(() => {
+        if (!isTypeDataLoaded && !isTypeDataLoading && userId) {
+            fetchConfigList({ setIsLoading: listConfigShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isTypeDataLoaded, userId]);
 
     const onSuccess = (res) => {
         if (res?.data) {

@@ -12,7 +12,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 
 import { indiviualProfileDataActions } from 'store/actions/data/customerMaster/individual/individualProfile/indiviualProfile';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -31,7 +30,7 @@ const mapStateToProps = (state) => {
             CustomerMaster: {
                 IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading: isIndiviualLoading, data: indiviualData = [] },
             },
-            ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, paramdata: appCategoryData = [] },
+            ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, filteredListData: appCategoryData = [] },
             SupportingDocument: { isLoaded: isDocumentDataLoaded = false, isDocumentLoading },
         },
     } = state;
@@ -46,7 +45,6 @@ const mapStateToProps = (state) => {
         isDocumentDataLoaded,
         isDocumentLoading,
     };
-    console.log(appCategoryData, 'dhgsfdjhsakgS');
     return returnValue;
 };
 
@@ -58,17 +56,6 @@ const mapDispatchToProps = (dispatch) => ({
             listIndiviualShowLoading: indiviualProfileDataActions.listShowLoading,
             saveData: indiviualProfileDataActions.saveData,
 
-            fetchApplicationCategorization: configParamEditActions.fetchList,
-            fetchApplicationSubCategory: configParamEditActions.fetchList,
-            fetchCustomerCategory: configParamEditActions.fetchList,
-            fetchGenderCategory: configParamEditActions.fetchList,
-            fetchMartialStatus: configParamEditActions.fetchList,
-            fetchOccupationList: configParamEditActions.fetchList,
-            fetchAnnualIncome: configParamEditActions.fetchList,
-            fetchVehicleUsed: configParamEditActions.fetchList,
-            fetchMotherTongue: configParamEditActions.fetchList,
-            fetchReligionList: configParamEditActions.fetchList,
-
             saveDocumentData: supportingDocumentDataActions.saveData,
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
             listDocumentShowLoading: supportingDocumentDataActions.listShowLoading,
@@ -79,7 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 const IndividualProfileBase = (props) => {
-    const { userId, fetchVehicleUsed, fetchMotherTongue, fetchReligionList, fetchAnnualIncome, fetchOccupationList, appCategoryData, listIndiviualShowLoading, fetchGenderCategory, fetchMartialStatus, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, isAppCategoryDataLoaded, isIndiviualProfileLoaded, fetchList, indiviualData, saveData, showGlobalNotification } = props;
+    const { userId, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
     const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, selectedCustomerId, setSelectedCustomerId } = props;
 
@@ -96,7 +83,6 @@ const IndividualProfileBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
     const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
-
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -117,24 +103,8 @@ const IndividualProfileBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
-    useEffect(() => {
-        fetchApplicationCategorization({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_CAT.id });
-        fetchApplicationSubCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_SUB_CAT.id });
-        fetchCustomerCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_CAT.id });
-        fetchGenderCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.GENDER_CD.id });
-        fetchMartialStatus({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.MARITAL_STATUS.id });
-        fetchOccupationList({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.OCC_TYPE.id });
-        fetchAnnualIncome({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.Annual_Income.id });
-        fetchVehicleUsed({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.Vehicle_Used.id });
-        fetchMotherTongue({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.MOTHER_TOUNGE.id });
-        fetchReligionList({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.RELGION.id });
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isAppCategoryDataLoaded]);
-
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const restObj = {};
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
 
         const data = {
@@ -180,9 +150,7 @@ const IndividualProfileBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('errorInfo', errorInfo);
-    };
+    const onFinishFailed = (errorInfo) => {};
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();

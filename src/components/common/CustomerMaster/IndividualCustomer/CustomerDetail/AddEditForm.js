@@ -16,11 +16,9 @@ import { BiLockAlt, BiTimeFive } from 'react-icons/bi';
 import { NameChangeHistory } from './NameChangeHistory';
 
 const { Text } = Typography;
-const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, configurableTypedata, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
-    console.log('🚀 ~ file: AddEditForm.js:23 ~ AddEditFormMain ~ customerType:', customerType, props);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
@@ -47,6 +45,7 @@ const AddEditFormMain = (props) => {
             });
         }
     };
+
     const handleNumberValidation = (event) => {
         const Mno = event.target.value;
         const regex = new RegExp('^([5-9]){1}([0-9]){9}$');

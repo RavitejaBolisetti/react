@@ -152,12 +152,10 @@ const AddEditFormMain = (props) => {
                                                             style={{ cursor: 'pointer' }}
                                                             onClick={(key) => {
                                                                 onEdit(item);
-                                                                // onCollapseChange(item?.editedId);
                                                                 onCollapseChange(index);
                                                             }}
-                                                            // onChange={(key) => onCollapseChange(key)}
                                                         >
-                                                            <FiEdit style={{ margin: '0.25rem 0 0 0' ,color: '#ff3e5b'}} />
+                                                            <FiEdit style={{ margin: '0.25rem 0 0 0', color: '#ff3e5b' }} />
                                                             <Typography style={{ fontSize: '14px', margin: '0 0 0 0.5rem', color: '#ff3e5b' }}>Edit</Typography>
                                                         </Space>
                                                     )}
@@ -173,9 +171,6 @@ const AddEditFormMain = (props) => {
                                 </Collapse>
                             ))}
                     </Space>
-                    {/* <Button type="primary" onClick={() => onFinish()}>
-                        Submit
-                    </Button> */}
                 </Card>
             ) : (
                 <ViewDetail {...viewProps} />

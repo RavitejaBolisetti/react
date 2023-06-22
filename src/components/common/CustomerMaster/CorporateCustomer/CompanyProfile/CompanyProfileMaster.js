@@ -13,8 +13,6 @@ import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 
 import { btnVisiblity } from 'utils/btnVisiblity';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'components/common/Common.module.css';
 
@@ -25,7 +23,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, paramdata: appCategoryData = [] },
+            ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, filteredListData: appCategoryData = [] },
             CustomerMaster: {
                 CompanyProfile: { isLoaded: isDataLoaded = false, data: customerProfileData = [] },
             },
@@ -54,9 +52,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchApplicationCategorization: configParamEditActions.fetchList,
-            fetchApplicationSubCategory: configParamEditActions.fetchList,
-            fetchCustomerCategory: configParamEditActions.fetchList,
             resetData: corporateCompanyProfileDataActions.reset,
             listShowLoading: corporateCompanyProfileDataActions.listShowLoading,
 
@@ -72,7 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyProfileBase = (props) => {
-    const { listShowLoading, section, saveData, uploadFile, userId, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, fetchCompanyProfileData, isAppCategoryDataLoaded, appCategoryData, customerProfileData } = props;
+    const { listShowLoading, section, saveData, uploadFile, userId, fetchCompanyProfileData, appCategoryData, customerProfileData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, selectedCustomer } = props;
     const { uploadListShowLoading } = props;
 
@@ -82,15 +77,6 @@ const CompanyProfileBase = (props) => {
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-
-    useEffect(() => {
-        if (!isAppCategoryDataLoaded) {
-            fetchApplicationCategorization({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_CAT.id });
-            fetchApplicationSubCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_SUB_CAT.id });
-            fetchCustomerCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_CAT.id });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isAppCategoryDataLoaded]);
 
     useEffect(() => {
         if (userId && selectedCustomer) {
@@ -106,8 +92,6 @@ const CompanyProfileBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer]);
-
-    console.log('Cust id:', selectedCustomer);
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();

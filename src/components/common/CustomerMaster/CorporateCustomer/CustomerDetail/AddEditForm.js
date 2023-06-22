@@ -17,19 +17,13 @@ const AddEditFormMain = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
-    useEffect(() => {
-        form.setFieldsValue({
-            ...formData,
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
-
     const handleCorporateChange = (value) => {
         setCorporateType(value);
     };
-    const onHandleSelect = (values) => {
+
+    const onHandleSelect = (value) => {
         form.setFieldsValue({
-            corporateName: values,
+            corporateCode: value,
         });
     };
     const handleNumberValidation = (event) => {
@@ -93,9 +87,8 @@ const AddEditFormMain = (props) => {
                         )}
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        {customerType}
-                        <Form.Item initialValue={formData?.customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                            <Select placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']} allowClear></Select>
+                        <Form.Item initialValue={customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
+                            <Select disabled={true} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']} allowClear></Select>
                         </Form.Item>
                     </Col>
                 </Row>

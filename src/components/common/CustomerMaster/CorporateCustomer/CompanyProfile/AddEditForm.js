@@ -402,32 +402,32 @@ const AddEditFormMain = (props) => {
                             >
                                 <Divider />
                                 <div className={style.uploadContainer}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item initialValue={formData?.customerConsent} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="customerConsent">
-                                            <Checkbox className={styles.registered}>I Consent to share my details with Mahindra & Mahindra. </Checkbox>
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.uploadContainer}>
-                                        <Dragger customRequest={handleUpload} {...uploadProps}>
-                                            <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
-                                                <img src={Svg} alt="" />
-                                            </p>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Form.Item initialValue={formData?.customerConsent} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="customerConsent">
+                                                <Checkbox className={styles.registered}>I Consent to share my details with Mahindra & Mahindra. </Checkbox>
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.uploadContainer}>
+                                            <Dragger customRequest={handleUpload} {...uploadProps}>
+                                                <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
+                                                    <img src={Svg} alt="" />
+                                                </p>
 
-                                            <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '500', fontSize: '14px', lineHeight: '23px', color: '#0B0B0C' }}>
-                                                Click or drop your file here to upload the signed and <br />
-                                                scanned customer form.
-                                            </p>
+                                                <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '500', fontSize: '14px', lineHeight: '23px', color: '#0B0B0C' }}>
+                                                    Click or drop your file here to upload the signed and <br />
+                                                    scanned customer form.
+                                                </p>
 
-                                            <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '400', fontSize: '12px', lineHeight: '23px', color: '#0B0B0C' }}>
-                                                File type should be png, jpg or pdf and max file size to be 5Mb
-                                            </p>
-                                            <Button danger>Upload File</Button>
-                                        </Dragger>
-                                    </Col>
-                                </Row>
+                                                <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '400', fontSize: '12px', lineHeight: '23px', color: '#0B0B0C' }}>
+                                                    File type should be png, jpg or pdf and max file size to be 5Mb
+                                                </p>
+                                                <Button danger>Upload File</Button>
+                                            </Dragger>
+                                        </Col>
+                                    </Row>
                                 </div>
                             </Panel>
                         </Collapse>

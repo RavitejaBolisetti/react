@@ -32,14 +32,12 @@ const mapStateToProps = (state) => {
                 CustomerDetailsIndividual: { isLoaded: isDataLoaded = false, isLoading, data },
                 Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
             },
-            ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isTypeDataLoading, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
 
     let returnValue = {
         userId,
-        isTypeDataLoaded,
-        isTypeDataLoading,
 
         isDataLoaded,
         isLoading,
@@ -57,9 +55,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchCorporateLovList: corporateDataActions.fetchFilteredList,
             listCorporateLovShowLoading: corporateDataActions.listShowLoading,
 
@@ -75,8 +70,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerDetailMasterBase = (props) => {
-    const { isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
+    const { isTypeDataLoaded, isTypeDataLoading, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
+    const { setRefreshList, userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick } = props;
 
@@ -102,17 +97,6 @@ const CustomerDetailMasterBase = (props) => {
     }, [isDataLoaded]);
 
     useEffect(() => {
-        if (userId && !isTypeDataLoaded && !isTypeDataLoading) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CUST_TYPE.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CORP_TYPE.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CORP_CATE.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.TITLE.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.MEM_TYPE.id });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isTypeDataLoaded]);
-
-    useEffect(() => {
         if (userId && !isCorporateLovDataLoaded) {
             fetchCorporateLovList({ setIsLoading: listCorporateLovShowLoading, userId });
         }
@@ -136,12 +120,13 @@ const CustomerDetailMasterBase = (props) => {
 
     useEffect(() => {
         if (typeData) {
-            setConfigurableTypedata({ CUST_TYPE: typeData['CUST_TYPE'], CORP_TYPE: typeData['CORP_TYPE'], CORP_CATE: typeData['CORP_CATE'], TITLE: typeData['TITLE'], MEM_TYPE: typeData['MEM_TYPE'] });
+            setConfigurableTypedata({ CUST_TYPE: typeData[PARAM_MASTER?.CUST_TYPE?.id], CORP_TYPE: typeData[PARAM_MASTER?.CORP_TYPE?.id], CORP_CATE: typeData[PARAM_MASTER?.CORP_CATE?.id], TITLE: typeData[PARAM_MASTER?.TITLE?.id], MEM_TYPE: typeData[PARAM_MASTER?.MEM_TYPE?.id] });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [typeData]);
 
     const onFinish = (values) => {
+        setRefreshList(false);
         const data = { ...values, customerId: selectedCustomer?.customerId };
 
         const onSuccess = (res) => {
@@ -149,7 +134,8 @@ const CustomerDetailMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
             setButtonData({ ...buttonData, formBtnActive: false });
-            
+            setRefreshList(true);
+
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
                 setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
@@ -174,6 +160,7 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const formProps = {
+        ...props,
         formActionType,
         form,
         onFinish,
