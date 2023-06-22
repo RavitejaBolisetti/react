@@ -24,7 +24,7 @@ const { Option } = Select;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { activeKey, formData, onFinish, onFinishFailed, extraParams, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
+    const { activeKey, formData, onFinish, onFinishFailed, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
     const [optionForm] = Form.useForm();
 
     const [isReadOnly, setIsReadOnly] = useState(false);
@@ -75,7 +75,7 @@ const AddEditFormMain = (props) => {
         listShowLoading,
         saveData,
         onSuccessAction,
-        extraParams,
+        selectedOrderId,
         onErrorAction,
         formData,
     };
@@ -95,94 +95,92 @@ const AddEditFormMain = (props) => {
                             }
                             key="1"
                         >
-                            <Form autoComplete="off" layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Vehicle Usage Type" name="vehicleUsageType" data-testid="usageType" rules={[validateRequiredSelectField('vehicle usage Type')]}>
-                                            <Select placeholder="Select Vehicle Usage Type" allowClear options={typeData[PARAM_MASTER.VEHCL_TYPE.id]} fieldNames={{ label: 'value', value: 'key' }} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Model" name="model" data-testid="model">
-                                            <Select onSelect={onHandleSelect} placeholder="Select" allowClear options={ProductHierarchyData} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Model Code" name="modelCode" data-testid="vehicleVariant">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('Model Code')} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Vehicle Usage Type" name="vehicleUsageType" data-testid="usageType" rules={[validateRequiredSelectField('vehicle usage Type')]}>
+                                        <Select placeholder="Select Vehicle Usage Type" allowClear options={typeData[PARAM_MASTER.VEHCL_TYPE.id]} fieldNames={{ label: 'value', value: 'key' }} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Model" name="model" data-testid="model">
+                                        <Select onSelect={onHandleSelect} placeholder="Select" allowClear options={ProductHierarchyData} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Model Code" name="modelCode" data-testid="vehicleVariant">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Model Code')} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Available Stock" name="availableStock" data-testid="availableStock">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('Available Stock')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Vehicle Allocated Status" name="vehicleAllocationStatus" data-testid="vehicleAllocatedStatus">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Allocated Status')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="PO Number" name="ponumber">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('PO Number')} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="PO Date" name="poDate">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('PO Date')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="PO Status" name="postatus">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('PO Status')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="SO Number" name="sonumber">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('SO Number')} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="SO Status" name="sostatus">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('SO Status')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="VIN Number" name="vinnumber">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('VIN number')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Vehicle Selling Price" name="vehicleSellingPrice">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Selling Price')} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Discount Amount" name="discountAmount">
-                                            <Input placeholder={preparePlaceholderText('Discount Amount')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Tax Amount" name="taxAmount">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('Tax Amount')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Vehicle Amount" name="vehicleAmount">
-                                            <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Amount')} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                            </Form>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Available Stock" name="availableStock" data-testid="availableStock">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Available Stock')} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Vehicle Allocated Status" name="vehicleAllocationStatus" data-testid="vehicleAllocatedStatus">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Allocated Status')} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="PO Number" name="ponumber">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('PO Number')} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="PO Date" name="poDate">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('PO Date')} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="PO Status" name="postatus">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('PO Status')} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="SO Number" name="sonumber">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('SO Number')} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="SO Status" name="sostatus">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('SO Status')} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="VIN Number" name="vinnumber">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('VIN number')} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Vehicle Selling Price" name="vehicleSellingPrice">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Selling Price')} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Discount Amount" name="discountAmount">
+                                        <Input placeholder={preparePlaceholderText('Discount Amount')} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Tax Amount" name="taxAmount">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Tax Amount')} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Vehicle Amount" name="vehicleAmount">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Amount')} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
                         </Panel>
                     </Collapse>
                     <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>

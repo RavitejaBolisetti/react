@@ -19,6 +19,9 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'components/common/Common.module.css';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
+import { OTFFormButton } from '../OTFFormButton';
+import { InputSkeleton } from 'components/common/Skeleton';
+import { OTFStatusBar } from '../utils/OTFStatusBar';
 
 const mapStateToProps = (state) => {
     const {
@@ -67,10 +70,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { VehicleDetailsData, fetchProductLov, saveData, ProductLovLoading, isProductHierarchyDataLoaded, ProductHierarchyData, formActionType, typeData, fetchList, isTypeDataLoaded, resetData, configLoading, fetchconfigList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { VehicleDetailsData, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, ProductHierarchyData, typeData, fetchList, isTypeDataLoaded, resetData, configLoading, fetchconfigList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { form, selectedOrderId, section, formActionType, handleFormValueChange } = props;
+
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setformData] = useState({});
-    const [form] = Form.useForm();
 
     const [tooltTipText, settooltTipText] = useState();
 
@@ -89,15 +93,6 @@ const VehicleDetailsMasterMain = (props) => {
         fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
     };
 
-    const extraParams = [
-        {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: 'OTF002',
-            name: 'OTF Number',
-        },
-    ];
-
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
@@ -115,15 +110,26 @@ const VehicleDetailsMasterMain = (props) => {
         }
     };
     useEffect(() => {
+        if (userId && selectedOrderId) {
+            const extraParams = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOrderId,
+                    name: 'OTF Number',
+                },
+            ];
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedOrderId]);
+    useEffect(() => {
         if (userId && !isTypeDataLoaded) {
             loadDependendData();
         }
-        if (userId && !isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction, extraParams });
-        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isTypeDataLoaded, isDataLoaded]);
+    }, [userId, isTypeDataLoaded]);
 
     useEffect(() => {
         if (ProductHierarchyData && isProductHierarchyDataLoaded && userId) {
@@ -151,10 +157,18 @@ const VehicleDetailsMasterMain = (props) => {
     }, [VehicleDetailsData, isDataLoaded]);
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: extraParams['0']['value'], OtfId: formData?.id, id: '' };
-        console.log('data', data, extraParams);
+        const data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: '' };
+        console.log('data', data, selectedOrderId);
 
         const onSuccess = (res) => {
+            const extraParams = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOrderId,
+                    name: 'OTF Number',
+                },
+            ];
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction, extraParams });
@@ -195,7 +209,7 @@ const VehicleDetailsMasterMain = (props) => {
         listShowLoading,
         saveData,
         onSuccessAction,
-        extraParams,
+        selectedOrderId,
         onErrorAction,
         form,
         onFinish,
@@ -211,17 +225,36 @@ const VehicleDetailsMasterMain = (props) => {
         tooltTipText,
         settooltTipText,
     };
+    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;
+    const formSkeleton = (
+        <Row>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <InputSkeleton height={'100vh'} />
+            </Col>
+        </Row>
+    );
 
     return (
-        <>
-            {!formActionType?.viewMode ? (
-                <div className={styles.drawerCustomerMaster}>
-                    <AddEditForm {...formProps} />
-                </div>
-            ) : (
-                <ViewDetail {...viewProps} />
-            )}
-        </>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Row gutter={20} className={styles.drawerBodyRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Row>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <h2>{section?.title}</h2>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <OTFStatusBar status={1} />
+                        </Col>
+                    </Row>
+                    {isLoading ? formSkeleton : formContainer}
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <OTFFormButton {...props} />
+                </Col>
+            </Row>
+        </Form>
     );
 };
 export const VehicleDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleDetailsMasterMain);

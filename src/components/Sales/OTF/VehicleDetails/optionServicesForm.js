@@ -8,62 +8,56 @@ import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Div
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
-import { OptionalServiceCard } from './OptionalServiceCard';
 import { validateRequiredInputField } from 'utils/validation';
 
-
 const OptionServicesFormMain = (props) => {
-    const { handleCancel, showGlobalNotification, extraParams, onErrorAction, formData, fetchList, userId, listShowLoading, saveData, onSuccessAction, optionForm, optionsServicesMapping, setoptionsServicesMapping } = props;
-    // const handleDelete = (index) => {
-    //     setoptionsServicesMapping(
-    //         optionsServicesMapping.filter((element, i) => {
-    //             if (index !== i) {
-    //                 return element;
-    //             }
-    //         })
-    //     );
-    // };
+    const { handleCancel, showGlobalNotification, selectedOrderId, onErrorAction, formData, fetchList, userId, listShowLoading, saveData, onSuccessAction, optionForm, optionsServicesMapping, setoptionsServicesMapping } = props;
 
-    const onFinish = (values) => {
-        // setoptionsServicesMapping([values, ...optionsServicesMapping]);
-        console.log('shaka', values);
-        const data = { ...values, otfNumber: extraParams['0']['value'], OtfId: formData?.id, id: '' };
-        console.log('data', data, extraParams);
-
-
-        const onSuccess = (res) => {
-            optionForm.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction, extraParams });
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        const requestData = {
-            data: [data],
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
-    };
-    const onFinishFailed = () => {
+    const onFinish = () => {
         optionForm
             .validateFields()
-            .then(() => {})
-            .catch(() => {});
+            .then(() => {
+                const values = optionForm.getFieldsValue();
+
+                const data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: '' };
+                console.log('data', data, selectedOrderId);
+                const onSuccess = (res) => {
+                    const extraParams = [
+                        {
+                            key: 'otfNumber',
+                            title: 'otfNumber',
+                            value: selectedOrderId,
+                            name: 'OTF Number',
+                        },
+                    ];
+                    optionForm.resetFields();
+                    showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+                    fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction, extraParams });
+                };
+
+                const onError = (message) => {
+                    showGlobalNotification({ message });
+                };
+
+                const requestData = {
+                    data: [data],
+                    method: 'post',
+                    setIsLoading: listShowLoading,
+                    userId,
+                    onError,
+                    onSuccess,
+                };
+
+                saveData(requestData);
+            })
+            .catch((err) => {});
     };
 
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form autoComplete="off" layout="vertical" form={optionForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                    <Form autoComplete="off" layout="vertical" form={optionForm}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Service Name" name="serviceName" rules={[validateRequiredInputField('Service Name')]}>
@@ -77,7 +71,7 @@ const OptionServicesFormMain = (props) => {
                             </Col>
                             <Col style={{ marginTop: '28px' }} xs={24} sm={24} md={4} lg={4} xl={4}>
                                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <Button style={{ marginLeft: '20px' }} htmlType="submit" type="primary">
+                                    <Button onClick={onFinish} style={{ marginLeft: '20px' }} type="primary">
                                         Save
                                     </Button>
                                     <Button style={{ marginLeft: '20px' }} onClick={handleCancel} danger>
@@ -89,9 +83,6 @@ const OptionServicesFormMain = (props) => {
                     </Form>
                 </Col>
             </Row>
-            {/* {optionsServicesMapping?.map((element, index) => {
-                return <OptionalServiceCard element={element} index={index} handleDelete={handleDelete} />;
-            })} */}
         </>
     );
 };
