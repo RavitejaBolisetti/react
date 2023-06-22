@@ -80,12 +80,11 @@ const AddEditForm = (props) => {
         <>
             <Form form={form} autoComplete="off" onFinish={onFinish} layout="vertical">
                 <Space direction="vertical">
-                    <Row>
+                    {/* <Row>
                         <Typography.Text strong>Add New Contact</Typography.Text>
-                    </Row>
-
+                    </Row> */}
                     <UploadUtils {...uploadProps} isViewModeVisible={isViewModeVisible} />
-
+                    <Divider className={style.contactDivider} />
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Purpose of Contact" name="purposeOfContact">
@@ -125,7 +124,7 @@ const AddEditForm = (props) => {
 
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Alternate Mobile Number" name="alternativeMobileNumber" rules={[validateMobileNoField('alternate mobile number')]}>
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate mobile number')}  {...disabledProps} />
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate mobile number')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>

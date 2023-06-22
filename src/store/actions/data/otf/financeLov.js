@@ -1,8 +1,8 @@
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_CORPORATE_COMPANY_PROFILE as baseURL } from 'constants/routingApi';
+import { BASE_URL_OTF_FINANCE_LOV as baseURL } from 'constants/routingApi';
 
-const PREFIX = 'CUSTOMER_MASTER_CORPORATE_LOV_';
-const moduleName = 'Company Profile';
+const PREFIX = 'OTF_FINANCE_LOV_';
+const moduleName = 'Finance Detail';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';
@@ -12,7 +12,7 @@ export const RECIEVE_DATA_DETAIL_ACTION_CONSTANT = PREFIX + 'RECIEVE_DETAIL_DATA
 export const SAVE_DATA_ACTION_CONSTANT = PREFIX + 'SAVE_DATA';
 export const RESET_DATA_ACTION_CONSTANT = PREFIX + 'RESET_DATA';
 
-export const corporateLovDataActions = dataActions({
+export const financeLovDataActions = dataActions({
     baseURL,
     moduleName,
     RECEIVE_DATA_LOADING_ACTION_CONSTANT,

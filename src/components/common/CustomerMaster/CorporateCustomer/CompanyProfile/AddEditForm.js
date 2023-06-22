@@ -12,6 +12,8 @@ import style from 'components/common/Common.module.css';
 import styles from 'components/Auth/Auth.module.css';
 
 import Svg from 'assets/images/Filter.svg';
+import { FiEye, FiTrash } from 'react-icons/fi';
+
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -26,33 +28,25 @@ const { Text } = Typography;
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 
 const AddEditFormMain = (props) => {
-    const { appCategoryData, formData } = props;
+    const { appCategoryData, listShowLoading, userId, formData, form } = props;
+    const { uploadListShowLoading, uploadFile, setUploadedFile } = props;
 
-    const [done, setDone] = useState();
     const [activeKey, setactiveKey] = useState([1]);
-
-    const [FinalFormData, setFinalFormData] = useState({
-        keyDetailForm: {
-            accountCode: '',
-            accountName: '',
-        },
-        authorityForm: {
-            personName: '',
-        },
-        // uploadCustomerForm: [],
-    });
 
     console.log('Form Data:', formData);
 
-    const [companyInfoValues, setCompanyInfoValues] = useState();
-    const [uploadCustomerFormValues, setUploadCustomerFormValues] = useState();
-
     const [customerCategory, setCustomerCategory] = useState();
 
+    // useEffect(() => {
+    //     setFinalFormData({ ...FinalFormData, keyAccountDetails: companyInfoValues, uploadCustomerForm: uploadCustomerFormValues });
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [done]);
     useEffect(() => {
-        setFinalFormData({ ...FinalFormData, keyAccountDetails: companyInfoValues, uploadCustomerForm: uploadCustomerFormValues });
+        form.setFieldsValue({
+            ...formData,
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [done]);
+    }, [formData]);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -72,25 +66,55 @@ const AddEditFormMain = (props) => {
         console.log('values', values);
     };
 
-    const handleCategoryChange = (value) => {
-        setCustomerCategory(value);
+    const onDrop = (e) => {
+        console.log('Dropped files', e.dataTransfer.files);
     };
 
     const uploadProps = {
-        name: 'file',
-        multiple: false,
-        action: '',
-        progress: { strokeWidth: 10 },
-        success: { percent: 100 },
-        onChange(info) {
+        showUploadList: {
+            showRemoveIcon: true,
+            showDownloadIcon: true,
+            previewIcon: <FiEye onClick={(e) => console.log(e, 'custom removeIcon event')} />,
+            removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
+            showProgress: true,
+        },
+        progress: { strokeWidth: 3, showInfo: true },
+
+        onDrop,
+        onChange: (info, event) => {
             const { status } = info.file;
 
-            if (status === 'done') {
+            if (status === 'uploading') {
+            } else if (status === 'done') {
+                setUploadedFile(info?.file?.response?.docId);
                 message.success(`${info.file.name} file uploaded successfully.`);
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }
         },
+    };
+
+    const handleUpload = (options) => {
+        const { file, onSuccess, onError } = options;
+
+        const data = new FormData();
+        data.append('applicationId', 'app');
+        data.append('file', file);
+
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: uploadListShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        uploadFile(requestData);
+    };
+
+    const handleCategoryChange = (value) => {
+        setCustomerCategory(value);
     };
 
     return (
@@ -177,7 +201,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                {customerCategory == 'CUS_CAT_2' && (
+                                {customerCategory === 'CUS_CAT_2' && (
                                     <>
                                         <Divider />
                                         <Row gutter={20}>
@@ -194,7 +218,7 @@ const AddEditFormMain = (props) => {
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Key Role Details" initialValue={formData?.KeyRoleDetails} name="KeyRoleDetails">
+                                                <Form.Item label="Key Role Details" initialValue={formData?.keyRouteDetails} name="KeyRoleDetails">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Key Role Details')} />
                                                 </Form.Item>
                                             </Col>
@@ -223,7 +247,7 @@ const AddEditFormMain = (props) => {
                                                     Social Profiles
                                                 </Text>
                                             </div>
-                                        </div>{' '}
+                                        </div>
                                     </>
                                 }
                             >
@@ -269,31 +293,31 @@ const AddEditFormMain = (props) => {
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Code" initialValue={formData?.accountCode} name="accountCode">
+                                        <Form.Item label="Account Code" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountCode} name="accountCode">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Code')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Name" initialValue={formData?.accountName} name="accountName">
+                                        <Form.Item label="Account Name" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountName} name="accountName">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Name')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Segment" initialValue={formData?.accountSegment} name="accountSegment">
+                                        <Form.Item label="Account Segment" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountSegment} name="accountSegment">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Segment')} disabled />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Client Name" initialValue={formData?.accountClientName} name="accountClientName">
+                                        <Form.Item label="Account Client Name" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountClientName} name="accountClientName">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Client Name')} disabled />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Mapping Date" initialValue={formData?.accountMappingDate} name="accountMappingDate">
+                                        <Form.Item label="Account Mapping Date" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountMappingDate} name="accountMappingDate">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Mapping Date')} disabled />
                                         </Form.Item>
                                     </Col>
@@ -321,26 +345,26 @@ const AddEditFormMain = (props) => {
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Name Of Person" initialValue={formData?.personName} name="personName" rules={[validateRequiredInputField('authorityRequest.personName')]}>
+                                        <Form.Item label="Name Of Person" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.personName} name="personName" rules={[validateRequiredInputField('authorityRequest.personName')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Name Of Person')} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Position" initialValue={formData?.postion} name="postion">
+                                        <Form.Item label="Position" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.postion} name="postion">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Position')} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Company Name" initialValue={formData?.companyName} name="companyName" rules={[validateRequiredInputField('authorityRequest.companyName')]}>
+                                        <Form.Item label="Company Name" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.companyName} name="companyName" rules={[validateRequiredInputField('authorityRequest.companyName')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Company Name')} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <Form.Item label="Remarks" initialValue={formData?.remarks} name="authorityRequest.remarks">
+                                        <Form.Item label="Remarks" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.remarks} name="authorityRequest.remarks">
                                             <TextArea maxLength={50} placeholder={preparePlaceholderText('Remarks')} />
                                         </Form.Item>
                                     </Col>
@@ -377,6 +401,7 @@ const AddEditFormMain = (props) => {
                                 }
                             >
                                 <Divider />
+                                <div className={style.uploadContainer}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item initialValue={formData?.customerConsent} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="customerConsent">
@@ -386,7 +411,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.uploadContainer}>
-                                        <Dragger {...uploadProps}>
+                                        <Dragger customRequest={handleUpload} {...uploadProps}>
                                             <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
                                                 <img src={Svg} alt="" />
                                             </p>
@@ -403,6 +428,7 @@ const AddEditFormMain = (props) => {
                                         </Dragger>
                                     </Col>
                                 </Row>
+                                </div>
                             </Panel>
                         </Collapse>
                     </Space>

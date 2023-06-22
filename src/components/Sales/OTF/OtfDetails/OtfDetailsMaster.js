@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { Form } from 'antd';
 
 import AddEditForm from './AddEditForm';
@@ -57,21 +57,16 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const OtfDetailsMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchConfigList, listConfigShowLoading, isConfigDataLoaded, isConfigLoading, typeData, isDataLoaded, otfData, isLoading } = props;
+    const { fetchList, saveData, listShowLoading, userId, fetchConfigList, listConfigShowLoading, isConfigDataLoaded, isConfigLoading, typeData, isDataLoaded, otfData, isLoading, formData, setFormData, isNewDataLoading } = props;
 
     const [form] = Form.useForm();
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-    const [formData, setFormData] = useState(otfData);
+    useEffect(() => {
+        setFormData(otfData);
+    }, [otfData]);
 
-    const extraParams = [
-        {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: 'OTF001',
-            name: 'OTF Number',
-        },
-    ];
-
+   
     const errorAction = (message) => {
         showGlobalNotification(message);
     };
@@ -91,21 +86,19 @@ const OtfDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isConfigDataLoaded, userId]);
 
-    useEffect(() => {
-        if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
-        }
-        setFormData(otfData);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, userId]);
+    
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const data = { ...values, id: recordId };
+        const otfNum = formData?.otfNumber || '';
+        const exchange = values?.exchange == true ? 1 : 0;
+        const loyalityScheme = values?.loyaltyScheme == true ? 1 : 0;
+        const data = { ...values, id: recordId, otfNumber: otfNum, loyaltyScheme: loyalityScheme, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
+        delete data?.mitraName;
+        delete data?.mitraType;
+        delete data?.modeOfPAyment;
 
         const onSuccess = (res) => {
-            form.resetFields();
-
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
         };
 
@@ -116,8 +109,8 @@ const OtfDetailsMasterBase = (props) => {
         };
 
         const requestData = {
-            data: [data],
-            method: 'post',
+            data: data,
+            method: 'put',
             setIsLoading: listShowLoading,
             userId,
             onError,

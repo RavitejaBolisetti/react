@@ -15,10 +15,10 @@ import dayjs from 'dayjs';
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
-const { TextArea, Search } = Input;
+const { TextArea } = Input;
 
 const FormBase = (props) => {
-    const { customerType, onSave, form, onChange, editedId, relationData, onSearch } = props;
+    const { customerType, onSave, form, onChange, relationData, onSearch, isSearchLoading, onCancel } = props;
 
     const type = [
         { name: 'Yes', key: 'Yes', value: 'Yes' },
@@ -41,8 +41,9 @@ const FormBase = (props) => {
     };
 
     const getRelationCode = (props) => {
+        let relationCode = relationData?.find((e) => e.value === props);
         form.setFieldsValue({
-            relationCode: props,
+            relationCode: relationCode?.key,
         });
     };
 
@@ -66,11 +67,17 @@ const FormBase = (props) => {
                 </Col>
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={null} label="Customer Id" name="relationCustomerId">
-                            <Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton />
+                        <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
+                            <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading} />
                         </Form.Item>
                     </Col>
-                ) : null}
+                ) : (
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                        <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
+                            <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading} />
+                        </Form.Item>
+                    </Col>
+                )}
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={null} label="Customer Name" name="customerName" rules={[validateRequiredInputField('Customer Name')]}>
@@ -80,7 +87,7 @@ const FormBase = (props) => {
                 {!customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
-                            <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear disabled={customer} onChange={getRelationCode}>
+                            <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear onChange={getRelationCode}>
                                 {relationData?.map((item) => (
                                     <Option key={'rel' + item?.key} value={item.value}>
                                         {item?.value}
@@ -96,9 +103,9 @@ const FormBase = (props) => {
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
-                            <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear disabled={customer} onChange={getRelationCode}>
+                            <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear onChange={getRelationCode}>
                                 {relationData?.map((item) => (
-                                    <Option key={'rel' + item?.key} value={item.key}>
+                                    <Option key={'rel' + item?.key} value={item.value}>
                                         {item?.value}
                                     </Option>
                                 ))}
@@ -107,7 +114,7 @@ const FormBase = (props) => {
                     </Col>
                 ) : null}
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item label="Relation Code" name="relationCode" />
+                    <Form.Item initial label="Relation Code" name="relationCode" />
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>
@@ -130,25 +137,25 @@ const FormBase = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item initialValue={editedId} label="Generated ID" name="editedId" />
+                    <Form.Item label="Generated ID" name="editedId" />
                 </Col>
 
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item initialValue={props?.id ? props?.id : null} label="ID" name="id" />
+                    <Form.Item initialValue={props?.id ? props?.id : ''} label="ID" name="id" />
                 </Col>
 
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item initialValue={'CUS1686811036620'} label="Customer Id" name="customerId" />
+                    <Form.Item initialValue={props?.customerId ? props?.customerId : ''} label="Customer Id" name="customerId" />
                 </Col>
             </Row>
 
             <Row style={{ display: 'flex' }}>
-                <Button type="primary" onClick={() => onSave(props)}>
+                <Button type="primary" onClick={onSave}>
                     Save
                 </Button>
 
-                <Button type="primary" style={{ margin: '0 0 0 1rem' }}>
-                    Reset
+                <Button type="primary" onClick={onCancel} style={{ margin: '0 0 0 1rem' }}>
+                    Cancel
                 </Button>
             </Row>
         </>

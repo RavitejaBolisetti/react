@@ -108,30 +108,33 @@ export const BASE_URL_TERM_CONDITION_MANUFACTURER = BASE_URL + 'appmst/tncmanufr
 export const BASE_URL_TERM_CONDITION_CHANGE_HISTORY = BASE_URL + 'appmst/termconditiondealerhistory';
 export const BASE_URL_TERM_CONDITION_MANUFACTURER_CHANGE_HISTORY = BASE_URL + 'appmst/tncmanufracturerhistory';
 
-export const BASE_URL_OTF_REPORTS = BASE_URL + 'customreports/otf/names';
-export const BASE_URL_OTF_DOWNLAOD_REPORT = BASE_URL + 'customreports/otf/register';
+export const BASE_URL_FAMILY_DETAIL_SEARCH = BASE_URL + 'customers/individual';
+export const BASE_URL_INDIVIUAL_PROFILE_CUSTOMER_MASTER = BASE_URL + 'customers/individual/profile';
+export const BASE_URL_CUSTOMER_MASTER_CUSTOMER_DETAILS_INDIVIDUAL = BASE_URL + 'customers/individual';
+export const BASE_URL_CUSTOMER_MASTER_ACCOUNTS_RELATED_INDIVISUAL = BASE_URL + 'customers/individual/accounts';
+export const BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER = BASE_URL + 'customers//individual/familydetails';
+export const BASE_URL_CUSTOMER_MASTER_ADDRESS = BASE_URL + 'customers/individual/address';
+export const BASE_URL_CUSTOMER_MASTER_NDIVIDUAL_CONTACT = BASE_URL + 'customers/individual/contacts';
+export const BASE_URL_INDIVIDUAL_NAME_CHANGE_HISTORY = BASE_URL + 'customers/individual/name/changehistory';
 
-export const BASE_URL_OTF_INVOICE_DETAILS = BASE_URL + 'otf/invoice';
-
+export const BASE_URL_CUSTOMER_MASTER_CORPORATE_PARENT_COMPANY = BASE_URL + 'customers/parent/company';
 export const BASE_URL_CUSTOMER_MASTER_CUSTOMER_DETAILS = BASE_URL + 'customers/corporate';
 export const BASE_URL_CUSTOMER_MASTER_CORPORATE_LOV = BASE_URL + 'customers/corporate/firms/lov';
-export const BASE_URL_CUSTOMER_MASTER_CUSTOMER_DETAILS_INDIVIDUAL = BASE_URL + 'customers/individual';
-export const BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER = BASE_URL + 'customers//individual/familydetails';
-export const BASE_URL_CUSTOMER_MASTER_NDIVIDUAL_CONTACT = BASE_URL + 'customers/individual/contacts';
 export const BASE_URL_CUSTOMER_MASTER_FIRM_CONTACT = BASE_URL + 'customers/corporate/contacts';
-
-export const BASE_URL_FAMILY_DETAIL_SEARCH = BASE_URL + 'customers/individual';
-export const BASE_URL_OTF = BASE_URL + 'otf/';
-export const BASE_URL_OTF_INVOICE = BASE_URL + 'invoice';
-export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';
+export const BASE_URL_CUSTOMER_MASTER_ACCOUNTS_RELATED_CORPORATE = BASE_URL + 'customers/corporate/accounts';
+export const BASE_URL_CORPORATE_COMPANY_LIST = BASE_URL + 'customers/corporate/firms';
 export const BASE_URL_CORPORATE_COMPANY_PROFILE = BASE_URL + 'customers/corporate/profile';
+
+export const BASE_URL_OTF = BASE_URL + 'otf/';
+export const BASE_URL_OTF_SEARCH_LIST = BASE_URL_OTF + 'search';
+export const BASE_URL_OTF_REPORTS = BASE_URL + 'customreports/otf/names';
+export const BASE_URL_OTF_DOWNLAOD_REPORT = BASE_URL + 'customreports/otf/register';
+export const BASE_URL_OTF_INVOICE_DETAILS = BASE_URL + 'otf/invoice';
 export const BASE_URL_OTF_DETAILS = BASE_URL_OTF + 'details';
 export const BASE_URL_OTF_VEHICLE_DETAILS = BASE_URL_OTF + 'vehicledetails';
+export const BASE_URL_OTF_INVOICE = BASE_URL + 'otf/invoice';
+export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';
+export const BASE_URL_OTF_INSURANCE_DETAIL = BASE_URL + 'otf/insurancedetails';
+export const BASE_URL_OTF_FINANCE_LOV = BASE_URL + 'otf/financiers/lov';
 
 export const BASE_URL_DOCUMENT_UPLOAD = BASE_URL + 'common/document/upload';
-
-export const BASE_URL_INDIVIUAL_PROFILE_CUSTOMER_MASTER = BASE_URL + 'customers/individual/profile';
-
-export const BASE_URL_CUSTOMER_MASTER_ACCOUNTS_RELATED_CORPORATE = BASE_URL + 'customers/corporate/accounts';
-export const BASE_URL_CUSTOMER_MASTER_ACCOUNTS_RELATED_INDIVISUAL = BASE_URL + 'customers/individual/accounts';
-export const BASE_URL_INDIVIDUAL_NAME_CHANGE_HISTORY = BASE_URL + 'customers/individual/name/changehistory;';
