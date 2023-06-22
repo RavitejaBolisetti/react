@@ -151,7 +151,6 @@ const VehicleDetailsMasterMain = (props) => {
             setformData(VehicleDetailsData);
 
             // fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraparams: LovParams });
-            // setkeys(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [VehicleDetailsData, isDataLoaded]);
@@ -179,8 +178,8 @@ const VehicleDetailsMasterMain = (props) => {
         };
 
         const requestData = {
-            data: [data],
-            method: 'post',
+            data: data,
+            method: 'put',
             setIsLoading: listShowLoading,
             userId,
             onError,
