@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
@@ -17,6 +17,7 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { GetAge } from 'utils/getAge';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
+import { InputSkeleton } from 'components/common/Skeleton';
 
 import styles from 'components/common/Common.module.css';
 
@@ -70,8 +71,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const FamilyDetailMasterBase = (props) => {
     const { section, userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, fetchFamilySearchList, listFamilySearchLoading, familySearchData } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, isSearchLoading } = props;
-
+    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, isSearchLoading, selectedCustomerId } = props;
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [form] = Form.useForm();
     // const [formData, setFormData] = useState([]);
     const [familyDetailList, setFamilyDetailsList] = useState([]);
@@ -79,17 +80,16 @@ const FamilyDetailMasterBase = (props) => {
     const [customerType, setCustomerType] = useState('Yes');
     const [editedMode, setEditedMode] = useState(false);
     const [editedId, setEditedId] = useState(0);
-
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    const ADD_ACTION = formActionType?.addMode;
+    const EDIT_ACTION = formActionType?.editMode;
+    const VIEW_ACTION = formActionType?.viewMode;
 
     const extraParams = [
         {
             key: 'customerId',
-            title: 'Customer',
-            value: 'CUS1686811036620',
-            name: 'customerId',
+            title: 'customerId',
+            value: selectedCustomerId,
+            name: 'Customer ID',
         },
     ];
 
@@ -101,11 +101,13 @@ const FamilyDetailMasterBase = (props) => {
     }, [userId, isRelationDataLoaded]);
 
     useEffect(() => {
-        if (userId && !isFamilyLoaded) {
-            fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, extraParams });
-        }
+        let onErrorAction = (res) => {
+            showGlobalNotification({ message: 'Family Data Not Exists' });
+            setFamilyDetailsList(() => []);
+        };
+        fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, onErrorAction, extraParams });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isFamilyLoaded]);
+    }, [selectedCustomerId]);
 
     const onChange = (value) => {
         setCustomerType(value);
@@ -114,7 +116,6 @@ const FamilyDetailMasterBase = (props) => {
     const onErrorAction = (res) => {
         showGlobalNotification({ message: 'User Not Found' });
         form.setFieldsValue({
-            //relationCustomerId: familySearchData?.customerId,
             customerName: null,
             dateOfBirth: null,
             relationAge: null,
@@ -144,7 +145,7 @@ const FamilyDetailMasterBase = (props) => {
 
     const onSave = () => {
         let values = form.getFieldsValue();
-        setFamilyDetailsList((items) => [{ ...values, customerId: 'CUS1686811036620', dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
+        setFamilyDetailsList((items) => [{ ...values, customerId: selectedCustomerId, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
         if (editedMode) {
             const upd_obj = familyDetailList?.map((obj) => {
                 if (obj?.editedId === values?.editedId) {
@@ -200,13 +201,19 @@ const FamilyDetailMasterBase = (props) => {
         return;
     };
 
+    const myProps = {
+        ...props,
+        saveButtonName: formActionType?.addMode ? 'Family Detail ID' : 'Save & Next',
+    };
+
     useEffect(() => {
         if (familyData?.length > 0) {
+            setFamilyDetailsList(() => []);
             for (let i = 0; i < familyData?.length; i++) {
-                setFamilyDetailsList((object) => [...object, { ...familyData[i], editedId: i ,relationCustomerId: familyData[i]?.relationCustomerId ? familyData[i]?.relationCustomerId  : ""}]);
+                setFamilyDetailsList((object) => [...object, { ...familyData[i], editedId: i }]);
             }
         }
-        setEditedId(() => familyData?.length);
+        forceUpdate();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [familyData]);
 
@@ -253,13 +260,12 @@ const FamilyDetailMasterBase = (props) => {
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title} </h2>
-                    {/* {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />} */}
                     <AddEditForm {...formProps} />
                 </Col>
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CustomerFormButton {...props} />
+                    <CustomerFormButton {...myProps} />
                 </Col>
             </Row>
         </Form>
