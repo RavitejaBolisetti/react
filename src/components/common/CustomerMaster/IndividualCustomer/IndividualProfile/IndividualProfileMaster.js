@@ -87,6 +87,7 @@ const IndividualProfileBase = (props) => {
 
     const [formData, setFormData] = useState([]);
     const [activeKey, setActiveKey] = useState([1]);
+    const [uploadedFile, setUploadedFile] = useState();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -134,11 +135,11 @@ const IndividualProfileBase = (props) => {
         const data = {
             ...rest,
             customerId: 'CUS1686810869696',
-            keyAccountDetails: { customerId: 'CUS1686810869696', accountCode: values?.accountCode || null, accountName: values?.accountName, accountSegment: values?.accountSegment || null, accountClientName: values?.accountClientName || null, accountMappingDate: values?.accountMappingDate || null },
+            keyAccountDetails: { customerId: 'CUS1686810869696', accountCode: values?.accountCode, accountName: values?.accountName, accountSegment: values?.accountSegment, accountClientName: values?.accountClientName, accountMappingDate: values?.accountMappingDate },
             authorityRequest: { customerId: 'CUS1686810869696', personName: values.personName, postion: values.postion, companyName: values.companyName, remarks: values.remarks, id: recordId },
             id: recordId,
-            customerFormDocId: 'd54902cf-a716-4ae9-b08c-23f9371013bc',
-            customerConsent: 'true',
+            profileFileDocId: uploadedFile ? uploadedFile : '',
+            customerFormDocId: uploadedFile ? uploadedFile : '',
         };
 
         const onSuccess = (res) => {
@@ -209,6 +210,8 @@ const IndividualProfileBase = (props) => {
         appCategoryData,
         listDocumentShowLoading,
         uploadDocumentFile,
+        setUploadedFile,
+
         saveDocumentData,
         userId,
         showDataLoading,

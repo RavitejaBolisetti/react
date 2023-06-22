@@ -23,7 +23,7 @@ const { Text } = Typography;
 const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, userId, uploadDocumentFile, listDocumentShowLoading } = props;
+    const { formData, appCategoryData, userId, uploadDocumentFile, setUploadedFile, listDocumentShowLoading } = props;
     const { isReadOnly = false } = props;
     const [customer, setCustomer] = useState(false);
 
@@ -51,6 +51,10 @@ const AddEditFormMain = (props) => {
         }
     };
 
+    const onDrop = (e) => {
+        console.log('Dropped files', e.dataTransfer.files);
+    };
+
     const uploadProps = {
         name: 'file',
         multiple: false,
@@ -62,6 +66,26 @@ const AddEditFormMain = (props) => {
 
             if (status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully.`);
+            } else if (status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
+        onDrop,
+        onChange: (info, event) => {
+            const { status } = info.file;
+
+            console.log('event', event);
+            if (status === 'uploading') {
+                console.log(' uploading info.file.loaded', info.file.loaded);
+                console.log(' uploading info.file.total', info.file.total);
+                console.log(' uploading info.file.percent', info.file.percent);
+            } else if (status === 'done') {
+                setUploadedFile(info?.file?.response?.docId);
+                message.success(`${info.file.name} file uploaded successfully.`);
+                console.log('done info.file.loaded', info.file.loaded);
+                console.log('done info.file.total', info.file.total);
+                console.log('done info.file.total', info.file.total);
+                console.log('done info.file.percent', info.file.percent);
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }
@@ -151,7 +175,7 @@ const AddEditFormMain = (props) => {
 
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Date of Birth" initialValue={dayjs(formData?.dateOfBirth)} name="dateOfBirth" >
+                                        <Form.Item label="Date of Birth" initialValue={dayjs(formData?.dateOfBirth)} name="dateOfBirth">
                                             <DatePicker format="DD-MM-YYYY" disabled={isReadOnly} className={styles.datepicker} />
                                         </Form.Item>
                                     </Col>
@@ -214,7 +238,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Aadhar No." name="adharNumber" initialValue={formData?.adharNumber} rules={[validateAadhar('aadhar')],[validateRequiredInputField('aadhar')]}>
+                                        <Form.Item label="Aadhar No." name="adharNumber" initialValue={formData?.adharNumber} rules={([validateAadhar('aadhar')], [validateRequiredInputField('aadhar')])}>
                                             <Input value={null} maxLength={12} className={styles.inputBox} placeholder={preparePlaceholderText('aadhar number')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
@@ -262,13 +286,13 @@ const AddEditFormMain = (props) => {
 
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField('pan')],[validateRequiredInputField('pan')]}>
+                                        <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={([validatePanField('pan')], [validateRequiredInputField('pan')])}>
                                             <Input value={null} maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin')],[validateRequiredInputField('gstin')]}>
+                                        <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={([validateGSTIN('gstin')], [validateRequiredInputField('gstin')])}>
                                             <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
