@@ -69,19 +69,24 @@ const SchemeDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
-    const viewProps = {
-        styles,
-        onCloseAction,
-        schemeData,
-    };
+    // const viewProps = {
+    //     styles,
+    //     onCloseAction,
+    //     schemeData,
+    // };
 
     const formProps = {
-        schemeData,
         formActionType,
         fetchList,
         onCloseAction,
     };
-    return <>{!formActionType?.viewMode ? <AddEditForm {...formProps} /> : <ViewDetail {...viewProps} />}</>;
+
+    console.log(schemeData,'DATA')
+
+    return (
+        // <>{!formActionType?.viewMode ? schemeData[0]?.schemes?.map((item) => <AddEditForm {...formProps} schemeCategory={item?.schemeCategory} amount={item?.amount} description={item?.description} />) : <ViewDetail {...viewProps} />}</>
+        schemeData[0]?.schemes?.map((item) => <AddEditForm {...formProps} schemeType={item?.schemeType} schemeCategory={item?.schemeCategory} amount={item?.amount} description={item?.description} id={item?.id} schemeName={item?.schemeName} />)
+    ) 
 };
 
 export const SchemeDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(SchemeDetailsMasterBase);
