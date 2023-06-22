@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
@@ -15,6 +15,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
+import { InputSkeleton } from 'components/common/Skeleton';
 
 import styles from 'components/common/Common.module.css';
 
@@ -56,10 +57,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const AccountRelatedMasterBase = (props) => {
     const { form, handleFormValueChange, onFinishFailed } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, accountData, saveData, isDataLoaded, resetData } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, accountData, saveData, isDataLoaded, isLoading, resetData } = props;
     const { formActionType, selectedCustomerId, handleButtonClick } = props;
 
     const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
+
+    const [formData, setFormData] = useState();
 
     const extraParams = [
         {
@@ -81,6 +84,7 @@ export const AccountRelatedMasterBase = (props) => {
     useEffect(() => {
         if (isDataLoaded) {
             form.setFieldsValue({ ...accountData });
+            setFormData(accountData);
         }
         return () => {
             resetData();
@@ -120,20 +124,29 @@ export const AccountRelatedMasterBase = (props) => {
     };
 
     const formProps = {
-        formData: accountData,
+        formData,
     };
 
     const viewProps = {
-        formData: accountData,
+        formData,
         styles,
     };
+
+    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;
+    const formSkeleton = (
+        <Row>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <InputSkeleton height={'100vh'} />
+            </Col>
+        </Row>
+    );
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title} </h2>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    {isLoading ? formSkeleton : formContainer}
                 </Col>
             </Row>
             <Row>
