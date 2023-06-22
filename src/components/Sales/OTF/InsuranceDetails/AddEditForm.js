@@ -10,7 +10,7 @@ import styles from 'components/common/Common.module.css';
 import { convertCalenderDate } from 'utils/formatDateTime';
 
 const AddEditFormMain = (props) => {
-    const { form, onFinishFailed, insuranceData, userId, onFinish } = props;
+    const { form, onFinishFailed, insuranceData, onFinish } = props;
     const { buttonData, setButtonData } = props;
 
     const toDateInitialValue = { initialValue: convertCalenderDate(insuranceData?.insuranceDate, 'YYYY/MM/DD') };

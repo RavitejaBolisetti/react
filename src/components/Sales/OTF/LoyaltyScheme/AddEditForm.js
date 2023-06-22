@@ -8,12 +8,12 @@ import React, { useEffect } from 'react';
 import styles from 'components/common/Common.module.css';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField } from 'utils/validation';
-import { Col, Input, Form, Row, Card, Skeleton } from 'antd';
+import { Col, Input, Form, Row, Card } from 'antd';
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { formActionType, formData, form, formdata, isLoyaltySchemeDataLoaded, onFinishFailed, onFinish } = props;
+    const { formData, form, formdata, onFinishFailed, onFinish } = props;
+
     useEffect(() => {
         if (formdata) {
             form.setFieldsValue({
@@ -36,7 +36,6 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formdata]);
-    
 
     return (
         <Card className={styles.ExchangeCard}>
