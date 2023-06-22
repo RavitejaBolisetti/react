@@ -86,7 +86,7 @@ const CustomerDetailMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
 
-    const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
+    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -154,7 +154,7 @@ const CustomerDetailMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
 
             if (res.data) {
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
                 setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
                 setSelectedCustomerId(res?.data?.customerId);
             }

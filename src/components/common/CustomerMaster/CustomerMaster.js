@@ -104,6 +104,7 @@ const CustomerMasterMain = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
     const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
+    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const defaultExtraParam = [
         {
@@ -173,17 +174,17 @@ const CustomerMasterMain = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
         form.resetFields();
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION || buttonAction === NEXT_EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
         setIsFormVisible(true);
 
-        if (buttonAction === NEXT_ACTION) {
+        if (buttonAction === NEXT_ACTION || buttonAction === NEXT_EDIT_ACTION) {
             const section = Object.values(sectionName)?.find((i) => i.id > currentSection);
             section && setCurrentSection(section?.id);
         }
 
-        if (buttonAction === VIEW_ACTION || !formVisible) {
+        if (buttonAction === EDIT_ACTION || buttonAction === VIEW_ACTION) {
             setSelectedCustomer(record);
             record && setSelectedCustomerId(record?.customerId);
             defaultSection && setCurrentSection(defaultSection);

@@ -56,13 +56,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AccountRelatedMasterBase = (props) => {
-    const { form, handleFormValueChange } = props;
+    const { form, handleFormValueChange, onFinishFailed } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, accountData, saveData, isDataLoaded, resetData } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, selectedCustomerId, handleButtonClick } = props;
+    const { formActionType, selectedCustomerId, handleButtonClick } = props;
 
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const extraParams = [
         {
@@ -89,7 +87,7 @@ export const AccountRelatedMasterBase = (props) => {
             resetData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, accountData]);
+    }, [isDataLoaded]);
 
     useEffect(() => {
         if (userId && selectedCustomerId) {
@@ -104,7 +102,7 @@ export const AccountRelatedMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-            setButtonData({ ...buttonData, formBtnActive: false });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
         };
 
         const onError = (message) => {
@@ -122,25 +120,8 @@ export const AccountRelatedMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const formProps = {
-        form,
         formData: accountData,
-        formActionType,
-        setFormActionType,
-        onFinish,
-        onFinishFailed,
-        tableData: accountData,
-
-        ADD_ACTION,
-        EDIT_ACTION,
-        VIEW_ACTION,
-        buttonData,
-        setButtonData,
-        handleButtonClick,
     };
 
     const viewProps = {
