@@ -2068,7 +2068,7 @@
 
 .drawerBodyRight .sectionborder {
     border-top: 1px solid #e6e6e6;
-    padding-top: 20px;
+    /* padding-top: 20px; */
 }
 
 .drawerBodyRight :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box button {

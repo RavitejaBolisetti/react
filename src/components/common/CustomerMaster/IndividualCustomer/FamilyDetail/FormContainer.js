@@ -52,8 +52,7 @@ const FormBase = (props) => {
     };
 
     return (
-        <>
-        <div className={styles.familyEditForm}>
+        <div>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={'Yes'} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
@@ -155,12 +154,11 @@ const FormBase = (props) => {
                     Save
                 </Button>
 
-                <Button type="primary" onClick={onCancel} >
+                <Button type="primary" onClick={onCancel}>
                     Cancel
                 </Button>
             </Row>
-            </div>
-        </>
+        </div>
     );
 };
 
