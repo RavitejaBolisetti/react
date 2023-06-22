@@ -132,4 +132,20 @@ export const PARAM_MASTER = {
         id: 'PURPOSE',
         title: 'PURPOSE',
     },
+    REL_TYPE: {
+        id: 'REL_TYPE',
+        title: 'REL_TYPE',
+    },
+    YEAR_LIST: {
+        id: 'YEAR_LIST',
+        title: 'YEAR_LIST',
+    },
+    VEHCL_USAG: {
+        id: 'VEHCL_USAG',
+        title: 'VEHCL_USAG',
+    },
+    MONTH: {
+        id: 'MONTH',
+        title: 'Months of year',
+    },
 };

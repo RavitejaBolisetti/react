@@ -11,6 +11,8 @@ import { OtfDetails } from './otfDetails';
 import { InsuranceDetail } from './insuranceDetail';
 import { OtfSearchList } from './otfSearch';
 import { FinanceLov } from './financeLov';
+import { ExchangeVehicle } from './exchangeVehicle';
+import { SchemeDetail } from './schemeDetail';
 
 export const OTF = combineReducers({
     InvoiceDetail,
@@ -19,4 +21,6 @@ export const OTF = combineReducers({
     InsuranceDetail,
     OtfSearchList,
     FinanceLov,
+    ExchangeVehicle,
+    SchemeDetail
 });
