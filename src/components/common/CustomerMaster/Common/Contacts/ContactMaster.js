@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ContactMain = (props) => {
     const { section, userId, isViewModeVisible, toggleButton, fetchConfigList, resetData, listConfigShowLoading, fetchContactDetailsList, customerData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData, isConfigDataLoaded, isConfigLoading } = props;
-    const { buttonData, setButtonData, selectedCustomer, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+    const { buttonData, setButtonData } = props;
 
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
@@ -78,10 +78,6 @@ const ContactMain = (props) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const extraParams = [
         {

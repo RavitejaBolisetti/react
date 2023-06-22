@@ -115,6 +115,7 @@ export const BASE_URL_CUSTOMER_MASTER_CUSTOMER_DETAILS_INDIVIDUAL = BASE_URL + '
 export const BASE_URL_CUSTOMER_MASTER_ACCOUNTS_RELATED_INDIVISUAL = BASE_URL + 'customers/individual/accounts';
 export const BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER = BASE_URL + 'customers//individual/familydetails';
 export const BASE_URL_CUSTOMER_MASTER_ADDRESS = BASE_URL + 'customers/individual/address';
+export const BASE_URL_CUSTOMER_MASTER_ADDRESS_CORPORATE = BASE_URL + 'customers/corporate/address';
 export const BASE_URL_CUSTOMER_MASTER_NDIVIDUAL_CONTACT = BASE_URL + 'customers/individual/contacts';
 export const BASE_URL_INDIVIDUAL_NAME_CHANGE_HISTORY = BASE_URL + 'customers/individual/name/changehistory';
 

@@ -3,15 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useReducer, useEffect, useMemo } from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Collapse, Divider, Form, Space, Row, Col, Typography, Button } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { FaRegUserCircle } from 'react-icons/fa';
-
 import { expandIcon } from 'utils/accordianExpandIcon';
-import { filterFunction } from 'utils/filterFunction';
 
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -22,8 +19,8 @@ import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { addressIndividualDataActions } from 'store/actions/data/customerMaster/individual/address/individualAddress';
+import { addressCorporateDataActions } from 'store/actions/data/customerMaster/corporate/address/individualAddress';
 
-import { ViewIndividualAddressDetails } from './ViewIndividualAddressDetails';
 import AddEditForm from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 import { InputSkeleton } from 'components/common/Skeleton';
@@ -73,6 +70,12 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: addressIndividualDataActions.reset,
             listShowLoading: addressIndividualDataActions.listShowLoading,
 
+            fetchListCorporate: addressCorporateDataActions.fetchList,
+            saveDataCorporate: addressCorporateDataActions.saveData,
+            resetDataCorporate: addressCorporateDataActions.reset,
+            listShowLoadingCorporate: addressCorporateDataActions.listShowLoading,
+
+
             listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
             fetchPincodeDetail: geoPincodeDataActions.fetchList,
 
@@ -83,8 +86,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddressMasterBase = (props) => {
-    const { selectedRowData, isViewModeVisible, section, isAddDataLoaded, addressIndData, setFormActionType, formActionType, isAddressLoaded, selectedCustomer, isAddLoading, saveData, listConfigShowLoading, fetchConfigList, addData } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, isAddressLoading, formData, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, resetData, pincodeData, userId, fetchList, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { isViewModeVisible, section, isAddDataLoaded, addressIndData, setFormActionType, formActionType, isAddressLoaded, selectedCustomer, isAddLoading, saveData, listConfigShowLoading, fetchConfigList, addData } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, isAddressLoading, formData, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification } = props;
+    const { fetchListCorporate,saveDataCorporate,  customerType } = props;
+console.log('viv customerType ', customerType)
     const [form] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -92,11 +97,6 @@ const AddressMasterBase = (props) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [refershData, setRefershData] = useState(false);
-    const [showDataLoading, setShowDataLoading] = useState(true);
-    const [filterString, setFilterString] = useState();
-    // const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-    // const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -118,7 +118,6 @@ const AddressMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAddDataLoaded]);
 
-    console.log('addressIndData', addressIndData?.customerAddress);
 
     useEffect(() => {
         if (userId && addressIndData?.customerAddress?.length) {
@@ -129,7 +128,11 @@ const AddressMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && !isAddressLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+            if(customerType === 'IND'){
+                fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+            }else{
+                fetchListCorporate({ setIsLoading: listShowLoading, userId, extraParams });
+            }  
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAddressLoaded]);
@@ -149,7 +152,6 @@ const AddressMasterBase = (props) => {
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
-    console.log('selectedRowData', selectedRowData);
 
     const onSubmit = () => {
         let data = { customerId: selectedCustomer?.customerId, customerAddress: addressData };
@@ -171,8 +173,11 @@ const AddressMasterBase = (props) => {
             onError,
             onSuccess,
         };
-
-        saveData(requestData);
+        if(customerType === 'IND'){
+            saveData(requestData);
+        }else{
+            saveDataCorporate(requestData)
+        }
 
         setShowAddEditForm(false);
         setIsEditing(false);
@@ -241,7 +246,6 @@ const AddressMasterBase = (props) => {
         saveButtonName: formActionType?.addMode ? 'Create Customer ID' : 'Save & Next',
     };
 
-    const formContainer = formActionType?.viewMode ? <ViewIndividualAddressDetails {...viewProps} /> : <AddEditForm {...formProps} />;
     const formSkeleton = (
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -280,9 +284,6 @@ const AddressMasterBase = (props) => {
                                 {isAddressLoading ? formSkeleton : <ViewAddressList {...formProps} />}
                             </Panel>
                         </Collapse>
-                        {/* <Button onClick={() => onSubmit()} type="primary">
-                            Submit
-                        </Button> */}
                     </Col>
                 </Row>
                 <Row>

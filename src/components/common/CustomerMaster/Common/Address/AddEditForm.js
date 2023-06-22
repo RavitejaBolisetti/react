@@ -145,7 +145,6 @@ const AddEditForm = (props) => {
             });
     };
 
-    // console.log(addData,'VER')
 
     return (
         <>
