@@ -87,8 +87,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CompanyCustomerDetailsMasterBase = (props) => {
     const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsData, section, fetchConfigList, listConfigShowLoading, fetchList, listShowLoading, moduleTitle, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, corporateLovData, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, isCustomerParentCompanyDataLoaded, customerParentCompanyData } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
-    const { sectionName, currentSection, setCurrentSection, selectedCustomer, setSelectedCustomer, handleButtonClick } = props;
+    const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick } = props;
 
     const [form] = Form.useForm();
 
@@ -102,9 +102,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
 
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -146,8 +144,9 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [typeData, customerDetailsData, isDataLoaded]);
+
     useEffect(() => {
-        if (!isDataLoaded && userId) {
+        if (userId && selectedCustomerId) {
             const extraParams = [
                 {
                     key: 'customerId',
@@ -165,7 +164,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded, selectedCustomer]);
+    }, [userId, selectedCustomerId]);
 
     const handeSearchParentCompName = (e) => {
         console.log(e.target.value);
@@ -177,15 +176,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
-    // const handleButtonClick = ({ record = null, buttonAction }) => {
-    //     form.resetFields();
-    //     setFormData([]);
-    //     setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-    //     setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-    //     record && setFormData(record);
-    //     setIsFormVisible(true);
-    // };
-
     const onFinish = (values) => {
         const recordId = customerDetailsData?.id || '';
         const data = { ...values, customerId: customerDetailsData.customerId, id: recordId };
@@ -195,16 +185,11 @@ const CompanyCustomerDetailsMasterBase = (props) => {
             setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
-            const section = Object.values(sectionName)?.find((i) => i.id > currentSection);
-            section && setCurrentSection(section?.id);
-            section && setSelectedCustomer(res?.data);
 
-            if (buttonData?.saveAndNewBtnClicked) {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            } else {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            if (res.data) {
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
+                setSelectedCustomerId(res?.data?.customerId);
             }
         };
 
@@ -221,29 +206,12 @@ const CompanyCustomerDetailsMasterBase = (props) => {
             onSuccess,
         };
 
-        console.log(requestData, 'Aman');
         saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
         return;
     };
-
-    const onCloseAction = () => {
-        form.resetFields();
-        setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
-    };
-
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
 
     const extraParams = [
         {
@@ -260,10 +228,9 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         corporateLovData,
         buttonData,
         onFinish,
-        onCloseAction,
+
         onFinishFailed,
         customerDetailsList,
-        titleOverride: drawerTitle.concat(moduleTitle),
         saveData,
         showForm,
         setShowForm,
@@ -277,7 +244,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const viewProps = {
         formData: customerDetailsData,
-        onCloseAction,
         styles,
     };
 
