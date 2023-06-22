@@ -81,8 +81,6 @@ const SchemeDetailsMasterBase = (props) => {
         onCloseAction,
     };
 
-    console.log(schemeData,'DATA')
-
     return (
         // <>{!formActionType?.viewMode ? schemeData[0]?.schemes?.map((item) => <AddEditForm {...formProps} schemeCategory={item?.schemeCategory} amount={item?.amount} description={item?.description} />) : <ViewDetail {...viewProps} />}</>
         schemeData[0]?.schemes?.map((item) => <AddEditForm {...formProps} schemeType={item?.schemeType} schemeCategory={item?.schemeCategory} amount={item?.amount} description={item?.description} id={item?.id} schemeName={item?.schemeName} validFrom={dayjs(item?.validFrom)} validTo={dayjs(item?.validTo)} />)
