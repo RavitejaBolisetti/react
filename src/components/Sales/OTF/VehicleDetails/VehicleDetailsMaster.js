@@ -70,7 +70,6 @@ const VehicleDetailsMasterMain = (props) => {
     const { VehicleDetailsData, fetchProductLov, saveData, ProductLovLoading, isProductHierarchyDataLoaded, ProductHierarchyData, formActionType, typeData, fetchList, isTypeDataLoaded, resetData, configLoading, fetchconfigList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setformData] = useState({});
-    const [keys, setkeys] = useState(true);
     const [form] = Form.useForm();
 
     const [tooltTipText, settooltTipText] = useState();
@@ -87,7 +86,7 @@ const VehicleDetailsMasterMain = (props) => {
     };
     const loadDependendData = () => {
         fetchconfigList({ setIsLoading: configLoading, userId, onErrorAction, parameterType: PARAM_MASTER.VEHCL_TYPE.id });
-        // fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
+        fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
     };
 
     const extraParams = [
@@ -127,7 +126,7 @@ const VehicleDetailsMasterMain = (props) => {
     }, [userId, isTypeDataLoaded, isDataLoaded]);
 
     useEffect(() => {
-        if (ProductHierarchyData && isProductHierarchyDataLoaded && userId && keys) {
+        if (ProductHierarchyData && isProductHierarchyDataLoaded && userId) {
             setProductHierarchyDataOptions(ProductHierarchyData);
         }
 
@@ -146,7 +145,7 @@ const VehicleDetailsMasterMain = (props) => {
             setformData(VehicleDetailsData);
 
             // fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraparams: LovParams });
-            setkeys(false);
+            // setkeys(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [VehicleDetailsData, isDataLoaded]);
@@ -177,8 +176,7 @@ const VehicleDetailsMasterMain = (props) => {
         saveData(requestData);
     };
     const onFinishFailed = () => {
-        form
-            .validateFields()
+        form.validateFields()
             .then(() => {})
             .catch(() => {});
     };
@@ -201,7 +199,7 @@ const VehicleDetailsMasterMain = (props) => {
         onErrorAction,
         form,
         onFinish,
-        onFinishFailed
+        onFinishFailed,
     };
     const viewProps = {
         activeKey,
