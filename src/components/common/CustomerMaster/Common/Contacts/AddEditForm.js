@@ -3,16 +3,15 @@
  *   All rights reserved.
  */
 import { useState } from 'react';
-import { Button, Form, message, Typography, Row, Col, Space, Select, Input, Divider, Checkbox } from 'antd';
+import { Button, Form, message, Row, Col, Space, Select, Input, Divider, Checkbox } from 'antd';
 import { BiLockAlt } from 'react-icons/bi';
 import { CheckOutlined } from '@ant-design/icons';
 
-import { validateLettersWithWhitespaces, validateEmailField, validateAlphanumericWithSpace, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
+import { validateLettersWithWhitespaces, validateEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import UploadUtils from './../UploadUtils';
 
-import { contactPurpose, title, gender } from 'constants/modules/CustomerMaster/individualProfile';
 import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
 
 import style from '../../../Common.module.css';
@@ -36,11 +35,11 @@ const uploadProps = {
 };
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData } = props;
+    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, formActionType } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
-    const disabledProps = { disabled: isReadOnly };
+    const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
 
     const handleCancelFormEdit = () => {
         form.resetFields();
@@ -223,14 +222,16 @@ const AddEditForm = (props) => {
                             <Input />
                         </Form.Item>
                     </Row>
-                    <Space>
-                        <Button htmlType="submit" type="primary">
-                            Save
-                        </Button>
-                        <Button onClick={handleCancelFormEdit} danger>
-                            Cancel
-                        </Button>
-                    </Space>
+                    {!formActionType?.viewMode && (
+                        <Space>
+                            <Button htmlType="submit" type="primary">
+                                Save
+                            </Button>
+                            <Button onClick={handleCancelFormEdit} danger>
+                                Cancel
+                            </Button>
+                        </Space>
+                    )}
                 </Space>
             </Form>
         </>

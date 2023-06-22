@@ -221,7 +221,7 @@ const CustomerDetailMasterBase = (props) => {
             </Col>
         </Row>
     );
-
+ 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>

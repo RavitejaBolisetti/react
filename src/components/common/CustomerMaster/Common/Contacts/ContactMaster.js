@@ -20,6 +20,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import AddEditForm from './AddEditForm';
 import ViewContactList from './ViewContactList';
 import { CustomerFormButton } from '../../CustomerFormButton';
+import { InputSkeleton } from 'components/common/Skeleton';
 
 import styles from 'components/common/Common.module.css';
 
@@ -68,8 +69,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ContactMain = (props) => {
-    const { section, userId, isViewModeVisible, toggleButton, fetchConfigList, resetData, listConfigShowLoading, fetchContactDetailsList, customerData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData, isConfigDataLoaded, isConfigLoading } = props;
-    const { buttonData, setButtonData, selectedCustomer, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+    const { section, userId, toggleButton, fetchConfigList, resetData, listConfigShowLoading, fetchContactDetailsList, customerData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData, isConfigDataLoaded, isConfigLoading } = props;
+    const { isCustomerDataLoading, selectedCustomer } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick } = props;
 
     const [form] = Form.useForm();
     const [contactData, setContactData] = useState([]);
@@ -79,27 +81,24 @@ const ContactMain = (props) => {
     const [editingData, setEditingData] = useState({});
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+console.log('selectedCustomer', selectedCustomer, "formActionType", formActionType)
 
     const extraParams = [
         {
             key: 'customerId',
             title: 'customerId',
-            value: 'CUS1686833188888',
-            // value: selectedCustomer?.customerId,
+            // value: 'CUS1686833188888',
+            value: selectedCustomer?.customerId,
             name: 'customerId',
         },
     ];
 
-
     useEffect(() => {
-        if (userId && !isCustomerDataLoaded && !isConfigLoading) {
+        if (userId && selectedCustomer?.customerId && !isCustomerDataLoaded && !isConfigLoading) {
             fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, selectedCustomer?.customerId]);
 
     useEffect(() => {
         if (userId && !isConfigDataLoaded && !isConfigLoading) {
@@ -165,10 +164,6 @@ const ContactMain = (props) => {
         form.resetFieldsValue();
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const deleteContactHandeler = (data) => {
         setContactData((prev) => {
             const updatedList = [...prev];
@@ -189,8 +184,6 @@ const ContactMain = (props) => {
         forceUpdate();
     };
 
-    console.log('contactData', contactData)
-
     const addBtnContactHandeler = (e) => {
         e.stopPropagation();
         form.resetFields();
@@ -209,15 +202,25 @@ const ContactMain = (props) => {
         isEditing,
         setIsEditing,
         deleteContactHandeler,
-        isViewModeVisible,
+        formActionType,
         setEditingData,
         typeData,
         onCheckdefaultAddClick,
+        setButtonData, 
     };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
+
+    const formContainer = formActionType?.viewMode ? <ViewContactList {...formProps} /> : <AddEditForm {...formProps} />     ;
+    const formSkeleton = (
+        <Row>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <InputSkeleton height={'100vh'} />
+            </Col>
+        </Row>
+    );
 
     return (<>
         {/* <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSaveFormData} onFinishFailed={onFinishFailed}> */}
@@ -229,17 +232,20 @@ const ContactMain = (props) => {
                             header={
                                 <Space>
                                     <Text strong> {toggleButton === 'Individual' ? 'Individual Contact' : 'Company Contact'}</Text>
-                                    {!isViewModeVisible && (
+                                    {!formActionType?.viewMode && (
                                         <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary">
                                             Add Contact
                                         </Button>
                                     )}
                                 </Space>
                             }
+                            showArrow={false}
                             key="1"
                         >
-                            {!isViewModeVisible && (showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />}
-                            <ViewContactList {...formProps} />
+                        {(!formActionType?.viewMode && showAddEditForm) && <AddEditForm {...formProps} /> }
+                        <ViewContactList {...formProps} />
+                        {/* { !formActionType?.viewMode && (showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />} */}
+                        {/* {isCustomerDataLoading ? formSkeleton : formContainer} */}
                         </Panel>
                     </Collapse>{' '}
                 </Col>

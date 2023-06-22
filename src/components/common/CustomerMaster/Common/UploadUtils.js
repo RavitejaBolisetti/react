@@ -1,3 +1,7 @@
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 import React from 'react';
 import { Button, Typography, Upload, Row, Col, Empty, Image, Card } from 'antd';
 
@@ -8,7 +12,7 @@ const { Dragger } = Upload;
 const { Text, Title } = Typography;
 
 const UploadUtils = (props) => {
-    const { uploadTitle, uploadDescription, uploadBtnName, isViewModeVisible } = props;
+    const { uploadTitle, uploadDescription, uploadBtnName, isViewModeVisible,imgUrl } = props;
     
     return (
         <>
