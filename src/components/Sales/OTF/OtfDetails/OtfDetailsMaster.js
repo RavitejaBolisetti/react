@@ -182,7 +182,6 @@ const OtfDetailsMasterBase = (props) => {
                             <OTFStatusBar status={1} />
                         </Col>
                     </Row>
-
                     {isLoading ? formSkeleton : formContainer}
                 </Col>
             </Row>
