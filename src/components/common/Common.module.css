@@ -1787,7 +1787,8 @@
     padding-bottom: 20px !important;
 }
 
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker {
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker,
+.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-item .ant-form-item-control .ant-picker {
     height: 36px;
     border-radius: 4px;
     padding: 5px 12px;
@@ -1798,13 +1799,16 @@
     color: #ff3e5b;
 }
 
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker .ant-picker-suffix svg {
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker .ant-picker-suffix svg,
+.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-item .ant-form-item-control .ant-picker .ant-picker-suffix svg {
     width: 16px;
     height: 16px;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker:hover,
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker-focused {
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker-focused,
+.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-item .ant-form-item-control .ant-picker:hover,
+.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-item .ant-form-item-control .ant-picker-focused {
     border-color: #0b0b0c;
     box-shadow: none;
 }
@@ -2174,6 +2178,14 @@
     font-weight: 700;
     font-size: 16px;
     line-height: 24px;
+}
+
+.dashedBorder {
+    border: 1px dashed #B5B5B5 !important;
+}
+
+.borderRadiusSix {
+    border-radius: 6px !important;
 }
 
 .userCircle {

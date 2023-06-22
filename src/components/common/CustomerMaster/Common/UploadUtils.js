@@ -43,7 +43,7 @@ const UploadUtils = (props) => {
                 </Row>
             ) : (
                 <>
-                    <Card style={{ border: '1px dashed #B5B5B5' }}>
+                    <Card className={styles.dashedBorder}>
                         <Space direction="vertical">
                             <Space>
                                 <Avatar icon={<HiCheck />} />
