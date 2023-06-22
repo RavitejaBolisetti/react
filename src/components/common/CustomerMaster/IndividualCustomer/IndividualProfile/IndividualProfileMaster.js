@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 const IndividualProfileBase = (props) => {
-    const { userId, fetchVehicleUsed, fetchMotherTongue, fetchReligionList, fecthViewDocument, viewDocument, fetchAnnualIncome, fetchOccupationList, appCategoryData, listIndiviualShowLoading, fetchGenderCategory, fetchMartialStatus, fetchCustomerCategory, isAppCategoryDataLoaded, fetchList, indiviualData, saveData, showGlobalNotification } = props;
+    const { userId, fetchVehicleUsed, fetchMotherTongue, fetchReligionList, fecthViewDocument, viewDocument, fetchAnnualIncome, fetchOccupationList, appCategoryData, fetchApplicationCategorization, fetchApplicationSubCategory, listIndiviualShowLoading, fetchGenderCategory, fetchMartialStatus, fetchCustomerCategory, isAppCategoryDataLoaded, fetchList, indiviualData, saveData, showGlobalNotification } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
     const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, selectedCustomerId, setSelectedCustomerId } = props;
 
@@ -140,6 +140,8 @@ const IndividualProfileBase = (props) => {
     }, [userId]);
 
     useEffect(() => {
+        fetchApplicationCategorization({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_CAT.id });
+        fetchApplicationSubCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_SUB_CAT.id });
         fetchCustomerCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_CAT.id });
         fetchGenderCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.GENDER_CD.id });
         fetchMartialStatus({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.MARITAL_STATUS.id });
