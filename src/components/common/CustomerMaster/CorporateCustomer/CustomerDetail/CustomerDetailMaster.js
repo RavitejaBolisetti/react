@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyCustomerDetailsMasterBase = (props) => {
-    const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsData, section, fetchConfigList, listConfigShowLoading, fetchList, listShowLoading, moduleTitle, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, corporateLovData, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, isCustomerParentCompanyDataLoaded, customerParentCompanyData } = props;
+    const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsData, section, fetchConfigList, listConfigShowLoading, resetData, fetchList, listShowLoading, moduleTitle, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, corporateLovData, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, isCustomerParentCompanyDataLoaded, customerParentCompanyData } = props;
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick } = props;
 
@@ -95,7 +95,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const [customerDetailsList, setCustomerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
-    const [isFormVisible, setIsFormVisible] = useState(false);
     const [configurableTypedata, setConfigurableTypedata] = useState({});
     const [formData, setFormData] = useState();
     const [refershData, setRefershData] = useState(false);
@@ -103,10 +102,19 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
 
     const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
+    const parentCompanyData = 'LV99';
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+    useEffect(() => {
+        if (isDataLoaded) {
+            form.setFieldsValue({ ...customerDetailsData });
+            setFormData(customerDetailsData);
+            setShowDataLoading(false);
+        } 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, customerDetailsData]);
 
     useEffect(() => {
         if (userId) {
@@ -139,14 +147,12 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         if (typeData) {
             setConfigurableTypedata({ CUST_TYPE: typeData['CUST_TYPE'], CORP_TYPE: typeData['CORP_TYPE'], CORP_CATE: typeData['CORP_CATE'], TITLE: typeData['TITLE'], MEM_TYPE: typeData['MEM_TYPE'] });
         }
-        if (customerDetailsData && isDataLoaded) {
-            setFormData(customerDetailsData);
-        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [typeData, customerDetailsData, isDataLoaded]);
+    }, [typeData, isDataLoaded]);
 
     useEffect(() => {
-        if (userId && selectedCustomerId) {
+        if (userId && selectedCustomerId ) {
             const extraParams = [
                 {
                     key: 'customerId',
@@ -157,7 +163,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
                 {
                     key: 'parentCompanyCode',
                     title: 'parentCompanyCode',
-                    value: '',
+                    value: parentCompanyData,
                     name: 'parentCompanyCode',
                 },
             ];
@@ -168,6 +174,10 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const handeSearchParentCompName = (e) => {
         console.log(e.target.value);
+    };
+    const myProps = {
+        ...props,
+        saveButtonName: formActionType?.addMode ? 'Create Customer ID' : 'Save & Next',
     };
 
     const onSuccessAction = (res) => {
@@ -240,6 +250,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         handleButtonClick,
         styles,
         handeSearchParentCompName,
+        customerParentCompanyData,
     };
 
     const viewProps = {
@@ -261,7 +272,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CustomerFormButton {...props} />
+                    <CustomerFormButton {...myProps} />
                 </Col>
             </Row>
         </Form>

@@ -23,7 +23,7 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, configurableTypedata, formData, corporateLovData, formActionType } = props;
+    const { form, configurableTypedata, formData, corporateLovData, formActionType: {editMode,viewMode}=undefined, } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
@@ -34,6 +34,23 @@ const AddEditFormMain = (props) => {
         setIsEnabled(!isEnabled);
     };
 
+
+    const handleCorporateChange = (value) => {
+        setCorporateType(value);
+    };
+
+    const copyWhatsNo = (props) => {
+        if (props) {
+            let number = form.getFieldsValue();
+            form.setFieldsValue({
+                whatsAppNumber: number?.mobileNumber,
+            });
+        } else {
+            form.setFieldsValue({
+                whatsAppNumber: null,
+            });
+        }
+    };
     const handleNumberValidation = (event) => {
         const Mno = event.target.value;
         const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
@@ -53,23 +70,6 @@ const AddEditFormMain = (props) => {
     const handleCancel = () => {
         setIsModalOpen(false);
         setmobileLoader(false);
-    };
-
-    const handleCorporateChange = (value) => {
-        setCorporateType(value);
-    };
-
-    const copyWhatsNo = (props) => {
-        if (props) {
-            let number = form.getFieldsValue();
-            form.setFieldsValue({
-                whatsAppNumber: number?.mobileNumber,
-            });
-        } else {
-            form.setFieldsValue({
-                whatsAppNumber: null,
-            });
-        }
     };
 
     const modalProps = {
@@ -119,30 +119,36 @@ const AddEditFormMain = (props) => {
                 <Card style={{ backgroundColor: '#F2F2F2' }}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
-                                <Input
-                                    placeholder={preparePlaceholderText('mobile number')}
-                                    onChange={handleNumberValidation}
-                                    maxLength={10}
-                                    size="small"
-                                    suffix={
-                                        <>
-                                            {false ? (
-                                                <Button loading={mobileLoader} onClick={showModal} type="link">
-                                                    Validate
-                                                </Button>
-                                            ) : (
-                                                <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
-                                            )}
-                                            <ValidateMobileNumberModal {...modalProps} />
-                                        </>
-                                    }
-                                />
-                            </Form.Item>
+                            {editMode ? (
+                                <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
+                                    <Input
+                                        placeholder={preparePlaceholderText('mobile number')}
+                                        onChange={handleNumberValidation}
+                                        maxLength={10}
+                                        size="small"
+                                        suffix={
+                                            <>
+                                                {false ? (
+                                                    <Button loading={mobileLoader} onClick={showModal} type="link">
+                                                        Validate
+                                                    </Button>
+                                                ) : (
+                                                    <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
+                                                )}
+                                                <ValidateMobileNumberModal {...modalProps} />
+                                            </>
+                                        }
+                                    />
+                                </Form.Item>
+                            ) : (
+                                <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
+                                    <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
+                                </Form.Item>
+                            )}
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Customer Type" initialValue={formData?.customerType} name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                                <Select placeholder="Select" loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
+                            <Form.Item label="Customer Type" initialValue={formData?.customerType} name="customerType" data-testid="customerType">
+                                <Select placeholder="Select" disabled defaultValue={{ label: 'Individual', value: 'IND' }} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
                             </Form.Item>
                         </Col>
                     </Row>
@@ -154,10 +160,13 @@ const AddEditFormMain = (props) => {
                                     Customer Name
                                 </Text>
                             </Col>
+
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                                <Button type="link" icon={<BiTimeFive />}>
-                                    View History
-                                </Button>
+                                {editMode && (
+                                    <Button type="link" icon={<BiTimeFive />}>
+                                        View History
+                                    </Button>
+                                )}
                             </Col>
                         </Row>
 
@@ -183,7 +192,7 @@ const AddEditFormMain = (props) => {
                                     <Input placeholder={preparePlaceholderText('last name')} />
                                 </Form.Item>
                             </Col>
-                            {formActionType?.editMode && (
+                            {editMode && (
                                 <>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <div className={styles.uploadDragger}>
@@ -234,13 +243,13 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Do you want to contacted over whatsapp?" initialValue={formData?.whatsappCommunicationIndicator} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
-                                <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} />
+                            <Form.Item label="Do you want to contacted over whatsapp?" initialValue={formData?.whatsappCommunicationIndicator === 0 || 0 ? 0 : 1} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
+                                <Switch value={formData?.whatsappCommunicationIndicator  === 0 || 0 ? 0 : 1} checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Want to use Mobile no as whatsapp no?" initialValue={formData?.mobileNumberAsWhatsappNumber} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
-                                <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={copyWhatsNo} />
+                            <Form.Item label="Want to use Mobile no as whatsapp no?" initialValue={formData?.mobileNumberAsWhatsappNumber === 0 || 0 ? 0 : 1} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
+                                <Switch value={formData?.mobileNumberAsWhatsappNumber  === 0 || 0 ? 0 : 1} checkedChildren="Yes" unCheckedChildren="No" onChange={copyWhatsNo} />
                             </Form.Item>
                         </Col>
                     </Row>
