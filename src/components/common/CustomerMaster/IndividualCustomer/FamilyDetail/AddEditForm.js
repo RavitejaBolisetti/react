@@ -148,21 +148,32 @@ const AddEditFormMain = (props) => {
                                                     </Typography>
 
                                                     {!VIEW_ACTION && !showForm && (
-                                                        <Space
-                                                            style={{ cursor: 'pointer' }}
-                                                            onClick={(key) => {
-                                                                onEdit(item);
-                                                                // onCollapseChange(item?.editedId);
-                                                                onCollapseChange(index);
-                                                            }}
-                                                            // onChange={(key) => onCollapseChange(key)}
-                                                        >
-                                                            <FiEdit style={{ margin: '0.25rem 0 0 0' ,color: '#ff3e5b'}} />
-                                                            <Typography style={{ fontSize: '14px', margin: '0 0 0 0.5rem', color: '#ff3e5b' }}>Edit</Typography>
-                                                        </Space>
+                                                        // <Space
+                                                        //     style={{ cursor: 'pointer' }}
+                                                        //     onClick={(key) => {
+                                                        //         onEdit(item);
+                                                        //         // onCollapseChange(item?.editedId);
+                                                        //         onCollapseChange(index);
+                                                        //     }}
+                                                        //     // onChange={(key) => onCollapseChange(key)}
+                                                        // >
+                                                        //     <span className={styles.editButton}>
+                                                        //     <FiEdit />
+                                                        //     <Typography >Edit</Typography>
+                                                        //     </span>
+                                                        // </Space>
+                                                        <Button onClick={(key) => {
+                                                            onEdit(item);
+                                                            // onCollapseChange(item?.editedId);
+                                                            onCollapseChange(index);
+                                                        }} icon={<FiEdit />} type="link" className="buttomEdit">
+                                                        Edit
+                                                    </Button>
                                                     )}
                                                 </Space>
+                                                <span className="headerTxt">
                                                 {item?.mnmCustomer === 'Yes' ? <Typography>M&M user </Typography> : item?.mnmCustomer === 'No' ? <Typography>Non-M&M user</Typography> : null}
+                                                </span>
                                             </Space>
                                         }
                                         key={index}
