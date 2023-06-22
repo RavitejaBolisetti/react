@@ -170,7 +170,7 @@ export const AccountRelatedMasterBase = (props) => {
 
     const formProps = {
         form,
-        formData: data[0],
+        formData: data,
         formActionType,
         setFormActionType,
         onFinish,
@@ -188,7 +188,7 @@ export const AccountRelatedMasterBase = (props) => {
         handleButtonClick,
     };
     const viewProps = {
-        formData: data[0],
+        formData: data,
         styles,
     };
 
