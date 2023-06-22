@@ -198,7 +198,7 @@ const CustomerMasterMain = (props) => {
 
     const tableProps = {
         isLoading: isLoading,
-        tableData: data,
+        tableData: data?.customerMasterDetails || [],
         tableColumn: tableColumn(handleButtonClick),
     };
 
