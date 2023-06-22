@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Row, Col, Form } from 'antd';
@@ -15,7 +15,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
@@ -76,29 +75,21 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerDetailMasterBase = (props) => {
+    const { isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form } = props;
+    const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick } = props;
 
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
-    const { sectionName, currentSection, setCurrentSection, selectedCustomer, selectedCustomerId } = props;
-
-    const { shouldResetForm, isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState();
     const [configurableTypedata, setConfigurableTypedata] = useState({});
 
     const [showDataLoading, setShowDataLoading] = useState(true);
 
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
-    };
-
-    const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        // setShowDataLoading(false);
     };
 
     useEffect(() => {
@@ -141,7 +132,7 @@ const CustomerDetailMasterBase = (props) => {
                     name: 'Customer ID',
                 },
             ];
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
@@ -153,12 +144,6 @@ const CustomerDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [typeData]);
 
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-    };
-
     const onFinish = (values) => {
         const data = { ...values, customerId: selectedCustomer?.customerId };
 
@@ -168,10 +153,11 @@ const CustomerDetailMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
 
-            const section = Object.values(sectionName)?.find((i) => i.id > currentSection);
-            section && setCurrentSection(section?.id);
-
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            if (res.data) {
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
+                setSelectedCustomerId(res?.data?.customerId);
+            }
         };
 
         const onError = (message) => {

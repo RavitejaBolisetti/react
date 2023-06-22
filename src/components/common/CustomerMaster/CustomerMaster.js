@@ -130,11 +130,21 @@ const CustomerMasterMain = (props) => {
         },
     ];
 
+    const onSuccessAction = (res) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setShowDataLoading(false);
+    };
+
+    const onErrorAction = (res) => {
+        showGlobalNotification({ message: res?.responseMessage });
+        setShowDataLoading(false);
+    };
+
     useEffect(() => {
         const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
+        setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
         setDefaultSection(defaultSection);
         setSection(defaultSection);
-        setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType]);
 
@@ -145,16 +155,6 @@ const CustomerMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
-
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        setShowDataLoading(false);
-    };
-
-    const onErrorAction = (res) => {
-        showGlobalNotification({ message: res?.responseMessage });
-        setShowDataLoading(false);
-    };
 
     useEffect(() => {
         if (!isConfigDataLoaded && !isConfigLoading && userId) {
@@ -208,6 +208,7 @@ const CustomerMasterMain = (props) => {
 
     const onSearchHandle = (value) => {
         setShowDataLoading(true);
+        fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
     };
 
     const handleChange = (selectedvalue) => {
@@ -262,8 +263,9 @@ const CustomerMasterMain = (props) => {
         handleButtonClick,
         defaultFormActionType,
         defaultBtnVisiblity,
-        selectedCustomer,
         selectedCustomerId,
+        setSelectedCustomerId,
+        selectedCustomer,
         setSelectedCustomer,
         section,
         currentSection,
