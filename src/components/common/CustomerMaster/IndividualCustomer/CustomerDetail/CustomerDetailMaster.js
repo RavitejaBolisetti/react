@@ -76,15 +76,13 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CustomerDetailMasterBase = (props) => {
     const { isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick } = props;
 
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState();
     const [configurableTypedata, setConfigurableTypedata] = useState({});
-
-    const [showDataLoading, setShowDataLoading] = useState(true);
 
     const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
@@ -96,7 +94,6 @@ const CustomerDetailMasterBase = (props) => {
         if (isDataLoaded) {
             form.setFieldsValue({ ...data });
             setFormData(data);
-            setShowDataLoading(false);
         }
         return () => {
             resetData();
@@ -149,7 +146,6 @@ const CustomerDetailMasterBase = (props) => {
 
         const onSuccess = (res) => {
             form.resetFields();
-            setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
 
@@ -176,10 +172,6 @@ const CustomerDetailMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const formProps = {
         formActionType,
         form,
@@ -196,16 +188,11 @@ const CustomerDetailMasterBase = (props) => {
         typeData,
         formData,
         configurableTypedata,
-        showDataLoading,
     };
 
     const viewProps = {
         formData,
         styles,
-    };
-
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const myProps = {
