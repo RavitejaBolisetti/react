@@ -81,7 +81,7 @@ const ContactMain = (props) => {
     const [editingData, setEditingData] = useState({});
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-console.log('selectedCustomer', selectedCustomer, "formActionType", formActionType)
+    console.log('selectedCustomer', selectedCustomer, 'formActionType', formActionType);
 
     const extraParams = [
         {
@@ -176,9 +176,9 @@ console.log('selectedCustomer', selectedCustomer, "formActionType", formActionTy
     const onCheckdefaultAddClick = (e, value) => {
         e.stopPropagation();
         setContactData((prev) => {
-            let updetedData = prev?.map((contact) => ({...contact, defaultContactIndicator: false}));
+            let updetedData = prev?.map((contact) => ({ ...contact, defaultContactIndicator: false }));
             const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.mobileNumber === value?.mobileNumber && el?.FirstName === value?.FirstName);
-            updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked});
+            updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked });
             return [...updetedData];
         });
         forceUpdate();
@@ -206,14 +206,44 @@ console.log('selectedCustomer', selectedCustomer, "formActionType", formActionTy
         setEditingData,
         typeData,
         onCheckdefaultAddClick,
-        setButtonData, 
+        setButtonData,
+    };
+
+    const onSubmit = () => {
+        let data = { customerId: selectedCustomer?.customerId, customerContact: contactData };
+
+        const onSuccess = (res) => {
+            form.resetFields();
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listContactDetailsShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveData(requestData);
+
+        setShowAddEditForm(false);
+        setIsEditing(false);
+        setEditingData({});
+        form.resetFields();
     };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    const formContainer = formActionType?.viewMode ? <ViewContactList {...formProps} /> : <AddEditForm {...formProps} />     ;
+    const formContainer = formActionType?.viewMode ? <ViewContactList {...formProps} /> : <AddEditForm {...formProps} />;
+
     const formSkeleton = (
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -222,8 +252,9 @@ console.log('selectedCustomer', selectedCustomer, "formActionType", formActionTy
         </Row>
     );
 
-    return (<>
-        {/* <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSaveFormData} onFinishFailed={onFinishFailed}> */}
+    return (
+        <>
+            {/* <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSaveFormData} onFinishFailed={onFinishFailed}> */}
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title} </h2>
@@ -242,12 +273,15 @@ console.log('selectedCustomer', selectedCustomer, "formActionType", formActionTy
                             showArrow={false}
                             key="1"
                         >
-                        {(!formActionType?.viewMode && showAddEditForm) && <AddEditForm {...formProps} /> }
-                        <ViewContactList {...formProps} />
-                        {/* { !formActionType?.viewMode && (showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />} */}
-                        {/* {isCustomerDataLoading ? formSkeleton : formContainer} */}
+                            {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
+                            {isCustomerDataLoading ? formSkeleton : <ViewContactList {...formProps} />}
+                            {/* { !formActionType?.viewMode && (showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />} */}
+                            {/* {isCustomerDataLoading ? formSkeleton : formContainer} */}
                         </Panel>
                     </Collapse>{' '}
+                    <Button onClick={() => onSubmit()} type="primary">
+                        Submit
+                    </Button>
                 </Col>
             </Row>
             <Row>
@@ -255,7 +289,7 @@ console.log('selectedCustomer', selectedCustomer, "formActionType", formActionTy
                     <CustomerFormButton {...props} />
                 </Col>
             </Row>
-        {/* </Form> */}
+            {/* </Form> */}
         </>
     );
 };

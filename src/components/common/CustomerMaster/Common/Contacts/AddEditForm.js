@@ -180,7 +180,7 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Alternate Email ID" name="alternateEmailId" rules={[validateEmailField('E-mail')]}>
+                            <Form.Item initialValue={null} label="Alternate Email ID" name="alternateEmailId" rules={[validateEmailField('E-mail')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate email id')} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -188,27 +188,27 @@ const AddEditForm = (props) => {
                         <Divider />
 
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Facebook Link" name="facebookId" rules={[validatFacebookProfileUrl('facebook')]}>
+                            <Form.Item initialValue={null} label="Facebook Link" name="facebookId" rules={[validatFacebookProfileUrl('facebook')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('facebook link')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Twitter Link" name="twitterId" rules={[validattwitterProfileUrl('twitter')]}>
+                            <Form.Item initialValue={null} label="Twitter Link" name="twitterId" rules={[validattwitterProfileUrl('twitter')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Instagram Link" name="instagramId" rules={[validatInstagramProfileUrl('instagram')]}>
+                            <Form.Item initialValue={null} label="Instagram Link" name="instagramId" rules={[validatInstagramProfileUrl('instagram')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('instagram link')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Youtube Channel" name="youTubeChannel" rules={[validatYoutubeProfileUrl('Pincode')]}>
+                            <Form.Item initialValue={null} label="Youtube Channel" name="youTubeChannel" rules={[validatYoutubeProfileUrl('Pincode')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('youtube channel')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Team BHP Link" name="teamBhp">
+                            <Form.Item initialValue={null} label="Team BHP Link" name="teamBhp">
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('team BHP link')} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -218,7 +218,7 @@ const AddEditForm = (props) => {
                                 <Checkbox>Mark As Default</Checkbox>
                             </Form.Item>
                         </Col>
-                        <Form.Item hidden name="docId">
+                        <Form.Item hidden initialValue={'qwertyu'} name="docId">
                             <Input />
                         </Form.Item>
                     </Row>
