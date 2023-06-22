@@ -18,6 +18,7 @@ import { FiTrash } from 'react-icons/fi';
 import { BiLockAlt, BiTimeFive } from 'react-icons/bi';
 import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
 import { NameChangeHistory } from './NameChangeHistory';
+import Svg from 'assets/images/Filter.svg';
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -196,6 +197,9 @@ const AddEditFormMain = (props) => {
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <div className={styles.uploadDragger}>
                                             <Dragger showUploadList={showUploadList} {...uploadProps}>
+                                                {/* <div>
+                                                    <img src={Svg} alt="" />
+                                                </div> */}
                                                 <Empty
                                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
                                                     imageStyle={{
