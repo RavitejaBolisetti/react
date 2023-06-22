@@ -333,6 +333,7 @@
 
 :global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu {
     /* padding: 10px; */
+    padding: 4px 3px;
     border: 1px solid #0B0B0C;
     border-radius: 6px;
     margin-top: 16px;
