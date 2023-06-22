@@ -1,11 +1,11 @@
 /*
- *   Copyright (c) 2023 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
 import { Descriptions } from 'antd';
 import AddEditForm from './AddEditForm';
-import styles from 'components/common/Common.module.css';
 
 const ViewDetailBase = (props) => {
     const { formData, styles } = props;
@@ -23,7 +23,7 @@ const ViewDetailBase = (props) => {
         setContactData,
         onFinish,
         form,
-        ...props
+        ...props,
     };
 
     return (
@@ -50,13 +50,6 @@ const ViewDetailBase = (props) => {
                         <Descriptions.Item label="Team BHP Link">{formData?.teamBhp}</Descriptions.Item>
                         <Descriptions.Item label="Mark As Default">{formData?.defaultContactIndicator ? 'Yes' : 'No'}</Descriptions.Item>
                     </Descriptions>
-
-                    {/* <Space>
-                        <Button type="primary" onClick={() => editContactHandeler({ formData, index })}>
-                            Edit
-                        </Button>
-                        <Button danger onClick={() => deleteContactHandeler( formData, index )}>Delete</Button>
-                    </Space> */}
                 </>
             ) : (
                 <AddEditForm {...formProps} />
