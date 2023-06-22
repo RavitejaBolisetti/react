@@ -150,7 +150,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Customer Type" initialValue={formData?.customerType} name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer type')]}>
-                                <Select placeholder="Select" defaultValue={{ label: 'Individual', value: 'IND' }} disabled={true} allowClear options={configurableTypedata['CUST_TYPE']}></Select>
+                                <Select placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} allowClear options={configurableTypedata['CUST_TYPE']} disabled={editMode}></Select>
                             </Form.Item>
                         </Col>
                     </Row>
@@ -296,7 +296,7 @@ const AddEditFormMain = (props) => {
                             </Col>
                         )}
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Corporate Category" initialValue={formData?.corporateCategory} name="corporateCategory" data-testid="corporateCategory">
+                            <Form.Item label="Corporate Category" initialValue={formData?.corporateCategory?.label} name="corporateCategory" data-testid="corporateCategory">
                                 <Select disabled={false} loading={false} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_CATE']} allowClear></Select>
                             </Form.Item>
                         </Col>
