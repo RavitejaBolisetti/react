@@ -81,7 +81,7 @@ const mapDispatchToProps = (dispatch) => ({
 const IndividualProfileBase = (props) => {
     const { userId, fetchVehicleUsed, fetchMotherTongue, fetchReligionList, fetchAnnualIncome, fetchOccupationList, appCategoryData, listIndiviualShowLoading, fetchGenderCategory, fetchMartialStatus, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, isAppCategoryDataLoaded, isIndiviualProfileLoaded, fetchList, indiviualData, saveData, showGlobalNotification } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
-    const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading } = props;
+    const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, selectedCustomerId, setSelectedCustomerId } = props;
 
     const [form] = Form.useForm();
 
@@ -95,13 +95,27 @@ const IndividualProfileBase = (props) => {
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
+
+
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
 
     useEffect(() => {
-        if (userId && !isIndiviualProfileLoaded) {
-            fetchList({ setIsLoading: listIndiviualShowLoading, userId, extraParams });
+        if (userId && selectedCustomerId) {
+            const extraParams = [
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: selectedCustomerId,
+                    name: 'Customer ID',
+                },
+            ];
+            fetchList({ setIsLoading: listIndiviualShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isIndiviualProfileLoaded]);
+    }, [userId, selectedCustomerId]);
 
     useEffect(() => {
         fetchApplicationCategorization({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_CAT.id });
@@ -118,15 +132,6 @@ const IndividualProfileBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAppCategoryDataLoaded]);
 
-    const extraParams = [
-        {
-            key: 'customerId',
-            title: 'Customer',
-            value: 'CUS1686811036620',
-            name: 'customerId',
-        },
-    ];
-
     const onFinish = (values) => {
         const recordId = formData?.id || '';
         const restObj = {};
@@ -134,9 +139,9 @@ const IndividualProfileBase = (props) => {
 
         const data = {
             ...rest,
-            customerId: 'CUS1686810869696',
-            keyAccountDetails: { customerId: 'CUS1686810869696', accountCode: values?.accountCode, accountName: values?.accountName, accountSegment: values?.accountSegment, accountClientName: values?.accountClientName, accountMappingDate: values?.accountMappingDate },
-            authorityRequest: { customerId: 'CUS1686810869696', personName: values.personName, postion: values.postion, companyName: values.companyName, remarks: values.remarks, id: recordId },
+            customerId: selectedCustomerId,
+            keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode, accountName: values?.accountName, accountSegment: values?.accountSegment, accountClientName: values?.accountClientName, accountMappingDate: values?.accountMappingDate },
+            authorityRequest: { customerId: selectedCustomerId, personName: values.personName, postion: values.postion, companyName: values.companyName, remarks: values.remarks, id: recordId },
             id: recordId,
             profileFileDocId: uploadedFile ? uploadedFile : '',
             customerFormDocId: uploadedFile ? uploadedFile : '',
@@ -147,7 +152,10 @@ const IndividualProfileBase = (props) => {
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-
+            if (res.data) {
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                setSelectedCustomerId(res?.data?.customerId);
+            }
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
