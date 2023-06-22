@@ -137,3 +137,4 @@ export const BASE_URL_OTF_INSURANCE_DETAIL = BASE_URL + 'otf/insurancedetails';
 export const BASE_URL_OTF_FINANCE_LOV = BASE_URL + 'otf/financiers/lov';
 
 export const BASE_URL_DOCUMENT_UPLOAD = BASE_URL + 'common/document/upload';
+export const BASE_URL_DOCUMENT_VIEW_URL = BASE_URL + 'common/document/view';
