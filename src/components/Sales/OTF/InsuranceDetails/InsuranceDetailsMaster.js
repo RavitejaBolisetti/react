@@ -6,6 +6,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { ViewDetail } from './ViewDetail';
 
 import { insuranceDetailDataActions } from 'store/actions/data/otf/insuranceDetail';
+import { AddEditForm } from './AddEditForm';
 
 const mapStateToProps = (state) => {
     const {
@@ -74,7 +75,14 @@ const InsuranceDetailsMasterBase = (props) => {
         onCloseAction,
         insuranceData,
     };
-    return <>{!formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <ViewDetail {...viewProps} />}</>;
+
+    const formProps = {
+        insuranceData,
+        formActionType,
+        fetchList,
+        onCloseAction,
+    };
+    return <>{!formActionType?.viewMode ? <AddEditForm {...formProps} /> : <ViewDetail {...viewProps} />}</>;
 };
 
 export const InsuranceDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(InsuranceDetailsMasterBase);
