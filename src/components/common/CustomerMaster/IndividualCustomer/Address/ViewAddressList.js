@@ -1,3 +1,7 @@
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 import React, { useState } from 'react';
 import { ViewIndividualAddressDetails } from './ViewIndividualAddressDetails';
 import { Button, Collapse, Space, Typography, Row, Col, Checkbox, Divider } from 'antd';
