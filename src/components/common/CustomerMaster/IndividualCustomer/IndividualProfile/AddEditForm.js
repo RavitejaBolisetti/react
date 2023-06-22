@@ -15,6 +15,7 @@ import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
 import { FiTrash } from 'react-icons/fi';
+import UploadUtils from '../../Common/UploadUtils';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -144,6 +145,7 @@ const AddEditFormMain = (props) => {
                                 }
                                 key="1"
                             >
+                                <UploadUtils />
                                 <Row gutter={16}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <div className={styles.uploadDragger}>
@@ -175,12 +177,12 @@ const AddEditFormMain = (props) => {
 
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Date of Birth" initialValue={dayjs(formData?.dateOfBirth)} name="dateOfBirth">
+                                        <Form.Item label="Date of Birth" initialValue={dayjs(formData?.dateOfBirth )|| ""} name="dateOfBirth">
                                             <DatePicker format="DD-MM-YYYY" disabled={isReadOnly} className={styles.datepicker} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Gender" name="gender" initialValue={formData?.gender} rules={[validateRequiredSelectField('gender')]}>
+                                        <Form.Item label="Gender" name="gender" initialValue={formData?.gender || ""} rules={[validateRequiredSelectField('gender')]}>
                                             <Select value={null} placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
                                                 {appCategoryData?.GENDER_CD?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
@@ -191,7 +193,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Maritial Status" initialValue={formData?.maritialStatus} name="martialStatus">
+                                        <Form.Item label="Maritial Status" initialValue={formData?.maritialStatus || ""} name="martialStatus">
                                             <Select value={null} placeholder={preparePlaceholderSelect('maritial status')} {...disabledProps}>
                                                 {appCategoryData?.MARITAL_STATUS?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
@@ -204,12 +206,12 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label=" Wedding Anniversary Date" initialValue={formData?.weddingAnniversary} name="weddingAnniversary">
+                                        <Form.Item label=" Wedding Anniversary Date" initialValue={formData?.weddingAnniversary || ""} name="weddingAnniversary">
                                             <DatePicker className={styles.datepicker} disabled={isReadOnly} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Occupation" initialValue={formData?.occuption} name="occuption">
+                                        <Form.Item label="Occupation" initialValue={formData?.occuption || ""} name="occuption">
                                             <Select value={null} placeholder={preparePlaceholderSelect('occupation')} {...disabledProps}>
                                                 {appCategoryData?.OCC_TYPE?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
@@ -220,7 +222,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Annual Income" initialValue={formData?.annualIncome} name="annualIncome">
+                                        <Form.Item label="Annual Income" initialValue={formData?.annualIncome || ""} name="annualIncome">
                                             <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
                                                 {appCategoryData?.Annual_Income?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
