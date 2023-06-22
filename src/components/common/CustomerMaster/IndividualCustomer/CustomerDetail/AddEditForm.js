@@ -5,9 +5,6 @@
  */
 
 import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Empty, message } from 'antd';
-
-import { CheckOutlined } from '@ant-design/icons';
-
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
@@ -16,15 +13,13 @@ import { useState } from 'react';
 import Dragger from 'antd/es/upload/Dragger';
 import { FiTrash } from 'react-icons/fi';
 import { BiLockAlt, BiTimeFive } from 'react-icons/bi';
-import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
 import { NameChangeHistory } from './NameChangeHistory';
 
 const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, configurableTypedata, formData, corporateLovData, formActionType: {editMode,viewMode}=undefined, } = props;
-    console.log(corporateLovData,'ssssss')
+    const { form, configurableTypedata, formData, corporateLovData, formActionType: { editMode } = undefined } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
@@ -34,7 +29,6 @@ const AddEditFormMain = (props) => {
     const handleToggle = () => {
         setIsEnabled(!isEnabled);
     };
-
 
     const handleCorporateChange = (value) => {
         setCorporateType(value);
@@ -272,14 +266,17 @@ const AddEditFormMain = (props) => {
                         {corporateType === 'LIS' ? (
                             <>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Select disabled={false} loading={false} placeholder="Select" allowClear>
+                                        {corporateLovData?.map((item) => (
+                                            <Option key={'lv' + item?.key} value={item?.key}>
+                                                {item?.value}
+                                            </Option>
+                                        ))}
+                                    </Select>
                                     <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
-                                        <Select disabled={false} loading={false} placeholder="Select" allowClear>
-                                            {corporateLovData?.map((item) => (
-                                                <Option key={'lv' + item?.key} value={item?.key}>
-                                                    {item?.value}
-                                                </Option>
-                                            ))}
-                                        </Select>
+                                        <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                                            <Select disabled={false} loading={false} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select>
+                                        </Form.Item>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>

@@ -10,19 +10,20 @@ import { useEffect, useState } from 'react';
 import { BiLockAlt } from 'react-icons/bi';
 import { CheckOutlined } from '@ant-design/icons';
 import { ValidateMobileNumberModal } from '../../IndividualCustomer/CustomerDetail/ValidateMobileNumberModal';
-const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { configurableTypedata, formData, form, corporateLovData, formActionType: { editMode } = undefined,customerType,handleParentCompany, onSearch } = props;
+    const { configurableTypedata, formData, form, corporateLovData, formActionType: { editMode } = undefined, validateParentCode, customerType, customerParentCompanyData } = props;
     const [corporateType, setCorporateType] = useState();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
+
     useEffect(() => {
         form.setFieldsValue({
             ...formData,
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
+
     const handleCorporateChange = (value) => {
         setCorporateType(value);
     };
@@ -86,12 +87,13 @@ const AddEditFormMain = (props) => {
                                 />
                             </Form.Item>
                         ) : (
-                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'),validateRequiredInputField('mobile number')]}>
+                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
                                 <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
                             </Form.Item>
                         )}
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        {customerType}
                         <Form.Item initialValue={formData?.customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
                             <Select placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']} allowClear></Select>
                         </Form.Item>
@@ -107,13 +109,11 @@ const AddEditFormMain = (props) => {
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.parentCompanyCode} label="Parent Company Code" name="parentCompanyCode" data-testid="parentCode" rules={[validateRequiredInputField('parent company code')]}>
-                            {/* <Input placeholder={preparePlaceholderText('parent company code')} onBlur={handleParentCompany} disabled={editMode} /> */}
-                            <Input.Search placeholder={preparePlaceholderText('parent company code')} onSearch={onSearch} enterButton disabled={editMode} />
+                            <Input placeholder={preparePlaceholderText('parent company code')} onBlur={validateParentCode} disabled={editMode} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        {/* initialValue={formData?.parentCompanyName} */}
-                        <Form.Item label="Parent Company Name" name="parentCompanyName">
+                        <Form.Item initialValue={formData?.parentCompanyName || (customerParentCompanyData && customerParentCompanyData.length > 0) ? customerParentCompanyData[0]?.parentCompanyName : ''} label="Parent Company Name" name="parentCompanyName" data-testid="parentName">
                             <Input placeholder={preparePlaceholderText('parent company name')} disabled />
                         </Form.Item>
                     </Col>
