@@ -147,7 +147,7 @@ const AddEditFormMain = (props) => {
                                 key="1"
                             >
                                 <div className={styles.uploadDragger}>
-                                    <UploadUtils isViewModeVisible={true} uploadImgTitle={'Profile Picture'} />
+                                    <img width="500" height="200" src={`data:image/png;base64,${viewDocument?.base64}`} />
                                 </div>
                                 {/* <Row gutter={16}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
