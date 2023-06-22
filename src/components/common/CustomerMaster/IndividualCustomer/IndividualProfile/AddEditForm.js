@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider } from 'antd';
+import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Empty } from 'antd';
 import Svg from 'assets/images/Filter.svg';
 import dayjs from 'dayjs';
 
@@ -24,7 +24,7 @@ const { Dragger } = Upload;
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 const AddEditFormMain = (props) => {
     const { formData, appCategoryData, userId, uploadDocumentFile, viewDocument, setUploadedFile, EDIT_ACTION, listDocumentShowLoading } = props;
-    const { isReadOnly= false  } = props;
+    const { isReadOnly = false } = props;
     const [customer, setCustomer] = useState(false);
 
     const [activeKey, setActiveKey] = useState([1]);
