@@ -1869,6 +1869,50 @@
     border-top: 1px solid #E6E6E6;
 }
 
+.drawerBodyRight .uploadDragger :global .ant-card .ant-card-body {
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 6px;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-card .ant-card-body .ant-space button {
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-space-horizontal .ant-avatar.ant-avatar-icon {
+    width: 40px;
+    height: 40px;
+    line-height: 44px;
+    font-size: 30px;
+    background-color: #70C922;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-space-horizontal .ant-space-item h5 {
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #0B0B0C;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-space-vertical {
+    gap: 20px !important;
+    margin-bottom: 0;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-space-vertical .ant-space-horizontal {
+    gap: 10px !important;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-space-horizontal .ant-space-item span.ant-typography {
+    color: #0B0B0C;
+    font-size: 12px;
+    line-height: 20px;
+}
+
 .drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-drag {
     border: 1px dashed #B5B5B5;
     margin-bottom: 20px;
@@ -2007,6 +2051,11 @@
 .drawerBodyRight .collapseable {
     padding-left: 0px;
     padding-top: 3px;
+}
+
+.drawerBodyRight .accordianContainer :global .ant-space-item .ant-collapse-item .ant-card {
+    margin-top: 0px;
+    margin-bottom: 20px;
 }
 
 /* .viewDrawerContainer {
