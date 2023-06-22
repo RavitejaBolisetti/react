@@ -23,6 +23,7 @@ const { TextArea } = Input;
 const { Text } = Typography;
 const { Dragger } = Upload;
 
+const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 const AddEditFormMain = (props) => {
     const { formData, appCategoryData, userId, uploadDocumentFile, setUploadedFile, listDocumentShowLoading } = props;
     const { isReadOnly = false } = props;
@@ -367,18 +368,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
 
-                        <Collapse
-                            expandIcon={() => {
-                                if (activeKey.includes(2)) {
-                                    return <MinusOutlined className={styles.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(2)}
-                            expandIconPosition="end"
-                        >
+                        <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel
                                 header={
                                     <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
@@ -427,18 +417,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                             </Panel>
                         </Collapse>
-                        <Collapse
-                            expandIcon={() => {
-                                if (activeKey.includes(3)) {
-                                    return <MinusOutlined className={styles.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(3)}
-                            expandIconPosition="end"
-                        >
+                        <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel
                                 header={
                                     <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
@@ -481,18 +460,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                             </Panel>
                         </Collapse>
-                        <Collapse
-                            expandIcon={() => {
-                                if (activeKey.includes(4)) {
-                                    return <MinusOutlined className={styles.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(4)}
-                            expandIconPosition="end"
-                        >
+                        <Collapse defaultActiveKey={['4']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel
                                 header={
                                     <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
@@ -530,18 +498,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
 
-                        <Collapse
-                            expandIcon={() => {
-                                if (activeKey.includes(5)) {
-                                    return <MinusOutlined className={styles.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(5)}
-                            expandIconPosition="end"
-                        >
+                        <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel
                                 header={
                                     <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>

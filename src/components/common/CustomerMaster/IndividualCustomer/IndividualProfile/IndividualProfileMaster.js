@@ -88,7 +88,7 @@ const IndividualProfileBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [activeKey, setActiveKey] = useState([1]);
     const [uploadedFile, setUploadedFile] = useState();
-    const [isBorder, setIsBorder]= useState(false);
+    const [isBorder, setIsBorder] = useState(false);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -97,7 +97,6 @@ const IndividualProfileBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
     const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
-
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -141,7 +140,7 @@ const IndividualProfileBase = (props) => {
         const data = {
             ...rest,
             customerId: selectedCustomerId,
-            keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode || '', accountName: values?.accountName|| '', accountSegment: values?.accountSegment || '', accountClientName: values?.accountClientName || '', accountMappingDate: values?.accountMappingDate || '' },
+            keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode || '', accountName: values?.accountName || '', accountSegment: values?.accountSegment || '', accountClientName: values?.accountClientName || '', accountMappingDate: values?.accountMappingDate || '' },
             authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
             id: recordId,
             profileFileDocId: uploadedFile ? uploadedFile : '',
