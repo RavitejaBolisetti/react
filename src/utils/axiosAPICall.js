@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import { LANGUAGE_EN } from 'language/en';
 
 import axios from 'axios';
@@ -50,7 +55,7 @@ const baseAPICall = (params) => {
                     if (response?.data?.status) {
                         if (response?.data?.statusCode === 200) {
                             onSuccess(response?.data);
-                        } else if (response?.data?.statusCode === 404) {
+                        } else if (response?.data?.statusCode === 404 || response?.data?.statusCode === 400) {
                             handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
                         } else if (response?.data?.statusCode === 409) {
                             handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });

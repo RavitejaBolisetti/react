@@ -6,7 +6,7 @@ const { Search } = Input;
 const { Option } = Select;
 
 export default function AdvanceOtfFilter(props) {
-    const { advanceFilter = false, otfFilter = false, title, otfSearchList, handleOTFChange, otfSearchvalue, ChangeSearchHandler, onSearchHandle, setAdvanceSearchVisible } = props;
+    const { advanceFilter = false, otfFilter = false, title, filterString, handleOTFChange, otfSearchvalue, ChangeSearchHandler, onSearchHandle, setAdvanceSearchVisible,typeData } = props;
 
     return (
         <>
@@ -18,12 +18,12 @@ export default function AdvanceOtfFilter(props) {
                             {otfFilter && (
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
                                     <div className={styles.selectSearchBg}>
-                                        <Select className={styles.headerSelectField} onChange={handleOTFChange} placeholder="OTF No." allowClear>
-                                            {otfSearchList?.map((item) => (
-                                                <Option value={item.id}>{item.value}</Option>
+                                        <Select className={styles.headerSelectField} onChange={handleOTFChange} placeholder="Select Parameter" allowClear>
+                                            {typeData?.map((item) => (
+                                                <Option value={item.key}>{item.value}</Option>
                                             ))}
                                         </Select>
-                                        <Search placeholder="Search" value={otfSearchvalue} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} className={styles.headerSearchField} />
+                                        <Search placeholder="Search" value={filterString?.searchParam} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} className={styles.headerSearchField} />
                                     </div>
                                 </Col>
                             )}

@@ -187,6 +187,66 @@
     padding: 0;
 }
 
+.tableProduct .success {
+    padding: 2px 6px;
+    background: #EEFCD2;
+    border: 1px solid #70C922;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: #70C922;
+}
+
+.tableProduct .error {
+    padding: 2px 6px;
+    background: #FEE3D4;
+    border: 1px solid #ED302D;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: #ED302D;
+}
+
+.tableProduct .warning {
+    padding: 2px 6px;
+    background: #FEF3D2;
+    border: 1px solid #F99C22;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: #F99C22;
+}
+
+.tableProduct .info {
+    padding: 2px 6px;
+    background: #D3EDFE;
+    border: 1px solid #2782F9;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: #2782F9;
+}
+
+.tableProduct .violet {
+    padding: 2px 6px;
+    background: #F3EAFF;
+    border: 1px solid #9747FF;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: #9747FF;
+}
+
 /* .tableProduct :global .ant-table-thead tr th {
     text-align: center;
 } */
@@ -327,7 +387,8 @@
 }
 
 .uploadDragger :global .ant-upload-wrapper .ant-upload-drag {
-    border: 1px dashed rgba(52, 44, 44, 0.53);
+    border: 1px dashed #B5B5B5;
+    margin-bottom: 12px;
 }
 
 .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
@@ -353,6 +414,10 @@
 .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon,
 .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon:hover {
     color: black;
+}
+
+.contactDivider {
+    margin-bottom: 12px !important;
 }
 
 .drawerFooterButtons button {
@@ -493,7 +558,7 @@
     padding: 12px 0px;
     background: #ffffff;
     left: 10px;
-    bottom: 0px;
+    bottom: 40px;
     box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
     z-index: 1;
 }
@@ -563,7 +628,7 @@
 
 .accordianContainer :global .ant-collapse {
     margin-bottom: 12px;
-    background: rgba(190, 190, 190, 0.1);
+    background: #f2f2f2;
 }
 
 .accordianContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
@@ -1457,6 +1522,10 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 23px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 15ch;
 }
 
 .drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item p span {
@@ -1464,6 +1533,10 @@
     font-size: 18px;
     font-weight: 700;
     line-height: 27px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 12ch;
 }
 
 .drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item:last-child {
@@ -1513,7 +1586,7 @@
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item-tail {
-    inset-block-start: 9px;
+    inset-block-start: 14px;
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item-head-custom {
@@ -1549,8 +1622,9 @@
     padding: 30px;
     margin-left: 0 !important;
     margin-right: 0 !important;
+    margin-bottom: 40px;
     height: calc(100vh - 60px);
-    max-height: calc(100vh - 60px);
+    /* max-height: calc(100vh - 60px); */
     overflow: hidden;
     overflow-y: overlay;
 }
@@ -1632,10 +1706,15 @@
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input {
-    height: 36px;
+    /* height: 36px; */
     padding: 5px 12px;
     border-color: #b5b5b6;
     color: #0b0b0c;
+    border-radius: 4px;
+}
+
+.drawerBodyRight :global .ant-input-affix-wrapper .ant-input-suffix {
+    color: #ff3e5b;
     border-radius: 4px;
 }
 
@@ -1644,7 +1723,9 @@
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input-disabled,
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input[disabled] {
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input[disabled],
+.drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-disabled,
+.drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input[disabled] {
     color: #858585;
     background-color: #e6e6e6;
     border-color: #858585;
@@ -1780,7 +1861,7 @@
 } */
 
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
-    padding: 20px 30px;
+    padding: 16px 20px;
     background: #f2f2f2;
     border-radius: 8px;
     /* border: 1px solid #f2f2f2; */
@@ -1788,6 +1869,7 @@
 
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item-active>.ant-collapse-header {
     border-radius: 8px 8px 0 0;
+    padding: 20px 30px;
 }
 
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-typography {
@@ -1809,8 +1891,13 @@
 .drawerBodyRight :global .ant-input-disabled,
 .drawerBodyRight :global .ant-input[disabled],
 .drawerBodyRight :global .ant-input-disabled:hover,
-.drawerBodyRight :global .ant-input[disabled]:hover {
+.drawerBodyRight :global .ant-input[disabled]:hover,
+.drawerBodyRight :global .ant-select-selector[disabled] {
     border-color: #e6e6e6 !important;
+}
+
+.drawerBodyRight :global .ant-upload-wrapper .ant-upload-drag {
+    border: 1px dashed #B5B5B5;
 }
 
 .drawerBodyRight :global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
@@ -1840,7 +1927,7 @@
 .drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     background: #f2f2f2;
     border-radius: 0 0 8px 8px;
-    padding: 0 30px;
+    padding: 0 30px 0px;
 }
 
 .drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box button {
@@ -1851,7 +1938,18 @@
     margin-bottom: 0;
 }
 
+/* .drawerBodyRight :global .ant-collapse .ant-collapse-item-active .ant-collapse-header-text .ant-btn-primary {
+    color: #B5B5B6;
+    background-color: #E6E6E6;
+    box-shadow: 0 2px 0 rgba(255, 5, 5, 0.06);
+} */
+
 .drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-divider-horizontal {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
     margin-top: 0;
     margin-bottom: 20px;
 }
@@ -1919,7 +2017,7 @@
 }
 
 .viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-content {
-    color: #0B0B0C;
+    color: #0b0b0c;
     font-weight: 400;
     font-size: 14px;
     line-height: 23px;
@@ -1928,27 +2026,101 @@
 .viewDrawerContainer :global .ant-card .ant-card-body .ant-divider-horizontal {
     margin-top: 0;
     margin-bottom: 20px;
-    border-color: #E6E6E6;
+    border-color: #e6e6e6;
 }
 
-.viewDrawerContainer :global .ant-descriptions-view table tbody tr th {
+.viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions:first-child {
+    border-bottom: 1px solid #E6E6E6;
+}
+
+.viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions:not(:first-child) {
+    border-top: 1px solid #E6E6E6;
+    padding-top: 20px;
+}
+
+.viewDrawerContainer :global .ant-descriptions .ant-descriptions-view table {
+    border-spacing: 0;
+}
+
+.viewDrawerContainer :global .ant-descriptions .ant-descriptions-view table tbody tr th {
     padding: 0 !important;
 }
 
-.viewDrawerContainer :global .ant-descriptions-view table tbody tr td {
+.viewDrawerContainer :global .ant-descriptions .ant-descriptions-view table tbody tr td {
     padding: 0 !important;
 
     padding-bottom: 20px !important;
 }
 
-.viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-content .anticon-check-square {
-    color: #b5b5b6;
-    margin-right: 10.83px;
+.viewDrawerContainer :global .ant-space {
+    gap: 10px !important;
 }
 
-.viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-content .anticon-check-square svg {
-    width: 18.33px;
-    height: 18.33px;
+.viewDrawerContainer :global .ant-space .ant-collapse {
+    margin-bottom: 0;
+}
+
+/* .viewDrawerContainer :global .ant-collapse .ant-collapse-content .ant-descriptions:first-child {
+    padding-top: 0px;
+    border-top: none;
+} */
+
+/* .viewDrawerContainer :global .ant-space .ant-space-item:last-child {
+    border: 0;
+    margin-bottom: 50px;
+} */
+
+.viewDrawerContainer .cardInsideBox :global .ant-typography {
+    color: #0B0B0C;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.viewDrawerContainer .cardInsideBox :global .ant-btn {
+    padding: 0;
+}
+
+.viewDrawerContainer .cardInsideBox :global .ant-btn span:last-child {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 23px;
+    vertical-align: text-bottom;
+}
+
+.viewDrawerContainer .cardInsideBox :global .ant-divider-horizontal {
+    margin-top: 2px !important;
+    margin-bottom: 12px !important;
+}
+
+.viewDrawerContainer .cardInsideBox .customerName :global .ant-tag-success {
+    margin-left: 22px;
+    /* height: 20px; */
+    padding: 0 8px;
+    vertical-align: bottom;
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: center;
+}
+
+.cardInsideBox {
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    color: #0b0b0c;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.customerName {
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    padding: 10px 20px;
+    color: #0B0B0C;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
 }
 
 .userCircle {
@@ -2004,12 +2176,26 @@
     padding-bottom: 20px;
 }
 
+.viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-content .anticon-check-square {
+    color: #b5b5b6;
+    margin-right: 10.83px;
+}
+
+.viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-content .anticon-check-square svg {
+    width: 18.33px;
+    height: 18.33px;
+}
+
 .ViewDataTabel {
     background: red;
 }
 
 .drawerBodyRight .accordianContainer :global .ant-table-wrapper .ant-table-thead>tr>th {
     background: #f2f2f2 !important;
+}
+
+.drawerBodyRight .uploadContainer {
+    margin-bottom: 20px;
 }
 
 .cardInsideBox {
@@ -2037,8 +2223,6 @@
 }
 
 @media (max-width: 768px) {
-
-    /* For mobile phones: */
     .headerSearchField {
         vertical-align: middle;
         margin: 0 0px;

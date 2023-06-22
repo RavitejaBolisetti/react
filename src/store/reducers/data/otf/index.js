@@ -8,13 +8,21 @@ import { combineReducers } from 'redux';
 import { InvoiceDetail } from './invoiceDetail';
 import { FinanceDetail } from './financeDetail';
 import { OtfDetails } from './otfDetails';
+import { InsuranceDetail } from './insuranceDetail';
+import { OtfSearchList } from './otfSearch';
 import { FinanceLov } from './financeLov';
 import { LoyaltyScheme } from './loyaltyAndScheme';
+import { ExchangeVehicle } from './exchangeVehicle';
+import { SchemeDetail } from './schemeDetail';
 
 export const OTF = combineReducers({
     InvoiceDetail,
     FinanceDetail,
     OtfDetails,
+    InsuranceDetail,
+    OtfSearchList,
     FinanceLov,
     LoyaltyScheme,
+    ExchangeVehicle,
+    SchemeDetail
 });

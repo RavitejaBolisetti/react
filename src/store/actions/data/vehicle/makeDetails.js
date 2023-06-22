@@ -1,8 +1,13 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_CORPORATE_COMPANY_PROFILE as baseURL } from 'constants/routingApi';
+import { BASE_URL_VEHICLE_MAKE as baseURL } from 'constants/routingApi';
 
-const PREFIX = 'CUSTOMER_MASTER_CORPORATE_LOV_';
-const moduleName = 'Company Profile';
+const PREFIX = 'VEHICLE_MAKE_';
+const moduleName = 'Vehicle Make Details';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';
@@ -12,7 +17,7 @@ export const RECIEVE_DATA_DETAIL_ACTION_CONSTANT = PREFIX + 'RECIEVE_DETAIL_DATA
 export const SAVE_DATA_ACTION_CONSTANT = PREFIX + 'SAVE_DATA';
 export const RESET_DATA_ACTION_CONSTANT = PREFIX + 'RESET_DATA';
 
-export const corporateLovDataActions = dataActions({
+export const vehicleMakeDetailsDataActions = dataActions({
     baseURL,
     moduleName,
     RECEIVE_DATA_LOADING_ACTION_CONSTANT,

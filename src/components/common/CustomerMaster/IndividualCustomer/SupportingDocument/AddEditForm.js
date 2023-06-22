@@ -17,7 +17,7 @@ const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { typeData, userId,setUploadedFile, uploadFile, listShowLoading, showGlobalNotification } = props;
+    const { typeData, userId,setUploadedFile, uploadFile, listShowLoading } = props;
 
 
     const onDrop = (e) => {
@@ -104,7 +104,7 @@ const AddEditForm = (props) => {
             </Row>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.uploadDragger}>
+                <div className={styles.uploadContainer} >
                         <Dragger customRequest={handleUpload}  {...uploadProps}>
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}

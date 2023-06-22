@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -86,7 +86,7 @@ const IndividualProfileBase = (props) => {
     const [form] = Form.useForm();
 
     const [formData, setFormData] = useState([]);
-    const [activeKey, setactiveKey] = useState([1]);
+    const [activeKey, setActiveKey] = useState([1]);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -128,8 +128,18 @@ const IndividualProfileBase = (props) => {
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
+        const restObj = {};
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
-        const data = { ...rest, customerId: 'CUS1686810869696', keyAccountDetails: { customerId: 'CUS1686810869696', accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { customerId: 'CUS1686810869696', personName: values.personName, postion: values.postion, companyName: values.companyName }, id: recordId, customerFormDocId: 'd54902cf-a716-4ae9-b08c-23f9371013bc', customerConsent: 'true' };
+
+        const data = {
+            ...rest,
+            customerId: 'CUS1686810869696',
+            keyAccountDetails: { customerId: 'CUS1686810869696', accountCode: values?.accountCode || null, accountName: values?.accountName, accountSegment: values?.accountSegment || null, accountClientName: values?.accountClientName || null, accountMappingDate: values?.accountMappingDate || null },
+            authorityRequest: { customerId: 'CUS1686810869696', personName: values.personName, postion: values.postion, companyName: values.companyName, remarks: values.remarks, id: recordId },
+            id: recordId,
+            customerFormDocId: 'd54902cf-a716-4ae9-b08c-23f9371013bc',
+            customerConsent: 'true',
+        };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -162,7 +172,7 @@ const IndividualProfileBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        return;
+        console.log('errorInfo', errorInfo);
     };
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
@@ -179,16 +189,6 @@ const IndividualProfileBase = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
-
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
 
     const formProps = {
         form,
@@ -211,13 +211,14 @@ const IndividualProfileBase = (props) => {
         uploadDocumentFile,
         saveDocumentData,
         userId,
+        showDataLoading,
     };
 
     const viewProps = {
         formData: indiviualData,
         styles,
         activeKey,
-        setactiveKey,
+        setActiveKey,
     };
 
     const handleFormValueChange = () => {

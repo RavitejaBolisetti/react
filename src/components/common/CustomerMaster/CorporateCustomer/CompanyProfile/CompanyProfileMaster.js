@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
@@ -19,6 +19,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'components/common/Common.module.css';
 
 import { corporateCompanyProfileDataActions } from 'store/actions/data/customerMaster/corporateCompanyProfileAction';
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 
 const mapStateToProps = (state) => {
     const {
@@ -28,6 +29,7 @@ const mapStateToProps = (state) => {
             CustomerMaster: {
                 CompanyProfile: { isLoaded: isDataLoaded = false, data: customerProfileData = [] },
             },
+            SupportingDocument: { isLoaded: isUploadDataLoaded = false, isLoading: isUploadDataLoading },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -61,6 +63,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchCompanyProfileData: corporateCompanyProfileDataActions.fetchList,
 
             saveData: corporateCompanyProfileDataActions.saveData,
+            uploadFile: supportingDocumentDataActions.uploadFile,
+            uploadListShowLoading: supportingDocumentDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -68,11 +72,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyProfileBase = (props) => {
-    const { listShowLoading, section, saveData, userId, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, fetchCompanyProfileData, isAppCategoryDataLoaded, appCategoryData, isDataLoaded, customerProfileData } = props;
+    const { listShowLoading, section, saveData, uploadFile, userId, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, fetchCompanyProfileData, isAppCategoryDataLoaded, appCategoryData, customerProfileData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, selectedCustomer } = props;
+    const { uploadListShowLoading } = props;
 
     const [form] = Form.useForm();
-    const [isFormVisible, setIsFormVisible] = useState(false);
+    const [uploadedFile, setUploadedFile] = useState();
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -108,26 +113,19 @@ const CompanyProfileBase = (props) => {
         form.resetFields();
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        setIsFormVisible(true);
     };
 
     const onFinish = (values) => {
         const recordId = customerProfileData?.id || '';
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
-        const data = { ...rest, customerId: customerProfileData.customerId, keyAccountDetails: { customerId: customerProfileData.customerId, accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { customerId: customerProfileData.customerId, personName: values.personName, postion: values.postion, companyName: values.companyName }, id: recordId };
+        const data = { ...rest, customerId: customerProfileData.customerId, keyAccountDetails: { customerId: customerProfileData.customerId, accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { customerId: customerProfileData.customerId, personName: values.personName, postion: values.postion, companyName: values.companyName }, customerFormDocId: uploadedFile, customerConsent: values.customerConsent, id: recordId };
 
         const onSuccess = (res) => {
             listShowLoading(false);
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
-            if (buttonData?.saveAndNewBtnClicked) {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            } else {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            }
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
         };
 
         const onError = (message) => {
@@ -152,7 +150,6 @@ const CompanyProfileBase = (props) => {
 
     const onCloseAction = () => {
         form.resetFields();
-        setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
 
@@ -165,6 +162,10 @@ const CompanyProfileBase = (props) => {
         styles,
         form,
         formData: customerProfileData,
+        uploadFile,
+        uploadListShowLoading,
+        uploadedFile,
+        setUploadedFile,
     };
 
     const viewProps = {

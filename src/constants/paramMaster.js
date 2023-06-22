@@ -60,10 +60,6 @@ export const PARAM_MASTER = {
         id: 'CUS_CAT',
         title: 'CUS_CAT',
     },
-    GENDER_CD: {
-        id: 'GENDER_CD',
-        title: 'GENDER_CD',
-    },
     MARITAL_STATUS: {
         id: 'MARITAL_STATUS',
         title: 'MARITAL_STATUS',
@@ -120,8 +116,36 @@ export const PARAM_MASTER = {
         id: 'REF',
         title: 'Referral',
     },
+    ADD_TYPE: {
+        id: 'ADD_TYPE',
+        title: 'ADD_TYPE',
+    },
+    GENDER_CD: {
+        id: 'GENDER_CD',
+        title: 'GENDER_CD',
+    },
+    OTF_SER: {
+        id: 'OTF_SER',
+        title: 'Referral',
+    },
     PURPOSE: {
         id: 'PURPOSE',
         title: 'PURPOSE',
+    },
+    REL_TYPE: {
+        id: 'REL_TYPE',
+        title: 'REL_TYPE',
+    },
+    YEAR_LIST: {
+        id: 'YEAR_LIST',
+        title: 'YEAR_LIST',
+    },
+    VEHCL_USAG: {
+        id: 'VEHCL_USAG',
+        title: 'VEHCL_USAG',
+    },
+    MONTH: {
+        id: 'MONTH',
+        title: 'Months of year',
     },
 };

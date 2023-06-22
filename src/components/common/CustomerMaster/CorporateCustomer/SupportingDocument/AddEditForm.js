@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -17,8 +17,7 @@ const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { typeData, userId,setUploadedFile, uploadFile, listShowLoading, showGlobalNotification } = props;
-
+    const { typeData, userId, setUploadedFile, uploadFile, listShowLoading, showGlobalNotification } = props;
 
     const onDrop = (e) => {
         console.log('Dropped files', e.dataTransfer.files);
@@ -102,10 +101,11 @@ const AddEditForm = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
+
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.uploadDragger}>
-                        <Dragger customRequest={handleUpload}  {...uploadProps}>
+                    <div style={{ border: 'red 1px solid' }}>
+                        <Dragger customRequest={handleUpload} {...uploadProps}>
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                                 imageStyle={{

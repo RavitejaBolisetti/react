@@ -16,40 +16,62 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onFamilyFinish, onFinishFailed, familyForm, onChange, showForm, setShowForm, setCustomerType, relationData, editedId, setEditedId } = props;
-    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode, onSearch } = props;
-    const [activeKey, setactiveKey] = useState([null]);
+    const { onFinish, onFinishFailed, form, onChange, showForm, setShowForm, setCustomerType, relationData, VIEW_ACTION } = props;
+    const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode, onSearch, isSearchLoading } = props;
+    const [activeKey, setactiveKey] = useState([]);
 
     const handleEdit = () => {
         setIsViewModeVisible(false);
     };
 
     const onCollapseChange = (values) => {
-        const isPresent = activeKey.includes(values);
-        if (isPresent) {
-            const newActivekeys = [];
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setactiveKey(newActivekeys);
+        if (VIEW_ACTION) {
+            setactiveKey(values);
         } else {
-            setactiveKey([...activeKey, values]);
+            if (typeof values === 'number') {
+                setactiveKey([values]);
+                return;
+            }
+            activeKey?.includes(values) ? setactiveKey('') : setactiveKey(values[values?.length - 1]);
         }
     };
 
     const addFunction = () => {
+        form.resetFields();
         setShowForm(true);
         setCustomerType('Yes');
-        setEditedId(() => editedId + 1);
-        familyForm.resetFields();
+        let id = Math.floor(Math.random() * 100000000 + 1);
+        form.setFieldsValue({
+            editedId: id,
+        });
     };
 
     const onEdit = (values) => {
         setEditedMode(true);
-        setCustomerType(false);
-        familyForm.setFieldsValue({
+        setShowForm(false);
+        if (values?.mnmCustomer === 'Yes') {
+            setCustomerType(true);
+        } else if (values?.mnmCustomer === 'No') {
+            setCustomerType(false);
+        }
+
+        form.setFieldsValue({
+            mnmCustomer: values?.mnmCustomer,
+            customerId: values?.customerId,
+            customerName: values?.customerName,
+            editedId: values?.editedId,
+            relationship: values?.relationship,
+            relationCode: values?.relationCode,
+            dateOfBirth: typeof values?.dateOfBirth === 'object' ? values?.dateOfBirth : dayjs(values?.dateOfBirth),
+            relationAge: values?.relationAge,
+            remarks: values?.remarks,
+        });
+    };
+
+    const onCancel = (values) => {
+        setEditedMode(false);
+        setShowForm(false);
+        form.setFieldsValue({
             mnmCustomer: values?.mnmCustomer,
             customerId: values?.customerId,
             customerName: values?.customerName,
@@ -73,16 +95,17 @@ const AddEditFormMain = (props) => {
     };
 
     const formProps = {
-        onFamilyFinish,
+        onFinish,
         onFinishFailed,
-        familyForm,
+        form,
         onChange,
         editedMode,
         onSave,
         customerType,
         relationData,
-        editedId,
         onSearch,
+        isSearchLoading,
+        onCancel,
     };
 
     return (
@@ -91,15 +114,18 @@ const AddEditFormMain = (props) => {
                 <Card className="">
                     <Space align="center" size={30}>
                         <Typography>Family Details</Typography>
-                        <Button type="primary" icon={<PlusOutlined />} onClick={addFunction} disabled={showForm || editedMode}>
-                            Add
-                        </Button>
+                        {!VIEW_ACTION && (
+                            <Button type="primary" icon={<PlusOutlined />} onClick={addFunction} disabled={showForm || editedMode}>
+                                Add
+                            </Button>
+                        )}
                     </Space>
                     {showForm || familyDetailList?.length > 0 ? <Divider /> : null}
                     <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
-                        {showForm && <FormContainer {...formProps} />}
+                        {showForm && !editedMode && <FormContainer {...formProps} />}
+                        {console.log(familyDetailList, 'FamilyList')}
                         {familyDetailList?.length > 0 &&
-                            familyDetailList?.map((item) => (
+                            familyDetailList?.map((item, index) => (
                                 <Collapse
                                     expandIcon={() => {
                                         if (activeKey.includes(item?.editedId)) {
@@ -109,7 +135,7 @@ const AddEditFormMain = (props) => {
                                         }
                                     }}
                                     activeKey={activeKey}
-                                    onChange={() => onCollapseChange(item?.editedId)}
+                                    onChange={(key) => onCollapseChange(key)}
                                     expandIconPosition="end"
                                     collapsible={editedMode ? 'disabled' : 'icon'}
                                 >
@@ -120,29 +146,36 @@ const AddEditFormMain = (props) => {
                                                     <Typography>
                                                         {item?.customerName} | {item?.relationship}
                                                     </Typography>
-                                                    <Space
-                                                        style={{ pointerEvents: editedMode ? 'none' : null }}
-                                                        onClick={() => {
-                                                            onEdit(item);
-                                                            onCollapseChange(item?.editedId);
-                                                        }}
-                                                    >
-                                                        <FiEdit color={editedMode ? 'grey' : '#ff3e5b'} style={{ margin: '0.25rem 0 0 0' }} />
-                                                        <Typography style={{ fontSize: '14px', margin: '0 0 0 0.5rem', color: editedMode ? 'grey' : '#ff3e5b' }}>Edit</Typography>
-                                                    </Space>
-                                                </Space>
 
-                                                {customerType ? <Typography>M&M user </Typography> : !customerType ? <Typography>Non-M&M user</Typography> : null}
+                                                    {!VIEW_ACTION && !showForm && (
+                                                        <Space
+                                                            style={{ cursor: 'pointer' }}
+                                                            onClick={(key) => {
+                                                                onEdit(item);
+                                                                // onCollapseChange(item?.editedId);
+                                                                onCollapseChange(index);
+                                                            }}
+                                                            // onChange={(key) => onCollapseChange(key)}
+                                                        >
+                                                            <FiEdit style={{ margin: '0.25rem 0 0 0' ,color: '#ff3e5b'}} />
+                                                            <Typography style={{ fontSize: '14px', margin: '0 0 0 0.5rem', color: '#ff3e5b' }}>Edit</Typography>
+                                                        </Space>
+                                                    )}
+                                                </Space>
+                                                {item?.mnmCustomer === 'Yes' ? <Typography>M&M user </Typography> : item?.mnmCustomer === 'No' ? <Typography>Non-M&M user</Typography> : null}
                                             </Space>
                                         }
-                                        key={item?.editedId}
+                                        key={index}
                                         style={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
                                     >
-                                        {editedMode ? <FormContainer {...formProps} item /> : <ViewDetail mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} />}
+                                        {editedMode && !showForm ? <FormContainer {...formProps} item /> : <ViewDetail mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} />}
                                     </Panel>
                                 </Collapse>
                             ))}
                     </Space>
+                    {/* <Button type="primary" onClick={() => onFinish()}>
+                        Submit
+                    </Button> */}
                 </Card>
             ) : (
                 <ViewDetail {...viewProps} />

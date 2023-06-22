@@ -21,15 +21,15 @@ import { ExchangeVehiclesMaster } from './ExchangeVehicles';
 import { AddOnDetailsMaster } from './AddOnDetails';
 import { OtfDetailsMaster } from './OtfDetails';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
-import { OTFDrawerFormButton } from 'components/common/Button';
+import { OTFFormButton } from 'components/common/Button';
 
-import OTFStatusBar from './utils/OTFStatusBar';
+import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { MovetoNextForm } from './utils/OTFUtils';
 
 import { LeftSidebar } from './LeftSidebar';
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible, formActionType, setFormActionType, isVisible } = props;
+    const { onCloseAction, isViewModeVisible, formActionType, setFormActionType, isVisible, formData, setFormData, isNewDataLoading } = props;
     const [currentSection, setCurrentSection] = useState(OTF_SECTION.OTF_DETAILS.id);
     const [section, setSection] = useState();
 
@@ -135,6 +135,9 @@ const AddEditFormMain = (props) => {
         leftTimeline,
         setleftTimeline,
         isViewModeVisible,
+        formData,
+        setFormData,
+        isNewDataLoading,
     };
 
     const renderElement = () => {
@@ -207,7 +210,7 @@ const AddEditFormMain = (props) => {
                             </Row>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <OTFDrawerFormButton {...otfButtonProps} />
+                            <OTFFormButton {...otfButtonProps} />
                         </Col>
                     </Row>
                 </Col>

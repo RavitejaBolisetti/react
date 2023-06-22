@@ -4,17 +4,15 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Space, Collapse, Typography, Descriptions, Divider, Row, Col } from 'antd';
+import { Space, Collapse, Typography, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { FaRegUserCircle } from 'react-icons/fa';
 import Svg from 'assets/images/Filter.svg';
-import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { setactiveKey, activeKey, styles, formData} = props;
+    const { setActiveKey, activeKey, styles, formData } = props;
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -27,9 +25,9 @@ const ViewDetailMain = (props) => {
                     newActivekeys.push(item);
                 }
             });
-            setactiveKey(newActivekeys);
+            setActiveKey(newActivekeys);
         } else {
-            setactiveKey([...activeKey, values]);
+            setActiveKey([...activeKey, values]);
         }
     };
     const viewProps = {
@@ -91,7 +89,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Usage/Application Sub-Category">{formData?.subCategory}</Descriptions.Item>
                             <Descriptions.Item label="Customer Category">{formData?.customerCategory}</Descriptions.Item>
                         </Descriptions>
-                        {formData?.customerCategory == 'Fleet' ? (
+                        {formData?.customerCategory === 'Fleet' ? (
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Business Details">{formData?.buisnessDetails}</Descriptions.Item>
                                 <Descriptions.Item label="Vehicle Deployment Detail">{formData?.vehicleDetails}</Descriptions.Item>

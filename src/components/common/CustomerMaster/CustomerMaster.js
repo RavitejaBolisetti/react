@@ -46,7 +46,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        data,
+        data: data?.customerMasterDetails || [],
         isLoading,
         moduleTitle,
         isConfigDataLoaded,
@@ -82,6 +82,8 @@ const CustomerMasterMain = (props) => {
 
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
     const [selectedCustomer, setSelectedCustomer] = useState();
+    const [selectedCustomerId, setSelectedCustomerId] = useState();
+    const [shouldResetForm, setShouldResetForm] = useState(false);
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -90,7 +92,6 @@ const CustomerMasterMain = (props) => {
 
     const [form] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
-
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
@@ -103,6 +104,7 @@ const CustomerMasterMain = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
     const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
+    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const defaultExtraParam = [
         {
@@ -129,11 +131,21 @@ const CustomerMasterMain = (props) => {
         },
     ];
 
+    const onSuccessAction = (res) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setShowDataLoading(false);
+    };
+
+    const onErrorAction = (res) => {
+        showGlobalNotification({ message: res?.responseMessage });
+        setShowDataLoading(false);
+    };
+
     useEffect(() => {
         const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
+        setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
         setDefaultSection(defaultSection);
         setSection(defaultSection);
-        setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType]);
 
@@ -144,16 +156,6 @@ const CustomerMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
-
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        setShowDataLoading(false);
-    };
-
-    const onErrorAction = (res) => {
-        showGlobalNotification({ message: res?.responseMessage });
-        setShowDataLoading(false);
-    };
 
     useEffect(() => {
         if (!isConfigDataLoaded && !isConfigLoading && userId) {
@@ -172,18 +174,19 @@ const CustomerMasterMain = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
         form.resetFields();
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION || buttonAction === NEXT_EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
         setIsFormVisible(true);
 
-        if (buttonAction === NEXT_ACTION) {
+        if (buttonAction === NEXT_ACTION || buttonAction === NEXT_EDIT_ACTION) {
             const section = Object.values(sectionName)?.find((i) => i.id > currentSection);
             section && setCurrentSection(section?.id);
         }
 
-        if (buttonAction === VIEW_ACTION || !formVisible) {
+        if (buttonAction === ADD_ACTION || buttonAction === EDIT_ACTION || buttonAction === VIEW_ACTION) {
             setSelectedCustomer(record);
+            record && setSelectedCustomerId(record?.customerId);
             defaultSection && setCurrentSection(defaultSection);
         }
     };
@@ -206,6 +209,7 @@ const CustomerMasterMain = (props) => {
 
     const onSearchHandle = (value) => {
         setShowDataLoading(true);
+        fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
     };
 
     const handleChange = (selectedvalue) => {
@@ -219,11 +223,20 @@ const CustomerMasterMain = (props) => {
         setFilterString({ ...filterString, searchParam: event.target.value });
     };
 
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
+
     const onCloseAction = () => {
         form.resetFields();
+        form.setFieldsValue({});
+
         setIsFormVisible(false);
         setFormActionType(defaultFormActionType);
         setButtonData(defaultBtnVisiblity);
+        setSelectedCustomer();
+        setSelectedCustomerId();
+        setShouldResetForm(true);
     };
 
     const drawerTitle = useMemo(() => {
@@ -247,7 +260,6 @@ const CustomerMasterMain = (props) => {
         titleOverride: drawerTitle.concat(moduleTitle),
         tableData: data,
         customerType,
-
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
@@ -258,12 +270,16 @@ const CustomerMasterMain = (props) => {
         handleButtonClick,
         defaultFormActionType,
         defaultBtnVisiblity,
+        selectedCustomerId,
+        setSelectedCustomerId,
         selectedCustomer,
         setSelectedCustomer,
         section,
         currentSection,
         sectionName,
         setCurrentSection,
+        shouldResetForm,
+        handleFormValueChange,
     };
 
     const selectProps = {
