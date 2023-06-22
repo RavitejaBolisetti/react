@@ -146,8 +146,10 @@ const AddEditFormMain = (props) => {
                                 }
                                 key="1"
                             >
-                                <UploadUtils />
-                                <Row gutter={16}>
+                                <div className={styles.uploadDragger}>
+                                    <UploadUtils isViewModeVisible={true} />
+                                </div>
+                                {/* <Row gutter={16}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <div className={styles.uploadDragger}>
                                             <Dragger customRequest={handleUpload} {...uploadProps}>
@@ -169,12 +171,11 @@ const AddEditFormMain = (props) => {
                                                         </>
                                                     }
                                                 />
-
                                                 <Button type="primary">Upload File</Button>
                                             </Dragger>
                                         </div>
                                     </Col>
-                                </Row>
+                                </Row> */}
 
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
