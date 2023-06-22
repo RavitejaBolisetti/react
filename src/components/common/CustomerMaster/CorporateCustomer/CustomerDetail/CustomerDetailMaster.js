@@ -138,15 +138,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         if (userId && !isCorporateLovDataLoaded) {
             fetchCorporateLovList({ setIsLoading: listCorporateLovShowLoading, userId });
         }
-        const extraParams = [
-            {
-                key: 'corporateLov',
-                title: 'corporateLov',
-                value: corporateLovData,
-                name: 'corporateLov',
-            },
-        ];
-        fetchCorporateLovList({ setIsLoading: listCorporateLovShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isCorporateLovDataLoaded]);
     
