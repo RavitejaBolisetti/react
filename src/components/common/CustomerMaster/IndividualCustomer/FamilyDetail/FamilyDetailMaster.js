@@ -88,7 +88,7 @@ const FamilyDetailMasterBase = (props) => {
         {
             key: 'customerId',
             title: 'Customer',
-            value: 'CUS1686811036620',
+            value: 'CUS1687367658058',
             name: 'customerId',
         },
     ];
@@ -144,7 +144,7 @@ const FamilyDetailMasterBase = (props) => {
 
     const onSave = () => {
         let values = form.getFieldsValue();
-        setFamilyDetailsList((items) => [{ ...values, customerId: 'CUS1686811036620', dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
+        setFamilyDetailsList((items) => [{ ...values, customerId: 'CUS1687367658058', dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
         if (editedMode) {
             const upd_obj = familyDetailList?.map((obj) => {
                 if (obj?.editedId === values?.editedId) {
@@ -202,6 +202,7 @@ const FamilyDetailMasterBase = (props) => {
 
     useEffect(() => {
         if (familyData?.length > 0) {
+            setFamilyDetailsList(()=> [])
             for (let i = 0; i < familyData?.length; i++) {
                 setFamilyDetailsList((object) => [...object, { ...familyData[i], editedId: i ,relationCustomerId: familyData[i]?.relationCustomerId ? familyData[i]?.relationCustomerId  : ""}]);
             }
