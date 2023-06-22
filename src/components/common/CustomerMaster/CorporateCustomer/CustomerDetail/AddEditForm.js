@@ -59,7 +59,7 @@ const AddEditFormMain = (props) => {
             <Card style={{ backgroundColor: '#F2F2F2' }}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    {editMode ? (
+                        {/* {editMode ? (
                                 <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
                                     <Input
                                         placeholder={preparePlaceholderText('mobile number')}
@@ -81,14 +81,15 @@ const AddEditFormMain = (props) => {
                                     />
                                 </Form.Item>
                             ) : (
-                                <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
-                                    <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small"  />
-                                </Form.Item>
-                            )}
+                               
+                            )} */}
+                        <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
+                            <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
+                        </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                            <Select placeholder="Select"  defaultValue={{ label: 'Individual', value: 'IND' }}  allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
+                            <Select placeholder="Select" defaultValue={{ label: 'Individual', value: 'IND' }} allowClear ></Select>
                         </Form.Item>
                     </Col>
                 </Row>

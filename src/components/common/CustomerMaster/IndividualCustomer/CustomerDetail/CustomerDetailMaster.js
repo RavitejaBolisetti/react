@@ -200,6 +200,7 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const viewProps = {
+        formActionType,
         formData,
         styles,
     };

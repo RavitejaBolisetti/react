@@ -119,7 +119,7 @@ const AddEditFormMain = (props) => {
                 <Card style={{ backgroundColor: '#F2F2F2' }}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            {editMode ? (
+                            {/* {editMode ? (
                                 <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
                                     <Input
                                         placeholder={preparePlaceholderText('mobile number')}
@@ -141,13 +141,14 @@ const AddEditFormMain = (props) => {
                                     />
                                 </Form.Item>
                             ) : (
-                                <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
-                                    <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
-                                </Form.Item>
-                            )}
+                               
+                            )} */}
+                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
+                                <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
+                            </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Customer Type" initialValue={formData?.customerType} name="customerType" data-testid="customerType">
+                            <Form.Item label="Customer Type" initialValue={formData?.customerType} name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer type')]}>
                                 <Select placeholder="Select" disabled defaultValue={{ label: 'Individual', value: 'IND' }} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
                             </Form.Item>
                         </Col>
@@ -244,12 +245,12 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Do you want to contacted over whatsapp?" initialValue={formData?.whatsappCommunicationIndicator === 0 || 0 ? 0 : 1} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
-                                <Switch value={formData?.whatsappCommunicationIndicator  === 0 || 0 ? 0 : 1} checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} />
+                                <Switch value={formData?.whatsappCommunicationIndicator === 0 || 0 ? 0 : 1} checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Want to use Mobile no as whatsapp no?" initialValue={formData?.mobileNumberAsWhatsappNumber === 0 || 0 ? 0 : 1} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
-                                <Switch value={formData?.mobileNumberAsWhatsappNumber  === 0 || 0 ? 0 : 1} checkedChildren="Yes" unCheckedChildren="No" onChange={copyWhatsNo} />
+                                <Switch value={formData?.mobileNumberAsWhatsappNumber === 0 || 0 ? 0 : 1} checkedChildren="Yes" unCheckedChildren="No" onChange={copyWhatsNo} />
                             </Form.Item>
                         </Col>
                     </Row>
