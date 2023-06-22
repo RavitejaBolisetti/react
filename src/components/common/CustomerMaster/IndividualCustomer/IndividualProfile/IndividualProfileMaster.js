@@ -123,8 +123,9 @@ const IndividualProfileBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
+
     useEffect(() => {
-        if (userId ) {
+        if (userId) {
             const extraParam = [
                 {
                     key: 'docId',
@@ -139,8 +140,6 @@ const IndividualProfileBase = (props) => {
     }, [userId]);
 
     useEffect(() => {
-        fetchApplicationCategorization({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_CAT.id });
-        fetchApplicationSubCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_SUB_CAT.id });
         fetchCustomerCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_CAT.id });
         fetchGenderCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.GENDER_CD.id });
         fetchMartialStatus({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.MARITAL_STATUS.id });

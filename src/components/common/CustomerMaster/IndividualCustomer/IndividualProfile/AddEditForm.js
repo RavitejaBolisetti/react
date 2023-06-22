@@ -216,7 +216,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Occupation" initialValue={formData?.occuption} name="occuption">
+                                        <Form.Item label="Occupation" initialValue={formData?.occuption || ''} name="occuption">
                                             <Select value={null} placeholder={preparePlaceholderSelect('occupation')} {...disabledProps}>
                                                 {appCategoryData?.OCC_TYPE?.map((item) => (
                                                     <Option key={'ct' + item.value} value={item.value}>
@@ -227,7 +227,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Annual Income" initialValue={formData?.annualIncome} name="annualIncome">
+                                        <Form.Item label="Annual Income" initialValue={formData?.annualIncome || ''} name="annualIncome">
                                             <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
                                                 {appCategoryData?.Annual_Income?.map((item) => (
                                                     <Option key={'ct' + item.value} value={item.value}>

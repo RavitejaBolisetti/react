@@ -166,7 +166,7 @@ const AddEditFormMain = (props) => {
             case OTF_SECTION.REFERRALS.id: {
                 return <ReferralsMaster {...RenderElementCommonProps} />;
             }
-            case OTF_SECTION.LOYALITY_SCHEME.id: {
+            case OTF_SECTION.LOYALTY_SCHEME.id: {
                 return <LoyaltySchemeMaster {...RenderElementCommonProps} />;
             }
             case OTF_SECTION.INVOICE_INFORMATION.id: {
