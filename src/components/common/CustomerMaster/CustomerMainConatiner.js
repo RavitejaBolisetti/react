@@ -19,6 +19,7 @@ import styles from 'components/common/Common.module.css';
 
 const CustomerMainConatinerMain = (props) => {
     const { customerType, currentSection } = props;
+    console.log('🚀 ~ file: CustomerMainConatiner.js:22 ~ CustomerMainConatinerMain ~ currentSection:', currentSection);
 
     const myProps = {
         ...props,
@@ -50,7 +51,7 @@ const CustomerMainConatinerMain = (props) => {
                         return <IndividualSupportingDocument {...myProps} />;
                     }
                     default: {
-                        return <IndivisualCustomerDetailMaster {...myProps} />;
+                        return;
                     }
                 }
             }
@@ -75,7 +76,7 @@ const CustomerMainConatinerMain = (props) => {
                         return <IndividualSupportingDocument {...myProps} />;
                     }
                     default: {
-                        return <CorporateCustomerDetailMaster {...myProps} />;
+                        return;
                     }
                 }
             }

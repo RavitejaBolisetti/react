@@ -7,7 +7,7 @@ import { React } from 'react';
 import { Row, Col, Form, Input, Checkbox, Space, Card } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateNumberWithTwoDecimalPlaces, validationNumber, valueBetween0to100 } from 'utils/validation';
+import { validationNumber, valueBetween0to100 } from 'utils/validation';
 
 const { TextArea } = Input;
 
