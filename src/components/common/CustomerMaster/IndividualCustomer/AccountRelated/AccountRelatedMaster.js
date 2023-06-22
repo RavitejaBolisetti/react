@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             CustomerMaster: {
-                IndivisualAccounts: { isLoaded = false, isLoading, data },
+                IndivisualAccounts: { isLoaded: isDataLoaded = false, isLoading, data: accountData = {} },
             },
         },
     } = state;
@@ -34,8 +34,8 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isLoaded,
-        data,
+        isDataLoaded,
+        accountData,
         isLoading,
         moduleTitle,
     };
@@ -57,80 +57,55 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AccountRelatedMasterBase = (props) => {
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, moduleTitle, isLoaded, data, saveData } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
-
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
-
-    const [showDataLoading, setShowDataLoading] = useState(true);
-    const [refershData, setRefershData] = useState(false);
-
-    const [form] = Form.useForm();
-
-    const [formData, setFormData] = useState([]);
-    const [isFormVisible, setIsFormVisible] = useState(false);
+    const { form, handleFormValueChange } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, accountData, saveData, isDataLoaded, resetData } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, selectedCustomerId, handleButtonClick } = props;
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const indivisualCustomer = 'CUS1687196336704';
     const extraParams = [
         {
             key: 'customerId',
             title: 'customerId',
-            value: indivisualCustomer,
+            value: selectedCustomerId,
             name: 'Customer ID',
         },
     ];
 
-    const errorAction = (message) => {
-        showGlobalNotification(message);
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
     };
+
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        setRefershData(false);
-        setShowDataLoading(false);
-        forceUpdate();
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     useEffect(() => {
-        if (userId && !isLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, errorAction });
+        if (isDataLoaded) {
+            form.setFieldsValue({ ...accountData });
+        }
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded]);
+
+    useEffect(() => {
+        if (userId && selectedCustomerId) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isLoaded]);
-
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormData([]);
-
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-
-        record && setFormData(record);
-        setIsFormVisible(true);
-    };
+    }, [userId, selectedCustomerId]);
 
     const onFinish = (values) => {
-        const data = { ...values, customerId: 'CUS1687196336704' };
+        const data = { ...values, customerId: selectedCustomerId };
 
         const onSuccess = (res) => {
             form.resetFields();
-            setShowDataLoading(true);
-
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, errorAction });
-
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
             setButtonData({ ...buttonData, formBtnActive: false });
-            if (buttonData?.saveAndNewBtnClicked) {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            } else {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            }
         };
 
         const onError = (message) => {
@@ -139,7 +114,7 @@ export const AccountRelatedMasterBase = (props) => {
 
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: accountData?.customerId ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -152,33 +127,14 @@ export const AccountRelatedMasterBase = (props) => {
         return;
     };
 
-    const onCloseAction = () => {
-        form.resetFields();
-        setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
-    };
-
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
         form,
-        formData: data,
+        formData: accountData,
         formActionType,
         setFormActionType,
         onFinish,
         onFinishFailed,
-        isVisible: isFormVisible,
-        onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
-        tableData: data,
+        tableData: accountData,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -187,14 +143,12 @@ export const AccountRelatedMasterBase = (props) => {
         setButtonData,
         handleButtonClick,
     };
+
     const viewProps = {
-        formData: data,
+        formData: accountData,
         styles,
     };
 
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>

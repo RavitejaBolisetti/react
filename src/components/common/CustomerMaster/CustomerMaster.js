@@ -222,6 +222,10 @@ const CustomerMasterMain = (props) => {
         setFilterString({ ...filterString, searchParam: event.target.value });
     };
 
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
+
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -272,6 +276,7 @@ const CustomerMasterMain = (props) => {
         sectionName,
         setCurrentSection,
         shouldResetForm,
+        handleFormValueChange,
     };
 
     const selectProps = {
