@@ -1,3 +1,7 @@
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 import React, { useState } from 'react';
 import { ViewIndividualAddressDetails } from './ViewIndividualAddressDetails';
 import { Button, Collapse, Space, Typography, Row, Col, Checkbox, Divider } from 'antd';
@@ -6,6 +10,7 @@ import { FiEdit } from 'react-icons/fi';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 import AddEditForm from './AddEditForm';
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -55,12 +60,13 @@ const ViewAddressList = (props) => {
     };
 // console.log('addressData', addressData)
     return (
-        <div>
+        <div className={styles.sectionborder}>
             {addressData?.length > 0 &&
                 addressData?.map((data, i) =>  {
                     console.log("data", data) 
                     return (
-                        <Collapse key={data?.addressType + data?.addressType} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
+                        
+                        <Collapse className={styles.innerCollapse} key={data?.addressType + data?.addressType} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
                             <Panel
                                 key={i}
                                 header={
@@ -68,7 +74,7 @@ const ViewAddressList = (props) => {
                                         <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                                             <Space>
                                                 <Text strong> {`${data?.addressType ? data?.addressType : ''} `}</Text>
-                                                {formActionType?.editMode && ( <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing}>
+                                                {formActionType?.editMode && ( <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing} className={styles.buttonEdit}>
                                                     Edit{' '}
                                                 </Button> )}
                                             </Space>
