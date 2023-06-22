@@ -12,7 +12,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { setActiveKey, activeKey, styles, formData } = props;
+    const { setActiveKey, activeKey, styles, formData, viewDocument } = props;
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -65,7 +65,7 @@ const ViewDetailMain = (props) => {
                     >
                         <Descriptions {...viewProps}>
                             <div>
-                                <img src={Svg} alt="message icon" />
+                                <img width="500" height="200" src={`data:image/png;base64,${viewDocument?.base64}`} />{' '}
                             </div>
                             <br />
                             <br />

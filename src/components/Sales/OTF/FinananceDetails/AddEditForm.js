@@ -4,40 +4,24 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Col, Input, Form, Row, Select, Card, DatePicker, Space, Button } from 'antd';
+import { Col, Input, Form, Row, Select, Card, DatePicker, Space } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import dayjs from 'dayjs';
 
 import styles from 'components/common/Common.module.css';
-import { validationNumber } from 'utils/validation';
 
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, onFinish, onFinishFailed, FinanceLovData } = props;
-    const { buttonData, setButtonData } = props;
-
-    const { setIsViewModeVisible } = props;
+    const { formData, FinanceLovData } = props;
     const [selected, setSelected] = useState();
-
-    const handleEdit = () => {
-        setIsViewModeVisible(false);
-    };
 
     const datePickerStyle = {
         width: '100%',
     };
 
     const handleDOChange = (item) => {
-        console.log(item);
         setSelected(item);
-    };
-
-    const viewProps = {
-        styles,
-        onCloseAction,
-        handleEdit,
-        formData,
     };
 
     const selectProps = {
@@ -56,7 +40,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formData?.financier} label="Financier" name="financier" placeholder={preparePlaceholderSelect('Select')}>
-                                            <Select disabled={false} loading={false} placeholder="Select" allowClear>
+                                            <Select disabled={false} loading={false} placeholder="Select" {...selectProps}>
                                                 {FinanceLovData?.map((item) => (
                                                     <Option key={item?.key} value={item?.key}>
                                                         {item?.value}
@@ -90,7 +74,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formData?.doReceived} label="D.O. Recived" name="doReceived">
-                                            <Select onChange={handleDOChange} placeholder="Select" allowClear>
+                                            <Select onChange={handleDOChange} placeholder="Select" {...selectProps}>
                                                 <Option value="yes">Yes</Option>
                                                 <Option value="no">No</Option>
                                             </Select>

@@ -4,10 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Card, Descriptions, Skeleton } from 'antd';
+import { Card, Descriptions } from 'antd';
 
 const ViewDetailMain = (props) => {
-    const { styles, customerForm, isLoyaltySchemeDataLoaded } = props;
+    const { styles, customerForm } = props;
     const viewProps = {
         bordered: false,
         colon: false,

@@ -1789,7 +1789,8 @@
     padding-bottom: 20px !important;
 }
 
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker {
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker,
+.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-item .ant-form-item-control .ant-picker {
     height: 36px;
     border-radius: 4px;
     padding: 5px 12px;
@@ -1810,7 +1811,9 @@
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker:hover,
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker-focused {
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker-focused,
+.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-item .ant-form-item-control .ant-picker:hover,
+.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-item .ant-form-item-control .ant-picker-focused {
     border-color: #0b0b0c;
     box-shadow: none;
 }
@@ -1896,6 +1899,54 @@
 .drawerBodyRight :global .ant-input[disabled]:hover,
 .drawerBodyRight :global .ant-select-selector[disabled] {
     border-color: #e6e6e6 !important;
+}
+
+.drawerBodyRight :global .ant-upload-wrapper .ant-upload-drag {
+    border: 1px dashed #b5b5b5;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-card .ant-card-body {
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 6px;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-card .ant-card-body .ant-space button {
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-space-horizontal .ant-avatar.ant-avatar-icon {
+    width: 40px;
+    height: 40px;
+    line-height: 44px;
+    font-size: 30px;
+    background-color: #70C922;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-space-horizontal .ant-space-item h5 {
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #0B0B0C;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-space-vertical {
+    gap: 20px !important;
+    margin-bottom: 0;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-space-vertical .ant-space-horizontal {
+    gap: 10px !important;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-space-horizontal .ant-space-item span.ant-typography {
+    color: #0B0B0C;
+    font-size: 12px;
+    line-height: 20px;
 }
 
 .drawerBodyRight .uploadDragger {
@@ -2048,6 +2099,11 @@
     padding-top: 3px;
 }
 
+.drawerBodyRight .accordianContainer :global .ant-space-item .ant-collapse-item .ant-card {
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
 /* .viewDrawerContainer {
     border: 1px solid red;
 } */
@@ -2168,6 +2224,14 @@
     line-height: 24px;
 }
 
+.dashedBorder {
+    border: 1px dashed #B5B5B5 !important;
+}
+
+.borderRadiusSix {
+    border-radius: 6px !important;
+}
+
 .userCircle {
     color: #ff3e5b !important;
     margin-top: 3px !important;
@@ -2245,6 +2309,37 @@
 
 .drawerBodyRight .uploadContainer {
     margin-bottom: 20px;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-empty-normal {
+    margin-block: 0px;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-empty .ant-empty-image {
+    display: none;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-empty .ant-empty-description {
+    margin-bottom: 20px;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #e6e6e6;
+    border: 1px solid #b5b5b6;
+    border-radius: 6px;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item {
+    margin-top: 0px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item:hover {
+    background-color: transparent;
 }
 
 .cardInsideBox {

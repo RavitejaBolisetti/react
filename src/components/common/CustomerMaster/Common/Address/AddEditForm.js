@@ -6,7 +6,6 @@
 import React, { useState, useEffect } from 'react';
 
 import { Row, Col, Checkbox, Button, Form, Input, Select, Space, AutoComplete } from 'antd';
-
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace, validatePincodeField, validateMobileNoField, validateLettersWithWhitespaces } from 'utils/validation';
 import { addressType } from 'constants/modules/CustomerMaster/individualProfile';
@@ -22,8 +21,6 @@ const AddEditForm = (props) => {
     const disabledProps = { disabled: formActionType?.editMode && formData?.partyCategory === 'Principal' ? true : false };
 
     const [options, setOptions] = useState(false);
-    /*visiblity of drawer   */
-    const [isVisible, setIsVisible] = useState(true);
     const [pinSearchData, setPinSearchData] = useState({});
 
     const onErrorAction = (res) => {
@@ -41,10 +38,6 @@ const AddEditForm = (props) => {
         setOptions(pinOption);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pincodeData]);
-    useEffect(() => {
-        setOptions();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isVisible]);
 
     const handleOnSelect = (key) => {
         const selectedPinCode = pincodeData?.find((i) => i.id === key);
@@ -144,7 +137,6 @@ const AddEditForm = (props) => {
                 console.error('err', err);
             });
     };
-
 
     return (
         <>

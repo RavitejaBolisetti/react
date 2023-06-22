@@ -60,7 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const InvoiceDetailsMasterBase = (props) => {
     const { invoiceData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { section,selectedOrderId, formActionType, handleFormValueChange } = props;
+    const { section, selectedOrderId } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
