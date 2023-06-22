@@ -25,15 +25,8 @@ const AddEditFormMain = (props) => {
     };
 
     const onCollapseChange = (values) => {
-        if (VIEW_ACTION) {
-            setactiveKey(values);
-        } else {
-            if (typeof values === 'number') {
-                setactiveKey([values]);
-                return;
-            }
-            activeKey?.includes(values) ? setactiveKey('') : setactiveKey(values[values?.length - 1]);
-        }
+        if (editedMode) return;
+        setactiveKey((prev) => (prev === values ? '' : values));
     };
 
     const addFunction = () => {
@@ -46,8 +39,9 @@ const AddEditFormMain = (props) => {
         });
     };
 
-    const onEdit = (values) => {
+    const onEdit = (values, index) => {
         setEditedMode(true);
+        setactiveKey(index);
         setShowForm(false);
         if (values?.mnmCustomer === 'Yes') {
             setCustomerType(true);
@@ -112,10 +106,10 @@ const AddEditFormMain = (props) => {
         <>
             {!isViewModeVisible ? (
                 <Card className="">
-                    <Space align="center" size={30}>
+                    <Space align="center" size={30} style={{marginBottom: showForm || familyDetailList?.length > 0 ? '0' : '16px'}}>
                         <Typography>Family Details</Typography>
                         {!VIEW_ACTION && (
-                            <Button type="primary" icon={<PlusOutlined />} onClick={addFunction} disabled={showForm || editedMode}>
+                            <Button type="primary" icon={<PlusOutlined />} onClick={addFunction} disabled={showForm || editedMode} >
                                 Add
                             </Button>
                         )}
@@ -123,52 +117,39 @@ const AddEditFormMain = (props) => {
                     {showForm || familyDetailList?.length > 0 ? <Divider /> : null}
                     <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
                         {showForm && !editedMode && <FormContainer {...formProps} />}
-                        {console.log(familyDetailList, 'FamilyList')}
                         {familyDetailList?.length > 0 &&
                             familyDetailList?.map((item, index) => (
                                 <Collapse
                                     expandIcon={() => {
-                                        if (activeKey.includes(item?.editedId)) {
-                                            return <MinusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
+                                        if (activeKey === item?.editedId) {
+                                            return <MinusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px', margin:'10px 0 0 0' }} />;
                                         } else {
-                                            return <PlusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
+                                            return <PlusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px', margin:'10px 0 0 0' }} />;
                                         }
                                     }}
                                     activeKey={activeKey}
-                                    onChange={(key) => onCollapseChange(key)}
+                                    onChange={() => onCollapseChange(index)}
                                     expandIconPosition="end"
-                                    collapsible={editedMode ? 'disabled' : 'icon'}
                                 >
                                     <Panel
                                         header={
-                                            <Space style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }} size="large">
-                                                <Space>
+                                            <Space style={{ display: 'flex', width:'100%', justifyContent: 'space-between',alignItems:'center' }} size="large">
+                                                <Space style={{ display: 'flex', justifyContent: 'space-between',alignItems:'center' }}>
                                                     <Typography>
                                                         {item?.customerName} | {item?.relationship}
                                                     </Typography>
 
                                                     {!VIEW_ACTION && !showForm && (
-                                                        // <Space
-                                                        //     style={{ cursor: 'pointer' }}
-                                                        //     onClick={(key) => {
-                                                        //         onEdit(item);
-                                                        //         // onCollapseChange(item?.editedId);
-                                                        //         onCollapseChange(index);
-                                                        //     }}
-                                                        //     // onChange={(key) => onCollapseChange(key)}
-                                                        // >
-                                                        //     <span className={styles.editButton}>
-                                                        //     <FiEdit />
-                                                        //     <Typography >Edit</Typography>
-                                                        //     </span>
-                                                        // </Space>
-                                                        <Button onClick={(key) => {
-                                                            onEdit(item);
-                                                            // onCollapseChange(item?.editedId);
-                                                            onCollapseChange(index);
-                                                        }} icon={<FiEdit />} type="link" className="buttomEdit">
-                                                        Edit
-                                                    </Button>
+                                                        <Button
+                                                            type="secondary"
+                                                            icon={<FiEdit/>}
+                                                            onClick={() => {
+                                                                onEdit(item, index);
+                                                            }}
+                                                           // disabled={editedMode}
+                                                        >
+                                                            Edit
+                                                        </Button>
                                                     )}
                                                 </Space>
                                                 <span className="headerTxt">
@@ -184,9 +165,6 @@ const AddEditFormMain = (props) => {
                                 </Collapse>
                             ))}
                     </Space>
-                    {/* <Button type="primary" onClick={() => onFinish()}>
-                        Submit
-                    </Button> */}
                 </Card>
             ) : (
                 <ViewDetail {...viewProps} />
