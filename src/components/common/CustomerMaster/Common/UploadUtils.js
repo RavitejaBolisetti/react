@@ -7,7 +7,7 @@ const { Dragger } = Upload;
 const { Text, Title } = Typography;
 
 const UploadUtils = (props) => {
-    const { uploadTitle, uploadDescription, uploadBtnName, isViewModeVisible } = props;
+    const { uploadTitle, uploadDescription, uploadBtnName, isViewModeVisible, uploadImgTitle } = props;
 
     return (
         <>
@@ -43,7 +43,7 @@ const UploadUtils = (props) => {
                             <Space>
                                 <Avatar icon={<HiCheck />} />
                                 <div>
-                                    <Title level={5}>Upload Successful</Title>
+                                    <Title level={5}>{uploadImgTitle || 'Profile Picture'}</Title>
                                     <Text>File type should be .png and .jpg and max file size to be 5Mb</Text>
                                 </div>
                             </Space>
