@@ -75,6 +75,7 @@ const VehicleDetailsMasterMain = (props) => {
 
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setformData] = useState({});
+    const [openAccordian, setOpenAccordian] = useState();
 
     const [tooltTipText, settooltTipText] = useState();
 
@@ -213,6 +214,8 @@ const VehicleDetailsMasterMain = (props) => {
         form,
         onFinish,
         onFinishFailed,
+        openAccordian,
+        setOpenAccordian,
     };
     const viewProps = {
         activeKey,

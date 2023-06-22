@@ -24,11 +24,11 @@ const { Option } = Select;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { activeKey, formData, onFinish, onFinishFailed, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
+    const { activeKey, formData, openAccordian, setOpenAccordian, onFinish, onFinishFailed, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
     const [optionForm] = Form.useForm();
 
     const [isReadOnly, setIsReadOnly] = useState(false);
-    const [openAccordian, setOpenAccordian] = useState();
+
     const [optionsServicesMapping, setoptionsServicesMapping] = useState([
         { serviceName: 'tax', amount: 200 },
         { serviceName: 'shaka', amount: 1000 },
@@ -78,6 +78,7 @@ const AddEditFormMain = (props) => {
         selectedOrderId,
         onErrorAction,
         formData,
+        setOpenAccordian,
     };
 
     return (

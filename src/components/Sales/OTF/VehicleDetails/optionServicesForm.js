@@ -11,7 +11,7 @@ import styles from 'components/common/Common.module.css';
 import { validateRequiredInputField } from 'utils/validation';
 
 const OptionServicesFormMain = (props) => {
-    const { handleCancel, showGlobalNotification, selectedOrderId, onErrorAction, formData, fetchList, userId, listShowLoading, saveData, onSuccessAction, optionForm, optionsServicesMapping, setoptionsServicesMapping } = props;
+    const { handleCancel, showGlobalNotification, selectedOrderId, onErrorAction, formData, fetchList, userId, listShowLoading, saveData, onSuccessAction, optionForm, optionsServicesMapping, setoptionsServicesMapping, setOpenAccordian } = props;
 
     const onFinish = () => {
         optionForm
@@ -31,7 +31,8 @@ const OptionServicesFormMain = (props) => {
                         },
                     ];
                     optionForm.resetFields();
-                    showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+                    showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: 'Optional service data Saved Successfully' });
+                    setOpenAccordian('3');
                     fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction, extraParams });
                 };
 
