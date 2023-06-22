@@ -1,17 +1,20 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useMemo, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Form } from 'antd';
+import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { otfFinanceDetailDataActions } from 'store/actions/data/otf/financeDetail';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { showGlobalNotification } from 'store/actions/notification';
 
+import { OTFFormButton } from '../OTFFormButton';
+import { InputSkeleton } from 'components/common/Skeleton';
+import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { AddEditForm } from './AddEditForm';
@@ -63,28 +66,24 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { saveData, fetchList, userId, listShowLoading, isLoaded, data, showGlobalNotification, moduleTitle, isFinanceLovDataLoaded, formActionType, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading } = props;
+    const { saveData, fetchList, userId, listShowLoading, isLoaded, data, showGlobalNotification, moduleTitle, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
 
-    const [form] = Form.useForm();
+    const { form, selectedOrderId, formActionType, handleFormValueChange } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: true };
-    // const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const selectedOTP = 'OTF001';
     const extraParams = [
         {
             key: 'otfNumber',
             title: 'otfNumber',
-            value: selectedOTP,
+            value: selectedOrderId,
             name: 'OTF Number',
         },
         {
@@ -123,7 +122,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: 'OTF001', id: 'a0368e0e-ac87-4beb-b0f5-f4f8b69ff8f7' };
+        const data = { ...values, otfNumber: selectedOrderId, id: 'a0368e0e-ac87-4beb-b0f5-f4f8b69ff8f7' };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -207,7 +206,37 @@ export const FinananceDetailsMasterBase = (props) => {
         styles,
     };
 
-    return <>{formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}</>;
+    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;
+    const formSkeleton = (
+        <Row>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <InputSkeleton height={'100vh'} />
+            </Col>
+        </Row>
+    );
+    return (
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Row gutter={20} className={styles.drawerBodyRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Row>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <h2>{section?.title}</h2>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <OTFStatusBar status={1} />
+                        </Col>
+                    </Row>
+
+                    {isLoading ? formSkeleton : formContainer}
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <OTFFormButton {...props} />
+                </Col>
+            </Row>
+        </Form>
+    );
 };
 
 const FinananceDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(FinananceDetailsMasterBase);
