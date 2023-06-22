@@ -26,6 +26,11 @@ const AddEditFormMain = (props) => {
     const handleCorporateChange = (value) => {
         setCorporateType(value);
     };
+    const onHandleSelect = (values) => {
+        form.setFieldsValue({
+            corporateName: values,
+        });
+    };
     const handleNumberValidation = (event) => {
         const Mno = event.target.value;
         const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
@@ -81,14 +86,14 @@ const AddEditFormMain = (props) => {
                                 />
                             </Form.Item>
                         ) : (
-                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
+                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')][validateRequiredInputField('mobile number')]}>
                                 <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
                             </Form.Item>
                         )}
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                            <Select placeholder="Select" defaultValue={{ label: 'Individual', value: 'IND' }} allowClear></Select>
+                            <Select placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']} allowClear></Select>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -120,17 +125,12 @@ const AddEditFormMain = (props) => {
                             <Select placeholder="Select" loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']} onChange={handleCorporateChange}></Select>
                         </Form.Item>
                     </Col>
+
                     {corporateType === 'LIS' ? (
                         <>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                    <Select loading={false} placeholder="Select" allowClear>
-                                        {corporateLovData?.map((item) => (
-                                            <Option key={'lv' + item?.key} value={item?.key}>
-                                                {item?.value}
-                                            </Option>
-                                        ))}
-                                    </Select>
+                                    <Select onSelect={onHandleSelect} options={corporateLovData} loading={false} fieldNames={{ label: 'value', value: 'key' }} placeholder="Select" allowClear></Select>
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>

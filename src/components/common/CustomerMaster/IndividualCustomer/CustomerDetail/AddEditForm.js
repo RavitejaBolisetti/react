@@ -144,13 +144,13 @@ const AddEditFormMain = (props) => {
                             ) : (
                                
                             )} */}
-                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
+                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
                                 <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Customer Type" initialValue={formData?.customerType} name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer type')]}>
-                                <Select placeholder="Select"  allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
+                                <Select placeholder="Select" defaultValue={{ label: 'Individual', value: 'IND' }} disabled={true} allowClear options={configurableTypedata['CUST_TYPE']}></Select>
                             </Form.Item>
                         </Col>
                     </Row>
@@ -190,7 +190,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                <Form.Item label="Last Name" initialValue={formData?.lastName} name="lastName" data-testid="lastName">
+                                <Form.Item label="Last Name" initialValue={formData?.lastName} name="lastName" data-testid="lastName" rules={[validateRequiredInputField('last name')]}>
                                     <Input placeholder={preparePlaceholderText('last name')} />
                                 </Form.Item>
                             </Col>
@@ -240,13 +240,13 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Email ID" initialValue={formData?.emailId} name="emailId" data-testid="emailId" rules={[validateEmailField('email id')]}>
+                            <Form.Item label="Email ID" initialValue={formData?.emailId} name="emailId" data-testid="emailId" rules={[validateEmailField('email id'), validateRequiredInputField('email id')]}>
                                 <Input placeholder={preparePlaceholderText('email id')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Do you want to contacted over whatsapp?" initialValue={formData?.whatsappCommunicationIndicator? true : false} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
-                                <Switch value={formData?.whatsappCommunicationIndicator? true : false} checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} defaultChecked={editMode === 'Edit'  ? true : false}/>
+                            <Form.Item label="Do you want to contacted over whatsapp?" initialValue={formData?.whatsappCommunicationIndicator ? true : false} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
+                                <Switch value={formData?.whatsappCommunicationIndicator ? true : false} checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} defaultChecked={editMode === 'Edit' ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -265,14 +265,14 @@ const AddEditFormMain = (props) => {
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Corporate Type" initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType">
+                            <Form.Item label="Corporate Type" initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType" rules={[validateRequiredSelectField('corporate type')]}>
                                 <Select placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']} onChange={handleCorporateChange} allowClear></Select>
                             </Form.Item>
                         </Col>
                         {corporateType === 'LIS' ? (
                             <>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                                    <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
                                         <Select disabled={false} loading={false} placeholder="Select" allowClear>
                                             {corporateLovData?.map((item) => (
                                                 <Option key={'lv' + item?.key} value={item?.key}>
@@ -283,14 +283,14 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code">
+                                    <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code" rules={[validateRequiredInputField('corporate name')]}>
                                         <Input placeholder={preparePlaceholderText('parent company name')} disabled />
                                     </Form.Item>
                                 </Col>
                             </>
                         ) : (
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                                <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
                                     <Input placeholder={preparePlaceholderText('corporate name')} />
                                 </Form.Item>
                             </Col>
