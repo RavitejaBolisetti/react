@@ -22,6 +22,8 @@ import { ViewDetail } from './ViewDetail';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { InputSkeleton } from 'components/common/Skeleton';
+import { OTFFormButton } from '../OTFFormButton';
+import { OTFStatusBar } from '../utils/OTFStatusBar';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -116,27 +118,21 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ExchangeVehiclesBase = (props) => {
-    const { exchangeData, isLoading, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, formActionType, section } = props;
+    const { exchangeData, isLoading, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, section } = props;
     const { fetchConfigList, listConfigShowLoading, isConfigDataLoaded, isConfigLoading, typeData } = props;
     const { fetchMakeLovList, listMakeShowLoading, fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isMakeDataLoaded, isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
     const { financeLovData, isFinanceLovLoading, isFinanceLovDataLoaded, fetchFinanceLovList, listFinanceLovShowLoading } = props;
     const { schemeLovData, isSchemeLovLoading, isSchemeLovDataLoaded, fetchSchemeLovList, listSchemeLovShowLoading } = props;
+    const { form, selectedOrderId, formActionType, handleFormValueChange } = props;
 
-    const [form] = Form.useForm();
     const [formData, setFormData] = useState('');
-
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-
-    const selectedOTF = 'OTF001';
 
     const extraParams = [
         {
             key: 'otfNumber',
             title: 'otfNumber',
-            value: selectedOTF,
+            value: selectedOrderId,
             name: 'OTF Number',
         },
     ];
@@ -200,7 +196,7 @@ const ExchangeVehiclesBase = (props) => {
     }, [isDataLoaded, userId, exchangeData]);
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOTF };
+        const data = { ...values, otfNumber: selectedOrderId };
         delete data.hypothicatedTo;
         delete data.usage;
         delete data.schemeName;
@@ -275,11 +271,24 @@ const ExchangeVehiclesBase = (props) => {
     );
 
     return (
-        <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <h2>{section?.title}</h2>
+                    <Row>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <h2>{section?.title}</h2>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <OTFStatusBar status={1} />
+                        </Col>
+                    </Row>
+
                     {isLoading ? formSkeleton : formContainer}
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <OTFFormButton {...props} />
                 </Col>
             </Row>
         </Form>

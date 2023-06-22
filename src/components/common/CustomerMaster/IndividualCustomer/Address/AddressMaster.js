@@ -84,7 +84,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AddressMasterBase = (props) => {
     const { selectedRowData, isViewModeVisible, section, isAddDataLoaded, addressIndData, setFormActionType, formActionType, isAddressLoaded, selectedCustomer, isAddLoading, saveData, listConfigShowLoading, fetchConfigList, addData } = props;
+<<<<<<< HEAD
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, isAddressLoading, formData, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, resetData, pincodeData, userId, fetchList, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+=======
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, handleFormValueChange, isAddressLoading, formData, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, resetData, pincodeData, userId, fetchList, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+>>>>>>> acc8ed74866ccd402d213dd773523142987b4685
     const [form] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -250,7 +254,6 @@ const AddressMasterBase = (props) => {
         </Row>
     );
 
-
     return (
         <>
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSubmit} onFinishFailed={onFinishFailed}>
@@ -275,9 +278,13 @@ const AddressMasterBase = (props) => {
                                 }
                                 key="1"
                             >
+<<<<<<< HEAD
                                 {/* {isAddressLoading ? formSkeleton : formContainer} */}
                                 {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
                                 {/* {(showAddEditForm || !addressData?.length > 0) && <AddEditForm {...formProps} />} */}
+=======
+                                {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
+>>>>>>> acc8ed74866ccd402d213dd773523142987b4685
                                 {isAddressLoading ? formSkeleton : <ViewAddressList {...formProps} />}
                             </Panel>
                         </Collapse>

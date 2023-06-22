@@ -139,6 +139,10 @@ export const valueBetween0to100 = (value, fieldName) => {
         return Promise.resolve('');
     }
 };
+export const NumberValidation = (fieldName) => ({
+    pattern: /^[a-zA-Z0-9]*$/,
+    message: 'Please enter valid ' + fieldName,
+});
 
 export const duplicateProductValidator = (value, dataList, props) => {
     if (dataList?.length > 0) {

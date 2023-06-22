@@ -1,6 +1,11 @@
 /*
+<<<<<<< HEAD
  *   Copyright (c) 2023
+=======
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+>>>>>>> acc8ed74866ccd402d213dd773523142987b4685
  *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
 
@@ -12,12 +17,23 @@ import { addressType } from 'constants/modules/CustomerMaster/individualProfile'
 
 import styles from 'components/common/Common.module.css';
 
+<<<<<<< HEAD
 const { Option } = Select;
 
 const AddEditForm = (props) => {
     const { onSubmit, form, setAddressData, isEditing, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType } = props;
     const { forceUpdate, handleFormValueChange } = props;
     const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail } = props;
+=======
+let index = 0;
+
+const { Option } = Select;
+
+const AddEditForm = (props) => {
+    const { isReadOnly = false, onFinish, form, setAddressData, isEditing, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType } = props;
+    const { typeData, forceUpdate, addData } = props;
+    const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, handleFormValueChange } = props;
+>>>>>>> acc8ed74866ccd402d213dd773523142987b4685
     const disabledProps = { disabled: formActionType?.editMode && formData?.partyCategory === 'Principal' ? true : false };
 
     const [options, setOptions] = useState(false);
@@ -102,12 +118,22 @@ const AddEditForm = (props) => {
 
     const handleSave = () => {
         form.validateFields()
+<<<<<<< HEAD
             .then((value) => {
                 // const value = form.getFieldsValue();
+=======
+            .then(() => {
+                const value = form.getFieldsValue();
+>>>>>>> acc8ed74866ccd402d213dd773523142987b4685
 
                 if (isEditing) {
                     setAddressData((prev) => {
                         let formData = [...prev];
+<<<<<<< HEAD
+=======
+                        console.log('formData', formData);
+
+>>>>>>> acc8ed74866ccd402d213dd773523142987b4685
                         formData?.forEach((contact) => {
                             if (contact?.defaultaddress === true) {
                                 contact.defaultaddress = false;
@@ -115,12 +141,23 @@ const AddEditForm = (props) => {
                         });
                         const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode);
                         formData.splice(index, 1, { ...value, ...pinSearchData });
+<<<<<<< HEAD
 
                         return [...formData];
                     });
                 } else {
                     setAddressData((prev) => {
                         let formData = [...prev];
+=======
+
+                        return [...formData];
+                    });
+                } else {
+                    setAddressData((prev) => {
+                        let formData = [...prev];
+                        console.log('formData', formData);
+
+>>>>>>> acc8ed74866ccd402d213dd773523142987b4685
                         if (value?.defaultaddress && formData?.length >= 1) {
                             formData?.forEach((contact) => {
                                 if (contact?.defaultaddress === true) {
@@ -140,7 +177,11 @@ const AddEditForm = (props) => {
                 form.setFieldsValue();
             })
             .catch((err) => {
+<<<<<<< HEAD
                 console.error('err', err);
+=======
+                console.log('err', err);
+>>>>>>> acc8ed74866ccd402d213dd773523142987b4685
             });
     };
 
@@ -148,7 +189,11 @@ const AddEditForm = (props) => {
 
     return (
         <>
+<<<<<<< HEAD
             <Form form={form} id="myAdd" onFinish={onSubmit} onFieldsChange={handleFormValueChange}  autoComplete="off" layout="vertical">
+=======
+            <Form form={form} id="myAdd" onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical">
+>>>>>>> acc8ed74866ccd402d213dd773523142987b4685
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type')]}>
@@ -208,7 +253,11 @@ const AddEditForm = (props) => {
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+<<<<<<< HEAD
                         <Form.Item label="Contact Name" name="contactName" rules={[validateRequiredInputField('contact name'), validateLettersWithWhitespaces('contact name')]}>
+=======
+                        <Form.Item label="Contact Name" name="contactName" rules={[validatePincodeField('Pin Code'), validateLettersWithWhitespaces('contact name')]}>
+>>>>>>> acc8ed74866ccd402d213dd773523142987b4685
                             <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
                         </Form.Item>
                     </Col>
@@ -216,7 +265,11 @@ const AddEditForm = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+<<<<<<< HEAD
                         <Form.Item label="Contact Mobile" name="mobileNumber" rules={[validateRequiredInputField('contact number'), validateMobileNoField('mobile number')]}>
+=======
+                        <Form.Item label="Contact Mobile" name="mobileNumber" rules={[validatePincodeField('Pin Code'), validateMobileNoField('mobile number')]}>
+>>>>>>> acc8ed74866ccd402d213dd773523142987b4685
                             <Input maxLength={50} placeholder={preparePlaceholderText('mobile number')} />
                         </Form.Item>
                     </Col>
