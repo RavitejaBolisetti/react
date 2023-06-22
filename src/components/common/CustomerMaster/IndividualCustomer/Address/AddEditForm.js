@@ -16,10 +16,10 @@ let index = 0;
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onSubmit, form, setAddressData, isEditing, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined } = props;
+    const { isReadOnly = false, onSubmit, form, setAddressData, isEditing, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType  } = props;
     const { typeData, forceUpdate, addData } = props;
     const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail } = props;
-    const disabledProps = { disabled: editMode && formData?.partyCategory === 'Principal' ? true : false };
+    const disabledProps = { disabled: formActionType?.editMode && formData?.partyCategory === 'Principal' ? true : false };
 
 
     const [options, setOptions] = useState(false);
@@ -262,18 +262,20 @@ const AddEditForm = (props) => {
                     </Col>
                 </Row>
                 <br></br>
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Space>
-                            <Button onClick={handleSave} key="submit" type="primary">
-                                Save
-                            </Button>
-                            <Button onClick={handleCancelFormEdit} ghost type="primary">
-                                Cancel
-                            </Button>
-                        </Space>
-                    </Col>
-                </Row>
+                {formActionType?.editMode && (
+                    <Row gutter={20}>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <Space>
+                                <Button onClick={handleSave} key="submit" type="primary">
+                                    Save
+                                </Button>
+                                <Button onClick={handleCancelFormEdit} ghost type="primary">
+                                    Cancel
+                                </Button>
+                            </Space>
+                        </Col>
+                    </Row>
+                )}
             </Form>
 
         </>

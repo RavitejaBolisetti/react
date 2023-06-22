@@ -76,7 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CustomerDetailMasterBase = (props) => {
     const { isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick } = props;
 
@@ -84,9 +84,7 @@ const CustomerDetailMasterBase = (props) => {
     const [formData, setFormData] = useState();
     const [configurableTypedata, setConfigurableTypedata] = useState({});
 
-    const [showDataLoading, setShowDataLoading] = useState(true);
-
-    const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
+    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -96,13 +94,12 @@ const CustomerDetailMasterBase = (props) => {
         if (isDataLoaded) {
             form.setFieldsValue({ ...data });
             setFormData(data);
-            setShowDataLoading(false);
         }
         return () => {
             resetData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, data]);
+    }, [isDataLoaded]);
 
     useEffect(() => {
         if (userId && !isTypeDataLoaded && !isTypeDataLoading) {
@@ -149,12 +146,11 @@ const CustomerDetailMasterBase = (props) => {
 
         const onSuccess = (res) => {
             form.resetFields();
-            setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
 
             if (res.data) {
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
                 setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
                 setSelectedCustomerId(res?.data?.customerId);
             }
@@ -176,10 +172,6 @@ const CustomerDetailMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const formProps = {
         formActionType,
         form,
@@ -196,16 +188,11 @@ const CustomerDetailMasterBase = (props) => {
         typeData,
         formData,
         configurableTypedata,
-        showDataLoading,
     };
 
     const viewProps = {
         formData,
         styles,
-    };
-
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const myProps = {

@@ -130,10 +130,17 @@ export const BASE_URL_OTF_SEARCH_LIST = BASE_URL_OTF + 'search';
 export const BASE_URL_OTF_REPORTS = BASE_URL + 'customreports/otf/names';
 export const BASE_URL_OTF_DOWNLAOD_REPORT = BASE_URL + 'customreports/otf/register';
 export const BASE_URL_OTF_INVOICE_DETAILS = BASE_URL + 'otf/invoice';
-export const BASE_URL_OTF_DETAILS = BASE_URL_OTF + 'details';
 export const BASE_URL_OTF_INVOICE = BASE_URL + 'otf/invoice';
 export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';
 export const BASE_URL_OTF_INSURANCE_DETAIL = BASE_URL + 'otf/insurancedetails';
 export const BASE_URL_OTF_FINANCE_LOV = BASE_URL + 'otf/financiers/lov';
+export const BASE_URL_OTF_SCHEMES = BASE_URL_OTF + 'schemes';
+export const BASE_URL_OTF_DETAILS = BASE_URL_OTF + 'details';
+export const BASE_URL_OTF_EXCHANGE_VEHICLE = BASE_URL_OTF + 'exchangevehicle';
 
 export const BASE_URL_DOCUMENT_UPLOAD = BASE_URL + 'common/document/upload';
+
+export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
+export const BASE_URL_VEHICLE_VARIANT = BASE_URL_VEHICLE + 'variant';
+export const BASE_URL_VEHICLE_MAKE = BASE_URL_VEHICLE + 'make';
+export const BASE_URL_VEHICLE_MODEL = BASE_URL_VEHICLE + 'model';

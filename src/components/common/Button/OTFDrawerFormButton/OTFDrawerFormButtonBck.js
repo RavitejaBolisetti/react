@@ -1,9 +1,14 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import { Button, Row, Col } from 'antd';
 import React from 'react';
 import { OTF_FORM_ACTION_TYPE } from 'constants/otfActionType';
-import styles from './OTFDrawerFormButton.module.css';
+import styles from './OTFFormButton.module.css';
 
-const OTFDrawerFormButton = ({ buttonData, id = { edit: 'edit', transfer: 'transfer', cancel: 'cancelOTF', allot: 'allot', unallot: 'unallot', invoice: 'invoice', deliverynote: 'deliveryNote', Next: 'myform' }, loader, onCloseAction, handleButtonClick, formData }) => {
+const OTFFormButton = ({ buttonData, id = { edit: 'edit', transfer: 'transfer', cancel: 'cancelOTF', allot: 'allot', unallot: 'unallot', invoice: 'invoice', deliverynote: 'deliveryNote', Next: 'myform' }, loader, onCloseAction, handleButtonClick, formData }) => {
     return (
         <Row gutter={20} className={styles.formFooter}>
             <Col xs={24} sm={2} md={2} lg={2} xl={2}>
@@ -67,4 +72,4 @@ const OTFDrawerFormButton = ({ buttonData, id = { edit: 'edit', transfer: 'trans
     );
 };
 
-export default OTFDrawerFormButton;
+export default OTFFormButton;
