@@ -25,7 +25,7 @@ import { LeftSidebar } from './LeftSidebar';
 import styles from 'components/common/Common.module.css';
 
 const OTFMainConatinerMain = (props) => {
-    const { section, currentSection } = props;
+    const { currentSection } = props;
 
     const myProps = {
         ...props,

@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Typography, Space, Collapse, Form } from 'antd';
+import { Row, Col, Form } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -31,14 +31,11 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Referrals';
-
     let returnValue = {
         userId,
         isDataLoaded,
         ReferralsData,
         isLoading,
-        moduleTitle,
     };
     return returnValue;
 };
@@ -58,9 +55,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ReferralsMasterBase = (props) => {
-    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, resetData, userId, isDataLoaded, ReferralsData, isLoading, moduleTitle } = props;
-    const { form, selectedOrderId, section, handleFormValueChange } = props;
-    const { addMode: addMode, editMode: editMode, viewMode: viewMode } = formActionType;
+    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, isDataLoaded, ReferralsData, isLoading } = props;
+    const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed } = props;
 
     const [formData, setformData] = useState();
     const extraParams = [
@@ -71,10 +67,9 @@ const ReferralsMasterBase = (props) => {
             name: 'OTF Number',
         },
     ];
+
     const onFinish = (values) => {
-        console.log('Values', values);
         const data = { ...values, otfNumber: 'OTF001', dob: dayjs(values?.dob).format('YYYY-MM-DD'), id: formData?.id };
-        console.log('data', data);
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -96,15 +91,6 @@ const ReferralsMasterBase = (props) => {
         };
 
         saveData(requestData);
-    };
-    const onFinishFailed = () => {
-        form?.validateFields()
-            .then(() => {
-                return;
-            })
-            .catch((err) => {
-                console.log('err', err);
-            });
     };
 
     const onErrorAction = (message) => {

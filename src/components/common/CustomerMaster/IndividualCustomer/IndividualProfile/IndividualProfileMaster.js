@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 const IndividualProfileBase = (props) => {
-    const { userId, fetchVehicleUsed, fetchMotherTongue, fetchReligionList, fecthViewDocument, isViewDataLoaded, viewDocument, fetchAnnualIncome, fetchOccupationList, appCategoryData, listIndiviualShowLoading, fetchGenderCategory, fetchMartialStatus, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, isAppCategoryDataLoaded, isIndiviualProfileLoaded, fetchList, indiviualData, saveData, showGlobalNotification } = props;
+    const { userId, fetchVehicleUsed, fetchMotherTongue, fetchReligionList, fecthViewDocument, viewDocument, fetchAnnualIncome, fetchOccupationList, appCategoryData, listIndiviualShowLoading, fetchGenderCategory, fetchMartialStatus, fetchCustomerCategory, isAppCategoryDataLoaded, fetchList, indiviualData, saveData, showGlobalNotification } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
     const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, selectedCustomerId, setSelectedCustomerId } = props;
 
@@ -154,7 +154,6 @@ const IndividualProfileBase = (props) => {
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const restObj = {};
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
 
         const data = {
@@ -221,6 +220,7 @@ const IndividualProfileBase = (props) => {
     };
 
     const formProps = {
+        isBorder,
         form,
         formData: indiviualData,
         formActionType,

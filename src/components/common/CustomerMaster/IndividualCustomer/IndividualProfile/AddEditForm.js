@@ -4,17 +4,15 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Empty, Divider } from 'antd';
+import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider } from 'antd';
 import Svg from 'assets/images/Filter.svg';
 import dayjs from 'dayjs';
 
 import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { religion, tongue, vehicle } from 'constants/modules/CustomerMaster/individualProfile';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
-import { FiTrash } from 'react-icons/fi';
 import UploadUtils from '../../Common/UploadUtils';
 
 const { Panel } = Collapse;
@@ -63,19 +61,9 @@ const AddEditFormMain = (props) => {
         action: '',
         progress: { strokeWidth: 10 },
         success: { percent: 100 },
-        onChange(info) {
-            const { status } = info.file;
-
-            if (status === 'done') {
-                message.success(`${info.file.name} file uploaded successfully.`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
         onDrop,
         onChange: (info, event) => {
             const { status } = info.file;
-
             console.log('event', event);
             if (status === 'uploading') {
                 console.log(' uploading info.file.loaded', info.file.loaded);
@@ -111,13 +99,6 @@ const AddEditFormMain = (props) => {
         };
 
         uploadDocumentFile(requestData);
-    };
-
-    const showUploadList = {
-        showRemoveIcon: false,
-        showPreviewIcon: true,
-        showDownloadIcon: true,
-        previewIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
     };
 
     const disabledProps = { disabled: isReadOnly };
