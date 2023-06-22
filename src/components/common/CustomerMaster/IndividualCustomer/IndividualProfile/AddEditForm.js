@@ -15,6 +15,7 @@ import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
 import { FiTrash } from 'react-icons/fi';
+import UploadUtils from '../../Common/UploadUtils';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -144,6 +145,7 @@ const AddEditFormMain = (props) => {
                                 }
                                 key="1"
                             >
+                                <UploadUtils />
                                 <Row gutter={16}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <div className={styles.uploadDragger}>
