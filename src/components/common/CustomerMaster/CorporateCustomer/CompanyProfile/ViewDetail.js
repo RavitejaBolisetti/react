@@ -4,15 +4,17 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Space, Collapse, Typography, Descriptions } from 'antd';
+import { Button, Space, Collapse, Typography, Descriptions, Upload } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
+import { FiEye } from 'react-icons/fi';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
+const { Dragger } = Upload;
 
 const ViewDetailMain = (props) => {
-    const { formData } = props;
+    const { formData, handleOnClick, viewDocument } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const viewProps = {
         bordered: false,
@@ -36,6 +38,28 @@ const ViewDetailMain = (props) => {
         } else {
             setactiveKey([...activeKey, values]);
         }
+    };
+
+    const uploadProps = {
+        showUploadList: {
+            // showRemoveIcon: true,
+            showDownloadIcon: true,
+            previewIcon: <FiEye onClick={(e) => console.log(e, 'custom removeIcon event')} />,
+            // showProgress: true,
+        },
+        // progress: { strokeWidth: 3, showInfo: true },
+
+        // onChange: (info, event) => {
+        //     const { status } = info.file;
+
+        //     if (status === 'uploading') {
+        //     } else if (status === 'done') {
+        //         setUploadedFile(info?.file?.response?.docId);
+        //         message.success(`${info.file.name} file uploaded successfully.`);
+        //     } else if (status === 'error') {
+        //         message.error(`${info.file.name} file upload failed.`);
+        //     }
+        // },
     };
 
     return (
@@ -138,13 +162,13 @@ const ViewDetailMain = (props) => {
                         }
                         key="3"
                     >
-                        {formData?.keyAccountDetails && formData?.keyAccountDetails.length > 0 && (
+                        {formData?.keyAccountDetails && (
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Account Code">{formData?.keyAccountDetails[0]?.accountCode}</Descriptions.Item>
-                                <Descriptions.Item label="Account Name">{formData?.keyAccountDetails[0]?.accountName}</Descriptions.Item>
-                                <Descriptions.Item label="Account Segment">{formData?.keyAccountDetails[0]?.accountSegment}</Descriptions.Item>
-                                <Descriptions.Item label="Account Client Name">{formData?.keyAccountDetails[0]?.accountClientName}</Descriptions.Item>
-                                <Descriptions.Item label="Account Mapping Date">{formData?.keyAccountDetails[0]?.accountMappingDate}</Descriptions.Item>
+                                <Descriptions.Item label="Account Code">{formData?.keyAccountDetails?.accountCode}</Descriptions.Item>
+                                <Descriptions.Item label="Account Name">{formData?.keyAccountDetails?.accountName}</Descriptions.Item>
+                                <Descriptions.Item label="Account Segment">{formData?.keyAccountDetails?.accountSegment}</Descriptions.Item>
+                                <Descriptions.Item label="Account Client Name">{formData?.keyAccountDetails?.accountClientName}</Descriptions.Item>
+                                <Descriptions.Item label="Account Mapping Date">{formData?.keyAccountDetails?.accountMappingDate}</Descriptions.Item>
                             </Descriptions>
                         )}
                     </Panel>
@@ -172,12 +196,12 @@ const ViewDetailMain = (props) => {
                         }
                         key="4"
                     >
-                        {formData?.authorityDetails && formData?.authorityDetails.length > 0 && (
+                        {formData?.authorityDetails && (
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Name Of Person">{formData?.authorityDetails[0].personName}</Descriptions.Item>
-                                <Descriptions.Item label="Position">{formData?.authorityDetails[0].postion}</Descriptions.Item>
-                                <Descriptions.Item label="Company Name">{formData?.authorityDetails[0].companyName}</Descriptions.Item>
-                                <Descriptions.Item label="Remarks">{formData?.authorityDetails[0].remarks}</Descriptions.Item>
+                                <Descriptions.Item label="Name Of Person">{formData?.authorityDetails.personName}</Descriptions.Item>
+                                <Descriptions.Item label="Position">{formData?.authorityDetails.postion}</Descriptions.Item>
+                                <Descriptions.Item label="Company Name">{formData?.authorityDetails.companyName}</Descriptions.Item>
+                                <Descriptions.Item label="Remarks">{formData?.authorityDetails.remarks}</Descriptions.Item>
                             </Descriptions>
                         )}
                     </Panel>
@@ -203,7 +227,10 @@ const ViewDetailMain = (props) => {
                             </div>
                         }
                         key="5"
-                    ></Panel>
+                    >
+                        <Button onClick={handleOnClick}>{formData?.customerFormDocId}</Button>
+                        {viewDocument && <img width="500" height="200" src={`data:image/png;base64,${viewDocument?.base64}`} />}
+                    </Panel>
                 </Collapse>
             </Space>
         </div>
