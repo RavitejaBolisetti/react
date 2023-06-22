@@ -189,62 +189,62 @@
 
 .tableProduct .success {
     padding: 2px 6px;
-    background: #EEFCD2;
-    border: 1px solid #70C922;
+    background: #eefcd2;
+    border: 1px solid #70c922;
     border-radius: 4px;
     font-weight: 400;
     font-size: 12px;
     line-height: 20px;
     text-align: center;
-    color: #70C922;
+    color: #70c922;
 }
 
 .tableProduct .error {
     padding: 2px 6px;
-    background: #FEE3D4;
-    border: 1px solid #ED302D;
+    background: #fee3d4;
+    border: 1px solid #ed302d;
     border-radius: 4px;
     font-weight: 400;
     font-size: 12px;
     line-height: 20px;
     text-align: center;
-    color: #ED302D;
+    color: #ed302d;
 }
 
 .tableProduct .warning {
     padding: 2px 6px;
-    background: #FEF3D2;
-    border: 1px solid #F99C22;
+    background: #fef3d2;
+    border: 1px solid #f99c22;
     border-radius: 4px;
     font-weight: 400;
     font-size: 12px;
     line-height: 20px;
     text-align: center;
-    color: #F99C22;
+    color: #f99c22;
 }
 
 .tableProduct .info {
     padding: 2px 6px;
-    background: #D3EDFE;
-    border: 1px solid #2782F9;
+    background: #d3edfe;
+    border: 1px solid #2782f9;
     border-radius: 4px;
     font-weight: 400;
     font-size: 12px;
     line-height: 20px;
     text-align: center;
-    color: #2782F9;
+    color: #2782f9;
 }
 
 .tableProduct .violet {
     padding: 2px 6px;
-    background: #F3EAFF;
-    border: 1px solid #9747FF;
+    background: #f3eaff;
+    border: 1px solid #9747ff;
     border-radius: 4px;
     font-weight: 400;
     font-size: 12px;
     line-height: 20px;
     text-align: center;
-    color: #9747FF;
+    color: #9747ff;
 }
 
 /* .tableProduct :global .ant-table-thead tr th {
@@ -1664,8 +1664,7 @@
     border-radius: 8px;
 }
 
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-label>label,
-.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-item .ant-form-item-label>label {
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-label>label {
     color: #545454;
     font-size: 14px;
     line-height: 23px;
@@ -1864,9 +1863,8 @@
     border-color: #e6e6e6 !important;
 }
 
-.drawerBodyRight .uploadDragger {
-    padding-top: 20px;
-    border-top: 1px solid #E6E6E6;
+.drawerBodyRight :global .ant-upload-wrapper .ant-upload-drag {
+    border: 1px dashed #b5b5b5;
 }
 
 .drawerBodyRight .uploadDragger :global .ant-card .ant-card-body {
@@ -2085,11 +2083,11 @@
 }
 
 .viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions:first-child {
-    border-bottom: 1px solid #E6E6E6;
+    border-bottom: 1px solid #e6e6e6;
 }
 
 .viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions:not(:first-child) {
-    border-top: 1px solid #E6E6E6;
+    border-top: 1px solid #e6e6e6;
     padding-top: 20px;
 }
 
@@ -2126,7 +2124,7 @@
 } */
 
 .viewDrawerContainer .cardInsideBox :global .ant-typography {
-    color: #0B0B0C;
+    color: #0b0b0c;
     font-weight: 700;
     font-size: 16px;
     line-height: 24px;
@@ -2172,7 +2170,7 @@
     border: 1px solid #e6e6e6;
     border-radius: 4px;
     padding: 10px 20px;
-    color: #0B0B0C;
+    color: #0b0b0c;
     font-weight: 700;
     font-size: 16px;
     line-height: 24px;
@@ -2255,6 +2253,37 @@
 
 .drawerBodyRight .uploadContainer {
     margin-bottom: 20px;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-empty-normal {
+    margin-block: 0px;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-empty .ant-empty-image {
+    display: none;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-empty .ant-empty-description {
+    margin-bottom: 20px;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #e6e6e6;
+    border: 1px solid #b5b5b6;
+    border-radius: 6px;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item {
+    margin-top: 0px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item:hover {
+    background-color: transparent;
 }
 
 .cardInsideBox {
