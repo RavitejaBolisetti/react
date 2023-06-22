@@ -4,15 +4,15 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
+import { Row, Col, Input, Form, Select, Card } from 'antd';
 
 import styles from 'components/common/Common.module.css';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { Row, Col, Input, Form, Select, Card, Button } from 'antd';
 
 const AddEditFormMain = (props) => {
-    const { formActionType, formData, form, onFinishFailed, onFinish } = props;
+    const { formData, form } = props;
     const { financeLovData, schemeLovData, typeData, makeData, modelData, variantData } = props;
     const { isConfigLoading, isSchemeLovLoading, isFinanceLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
 
@@ -198,13 +198,6 @@ const AddEditFormMain = (props) => {
                             placeholder={preparePlaceholderSelect('Finance Company')}
                         />
                     </Form.Item>
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Button htmlType="submit" type="primary">
-                        Submit
-                    </Button>
                 </Col>
             </Row>
         </Card>

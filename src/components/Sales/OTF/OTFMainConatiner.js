@@ -25,7 +25,7 @@ import { LeftSidebar } from './LeftSidebar';
 import styles from 'components/common/Common.module.css';
 
 const OTFMainConatinerMain = (props) => {
-    const { section, currentSection } = props;
+    const { currentSection } = props;
 
     const myProps = {
         ...props,
@@ -57,7 +57,7 @@ const OTFMainConatinerMain = (props) => {
             case OTF_SECTION.REFERRALS.id: {
                 return <ReferralsMaster {...myProps} />;
             }
-            case OTF_SECTION.LOYALITY_SCHEME.id: {
+            case OTF_SECTION.LOYALTY_SCHEME.id: {
                 return <LoyaltySchemeMaster {...myProps} />;
             }
             case OTF_SECTION.INVOICE_INFORMATION.id: {
