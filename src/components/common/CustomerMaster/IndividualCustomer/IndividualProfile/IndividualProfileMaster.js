@@ -123,6 +123,20 @@ const IndividualProfileBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
+    useEffect(() => {
+        if (userId ) {
+            const extraParam = [
+                {
+                    key: 'docId',
+                    title: 'docId',
+                    value: indiviualData?.customerFormDocId ? indiviualData?.customerFormDocId : '',
+                    name: 'docId',
+                },
+            ];
+            fecthViewDocument({ setIsLoading: listIndiviualShowLoading, userId, extraParam, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
 
     useEffect(() => {
         fetchApplicationCategorization({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_CAT.id });
@@ -135,7 +149,6 @@ const IndividualProfileBase = (props) => {
         fetchVehicleUsed({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.Vehicle_Used.id });
         fetchMotherTongue({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.MOTHER_TOUNGE.id });
         fetchReligionList({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.RELGION.id });
-        fecthViewDocument({ setIsLoading: listIndiviualShowLoading, userId });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAppCategoryDataLoaded]);
