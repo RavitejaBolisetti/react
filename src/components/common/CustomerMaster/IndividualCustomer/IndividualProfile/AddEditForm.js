@@ -25,8 +25,8 @@ const { Dragger } = Upload;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, userId, uploadDocumentFile,viewDocument, setUploadedFile, listDocumentShowLoading } = props;
-    const { isReadOnly = false } = props;
+    const { formData, appCategoryData, userId, uploadDocumentFile, viewDocument, setUploadedFile, EDIT_ACTION, listDocumentShowLoading } = props;
+    const { isReadOnly= false  } = props;
     const [customer, setCustomer] = useState(false);
 
     const [activeKey, setActiveKey] = useState([1]);
@@ -146,36 +146,39 @@ const AddEditFormMain = (props) => {
                                 }
                                 key="1"
                             >
-                                <div className={styles.uploadDragger}>
-                                    <UploadUtils isViewModeVisible={true} uploadImgTitle={'Profile Picture'} viewDocument={viewDocument} />
-                                </div>
-                                {/* <Row gutter={16}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <div className={styles.uploadDragger}>
-                                            <Dragger customRequest={handleUpload} {...uploadProps}>
-                                                <Empty
-                                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                                    imageStyle={{
-                                                        height: 100,
-                                                    }}
-                                                    description={
-                                                        <>
-                                                            <span>
-                                                                Click or drop your file here to upload the signed and <br />
-                                                                scanned customer form.
-                                                            </span>
-                                                            <span>
-                                                                <br />
-                                                                File type should be png, jpg or pdf and max file size to be 5Mb
-                                                            </span>
-                                                        </>
-                                                    }
-                                                />
-                                                <Button type="primary">Upload File</Button>
-                                            </Dragger>
-                                        </div>
-                                    </Col>
-                                </Row> */}
+                                {EDIT_ACTION ? (
+                                    <div className={styles.uploadDragger}>
+                                        <UploadUtils isViewModeVisible={true} uploadImgTitle={'Profile Picture'} viewDocument={viewDocument} />
+                                    </div>
+                                ) : (
+                                    <Row gutter={16}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <div className={styles.uploadDragger}>
+                                                <Dragger customRequest={handleUpload} {...uploadProps}>
+                                                    <Empty
+                                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                        imageStyle={{
+                                                            height: 100,
+                                                        }}
+                                                        description={
+                                                            <>
+                                                                <span>
+                                                                    Click or drop your file here to upload the signed and <br />
+                                                                    scanned customer form.
+                                                                </span>
+                                                                <span>
+                                                                    <br />
+                                                                    File type should be png, jpg or pdf and max file size to be 5Mb
+                                                                </span>
+                                                            </>
+                                                        }
+                                                    />
+                                                    <Button type="primary">Upload File</Button>
+                                                </Dragger>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                )}
 
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -508,29 +511,31 @@ const AddEditFormMain = (props) => {
                                 }
                                 key="5"
                             >
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">
-                                            <Checkbox> I Consent to share my details with Mahindra & Mahindra</Checkbox>
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Dragger {...uploadProps} customRequest={handleUpload} className={styles.uploadContainer}>
-                                            <div>
-                                                <img src={Svg} alt="" />
-                                            </div>
-                                            <div className={styles.uploadtext}>
-                                                Click or drop your file here to upload the signed and <br /> scanned customer form.
-                                            </div>
-                                            <div>File type should be png, jpg or pdf and max file size to be 5Mb</div>
-                                            <Button {...disabledProps} type="primary" style={{ marginLeft: '30px', marginTop: '16px' }}>
-                                                Upload File
-                                            </Button>
-                                        </Dragger>
-                                    </Col>
-                                </Row>
+                                <>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">
+                                                <Checkbox> I Consent to share my details with Mahindra & Mahindra</Checkbox>
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Dragger {...uploadProps} customRequest={handleUpload} className={styles.uploadContainer}>
+                                                <div>
+                                                    <img src={Svg} alt="" />
+                                                </div>
+                                                <div className={styles.uploadtext}>
+                                                    Click or drop your file here to upload the signed and <br /> scanned customer form.
+                                                </div>
+                                                <div>File type should be png, jpg or pdf and max file size to be 5Mb</div>
+                                                <Button {...disabledProps} type="primary" style={{ marginLeft: '30px', marginTop: '16px' }}>
+                                                    Upload File
+                                                </Button>
+                                            </Dragger>
+                                        </Col>
+                                    </Row>
+                                </>
                             </Panel>
                         </Collapse>
                     </Space>
