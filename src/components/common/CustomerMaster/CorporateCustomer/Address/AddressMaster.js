@@ -4,7 +4,7 @@
  */
 import { AddressMaster } from './../../Common/Address';
 
-export const CompanyAddressMaster = (props) => {
+export const ContactMasterMain = (props) => {
     return <AddressMaster {...props} />;
 };
 
