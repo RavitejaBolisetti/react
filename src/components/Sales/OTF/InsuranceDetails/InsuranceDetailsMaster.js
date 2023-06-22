@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -53,8 +53,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const InsuranceDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedOrderId, handleFormValueChange,section, isLoading } = props;
-    
+    const { form, selectedOrderId, handleFormValueChange, section, isLoading } = props;
+
     const [formData, setFormData] = useState();
 
     useEffect(() => {
@@ -72,7 +72,7 @@ const InsuranceDetailsMasterBase = (props) => {
                     name: 'OTF Number',
                 },
             ];
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction,onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -111,8 +111,8 @@ const InsuranceDetailsMasterBase = (props) => {
         </Row>
     );
 
-    return(
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} >
+    return (
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
@@ -133,7 +133,7 @@ const InsuranceDetailsMasterBase = (props) => {
                 </Col>
             </Row>
         </Form>
-    ) 
+    );
 };
 
 export const InsuranceDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(InsuranceDetailsMasterBase);

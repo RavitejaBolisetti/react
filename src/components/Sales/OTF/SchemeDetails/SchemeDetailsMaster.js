@@ -3,20 +3,90 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
-import { Row, Col, Form } from 'antd';
-import styles from 'components/common/Common.module.css';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Form, Row, Col } from 'antd';
+
+import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
+import { InputSkeleton } from 'components/common/Skeleton';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { OTFFormButton } from '../OTFFormButton';
-import { InputSkeleton } from 'components/common/Skeleton';
 
-export const SchemeDetailsMaster = (props) => {
-    const { isLoading, section, form, selectedOrderId, formActionType, handleFormValueChange } = props;
+import styles from 'components/common/Common.module.css';
+
+import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetail';
+
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            OTF: {
+                SchemeDetail: { isLoaded: isDataLoaded = false, isLoading, data: schemeData = [] },
+            },
+        },
+    } = state;
+
+    console.log('schemeData', schemeData);
+    const moduleTitle = 'Scheme And Offer Details';
+
+    let returnValue = {
+        userId,
+        isDataLoaded,
+        schemeData,
+        isLoading,
+        moduleTitle,
+    };
+    return returnValue;
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchList: otfSchemeDetailDataActions.fetchList,
+            listShowLoading: otfSchemeDetailDataActions.listShowLoading,
+            resetData: otfSchemeDetailDataActions.reset,
+            showGlobalNotification,
+        },
+        dispatch
+    ),
+});
+
+const SchemeDetailsMasterBase = (props) => {
+    const { schemeData, onCloseAction, fetchList, formActionType, userId, listShowLoading, showGlobalNotification } = props;
+    const { form, selectedOrderId, handleFormValueChange, section, isLoading } = props;
+
+    const onErrorAction = (message) => {
+        showGlobalNotification(message);
+    };
+
+    const onSuccessAction = (res) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    };
+
+    useEffect(() => {
+        if (userId && selectedOrderId) {
+            const extraParams = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOrderId,
+                    name: 'OTF Number',
+                },
+            ];
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedOrderId]);
+
     const viewProps = {
         styles,
+        onCloseAction,
+        schemeData,
     };
 
     const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...props} />;
@@ -29,7 +99,7 @@ export const SchemeDetailsMaster = (props) => {
     );
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} >
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
@@ -51,3 +121,5 @@ export const SchemeDetailsMaster = (props) => {
         </Form>
     );
 };
+
+export const SchemeDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(SchemeDetailsMasterBase);
