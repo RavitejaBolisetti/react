@@ -1691,7 +1691,7 @@
 .drawerBodyRight :global .ant-card-bordered,
 .drawerBodyRight :global .ant-space-vertical {
     border: 0;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body {

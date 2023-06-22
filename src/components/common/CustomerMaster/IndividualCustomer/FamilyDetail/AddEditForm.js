@@ -106,7 +106,7 @@ const AddEditFormMain = (props) => {
         <>
             {!isViewModeVisible ? (
                 <Card className="">
-                    <Space align="center" size={30} style={{marginBottom: showForm || familyDetailList?.length > 0 ? '0' : '16px'}}>
+                    <Space align="center" size={30} style={{marginBottom: showForm || familyDetailList?.length > 0 ? '0' : '0'}}>
                         <Typography>Family Details</Typography>
                         {!VIEW_ACTION && (
                             <Button type="primary" icon={<PlusOutlined />} onClick={addFunction} disabled={showForm || editedMode} >
