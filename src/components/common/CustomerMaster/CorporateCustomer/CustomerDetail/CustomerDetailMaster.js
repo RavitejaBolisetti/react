@@ -89,7 +89,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData } = props;
     const { form, handleFormValueChange, onFinishFailed, buttonData, setButtonData, formActionType, handleButtonClick } = props;
 
-    const [customerDetailsList, setCustomerDetailsList] = useState([]);
+    const [customerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
     const [configurableTypedata, setConfigurableTypedata] = useState({});
@@ -111,7 +111,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
             resetData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, customerDetailsData]);
+    }, [isDataLoaded]);
 
     useEffect(() => {
         if (userId) {
@@ -134,6 +134,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isCorporateLovDataLoaded]);
+
     useEffect(() => {
         if (userId && !isCustomerParentCompanyDataLoaded) {
             fetchCustomerParentCompanyList({ setIsLoading: listCustomerParentCompanyShowLoading, userId });

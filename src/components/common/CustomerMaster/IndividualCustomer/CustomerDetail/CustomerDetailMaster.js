@@ -99,7 +99,7 @@ const CustomerDetailMasterBase = (props) => {
             resetData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, data]);
+    }, [isDataLoaded]);
 
     useEffect(() => {
         if (userId && !isTypeDataLoaded && !isTypeDataLoading) {
