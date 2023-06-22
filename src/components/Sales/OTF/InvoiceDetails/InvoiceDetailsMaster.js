@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -13,6 +13,9 @@ import { otfInvoiceDetailDataActions } from 'store/actions/data/otf/invoiceDetai
 import { showGlobalNotification } from 'store/actions/notification';
 import { dynamicExpandIcon } from 'utils/accordianExpandIcon';
 import { DataTable } from 'utils/dataTable';
+
+import { OTFStatusBar } from '../utils/OTFStatusBar';
+import { OTFFormButton } from '../OTFFormButton';
 
 import { tableColumnInvoice, tableColumnDelivery } from './tableColumn';
 
@@ -57,9 +60,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const InvoiceDetailsMasterBase = (props) => {
     const { invoiceData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { section, selectedOrderId } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
-    const selectedOTP = 'OTF002';
 
     const onChange = (values) => {
         if (activeKey?.includes(values)) {
@@ -73,7 +76,7 @@ export const InvoiceDetailsMasterBase = (props) => {
         {
             key: 'otfNumber',
             title: 'otfNumber',
-            value: selectedOTP,
+            value: selectedOrderId,
             name: 'OTF Number',
         },
     ];
@@ -94,40 +97,55 @@ export const InvoiceDetailsMasterBase = (props) => {
     }, [isDataLoaded, userId]);
 
     return (
-        <Row gutter={20}>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <Space size="middle" direction="vertical" className={styles.accordianContainer}>
-                    <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        Invoice Information
-                                    </Text>
-                                </div>
-                            }
-                            key={1}
-                        >
-                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnInvoice()} tableData={invoiceData?.invoiceDetails} />
-                        </Panel>
-                    </Collapse>
-                    <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        Delivery Information
-                                    </Text>
-                                </div>
-                            }
-                            key={2}
-                        >
-                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />
-                        </Panel>
-                    </Collapse>
-                </Space>
-            </Col>
-        </Row>
+        <>
+            <Row gutter={20} className={styles.drawerBodyRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Row>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <h2>{section?.title}</h2>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <OTFStatusBar status={1} />
+                        </Col>
+                    </Row>
+                    <Space size="middle" direction="vertical" className={styles.accordianContainer}>
+                        <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
+                            <Panel
+                                header={
+                                    <div className={styles.alignUser}>
+                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                            Invoice Information
+                                        </Text>
+                                    </div>
+                                }
+                                key={1}
+                            >
+                                <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnInvoice()} tableData={invoiceData?.invoiceDetails} />
+                            </Panel>
+                        </Collapse>
+                        <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
+                            <Panel
+                                header={
+                                    <div className={styles.alignUser}>
+                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                            Delivery Information
+                                        </Text>
+                                    </div>
+                                }
+                                key={2}
+                            >
+                                <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />
+                            </Panel>
+                        </Collapse>
+                    </Space>
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <OTFFormButton {...props} />
+                </Col>
+            </Row>
+        </>
     );
 };
 

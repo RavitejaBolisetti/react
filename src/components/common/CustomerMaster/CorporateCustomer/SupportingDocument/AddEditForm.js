@@ -104,7 +104,7 @@ const AddEditForm = (props) => {
 
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div style={{ border: 'red 1px solid' }}>
+                    <div>
                         <Dragger customRequest={handleUpload} {...uploadProps}>
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
