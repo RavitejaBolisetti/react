@@ -1761,7 +1761,7 @@
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
-    margin-top: 0;
+    margin-top: 20px;
     margin-bottom: 20px;
     border-color: #e6e6e6;
 }
@@ -2007,10 +2007,10 @@
     margin-bottom: 20px;
 }
 
-.drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
+/* .drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
     margin-top: 0;
     margin-bottom: 20px;
-}
+} */
 
 .drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
     border: 1px solid #0b0b0c;
