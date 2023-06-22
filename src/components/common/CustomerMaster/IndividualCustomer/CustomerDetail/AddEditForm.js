@@ -149,7 +149,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Customer Type" initialValue={formData?.customerType} name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer type')]}>
-                                <Select placeholder="Select" disabled defaultValue={{ label: 'Individual', value: 'IND' }} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
+                                <Select placeholder="Select"  allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
                             </Form.Item>
                         </Col>
                     </Row>
@@ -244,12 +244,12 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Do you want to contacted over whatsapp?" initialValue={formData?.whatsappCommunicationIndicator === 0 || 0 ? 0 : 1} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
-                                <Switch value={formData?.whatsappCommunicationIndicator === 0 || 0 ? 0 : 1} checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} />
+                            <Form.Item label="Do you want to contacted over whatsapp?" initialValue={formData?.whatsappCommunicationIndicator? true : false} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
+                                <Switch value={formData?.whatsappCommunicationIndicator? true : false} checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} defaultChecked={editMode === 'Edit'  ? true : false}/>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Want to use Mobile no as whatsapp no?" initialValue={formData?.mobileNumberAsWhatsappNumber === 0 || 0 ? 0 : 1} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
+                            <Form.Item label="Want to use Mobile no as whatsapp no?" initialValue={formData?.mobileNumberAsWhatsappNumber === false || false ? false : true} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
                                 <Switch value={formData?.mobileNumberAsWhatsappNumber === 0 || 0 ? 0 : 1} checkedChildren="Yes" unCheckedChildren="No" onChange={copyWhatsNo} />
                             </Form.Item>
                         </Col>
