@@ -46,7 +46,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        data,
+        data: data?.customerMasterDetails || [],
         isLoading,
         moduleTitle,
         isConfigDataLoaded,

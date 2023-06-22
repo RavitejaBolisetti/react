@@ -90,6 +90,7 @@ export const OtfMasterBase = (props) => {
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
+    console.log('🚀 ~ file: OtfMaster.js:93 ~ OtfMasterBase ~ selectedOrderId:', selectedOrderId);
     const [shouldResetForm, setShouldResetForm] = useState(false);
 
     const [section, setSection] = useState();
@@ -181,6 +182,7 @@ export const OtfMasterBase = (props) => {
     }, [isSearchDataLoaded, userId]);
 
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
+        console.log('🚀 ~ file: OtfMaster.js:185 ~ handleButtonClick ~ record:', record);
         form.resetFields();
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
@@ -194,7 +196,7 @@ export const OtfMasterBase = (props) => {
 
         if (buttonAction === VIEW_ACTION || !formVisible) {
             setSelectedOrder(record);
-            record && setSelectedOrderId(record?.customerId);
+            record && setSelectedOrderId(record?.otfNumber);
             defaultSection && setCurrentSection(defaultSection);
         }
     };
@@ -259,6 +261,10 @@ export const OtfMasterBase = (props) => {
 
     const onFinishFailed = (errorInfo) => {
         return;
+    };
+
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const onCloseAction = () => {
@@ -374,6 +380,7 @@ export const OtfMasterBase = (props) => {
         setCurrentSection,
         shouldResetForm,
         setFormData,
+        handleFormValueChange,
     };
 
     return (

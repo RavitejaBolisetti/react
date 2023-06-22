@@ -28,7 +28,6 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isLoading: isTypeDataLoading, paramdata: typeData = [] },
-
             OTF: {
                 OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
             },
@@ -68,10 +67,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const OtfDetailsMasterBase = (props) => {
-    const { isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading, resetData, form } = props;
-    const { selectedCustomer, setSelectedCustomer, selectedOrderId, setSelectedOrderId } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, handleFormValueChange } = props;
+    const { isTypeDataLoaded, typeData, fetchConfigList, listConfigShowLoading } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
+    const { form, selectedOrderId, formActionType, handleFormValueChange } = props;
 
     const [formData, setFormData] = useState();
 
@@ -88,10 +86,10 @@ const OtfDetailsMasterBase = (props) => {
         if (userId && selectedOrderId) {
             const extraParams = [
                 {
-                    key: 'customerId',
-                    title: 'customerId',
+                    key: 'otfNumber',
+                    title: 'otfNumber',
                     value: selectedOrderId,
-                    name: 'Customer ID',
+                    name: 'OTF Number',
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
@@ -114,20 +112,20 @@ const OtfDetailsMasterBase = (props) => {
     const onFinish = (values) => {
         const recordId = otfData?.id || '';
         const otfNum = otfData?.otfNumber || '';
-        const exchange = values?.exchange == true ? 1 : 0;
-        const loyalityScheme = values?.loyaltyScheme == true ? 1 : 0;
+        const exchange = values?.exchange === true ? 1 : 0;
+        const loyalityScheme = values?.loyaltyScheme === true ? 1 : 0;
         const data = { ...values, id: recordId, otfNumber: otfNum, loyaltyScheme: loyalityScheme, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
         delete data?.mitraName;
         delete data?.mitraType;
         delete data?.modeOfPAyment;
 
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
         };
 
         const onError = (message) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
