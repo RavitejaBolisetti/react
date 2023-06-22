@@ -25,7 +25,7 @@ const { Dragger } = Upload;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, userId, uploadDocumentFile, setUploadedFile, listDocumentShowLoading } = props;
+    const { formData, appCategoryData, userId, uploadDocumentFile,viewDocument, setUploadedFile, listDocumentShowLoading } = props;
     const { isReadOnly = false } = props;
     const [customer, setCustomer] = useState(false);
 
@@ -147,7 +147,7 @@ const AddEditFormMain = (props) => {
                                 key="1"
                             >
                                 <div className={styles.uploadDragger}>
-                                    <img width="500" height="200" src={`data:image/png;base64,${viewDocument?.base64}`} />
+                                    <UploadUtils isViewModeVisible={true} uploadImgTitle={'Profile Picture'} viewDocument={viewDocument} />
                                 </div>
                                 {/* <Row gutter={16}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>

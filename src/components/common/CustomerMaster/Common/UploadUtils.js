@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { Button, Typography, Upload, Row, Col, Empty, Image, Card, Space, Avatar } from 'antd';
 import { HiCheck } from 'react-icons/hi';
@@ -7,7 +12,7 @@ const { Dragger } = Upload;
 const { Text, Title } = Typography;
 
 const UploadUtils = (props) => {
-    const { uploadTitle, uploadDescription, uploadBtnName, isViewModeVisible, uploadImgTitle } = props;
+    const { uploadTitle, uploadDescription, uploadBtnName, isViewModeVisible, uploadImgTitle,viewDocument } = props;
 
     return (
         <>
@@ -48,7 +53,7 @@ const UploadUtils = (props) => {
                                 </div>
                             </Space>
                             <Space>
-                                <Image style={{ borderRadius: '6px' }} width={150} preview={false} src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
+                                <Image style={{ borderRadius: '6px' }} width={150} preview={false} src={`data:image/png;base64,${viewDocument?.base64}` } />
                                 <Button type="link">Replace Image</Button>
                             </Space>
                         </Space>

@@ -15,6 +15,8 @@ import { indiviualProfileDataActions } from 'store/actions/data/customerMaster/i
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
+import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
+
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
 
@@ -30,6 +32,7 @@ const mapStateToProps = (state) => {
         data: {
             CustomerMaster: {
                 IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading: isIndiviualLoading, data: indiviualData = [] },
+                ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
             ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, paramdata: appCategoryData = [] },
             SupportingDocument: { isLoaded: isDocumentDataLoaded = false, isDocumentLoading },
@@ -45,6 +48,8 @@ const mapStateToProps = (state) => {
         indiviualData,
         isDocumentDataLoaded,
         isDocumentLoading,
+        viewDocument,
+        isViewDataLoaded,
     };
     console.log(appCategoryData, 'dhgsfdjhsakgS');
     return returnValue;
@@ -73,13 +78,15 @@ const mapDispatchToProps = (dispatch) => ({
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
             listDocumentShowLoading: supportingDocumentDataActions.listShowLoading,
 
+            fecthViewDocument: documentViewDataActions.fetchList,
+
             showGlobalNotification,
         },
         dispatch
     ),
 });
 const IndividualProfileBase = (props) => {
-    const { userId, fetchVehicleUsed, fetchMotherTongue, fetchReligionList, fetchAnnualIncome, fetchOccupationList, appCategoryData, listIndiviualShowLoading, fetchGenderCategory, fetchMartialStatus, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, isAppCategoryDataLoaded, isIndiviualProfileLoaded, fetchList, indiviualData, saveData, showGlobalNotification } = props;
+    const { userId, fetchVehicleUsed, fetchMotherTongue, fetchReligionList, fecthViewDocument, isViewDataLoaded, viewDocument, fetchAnnualIncome, fetchOccupationList, appCategoryData, listIndiviualShowLoading, fetchGenderCategory, fetchMartialStatus, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, isAppCategoryDataLoaded, isIndiviualProfileLoaded, fetchList, indiviualData, saveData, showGlobalNotification } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
     const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, selectedCustomerId, setSelectedCustomerId } = props;
 
@@ -128,6 +135,7 @@ const IndividualProfileBase = (props) => {
         fetchVehicleUsed({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.Vehicle_Used.id });
         fetchMotherTongue({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.MOTHER_TOUNGE.id });
         fetchReligionList({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.RELGION.id });
+        fecthViewDocument({ setIsLoading: listIndiviualShowLoading, userId });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAppCategoryDataLoaded]);
@@ -224,6 +232,7 @@ const IndividualProfileBase = (props) => {
         saveDocumentData,
         userId,
         showDataLoading,
+        viewDocument,
     };
 
     const viewProps = {
@@ -231,6 +240,7 @@ const IndividualProfileBase = (props) => {
         styles,
         activeKey,
         setActiveKey,
+        viewDocument,
     };
 
     const handleFormValueChange = () => {
