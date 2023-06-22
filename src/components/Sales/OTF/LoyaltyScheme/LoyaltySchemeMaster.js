@@ -53,44 +53,38 @@ const mapDispatchToProps = (dispatch) => ({
 
 const LoyaltySchemeMasterMain = (props) => {
     const { isLoyaltySchemeDataLoaded, isLoading, resetData, section, listShowLoading, fetchList, LoyaltySchemeData, userId, showGlobalNotification } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange } = props;
+    const { form, selectedOrderId, formActionType, handleFormValueChange, onFinishFailed } = props;
 
     const [formdata, setformdata] = useState();
 
-    const onSuccessAction = (res) => {};
-
     const onErrorAction = (message) => {
-        resetData();
         showGlobalNotification({ message });
     };
-    const extraParams = [
-        {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'otfNumber',
-        },
-    ];
+
     const onFinish = (values) => {};
-    const onFinishFailed = (values) => {
-        form.validateFields()
-            .then(() => {})
-            .catch((err) => {
-                console.log('err');
-            });
-    };
+
     useEffect(() => {
-        if (!isLoyaltySchemeDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction, extraParams });
+        if (userId && selectedOrderId) {
+            const extraParams = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOrderId,
+                    name: 'OTF Number',
+                },
+            ];
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isLoyaltySchemeDataLoaded, userId]);
+    }, [userId, selectedOrderId]);
+
     useEffect(() => {
         if (LoyaltySchemeData) {
             setformdata(LoyaltySchemeData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [LoyaltySchemeData]);
+
     const formProps = {
         ...props,
         form,
