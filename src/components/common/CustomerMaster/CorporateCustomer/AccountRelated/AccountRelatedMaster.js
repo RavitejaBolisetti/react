@@ -58,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const AccountRelatedBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, moduleTitle, isLoaded, data, saveData } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, selectedCustomerId } = props;
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [refershData, setRefershData] = useState(false);
@@ -82,9 +82,10 @@ export const AccountRelatedBase = (props) => {
         },
     ];
 
-    const errorAction = (message) => {
+    const onErrorAction = (message) => {
         showGlobalNotification(message);
     };
+
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
@@ -92,11 +93,20 @@ export const AccountRelatedBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId && !isLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, errorAction });
+        if (userId && selectedCustomerId) {
+            const extraParams = [
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: selectedCustomerId,
+                    name: 'Customer ID',
+                },
+            ];
+
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isLoaded]);
+    }, [userId, selectedCustomerId]);
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
@@ -114,7 +124,7 @@ export const AccountRelatedBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, errorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
 
