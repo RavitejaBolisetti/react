@@ -38,7 +38,7 @@ const UploadUtils = (props) => {
                 </Row>
             ) : (
                 <>
-                    <Card style={{ border: '1px dashed #B5B5B5' }}>
+                    <Card className={styles.dashedBorder}>
                         <Space direction="vertical">
                             <Space>
                                 <Avatar icon={<HiCheck />} />
@@ -48,7 +48,7 @@ const UploadUtils = (props) => {
                                 </div>
                             </Space>
                             <Space>
-                                <Image style={{ borderRadius: '6px' }} width={150} preview={false} src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
+                                <Image className={styles.borderRadiusSix} width={150} preview={false} src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
                                 <Button type="link">Replace Image</Button>
                             </Space>
                         </Space>
