@@ -8,13 +8,14 @@ import { Col, Input, Form, Row, Select, DatePicker, Space, Collapse, Typography 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
+import { convertCalenderDate } from 'utils/formatDateTime';
 
 const { Text } = Typography;
 const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const [customerForm] = Form.useForm();
+    const { schemeData } = props;
     const [activeKey, setactiveKey] = useState([1]);
 
     const onChange = (values) => {
@@ -35,32 +36,32 @@ const AddEditFormMain = (props) => {
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <Space style={{ display: 'flex' }} size="middle" direction="vertical" className={styles.accordianContainer}>
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(props?.id)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(props?.id)}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {props?.schemeName}
-                                </Text>
-                            </div>
-                        }
-                        key={props?.id}
+                {schemeData[0]?.schemes?.map((schemeForm, index) => (
+                    <Collapse
+                        expandIcon={() => {
+                            if (activeKey.includes(schemeForm?.id)) {
+                                return <MinusOutlined className={styles.iconsColor} />;
+                            } else {
+                                return <PlusOutlined className={styles.iconsColor} />;
+                            }
+                        }}
+                        activeKey={activeKey}
+                        onChange={() => onChange(schemeForm?.id)}
+                        expandIconPosition="end"
                     >
-                        <Form autoComplete="off" layout="vertical" form={customerForm}>
+                        <Panel
+                            header={
+                                <div className={styles.alignUser}>
+                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                        {schemeForm?.schemeName}
+                                    </Text>
+                                </div>
+                            }
+                            key={schemeForm?.id}
+                        >
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={props?.schemeType} label="Scheme Type" name="schemeType">
+                                    <Form.Item initialValue={schemeForm?.schemeType} label="Scheme Type" name="schemeType">
                                         <Select
                                             disabled={true}
                                             placeholder={preparePlaceholderSelect('Scheme Type')}
@@ -72,12 +73,12 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={props?.schemeCategory} label="Scheme Category" name="schemeCategory">
+                                    <Form.Item initialValue={schemeForm?.schemeCategory} label="Scheme Category" name="schemeCategory">
                                         <Input className={styles.inputBox} placeholder={preparePlaceholderText('Scheme Category')} disabled={true} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={props?.amount} label="Amount" name="amount">
+                                    <Form.Item initialValue={schemeForm?.amount} label="Amount" name="amount">
                                         <Input className={styles.inputBox} placeholder={preparePlaceholderText('Amount')} disabled={true} />
                                     </Form.Item>
                                 </Col>
@@ -85,12 +86,12 @@ const AddEditFormMain = (props) => {
 
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={props?.validFrom} label="Valid From" name="validFrom">
+                                    <Form.Item initialValue={convertCalenderDate(schemeForm?.validFrom, 'YYYY-MM-DD')} label="Valid From" name="validFrom">
                                         <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={props?.validTo} label="Valid To" name="validTo">
+                                    <Form.Item initialValue={convertCalenderDate(schemeForm?.validTo, 'YYYY-MM-DD')} label="Valid To" name="validTo">
                                         <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
                                     </Form.Item>
                                 </Col>
@@ -98,14 +99,15 @@ const AddEditFormMain = (props) => {
 
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item initialValue={props?.description} label="Description" name="description">
+                                    <Form.Item initialValue={schemeForm?.description} label="Description" name="description">
                                         <TextArea className={styles.inputBox} placeholder={preparePlaceholderText('Description')} disabled={true} />
                                     </Form.Item>
                                 </Col>
                             </Row>
-                        </Form>
-                    </Panel>
-                </Collapse>
+                        </Panel>
+                    </Collapse>
+                ))}
+                ;
             </Space>
         </div>
     );

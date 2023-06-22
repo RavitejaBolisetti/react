@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -11,43 +11,13 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, onChange, styles, schemeData } = props;
+    const { activeKey, styles, schemeData } = props;
     const viewProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-
-    // const schemeData = [
-    //     {
-    //         schemeType: 'WOW',
-    //         schemeCategory: 'Wind',
-    //         amount: 900,
-    //         validFrom: '10/10/2023',
-    //         validTo: '1/11/2023',
-    //         id: 1,
-    //         description: 'Refer the best High Touch Engineer-Routing & Switching',
-    //     },
-    //     {
-    //         schemeType: 'WOW',
-    //         schemeCategory: 'Wind',
-    //         amount: 900,
-    //         validFrom: '10/10/2023',
-    //         validTo: '1/11/2023',
-    //         id: 2,
-    //         description: 'Refer the best High Touch Engineer-Routing & Switching',
-    //     },
-    //     {
-    //         schemeType: 'WOW',
-    //         schemeCategory: 'Wind',
-    //         amount: 900,
-    //         validFrom: '10/10/2023',
-    //         validTo: '1/11/2023',
-    //         id: 3,
-    //         description: 'Refer the best High Touch Engineer-Routing & Switching',
-    //     },
-    // ];
 
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
@@ -62,7 +32,6 @@ const ViewDetailMain = (props) => {
                             }
                         }}
                         activeKey={activeKey}
-                        //onChange={() => onChange(schemeForm?.id)}
                         expandIconPosition="end"
                         className={styles.collapseContainer}
                     >
