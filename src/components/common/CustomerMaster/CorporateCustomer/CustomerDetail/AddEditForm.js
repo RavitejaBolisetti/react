@@ -13,7 +13,7 @@ import { ValidateMobileNumberModal } from '../../IndividualCustomer/CustomerDeta
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { configurableTypedata, formData, form, corporateLovData, formActionType: { editMode } = undefined,customerType } = props;
+    const { configurableTypedata, formData, form, corporateLovData, formActionType: { editMode } = undefined,customerType,handleParentCompany, onSearch } = props;
     const [corporateType, setCorporateType] = useState();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
@@ -59,37 +59,36 @@ const AddEditFormMain = (props) => {
             <Card style={{ backgroundColor: '#F2F2F2' }}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        {/* {editMode ? (
-                                <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
-                                    <Input
-                                        placeholder={preparePlaceholderText('mobile number')}
-                                        onChange={handleNumberValidation}
-                                        maxLength={10}
-                                        size="small"
-                                        suffix={
-                                            <>
-                                                {false ? (
-                                                    <Button loading={mobileLoader} onClick={showModal} type="link">
-                                                        Validate
-                                                    </Button>
-                                                ) : (
-                                                    <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
-                                                )}
-                                                <ValidateMobileNumberModal {...modalProps} />
-                                            </>
-                                        }
-                                    />
-                                </Form.Item>
-                            ) : (
-                               
-                            )} */}
-                        <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
-                            <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
-                        </Form.Item>
+                        {editMode ? (
+                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
+                                <Input
+                                    placeholder={preparePlaceholderText('mobile number')}
+                                    onChange={handleNumberValidation}
+                                    maxLength={10}
+                                    size="small"
+                                    suffix={
+                                        <>
+                                            {false ? (
+                                                <Button loading={mobileLoader} onClick={showModal} type="link">
+                                                    Validate
+                                                </Button>
+                                            ) : (
+                                                <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
+                                            )}
+                                            <ValidateMobileNumberModal {...modalProps} />
+                                        </>
+                                    }
+                                />
+                            </Form.Item>
+                        ) : (
+                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
+                                <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
+                            </Form.Item>
+                        )}
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                            <Select placeholder="Select" defaultValue={{ label: 'Individual', value: 'IND' }} allowClear ></Select>
+                            <Select placeholder="Select" defaultValue={{ label: 'Individual', value: 'IND' }} allowClear></Select>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -103,11 +102,13 @@ const AddEditFormMain = (props) => {
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.parentCompanyCode} label="Parent Company Code" name="parentCompanyCode" data-testid="parentCode" rules={[validateRequiredInputField('parent company code')]}>
-                            <Input placeholder={preparePlaceholderText('parent company code')} disabled={editMode} />
+                            {/* <Input placeholder={preparePlaceholderText('parent company code')} onBlur={handleParentCompany} disabled={editMode} /> */}
+                            <Input.Search placeholder={preparePlaceholderText('parent company code')} onSearch={onSearch} enterButton disabled={editMode} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={formData?.parentCompanyName} label="Parent Company Name" name="parentCompanyName" data-testid="parentName">
+                        {/* initialValue={formData?.parentCompanyName} */}
+                        <Form.Item label="Parent Company Name" name="parentCompanyName">
                             <Input placeholder={preparePlaceholderText('parent company name')} disabled />
                         </Form.Item>
                     </Col>

@@ -31,12 +31,13 @@ const mapStateToProps = (state) => {
         data: {
             CustomerMaster: {
                 CustomerDetails: { isLoaded: isDataLoaded = false, isLoading, data: customerDetailsData = [] },
-                Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
+                Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData =[]},
                 CustomerParentCompany: { isLoaded: isCustomerParentCompanyDataLoaded = false, isCustomerParentCompanyLoading, data: customerParentCompanyData = [] },
             },
             ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isTypeDataLoading, paramdata: typeData = [] },
         },
     } = state;
+    
 
     const moduleTitle = 'Customer Details';
 
@@ -59,6 +60,8 @@ const mapStateToProps = (state) => {
         isCustomerParentCompanyLoading,
         customerParentCompanyData,
     };
+
+    console.log(corporateLovData,'ssssskkkk')
     return returnValue;
 };
 
@@ -98,11 +101,11 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const [configurableTypedata, setConfigurableTypedata] = useState({});
     const [formData, setFormData] = useState();
     const [refershData, setRefershData] = useState(false);
+    const [parentCompanyField, setParentCompanyField] = useState('');
 
     const [showDataLoading, setShowDataLoading] = useState(true);
 
     const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
-    const parentCompanyData = 'LV99';
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -135,11 +138,30 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         if (userId && !isCorporateLovDataLoaded) {
             fetchCorporateLovList({ setIsLoading: listCorporateLovShowLoading, userId });
         }
+        const extraParams = [
+            {
+                key: 'corporateLov',
+                title: 'corporateLov',
+                value: corporateLovData,
+                name: 'corporateLov',
+            },
+        ];
+        fetchCorporateLovList({ setIsLoading: listCorporateLovShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isCorporateLovDataLoaded]);
+    
     useEffect(() => {
         if (userId && !isCustomerParentCompanyDataLoaded) {
             fetchCustomerParentCompanyList({ setIsLoading: listCustomerParentCompanyShowLoading, userId });
+            const extraParams = [
+                {
+                    key: 'parentCompanyCode',
+                    title: 'parentCompanyCode',
+                    value: customerParentCompanyData,
+                    name: 'parentCompanyCode',
+                },
+            ];
+            fetchCustomerParentCompanyList({ setIsLoading: listCustomerParentCompanyShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isCustomerParentCompanyDataLoaded]);
@@ -160,19 +182,36 @@ const CompanyCustomerDetailsMasterBase = (props) => {
                     value: selectedCustomer?.customerId,
                     name: 'Customer ID',
                 },
-                {
-                    key: 'parentCompanyCode',
-                    title: 'parentCompanyCode',
-                    value: parentCompanyData,
-                    name: 'parentCompanyCode',
-                },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
-    const handeSearchParentCompName = (e) => {
+    const onSearch = (value) => {
+        let searchParams = [
+            {
+                key: 'parentCompanyCode',
+                title: 'parentCompanyCode',
+                value: value,
+                name: 'parentCompanyCode',
+            },
+        ];
+        fetchCustomerParentCompanyList({ setIsLoading: listCustomerParentCompanyShowLoading, userId, onSuccessAction, extraParams : searchParams, onErrorAction });
+
+    };
+
+    useEffect(() => {
+        form.setFieldsValue({
+            parentCompanyName: customerParentCompanyData[0]?.parentCompanyName,
+        });
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [customerParentCompanyData]);
+
+   
+
+    const handleParentCompany = (e) => {
         console.log(e.target.value);
     };
     const myProps = {
@@ -226,6 +265,8 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         return;
     };
 
+
+
     const extraParams = [
         {
             key: 'customerId',
@@ -252,8 +293,9 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         configurableTypedata,
         handleButtonClick,
         styles,
-        handeSearchParentCompName,
+        handleParentCompany,
         customerParentCompanyData,
+        onSearch,
     };
 
     const viewProps = {
@@ -264,6 +306,10 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
+
+    console.log(customerParentCompanyData,'kkk')
+
+
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
