@@ -85,7 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyCustomerDetailsMasterBase = (props) => {
-    const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsData, section, fetchConfigList, listConfigShowLoading, fetchList, listShowLoading, moduleTitle, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, corporateLovData, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, isCustomerParentCompanyDataLoaded, customerParentCompanyData } = props;
+    const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsData, section, fetchConfigList, listConfigShowLoading, fetchList, listShowLoading, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, corporateLovData, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, customerParentCompanyData } = props;
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData } = props;
     const { form, handleFormValueChange, onFinishFailed, buttonData, setButtonData, formActionType, handleButtonClick } = props;
 
@@ -97,7 +97,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const [refershData, setRefershData] = useState(false);
 
     const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
-    const parentCompanyData = 'LV99';
+
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -144,12 +144,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     }, [userId, isCorporateLovDataLoaded]);
 
     useEffect(() => {
-        if (userId && !isCustomerParentCompanyDataLoaded) {
-            fetchCustomerParentCompanyList({ setIsLoading: listCustomerParentCompanyShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isCustomerParentCompanyDataLoaded]);
-    useEffect(() => {
         if (typeData) {
             setConfigurableTypedata({ CUST_TYPE: typeData['CUST_TYPE'], CORP_TYPE: typeData['CORP_TYPE'], CORP_CATE: typeData['CORP_CATE'], TITLE: typeData['TITLE'], MEM_TYPE: typeData['MEM_TYPE'] });
         }
@@ -165,12 +159,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
                     title: 'customerId',
                     value: selectedCustomer?.customerId,
                     name: 'Customer ID',
-                },
-                {
-                    key: 'parentCompanyCode',
-                    title: 'parentCompanyCode',
-                    value: parentCompanyData,
-                    name: 'parentCompanyCode',
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
@@ -228,7 +216,23 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         },
     ];
 
+    const validateParentCode = (e) => {
+        const parentCompanyData = e?.target?.value;
+        if (parentCompanyData) {
+            const extraParams = [
+                {
+                    key: 'parentCompanyCode',
+                    title: 'parentCompanyCode',
+                    value: parentCompanyData,
+                    name: 'parentCompanyCode',
+                },
+            ];
+            fetchCustomerParentCompanyList({ setIsLoading: listCustomerParentCompanyShowLoading, extraParams, userId });
+        }
+    };
+
     const formProps = {
+        ...props,
         form,
         formData,
         corporateLovData,
@@ -247,6 +251,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         styles,
         handeSearchParentCompName,
         customerParentCompanyData,
+        validateParentCode,
     };
 
     const viewProps = {
