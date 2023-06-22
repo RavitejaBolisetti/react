@@ -386,40 +386,6 @@
     color: #ffffff !important;
 }
 
-.uploadDragger :global .ant-upload-wrapper .ant-upload-drag {
-    border: 1px dashed #B5B5B5;
-    margin-bottom: 12px;
-}
-
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
-    height: 40px;
-    margin-top: 20px;
-    background-color: #e6e6e6;
-    border-radius: 6px;
-}
-
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
-    height: 40px;
-    margin-top: 20px;
-    background-color: #e6e6e6;
-    border-radius: 6px;
-    color: #0b0b0c;
-}
-
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-name,
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-icon .anticon {
-    color: black;
-}
-
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon,
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon:hover {
-    color: black;
-}
-
-.contactDivider {
-    margin-bottom: 12px !important;
-}
-
 .drawerFooterButtons button {
     margin-bottom: 0 !important;
     height: 34px;
@@ -1622,7 +1588,7 @@
     padding: 30px;
     margin-left: 0 !important;
     margin-right: 0 !important;
-    margin-bottom: 40px;
+    /* margin-bottom: 40px; */
     height: calc(100vh - 60px);
     /* max-height: calc(100vh - 60px); */
     overflow: hidden;
@@ -1685,7 +1651,8 @@
     margin-right: -55px;
 }
 
-.drawerBodyRight :global .ant-card-bordered {
+.drawerBodyRight :global .ant-card-bordered,
+.drawerBodyRight :global .ant-space-vertical {
     border: 0;
     margin-bottom: 50px;
 }
@@ -1697,7 +1664,8 @@
     border-radius: 8px;
 }
 
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-label>label {
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-label>label,
+.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-item .ant-form-item-label>label {
     color: #545454;
     font-size: 14px;
     line-height: 23px;
@@ -1896,9 +1864,45 @@
     border-color: #e6e6e6 !important;
 }
 
-.drawerBodyRight :global .ant-upload-wrapper .ant-upload-drag {
-    border: 1px dashed #B5B5B5;
+.drawerBodyRight .uploadDragger {
+    padding-top: 20px;
+    border-top: 1px solid #E6E6E6;
 }
+
+.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-drag {
+    border: 1px dashed #B5B5B5;
+    margin-bottom: 20px;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
+    height: 40px;
+    margin-top: 20px;
+    background-color: #e6e6e6;
+    border-radius: 6px;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
+    height: 40px;
+    margin-top: 20px;
+    background-color: #e6e6e6;
+    border-radius: 6px;
+    color: #0b0b0c;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-name,
+.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-icon .anticon {
+    color: black;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon,
+.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon:hover {
+    color: black;
+}
+
+.contactDivider {
+    margin-bottom: 12px !important;
+}
+
 
 .drawerBodyRight :global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
     color: #ff3e5b;
@@ -2009,14 +2013,16 @@
     border: 1px solid red;
 } */
 
-.viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-label {
+.viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-label,
+.viewDrawerContainer :global .ant-collapse .ant-collapse-content .ant-descriptions .ant-descriptions-item-label {
     color: #545454;
     font-weight: 400;
     font-size: 14px;
     line-height: 23px;
 }
 
-.viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-content {
+.viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-content,
+.viewDrawerContainer :global .ant-collapse .ant-collapse-content .ant-descriptions .ant-descriptions-item-content {
     color: #0b0b0c;
     font-weight: 400;
     font-size: 14px;
@@ -2169,7 +2175,7 @@
 }
 
 .collapseContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
-    padding-bottom: 0px;
+    padding-bottom: 0px !important;
 }
 
 .collapseContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(even) .ant-descriptions-item {
@@ -2184,6 +2190,10 @@
 .viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-content .anticon-check-square svg {
     width: 18.33px;
     height: 18.33px;
+}
+
+.viewDrawerContainer :global .ant-card-bordered {
+    margin-bottom: 0px;
 }
 
 .ViewDataTabel {
