@@ -24,33 +24,22 @@ const { Option } = Select;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { activeKey, formData, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
-    const [form] = Form.useForm();
+    const { activeKey, formData, onFinish, onFinishFailed, extraParams, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
     const [optionForm] = Form.useForm();
 
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [openAccordian, setOpenAccordian] = useState();
-    const [optionsServicesMapping, setoptionsServicesMapping] = useState([{}]);
+    const [optionsServicesMapping, setoptionsServicesMapping] = useState([
+        { serviceName: 'tax', amount: 200 },
+        { serviceName: 'shaka', amount: 1000 },
+    ]);
     const disabledProp = { disabled: true };
     useEffect(() => {
         if (formActionType?.editMode && formData) {
             form.setFieldsValue({
-                usageType: formData?.vehicleUsageType,
-                model: formData?.model,
-                modelCode: formData?.modelCode,
-                availableStock: formData?.availableStock,
-                vehicleAllocatedStatus: formData?.vehicleAllocationStatus,
-                poNumber: formData?.ponumber,
+                ...formData,
                 poDate: formData?.podate?.substr(0, 10),
                 poDate: dayjs(formData?.podate?.substr(0, 10)).format('DD/MM/YYYY'),
-                poStatus: formData?.postatus,
-                soNumber: formData?.sonumber,
-                soStatus: formData?.sostatus,
-                vinNumber: formData?.vinnumber,
-                vehicleSellingPrice: formData?.vehicleSellingPrice,
-                discountAmount: formData?.discountAmount,
-                taxAmount: formData?.taxAmount,
-                vehicleAmount: formData?.vehicleAmount,
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,6 +67,17 @@ const AddEditFormMain = (props) => {
     const OptionServicesFormProps = {
         handleCancel,
         optionForm,
+        optionsServicesMapping,
+        setoptionsServicesMapping,
+        showGlobalNotification,
+        fetchList,
+        userId,
+        listShowLoading,
+        saveData,
+        onSuccessAction,
+        extraParams,
+        onErrorAction,
+        formData,
     };
 
     return (
@@ -95,10 +95,10 @@ const AddEditFormMain = (props) => {
                             }
                             key="1"
                         >
-                            <Form autoComplete="off" layout="vertical" form={form}>
+                            <Form autoComplete="off" layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Vehicle Usage Type" name="usageType" data-testid="usageType" rules={[validateRequiredSelectField('vehicle usage Type')]}>
+                                        <Form.Item label="Vehicle Usage Type" name="vehicleUsageType" data-testid="usageType" rules={[validateRequiredSelectField('vehicle usage Type')]}>
                                             <Select placeholder="Select Vehicle Usage Type" allowClear options={typeData[PARAM_MASTER.VEHCL_TYPE.id]} fieldNames={{ label: 'value', value: 'key' }} />
                                         </Form.Item>
                                     </Col>
@@ -121,12 +121,12 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="Vehicle Allocated Status" name="vehicleAllocatedStatus" data-testid="vehicleAllocatedStatus">
+                                        <Form.Item label="Vehicle Allocated Status" name="vehicleAllocationStatus" data-testid="vehicleAllocatedStatus">
                                             <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Allocated Status')} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="PO Number" name="poNumber">
+                                        <Form.Item label="PO Number" name="ponumber">
                                             <Input {...disabledProp} placeholder={preparePlaceholderText('PO Number')} />
                                         </Form.Item>
                                     </Col>
@@ -138,24 +138,24 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="PO Status" name="poStatus">
+                                        <Form.Item label="PO Status" name="postatus">
                                             <Input {...disabledProp} placeholder={preparePlaceholderText('PO Status')} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="SO Number" name="soNumber">
+                                        <Form.Item label="SO Number" name="sonumber">
                                             <Input {...disabledProp} placeholder={preparePlaceholderText('SO Number')} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="SO Status" name="soStatus">
+                                        <Form.Item label="SO Status" name="sostatus">
                                             <Input {...disabledProp} placeholder={preparePlaceholderText('SO Status')} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item label="VIN Number" name="vinNumber">
+                                        <Form.Item label="VIN Number" name="vinnumber">
                                             <Input {...disabledProp} placeholder={preparePlaceholderText('VIN number')} />
                                         </Form.Item>
                                     </Col>

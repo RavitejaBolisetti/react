@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Typography, Space, Collapse } from 'antd';
+import { Row, Col, Typography, Space, Collapse, Form } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -53,6 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: otfvehicleDetailsDataActions.fetchList,
+            saveData: otfvehicleDetailsDataActions.saveData,
             fetchProductLov: productHierarchyDataActions.fetchFilteredList,
             ProductLovLoading: productHierarchyDataActions.listShowLoading,
             fetchconfigList: configParamEditActions.fetchList,
@@ -66,10 +67,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { VehicleDetailsData, fetchProductLov, ProductLovLoading, isProductHierarchyDataLoaded, ProductHierarchyData, formActionType, typeData, fetchList, isTypeDataLoaded, resetData, configLoading, fetchconfigList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { VehicleDetailsData, fetchProductLov, saveData, ProductLovLoading, isProductHierarchyDataLoaded, ProductHierarchyData, formActionType, typeData, fetchList, isTypeDataLoaded, resetData, configLoading, fetchconfigList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setformData] = useState({});
     const [keys, setkeys] = useState(true);
+    const [form] = Form.useForm();
 
     const [tooltTipText, settooltTipText] = useState();
 
@@ -85,7 +87,7 @@ const VehicleDetailsMasterMain = (props) => {
     };
     const loadDependendData = () => {
         fetchconfigList({ setIsLoading: configLoading, userId, onErrorAction, parameterType: PARAM_MASTER.VEHCL_TYPE.id });
-        fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
+        // fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
     };
 
     const extraParams = [
@@ -120,11 +122,10 @@ const VehicleDetailsMasterMain = (props) => {
         if (userId && !isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction, extraParams });
         }
-        if (userId && isDataLoaded) {
-            setformData(VehicleDetailsData);
-        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isTypeDataLoaded, isDataLoaded]);
+
     useEffect(() => {
         if (ProductHierarchyData && isProductHierarchyDataLoaded && userId && keys) {
             setProductHierarchyDataOptions(ProductHierarchyData);
@@ -142,11 +143,46 @@ const VehicleDetailsMasterMain = (props) => {
                     name: 'Product Code',
                 },
             ];
-            fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraparams: LovParams });
+            setformData(VehicleDetailsData);
+
+            // fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraparams: LovParams });
             setkeys(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [VehicleDetailsData, isDataLoaded]);
+
+    const onFinish = (values) => {
+        const data = { ...values, otfNumber: extraParams['0']['value'], OtfId: formData?.id, id: '' };
+        console.log('data', data, extraParams);
+
+        const onSuccess = (res) => {
+            form.resetFields();
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction, extraParams });
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+
+        const requestData = {
+            data: [data],
+            method: 'post',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveData(requestData);
+    };
+    const onFinishFailed = () => {
+        form
+            .validateFields()
+            .then(() => {})
+            .catch(() => {});
+    };
+
     const formProps = {
         formData,
         formActionType,
@@ -155,6 +191,17 @@ const VehicleDetailsMasterMain = (props) => {
         onChange,
         typeData,
         ProductHierarchyData: ProductHierarchyDataOptions,
+        showGlobalNotification,
+        fetchList,
+        userId,
+        listShowLoading,
+        saveData,
+        onSuccessAction,
+        extraParams,
+        onErrorAction,
+        form,
+        onFinish,
+        onFinishFailed
     };
     const viewProps = {
         activeKey,
