@@ -208,7 +208,7 @@ const ContactMain = (props) => {
         onCheckdefaultAddClick,
         setButtonData,
     };
-
+console.log("selectedCustomer", selectedCustomer)
     const onSubmit = () => {
         let data = { customerId: selectedCustomer?.customerId, customerContact: contactData };
 
