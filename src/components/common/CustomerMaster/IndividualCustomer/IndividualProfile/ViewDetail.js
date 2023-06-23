@@ -4,17 +4,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Space, Collapse, Typography, Descriptions } from 'antd';
+import { Space, Collapse, Typography, Descriptions, Card } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import Svg from 'assets/images/Filter.svg';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-
+import { FiEye } from 'react-icons/fi';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { setActiveKey, activeKey, styles, formData, viewDocument } = props;
+    const { setActiveKey, activeKey, styles, formData, viewDocument, handleOnClick } = props;
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -67,7 +66,7 @@ const ViewDetailMain = (props) => {
                     >
                         <Descriptions {...viewProps}>
                             <div>
-                                <img width="500" height="200" src={`data:image/png;base64,${viewDocument?.base64}`} />{' '}
+                                <img width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
                             </div>
                             <br />
                             <br />
@@ -216,7 +215,9 @@ const ViewDetailMain = (props) => {
                             </div>
                         }
                         key="4"
-                    ></Panel>
+                    >
+                        <Card key={formData?.image} title={formData?.image} extra={<FiEye />} onClick={handleOnClick}></Card>
+                    </Panel>
                 </Collapse>
             </Space>
         </div>

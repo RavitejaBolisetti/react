@@ -116,7 +116,7 @@ export const FormCommon = (props) => {
                 </Row>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="salutation" label="Salutation" initialValue={data?.saluation} rules={[validateRequiredInputField('Salutation')]}>
+                        <Form.Item name="saluation" label="Salutation" initialValue={data?.saluation} rules={[validateRequiredInputField('Salutation')]}>
                             <Input maxLength={6} placeholder={preparePlaceholderText('Salutation')} disabled={true} />
                         </Form.Item>
                     </Col>
@@ -184,7 +184,7 @@ export const FormCommon = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item name="alternateNumber" label="Alternate Number" initialValue={data?.alternateNumber} rules={[validateRequiredInputField('alternate Number')]}>
-                            <Input maxLength={10} placeholder={preparePlaceholderText('alternate Number')} disabled={formActionType?.editMode ? true : false} />
+                            <Input maxLength={10} placeholder={preparePlaceholderText('alternate Number')} disabled={formActionType?.editMode ? false : true} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -201,7 +201,7 @@ export const FormCommon = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item name="aadharNumber" label="Aadhar" initialValue={data?.aadharNumber} rules={[validateRequiredInputField('Aadhar')]}>
-                            <Input maxLength={12} placeholder={preparePlaceholderText('Aadhar')} disabled={formActionType?.editMode ? true : false} />
+                            <Input maxLength={12} placeholder={preparePlaceholderText('Aadhar')} disabled={formActionType?.editMode ? false : true} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -211,14 +211,14 @@ export const FormCommon = (props) => {
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item name="drivingLicense" label="Driving License" initialValue={data?.drivingLicense} rules={[validateRequiredInputField('Driving License')]}>
-                            <Input placeholder={preparePlaceholderText('Driving License')} maxLength={15} />
+                            <Input placeholder={preparePlaceholderText('Driving License')} maxLength={16} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="tradeLicence" label="Trade Licence" initialValue={data?.tradeLicense} rules={[validateRequiredInputField('trade Licence')]}>
-                            <Input maxLength={15} placeholder={preparePlaceholderText('Trade Licence')} disabled={formActionType?.editMode ? true : false} />
+                        <Form.Item name="tradeLicense" label="Trade Licence" initialValue={data?.tradeLicense} rules={[validateRequiredInputField('trade Licence')]}>
+                            <Input maxLength={15} placeholder={preparePlaceholderText('Trade Licence')} disabled={formActionType?.editMode ? false : true} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

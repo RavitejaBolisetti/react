@@ -64,6 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
             listDocumentShowLoading: supportingDocumentDataActions.listShowLoading,
 
             fecthViewDocument: documentViewDataActions.fetchList,
+            downloadFile: supportingDocumentDataActions.downloadFile,
 
             showGlobalNotification,
         },
@@ -72,9 +73,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 const IndividualProfileBase = (props) => {
     const { userId, fecthViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification } = props;
-    const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+    const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, downloadFile } = props;
     const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, selectedCustomerId, setSelectedCustomerId } = props;
-
+    console.log('indiviualData', indiviualData);
     const [form] = Form.useForm();
 
     const [formData, setFormData] = useState([]);
@@ -109,17 +110,17 @@ const IndividualProfileBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
+    const extraParams = [
+        {
+            key: 'docId',
+            title: 'docId',
+            value: indiviualData?.image,
+            name: 'docId',
+        },
+    ];
     useEffect(() => {
         if (userId) {
-            const extraParam = [
-                {
-                    key: 'docId',
-                    title: 'docId',
-                    value: indiviualData?.customerFormDocId ? indiviualData?.customerFormDocId : '',
-                    name: 'docId',
-                },
-            ];
-            fecthViewDocument({ setIsLoading: listIndiviualShowLoading, userId, extraParam, onErrorAction });
+            fecthViewDocument({ setIsLoading: listIndiviualShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -175,6 +176,17 @@ const IndividualProfileBase = (props) => {
         setIsFormVisible(true);
     };
 
+    const handleOnClick = () => {
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: indiviualData?.image,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: listIndiviualShowLoading, userId, extraParams });
+    };
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
