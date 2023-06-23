@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
                 IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading: isIndiviualLoading, data: indiviualData = [] },
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
-            ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, filteredListData: appCategoryData = [] },
+            ConfigurableParameterEditing: { filteredListData: appCategoryData = [] },
             SupportingDocument: { isLoaded: isDocumentDataLoaded = false, isDocumentLoading },
         },
     } = state;
@@ -41,7 +41,6 @@ const mapStateToProps = (state) => {
         userId,
         isIndiviualProfileLoaded,
         isIndiviualLoading,
-        isAppCategoryDataLoaded,
         appCategoryData,
         indiviualData,
         isDocumentDataLoaded,

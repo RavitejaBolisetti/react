@@ -1,19 +1,17 @@
 /*
- *   Copyright (c) 2023
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
 
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
-import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { CustomerFormButton } from '../../CustomerFormButton';
 import AddEditForm from './AddEditForm';
@@ -25,7 +23,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isDocumentDataLoaded = false, data: configData = [], filteredListData: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isDataLoaded = false, isLoading },
         },
     } = state;
@@ -34,8 +32,6 @@ const mapStateToProps = (state) => {
         userId,
         accessToken,
         token,
-        isDocumentDataLoaded,
-        configData,
         typeData: typeData && typeData[PARAM_MASTER.CUST_FILES.id],
         isDataLoaded,
         isLoading,
@@ -58,16 +54,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupportingDocumentBase = (props) => {
-    const { uploadFile, accessToken, token } = props;
+    const { uploadFile, accessToken, token, onFinishFailed } = props;
 
     const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+    const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
 
     const [form] = Form.useForm();
 
     const [uploadedFile, setUploadedFile] = useState();
-    const [isFormVisible, setIsFormVisible] = useState(false);
-    const [formData, setFormData] = useState();
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -96,27 +90,14 @@ const SupportingDocumentBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = () => {
-        console.log('failed');
-    };
-
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormData([]);
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        record && setFormData(record);
-        setIsFormVisible(true);
-    };
-
     const formProps = {
+        ...props,
         typeData,
         userId,
         accessToken,
         token,
         saveData,
         onFinish,
-        onFinishFailed,
         setUploadedFile,
         uploadFile,
         listShowLoading,
@@ -127,11 +108,6 @@ const SupportingDocumentBase = (props) => {
         VIEW_ACTION,
         buttonData,
         setButtonData,
-        handleButtonClick,
-    };
-
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     return (

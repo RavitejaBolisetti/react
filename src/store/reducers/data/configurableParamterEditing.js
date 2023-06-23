@@ -38,9 +38,9 @@ export const ConfigurableParameterEditing = (state = initialState, action) => {
 
 const buildObject = (arr) => {
     const obj = [];
-    const unique = [...new Set(arr.map((item) => item.key))];
+    const unique = [...new Set(arr.map((item) => item.parentKey))];
     for (let i = 0; i < unique.length; i++) {
-        obj[unique[i].trim()] = arr?.filter((item) => item.key === unique[i]);
+        obj[unique[i].trim()] = arr?.filter((item) => item.parentKey === unique[i]);
     }
     return obj;
 };

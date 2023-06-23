@@ -8,7 +8,6 @@ import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { customerDetailsDataActions } from 'store/actions/data/customerMaster/customerDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -16,7 +15,6 @@ import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { InputSkeleton } from 'components/common/Skeleton';

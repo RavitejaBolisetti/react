@@ -13,11 +13,11 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import styles from 'components/common/Common.module.css';
 import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { addressIndividualDataActions } from 'store/actions/data/customerMaster/individual/address/individualAddress';
 import { addressCorporateDataActions } from 'store/actions/data/customerMaster/corporate/address/individualAddress';
 
@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isAddDataLoaded = false, isAddLoading, paramdata: addData = [] },
+            ConfigurableParameterEditing: { filteredListData: addData = [] },
             CustomerMaster: {
                 AddressIndividual: { isLoaded: isAddressLoaded = false, isLoading: isAddressLoading, data: addressIndData = [] },
             },
@@ -46,8 +46,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         addressIndData,
-        isAddDataLoaded,
-        isAddLoading,
         isAddressLoaded,
         isAddressLoading,
         addData: addData && addData[PARAM_MASTER.ADD_TYPE.id],
@@ -62,9 +60,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchList: addressIndividualDataActions.fetchList,
             saveData: addressIndividualDataActions.saveData,
             resetData: addressIndividualDataActions.reset,
@@ -74,7 +69,6 @@ const mapDispatchToProps = (dispatch) => ({
             saveDataCorporate: addressCorporateDataActions.saveData,
             resetDataCorporate: addressCorporateDataActions.reset,
             listShowLoadingCorporate: addressCorporateDataActions.listShowLoading,
-
 
             listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
             fetchPincodeDetail: geoPincodeDataActions.fetchList,
@@ -86,10 +80,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddressMasterBase = (props) => {
-    const { isViewModeVisible, section, isAddDataLoaded, addressIndData, setFormActionType, formActionType, isAddressLoaded, selectedCustomer, isAddLoading, saveData, listConfigShowLoading, fetchConfigList, addData } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, isAddressLoading, formData, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification } = props;
-    const { fetchListCorporate,saveDataCorporate,  customerType } = props;
-console.log('viv customerType ', customerType)
+    const { isViewModeVisible, section, addressIndData, setFormActionType, formActionType, isAddressLoaded, selectedCustomer, saveData, addData } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, isAddressLoading, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification } = props;
+    const { fetchListCorporate, saveDataCorporate, customerType } = props;
+
     const [form] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -112,14 +106,6 @@ console.log('viv customerType ', customerType)
     ];
 
     useEffect(() => {
-        if (userId && !isAddDataLoaded && !isAddLoading) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.ADD_TYPE.id });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isAddDataLoaded]);
-
-
-    useEffect(() => {
         if (userId && addressIndData?.customerAddress?.length) {
             setAddressData(addressIndData?.customerAddress);
         }
@@ -128,11 +114,11 @@ console.log('viv customerType ', customerType)
 
     useEffect(() => {
         if (userId && !isAddressLoaded) {
-            if(customerType === 'IND'){
+            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
-            }else{
+            } else {
                 fetchListCorporate({ setIsLoading: listShowLoading, userId, extraParams });
-            }  
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAddressLoaded]);
@@ -165,6 +151,7 @@ console.log('viv customerType ', customerType)
         const onError = (message) => {
             showGlobalNotification({ message });
         };
+
         const requestData = {
             data: data,
             method: formActionType?.editMode ? 'put' : 'post',
@@ -173,10 +160,11 @@ console.log('viv customerType ', customerType)
             onError,
             onSuccess,
         };
-        if(customerType === 'IND'){
+
+        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
             saveData(requestData);
-        }else{
-            saveDataCorporate(requestData)
+        } else {
+            saveDataCorporate(requestData);
         }
 
         setShowAddEditForm(false);
@@ -207,6 +195,7 @@ console.log('viv customerType ', customerType)
     };
 
     const formProps = {
+        ...props,
         setShowAddEditForm,
         showAddEditForm,
         formActionType,
@@ -236,14 +225,8 @@ console.log('viv customerType ', customerType)
         handleFormValueChange,
     };
 
-    const viewProps = {
-        formData,
-        styles,
-    };
-
     const myProps = {
         ...props,
-        saveButtonName: formActionType?.addMode ? 'Create Customer ID' : 'Save & Next',
     };
 
     const formSkeleton = (
@@ -278,9 +261,7 @@ console.log('viv customerType ', customerType)
                                 }
                                 key="1"
                             >
-                                {/* {isAddressLoading ? formSkeleton : formContainer} */}
                                 {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                {/* {(showAddEditForm || !addressData?.length > 0) && <AddEditForm {...formProps} />} */}
                                 {isAddressLoading ? formSkeleton : <ViewAddressList {...formProps} />}
                             </Panel>
                         </Collapse>

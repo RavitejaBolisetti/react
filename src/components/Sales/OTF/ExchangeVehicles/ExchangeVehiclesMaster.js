@@ -44,7 +44,7 @@ const mapStateToProps = (state) => {
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isloading: isFinanceLovLoading, data: financeLovData = [] },
                 SchemeDetail: { isLoaded: isSchemeLovDataLoaded = false, isloading: isSchemeLovLoading, data: schemeLovData = [] },
             },
-            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, filteredListData: typeData = [] },
             Vehicle: {
                 MakeVehicleDetails: { isLoaded: isMakeDataLoaded = false, isMakeLoading, data: makeData = [] },
                 ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isModelLoading, data: modelData = [] },

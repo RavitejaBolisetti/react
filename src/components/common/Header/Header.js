@@ -26,7 +26,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
 import IMG_ICON from 'assets/img/icon.png';
-import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { HeadPhoneIcon, MenuArrow } from 'Icons';
 
@@ -103,7 +102,7 @@ const HeaderMain = (props) => {
 
     useEffect(() => {
         if (!isTypeDataLoaded && !isTypeDataLoading && userId) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId });
+            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: 'ALL' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isTypeDataLoaded, userId]);

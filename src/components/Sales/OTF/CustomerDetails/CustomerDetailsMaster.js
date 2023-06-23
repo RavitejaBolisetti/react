@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
             Geo: {
                 Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
             },
-            ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isTypeDataLoading, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isTypeDataLoading, filteredListData: typeData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },

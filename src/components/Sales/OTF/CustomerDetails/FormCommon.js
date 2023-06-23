@@ -1,83 +1,84 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Select, Row, Checkbox, Space, Collapse, Typography, AutoComplete, Button, DatePicker } from 'antd';
+import { Col, Input, Form, Row, DatePicker } from 'antd';
 import dayjs from 'dayjs';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { FiEdit } from 'react-icons/fi';
-import { validateRequiredInputField, validatePincodeField, validateRequiredSelectField } from 'utils/validation';
-import { OTF_FORM_ACTION_TYPE } from 'constants/otfActionType';
 
-import styles from 'components/common/Common.module.css';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 export const FormCommon = (props) => {
     const [options, setOptions] = useState(false);
-    const { formActionType, onFinishFailed, form, formData, typeData, onFinish, isBillingForm, handleOnChange } = props;
-    const { userId, pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, data } = props;
+    const { formActionType, onFinishFailed, form,  onFinish } = props;
+    const { userId, pincodeData,  listPinCodeShowLoading, fetchPincodeDetail, data } = props;
     const { forceUpdate, isVisible } = props;
-    console.log('data ', data);
     const innitValue = dayjs(data?.birthDate, 'YYYY/MM/DD');
 
     const [activeKey, setactiveKey] = useState([1]);
 
-    const onChange = (values) => {
-        const isPresent = activeKey.includes(values);
+    // const onChange = (values) => {
+    //     const isPresent = activeKey.includes(values);
+    //     if (isPresent) {
+    //         const newActivekeys = [];
 
-        if (isPresent) {
-            const newActivekeys = [];
+    //         activeKey.forEach((item) => {
+    //             if (item !== values) {
+    //                 newActivekeys.push(item);
+    //             }
+    //         });
+    //         setactiveKey(newActivekeys);
+    //     } else {
+    //         setactiveKey([...activeKey, values]);
+    //     }
+    // };
 
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setactiveKey(newActivekeys);
-        } else {
-            setactiveKey([...activeKey, values]);
-        }
-    };
-    const handleOnSelect = (key) => {
-        const selectedPinCode = pincodeData?.find((i) => i.id === key);
-        if (selectedPinCode) {
-            form.setFieldsValue({
-                pinCode: selectedPinCode?.pinCode,
-                state: selectedPinCode?.stateName,
-                city: selectedPinCode?.cityName,
-                tehsil: selectedPinCode?.tehsilName,
-                district: selectedPinCode?.districtName,
-                locality: selectedPinCode?.localityName,
-            });
-            forceUpdate();
-        }
-    };
+    // const handleOnSelect = (key) => {
+    //     const selectedPinCode = pincodeData?.find((i) => i.id === key);
+    //     if (selectedPinCode) {
+    //         form.setFieldsValue({
+    //             pinCode: selectedPinCode?.pinCode,
+    //             state: selectedPinCode?.stateName,
+    //             city: selectedPinCode?.cityName,
+    //             tehsil: selectedPinCode?.tehsilName,
+    //             district: selectedPinCode?.districtName,
+    //             locality: selectedPinCode?.localityName,
+    //         });
+    //         forceUpdate();
+    //     }
+    // };
 
-    const handleOnSearch = (value) => {
-        if (!(typeof options === 'undefined')) {
-            return;
-        }
-        setOptions();
-        if (value.length <= 5) {
-            form.validateFields(['pinCode']);
-        } else if (value.length > 5) {
-            const extraParams = [
-                {
-                    key: 'pincode',
-                    value: value,
-                },
-            ];
-            fetchPincodeDetail({ setIsLoading: listPinCodeShowLoading, userId, extraParams });
-        }
-    };
+    // const handleOnSearch = (value) => {
+    //     if (!(typeof options === 'undefined')) {
+    //         return;
+    //     }
+    //     setOptions();
+    //     if (value.length <= 5) {
+    //         form.validateFields(['pinCode']);
+    //     } else if (value.length > 5) {
+    //         const extraParams = [
+    //             {
+    //                 key: 'pincode',
+    //                 value: value,
+    //             },
+    //         ];
+    //         fetchPincodeDetail({ setIsLoading: listPinCodeShowLoading, userId, extraParams });
+    //     }
+    // };
 
-    const handleOnClear = () => {
-        setOptions();
-        form.setFieldsValue({
-            pinCode: undefined,
-            state: undefined,
-            city: undefined,
-            tehsil: undefined,
-            district: undefined,
-            locality: undefined,
-        });
-    };
+    // const handleOnClear = () => {
+    //     setOptions();
+    //     form.setFieldsValue({
+    //         pinCode: undefined,
+    //         state: undefined,
+    //         city: undefined,
+    //         tehsil: undefined,
+    //         district: undefined,
+    //         locality: undefined,
+    //     });
+    // };
 
     useEffect(() => {
         const pinOption = pincodeData?.map((item) => ({
@@ -234,7 +235,6 @@ export const FormCommon = (props) => {
                         </Form.Item>
                     </Col> */}
                 </Row>
-                
             </Form>
         </>
     );

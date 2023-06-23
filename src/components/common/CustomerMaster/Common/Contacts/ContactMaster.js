@@ -18,6 +18,7 @@ import AddEditForm from './AddEditForm';
 import ViewContactList from './ViewContactList';
 import { CustomerFormButton } from '../../CustomerFormButton';
 import { InputSkeleton } from 'components/common/Skeleton';
+import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import styles from 'components/common/Common.module.css';
 
@@ -31,14 +32,12 @@ const mapStateToProps = (state) => {
             customerContacts: { isLoaded: isCustomerDataLoaded = false, isLoading: isCustomerDataLoading, data: customerData = [] },
         },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, filteredListData: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
 
     let returnValue = {
         userId,
-        isConfigDataLoaded,
-        isConfigLoading,
         isCustomerDataLoaded,
         isCustomerDataLoading,
         typeData: typeData,
@@ -68,7 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ContactMain = (props) => {
-    const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData, isConfigDataLoaded, isConfigLoading } = props;
+    const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData } = props;
     const { isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData } = props;
     const { buttonData, setButtonData, formActionType } = props;
 
@@ -85,15 +84,14 @@ const ContactMain = (props) => {
         {
             key: 'customerId',
             title: 'customerId',
-            // value: 'CUS1686833188888',
             value: selectedCustomer?.customerId,
             name: 'customerId',
         },
     ];
 
     useEffect(() => {
-        if (userId && selectedCustomer?.customerId && !isCustomerDataLoaded && !isConfigLoading) {
-            if (customerType === 'IND') {
+        if (userId && selectedCustomer?.customerId && !isCustomerDataLoaded) {
+            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
             } else {
                 fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
@@ -223,7 +221,7 @@ const ContactMain = (props) => {
             onSuccess,
         };
 
-        if (customerType === 'IND') {
+        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
             saveIndividualData(requestData);
         } else {
             saveData(requestData);
@@ -257,7 +255,7 @@ const ContactMain = (props) => {
                             <Panel
                                 header={
                                     <Space>
-                                        <Text strong> {customerType === 'IND' ? 'Individual Contact' : 'Company Contact'}</Text>
+                                        <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Contact' : 'Company Contact'}</Text>
                                         {!formActionType?.viewMode && (
                                             <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary">
                                                 Add Contact
