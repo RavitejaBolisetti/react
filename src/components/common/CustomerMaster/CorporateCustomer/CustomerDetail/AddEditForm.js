@@ -123,7 +123,7 @@ const AddEditFormMain = (props) => {
                         <>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                    <Select onSelect={onHandleSelect} options={corporateLovData} loading={false} fieldNames={{ label: 'value', value: 'key' }} placeholder="Select" allowClear></Select>
+                                    <Select onSelect={onHandleSelect} loading={false} fieldNames={{ label: 'value', value: 'key' }} placeholder="Select" allowClear options={corporateLovData}></Select>
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
