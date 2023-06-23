@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             OTF: {
-                FinanceDetail: { isLoaded, isLoading, data },
+                FinanceDetail: { isLoaded, isLoading, data: financeData = [] },
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isloading: isFinanceLovLoading, data: FinanceLovData = [] },
             },
         },
@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isLoaded,
-        data,
+        financeData,
         isLoading,
         moduleTitle,
 
@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { saveData, fetchList, userId, listShowLoading, isLoaded, data, showGlobalNotification, moduleTitle, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
+    const { saveData, fetchList, userId, listShowLoading, isLoaded, financeData, showGlobalNotification, moduleTitle, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
 
     const { form, selectedOrderId, formActionType, handleFormValueChange } = props;
 
@@ -121,7 +121,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId };
+        const data = { ...values, id: financeData?.id, otfNumber: selectedOrderId };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -145,7 +145,7 @@ export const FinananceDetailsMasterBase = (props) => {
 
         const requestData = {
             data: data,
-            method: data ? 'put' : 'post',
+            method: financeData?.id ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -175,7 +175,7 @@ export const FinananceDetailsMasterBase = (props) => {
 
     const formProps = {
         form,
-        formData: data,
+        formData: financeData,
         formActionType,
         setFormActionType,
         fetchList,
@@ -184,7 +184,7 @@ export const FinananceDetailsMasterBase = (props) => {
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
-        tableData: data,
+        tableData: financeData,
 
         isFinanceLovDataLoaded,
         isFinanceLovLoading,
@@ -201,7 +201,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const viewProps = {
-        formData: data,
+        formData: financeData,
         styles,
     };
 

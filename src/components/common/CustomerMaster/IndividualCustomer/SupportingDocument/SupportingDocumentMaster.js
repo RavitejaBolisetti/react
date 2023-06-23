@@ -72,7 +72,7 @@ const SupportingDocumentBase = (props) => {
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message, placement: 'bottomRight' });
+            showGlobalNotification({ message });
         };
 
         const requestData = {

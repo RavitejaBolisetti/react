@@ -115,7 +115,7 @@ const CompanyProfileBase = (props) => {
 
         const onError = (message) => {
             listShowLoading(false);
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
