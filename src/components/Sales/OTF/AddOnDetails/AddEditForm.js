@@ -56,6 +56,7 @@ function AddEditForm(props) {
     };
 
     return (
+        <div className={styles.drawerBodyRight}>
         <Space direction="vertical" size="small" className={styles.accordianContainer}>
             <Collapse onChange={() => handleCollapse('Accessories Information')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
                 <Panel header={headerPropsFn('Accessories Information', onAddAccessories, null)} key="Accessories Information">
@@ -87,6 +88,7 @@ function AddEditForm(props) {
                 </Panel>
             </Collapse>
         </Space>
+        </div>
     );
 }
 

@@ -1697,7 +1697,7 @@
 } */
 
 .drawerBodyRight :global .ant-steps .ant-steps-item-container {
-    margin-right: 5px;
+    margin-right: 3px;
 }
 
 .drawerBodyRight :global .ant-steps.ant-steps-label-vertical .ant-steps-item-content {

@@ -45,6 +45,7 @@ const ViewDetailMain = (props) => {
     const billingBirthDate = dayjs(formData.billingCustomer?.birthDate).format('DD/MM/YYYY');
 
     return (
+        <div className={styles.drawerBodyRight}>
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Space style={{ display: 'flex' }} size="middle" direction="vertical">
@@ -142,6 +143,7 @@ const ViewDetailMain = (props) => {
                 </Space>
             </Col>
         </Row>
+        </div>
     );
 };
 
