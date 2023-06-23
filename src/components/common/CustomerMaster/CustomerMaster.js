@@ -108,6 +108,18 @@ const CustomerMasterMain = (props) => {
             value: customerType,
             canRemove: true,
         },
+        {
+            key: 'pageSize',
+            title: 'Value',
+            value: 1000,
+            canRemove: true,
+        },
+        {
+            key: 'pageNumber',
+            title: 'Value',
+            value: 1,
+            canRemove: true,
+        },
     ];
 
     const extraParams = [
@@ -187,7 +199,7 @@ const CustomerMasterMain = (props) => {
 
     const tableProps = {
         isLoading: isLoading,
-        tableData: data,
+        tableData: data?.customerMasterDetails,
         tableColumn: tableColumn(handleButtonClick),
     };
 

@@ -63,6 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: corporateCompanyProfileDataActions.saveData,
             uploadFile: supportingDocumentDataActions.uploadFile,
             uploadListShowLoading: supportingDocumentDataActions.listShowLoading,
+            downloadFile: supportingDocumentDataActions.downloadFile,
             showGlobalNotification,
         },
         dispatch
@@ -70,8 +71,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyProfileBase = (props) => {
-    const { showGlobalNotification, buttonData, setButtonData, formActionType, handleButtonClick, defaultBtnVisiblity, selectedCustomer, setSelectedCustomerId } = props;
-    const { listShowLoading, section, saveData, uploadFile, userId, fetchCompanyProfileData, fecthViewDocument, appCategoryData, customerProfileData, viewDocument } = props;
+    const { showGlobalNotification, buttonData, setButtonData, formActionType, handleButtonClick, defaultBtnVisiblity, selectedCustomer, selectedCustomerId } = props;
+    const { listShowLoading, section, saveData, uploadFile, userId, fetchCompanyProfileData, downloadFile, appCategoryData, customerProfileData, viewDocument } = props;
     const { uploadListShowLoading } = props;
 
     const [form] = Form.useForm();
@@ -96,9 +97,11 @@ const CompanyProfileBase = (props) => {
 
     const onFinish = (values) => {
         const recordId = customerProfileData?.id || '';
-        const customerId = customerProfileData.customerId ? customerProfileData.customerId : setSelectedCustomerId;
+        const customerId = customerProfileData.customerId ? customerProfileData.customerId : selectedCustomerId;
+        // const keyRoleId = customerProfileData?.keyAccountDetails ? customerProfileData?.keyAccountDetails.id : '';
+        const authorityId = customerProfileData?.authorityDetails ? customerProfileData?.authorityDetails.id : '';
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
-        const data = { ...rest, customerId: customerId, keyAccountDetails: { customerId: customerId, accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { customerId: customerId, personName: values.personName, postion: values.postion, companyName: values.companyName, remarks: values.remarks }, customerFormDocId: uploadedFile, customerConsent: values.customerConsent, id: recordId };
+        const data = { ...rest, customerId: customerId, keyAccountDetails: { customerId: customerId, accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { id: authorityId, customerId: customerId, personName: values.personName, postion: values.postion, companyName: values.companyName, remarks: values.remarks }, customerFormDocId: uploadedFile, customerConsent: values.customerConsent, id: recordId };
 
         const onSuccess = (res) => {
             listShowLoading(false);
@@ -145,7 +148,7 @@ const CompanyProfileBase = (props) => {
                 name: 'docId',
             },
         ];
-        fecthViewDocument({ setIsLoading: listShowLoading, userId, extraParams });
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams });
     };
 
     const formProps = {
