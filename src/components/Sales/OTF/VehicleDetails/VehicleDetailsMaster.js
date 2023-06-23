@@ -78,6 +78,7 @@ const VehicleDetailsMasterMain = (props) => {
     const [openAccordian, setOpenAccordian] = useState();
 
     const [tooltTipText, settooltTipText] = useState();
+    const [isReadOnly, setIsReadOnly] = useState();
 
     const [ProductHierarchyDataOptions, setProductHierarchyDataOptions] = useState();
 
@@ -157,7 +158,7 @@ const VehicleDetailsMasterMain = (props) => {
     }, [VehicleDetailsData, isDataLoaded]);
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: '' };
+        const data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: '', optionalServices: [] };
         console.log('data', data, selectedOrderId);
 
         const onSuccess = (res) => {
@@ -216,6 +217,8 @@ const VehicleDetailsMasterMain = (props) => {
         onFinishFailed,
         openAccordian,
         setOpenAccordian,
+        isReadOnly,
+        setIsReadOnly,
     };
     const viewProps = {
         activeKey,

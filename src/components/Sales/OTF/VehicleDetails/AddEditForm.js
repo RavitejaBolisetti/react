@@ -24,10 +24,8 @@ const { Option } = Select;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { activeKey, formData, openAccordian, setOpenAccordian, onFinish, onFinishFailed, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
+    const { activeKey, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, onFinish, onFinishFailed, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
     const [optionForm] = Form.useForm();
-
-    const [isReadOnly, setIsReadOnly] = useState(false);
 
     const [optionsServicesMapping, setoptionsServicesMapping] = useState([
         { serviceName: 'tax', amount: 200 },
@@ -57,6 +55,7 @@ const AddEditFormMain = (props) => {
         });
     };
     const addContactHandeler = (e) => {
+        console.log('called on error');
         optionForm.resetFields();
         setOpenAccordian('3');
         setIsReadOnly(true);
@@ -79,6 +78,7 @@ const AddEditFormMain = (props) => {
         onErrorAction,
         formData,
         setOpenAccordian,
+        addContactHandeler,
     };
 
     return (

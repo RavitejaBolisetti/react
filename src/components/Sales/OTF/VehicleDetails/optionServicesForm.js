@@ -11,13 +11,26 @@ import styles from 'components/common/Common.module.css';
 import { validateRequiredInputField } from 'utils/validation';
 
 const OptionServicesFormMain = (props) => {
-    const { handleCancel, showGlobalNotification, selectedOrderId, onErrorAction, formData, fetchList, userId, listShowLoading, saveData, onSuccessAction, optionForm, optionsServicesMapping, setoptionsServicesMapping, setOpenAccordian } = props;
-
+    const { handleCancel, addContactHandeler, showGlobalNotification, selectedOrderId, onErrorAction, formData, fetchList, userId, listShowLoading, saveData, onSuccessAction, optionForm, optionsServicesMapping, setoptionsServicesMapping, setOpenAccordian } = props;
+    const isServiceNamePresent = (serviceName) => {
+        let found = false;
+        formData['optionalServices']?.find((element, index) => {
+            if (element?.serviceName?.trim()?.toLowerCase() === serviceName?.trim()?.toLowerCase()) {
+                showGlobalNotification({ notificationType: 'error', title: 'ERROR', message: 'Duplicate service Name' });
+                found = true;
+                return;
+            }
+        });
+        return found;
+    };
     const onFinish = () => {
         optionForm
             .validateFields()
             .then(() => {
                 const values = optionForm.getFieldsValue();
+                if (isServiceNamePresent(values?.serviceName)) {
+                    return;
+                }
 
                 const data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: '' };
                 console.log('data', data, selectedOrderId);
@@ -37,6 +50,7 @@ const OptionServicesFormMain = (props) => {
                 };
 
                 const onError = (message) => {
+                    addContactHandeler();
                     showGlobalNotification({ message });
                 };
 
