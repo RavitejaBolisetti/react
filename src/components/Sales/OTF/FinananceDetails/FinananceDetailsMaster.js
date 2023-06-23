@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -91,12 +91,6 @@ export const FinananceDetailsMasterBase = (props) => {
             value: selectedOrderId,
             name: 'OTF Number',
         },
-        {
-            key: 'id',
-            title: 'id',
-            value: 'a0368e0e-ac87-4beb-b0f5-f4f8b69ff8f7',
-            name: 'OTF ID',
-        },
     ];
 
     useEffect(() => {
@@ -127,7 +121,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId, id: 'a0368e0e-ac87-4beb-b0f5-f4f8b69ff8f7' };
+        const data = { ...values, otfNumber: selectedOrderId };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -151,7 +145,7 @@ export const FinananceDetailsMasterBase = (props) => {
 
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: data ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
