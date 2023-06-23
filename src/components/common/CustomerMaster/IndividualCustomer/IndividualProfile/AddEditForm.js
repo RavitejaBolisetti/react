@@ -8,7 +8,7 @@ import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, S
 import Svg from 'assets/images/Filter.svg';
 import dayjs from 'dayjs';
 
-import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId } from 'utils/validation';
+import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, validatInstagramProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
@@ -197,7 +197,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Occupation" initialValue={formData?.occuption } name="occuption">
+                                        <Form.Item label="Occupation" initialValue={formData?.occuption} name="occuption">
                                             <Select value={null} placeholder={preparePlaceholderSelect('occupation')} {...disabledProps}>
                                                 {appCategoryData?.OCC_TYPE?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
@@ -208,7 +208,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Annual Income" initialValue={formData?.annualIncome } name="annualIncome">
+                                        <Form.Item label="Annual Income" initialValue={formData?.annualIncome} name="annualIncome">
                                             <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
                                                 {appCategoryData?.Annual_Income?.map((item) => (
                                                     <Option key={'ct' + item.key} value={item.key}>
@@ -226,7 +226,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Aadhar No." name="adharNumber" initialValue={formData?.adharNumber} rules={([validateAadhar('aadhar')], [validateRequiredInputField('aadhar')])}>
+                                        <Form.Item label="Aadhar No." name="adharNumber" initialValue={formData?.adharNumber} rules={[validateAadhar('aadhar'), validateRequiredInputField('aadhar')]}>
                                             <Input value={null} maxLength={12} className={styles.inputBox} placeholder={preparePlaceholderText('aadhar number')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
@@ -274,13 +274,13 @@ const AddEditFormMain = (props) => {
 
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={([validatePanField('pan')], [validateRequiredInputField('pan')])}>
+                                        <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField('pan'), validateRequiredInputField('pan')]}>
                                             <Input value={null} maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={([validateGSTIN('gstin')], [validateRequiredInputField('gstin')])}>
+                                        <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin'), validateRequiredInputField('gstin')]}>
                                             <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
@@ -370,26 +370,26 @@ const AddEditFormMain = (props) => {
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Facebook Link" initialValue={formData?.facebookLink} name="facebookLink">
+                                        <Form.Item label="Facebook Link" initialValue={formData?.facebookLink} name="facebookLink" rules={[validatFacebookProfileUrl('facebookLink')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Twitter Link" initialValue={formData?.twitterLink} name="twitterLink">
+                                        <Form.Item label="Twitter Link" initialValue={formData?.twitterLink} name="twitterLink" rules={[validattwitterProfileUrl('twitterLink')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Instagram Link" initialValue={formData?.instagramLink} name="instagramLink">
+                                        <Form.Item label="Instagram Link" initialValue={formData?.instagramLink} name="instagramLink" rules={[validatInstagramProfileUrl('instagramLink')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Youtube Channel" initialValue={formData?.youtubeChannelLink} name="youtubeChannelLink">
+                                        <Form.Item label="Youtube Channel" initialValue={formData?.youtubeChannelLink} name="youtubeChannelLink" rules={[validatYoutubeProfileUrl('youtubeChannelLink')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
                                         </Form.Item>
                                     </Col>
