@@ -231,13 +231,8 @@ export const OtfMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
-            if (buttonData?.saveAndNewBtnClicked) {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            } else {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            }
+
+            setIsFormVisible(false);
         };
 
         const onError = (message) => {

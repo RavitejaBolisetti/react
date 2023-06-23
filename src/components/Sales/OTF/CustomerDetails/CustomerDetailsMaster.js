@@ -127,16 +127,14 @@ export const CustomerDetailsMain = (props) => {
 
     const onFinish = () => {
         form.getFieldsValue();
-        console.log('hello', billCstmForm.getFieldsValue());
         const data = { bookingCustomer: { ...form.getFieldsValue(), birthDate: dayjs(form.getFieldsValue().birthDate).format('YYYY-MM-DD'), otfNumber: selectedOTF, bookingAndBillingType: 'BOOKING', id: customerFormData.bookingCustomer.id, customerId: 'CUS001' }, billingCustomer: { ...billCstmForm.getFieldsValue(), birthDate: dayjs(billCstmForm.getFieldsValue()?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOTF, bookingAndBillingType: 'BILLING', id: customerFormData.billingCustomer.id, customerId: 'CUS001' } };
-        console.log('submit form', data);
         const onSuccess = (res) => {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         };
 
         const onError = (message) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
