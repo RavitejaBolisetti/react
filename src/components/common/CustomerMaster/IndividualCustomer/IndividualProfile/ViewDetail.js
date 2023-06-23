@@ -7,6 +7,8 @@ import React from 'react';
 import { Space, Collapse, Typography, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import Svg from 'assets/images/Filter.svg';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -69,32 +71,32 @@ const ViewDetailMain = (props) => {
                             </div>
                             <br />
                             <br />
-                            <Descriptions.Item label="Date of Birth">{formData?.dateOfBirth}</Descriptions.Item>
-                            <Descriptions.Item label="Gender">{formData?.gender}</Descriptions.Item>
-                            <Descriptions.Item label="Maritial Status">{formData?.martialStatus}</Descriptions.Item>
-                            <Descriptions.Item label="Wedding Anniversary Date">{formData?.weddingAnniversary}</Descriptions.Item>
-                            <Descriptions.Item label="Occupation">{formData?.occuption}</Descriptions.Item>
-                            <Descriptions.Item label="Annual Income">{formData?.annualIncome}</Descriptions.Item>
-                            <Descriptions.Item label="Driving License No.">{formData?.drivingLicenseNumber}</Descriptions.Item>
-                            <Descriptions.Item label="Aadhar No.">{formData?.adharNumber}</Descriptions.Item>
-                            <Descriptions.Item label="Voter ID">{formData?.voterId}</Descriptions.Item>
-                            <Descriptions.Item label="Vehicle Used">{formData?.vehicleUsed}</Descriptions.Item>
-                            <Descriptions.Item label="Mother Tongue">{formData?.preferredLanguage}</Descriptions.Item>
-                            <Descriptions.Item label="Religion">{formData?.religion}</Descriptions.Item>
-                            <Descriptions.Item label="PAN">{formData?.panNumber}</Descriptions.Item>
-                            <Descriptions.Item label="GSTIN">{formData?.gstin}</Descriptions.Item>
+                            <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(formData?.dateOfBirth)}</Descriptions.Item>
+                            <Descriptions.Item label="Gender">{checkAndSetDefaultValue(formData?.gender)}</Descriptions.Item>
+                            <Descriptions.Item label="Maritial Status">{checkAndSetDefaultValue(formData?.martialStatus)}</Descriptions.Item>
+                            <Descriptions.Item label="Wedding Anniversary Date">{checkAndSetDefaultValue(formData?.weddingAnniversary)}</Descriptions.Item>
+                            <Descriptions.Item label="Occupation">{checkAndSetDefaultValue(formData?.occuption)}</Descriptions.Item>
+                            <Descriptions.Item label="Annual Income">{checkAndSetDefaultValue(formData?.annualIncome)}</Descriptions.Item>
+                            <Descriptions.Item label="Driving License No.">{checkAndSetDefaultValue(formData?.drivingLicenseNumber)}</Descriptions.Item>
+                            <Descriptions.Item label="Aadhar No.">{checkAndSetDefaultValue(formData?.adharNumber)}</Descriptions.Item>
+                            <Descriptions.Item label="Voter ID">{checkAndSetDefaultValue(formData?.voterId)}</Descriptions.Item>
+                            <Descriptions.Item label="Vehicle Used">{checkAndSetDefaultValue(formData?.vehicleUsed)}</Descriptions.Item>
+                            <Descriptions.Item label="Mother Tongue">{checkAndSetDefaultValue(formData?.preferredLanguage)}</Descriptions.Item>
+                            <Descriptions.Item label="Religion">{checkAndSetDefaultValue(formData?.religion)}</Descriptions.Item>
+                            <Descriptions.Item label="PAN">{checkAndSetDefaultValue(formData?.panNumber)}</Descriptions.Item>
+                            <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData?.gstin)}</Descriptions.Item>
                         </Descriptions>
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Usage/Application Categorization">{formData?.usageCategorizationcategory}</Descriptions.Item>
-                            <Descriptions.Item label="Usage/Application Sub-Category">{formData?.subCategory}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Category">{formData?.customerCategory}</Descriptions.Item>
+                            <Descriptions.Item label="Usage/Application Categorization">{checkAndSetDefaultValue(formData?.usageCategorizationcategory)}</Descriptions.Item>
+                            <Descriptions.Item label="Usage/Application Sub-Category">{checkAndSetDefaultValue(formData?.subCategory)}</Descriptions.Item>
+                            <Descriptions.Item label="Customer Category">{checkAndSetDefaultValue(formData?.customerCategory)}</Descriptions.Item>
                         </Descriptions>
                         {formData?.customerCategory === 'Fleet' ? (
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Business Details">{formData?.buisnessDetails}</Descriptions.Item>
-                                <Descriptions.Item label="Vehicle Deployment Detail">{formData?.vehicleDetails}</Descriptions.Item>
-                                <Descriptions.Item label="Key Role Details">{formData?.keyRole}</Descriptions.Item>
-                                <Descriptions.Item label="Major Route Details">{formData?.routeDetails}</Descriptions.Item>
+                                <Descriptions.Item label="Business Details">{checkAndSetDefaultValue(formData?.buisnessDetails)}</Descriptions.Item>
+                                <Descriptions.Item label="Vehicle Deployment Detail">{checkAndSetDefaultValue(formData?.vehicleDetails)}</Descriptions.Item>
+                                <Descriptions.Item label="Key Role Details">{checkAndSetDefaultValue(formData?.keyRole)}</Descriptions.Item>
+                                <Descriptions.Item label="Major Route Details">{checkAndSetDefaultValue(formData?.routeDetails)}</Descriptions.Item>
                             </Descriptions>
                         ) : null}
                     </Panel>
@@ -123,12 +125,12 @@ const ViewDetailMain = (props) => {
                         key="5"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="M1-MMFSL">{formData?.mmfsl}</Descriptions.Item>
-                            <Descriptions.Item label="Facebook Link">{formData?.facebookId}</Descriptions.Item>
-                            <Descriptions.Item label="Twitter Link">{formData?.twitterId}</Descriptions.Item>
-                            <Descriptions.Item label="Instagram Link">{formData?.instagramId}</Descriptions.Item>
-                            <Descriptions.Item label="Youtube Channel">{formData?.youtubeChannel}</Descriptions.Item>
-                            <Descriptions.Item label="Team BHP Link">{formData?.teamBhp}</Descriptions.Item>
+                            <Descriptions.Item label="M1-MMFSL">{checkAndSetDefaultValue(formData?.mmfsl)}</Descriptions.Item>
+                            <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookId)}</Descriptions.Item>
+                            <Descriptions.Item label="Twitter Link">{checkAndSetDefaultValue(formData?.twitterId)}</Descriptions.Item>
+                            <Descriptions.Item label="Instagram Link">{checkAndSetDefaultValue(formData?.instagramId)}</Descriptions.Item>
+                            <Descriptions.Item label="Youtube Channel">{checkAndSetDefaultValue(formData?.youtubeChannel)}</Descriptions.Item>
+                            <Descriptions.Item label="Team BHP Link">{checkAndSetDefaultValue(formData?.teamBhp)}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>
@@ -155,11 +157,11 @@ const ViewDetailMain = (props) => {
                         key="2"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Account Code">{formData?.accountCode}</Descriptions.Item>
-                            <Descriptions.Item label="Account Name">{formData?.accountName}</Descriptions.Item>
-                            <Descriptions.Item label="Account Segement">{formData?.accountSegement}</Descriptions.Item>
-                            <Descriptions.Item label="Account Client Name">{formData?.accountClientName}</Descriptions.Item>
-                            <Descriptions.Item label="Account Mapping Date">{formData?.accountMappingDate}</Descriptions.Item>
+                            <Descriptions.Item label="Account Code">{checkAndSetDefaultValue(formData?.accountCode)}</Descriptions.Item>
+                            <Descriptions.Item label="Account Name">{checkAndSetDefaultValue(formData?.accountName)}</Descriptions.Item>
+                            <Descriptions.Item label="Account Segement">{checkAndSetDefaultValue(formData?.accountSegement)}</Descriptions.Item>
+                            <Descriptions.Item label="Account Client Name">{checkAndSetDefaultValue(formData?.accountClientName)}</Descriptions.Item>
+                            <Descriptions.Item label="Account Mapping Date">{checkAndSetDefaultValue(formData?.accountMappingDate)}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>
@@ -186,10 +188,10 @@ const ViewDetailMain = (props) => {
                         key="3"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Name Of Person">{formData?.nameOfPerson}</Descriptions.Item>
-                            <Descriptions.Item label="Position">{formData?.position}</Descriptions.Item>
-                            <Descriptions.Item label="Company Name">{formData?.companyName}</Descriptions.Item>
-                            <Descriptions.Item label="Remarks">{formData?.remarks}</Descriptions.Item>
+                            <Descriptions.Item label="Name Of Person">{checkAndSetDefaultValue(formData?.nameOfPerson)}</Descriptions.Item>
+                            <Descriptions.Item label="Position">{checkAndSetDefaultValue(formData?.position)}</Descriptions.Item>
+                            <Descriptions.Item label="Company Name">{checkAndSetDefaultValue(formData?.companyName)}</Descriptions.Item>
+                            <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.remarks)}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>

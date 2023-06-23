@@ -6,6 +6,8 @@
 import React from 'react';
 import { Typography, Descriptions, Card, Divider, Col, Row, Space, Button } from 'antd';
 import { BiTimeFive } from 'react-icons/bi';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+
 
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
@@ -29,8 +31,8 @@ const ViewDetailMain = (props) => {
                     }
                 >
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Mobile Number">{formData?.mobileNumber}</Descriptions.Item>
-                        <Descriptions.Item label="Customer Type">{formData?.customerType}</Descriptions.Item>
+                        <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber)}</Descriptions.Item>
+                        <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(formData?.customerType)}</Descriptions.Item>
                     </Descriptions>
                     <div className={styles.cardInsideBox}>
                         <Row>
@@ -57,17 +59,17 @@ const ViewDetailMain = (props) => {
                         </Row>
                     </div>
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Email Id">{formData?.emailId}</Descriptions.Item>
-                        <Descriptions.Item label="Do you want to contact over whatsapp?">{formData?.whatsappCommunicationIndicator ? 'Yes' : 'No'}</Descriptions.Item>
+                        <Descriptions.Item label="Email Id">{checkAndSetDefaultValue(formData?.emailId)}</Descriptions.Item>
+                        <Descriptions.Item label="Do you want to contact over whatsapp?">{checkAndSetDefaultValue(formData?.whatsappCommunicationIndicator ? 'Yes' : 'No')}</Descriptions.Item>
                         <Descriptions />
-                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?">{formData?.mobileNumberAsWhatsappNumber ? 'Yes' : 'No'}</Descriptions.Item>
-                        <Descriptions.Item label="Whatsapp Number">{formData?.whatsAppNumber}</Descriptions.Item>
+                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?">{checkAndSetDefaultValue(formData?.mobileNumberAsWhatsappNumber ? 'Yes' : 'No')}</Descriptions.Item>
+                        <Descriptions.Item label="Whatsapp Number">{checkAndSetDefaultValue(formData?.whatsAppNumber)}</Descriptions.Item>
                     </Descriptions>
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Corporate Type">{formData?.corporateType}</Descriptions.Item>
-                        <Descriptions.Item label="Corporate Name">{formData?.corporateName}</Descriptions.Item>
-                        <Descriptions.Item label="Corporate Category">{formData?.corporateCategory}</Descriptions.Item>
-                        <Descriptions.Item label="Membership Type">{formData?.membershipType}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(formData?.corporateType)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Name">{checkAndSetDefaultValue(formData?.corporateName)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(formData?.corporateCategory)}</Descriptions.Item>
+                        <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(formData?.membershipType)}</Descriptions.Item>
                     </Descriptions>
                 </Card>
             </Space>
