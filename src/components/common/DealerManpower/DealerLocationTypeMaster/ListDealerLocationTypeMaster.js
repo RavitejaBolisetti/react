@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -16,7 +21,6 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { ListDataTable } from 'utils/ListDataTable';
 
 import { AddEditForm } from './AddEditForm';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 const mapStateToProps = (state) => {
@@ -26,20 +30,17 @@ const mapStateToProps = (state) => {
             DealerManpower: {
                 DealerLocationTypeMaster: { isLoaded: isDataLoaded = false, isLoading, data },
             },
-            ConfigurableParameterEditing: { isLoaded: isApplicableToDataLoaded = false, isApplicableToDataLoading, paramdata: applicableToData = [] },
+            ConfigurableParameterEditing: { paramdata: applicableToData = [] },
         },
     } = state;
 
     const moduleTitle = 'Dealer Location Type Master';
-    console.log('data', data);
 
     let returnValue = {
         userId,
         isDataLoaded,
         data,
         isLoading,
-        isApplicableToDataLoaded,
-        isApplicableToDataLoading,
         applicableToData: applicableToData && applicableToData[PARAM_MASTER.DLR_APP_TYPE.id],
         moduleTitle,
     };
@@ -50,9 +51,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchTypeList: configParamEditActions.fetchList,
-            listTypeShowLoading: configParamEditActions.listShowLoading,
-
             fetchList: dealerManpowerLocationTypeMasterDataActions.fetchList,
             saveData: dealerManpowerLocationTypeMasterDataActions.saveData,
             listShowLoading: dealerManpowerLocationTypeMasterDataActions.listShowLoading,
@@ -166,7 +164,6 @@ export const ListDealerLocationTypeMasterBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });

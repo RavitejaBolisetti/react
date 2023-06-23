@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Input, Form, Empty, ConfigProvider, Select } from 'antd';
 
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -199,7 +198,7 @@ const CustomerMasterMain = (props) => {
 
     const tableProps = {
         isLoading: isLoading,
-        tableData: data?.customerMasterDetails,
+        tableData: data,
         tableColumn: tableColumn(handleButtonClick),
     };
 

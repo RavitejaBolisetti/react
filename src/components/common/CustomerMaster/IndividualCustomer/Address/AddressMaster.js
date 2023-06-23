@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isAddDataLoaded = false, isAddLoading, paramdata: addData = [] },
+            ConfigurableParameterEditing: { filteredListData: addData = [] },
             CustomerMaster: {
                 AddressIndividual: { isLoaded: isAddressLoaded = false, isLoading: isAddressLoading, data: addressIndData = [] },
             },

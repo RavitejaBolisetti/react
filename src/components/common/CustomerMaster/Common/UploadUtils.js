@@ -20,11 +20,10 @@ const { Text, Title } = Typography;
 const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
-
         data: {
             SupportingDocument: { isLoaded: isDataLoaded = false, isLoading },
             CustomerMaster: {
-                ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
+                ViewDocument: { data: viewDocument },
             },
         },
     } = state;
@@ -73,7 +72,7 @@ const UploadUtilsMain = (props) => {
                     name: 'docId',
                 },
             ];
-            setUploadImgDocId(uploadedFile)
+            setUploadImgDocId(uploadedFile);
             fecthViewDocument({ setIsLoading: listShowLoadingOnLoad, userId, extraParams });
         }
 

@@ -8,7 +8,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Row, Col, Form } from 'antd';
 
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -38,12 +37,10 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-
         isDataLoaded,
         isLoading,
         data,
         typeData: typeData,
-
         isCorporateLovDataLoaded,
         isCorporateLovLoading,
         corporateLovData,
@@ -70,7 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerDetailMasterBase = (props) => {
-    const { isTypeDataLoaded, isTypeDataLoading, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
+    const { typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
     const { setRefreshList, userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick } = props;
@@ -120,6 +117,7 @@ const CustomerDetailMasterBase = (props) => {
 
     useEffect(() => {
         if (typeData) {
+            console.log('typeData', typeData);
             setConfigurableTypedata({ CUST_TYPE: typeData[PARAM_MASTER?.CUST_TYPE?.id], CORP_TYPE: typeData[PARAM_MASTER?.CORP_TYPE?.id], CORP_CATE: typeData[PARAM_MASTER?.CORP_CATE?.id], TITLE: typeData[PARAM_MASTER?.TITLE?.id], MEM_TYPE: typeData[PARAM_MASTER?.MEM_TYPE?.id] });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -197,7 +195,7 @@ const CustomerDetailMasterBase = (props) => {
             </Col>
         </Row>
     );
- 
+
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>

@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, filteredListData: appCategoryData = [] },
+            ConfigurableParameterEditing: { filteredListData: appCategoryData = [] },
             CustomerMaster: {
                 CompanyProfile: { isLoaded: isDataLoaded = false, data: customerProfileData = [] },
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
@@ -39,7 +39,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         collapsed,
         userId,
-        isAppCategoryDataLoaded,
         appCategoryData,
         isDataLoaded,
         isViewDataLoaded,
