@@ -16,7 +16,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { onSubmit, form, setAddressData, isEditing, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType } = props;
+    const { onSubmit, form, setAddressData, isEditing, addressData, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType } = props;
     const { forceUpdate, handleFormValueChange } = props;
     const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail } = props;
     const disabledProps = { disabled: formActionType?.editMode && formData?.partyCategory === 'Principal' ? true : false };
@@ -144,7 +144,7 @@ const AddEditForm = (props) => {
             <Form form={form} id="myAdd" onFinish={onSubmit} onFieldsChange={handleFormValueChange}  autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type')]}>
+                        <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type'), { validator: (rule, value) => duplicateValidator(value, 'addressType', addressData)   }]}>
                             <Select placeholder={preparePlaceholderSelect('address type')}>
                                 {addressType?.map((item) => (
                                     <Option key={'ct' + item?.key} value={item?.key}>
