@@ -4,17 +4,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Button, Space, Collapse, Typography, Descriptions, Upload } from 'antd';
+import { Space, Collapse, Typography, Descriptions, Card } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
 import { FiEye } from 'react-icons/fi';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
-const { Dragger } = Upload;
 
 const ViewDetailMain = (props) => {
-    const { formData, handleOnClick, viewDocument } = props;
+    const { formData, handleOnClick } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const viewProps = {
         bordered: false,
@@ -38,28 +37,6 @@ const ViewDetailMain = (props) => {
         } else {
             setactiveKey([...activeKey, values]);
         }
-    };
-
-    const uploadProps = {
-        showUploadList: {
-            // showRemoveIcon: true,
-            showDownloadIcon: true,
-            previewIcon: <FiEye onClick={(e) => console.log(e, 'custom removeIcon event')} />,
-            // showProgress: true,
-        },
-        // progress: { strokeWidth: 3, showInfo: true },
-
-        // onChange: (info, event) => {
-        //     const { status } = info.file;
-
-        //     if (status === 'uploading') {
-        //     } else if (status === 'done') {
-        //         setUploadedFile(info?.file?.response?.docId);
-        //         message.success(`${info.file.name} file uploaded successfully.`);
-        //     } else if (status === 'error') {
-        //         message.error(`${info.file.name} file upload failed.`);
-        //     }
-        // },
     };
 
     return (
@@ -228,8 +205,10 @@ const ViewDetailMain = (props) => {
                         }
                         key="5"
                     >
-                        <Button onClick={handleOnClick}>{formData?.customerFormDocId}</Button>
-                        {viewDocument && <img width="500" height="200" src={`data:image/png;base64,${viewDocument?.base64}`} />}
+                        <a>
+                            <Card key={formData?.customerFormDocId} title={formData?.customerFormDocId} extra={<FiEye />} onClick={handleOnClick}></Card>
+                        </a>
+                        {/* {viewDocument && <img width="500" height="200" src={`data:image/png;base64,${viewDocument?.base64}`} />} */}
                     </Panel>
                 </Collapse>
             </Space>

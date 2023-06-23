@@ -236,7 +236,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
 
-                        <Collapse expandIcon={expandIcon} expandIconPosition="end">
+                        <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel
                                 key="2"
                                 header={
@@ -275,7 +275,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
 
-                        <Collapse expandIcon={expandIcon} expandIconPosition="end">
+                        <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel
                                 key="3"
                                 header={
@@ -326,7 +326,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
 
-                        <Collapse expandIcon={expandIcon} expandIconPosition="end">
+                        <Collapse defaultActiveKey={['4']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel
                                 key="4"
                                 header={
