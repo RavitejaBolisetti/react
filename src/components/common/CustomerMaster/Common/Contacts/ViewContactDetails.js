@@ -6,10 +6,11 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 import AddEditForm from './AddEditForm';
+import UploadUtils from './../UploadUtils';
 
 const ViewDetailBase = (props) => {
     const { formData, styles } = props;
-    const { setShowAddEditForm, setContactData, onFinish, form, isEditing } = props;
+    const { setShowAddEditForm, setContactData, onFinish, form, isEditing, viewDocument } = props;
 
     const viewProps = {
         bordered: false,
@@ -30,6 +31,7 @@ const ViewDetailBase = (props) => {
         <div className={styles.viewDrawerContainer}>
             {!isEditing ? (
                 <>
+                <UploadUtils {...formProps} />
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Purpose of Contact">{formData?.purposeOfContact}</Descriptions.Item>
                         <Descriptions.Item label="Mobile Number">{formData?.mobileNumber}</Descriptions.Item>

@@ -17,25 +17,25 @@ import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
 import style from '../../../Common.module.css';
 
 const { Option } = Select;
-const uploadProps = {
-    name: 'file',
-    multiple: true,
-    action: '',
-    uploadTitle: 'Upload Your Profile Picture',
-    uploadDescription: 'File type should be .png and .jpg and max file size to be 5MB',
-    uploadBtnName: 'Upload File',
-    onChange(info) {
-        const { status } = info.file;
-        if (status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully.`);
-        } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-};
+// const uploadProps = {
+//     name: 'file',
+//     multiple: true,
+//     action: '',
+//     uploadTitle: 'Upload Your Profile Picture',
+//     uploadDescription: 'File type should be .png and .jpg and max file size to be 5MB',
+//     uploadBtnName: 'Upload File',
+//     onChange(info) {
+//         const { status } = info.file;
+//         if (status === 'done') {
+//             message.success(`${info.file.name} file uploaded successfully.`);
+//         } else if (status === 'error') {
+//             message.error(`${info.file.name} file upload failed.`);
+//         }
+//     },
+// };
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, formActionType } = props;
+    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, formActionType, setUploadImgDocId } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
@@ -79,10 +79,9 @@ const AddEditForm = (props) => {
         <>
             <Form form={form} autoComplete="off" onFinish={onFinish} layout="vertical">
                 <Space direction="vertical">
-                    {/* <Row>
-                        <Typography.Text strong>Add New Contact</Typography.Text>
-                    </Row> */}
-                    <UploadUtils {...uploadProps} isViewModeVisible={isViewModeVisible} />
+                    <UploadUtils 
+                    // {...uploadProps} 
+                    isViewModeVisible={isViewModeVisible} setUploadImgDocId={setUploadImgDocId} />
                     <Divider className={style.contactDivider} />
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>

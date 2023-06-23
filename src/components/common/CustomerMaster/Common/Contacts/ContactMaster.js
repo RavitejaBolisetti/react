@@ -84,6 +84,7 @@ const ContactMain = (props) => {
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
+    const [uploadImgDocId, setUploadImgDocId] = useState('')
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const extraParams = [
@@ -218,10 +219,11 @@ const ContactMain = (props) => {
         typeData,
         onCheckdefaultAddClick,
         setButtonData,
+        setUploadImgDocId,
     };
 
     const onSubmit = () => {
-        let data = { customerId: selectedCustomer?.customerId, customerContact: contactData };
+        let data = { customerId: selectedCustomer?.customerId, customerContact: {...contactData, docId: uploadImgDocId} };
 
         const onSuccess = (res) => {
             contactform.resetFields();
@@ -270,7 +272,7 @@ const ContactMain = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSubmit} onFinishFailed={onFinishFailed}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>
@@ -295,9 +297,6 @@ const ContactMain = (props) => {
                                 {/* {isCustomerDataLoading ? formSkeleton : formContainer} */}
                             </Panel>
                         </Collapse>{' '}
-                        <Button onClick={() => onSubmit()} type="primary">
-                            Submit
-                        </Button>
                     </Col>
                 </Row>
                 <Row>

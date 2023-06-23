@@ -32,6 +32,7 @@ const ViewContactList = (props) => {
     };
 
     const detailProps = {
+        ...props,
         setShowAddEditForm,
         showAddEditForm,
         setContactData,

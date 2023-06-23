@@ -1,3 +1,7 @@
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_DOCUMENT_VIEW_URL as baseURL } from 'constants/routingApi';
 
