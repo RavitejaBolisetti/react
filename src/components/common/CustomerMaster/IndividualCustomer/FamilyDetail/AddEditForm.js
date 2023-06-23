@@ -41,13 +41,15 @@ const AddEditFormMain = (props) => {
     };
 
     const onEdit = (values, index) => {
+        console.log(values,'OnValues');
+        console.log(index,'OnIndex')
         setEditedMode(true);
         setactiveKey(index);
         setShowForm(false);
         if (values?.mnmCustomer === 'Yes') {
-            setCustomerType(true);
+            setCustomerType('Yes');
         } else if (values?.mnmCustomer === 'No') {
-            setCustomerType(false);
+            setCustomerType('No');
         }
 
         form.setFieldsValue({

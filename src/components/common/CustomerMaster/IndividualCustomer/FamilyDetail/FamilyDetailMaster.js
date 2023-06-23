@@ -150,11 +150,10 @@ const FamilyDetailMasterBase = (props) => {
         setEditedMode(false);
 
         form.resetFields();
-
         if (values?.mnmCustomer === 'Yes') {
-            setCustomerType(true);
+            setCustomerType('Yes');
         } else if (values?.mnmCustomer === 'No') {
-            setCustomerType(false);
+            setCustomerType('No');
         }
     };
 
@@ -202,11 +201,20 @@ const FamilyDetailMasterBase = (props) => {
     }, [familyData]);
 
     useEffect(() => {
-        form.setFieldsValue({
-            customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
-            dateOfBirth: dayjs(familySearchData?.dateOfBirth),
-            relationAge: GetAge(familySearchData?.dateOfBirth),
-        });
+        if(familySearchData?.dateOfBirth === null || familySearchData?.dateOfBirth === undefined || familySearchData?.dateOfBirth === ""){
+            form.setFieldsValue({
+                customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
+                dateOfBirth: null,
+                relationAge:"NA",
+            });
+        } else {
+            form.setFieldsValue({
+                customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
+                dateOfBirth: dayjs(familySearchData?.dateOfBirth),
+                relationAge: GetAge(familySearchData?.dateOfBirth),
+            });
+        }
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [familySearchData]);
 
