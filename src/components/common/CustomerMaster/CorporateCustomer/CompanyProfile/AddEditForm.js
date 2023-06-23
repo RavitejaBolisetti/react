@@ -29,13 +29,11 @@ const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlin
 
 const AddEditFormMain = (props) => {
     const { appCategoryData, listShowLoading, userId, formData, form } = props;
-    const { uploadListShowLoading, uploadFile, setUploadedFile } = props;
+    const { uploadListShowLoading, uploadFile, setUploadedFile, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
     console.log('Form Data:', formData);
-
-    const [customerCategory, setCustomerCategory] = useState();
 
     // useEffect(() => {
     //     setFinalFormData({ ...FinalFormData, keyAccountDetails: companyInfoValues, uploadCustomerForm: uploadCustomerFormValues });
@@ -113,6 +111,14 @@ const AddEditFormMain = (props) => {
         uploadFile(requestData);
     };
 
+    const handleAppCategoryChange = (value) => {
+        setAppCustomerCategory(value);
+    };
+
+    const handleAppSubCategoryChange = (value) => {
+        setAppSubCategory(value);
+    };
+
     const handleCategoryChange = (value) => {
         setCustomerCategory(value);
     };
@@ -167,7 +173,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Usage/Application Categorization" initialValue={formData?.applicationCategorization} name="applicationCategorization">
-                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Usage/Application Categorization')}>
+                                            <Select maxLength={50} onChange={handleAppCategoryChange} placeholder={preparePlaceholderSelect('Usage/Application Categorization')}>
                                                 {appCategoryData.APP_CAT?.map((item) => (
                                                     <Option key={'ap' + item.key} value={item.key}>
                                                         {item.value}
@@ -179,7 +185,7 @@ const AddEditFormMain = (props) => {
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Usage/Application Sub-Category" initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
-                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Usage/Application Sub-Category')}>
+                                            <Select maxLength={50} onChange={handleAppSubCategoryChange} placeholder={preparePlaceholderSelect('Usage/Application Sub-Category')}>
                                                 {appCategoryData.APP_SUB_CAT?.map((item) => (
                                                     <Option key={'sc' + item.key} value={item.key}>
                                                         {item.value}
