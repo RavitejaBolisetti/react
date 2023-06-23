@@ -277,4 +277,5 @@ const IndividualProfileBase = (props) => {
     );
 };
 
+
 export const IndividualProfileMaster = connect(mapStateToProps, mapDispatchToProps)(IndividualProfileBase);
