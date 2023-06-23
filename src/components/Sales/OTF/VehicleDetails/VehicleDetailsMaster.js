@@ -158,7 +158,7 @@ const VehicleDetailsMasterMain = (props) => {
     }, [VehicleDetailsData, isDataLoaded]);
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: '', optionalServices: [] };
+        const data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, optionalServices: [] };
         console.log('data', data, selectedOrderId);
 
         const onSuccess = (res) => {
