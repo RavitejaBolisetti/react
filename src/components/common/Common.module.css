@@ -4,9 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 @import url('./global.css');
-
+.marT30 {
+    margin-top: 30px;
+}
 .marR5 {
     margin-right: 5px;
+}
+.marR20 {
+    margin-right: 20px;
 }
 
 .padT5 {
@@ -41,6 +46,26 @@
     visibility: visible;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
+}
+.tooltipAlign {
+    display: flex;
+    align-items: center;
+}
+.tooltipAlign > svg {
+    margin-left: 5px;
+    color: #2782f9;
+}
+.toolTip :global .ant-tooltip-content .ant-tooltip-inner p {
+    padding-left: 12px !important;
+}
+.toolTip :global .ant-tooltip-content {
+    border: 1px solid #2782f9 !important;
+    background: #d3edfe;
+    border-radius: 4px;
+    width: 225px;
+}
+.toolTip :global .ant-tooltip-arrow::before {
+    background: #2782f9;
 }
 
 .content :global .ant-tree-show-line .ant-tree-switcher-line-icon svg {
@@ -386,6 +411,40 @@
     color: #ffffff !important;
 }
 
+.uploadDragger :global .ant-upload-wrapper .ant-upload-drag {
+    border: 1px dashed #b5b5b5;
+    margin-bottom: 12px;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
+    height: 40px;
+    margin-top: 20px;
+    background-color: #e6e6e6;
+    border-radius: 6px;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
+    height: 40px;
+    margin-top: 20px;
+    background-color: #e6e6e6;
+    border-radius: 6px;
+    color: #0b0b0c;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-name,
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-icon .anticon {
+    color: black;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon,
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon:hover {
+    color: black;
+}
+
+.contactDivider {
+    margin-bottom: 12px !important;
+}
+
 .drawerFooterButtons button {
     margin-bottom: 0 !important;
     height: 34px;
@@ -648,6 +707,11 @@
 
 .accordianContainer :global .ant-collapse .ant-collapse-content-box .ant-select .ant-input-group-wrapper .ant-input-affix-wrapper {
     border-width: 0;
+}
+
+.drawerBodyRight .accordianContainer .viewCardSize {
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
 }
 
 .viewCardSize :global .ant-card-body .ant-space .ant-space-item p,
@@ -1346,6 +1410,7 @@
 
 .contentHeaderBackground .selectSearchBg .headerSelectField {
     width: 25%;
+    /* width: auto; */
     position: absolute;
     z-index: 99;
 }
@@ -1357,6 +1422,7 @@
 
 .selectSearchBg :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     height: 26px;
+        /* margin-right: 20px; */
 }
 
 .selectSearchBg :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
@@ -1585,7 +1651,7 @@
 } */
 
 .drawerBodyRight {
-    padding: 30px;
+    padding: 30px 30px 56px;
     margin-left: 0 !important;
     margin-right: 0 !important;
     /* margin-bottom: 40px; */
@@ -1633,7 +1699,7 @@
 } */
 
 .drawerBodyRight :global .ant-steps .ant-steps-item-container {
-    margin-right: 5px;
+    margin-right: 3px;
 }
 
 .drawerBodyRight :global .ant-steps.ant-steps-label-vertical .ant-steps-item-content {
@@ -1654,7 +1720,7 @@
 .drawerBodyRight :global .ant-card-bordered,
 .drawerBodyRight :global .ant-space-vertical {
     border: 0;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body {
@@ -1726,7 +1792,7 @@
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
-    margin-top: 0;
+    margin-top: 20px;
     margin-bottom: 20px;
     border-color: #e6e6e6;
 }
@@ -1872,7 +1938,7 @@
     background: #fff;
 }
 
-.drawerBodyRight :global .ant-collapse>.ant-collapse-item-active>.ant-collapse-header {
+.drawerBodyRight :global .ant-collapse > .ant-collapse-item-active > .ant-collapse-header {
     border-radius: 8px 8px 0 0;
     padding: 16px 20px;
 }
@@ -1885,9 +1951,17 @@
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-typography strong {
     font-weight: 700;
     font-size: 16px;
-    line-height: 24px;
+    line-height: 22px;
 }
-
+.drawerBodyRight :global .ant-typography {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    /* margin-bottom: 20px; */
+}
+.drawerBodyRight :global .ant-space {
+    align-items: normal;
+}
 /* .drawerBodyRight :global .ant-input {
     height: 36px;
     border-radius: 4px;
@@ -2021,10 +2095,10 @@
 
 .drawerBodyRight .sectionborder {
     border-top: 1px solid #e6e6e6;
-    padding-top: 20px;
+    /* padding-top: 20px; */
 }
 
-.drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box button {
+.drawerBodyRight :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box button {
     margin-bottom: 20px;
 }
 
@@ -2043,14 +2117,14 @@
     margin-bottom: 20px;
 }
 
-.drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
+/* .drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
     margin-top: 0;
     margin-bottom: 20px;
-}
+} */
 
-.drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
+/* .drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
     border: 1px solid #0b0b0c;
-}
+} */
 
 .drawerBodyRight :global .ant-checkbox+span {
     padding-inline-start: 4px;
@@ -2071,7 +2145,8 @@
 .drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
     width: 18px;
     height: 18px;
-    background-color: transparent;
+    background-color: #fff;
+    border: 1px solid #0b0b0c;
 }
 
 .drawerBodyRight :global .ant-checkbox-wrapper-checked:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
@@ -2097,6 +2172,9 @@
 .drawerBodyRight .collapseable {
     padding-left: 0px;
     padding-top: 3px;
+}
+.drawerBodyRight .accordianContainer .viewCardSize :global .ant-card-body {
+    padding:10px;
 }
 
 .drawerBodyRight .accordianContainer :global .ant-space-item .ant-collapse-item .ant-card {
@@ -2160,16 +2238,6 @@
 .viewDrawerContainer :global .ant-space .ant-collapse {
     margin-bottom: 0;
 }
-
-/* .viewDrawerContainer :global .ant-collapse .ant-collapse-content .ant-descriptions:first-child {
-    padding-top: 0px;
-    border-top: none;
-} */
-
-/* .viewDrawerContainer :global .ant-space .ant-space-item:last-child {
-    border: 0;
-    margin-bottom: 50px;
-} */
 
 .viewDrawerContainer .cardInsideBox :global .ant-typography {
     color: #0b0b0c;
@@ -2247,6 +2315,9 @@
 
 .iconsColor {
     color: #ff3e5b !important;
+}
+.activeTextColor {
+    color: #b5b5b6 !important;
 }
 
 .ExchangeCard {
@@ -2367,6 +2438,7 @@
 }
 
 @media (max-width: 768px) {
+    /* For mobile phones: */
     .headerSearchField {
         vertical-align: middle;
         margin: 0 0px;

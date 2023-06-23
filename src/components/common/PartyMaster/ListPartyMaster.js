@@ -1,10 +1,14 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect, useReducer, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 
 import { ListDataTable } from 'utils/ListDataTable';
@@ -23,7 +27,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isPartyDataLoaded = false, isPartyDataLoading, data: configData = [], paramdata: typeData = [] },
+            ConfigurableParameterEditing: { isLoaded: isPartyDataLoaded = false, isPartyDataLoading, data: configData = [], filteredListData: typeData = [] },
             PartyMaster: { isLoaded: isDataLoaded = false, isLoading, data, detailData },
             Geo: {
                 Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
@@ -55,8 +59,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            configFetchList: configParamEditActions.fetchList,
-            configListShowLoading: configParamEditActions.listShowLoading,
             fetchList: partyMasterDataActions.fetchList,
             fetchDetail: partyMasterDataActions.fetchDetail,
             saveData: partyMasterDataActions.saveData,
@@ -72,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ListPartyMasterBase = (props) => {
     const { data, detailData, saveData, fetchList, fetchDetail, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
-    const { typeData, configFetchList, configListShowLoading } = props;
+    const { typeData } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData } = props;
 
     const [form] = Form.useForm();
@@ -104,14 +106,6 @@ export const ListPartyMasterBase = (props) => {
         setRefershData(false);
         setShowDataLoading(false);
     };
-
-    useEffect(() => {
-        if (userId && !isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            configFetchList({ setIsLoading: configListShowLoading, userId, parameterType: 'PTY_CAT' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {

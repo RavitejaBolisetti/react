@@ -7,6 +7,8 @@ import React from 'react';
 import { Descriptions, Card, Space } from 'antd';
 import dayjs from 'dayjs';
 
+import styles from 'components/common/Common.module.css';
+
 const ViewDetailBase = (props) => {
     const { customerType } = props;
 
@@ -18,10 +20,8 @@ const ViewDetailBase = (props) => {
     };
 
     return (
-        <div>
-            <Space direction="vertical" size="middle">
-                <Card>
-                    <Descriptions {...viewProps}>
+        <div className={styles.sectionborder}>
+                    <Descriptions {...viewProps} className={styles.descriptionBox}>
                         <Descriptions.Item label="M&M Customer">{props?.mnmCustomer}</Descriptions.Item>
                         <Descriptions.Item label="Customer ID">{props?.customerId}</Descriptions.Item>
                         {customerType ? <Descriptions.Item label="Customer Name">{props?.customerName}</Descriptions.Item> : null}
@@ -31,8 +31,6 @@ const ViewDetailBase = (props) => {
                         <Descriptions.Item label="" />
                         <Descriptions.Item label="Remark">{props?.remarks}</Descriptions.Item>
                     </Descriptions>
-                </Card>
-            </Space>
         </div>
     );
 };

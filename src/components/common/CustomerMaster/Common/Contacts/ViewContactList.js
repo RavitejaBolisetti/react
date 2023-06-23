@@ -13,10 +13,11 @@ const { Text } = Typography;
 
 const ViewContactList = (props) => {
     const { styles, contactData, deleteContactHandeler, onCheckdefaultAddClick, setEditingData, typeData } = props;
-    const { setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, isEditing, setIsEditing } = props;
+    const { setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, isEditing, setIsEditing, formActionType } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
-
+    const disableProp = {disabled: formActionType?.viewMode };
+    
     const editContactHandeler = (e, data, i) => {
         e.stopPropagation();
         setOpenAccordian(i);
@@ -26,11 +27,12 @@ const ViewContactList = (props) => {
     };
 
     const handleCollapse = (key) => {
-        if(isEditing) return;
+        if (isEditing) return;
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     const detailProps = {
+        ...props,
         setShowAddEditForm,
         showAddEditForm,
         setContactData,
@@ -57,14 +59,16 @@ const ViewContactList = (props) => {
                                             <Space>
                                                 <Text strong> {`${data?.firstName ? data?.firstName : ''} ${data?.middleName ? data?.middleName : ''} ${data?.lastName ? data?.lastName : ''}`}</Text>{' '}
                                             </Space>
-                                            <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing}>
-                                                Edit{' '}
-                                            </Button>
+                                            {!formActionType?.viewMode && (
+                                                <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing}>
+                                                    Edit{' '}
+                                                </Button>
+                                            )}
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                            <Checkbox valuePropName="checked" defaultChecked={data?.defaultContactIndicator} onClick={(e)=>onCheckdefaultAddClick(e,data)}>
+                                            <Checkbox valuePropName="checked" checked={data?.defaultContactIndicator} defaultChecked={data?.defaultContactIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)} {...disableProp}>
                                                 Mark As Default
-                                            </Checkbox>
+                                            </Checkbox >
                                             <Divider type="vertical" />
                                             <Text type="secondary">{data?.purposeOfContact}</Text>
                                         </Col>

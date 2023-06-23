@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Input, Form, Empty, ConfigProvider, Select } from 'antd';
 
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -34,7 +33,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
         customer: {
             customerDetail: { isLoaded: isDataLoaded = false, isLoading, data, filter: filterString = {} },
@@ -49,8 +48,6 @@ const mapStateToProps = (state) => {
         data: data?.customerMasterDetails || [],
         isLoading,
         moduleTitle,
-        isConfigDataLoaded,
-        isConfigLoading,
         typeData: typeData && typeData[PARAM_MASTER.CUST_MST.id],
         filterString,
     };
@@ -61,9 +58,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchList: customerDetailDataActions.fetchList,
             saveData: customerDetailDataActions.saveData,
             setFilterString: customerDetailDataActions.setFilter,
@@ -76,14 +70,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerMasterMain = (props) => {
-    const { data, fetchList, userId, isLoading, listShowLoading, showGlobalNotification, resetData, moduleTitle } = props;
-    const { isConfigDataLoaded, isConfigLoading, typeData, listConfigShowLoading, fetchConfigList } = props;
+    const { data, fetchList, userId, isLoading, listShowLoading, showGlobalNotification, resetData, moduleTitle, typeData } = props;
     const { filterString, setFilterString } = props;
 
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
     const [selectedCustomer, setSelectedCustomer] = useState();
     const [selectedCustomerId, setSelectedCustomerId] = useState();
     const [shouldResetForm, setShouldResetForm] = useState(false);
+    const [refreshList, setRefreshList] = useState(false);
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -111,6 +105,18 @@ const CustomerMasterMain = (props) => {
             key: 'customerType',
             title: 'Customer Type',
             value: customerType,
+            canRemove: true,
+        },
+        {
+            key: 'pageSize',
+            title: 'Value',
+            value: 1000,
+            canRemove: true,
+        },
+        {
+            key: 'pageNumber',
+            title: 'Value',
+            value: 1,
             canRemove: true,
         },
     ];
@@ -158,19 +164,12 @@ const CustomerMasterMain = (props) => {
     }, [currentSection, sectionName]);
 
     useEffect(() => {
-        if (!isConfigDataLoaded && !isConfigLoading && userId) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CUST_MST.id });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isConfigDataLoaded, userId]);
-
-    useEffect(() => {
         if (userId && customerType) {
             resetData();
             fetchList({ setIsLoading: listShowLoading, extraParams: defaultExtraParam, userId, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerType, userId]);
+    }, [customerType, userId, refreshList]);
 
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
         form.resetFields();
@@ -184,7 +183,7 @@ const CustomerMasterMain = (props) => {
             section && setCurrentSection(section?.id);
         }
 
-        if (buttonAction === ADD_ACTION || buttonAction === EDIT_ACTION || buttonAction === VIEW_ACTION) {
+        if (buttonAction === EDIT_ACTION || buttonAction === VIEW_ACTION) {
             setSelectedCustomer(record);
             record && setSelectedCustomerId(record?.customerId);
             defaultSection && setCurrentSection(defaultSection);
@@ -280,6 +279,7 @@ const CustomerMasterMain = (props) => {
         setCurrentSection,
         shouldResetForm,
         handleFormValueChange,
+        setRefreshList,
     };
 
     const selectProps = {

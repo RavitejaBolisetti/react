@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   Copyright (c) 2023
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -15,16 +15,16 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { onFinish, form, setAddressData, isEditing, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, formActionType } = props;
-    const { forceUpdate } = props;
-    const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, handleFormValueChange } = props;
+    const { onSubmit, form, setAddressData, isEditing, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType } = props;
+    const { forceUpdate, handleFormValueChange } = props;
+    const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail } = props;
     const disabledProps = { disabled: formActionType?.editMode && formData?.partyCategory === 'Principal' ? true : false };
 
     const [options, setOptions] = useState(false);
     const [pinSearchData, setPinSearchData] = useState({});
 
     const onErrorAction = (res) => {
-        // console.log('error');
+        console.log('error');
     };
 
     const onSuccessAction = () => {};
@@ -96,14 +96,12 @@ const AddEditForm = (props) => {
 
     const handleSave = () => {
         form.validateFields()
-            .then(() => {
-                const value = form.getFieldsValue();
+            .then((value) => {
+                // const value = form.getFieldsValue();
 
                 if (isEditing) {
                     setAddressData((prev) => {
                         let formData = [...prev];
-                        console.log('formData', formData);
-
                         formData?.forEach((contact) => {
                             if (contact?.defaultaddress === true) {
                                 contact.defaultaddress = false;
@@ -117,8 +115,6 @@ const AddEditForm = (props) => {
                 } else {
                     setAddressData((prev) => {
                         let formData = [...prev];
-                        console.log('formData', formData);
-
                         if (value?.defaultaddress && formData?.length >= 1) {
                             formData?.forEach((contact) => {
                                 if (contact?.defaultaddress === true) {
@@ -138,13 +134,13 @@ const AddEditForm = (props) => {
                 form.setFieldsValue();
             })
             .catch((err) => {
-                console.log('err', err);
+                console.error('err', err);
             });
     };
 
     return (
         <>
-            <Form form={form} id="myAdd" onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical">
+            <Form form={form} id="myAdd" onFinish={onSubmit} onFieldsChange={handleFormValueChange}  autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type')]}>
@@ -204,7 +200,7 @@ const AddEditForm = (props) => {
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Contact Name" name="contactName" rules={[validatePincodeField('Pin Code'), validateLettersWithWhitespaces('contact name')]}>
+                        <Form.Item label="Contact Name" name="contactName" rules={[validateRequiredInputField('contact name'), validateLettersWithWhitespaces('contact name')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
                         </Form.Item>
                     </Col>
@@ -212,7 +208,7 @@ const AddEditForm = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Contact Mobile" name="mobileNumber" rules={[validatePincodeField('Pin Code'), validateMobileNoField('mobile number')]}>
+                        <Form.Item label="Contact Mobile" name="mobileNumber" rules={[validateRequiredInputField('contact number'), validateMobileNoField('mobile number')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('mobile number')} />
                         </Form.Item>
                     </Col>
@@ -235,7 +231,7 @@ const AddEditForm = (props) => {
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Space>
-                                <Button onClick={handleSave} key="submit" type="primary">
+                                <Button onClick={handleSave} type="primary">
                                     Save
                                 </Button>
                                 <Button onClick={handleCancelFormEdit} ghost type="primary">

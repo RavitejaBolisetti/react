@@ -1,41 +1,54 @@
-import React from 'react';
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+import React, { useEffect } from 'react';
 import { Space, Collapse, Typography, Divider, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import style from 'utils/PasswordStrengthMeter/PasswordStrengthMeter.module.css';
+import styles from 'components/common/Common.module.css';
+
 import { addToolTip } from 'utils/customMenuLink';
 import { DataTable } from 'utils/dataTable';
+import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, onChange, styles, columns, data, optionalData, optionalColumns } = props;
+    const { activeKey, onChange, tooltTipText, settooltTipText, modelData, styles, columns, data, formData, optionalData, optionalColumns } = props;
     const viewProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-    const vehicleForm = {
-        vehicleUsageType: 'uttar pradesh',
-        vehicleModel: 'ssss',
-        model: '12312',
-        stock: 'Delhi',
-        allotedStatus: 'status',
-        PONumber: '123122737328',
-        PODate: '12/06/2023',
-        POStatus: 'Status',
-        SONumber: '653728438213',
-        SOStatus: 'Status',
-        VINNumber: 'MAFCL723849203VIN',
-        discountAmount: '24500',
-        sellingPrice: '2454324',
-        taxAmount: '222',
-        vehicleAmount: '12640',
-    };
-
-    const text = 'Color - RED Seating Capacity - 7 Fuel - Diesel Variant - XUV 500 Name - XUV';
+    useEffect(() => {
+        if (modelData?.length > 0) {
+            console.log('modelData', modelData);
+            settooltTipText(
+                <div>
+                    <p>
+                        Color - <span>{modelData['0']['color']}</span>
+                    </p>
+                    <p>
+                        Seating - <span>{modelData['0']['seatingCapacity']}</span>
+                    </p>
+                    <p>
+                        Fuel - <span>{modelData['0']['fuel']}</span>
+                    </p>
+                    <p>
+                        Variant - <span>{modelData['0']['variant']}</span>
+                    </p>
+                    <p>
+                        Name - <span>{modelData['0']['name']}</span>
+                    </p>
+                </div>
+            );
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [modelData]);
 
     return (
         <Space direction="vertical" size="middle" className={styles.accordianContainer}>
@@ -51,7 +64,6 @@ const ViewDetailMain = (props) => {
                 onChange={() => onChange(1)}
                 expandIconPosition="end"
                 className={styles.collapseContainer}
-
             >
                 <Panel
                     header={
@@ -63,26 +75,27 @@ const ViewDetailMain = (props) => {
                     }
                     key="1"
                 >
-                    <Divider />
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Vehicle Usage Type ">{vehicleForm?.vehicleUsageType}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Model">{vehicleForm?.vehicleModel}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Usage Type ">{formData?.vehicleUsageType ? formData?.vehicleUsageType : 'null'}</Descriptions.Item>
                         <Descriptions.Item label="Model">
-                            {vehicleForm?.model}
-                            {addToolTip(text, 'bottom', '#20232C', style.infoTooltipDesign)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                            <div className={styles.tooltipAlign}>
+                                {formData?.model}
+                                {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                            </div>
                         </Descriptions.Item>
-                        <Descriptions.Item label="Available Stock">{vehicleForm?.stock}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Allocated Status">{vehicleForm?.allotedStatus}</Descriptions.Item>
-                        <Descriptions.Item label="PO Number">{vehicleForm?.PONumber}</Descriptions.Item>
-                        <Descriptions.Item label="PO Date">{vehicleForm?.PODate}</Descriptions.Item>
-                        <Descriptions.Item label="PO Status">{vehicleForm?.POStatus}</Descriptions.Item>
-                        <Descriptions.Item label="SO Number">{vehicleForm?.SONumber}</Descriptions.Item>
-                        <Descriptions.Item label="SO Status">{vehicleForm?.SOStatus}</Descriptions.Item>
-                        <Descriptions.Item label="VIN Number">{vehicleForm?.VINNumber}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Selling Price">{vehicleForm?.sellingPrice}</Descriptions.Item>
-                        <Descriptions.Item label="Discount Amount">{vehicleForm?.discountAmount}</Descriptions.Item>
-                        <Descriptions.Item label="Tax Amount">{vehicleForm?.taxAmount}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Amount">{vehicleForm?.vehicleAmount}</Descriptions.Item>
+                        <Descriptions.Item label="Model Code">{formData?.modelCode}</Descriptions.Item>
+                        <Descriptions.Item label="Available Stock">{formData?.availableStock}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Allocated Status">{formData?.vehicleAllocationStatus ? formData?.vehicleAllocationStatus : 'null'}</Descriptions.Item>
+                        <Descriptions.Item label="PO Number">{formData?.ponumber}</Descriptions.Item>
+                        <Descriptions.Item label="PO Date">{formData?.podate}</Descriptions.Item>
+                        <Descriptions.Item label="PO Status">{formData?.postatus}</Descriptions.Item>
+                        <Descriptions.Item label="SO Number">{formData?.sonumber}</Descriptions.Item>
+                        <Descriptions.Item label="SO Status">{formData?.sostatus}</Descriptions.Item>
+                        <Descriptions.Item label="VIN Number">{formData?.vinnumber}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Selling Price">{formData?.vehicleSellingPrice}</Descriptions.Item>
+                        <Descriptions.Item label="Discount Amount">{formData?.discountAmount}</Descriptions.Item>
+                        <Descriptions.Item label="Tax Amount">{formData?.taxAmount}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Amount">{formData?.vehicleAmount}</Descriptions.Item>
                     </Descriptions>
                 </Panel>
             </Collapse>
@@ -99,7 +112,6 @@ const ViewDetailMain = (props) => {
                 onChange={() => onChange(2)}
                 expandIconPosition="end"
                 className={styles.collapseContainer}
-
             >
                 <Panel
                     header={
@@ -111,7 +123,7 @@ const ViewDetailMain = (props) => {
                     }
                     key="2"
                 >
-                    <DataTable tableColumn={columns} tableData={data} pagination={false} removePagination={true} />
+                    <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
                 </Panel>
             </Collapse>
 
@@ -127,7 +139,6 @@ const ViewDetailMain = (props) => {
                 onChange={() => onChange(3)}
                 expandIconPosition="end"
                 className={styles.collapseContainer}
-
             >
                 <Panel
                     header={
@@ -139,7 +150,7 @@ const ViewDetailMain = (props) => {
                     }
                     key="3"
                 >
-                    <DataTable tableColumn={optionalColumns} tableData={optionalData} pagination={false} removePagination={true} />
+                    <DataTable tableColumn={optionalServicesColumns} tableData={formData['optionalServices']} removePagination={true} />
                 </Panel>
             </Collapse>
         </Space>

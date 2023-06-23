@@ -10,16 +10,15 @@ import { PlusOutlined } from '@ant-design/icons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { customerDetailDataActions } from 'store/actions/customer/customerContacts';
+import { customerDetailIndividualDataActions } from 'store/actions/customer/customerContactsIndividual';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import AddEditForm from './AddEditForm';
 import ViewContactList from './ViewContactList';
 import { CustomerFormButton } from '../../CustomerFormButton';
+import { InputSkeleton } from 'components/common/Skeleton';
+import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import styles from 'components/common/Common.module.css';
 
@@ -33,14 +32,12 @@ const mapStateToProps = (state) => {
             customerContacts: { isLoaded: isCustomerDataLoaded = false, isLoading: isCustomerDataLoading, data: customerData = [] },
         },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
 
     let returnValue = {
         userId,
-        isConfigDataLoaded,
-        isConfigLoading,
         isCustomerDataLoaded,
         isCustomerDataLoading,
         typeData: typeData,
@@ -53,13 +50,15 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchContactDetailsList: customerDetailDataActions.fetchList,
             listContactDetailsShowLoading: customerDetailDataActions.listShowLoading,
             saveData: customerDetailDataActions.saveData,
             resetData: customerDetailDataActions.reset,
+
+            fetchContactIndividualDetailsList: customerDetailIndividualDataActions.fetchList,
+            listContactIndividualDetailsShowLoading: customerDetailIndividualDataActions.listShowLoading,
+            saveIndividualData: customerDetailIndividualDataActions.saveData,
+            resetIndividualData: customerDetailIndividualDataActions.reset,
 
             showGlobalNotification,
         },
@@ -68,48 +67,38 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ContactMain = (props) => {
-    const { section, userId, isViewModeVisible, toggleButton, fetchConfigList, resetData, listConfigShowLoading, fetchContactDetailsList, customerData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData, isConfigDataLoaded, isConfigLoading } = props;
-    const { buttonData, setButtonData, selectedCustomer, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+    const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData } = props;
+    const { isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData } = props;
+    const { buttonData, setButtonData, formActionType } = props;
 
-    const [form] = Form.useForm();
+    const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
+    const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const extraParams = [
         {
             key: 'customerId',
             title: 'customerId',
-            value: 'CUS1686833188888',
-            // value: selectedCustomer?.customerId,
+            value: selectedCustomer?.customerId,
             name: 'customerId',
         },
     ];
 
-
     useEffect(() => {
-        if (userId && !isCustomerDataLoaded && !isConfigLoading) {
-            fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+        if (userId && selectedCustomer?.customerId && !isCustomerDataLoaded) {
+            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
+                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+            } else {
+                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
-
-    useEffect(() => {
-        if (userId && !isConfigDataLoaded && !isConfigLoading) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.GENDER_CD.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.TITLE.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.FAMLY_RELTN.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.PURPOSE.id });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, selectedCustomer?.customerId]);
 
     useEffect(() => {
         if (userId && customerData?.customerContact?.length) {
@@ -131,69 +120,63 @@ const ContactMain = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-    const onSaveFormData = (value) => {
-        if (isEditing) {
-            setContactData((prev) => {
-                let formData = [...prev];
-                formData?.forEach((contact) => {
-                    if (contact?.defaultaddress === true) {
-                        contact.defaultaddress = false;
-                    }
-                });
-                const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
-                formData.splice(index, 1, { ...value });
-                return [...formData];
-            });
-        } else {
-            setContactData((prev) => {
-                let formData = [...prev];
-                if (value?.defaultaddress && formData?.length >= 1) {
-                    formData?.forEach((contact) => {
-                        if (contact?.defaultaddress === true) {
-                            contact.defaultaddress = false;
+    const onSaveFormData = () => {
+        contactform
+            .validateFields()
+            .then((value) => {
+                if (isEditing) {
+                    setContactData((prev) => {
+                        let formData = [...prev];
+                        formData?.forEach((contact) => {
+                            if (contact?.defaultaddress === true) {
+                                contact.defaultaddress = false;
+                            }
+                        });
+                        const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
+                        formData.splice(index, 1, { ...value });
+                        return [...formData];
+                    });
+                } else {
+                    setContactData((prev) => {
+                        let formData = [...prev];
+                        if (value?.defaultaddress && formData?.length >= 1) {
+                            formData?.forEach((contact) => {
+                                if (contact?.defaultaddress === true) {
+                                    contact.defaultaddress = false;
+                                }
+                            });
+                            return [...formData, value];
+                        } else {
+                            return [...prev, { ...value }];
                         }
                     });
-                    return [...formData, value];
-                } else {
-                    return [...prev, { ...value }];
                 }
-            });
-        }
-        setShowAddEditForm(false);
-        setIsEditing(false);
-        setEditingData({});
-        form.resetFieldsValue();
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
-    const deleteContactHandeler = (data) => {
-        setContactData((prev) => {
-            const updatedList = [...prev];
-            const index = prev?.findIndex((el) => el?.contactMobileNumber === data?.contactMobileNumber && el?.contactNameFirstName === data?.contactNameFirstName);
-            updatedList.splice(index, 1);
-            return [...updatedList];
-        });
+                setShowAddEditForm(false);
+                setIsEditing(false);
+                setEditingData({});
+                contactform.resetFieldsValue();
+            })
+            .catch((err) => console.error(err));
     };
 
     const onCheckdefaultAddClick = (e, value) => {
         e.stopPropagation();
         setContactData((prev) => {
-            let updetedData = prev?.map((contact) => ({...contact, defaultContactIndicator: false}));
+            let updetedData = prev?.map((contact) => ({ ...contact, defaultContactIndicator: false }));
             const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.mobileNumber === value?.mobileNumber && el?.FirstName === value?.FirstName);
-            updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked});
+            updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked });
             return [...updetedData];
         });
         forceUpdate();
     };
 
-    console.log('contactData', contactData)
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
 
     const addBtnContactHandeler = (e) => {
         e.stopPropagation();
-        form.resetFields();
+        contactform.resetFields();
         setShowAddEditForm(true);
         setOpenAccordian('1');
     };
@@ -205,51 +188,98 @@ const ContactMain = (props) => {
         contactData,
         onFinish: onSaveFormData,
         styles,
-        form,
+        form: contactform,
         isEditing,
         setIsEditing,
-        deleteContactHandeler,
-        isViewModeVisible,
+        formActionType,
         setEditingData,
         typeData,
         onCheckdefaultAddClick,
+        setButtonData,
+        setUploadImgDocId,
+        handleFormValueChange,
     };
 
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
+    const onSubmit = () => {
+        let data = { customerId: selectedCustomer?.customerId, customerContact: { ...contactData, docId: uploadImgDocId } };
+
+        const onSuccess = (res) => {
+            contactform.resetFields();
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listContactDetailsShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
+            saveIndividualData(requestData);
+        } else {
+            saveData(requestData);
+        }
+
+        setShowAddEditForm(false);
+        setIsEditing(false);
+        setEditingData({});
+        contactform.resetFields();
     };
 
-    return (<>
-        {/* <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSaveFormData} onFinishFailed={onFinishFailed}> */}
-            <Row gutter={20} className={styles.drawerBodyRight}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <h2>{section?.title} </h2>
-                    <Collapse onChange={() => handleCollapse(1)} activeKey={openAccordian}>
-                        <Panel
-                            header={
-                                <Space>
-                                    <Text strong> {toggleButton === 'Individual' ? 'Individual Contact' : 'Company Contact'}</Text>
-                                    {!isViewModeVisible && (
-                                        <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary">
-                                            Add Contact
-                                        </Button>
-                                    )}
-                                </Space>
-                            }
-                            key="1"
-                        >
-                            {!isViewModeVisible && (showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />}
-                            <ViewContactList {...formProps} />
-                        </Panel>
-                    </Collapse>{' '}
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CustomerFormButton {...props} />
-                </Col>
-            </Row>
-        {/* </Form> */}
+    const onFinishFailed = (err) => {
+        console.error(err);
+    };
+
+    const formSkeleton = (
+        <Row>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <InputSkeleton height={'100vh'} />
+            </Col>
+        </Row>
+    );
+
+    return (
+        <>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSubmit} onFinishFailed={onFinishFailed}>
+                <Row gutter={20} className={styles.drawerBodyRight}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <h2>{section?.title} </h2>
+                        <Collapse onChange={() => handleCollapse(1)} activeKey={openAccordian}>
+                            <Panel
+                                header={
+                                    <Space>
+                                        <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Contact' : 'Company Contact'}</Text>
+                                        {!formActionType?.viewMode && (
+                                            <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary">
+                                                Add Contact
+                                            </Button>
+                                        )}
+                                    </Space>
+                                }
+                                showArrow={false}
+                                key="1"
+                            >
+                                {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
+                                {isCustomerDataLoading ? formSkeleton : <ViewContactList {...formProps} />}
+                                {/* { !formActionType?.viewMode && (showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />} */}
+                                {/* {isCustomerDataLoading ? formSkeleton : formContainer} */}
+                            </Panel>
+                        </Collapse>{' '}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <CustomerFormButton {...props} />
+                    </Col>
+                </Row>
+            </Form>
         </>
     );
 };

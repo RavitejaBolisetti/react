@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Input, Form, Select, DatePicker, Switch, Card, Button } from 'antd';
+import { Row, Col, Input, Form, Select, DatePicker, Switch, Card } from 'antd';
 
 import dayjs from 'dayjs';
 
@@ -16,7 +16,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, formActionType, onFinish, onFinishFailed, typeData } = props;
+    const { formData, formActionType, typeData, salesConsultantLov } = props;
     const innitValue = dayjs(formData?.initialPromiseDeliveryDate, 'YYYY/MM/DD');
     const expectedValue = dayjs(formData?.custExpectedDeliveryDate, 'YYYY/MM/DD');
 
@@ -53,7 +53,9 @@ const AddEditFormMain = (props) => {
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.saleConsultant} name="saleConsultant" label="Sales Consultant" rules={[validateRequiredSelectField('Sales Consultant')]}>
                         <Select placeholder="Select" showSearch allowClear>
-                            <Option value="salesConsultant">salesConsultant</Option>
+                            {salesConsultantLov?.map((item) => (
+                                <Option value={item.key}>{item.value}</Option>
+                            ))}
                         </Select>
                     </Form.Item>
                 </Col>
@@ -78,7 +80,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.referral} label="Referral" name="referral" rules={[validateRequiredInputField('Referral')]}>
-                        <Select placeholder="Select" showSearch allowClear options={typeData['REF']} fieldNames={{ label: 'value', value: 'key' }} />
+                        <Select placeholder="Select" showSearch allowClear options={typeData['RFRL']} fieldNames={{ label: 'value', value: 'key' }} />
                     </Form.Item>
                 </Col>
 

@@ -29,7 +29,7 @@ import { MovetoNextForm } from './utils/OTFUtils';
 import { LeftSidebar } from './LeftSidebar';
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible, formActionType, setFormActionType, isVisible, formData, setFormData, isNewDataLoading } = props;
+    const { onCloseAction, isViewModeVisible, formActionType, setFormActionType, isVisible, formData, setFormData, isNewDataLoading, otfSearchSelected } = props;
     const [currentSection, setCurrentSection] = useState(OTF_SECTION.OTF_DETAILS.id);
     const [section, setSection] = useState();
 
@@ -138,6 +138,7 @@ const AddEditFormMain = (props) => {
         formData,
         setFormData,
         isNewDataLoading,
+        otfSearchSelected,
     };
 
     const renderElement = () => {

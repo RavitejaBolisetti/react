@@ -28,7 +28,7 @@ export const CustomerFormButton = ({ formData, onCloseAction, buttonData, setBut
 
             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
                 {buttonData?.editBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record: formData, formVisible: true })} type="primary">
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record: formData })} type="primary">
                         Edit
                     </Button>
                 )}

@@ -8,8 +8,12 @@ import { combineReducers } from 'redux';
 import { InvoiceDetail } from './invoiceDetail';
 import { FinanceDetail } from './financeDetail';
 import { OtfDetails } from './otfDetails';
+import { OtfCustomerDetails } from './customerDetails';
+import { VehicleDetails } from './vehicleDetails';
 import { InsuranceDetail } from './insuranceDetail';
 import { OtfSearchList } from './otfSearch';
+import { salesConsultantLov } from './salesConsultant';
+
 import { FinanceLov } from './financeLov';
 import { LoyaltyScheme } from './loyaltyAndScheme';
 import { Referrals } from './referrals';
@@ -20,8 +24,11 @@ export const OTF = combineReducers({
     InvoiceDetail,
     FinanceDetail,
     OtfDetails,
+    OtfCustomerDetails,
+    VehicleDetails,
     InsuranceDetail,
     OtfSearchList,
+    salesConsultantLov,
     FinanceLov,
     LoyaltyScheme,
     Referrals,

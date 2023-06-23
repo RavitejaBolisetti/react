@@ -116,6 +116,10 @@ export const PARAM_MASTER = {
         id: 'REF',
         title: 'Referral',
     },
+    VEHCL_TYPE: {
+        id: 'VEHCL_TYPE',
+        title: 'VEHCL_TYPE',
+    },
     ADD_TYPE: {
         id: 'ADD_TYPE',
         title: 'ADD_TYPE',
@@ -126,6 +130,10 @@ export const PARAM_MASTER = {
     },
     OTF_SER: {
         id: 'OTF_SER',
+        title: 'Referral',
+    },
+    RFRL: {
+        id: 'RFRL',
         title: 'Referral',
     },
     PURPOSE: {
