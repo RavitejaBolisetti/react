@@ -3,5 +3,5 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { AddressMaster } from './AddressMaster';
-export { AddressMaster };
+import { AddressMaster as AddressMaster1 } from './AddressMaster';
+export { AddressMaster1 };

@@ -76,8 +76,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddressMasterBase = (props) => {
-    const { selectedRowData, isViewModeVisible, section, addressIndData, setFormActionType, formActionType, isAddressLoaded, selectedCustomer, saveData, addData } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, handleFormValueChange, isAddressLoading, formData, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification } = props;
+    const { isViewModeVisible, section, addressIndData, setFormActionType, formActionType, isAddressLoaded, selectedCustomer, saveData, addData } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, handleFormValueChange, isAddressLoading, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification } = props;
     const [form] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -248,9 +248,6 @@ const AddressMasterBase = (props) => {
                                 {isAddressLoading ? formSkeleton : <ViewAddressList {...formProps} />}
                             </Panel>
                         </Collapse>
-                        {/* <Button onClick={() => onSubmit()} type="primary">
-                            Submit
-                        </Button> */}
                     </Col>
                 </Row>
                 <Row>

@@ -3,43 +3,25 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Row, Col, Checkbox, Button, Form, Input, Select, Space, AutoComplete } from 'antd';
-
-import { SearchOutlined } from '@ant-design/icons';
-
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace, validatePincodeField, validateMobileNoField, validateLettersWithWhitespaces } from 'utils/validation';
 import { addressType } from 'constants/modules/CustomerMaster/individualProfile';
 
 import styles from 'components/common/Common.module.css';
 
-let index = 0;
-
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onFinish, form, setAddressData, isEditing, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType } = props;
-    const { typeData, forceUpdate, addData } = props;
+    const { onFinish, form, setAddressData, isEditing, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, formActionType } = props;
+    const { forceUpdate } = props;
     const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, handleFormValueChange } = props;
     const disabledProps = { disabled: formActionType?.editMode && formData?.partyCategory === 'Principal' ? true : false };
 
     const [options, setOptions] = useState(false);
-    /*visiblity of drawer   */
-    const [isVisible, setIsVisible] = useState(true);
     const [pinSearchData, setPinSearchData] = useState({});
-    const [items, setItems] = useState(['Office', 'Residence', 'Permanent', 'Other']);
-    const [name, setName] = useState('');
-
-    const inputRef = useRef(null);
-    const onNameChange = (event) => {
-        setName(event.target.value);
-    };
-
-    const handleOther = (key) => {
-        // setIsOther(key === 4);
-    };
 
     const onErrorAction = (res) => {
         // console.log('error');
@@ -56,10 +38,6 @@ const AddEditForm = (props) => {
         setOptions(pinOption);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pincodeData]);
-    useEffect(() => {
-        setOptions();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isVisible]);
 
     const handleOnSelect = (key) => {
         const selectedPinCode = pincodeData?.find((i) => i.id === key);
@@ -163,8 +141,6 @@ const AddEditForm = (props) => {
                 console.log('err', err);
             });
     };
-
-    // console.log(addData,'VER')
 
     return (
         <>

@@ -12,7 +12,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 
 import { indiviualProfileDataActions } from 'store/actions/data/customerMaster/individual/individualProfile/indiviualProfile';
-import { PARAM_MASTER } from 'constants/paramMaster';
+
+import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
@@ -29,6 +30,7 @@ const mapStateToProps = (state) => {
         data: {
             CustomerMaster: {
                 IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading: isIndiviualLoading, data: indiviualData = [] },
+                ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
             ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, filteredListData: appCategoryData = [] },
             SupportingDocument: { isLoaded: isDocumentDataLoaded = false, isDocumentLoading },
@@ -44,6 +46,8 @@ const mapStateToProps = (state) => {
         indiviualData,
         isDocumentDataLoaded,
         isDocumentLoading,
+        viewDocument,
+        isViewDataLoaded,
     };
     return returnValue;
 };
@@ -60,13 +64,15 @@ const mapDispatchToProps = (dispatch) => ({
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
             listDocumentShowLoading: supportingDocumentDataActions.listShowLoading,
 
+            fecthViewDocument: documentViewDataActions.fetchList,
+
             showGlobalNotification,
         },
         dispatch
     ),
 });
 const IndividualProfileBase = (props) => {
-    const { userId, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification } = props;
+    const { userId, fecthViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
     const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, selectedCustomerId, setSelectedCustomerId } = props;
 
@@ -75,6 +81,7 @@ const IndividualProfileBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [activeKey, setActiveKey] = useState([1]);
     const [uploadedFile, setUploadedFile] = useState();
+    const [isBorder, setIsBorder] = useState(false);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -103,6 +110,21 @@ const IndividualProfileBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
+    useEffect(() => {
+        if (userId) {
+            const extraParam = [
+                {
+                    key: 'docId',
+                    title: 'docId',
+                    value: indiviualData?.customerFormDocId ? indiviualData?.customerFormDocId : '',
+                    name: 'docId',
+                },
+            ];
+            fecthViewDocument({ setIsLoading: listIndiviualShowLoading, userId, extraParam, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
+
     const onFinish = (values) => {
         const recordId = formData?.id || '';
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
@@ -110,8 +132,8 @@ const IndividualProfileBase = (props) => {
         const data = {
             ...rest,
             customerId: selectedCustomerId,
-            keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode, accountName: values?.accountName, accountSegment: values?.accountSegment, accountClientName: values?.accountClientName, accountMappingDate: values?.accountMappingDate },
-            authorityRequest: { customerId: selectedCustomerId, personName: values.personName, postion: values.postion, companyName: values.companyName, remarks: values.remarks, id: recordId },
+            keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode || '', accountName: values?.accountName || '', accountSegment: values?.accountSegment || '', accountClientName: values?.accountClientName || '', accountMappingDate: values?.accountMappingDate || '' },
+            authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
             id: recordId,
             profileFileDocId: uploadedFile ? uploadedFile : '',
             customerFormDocId: uploadedFile ? uploadedFile : '',
@@ -168,6 +190,7 @@ const IndividualProfileBase = (props) => {
     };
 
     const formProps = {
+        isBorder,
         form,
         formData: indiviualData,
         formActionType,
@@ -191,6 +214,7 @@ const IndividualProfileBase = (props) => {
         saveDocumentData,
         userId,
         showDataLoading,
+        viewDocument,
     };
 
     const viewProps = {
@@ -198,6 +222,7 @@ const IndividualProfileBase = (props) => {
         styles,
         activeKey,
         setActiveKey,
+        viewDocument,
     };
 
     const handleFormValueChange = () => {

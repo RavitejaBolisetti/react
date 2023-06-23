@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Input, Form, Select, Card, Button } from 'antd';
+import { Row, Col, Input, Form, Select, Card } from 'antd';
 
 import styles from 'components/common/Common.module.css';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -12,7 +12,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 const AddEditFormMain = (props) => {
-    const { formActionType, formData, form, onFinishFailed, onFinish } = props;
+    const { formData, form } = props;
     const { financeLovData, schemeLovData, typeData, makeData, modelData, variantData } = props;
     const { isConfigLoading, isSchemeLovLoading, isFinanceLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
 

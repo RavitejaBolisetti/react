@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Space, Collapse, Typography, Divider, Descriptions } from 'antd';
+import { Space, Collapse, Typography, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 const { Panel } = Collapse;

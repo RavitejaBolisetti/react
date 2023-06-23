@@ -4,17 +4,15 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Empty, Divider } from 'antd';
+import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Empty } from 'antd';
 import Svg from 'assets/images/Filter.svg';
 import dayjs from 'dayjs';
 
 import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { religion, tongue, vehicle } from 'constants/modules/CustomerMaster/individualProfile';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
-import { FiTrash } from 'react-icons/fi';
 import UploadUtils from '../../Common/UploadUtils';
 
 const { Panel } = Collapse;
@@ -23,8 +21,9 @@ const { TextArea } = Input;
 const { Text } = Typography;
 const { Dragger } = Upload;
 
+const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, userId, uploadDocumentFile, setUploadedFile, listDocumentShowLoading } = props;
+    const { formData, appCategoryData, userId, uploadDocumentFile, viewDocument, setUploadedFile, EDIT_ACTION, listDocumentShowLoading } = props;
     const { isReadOnly = false } = props;
     const [customer, setCustomer] = useState(false);
 
@@ -62,19 +61,9 @@ const AddEditFormMain = (props) => {
         action: '',
         progress: { strokeWidth: 10 },
         success: { percent: 100 },
-        onChange(info) {
-            const { status } = info.file;
-
-            if (status === 'done') {
-                message.success(`${info.file.name} file uploaded successfully.`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
         onDrop,
         onChange: (info, event) => {
             const { status } = info.file;
-
             console.log('event', event);
             if (status === 'uploading') {
                 console.log(' uploading info.file.loaded', info.file.loaded);
@@ -112,13 +101,6 @@ const AddEditFormMain = (props) => {
         uploadDocumentFile(requestData);
     };
 
-    const showUploadList = {
-        showRemoveIcon: false,
-        showPreviewIcon: true,
-        showDownloadIcon: true,
-        previewIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
-    };
-
     const disabledProps = { disabled: isReadOnly };
     return (
         <>
@@ -145,47 +127,51 @@ const AddEditFormMain = (props) => {
                                 }
                                 key="1"
                             >
-                                <UploadUtils />
-                                <Row gutter={16}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <div className={styles.uploadDragger}>
-                                            <Dragger customRequest={handleUpload} {...uploadProps}>
-                                                <Empty
-                                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                                    imageStyle={{
-                                                        height: 100,
-                                                    }}
-                                                    description={
-                                                        <>
-                                                            <span>
-                                                                Click or drop your file here to upload the signed and <br />
-                                                                scanned customer form.
-                                                            </span>
-                                                            <span>
-                                                                <br />
-                                                                File type should be png, jpg or pdf and max file size to be 5Mb
-                                                            </span>
-                                                        </>
-                                                    }
-                                                />
-
-                                                <Button type="primary">Upload File</Button>
-                                            </Dragger>
-                                        </div>
-                                    </Col>
-                                </Row>
+                                {EDIT_ACTION ? (
+                                    <div className={styles.uploadDragger}>
+                                        <UploadUtils isViewModeVisible={true} uploadImgTitle={'Profile Picture'} viewDocument={viewDocument} />
+                                    </div>
+                                ) : (
+                                    <Row gutter={16}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <div className={styles.uploadDragger}>
+                                                <Dragger customRequest={handleUpload} {...uploadProps}>
+                                                    <Empty
+                                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                        imageStyle={{
+                                                            height: 100,
+                                                        }}
+                                                        description={
+                                                            <>
+                                                                <span>
+                                                                    Click or drop your file here to upload the signed and <br />
+                                                                    scanned customer form.
+                                                                </span>
+                                                                <span>
+                                                                    <br />
+                                                                    File type should be png, jpg or pdf and max file size to be 5Mb
+                                                                </span>
+                                                            </>
+                                                        }
+                                                    />
+                                                    <Button type="primary">Upload File</Button>
+                                                </Dragger>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                )}
 
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Date of Birth" initialValue={dayjs(formData?.dateOfBirth) || ''} name="dateOfBirth">
-                                            <DatePicker format="DD-MM-YYYY" disabled={isReadOnly} className={styles.datepicker} />
+                                        <Form.Item label="Date of Birth" initialValue={dayjs(formData?.dateOfBirth)} name="dateOfBirth">
+                                            <DatePicker format="YYYY-MM-DD" disabled={isReadOnly} className={styles.datepicker} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Gender" name="gender" initialValue={formData?.gender || ''} rules={[validateRequiredSelectField('gender')]}>
-                                            <Select value={null} placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
+                                        <Form.Item label="Gender" name="gender" initialValue={formData?.gender} rules={[validateRequiredSelectField('gender')]}>
+                                            <Select placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
                                                 {appCategoryData?.GENDER_CD?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
+                                                    <Option key={'ct' + item.value} value={item.value}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -196,7 +182,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item label="Maritial Status" initialValue={formData?.maritialStatus || ''} name="martialStatus">
                                             <Select value={null} placeholder={preparePlaceholderSelect('maritial status')} {...disabledProps}>
                                                 {appCategoryData?.MARITAL_STATUS?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
+                                                    <Option key={'ct' + item.value} value={item.value}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -206,15 +192,15 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label=" Wedding Anniversary Date" initialValue={formData?.weddingAnniversary || ''} name="weddingAnniversary">
-                                            <DatePicker className={styles.datepicker} disabled={isReadOnly} />
+                                        <Form.Item label=" Wedding Anniversary Date" initialValue={formData?.weddingAnniversary} name="weddingAnniversary">
+                                            <DatePicker format="YYYY-MM-DD" className={styles.datepicker} disabled={isReadOnly} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Occupation" initialValue={formData?.occuption || ''} name="occuption">
                                             <Select value={null} placeholder={preparePlaceholderSelect('occupation')} {...disabledProps}>
                                                 {appCategoryData?.OCC_TYPE?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
+                                                    <Option key={'ct' + item.value} value={item.value}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -225,7 +211,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item label="Annual Income" initialValue={formData?.annualIncome || ''} name="annualIncome">
                                             <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
                                                 {appCategoryData?.Annual_Income?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
+                                                    <Option key={'ct' + item.value} value={item.value}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -255,7 +241,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item label="Vehicle Used" initialValue={formData?.vehicleUsed} name="vehicleUsed">
                                             <Select value={null} placeholder={preparePlaceholderSelect('vehicle used')} {...disabledProps}>
                                                 {appCategoryData?.Vehicle_Used?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
+                                                    <Option key={'ct' + item.value} value={item.value}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -263,10 +249,10 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Mother Tongue" initialValue={formData?.preferredLamguage} name="preferredLanguage">
+                                        <Form.Item label="Mother Tongue" initialValue={formData?.motherTongue} name="motherTongue">
                                             <Select value={null} placeholder={preparePlaceholderSelect('mother tongue')} {...disabledProps}>
                                                 {appCategoryData?.MOTHER_TOUNGE?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
+                                                    <Option key={'ct' + item.value} value={item.value}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -277,7 +263,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item label="Religion" initialValue={formData?.religion} name="religion">
                                             <Select value={null} placeholder={preparePlaceholderSelect('religion')} {...disabledProps}>
                                                 {appCategoryData?.RELGION?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
+                                                    <Option key={'ct' + item.value} value={item.value}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -301,10 +287,10 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Usage/Application Categorization" initialValue={formData?.applicationcategorization} name="applicationCategorization">
+                                        <Form.Item label="Usage/Application Categorization" initialValue={formData?.applicationCategorization} name="applicationCategorization">
                                             <Select value={null} placeholder={preparePlaceholderSelect('usage/application category')} {...disabledProps}>
                                                 {appCategoryData?.APP_CAT?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
+                                                    <Option key={'ct' + item.value} value={item.value}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -315,7 +301,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item label="Usage/Application Sub-Category" initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
                                             <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
                                                 {appCategoryData?.APP_SUB_CAT?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
+                                                    <Option key={'ct' + item.value} value={item.value}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -326,7 +312,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item label="Customer Category" initialValue={formData?.customerCategory} name="customerCategory">
                                             <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps} onChange={onCustomerCategoryChange}>
                                                 {appCategoryData?.CUS_CAT?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
+                                                    <Option key={'ct' + item.value} value={item.value}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -367,18 +353,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
 
-                        <Collapse
-                            expandIcon={() => {
-                                if (activeKey.includes(2)) {
-                                    return <MinusOutlined className={styles.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(2)}
-                            expandIconPosition="end"
-                        >
+                        <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel
                                 header={
                                     <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
@@ -427,18 +402,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                             </Panel>
                         </Collapse>
-                        <Collapse
-                            expandIcon={() => {
-                                if (activeKey.includes(3)) {
-                                    return <MinusOutlined className={styles.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(3)}
-                            expandIconPosition="end"
-                        >
+                        <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel
                                 header={
                                     <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
@@ -449,50 +413,39 @@ const AddEditFormMain = (props) => {
                             >
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Code" name="accountCode" initialValue={formData?.accountCode}>
+                                        <Form.Item label="Account Code" name="accountCode" initialValue={formData?.keyAccountDetails?.accountCode}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter account code')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Name" name="accountName" initialValue={formData?.accountName}>
+                                        <Form.Item label="Account Name" name="accountName" initialValue={formData?.keyAccountDetails?.accountName}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Segement" name="accountSegment" initialValue={formData?.accountSegment}>
+                                        <Form.Item label="Account Segement" name="accountSegment" initialValue={formData?.keyAccountDetails?.accountSegment}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} disabled />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Client Name" name="accountClientName" initialValue={formData?.accountClientName}>
+                                        <Form.Item label="Account Client Name" name="accountClientName" initialValue={formData?.keyAccountDetails?.accountClientName}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Mapping Date" name="accountMappingDate" initialValue={formData?.accountMappingDate}>
+                                        <Form.Item label="Account Mapping Date" name="accountMappingDate" initialValue={formData?.keyAccountDetails?.accountMappingDate}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                             </Panel>
                         </Collapse>
-                        <Collapse
-                            expandIcon={() => {
-                                if (activeKey.includes(4)) {
-                                    return <MinusOutlined className={styles.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(4)}
-                            expandIconPosition="end"
-                        >
+                        <Collapse defaultActiveKey={['4']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel
                                 header={
                                     <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
@@ -503,45 +456,34 @@ const AddEditFormMain = (props) => {
                             >
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Name of Person" initialValue={formData?.personName} name="personName" rules={[validateRequiredInputField('Name of Person')]}>
+                                        <Form.Item label="Name of Person" initialValue={formData?.authorityDetails?.personName} name="personName" rules={[validateRequiredInputField('Name of Person')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter name of person')} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Position" initialValue={formData?.position} name="position">
+                                        <Form.Item label="Position" initialValue={formData?.authorityDetails?.postion} name="postion">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter position')} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Company Name" initialValue={formData?.companyName} name="companyName" rules={[validateRequiredInputField('Company Name')]}>
+                                        <Form.Item label="Company Name" initialValue={formData?.authorityDetails?.companyName} name="companyName" rules={[validateRequiredInputField('Company Name')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter company name')} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <Form.Item label="Remarks" initialValue={formData?.remarks} name="remarks">
-                                            <TextArea placeholder={preparePlaceholderText('remarks')} showCount maxLength={100} autoSize={{ minRows: 1, maxRows: 1 }} />
+                                        <Form.Item label="Remarks" initialValue={formData?.authorityDetails?.remarks} name="remarks">
+                                            <TextArea maxLength={50} placeholder={preparePlaceholderText('Remarks')} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                             </Panel>
                         </Collapse>
 
-                        <Collapse
-                            expandIcon={() => {
-                                if (activeKey.includes(5)) {
-                                    return <MinusOutlined className={styles.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(5)}
-                            expandIconPosition="end"
-                        >
+                        <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel
                                 header={
                                     <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
@@ -550,12 +492,12 @@ const AddEditFormMain = (props) => {
                                 }
                                 key="5"
                             >
-                                <Form autoComplete="off" layout="vertical">
+                                <>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Checkbox value="customerConsent" name="customerConsent">
-                                                I Consent to share my details with Mahindra & Mahindra.{' '}
-                                            </Checkbox>
+                                            <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">
+                                                <Checkbox> I Consent to share my details with Mahindra & Mahindra</Checkbox>
+                                            </Form.Item>
                                         </Col>
                                     </Row>
                                     <Row gutter={20}>
@@ -574,7 +516,7 @@ const AddEditFormMain = (props) => {
                                             </Dragger>
                                         </Col>
                                     </Row>
-                                </Form>
+                                </>
                             </Panel>
                         </Collapse>
                     </Space>
