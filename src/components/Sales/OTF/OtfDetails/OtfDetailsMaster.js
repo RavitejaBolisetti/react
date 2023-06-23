@@ -16,6 +16,7 @@ import { bindActionCreators } from 'redux';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { showGlobalNotification } from 'store/actions/notification';
+import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { InputSkeleton } from 'components/common/Skeleton';
@@ -30,9 +31,11 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isLoading: isTypeDataLoading, paramdata: typeData = [] },
             OTF: {
                 OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
+                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded = false, isLoading: isSalesConsultantLoading, data: salesConsultantLov = [] },
             },
         },
     } = state;
+
     const moduleTitle = 'OTF Details';
 
     let returnValue = {
@@ -45,6 +48,7 @@ const mapStateToProps = (state) => {
         otfData,
         isLoading,
         moduleTitle,
+        salesConsultantLov,
     };
     return returnValue;
 };
@@ -60,6 +64,8 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: otfDetailsDataActions.saveData,
             resetData: otfDetailsDataActions.reset,
             listShowLoading: otfDetailsDataActions.listShowLoading,
+
+            fetchSalesConsultant: salesConsultantActions.fetchList,
             showGlobalNotification,
         },
         dispatch
@@ -69,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 const OtfDetailsMasterBase = (props) => {
     const { isTypeDataLoaded, typeData, fetchConfigList, listConfigShowLoading } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange } = props;
+    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov } = props;
 
     const [formData, setFormData] = useState();
 
@@ -103,8 +109,9 @@ const OtfDetailsMasterBase = (props) => {
             fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.SALE_TYP?.id, userId });
             fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.FNC_ARNGD?.id, userId });
             fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.DLVR_AT?.id, userId });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.REF?.id, userId });
+            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.RFRL?.id, userId });
             fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.PRC_TYP?.id, userId });
+            fetchSalesConsultant({ setIsLoading: listConfigShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isTypeDataLoaded, userId]);
@@ -155,6 +162,7 @@ const OtfDetailsMasterBase = (props) => {
         isDataLoaded,
         formData,
         isLoading,
+        salesConsultantLov,
     };
 
     const viewProps = {

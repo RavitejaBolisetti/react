@@ -7,7 +7,7 @@ const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
     const { handleFilterChange } = props;
-    const { filterString, setFilterString, form, handleResetFilter, setAdvanceSearchVisible, otfStatusList } = props;
+    const { filterString, setFilterString, form, handleResetFilter, setAdvanceSearchVisible, otfStatusList , onFinishAdvanceFilter} = props;
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState();
 
@@ -35,7 +35,7 @@ export const AdvancedSearchFrom = (props) => {
         className: styles.headerSelectField,
     };
     return (
-        <Form autoComplete="off" layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={form} onFinish={onFinishAdvanceFilter} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="From Date" name="fromDate">

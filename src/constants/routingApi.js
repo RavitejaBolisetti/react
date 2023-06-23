@@ -149,6 +149,8 @@ export const BASE_URL_DOCUMENT_UPLOAD = BASE_URL + 'common/document/upload';
 export const BASE_URL_DOCUMENT_DOWNLOAD = BASE_URL + 'common/document/download';
 export const BASE_URL_DOCUMENT_VIEW_URL = BASE_URL + 'common/document/view';
 
+export const BASE_URL_SALES_CONSULTANT = BASE_URL + 'users/dealer/employees/lov';
+export const BASE_URL_OTF_CUSTOMER = BASE_URL + 'otf/customerdetails';
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
 export const BASE_URL_VEHICLE_VARIANT = BASE_URL_VEHICLE + 'variant';
 export const BASE_URL_VEHICLE_MAKE = BASE_URL_VEHICLE + 'make';

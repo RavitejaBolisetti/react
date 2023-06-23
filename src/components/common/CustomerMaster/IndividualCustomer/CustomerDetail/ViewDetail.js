@@ -4,13 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Typography, Descriptions, Card, Divider, Col, Row, Tag, Space, Button } from 'antd';
+import { Typography, Descriptions, Card, Divider, Col, Row, Space, Button } from 'antd';
 import { BiTimeFive } from 'react-icons/bi';
 
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
-    const { styles, formData,formActionType:{viewMode} = undefined } = props;
-    console.log('🚀 ~ file: ViewDetail.js:13 ~ ViewDetailMain ~ formData:', formData);
+    const { styles, formData } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -54,7 +53,6 @@ const ViewDetailMain = (props) => {
                                     <span>&nbsp;</span>
                                     {formData?.lastName}
                                 </Text>
-                                {/* <Tag color="success">Approved</Tag> */}
                             </Col>
                         </Row>
                     </div>

@@ -132,6 +132,10 @@ export const PARAM_MASTER = {
         id: 'OTF_SER',
         title: 'Referral',
     },
+    RFRL: {
+        id: 'RFRL',
+        title: 'Referral',
+    },
     PURPOSE: {
         id: 'PURPOSE',
         title: 'PURPOSE',
