@@ -35,7 +35,7 @@ const { Option } = Select;
 // };
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, formActionType, setUploadImgDocId } = props;
+    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, formActionType, setUploadImgDocId, handleFormValueChange } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
@@ -77,7 +77,7 @@ const AddEditForm = (props) => {
 
     return (
         <>
-            <Form form={form} autoComplete="off" onFinish={onFinish} layout="vertical">
+            <Form form={form} autoComplete="off" onFinish={onFinish} onFieldsChange={handleFormValueChange} layout="vertical">
                 <Space direction="vertical">
                     <UploadUtils 
                     // {...uploadProps} 

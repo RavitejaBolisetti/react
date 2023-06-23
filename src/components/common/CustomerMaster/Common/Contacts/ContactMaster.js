@@ -175,6 +175,11 @@ const ContactMain = (props) => {
         forceUpdate();
     };
 
+    
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
+
     const addBtnContactHandeler = (e) => {
         e.stopPropagation();
         contactform.resetFields();
@@ -198,6 +203,7 @@ const ContactMain = (props) => {
         onCheckdefaultAddClick,
         setButtonData,
         setUploadImgDocId,
+        handleFormValueChange,
     };
 
     const onSubmit = () => {
@@ -233,9 +239,6 @@ const ContactMain = (props) => {
         contactform.resetFields();
     };
 
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
     const onFinishFailed = (err) => {
         console.error(err);
     };
