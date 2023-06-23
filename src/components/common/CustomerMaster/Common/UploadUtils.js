@@ -127,7 +127,6 @@ const UploadUtilsMain = (props) => {
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <div className={styles.uploadDragger}>
-                            {/* <Dragger {...props}> */}
                             <Dragger customRequest={handleUpload} {...uploadProps} multiple={false}>
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -144,7 +143,7 @@ const UploadUtilsMain = (props) => {
                                         </>
                                     }
                                 />
-                                <Button type="primary">{uploadBtnName || 'Upload File temp'}</Button>
+                                <Button type="primary">{uploadBtnName || 'Upload File'}</Button>
                             </Dragger>
                         </div>
                     </Col>
