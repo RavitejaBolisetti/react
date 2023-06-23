@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -108,7 +108,6 @@ export const BASE_URL_TERM_CONDITION_MANUFACTURER = BASE_URL + 'appmst/tncmanufr
 export const BASE_URL_TERM_CONDITION_CHANGE_HISTORY = BASE_URL + 'appmst/termconditiondealerhistory';
 export const BASE_URL_TERM_CONDITION_MANUFACTURER_CHANGE_HISTORY = BASE_URL + 'appmst/tncmanufracturerhistory';
 
-
 export const BASE_URL_LOYALTY_AND_SCHEME = BASE_URL + 'otf/loyalty/schemes';
 export const BASE_URL_FAMILY_DETAIL_SEARCH = BASE_URL + 'customers/individual';
 export const BASE_URL_INDIVIUAL_PROFILE_CUSTOMER_MASTER = BASE_URL + 'customers/individual/profile';
@@ -116,6 +115,7 @@ export const BASE_URL_CUSTOMER_MASTER_CUSTOMER_DETAILS_INDIVIDUAL = BASE_URL + '
 export const BASE_URL_CUSTOMER_MASTER_ACCOUNTS_RELATED_INDIVISUAL = BASE_URL + 'customers/individual/accounts';
 export const BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER = BASE_URL + 'customers//individual/familydetails';
 export const BASE_URL_CUSTOMER_MASTER_ADDRESS = BASE_URL + 'customers/individual/address';
+export const BASE_URL_CUSTOMER_MASTER_ADDRESS_CORPORATE = BASE_URL + 'customers/corporate/address';
 export const BASE_URL_CUSTOMER_MASTER_NDIVIDUAL_CONTACT = BASE_URL + 'customers/individual/contacts';
 export const BASE_URL_INDIVIDUAL_NAME_CHANGE_HISTORY = BASE_URL + 'customers/individual/name/changehistory';
 
@@ -139,13 +139,18 @@ export const BASE_URL_OTF_DETAILS = BASE_URL_OTF + 'details';
 export const BASE_URL_OTF_VEHICLE_DETAILS = BASE_URL_OTF + 'vehicledetails';
 export const BASE_URL_OTF_INVOICE = BASE_URL + 'otf/invoice';
 export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';
+export const BASE_URL_OTF_SCHEME_DETAIL = BASE_URL + 'otf/schemes';
 export const BASE_URL_OTF_INSURANCE_DETAIL = BASE_URL + 'otf/insurancedetails';
 export const BASE_URL_OTF_FINANCE_LOV = BASE_URL + 'otf/financiers/lov';
 export const BASE_URL_OTF_SCHEMES = BASE_URL_OTF + 'schemes';
 export const BASE_URL_OTF_EXCHANGE_VEHICLE = BASE_URL_OTF + 'exchangevehicle';
 
 export const BASE_URL_DOCUMENT_UPLOAD = BASE_URL + 'common/document/upload';
+export const BASE_URL_DOCUMENT_DOWNLOAD = BASE_URL + 'common/document/download';
+export const BASE_URL_DOCUMENT_VIEW_URL = BASE_URL + 'common/document/view';
 
+export const BASE_URL_SALES_CONSULTANT = BASE_URL + 'users/dealer/employees/lov';
+export const BASE_URL_OTF_CUSTOMER = BASE_URL + 'otf/customerdetails';
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
 export const BASE_URL_VEHICLE_VARIANT = BASE_URL_VEHICLE + 'variant';
 export const BASE_URL_VEHICLE_MAKE = BASE_URL_VEHICLE + 'make';

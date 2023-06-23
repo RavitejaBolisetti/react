@@ -10,7 +10,6 @@ import { useEffect, useState } from 'react';
 import { BiLockAlt } from 'react-icons/bi';
 import { CheckOutlined } from '@ant-design/icons';
 import { ValidateMobileNumberModal } from '../../IndividualCustomer/CustomerDetail/ValidateMobileNumberModal';
-const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { configurableTypedata, formData, form, corporateLovData, formActionType: { editMode } = undefined, validateParentCode, customerType, customerParentCompanyData } = props;
@@ -18,15 +17,14 @@ const AddEditFormMain = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
-    useEffect(() => {
-        form.setFieldsValue({
-            ...formData,
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
-
     const handleCorporateChange = (value) => {
         setCorporateType(value);
+    };
+
+    const onHandleSelect = (value) => {
+        form.setFieldsValue({
+            corporateCode: value,
+        });
     };
     const handleNumberValidation = (event) => {
         const Mno = event.target.value;
@@ -83,15 +81,14 @@ const AddEditFormMain = (props) => {
                                 />
                             </Form.Item>
                         ) : (
-                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
+                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
                                 <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
                             </Form.Item>
                         )}
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        {customerType}
-                        <Form.Item initialValue={formData?.customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                            <Select placeholder="Select" defaultValue={{ label: 'Individual', value: 'IND' }} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']}></Select>
+                        <Form.Item initialValue={customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
+                            <Select disabled={true} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']} allowClear></Select>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -121,17 +118,12 @@ const AddEditFormMain = (props) => {
                             <Select placeholder="Select" loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']} onChange={handleCorporateChange}></Select>
                         </Form.Item>
                     </Col>
+
                     {corporateType === 'LIS' ? (
                         <>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                    <Select loading={false} placeholder="Select" allowClear>
-                                        {corporateLovData?.map((item) => (
-                                            <Option key={'lv' + item?.key} value={item?.key}>
-                                                {item?.value}
-                                            </Option>
-                                        ))}
-                                    </Select>
+                                    <Select onSelect={onHandleSelect} loading={false} fieldNames={{ label: 'value', value: 'key' }} placeholder="Select" allowClear options={corporateLovData}></Select>
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>

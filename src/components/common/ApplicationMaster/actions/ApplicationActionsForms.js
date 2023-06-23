@@ -19,7 +19,7 @@ const ApplicationActionsForm = ({ finalFormdata, form, onFinish, status, name, i
                     <Form form={form} onFieldsChange={onFieldsChange} autoComplete="off" id="applicationActionsForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item label="Action" name="applicationName" rules={[validateRequiredSelectField('application action'), { validator: (rule, value) => duplicateValidator(value?.label, 'actionName', finalFormdata?.applicationAction)   }]}>  
+                                <Form.Item label="Action" name="applicationName" rules={[validateRequiredSelectField('application action'),  { validator: (rule, value) => duplicateValidator(value?.label, 'actionName', finalFormdata?.applicationAction)   }]}>  
                                     <Select
                                         getPopupContainer={(triggerNode) => triggerNode.parentElement}
                                         labelInValue

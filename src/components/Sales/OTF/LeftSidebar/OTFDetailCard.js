@@ -9,11 +9,11 @@ import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { convertDateTime } from 'utils/formatDateTime';
 
 const { Panel } = Collapse;
-const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={18} /> : <SlArrowDown size={18} />);
+const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={13} /> : <SlArrowDown size={13} />);
 
 const OTFDetailCard = (props) => {
     const { selectedOrder } = props;
-    const fullName = selectedOrder?.customerName?.split('');
+    const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon}>
@@ -24,9 +24,9 @@ const OTFDetailCard = (props) => {
                             <Avatar size={60}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
                                 <p>
-                                    <span>{selectedOrder?.otfNumber}</span>
+                                    <span>{selectedOrder?.customerName}</span>
                                 </p>
-                                <p>{selectedOrder?.customerId}</p>
+                                <p>{selectedOrder?.otfNumber}</p>
                             </div>
                         </Space>
                     </>

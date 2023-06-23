@@ -2,18 +2,15 @@
  *   Copyright (c) 2023
  *   All rights reserved.
  */
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
 
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
-import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { CustomerFormButton } from '../../CustomerFormButton';
 import AddEditForm from './AddEditForm';
@@ -25,8 +22,8 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isDocumentDataLoaded = false, data: configData = [], paramdata: typeData = [] },
-            SupportingDocument: { isLoaded: isDataLoaded = false, isLoading },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
         },
     } = state;
 
@@ -34,11 +31,10 @@ const mapStateToProps = (state) => {
         userId,
         accessToken,
         token,
-        isDocumentDataLoaded,
-        configData,
         typeData: typeData && typeData[PARAM_MASTER.CUST_FILES.id],
         isDataLoaded,
         isLoading,
+        supportingData,
     };
     return returnValue;
 };
@@ -47,9 +43,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            configFetchList: configParamEditActions.fetchList,
-            configListShowLoading: configParamEditActions.listShowLoading,
-
+            fetchList: supportingDocumentDataActions.fetchList,
             saveData: supportingDocumentDataActions.saveData,
             uploadFile: supportingDocumentDataActions.uploadFile,
             listShowLoading: supportingDocumentDataActions.listShowLoading,
@@ -61,37 +55,42 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupportingDocumentBase = (props) => {
-    const { isDocumentDataLoaded, uploadFile, accessToken, token, configFetchList, configListShowLoading } = props;
+    const { uploadFile, accessToken, token, onFinishFailed, form } = props;
 
-    const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData } = props;
+    const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, isDataLoaded, fetchList, supportingData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
-
-    const [form] = Form.useForm();
+    const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
 
     const [uploadedFile, setUploadedFile] = useState();
-    const [isFormVisible, setIsFormVisible] = useState(false);
     const [formData, setFormData] = useState();
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
+    const extraParams = [
+        {
+            key: 'customerId',
+            value: selectedCustomerId,
+        },
+    ];
+
     useEffect(() => {
-        if (userId && !isDocumentDataLoaded) {
-            configFetchList({ setIsLoading: configListShowLoading, userId, parameterType: PARAM_MASTER?.CUST_FILES.id });
+        if (userId && selectedCustomerId) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDocumentDataLoaded]);
+    }, [userId, selectedCustomerId]);
 
     const onFinish = (values) => {
-        const data = { ...values, customerId: 'CUS001', status: true, docId: uploadedFile, id: '' };
+        const data = { ...values, customerId: selectedCustomerId, status: true, docId: uploadedFile, documentTypeId: 'INSPOL', id: '' };
 
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message, placement: 'bottomRight' });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -106,27 +105,18 @@ const SupportingDocumentBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = () => {
-        console.log('failed');
-    };
-
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormData([]);
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        record && setFormData(record);
-        setIsFormVisible(true);
+    const viewProps = {
+        supportingData,
     };
 
     const formProps = {
+        ...props,
         typeData,
         userId,
         accessToken,
         token,
         saveData,
         onFinish,
-        onFinishFailed,
         setUploadedFile,
         uploadFile,
         listShowLoading,
@@ -137,7 +127,6 @@ const SupportingDocumentBase = (props) => {
         VIEW_ACTION,
         buttonData,
         setButtonData,
-        handleButtonClick,
     };
 
     const handleFormValueChange = () => {
@@ -149,7 +138,7 @@ const SupportingDocumentBase = (props) => {
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title}</h2>
-                    {formActionType?.viewMode ? <ViewDetail /> : <AddEditForm {...formProps} />}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

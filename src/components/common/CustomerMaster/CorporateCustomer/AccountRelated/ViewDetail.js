@@ -6,6 +6,8 @@
 import React from 'react';
 import { Descriptions, Card } from 'antd';
 import { CheckSquareOutlined } from '@ant-design/icons';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+
 
 const ViewDetailBase = (props) => {
     const { styles, formData } = props;
@@ -27,13 +29,13 @@ const ViewDetailBase = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Card>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Credit Limit">{formData?.creditAmount}</Descriptions.Item>
-                    <Descriptions.Item label="Credit Limit Days">{formData?.creditDays}</Descriptions.Item>
-                    <Descriptions.Item label="Outstanding Amount">{formData?.outstandingAmount}</Descriptions.Item>
-                    <Descriptions.Item label="Parts Discount">{formData?.partsDiscount}</Descriptions.Item>
-                    <Descriptions.Item label="Labour Discount">{formData?.labourDiscount}</Descriptions.Item>
-                    <Descriptions.Item label="Remarks">{formData?.remarks}</Descriptions.Item>
-                    {/* <Descriptions.Item label="VIP Dealer">{renderCheckbox(formData?.vipDealerInd)}</Descriptions.Item> */}
+                    <Descriptions.Item label="Credit Limit">{checkAndSetDefaultValue(formData?.creditAmount)}</Descriptions.Item>
+                    <Descriptions.Item label="Credit Limit Days">{checkAndSetDefaultValue(formData?.creditDays)}</Descriptions.Item>
+                    <Descriptions.Item label="Outstanding Amount">{checkAndSetDefaultValue(formData?.outstandingAmount)}</Descriptions.Item>
+                    <Descriptions.Item label="Parts Discount">{checkAndSetDefaultValue(formData?.partsDiscount)}</Descriptions.Item>
+                    <Descriptions.Item label="Labour Discount">{checkAndSetDefaultValue(formData?.labourDiscount)}</Descriptions.Item>
+                    <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.remarks)}</Descriptions.Item>
+                    {/* <Descriptions.Item label="VIP Dealer">{checkAndSetDefaultValue(renderCheckbox(formData?.vipDealerInd))}</Descriptions.Item> */}
                     <div> {renderCheckbox(formData?.vipDealerInd)}VIP Dealer</div>
                 </Descriptions>
             </Card>

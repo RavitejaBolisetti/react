@@ -4,13 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Typography, Descriptions, Card, Divider, Col, Row, Tag, Space, Button } from 'antd';
+import { Typography, Descriptions, Card, Divider, Col, Row, Space, Button } from 'antd';
 import { BiTimeFive } from 'react-icons/bi';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+
 
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
     const { styles, formData } = props;
-    console.log('🚀 ~ file: ViewDetail.js:13 ~ ViewDetailMain ~ formData:', formData);
     const viewProps = {
         bordered: false,
         colon: false,
@@ -30,8 +31,8 @@ const ViewDetailMain = (props) => {
                     }
                 >
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Mobile Number">{formData?.mobileNumber}</Descriptions.Item>
-                        <Descriptions.Item label="Customer Type">{formData?.customerType}</Descriptions.Item>
+                        <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber)}</Descriptions.Item>
+                        <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(formData?.customerType)}</Descriptions.Item>
                     </Descriptions>
                     <div className={styles.cardInsideBox}>
                         <Row>
@@ -54,22 +55,21 @@ const ViewDetailMain = (props) => {
                                     <span>&nbsp;</span>
                                     {formData?.lastName}
                                 </Text>
-                                <Tag color="success">Approved</Tag>
                             </Col>
                         </Row>
                     </div>
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Email Id">{formData?.emailId}</Descriptions.Item>
-                        <Descriptions.Item label="Do you want to contact over whatsapp?">{formData?.whatsappCommunicationIndicator}</Descriptions.Item>
+                        <Descriptions.Item label="Email Id">{checkAndSetDefaultValue(formData?.emailId)}</Descriptions.Item>
+                        <Descriptions.Item label="Do you want to contact over whatsapp?">{checkAndSetDefaultValue(formData?.whatsappCommunicationIndicator ? 'Yes' : 'No')}</Descriptions.Item>
                         <Descriptions />
-                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?">{formData?.mobileNumberAsWhatsappNumber}</Descriptions.Item>
-                        <Descriptions.Item label="Whatsapp Number">{formData?.whatsAppNumber}</Descriptions.Item>
+                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?">{checkAndSetDefaultValue(formData?.mobileNumberAsWhatsappNumber ? 'Yes' : 'No')}</Descriptions.Item>
+                        <Descriptions.Item label="Whatsapp Number">{checkAndSetDefaultValue(formData?.whatsAppNumber)}</Descriptions.Item>
                     </Descriptions>
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Corporate Type">{formData?.corporateType}</Descriptions.Item>
-                        <Descriptions.Item label="Corporate Name">{formData?.corporateName}</Descriptions.Item>
-                        <Descriptions.Item label="Corporate Category">{formData?.corporateCategory}</Descriptions.Item>
-                        <Descriptions.Item label="Membership Type">{formData?.membershipType}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(formData?.corporateType)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Name">{checkAndSetDefaultValue(formData?.corporateName)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(formData?.corporateCategory)}</Descriptions.Item>
+                        <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(formData?.membershipType)}</Descriptions.Item>
                     </Descriptions>
                 </Card>
             </Space>

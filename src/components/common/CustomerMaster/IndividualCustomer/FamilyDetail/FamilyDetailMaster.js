@@ -7,17 +7,14 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { familyDetailsDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetails';
 import { familyDetailSearchDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetailSearch';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { GetAge } from 'utils/getAge';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
-import { InputSkeleton } from 'components/common/Skeleton';
 
 import styles from 'components/common/Common.module.css';
 
@@ -27,7 +24,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isRelationDataLoaded = false, isRelationLoading, paramdata: relationData = [] },
+            ConfigurableParameterEditing: { filteredListData: relationData = [] },
             CustomerMaster: {
                 FamilyDetails: { isLoaded: isFamilyLoaded = false, isLoading: isFamilyLoading, data: familyData = [] },
                 FamilyDetailSearch: { isLoading: isSearchLoading, data: familySearchData = [] },
@@ -37,8 +34,6 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isRelationDataLoaded,
-        isRelationLoading,
         isFamilyLoaded,
         isFamilyLoading,
         relationData: relationData && relationData[PARAM_MASTER.FAMLY_RELTN.id],
@@ -53,9 +48,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchFamilyDetailsList: familyDetailsDataActions.fetchList,
             listFamilyDetailsShowLoading: familyDetailsDataActions.listShowLoading,
             saveData: familyDetailsDataActions.saveData,
@@ -70,11 +62,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const FamilyDetailMasterBase = (props) => {
-    const { section, userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, fetchFamilySearchList, listFamilySearchLoading, familySearchData } = props;
+    const { section, userId, relationData, fetchFamilyDetailsList, listFamilyDetailsShowLoading, familyData, saveData, showGlobalNotification, fetchFamilySearchList, listFamilySearchLoading, familySearchData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, isSearchLoading, selectedCustomerId } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [form] = Form.useForm();
-    // const [formData, setFormData] = useState([]);
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [customerType, setCustomerType] = useState('Yes');
@@ -92,13 +83,6 @@ const FamilyDetailMasterBase = (props) => {
             name: 'Customer ID',
         },
     ];
-
-    useEffect(() => {
-        if (userId && !isRelationDataLoaded && !isRelationLoading) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.FAMLY_RELTN.id });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isRelationDataLoaded]);
 
     useEffect(() => {
         let onErrorAction = (res) => {
@@ -166,11 +150,10 @@ const FamilyDetailMasterBase = (props) => {
         setEditedMode(false);
 
         form.resetFields();
-
         if (values?.mnmCustomer === 'Yes') {
-            setCustomerType(true);
+            setCustomerType('Yes');
         } else if (values?.mnmCustomer === 'No') {
-            setCustomerType(false);
+            setCustomerType('No');
         }
     };
 
@@ -218,11 +201,20 @@ const FamilyDetailMasterBase = (props) => {
     }, [familyData]);
 
     useEffect(() => {
-        form.setFieldsValue({
-            customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
-            dateOfBirth: dayjs(familySearchData?.dateOfBirth),
-            relationAge: GetAge(familySearchData?.dateOfBirth),
-        });
+        if(familySearchData?.dateOfBirth === null || familySearchData?.dateOfBirth === undefined || familySearchData?.dateOfBirth === ""){
+            form.setFieldsValue({
+                customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
+                dateOfBirth: null,
+                relationAge:"NA",
+            });
+        } else {
+            form.setFieldsValue({
+                customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
+                dateOfBirth: dayjs(familySearchData?.dateOfBirth),
+                relationAge: GetAge(familySearchData?.dateOfBirth),
+            });
+        }
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [familySearchData]);
 

@@ -11,6 +11,7 @@ const ViewDetailMain = ({ name, data }) => {
 
     return (
         <>
+            
             <Descriptions {...viewProps}>
                 <Descriptions.Item label={name}>{data?.name}</Descriptions.Item>
                 <Descriptions.Item label={name + ' Rate'}>{data?.price}</Descriptions.Item>

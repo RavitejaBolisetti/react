@@ -33,7 +33,7 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => 
     }, []);
 
     const informationModalBox = useCallback(
-        ({ type = 'error', title = 'ERROR', message, duration = 5, placement = 'topRight', showTitle = true }) => {
+        ({ type = 'error', title = 'ERROR', message, duration = 3, placement = 'topRight', showTitle = true }) => {
             const checkIcon = {
                 success: <AiOutlineCheckCircle />,
                 warning: <AiOutlineInfoCircle />,

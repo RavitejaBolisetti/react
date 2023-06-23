@@ -1,3 +1,7 @@
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_CUSTOMER_MASTER_ADDRESS as baseURL } from 'constants/routingApi';
 

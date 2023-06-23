@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Collapse, Space, Card, Typography, Button, Divider } from 'antd';
+import { Collapse, Space, Card, Typography, Button, Row } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { ViewDetail } from './ViewDetail';
 import { FiEdit } from 'react-icons/fi';
@@ -13,6 +13,7 @@ import dayjs from 'dayjs';
 
 import styles from 'components/common/Common.module.css';
 
+const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
@@ -25,15 +26,8 @@ const AddEditFormMain = (props) => {
     };
 
     const onCollapseChange = (values) => {
-        if (VIEW_ACTION) {
-            setactiveKey(values);
-        } else {
-            if (typeof values === 'number') {
-                setactiveKey([values]);
-                return;
-            }
-            activeKey?.includes(values) ? setactiveKey('') : setactiveKey(values[values?.length - 1]);
-        }
+        if (editedMode) return;
+        setactiveKey((prev) => (prev === values ? '' : values));
     };
 
     const addFunction = () => {
@@ -46,13 +40,16 @@ const AddEditFormMain = (props) => {
         });
     };
 
-    const onEdit = (values) => {
+    const onEdit = (values, index) => {
+        console.log(values,'OnValues');
+        console.log(index,'OnIndex')
         setEditedMode(true);
+        setactiveKey(index);
         setShowForm(false);
         if (values?.mnmCustomer === 'Yes') {
-            setCustomerType(true);
+            setCustomerType('Yes');
         } else if (values?.mnmCustomer === 'No') {
-            setCustomerType(false);
+            setCustomerType('No');
         }
 
         form.setFieldsValue({
@@ -112,58 +109,63 @@ const AddEditFormMain = (props) => {
         <>
             {!isViewModeVisible ? (
                 <Card className="">
-                    <Space align="center" size={30}>
+                    <Row type="flex" align="middle" style={{ margin: showForm || familyDetailList?.length > 0 ? '0 0 16px 0' : '0' }}>
                         <Typography>Family Details</Typography>
                         {!VIEW_ACTION && (
-                            <Button type="primary" icon={<PlusOutlined />} onClick={addFunction} disabled={showForm || editedMode}>
+                            <Button type="primary" icon={<PlusOutlined />} onClick={addFunction} disabled={showForm || editedMode} style={{ margin: '0 0 0 12px' }}>
                                 Add
                             </Button>
                         )}
-                    </Space>
-                    {showForm || familyDetailList?.length > 0 ? <Divider /> : null}
+                    </Row>
+                    {/* {showForm || familyDetailList?.length > 0 ? <Divider /> : null} */}
                     <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
                         {showForm && !editedMode && <FormContainer {...formProps} />}
-                        {console.log(familyDetailList, 'FamilyList')}
                         {familyDetailList?.length > 0 &&
                             familyDetailList?.map((item, index) => (
                                 <Collapse
                                     expandIcon={() => {
-                                        if (activeKey.includes(item?.editedId)) {
-                                            return <MinusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
+                                        if (activeKey === item?.editedId) {
+                                            return <MinusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px', margin: '8px 0 0 0' }} />;
                                         } else {
-                                            return <PlusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
+                                            return <PlusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px', margin: '8px 0 0 0' }} />;
                                         }
                                     }}
                                     activeKey={activeKey}
-                                    onChange={(key) => onCollapseChange(key)}
+                                    onChange={() => onCollapseChange(index)}
                                     expandIconPosition="end"
-                                    collapsible={editedMode ? 'disabled' : 'icon'}
                                 >
                                     <Panel
                                         header={
-                                            <Space style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }} size="large">
-                                                <Space>
+                                            <Row type="flex" justify="space-between" align="middle" size="large" style={{ margin: '0 13px' }}>
+                                                <Row type="flex" justify="space-around" align="middle">
                                                     <Typography>
                                                         {item?.customerName} | {item?.relationship}
                                                     </Typography>
 
                                                     {!VIEW_ACTION && !showForm && (
-                                                        <Space
-                                                            style={{ cursor: 'pointer' }}
-                                                            onClick={(key) => {
-                                                                onEdit(item);
-                                                                // onCollapseChange(item?.editedId);
-                                                                onCollapseChange(index);
+                                                        <Button
+                                                            type="secondary"
+                                                            icon={<FiEdit />}
+                                                            onClick={() => {
+                                                                onEdit(item, index);
                                                             }}
-                                                            // onChange={(key) => onCollapseChange(key)}
+                                                            // disabled={editedMode}
                                                         >
-                                                            <FiEdit style={{ margin: '0.25rem 0 0 0' ,color: '#ff3e5b'}} />
-                                                            <Typography style={{ fontSize: '14px', margin: '0 0 0 0.5rem', color: '#ff3e5b' }}>Edit</Typography>
-                                                        </Space>
+                                                            Edit
+                                                        </Button>
                                                     )}
-                                                </Space>
-                                                {item?.mnmCustomer === 'Yes' ? <Typography>M&M user </Typography> : item?.mnmCustomer === 'No' ? <Typography>Non-M&M user</Typography> : null}
-                                            </Space>
+                                                </Row>
+                                                {item?.mnmCustomer === 'Yes' ? (
+                                                    <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
+                                                        {' '}
+                                                        M&M user{' '}
+                                                    </Text>
+                                                ) : item?.mnmCustomer === 'No' ? (
+                                                    <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
+                                                        Non-M&M user
+                                                    </Text>
+                                                ) : null}
+                                            </Row>
                                         }
                                         key={index}
                                         style={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
@@ -173,9 +175,6 @@ const AddEditFormMain = (props) => {
                                 </Collapse>
                             ))}
                     </Space>
-                    {/* <Button type="primary" onClick={() => onFinish()}>
-                        Submit
-                    </Button> */}
                 </Card>
             ) : (
                 <ViewDetail {...viewProps} />

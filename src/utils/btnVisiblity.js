@@ -11,7 +11,6 @@ const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
 const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
 export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn = true }) => {
-    console.log('buttonAction', buttonAction);
     if (buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION) {
         return { ...defaultBtnVisiblity, closeBtn: true, editBtn: true, nextBtn: true };
     } else if (buttonAction === EDIT_ACTION || buttonAction === NEXT_EDIT_ACTION) {

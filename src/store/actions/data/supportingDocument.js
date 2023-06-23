@@ -6,7 +6,8 @@
 import { dataActions } from 'store/actions/crud/dataAction';
 import { withAuthToken } from 'utils/withAuthToken';
 import { axiosAPICall } from 'utils/axiosAPICall';
-import { BASE_URL_SUPPORTING_DOCUMENT as baseURL, BASE_URL_DOCUMENT_UPLOAD as baseUploadURL } from 'constants/routingApi';
+// import useFileDownload from 'utils/useFileDownload';
+import { BASE_URL_SUPPORTING_DOCUMENT as baseURL, BASE_URL_DOCUMENT_UPLOAD as baseUploadURL, BASE_URL_DOCUMENT_DOWNLOAD as baseDownloadUrl } from 'constants/routingApi';
 
 const PREFIX = 'UPLOAD_';
 const moduleName = 'Supporting Document(Vault)';
@@ -53,6 +54,54 @@ supportingDocumentDataActions.uploadFile = withAuthToken((params) => ({ token, a
     };
 
     axiosAPICall(apiCallParams);
+});
+
+supportingDocumentDataActions.downloadFile = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data, userId, onSuccess, method = 'get', extraParams = [], selectedDocument = undefined } = params;
+    setIsLoading(true);
+    // console.log('selectedDocument', selectedDocument);
+    // return false;
+    const onSuccessAction = (res) => {
+        onSuccess(res.data);
+    };
+
+    let sExtraParamsString = '?';
+    extraParams?.forEach((item, index) => {
+        sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+    });
+    sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+
+    const AuthStr = 'Bearer '.concat(token);
+    const headers = { Authorization: AuthStr, userId, accessToken: token, deviceType: 'W', deviceId: '' };
+
+    fetch(baseDownloadUrl + sExtraParamsString, {
+        method: 'GET',
+        headers: headers,
+    }).then((response) => {
+        response.blob().then((blob) => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = selectedDocument?.documentName + '.pdf';
+            a.click();
+        });
+    });
+
+    // const apiCallParams = {
+    //     data,
+    //     method: method,
+    //     url: baseDownloadUrl + (sExtraParamsString ? sExtraParamsString : ''),
+    //     token,
+    //     accessToken,
+    //     userId,
+    //     onSuccess: onSuccessAction,
+    //     onError,
+    //     onTimeout: () => onError('Request timed out, Please try again'),
+    //     postRequest: () => setIsLoading(false),
+    //     // headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + window.localStorage['Access_Token'] },
+    // };
+
+    // axiosAPICall(apiCallParams);
 });
 
 export { supportingDocumentDataActions };

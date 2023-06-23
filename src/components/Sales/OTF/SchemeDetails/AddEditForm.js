@@ -5,31 +5,23 @@
  */
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, DatePicker, Space, Collapse, Typography } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
-import { ViewDetail } from './ViewDetail';
+import { convertCalenderDate } from 'utils/formatDateTime';
+
 const { Text } = Typography;
-const { Option } = Select;
 const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { form,onCloseAction, setIsViewModeVisible, formActionType } = props;
-
+    const { schemeData } = props;
     const [activeKey, setactiveKey] = useState([1]);
-
-    const handleEdit = () => {
-        setIsViewModeVisible(false);
-    };
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
-
         if (isPresent) {
             const newActivekeys = [];
-
             activeKey.forEach((item) => {
                 if (item !== values) {
                     newActivekeys.push(item);
@@ -41,99 +33,83 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const schemeType = [{ code: 'hey' }, { code: 'bud' }];
-
-    const viewProps = {
-        activeKey,
-        setactiveKey,
-        onChange,
-        styles,
-        onCloseAction,
-        handleEdit,
-    };
-
     return (
-        <>
-            <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
-                <Space style={{ display: 'flex' }} size="middle" direction="vertical" className={styles.accordianContainer}>
+        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+            <Space style={{ display: 'flex' }} size="middle" direction="vertical" className={styles.accordianContainer}>
+                {schemeData[0]?.schemes?.map((schemeForm, index) => (
                     <Collapse
                         expandIcon={() => {
-                            if (activeKey.includes(1)) {
+                            if (activeKey.includes(schemeForm?.id)) {
                                 return <MinusOutlined className={styles.iconsColor} />;
                             } else {
                                 return <PlusOutlined className={styles.iconsColor} />;
                             }
                         }}
                         activeKey={activeKey}
-                        onChange={() => onChange(1)}
+                        onChange={() => onChange(schemeForm?.id)}
                         expandIconPosition="end"
                     >
                         <Panel
                             header={
                                 <div className={styles.alignUser}>
                                     <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        Scheme
+                                        {schemeForm?.schemeName}
                                     </Text>
                                 </div>
                             }
-                            key="1"
+                            key={schemeForm?.id}
                         >
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={''} label="Scheme Type" name="1" rules={[validateRequiredSelectField('Scheme Type')]}>
-                                            <Select
-                                                placeholder={preparePlaceholderSelect('Scheme Type')}
-                                                style={{
-                                                    width: '100%',
-                                                }}
-                                                className={styles.inputBox}
-                                            >
-                                                {schemeType?.map((item) => {
-                                                    return (
-                                                        <Option key={'st' + item.code} value={item?.code}>
-                                                            {item?.code}
-                                                        </Option>
-                                                    );
-                                                })}
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={''} label="Scheme Category" name="2" rules={[validateRequiredInputField('Scheme Category')]}>
-                                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('Scheme Category')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={''} label="Amount" name="3" rules={[validateRequiredInputField('Amount')]}>
-                                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('Amount')} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={''} label="Valid From" name="4" rules={[validateRequiredInputField('Valid From')]}>
-                                            <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} style={{ width: '100%' }} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={''} label="Valid To" name="5" rules={[validateRequiredInputField('Valid To')]}>
-                                            <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} style={{ width: '100%' }} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={schemeForm?.schemeType} label="Scheme Type" name="schemeType">
+                                        <Select
+                                            disabled={true}
+                                            placeholder={preparePlaceholderSelect('Scheme Type')}
+                                            style={{
+                                                width: '100%',
+                                            }}
+                                            className={styles.inputBox}
+                                        ></Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={schemeForm?.schemeCategory} label="Scheme Category" name="schemeCategory">
+                                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('Scheme Category')} disabled={true} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={schemeForm?.amount} label="Amount" name="amount">
+                                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('Amount')} disabled={true} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item initialValue={''} label="Description" name="6" rules={[validateRequiredInputField('Description')]}>
-                                            <TextArea className={styles.inputBox} placeholder={preparePlaceholderText('Description')} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={convertCalenderDate(schemeForm?.validFrom, 'YYYY-MM-DD')} label="Valid From" name="validFrom">
+                                        <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={convertCalenderDate(schemeForm?.validTo, 'YYYY-MM-DD')} label="Valid To" name="validTo">
+                                        <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Form.Item initialValue={schemeForm?.description} label="Description" name="description">
+                                        <TextArea className={styles.inputBox} placeholder={preparePlaceholderText('Description')} disabled={true} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
                         </Panel>
                     </Collapse>
-                </Space>
-            </div>
-        </>
+                ))}
+                ;
+            </Space>
+        </div>
     );
 };
 

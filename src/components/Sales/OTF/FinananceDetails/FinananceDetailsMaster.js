@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             OTF: {
-                FinanceDetail: { isLoaded, isLoading, data },
+                FinanceDetail: { isLoaded, isLoading, data: financeData = [] },
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isloading: isFinanceLovLoading, data: FinanceLovData = [] },
             },
         },
@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isLoaded,
-        data,
+        financeData,
         isLoading,
         moduleTitle,
 
@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { saveData, fetchList, userId, listShowLoading, isLoaded, data, showGlobalNotification, moduleTitle, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
+    const { saveData, fetchList, userId, listShowLoading, isLoaded, financeData, showGlobalNotification, moduleTitle, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
 
     const { form, selectedOrderId, formActionType, handleFormValueChange } = props;
 
@@ -90,12 +90,6 @@ export const FinananceDetailsMasterBase = (props) => {
             title: 'otfNumber',
             value: selectedOrderId,
             name: 'OTF Number',
-        },
-        {
-            key: 'id',
-            title: 'id',
-            value: 'a0368e0e-ac87-4beb-b0f5-f4f8b69ff8f7',
-            name: 'OTF ID',
         },
     ];
 
@@ -127,22 +121,15 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId, id: 'a0368e0e-ac87-4beb-b0f5-f4f8b69ff8f7' };
+        const data = { ...values, id: financeData?.id, otfNumber: selectedOrderId };
 
         const onSuccess = (res) => {
             form.resetFields();
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
-            if (buttonData?.saveAndNewBtnClicked) {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            } else {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            }
         };
 
         const onError = (message) => {
@@ -151,7 +138,7 @@ export const FinananceDetailsMasterBase = (props) => {
 
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: financeData?.id ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -181,7 +168,7 @@ export const FinananceDetailsMasterBase = (props) => {
 
     const formProps = {
         form,
-        formData: data,
+        formData: financeData,
         formActionType,
         setFormActionType,
         fetchList,
@@ -190,7 +177,7 @@ export const FinananceDetailsMasterBase = (props) => {
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
-        tableData: data,
+        tableData: financeData,
 
         isFinanceLovDataLoaded,
         isFinanceLovLoading,
@@ -207,7 +194,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const viewProps = {
-        formData: data,
+        formData: financeData,
         styles,
     };
 

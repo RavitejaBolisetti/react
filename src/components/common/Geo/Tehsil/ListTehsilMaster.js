@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
@@ -21,7 +26,6 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 
 const mapStateToProps = (state) => {
     const {
@@ -33,7 +37,7 @@ const mapStateToProps = (state) => {
                 District: { isFilteredListLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, filteredListData: districtData },
                 Tehsil: { isLoaded: isDataLoaded = false, isLoading, data = [] },
             },
-            ConfigurableParameterEditing: { isLoaded: isTehsilCategoryDataLoaded = false, isTehsilCategoryDataLoading, paramdata: tehsilCategoryData = [] },
+            ConfigurableParameterEditing: { paramdata: tehsilCategoryData = [] },
         },
     } = state;
 
@@ -55,8 +59,6 @@ const mapStateToProps = (state) => {
         isStateLoading,
         isDistrictDataLoaded,
         districtData,
-        isTehsilCategoryDataLoaded,
-        isTehsilCategoryDataLoading,
         tehsilCategoryData: tehsilCategoryData && tehsilCategoryData[PARAM_MASTER.GEO_TEH_CAT.id],
         stateData,
         data,
@@ -76,8 +78,6 @@ const mapDispatchToProps = (dispatch) => ({
             listStateShowLoading: geoStateDataActions.listShowLoading,
             fetchDistrictLovList: geoDistrictDataActions.fetchFilteredList,
             listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
-            fetchTehsilCategoryList: configParamEditActions.fetchList,
-            listTehsilCategoryShowLoading: configParamEditActions.listShowLoading,
             fetchList: geoTehsilDataActions.fetchList,
             saveData: geoTehsilDataActions.saveData,
             listShowLoading: geoTehsilDataActions.listShowLoading,
@@ -91,7 +91,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const ListTehsilBase = (props) => {
     const { data, saveData, fetchList, userId, resetData, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
-    const { isTehsilCategoryDataLoaded, isTehsilCategoryDataLoading, tehsilCategoryData, listTehsilCategoryShowLoading, fetchTehsilCategoryList } = props;
+    const { isTehsilCategoryDataLoaded, isTehsilCategoryDataLoading, tehsilCategoryData } = props;
 
     const { isStateDataLoaded, stateData, listStateShowLoading, fetchStateLovList } = props;
     const { isDistrictDataLoaded, districtData, listDistrictShowLoading, fetchDistrictLovList } = props;
@@ -143,7 +143,6 @@ export const ListTehsilBase = (props) => {
                 fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             }
         }
-        fetchTehsilCategoryList({ setIsLoading: listTehsilCategoryShowLoading, userId, parameterType: PARAM_MASTER.GEO_TEH_CAT.id });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataCountryLoaded, isStateDataLoaded, isDataLoaded]);
 

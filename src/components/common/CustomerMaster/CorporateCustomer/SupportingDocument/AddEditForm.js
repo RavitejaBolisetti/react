@@ -39,16 +39,9 @@ const AddEditForm = (props) => {
 
             console.log('event', event);
             if (status === 'uploading') {
-                console.log(' uploading info.file.loaded', info.file.loaded);
-                console.log(' uploading info.file.total', info.file.total);
-                console.log(' uploading info.file.percent', info.file.percent);
             } else if (status === 'done') {
                 setUploadedFile(info?.file?.response?.docId);
                 message.success(`${info.file.name} file uploaded successfully.`);
-                console.log('done info.file.loaded', info.file.loaded);
-                console.log('done info.file.total', info.file.total);
-                console.log('done info.file.total', info.file.total);
-                console.log('done info.file.percent', info.file.percent);
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }
@@ -104,7 +97,7 @@ const AddEditForm = (props) => {
 
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div style={{ border: 'red 1px solid' }}>
+                    <div>
                         <Dragger customRequest={handleUpload} {...uploadProps}>
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
