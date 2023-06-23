@@ -211,9 +211,8 @@ const ExchangeVehiclesBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
         };
-
-        fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
 
         const onError = (message) => {
             showGlobalNotification({ message });
