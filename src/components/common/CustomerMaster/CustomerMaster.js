@@ -183,7 +183,7 @@ const CustomerMasterMain = (props) => {
             section && setCurrentSection(section?.id);
         }
 
-        if (buttonAction === ADD_ACTION || buttonAction === EDIT_ACTION || buttonAction === VIEW_ACTION) {
+        if (buttonAction === EDIT_ACTION || buttonAction === VIEW_ACTION) {
             setSelectedCustomer(record);
             record && setSelectedCustomerId(record?.customerId);
             defaultSection && setCurrentSection(defaultSection);
