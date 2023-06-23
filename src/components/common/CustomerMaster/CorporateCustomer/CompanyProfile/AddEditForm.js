@@ -236,7 +236,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
 
-                        <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
+                        <Collapse expandIcon={expandIcon} expandIconPosition="end">
                             <Panel
                                 key="2"
                                 header={
@@ -275,7 +275,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
 
-                        <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
+                        <Collapse expandIcon={expandIcon} expandIconPosition="end">
                             <Panel
                                 key="3"
                                 header={
@@ -293,31 +293,31 @@ const AddEditFormMain = (props) => {
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Code" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountCode} name="accountCode">
+                                        <Form.Item label="Account Code" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails?.accountCode} name="accountCode">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Code')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Name" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountName} name="accountName">
+                                        <Form.Item label="Account Name" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails?.accountName} name="accountName">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Name')} disabled />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Segment" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountSegment} name="accountSegment">
+                                        <Form.Item label="Account Segment" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails?.accountSegment} name="accountSegment">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Segment')} disabled />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Client Name" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountClientName} name="accountClientName">
+                                        <Form.Item label="Account Client Name" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails?.accountClientName} name="accountClientName">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Client Name')} disabled />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Mapping Date" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails[0]?.accountMappingDate} name="accountMappingDate">
+                                        <Form.Item label="Account Mapping Date" initialValue={formData?.keyAccountDetails && formData?.keyAccountDetails?.accountMappingDate} name="accountMappingDate">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Account Mapping Date')} disabled />
                                         </Form.Item>
                                     </Col>
@@ -326,7 +326,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
 
-                        <Collapse defaultActiveKey={['4']} expandIcon={expandIcon} expandIconPosition="end">
+                        <Collapse expandIcon={expandIcon} expandIconPosition="end">
                             <Panel
                                 key="4"
                                 header={
@@ -345,26 +345,26 @@ const AddEditFormMain = (props) => {
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Name Of Person" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.personName} name="personName" rules={[validateRequiredInputField('authorityRequest.personName')]}>
+                                        <Form.Item label="Name Of Person" initialValue={formData?.authorityDetails && formData?.authorityDetails?.personName} name="personName" rules={[validateRequiredInputField('authorityRequest.personName')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Name Of Person')} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Position" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.postion} name="postion">
+                                        <Form.Item label="Position" initialValue={formData?.authorityDetails && formData?.authorityDetails?.postion} name="postion">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Position')} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Company Name" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.companyName} name="companyName" rules={[validateRequiredInputField('authorityRequest.companyName')]}>
+                                        <Form.Item label="Company Name" initialValue={formData?.authorityDetails && formData?.authorityDetails?.companyName} name="companyName" rules={[validateRequiredInputField('authorityRequest.companyName')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Company Name')} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <Form.Item label="Remarks" initialValue={formData?.authorityDetails && formData?.authorityDetails[0]?.remarks} name="authorityRequest.remarks">
+                                        <Form.Item label="Remarks" initialValue={formData?.authorityDetails && formData?.authorityDetails?.remarks} name="remarks">
                                             <TextArea maxLength={50} placeholder={preparePlaceholderText('Remarks')} />
                                         </Form.Item>
                                     </Col>
@@ -402,32 +402,32 @@ const AddEditFormMain = (props) => {
                             >
                                 <Divider />
                                 <div className={style.uploadContainer}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item initialValue={formData?.customerConsent} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="customerConsent">
-                                            <Checkbox className={styles.registered}>I Consent to share my details with Mahindra & Mahindra. </Checkbox>
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.uploadContainer}>
-                                        <Dragger customRequest={handleUpload} {...uploadProps}>
-                                            <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
-                                                <img src={Svg} alt="" />
-                                            </p>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Form.Item initialValue={formData?.customerConsent} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="customerConsent">
+                                                <Checkbox className={styles.registered}>I Consent to share my details with Mahindra & Mahindra. </Checkbox>
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.uploadContainer}>
+                                            <Dragger customRequest={handleUpload} {...uploadProps}>
+                                                <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
+                                                    <img src={Svg} alt="" />
+                                                </p>
 
-                                            <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '500', fontSize: '14px', lineHeight: '23px', color: '#0B0B0C' }}>
-                                                Click or drop your file here to upload the signed and <br />
-                                                scanned customer form.
-                                            </p>
+                                                <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '500', fontSize: '14px', lineHeight: '23px', color: '#0B0B0C' }}>
+                                                    Click or drop your file here to upload the signed and <br />
+                                                    scanned customer form.
+                                                </p>
 
-                                            <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '400', fontSize: '12px', lineHeight: '23px', color: '#0B0B0C' }}>
-                                                File type should be png, jpg or pdf and max file size to be 5Mb
-                                            </p>
-                                            <Button danger>Upload File</Button>
-                                        </Dragger>
-                                    </Col>
-                                </Row>
+                                                <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '400', fontSize: '12px', lineHeight: '23px', color: '#0B0B0C' }}>
+                                                    File type should be png, jpg or pdf and max file size to be 5Mb
+                                                </p>
+                                                <Button danger>Upload File</Button>
+                                            </Dragger>
+                                        </Col>
+                                    </Row>
                                 </div>
                             </Panel>
                         </Collapse>

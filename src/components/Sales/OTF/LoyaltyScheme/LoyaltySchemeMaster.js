@@ -52,7 +52,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const LoyaltySchemeMasterMain = (props) => {
-    const { isLoyaltySchemeDataLoaded, isLoading, resetData, section, listShowLoading, fetchList, LoyaltySchemeData, userId, showGlobalNotification } = props;
+    const { isLoyaltySchemeDataLoaded, isLoading, section, listShowLoading, fetchList, LoyaltySchemeData, userId, showGlobalNotification } = props;
     const { form, selectedOrderId, formActionType, handleFormValueChange, onFinishFailed } = props;
 
     const [formdata, setformdata] = useState();

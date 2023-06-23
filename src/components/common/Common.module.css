@@ -8,6 +8,9 @@
 .marR5 {
     margin-right: 5px;
 }
+.marR20 {
+    margin-right: 20px;
+}
 
 .padT5 {
     padding-top: 5px;
@@ -404,6 +407,40 @@
 .buttonContainer :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
     background-color: #ff3e5b;
     color: #ffffff !important;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-drag {
+    border: 1px dashed #b5b5b5;
+    margin-bottom: 12px;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
+    height: 40px;
+    margin-top: 20px;
+    background-color: #e6e6e6;
+    border-radius: 6px;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
+    height: 40px;
+    margin-top: 20px;
+    background-color: #e6e6e6;
+    border-radius: 6px;
+    color: #0b0b0c;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-name,
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-icon .anticon {
+    color: black;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon,
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon:hover {
+    color: black;
+}
+
+.contactDivider {
+    margin-bottom: 12px !important;
 }
 
 .drawerFooterButtons button {
@@ -1371,6 +1408,7 @@
 
 .contentHeaderBackground .selectSearchBg .headerSelectField {
     width: 25%;
+    /* width: auto; */
     position: absolute;
     z-index: 99;
 }
@@ -1382,6 +1420,7 @@
 
 .selectSearchBg :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     height: 26px;
+        /* margin-right: 20px; */
 }
 
 .selectSearchBg :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
@@ -1610,7 +1649,7 @@
 } */
 
 .drawerBodyRight {
-    padding: 30px;
+    padding: 30px 30px 56px;
     margin-left: 0 !important;
     margin-right: 0 !important;
     /* margin-bottom: 40px; */
@@ -1679,7 +1718,7 @@
 .drawerBodyRight :global .ant-card-bordered,
 .drawerBodyRight :global .ant-space-vertical {
     border: 0;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body {
@@ -1751,7 +1790,7 @@
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
-    margin-top: 0;
+    margin-top: 20px;
     margin-bottom: 20px;
     border-color: #e6e6e6;
 }
@@ -1814,7 +1853,8 @@
     padding-bottom: 20px !important;
 }
 
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker {
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker,
+.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-item .ant-form-item-control .ant-picker {
     height: 36px;
     border-radius: 4px;
     padding: 5px 12px;
@@ -1825,13 +1865,19 @@
     color: #ff3e5b;
 }
 
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker.ant-picker-disabled .ant-picker-suffix {
+    color: #858585;
+}
+
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker .ant-picker-suffix svg {
     width: 16px;
     height: 16px;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker:hover,
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker-focused {
+.drawerBodyRight :global .ant-card .ant-card-body .ant-form-vertical .ant-form-item .ant-form-item-control .ant-picker-focused,
+.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-item .ant-form-item-control .ant-picker:hover,
+.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-item .ant-form-item-control .ant-picker-focused {
     border-color: #0b0b0c;
     box-shadow: none;
 }
@@ -1853,13 +1899,15 @@
 /* .drawerBodyRight :global .ant-btn-dangerous {
     margin-left: 10px;
 } */
-:global .ant-collapse{
+:global .ant-collapse {
     background-color: #f2f2f2;
 }
-.drawerBodyRight :global .ant-collapse{
-border: 1px solid #B5B5B6;
+
+.drawerBodyRight :global .ant-collapse {
+    border: 1px solid #B5B5B6;
 
 }
+
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
     padding: 16px 20px;
     background: #f2f2f2;
@@ -1867,25 +1915,28 @@ border: 1px solid #B5B5B6;
     /* border: 1px solid #f2f2f2; */
 }
 
-.drawerBodyRight .sectionborder :global .ant-collapse>.ant-collapse-item>.ant-collapse-header{
+.drawerBodyRight .sectionborder :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
     background: #E6E6E6;
-}
-.drawerBodyRight .sectionborder :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box{
-    background: #E6E6E6;
-}
-.drawerBodyRight .sectionborder .viewDrawerContainer{
-    border-top:1px solid #B5B5B6;
-}
-.drawerBodyRight .sectionborder .buttonEdit{
-    margin-bottom: 0!important;
 }
 
-.drawerBodyRight .sectionborder :global .ant-checkbox{
+.drawerBodyRight .sectionborder :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+    background: #E6E6E6;
+}
+
+.drawerBodyRight .sectionborder .viewDrawerContainer {
+    border-top: 1px solid #B5B5B6;
+}
+
+.drawerBodyRight .sectionborder .buttonEdit {
+    margin-bottom: 0 !important;
+}
+
+.drawerBodyRight .sectionborder :global .ant-checkbox {
     margin-right: 10px;
     background: #fff;
 }
 
-.drawerBodyRight :global .ant-collapse>.ant-collapse-item-active>.ant-collapse-header {
+.drawerBodyRight :global .ant-collapse > .ant-collapse-item-active > .ant-collapse-header {
     border-radius: 8px 8px 0 0;
     padding: 16px 20px;
 }
@@ -1898,9 +1949,17 @@ border: 1px solid #B5B5B6;
 .drawerBodyRight :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-typography strong {
     font-weight: 700;
     font-size: 16px;
-    line-height: 24px;
+    line-height: 22px;
 }
-
+.drawerBodyRight :global .ant-typography {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    /* margin-bottom: 20px; */
+}
+.drawerBodyRight :global .ant-space {
+    align-items: normal;
+}
 /* .drawerBodyRight :global .ant-input {
     height: 36px;
     border-radius: 4px;
@@ -1912,6 +1971,54 @@ border: 1px solid #B5B5B6;
 .drawerBodyRight :global .ant-input[disabled]:hover,
 .drawerBodyRight :global .ant-select-selector[disabled] {
     border-color: #e6e6e6 !important;
+}
+
+.drawerBodyRight :global .ant-upload-wrapper .ant-upload-drag {
+    border: 1px dashed #b5b5b5;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-card .ant-card-body {
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 6px;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-card .ant-card-body .ant-space button {
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-space-horizontal .ant-avatar.ant-avatar-icon {
+    width: 40px;
+    height: 40px;
+    line-height: 44px;
+    font-size: 30px;
+    background-color: #70C922;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-space-horizontal .ant-space-item h5 {
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #0B0B0C;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-space-vertical {
+    gap: 20px !important;
+    margin-bottom: 0;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-space-vertical .ant-space-horizontal {
+    gap: 10px !important;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-space-horizontal .ant-space-item span.ant-typography {
+    color: #0B0B0C;
+    font-size: 12px;
+    line-height: 20px;
 }
 
 .drawerBodyRight .uploadDragger {
@@ -1984,12 +2091,12 @@ border: 1px solid #B5B5B6;
     padding: 0 30px 0px;
 }
 
-.drawerBodyRight .sectionborder{
+.drawerBodyRight .sectionborder {
     border-top: 1px solid #e6e6e6;
-    padding-top: 20px;
+    /* padding-top: 20px; */
 }
 
-.drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box button {
+.drawerBodyRight :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box button {
     margin-bottom: 20px;
 }
 
@@ -2008,14 +2115,14 @@ border: 1px solid #B5B5B6;
     margin-bottom: 20px;
 }
 
-.drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
+/* .drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
     margin-top: 0;
     margin-bottom: 20px;
-}
+} */
 
-.drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
+/* .drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
     border: 1px solid #0b0b0c;
-}
+} */
 
 .drawerBodyRight :global .ant-checkbox + span {
     padding-inline-start: 4px;
@@ -2036,7 +2143,8 @@ border: 1px solid #B5B5B6;
 .drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
     width: 18px;
     height: 18px;
-    background-color: transparent;
+    background-color: #fff;
+    border: 1px solid #0b0b0c;
 }
 
 .drawerBodyRight :global .ant-checkbox-wrapper-checked:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
@@ -2065,6 +2173,11 @@ border: 1px solid #B5B5B6;
 }
 .drawerBodyRight .accordianContainer .viewCardSize :global .ant-card-body {
     padding:10px;
+}
+
+.drawerBodyRight .accordianContainer :global .ant-space-item .ant-collapse-item .ant-card {
+    margin-top: 0px;
+    margin-bottom: 20px;
 }
 
 /* .viewDrawerContainer {
@@ -2124,16 +2237,6 @@ border: 1px solid #B5B5B6;
     margin-bottom: 0;
 }
 
-/* .viewDrawerContainer :global .ant-collapse .ant-collapse-content .ant-descriptions:first-child {
-    padding-top: 0px;
-    border-top: none;
-} */
-
-/* .viewDrawerContainer :global .ant-space .ant-space-item:last-child {
-    border: 0;
-    margin-bottom: 50px;
-} */
-
 .viewDrawerContainer .cardInsideBox :global .ant-typography {
     color: #0b0b0c;
     font-weight: 700;
@@ -2185,6 +2288,14 @@ border: 1px solid #B5B5B6;
     font-weight: 700;
     font-size: 16px;
     line-height: 24px;
+}
+
+.dashedBorder {
+    border: 1px dashed #B5B5B5 !important;
+}
+
+.borderRadiusSix {
+    border-radius: 6px !important;
 }
 
 .userCircle {
@@ -2267,6 +2378,37 @@ border: 1px solid #B5B5B6;
 
 .drawerBodyRight .uploadContainer {
     margin-bottom: 20px;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-empty-normal {
+    margin-block: 0px;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-empty .ant-empty-image {
+    display: none;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-empty .ant-empty-description {
+    margin-bottom: 20px;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #e6e6e6;
+    border: 1px solid #b5b5b6;
+    border-radius: 6px;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item {
+    margin-top: 0px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item:hover {
+    background-color: transparent;
 }
 
 .cardInsideBox {

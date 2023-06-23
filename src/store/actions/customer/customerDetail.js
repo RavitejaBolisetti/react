@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 
+ *   Copyright (c) 2023
  *   All rights reserved.
  */
 import { dataActions } from 'store/actions/crud/dataAction';

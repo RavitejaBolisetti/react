@@ -12,24 +12,22 @@ import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 
-import { btnVisiblity } from 'utils/btnVisiblity';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'components/common/Common.module.css';
 
 import { corporateCompanyProfileDataActions } from 'store/actions/data/customerMaster/corporateCompanyProfileAction';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
+import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, paramdata: appCategoryData = [] },
+            ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, filteredListData: appCategoryData = [] },
             CustomerMaster: {
                 CompanyProfile: { isLoaded: isDataLoaded = false, data: customerProfileData = [] },
+                ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
-            SupportingDocument: { isLoaded: isUploadDataLoaded = false, isLoading: isUploadDataLoading },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -44,7 +42,9 @@ const mapStateToProps = (state) => {
         isAppCategoryDataLoaded,
         appCategoryData,
         isDataLoaded,
+        isViewDataLoaded,
         customerProfileData,
+        viewDocument,
         moduleTitle,
     };
     return returnValue;
@@ -54,13 +54,11 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchApplicationCategorization: configParamEditActions.fetchList,
-            fetchApplicationSubCategory: configParamEditActions.fetchList,
-            fetchCustomerCategory: configParamEditActions.fetchList,
             resetData: corporateCompanyProfileDataActions.reset,
             listShowLoading: corporateCompanyProfileDataActions.listShowLoading,
 
             fetchCompanyProfileData: corporateCompanyProfileDataActions.fetchList,
+            fecthViewDocument: documentViewDataActions.fetchList,
 
             saveData: corporateCompanyProfileDataActions.saveData,
             uploadFile: supportingDocumentDataActions.uploadFile,
@@ -72,25 +70,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyProfileBase = (props) => {
-    const { listShowLoading, section, saveData, uploadFile, userId, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, fetchCompanyProfileData, isAppCategoryDataLoaded, appCategoryData, customerProfileData } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, selectedCustomer } = props;
+    const { showGlobalNotification, buttonData, setButtonData, formActionType, handleButtonClick, defaultBtnVisiblity, selectedCustomer, setSelectedCustomerId } = props;
+    const { listShowLoading, section, saveData, uploadFile, userId, fetchCompanyProfileData, fecthViewDocument, appCategoryData, customerProfileData, viewDocument } = props;
     const { uploadListShowLoading } = props;
 
     const [form] = Form.useForm();
     const [uploadedFile, setUploadedFile] = useState();
 
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-
-    useEffect(() => {
-        if (!isAppCategoryDataLoaded) {
-            fetchApplicationCategorization({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_CAT.id });
-            fetchApplicationSubCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_SUB_CAT.id });
-            fetchCustomerCategory({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CUST_CAT.id });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isAppCategoryDataLoaded]);
+    const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
 
     useEffect(() => {
         if (userId && selectedCustomer) {
@@ -107,25 +94,21 @@ const CompanyProfileBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer]);
 
-    console.log('Cust id:', selectedCustomer);
-
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-    };
-
     const onFinish = (values) => {
         const recordId = customerProfileData?.id || '';
+        const customerId = customerProfileData.customerId ? customerProfileData.customerId : setSelectedCustomerId;
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
-        const data = { ...rest, customerId: customerProfileData.customerId, keyAccountDetails: { customerId: customerProfileData.customerId, accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { customerId: customerProfileData.customerId, personName: values.personName, postion: values.postion, companyName: values.companyName }, customerFormDocId: uploadedFile, customerConsent: values.customerConsent, id: recordId };
+        const data = { ...rest, customerId: customerId, keyAccountDetails: { customerId: customerId, accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { customerId: customerId, personName: values.personName, postion: values.postion, companyName: values.companyName, remarks: values.remarks }, customerFormDocId: uploadedFile, customerConsent: values.customerConsent, id: recordId };
 
         const onSuccess = (res) => {
             listShowLoading(false);
             form.resetFields();
+
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            if (res.data) {
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            }
         };
 
         const onError = (message) => {
@@ -153,6 +136,18 @@ const CompanyProfileBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const handleOnClick = () => {
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: customerProfileData?.customerFormDocId,
+                name: 'docId',
+            },
+        ];
+        fecthViewDocument({ setIsLoading: listShowLoading, userId, extraParams });
+    };
+
     const formProps = {
         handleButtonClick,
         buttonData,
@@ -166,12 +161,15 @@ const CompanyProfileBase = (props) => {
         uploadListShowLoading,
         uploadedFile,
         setUploadedFile,
+        handleOnClick,
     };
 
     const viewProps = {
         onCloseAction,
         styles,
         formData: customerProfileData,
+        handleOnClick,
+        viewDocument,
     };
 
     const handleFormValueChange = () => {

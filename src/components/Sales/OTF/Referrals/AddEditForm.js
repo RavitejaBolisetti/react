@@ -5,18 +5,16 @@
  */
 import React, { useEffect } from 'react';
 
-import { Col, Input, Form, Row, DatePicker, Card, Button } from 'antd';
+import { Col, Input, Form, Row, DatePicker, Card } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-
-import styles from 'components/common/Common.module.css';
-import { ViewDetail } from './ViewDetail';
+import { validateRequiredInputField } from 'utils/validation';
 import { validateMobileNoField } from 'utils/validation';
 import dayjs from 'dayjs';
 
 const AddEditFormMain = (props) => {
-    const { formActionType, formData, form, onFinish, onFinishFailed } = props;
+    const { formData, form } = props;
+
     useEffect(() => {
         if (formData?.hasOwnProperty('customerName')) {
             form.setFieldsValue({
@@ -27,9 +25,6 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
-    const viewProps = {
-        styles,
-    };
 
     return (
         <Card style={{ backgroundColor: '#F2F2F2' }}>
@@ -80,9 +75,6 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
-            {/* <Button type="primary" htmlType="submit">
-                Save
-            </Button> */}
         </Card>
     );
 };

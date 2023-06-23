@@ -16,8 +16,8 @@ import { Row, Col, Form } from 'antd';
 
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
-import { schemeDataActions } from 'store/actions/data/otf/schemeDetail';
-import { otfExchangeVehicleDataActions } from 'store/actions/data/otf/exchangeVehicle';
+import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetail';
+import { schemeDataActions } from 'store/actions/data/otf/exchangeVehicle';
 import { vehicleMakeDetailsDataActions } from 'store/actions/data/vehicle/makeDetails';
 import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
 import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
@@ -25,7 +25,6 @@ import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/var
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
@@ -97,8 +96,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchFinanceLovList: financeLovDataActions.fetchList,
             listFinanceLovShowLoading: financeLovDataActions.listShowLoading,
 
-            fetchSchemeLovList: schemeDataActions.fetchFilteredList,
-            listSchemeLovShowLoading: schemeDataActions.listShowLoading,
+            fetchSchemeLovList: otfSchemeDetailDataActions.fetchFilteredList,
+            listSchemeLovShowLoading: otfSchemeDetailDataActions.listShowLoading,
 
             fetchMakeLovList: vehicleMakeDetailsDataActions.fetchList,
             listMakeShowLoading: vehicleMakeDetailsDataActions.listShowLoading,
@@ -112,10 +111,10 @@ const mapDispatchToProps = (dispatch) => ({
             fetchConfigList: configParamEditActions.fetchList,
             listConfigShowLoading: configParamEditActions.listShowLoading,
 
-            fetchList: otfExchangeVehicleDataActions.fetchList,
-            listShowLoading: otfExchangeVehicleDataActions.listShowLoading,
-            saveData: otfExchangeVehicleDataActions.saveData,
-            resetData: otfExchangeVehicleDataActions.reset,
+            fetchList: schemeDataActions.fetchList,
+            listShowLoading: schemeDataActions.listShowLoading,
+            saveData: schemeDataActions.saveData,
+            resetData: schemeDataActions.reset,
             showGlobalNotification,
         },
         dispatch
