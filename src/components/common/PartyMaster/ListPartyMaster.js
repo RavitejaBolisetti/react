@@ -74,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ListPartyMasterBase = (props) => {
     const { data, detailData, saveData, fetchList, fetchDetail, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
-    const { typeData, configFetchList, configListShowLoading } = props;
+    const { typeData } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData } = props;
 
     const [form] = Form.useForm();
@@ -106,14 +106,6 @@ export const ListPartyMasterBase = (props) => {
         setRefershData(false);
         setShowDataLoading(false);
     };
-
-    useEffect(() => {
-        if (userId && !isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            configFetchList({ setIsLoading: configListShowLoading, userId, parameterType: 'PTY_CAT' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {
