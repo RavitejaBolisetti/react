@@ -39,8 +39,8 @@ const ViewDetailMain = (props) => {
                 <Descriptions.Item label="Influencer/Mitra Name">{checkAndSetDefaultValue(formData?.mitraName)}</Descriptions.Item>
                 <Descriptions.Item label="Mode Of Payment">{checkAndSetDefaultValue(formData?.modeOfPAyment)}</Descriptions.Item>
                 <Descriptions.Item label="Finance Agreed">{checkAndSetDefaultValue(formData?.financeArrangedBy)}</Descriptions.Item>
-                <Descriptions.Item label="Exchange">{formData?.exchange === 1 ? <span className={styles.activeText}>Yes</span> : 'No'}</Descriptions.Item>
-                <Descriptions.Item label="Loyality Scheme">{formData?.loyalityScheme === 1 ? <span className={styles.activeText}>Yes</span> : 'No'}</Descriptions.Item>
+                <Descriptions.Item label="Exchange">{checkAndSetDefaultValue(formData?.exchange === 1 ? <span className={styles.activeText}>Yes</span> : 'No')}</Descriptions.Item>
+                <Descriptions.Item label="Loyality Scheme">{checkAndSetDefaultValue(formData?.loyalityScheme === 1 ? <span className={styles.activeText}>Yes</span> : 'No')}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

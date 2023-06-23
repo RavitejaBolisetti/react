@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { Col, Row, Space, Collapse, Typography, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'components/common/Common.module.css';
 
@@ -73,24 +74,24 @@ const ViewDetailMain = (props) => {
                             key="1"
                         >
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Customer ID">{formData.bookingCustomer?.customerId}</Descriptions.Item>
-                                <Descriptions.Item label="Customer Type">{formData.bookingCustomer?.customerType}</Descriptions.Item>
-                                <Descriptions.Item label="Mobile Number">{formData.bookingCustomer?.mobileNumber}</Descriptions.Item>
-                                <Descriptions.Item label="Salutation">{formData.bookingCustomer?.saluation}</Descriptions.Item>
-                                <Descriptions.Item label="Customer Name">{formData.bookingCustomer?.customerName}</Descriptions.Item>
-                                <Descriptions.Item label="Address">{formData.bookingCustomer?.address}</Descriptions.Item>
-                                <Descriptions.Item label="City/District">{formData.bookingCustomer?.district}</Descriptions.Item>
-                                <Descriptions.Item label="State">{formData.bookingCustomer?.state}</Descriptions.Item>
-                                <Descriptions.Item label="Pin Code">{formData.bookingCustomer?.pincode}</Descriptions.Item>
-                                <Descriptions.Item label="Alternate Number">{formData.bookingCustomer?.alternateNumber}</Descriptions.Item>
-                                <Descriptions.Item label="Email">{formData.bookingCustomer?.email}</Descriptions.Item>
-                                <Descriptions.Item label="PAN">{formData.bookingCustomer?.panNo}</Descriptions.Item>
-                                <Descriptions.Item label="Aadhar">{formData.bookingCustomer?.aadharNumber}</Descriptions.Item>
-                                <Descriptions.Item label="GSTIN">{formData.bookingCustomer?.gstin}</Descriptions.Item>
-                                <Descriptions.Item label="Driving License">{formData.bookingCustomer?.drivingLicense}</Descriptions.Item>
-                                <Descriptions.Item label="Trade Licence">{formData.bookingCustomer?.tradeLicense}</Descriptions.Item>
-                                <Descriptions.Item label="Birth Date">{bookingBirthDate} </Descriptions.Item>
-                                {/* <Descriptions.Item label="Do You Want to Add Corporate Details">{formData.bookingCustomer?.sameAsBookingCustomer}</Descriptions.Item> */}
+                                <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData.bookingCustomer?.customerId)}</Descriptions.Item>
+                                <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(formData.bookingCustomer?.customerType)}</Descriptions.Item>
+                                <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData.bookingCustomer?.mobileNumber)}</Descriptions.Item>
+                                <Descriptions.Item label="Salutation">{checkAndSetDefaultValue(formData.bookingCustomer?.saluation)}</Descriptions.Item>
+                                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData.bookingCustomer?.customerName)}</Descriptions.Item>
+                                <Descriptions.Item label="Address">{checkAndSetDefaultValue(formData.bookingCustomer?.address)}</Descriptions.Item>
+                                <Descriptions.Item label="City/District">{checkAndSetDefaultValue(formData.bookingCustomer?.district)}</Descriptions.Item>
+                                <Descriptions.Item label="State">{checkAndSetDefaultValue(formData.bookingCustomer?.state)}</Descriptions.Item>
+                                <Descriptions.Item label="Pin Code">{checkAndSetDefaultValue(formData.bookingCustomer?.pincode)}</Descriptions.Item>
+                                <Descriptions.Item label="Alternate Number">{checkAndSetDefaultValue(formData.bookingCustomer?.alternateNumber)}</Descriptions.Item>
+                                <Descriptions.Item label="Email">{checkAndSetDefaultValue(formData.bookingCustomer?.email)}</Descriptions.Item>
+                                <Descriptions.Item label="PAN">{checkAndSetDefaultValue(formData.bookingCustomer?.panNo)}</Descriptions.Item>
+                                <Descriptions.Item label="Aadhar">{checkAndSetDefaultValue(formData.bookingCustomer?.aadharNumber)}</Descriptions.Item>
+                                <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData.bookingCustomer?.gstin)}</Descriptions.Item>
+                                <Descriptions.Item label="Driving License">{checkAndSetDefaultValue(formData.bookingCustomer?.drivingLicense)}</Descriptions.Item>
+                                <Descriptions.Item label="Trade Licence">{checkAndSetDefaultValue(formData.bookingCustomer?.tradeLicense)}</Descriptions.Item>
+                                <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(bookingBirthDate)} </Descriptions.Item>
+                                {/* <Descriptions.Item label="Do You Want to Add Corporate Details">{checkAndSetDefaultValue(formData.bookingCustomer?.sameAsBookingCustomer)}</Descriptions.Item> */}
                             </Descriptions>
                         </Panel>
                     </Collapse>
@@ -119,24 +120,24 @@ const ViewDetailMain = (props) => {
                         >
                             {/* <Checkbox>Same as Booking Customer</Checkbox> */}
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Customer ID">{formData.billingCustomer?.customerId}</Descriptions.Item>
-                                <Descriptions.Item label="Customer Type">{formData.billingCustomer?.customerType}</Descriptions.Item>
-                                <Descriptions.Item label="Mobile Number">{formData.billingCustomer?.mobileNumber}</Descriptions.Item>
-                                <Descriptions.Item label="Salutation">{formData.billingCustomer?.saluation}</Descriptions.Item>
-                                <Descriptions.Item label="Customer Name">{formData.billingCustomer?.customerName}</Descriptions.Item>
-                                <Descriptions.Item label="Address">{formData.billingCustomer?.address}</Descriptions.Item>
-                                <Descriptions.Item label="City/District">{formData.billingCustomer?.district}</Descriptions.Item>
-                                <Descriptions.Item label="State">{formData.billingCustomer?.state}</Descriptions.Item>
-                                <Descriptions.Item label="Pin Code">{formData.billingCustomer?.pincode}</Descriptions.Item>
-                                <Descriptions.Item label="Alternate Number">{formData.billingCustomer?.alternateNumber}</Descriptions.Item>
-                                <Descriptions.Item label="Email">{formData.billingCustomer?.email}</Descriptions.Item>
-                                <Descriptions.Item label="PAN">{formData.billingCustomer?.panNo}</Descriptions.Item>
-                                <Descriptions.Item label="Aadhar">{formData.billingCustomer?.aadharNumber}</Descriptions.Item>
-                                <Descriptions.Item label="GSTIN">{formData.billingCustomer?.gstin}</Descriptions.Item>
-                                <Descriptions.Item label="Driving License">{formData.billingCustomer?.drivingLicense}</Descriptions.Item>
-                                <Descriptions.Item label="Trade Licence">{formData.billingCustomer?.tradeLicense}</Descriptions.Item>
-                                <Descriptions.Item label="Birth Date">{billingBirthDate}</Descriptions.Item>
-                                {/* <Descriptions.Item label="Do You Want to Add Corporate Details">{formData.billingCustomer?.sameAsBookingCustomer}</Descriptions.Item> */}
+                                <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData.billingCustomer?.customerId)}</Descriptions.Item>
+                                <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(formData.billingCustomer?.customerType)}</Descriptions.Item>
+                                <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData.billingCustomer?.mobileNumber)}</Descriptions.Item>
+                                <Descriptions.Item label="Salutation">{checkAndSetDefaultValue(formData.billingCustomer?.saluation)}</Descriptions.Item>
+                                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData.billingCustomer?.customerName)}</Descriptions.Item>
+                                <Descriptions.Item label="Address">{checkAndSetDefaultValue(formData.billingCustomer?.address)}</Descriptions.Item>
+                                <Descriptions.Item label="City/District">{checkAndSetDefaultValue(formData.billingCustomer?.district)}</Descriptions.Item>
+                                <Descriptions.Item label="State">{checkAndSetDefaultValue(formData.billingCustomer?.state)}</Descriptions.Item>
+                                <Descriptions.Item label="Pin Code">{checkAndSetDefaultValue(formData.billingCustomer?.pincode)}</Descriptions.Item>
+                                <Descriptions.Item label="Alternate Number">{checkAndSetDefaultValue(formData.billingCustomer?.alternateNumber)}</Descriptions.Item>
+                                <Descriptions.Item label="Email">{checkAndSetDefaultValue(formData.billingCustomer?.email)}</Descriptions.Item>
+                                <Descriptions.Item label="PAN">{checkAndSetDefaultValue(formData.billingCustomer?.panNo)}</Descriptions.Item>
+                                <Descriptions.Item label="Aadhar">{checkAndSetDefaultValue(formData.billingCustomer?.aadharNumber)}</Descriptions.Item>
+                                <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData.billingCustomer?.gstin)}</Descriptions.Item>
+                                <Descriptions.Item label="Driving License">{checkAndSetDefaultValue(formData.billingCustomer?.drivingLicense)}</Descriptions.Item>
+                                <Descriptions.Item label="Trade Licence">{checkAndSetDefaultValue(formData.billingCustomer?.tradeLicense)}</Descriptions.Item>
+                                <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(billingBirthDate)}</Descriptions.Item>
+                                {/* <Descriptions.Item label="Do You Want to Add Corporate Details">{checkAndSetDefaultValue(formData.billingCustomer?.sameAsBookingCustomer)}</Descriptions.Item> */}
                             </Descriptions>
                         </Panel>
                     </Collapse>
