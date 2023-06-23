@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
             customerContacts: { isLoaded: isCustomerDataLoaded = false, isLoading: isCustomerDataLoading, data: customerData = [] },
         },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, filteredListData: typeData = [] },
         },
     } = state;
 
@@ -54,9 +54,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchContactDetailsList: customerDetailDataActions.fetchList,
             listContactDetailsShowLoading: customerDetailDataActions.listShowLoading,
             saveData: customerDetailDataActions.saveData,
@@ -84,7 +81,7 @@ const ContactMain = (props) => {
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
-    const [uploadImgDocId, setUploadImgDocId] = useState('')
+    const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const extraParams = [
@@ -109,16 +106,6 @@ const ContactMain = (props) => {
     }, [userId, selectedCustomer?.customerId]);
 
     useEffect(() => {
-        if (userId && !isConfigDataLoaded && !isConfigLoading) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.GENDER_CD.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.TITLE.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.FAMLY_RELTN.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.PURPOSE.id });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
-
-    useEffect(() => {
         if (userId && customerData?.customerContact?.length) {
             setContactData(customerData?.customerContact);
         }
@@ -139,7 +126,8 @@ const ContactMain = (props) => {
     };
 
     const onSaveFormData = () => {
-        contactform.validateFields()
+        contactform
+            .validateFields()
             .then((value) => {
                 if (isEditing) {
                     setContactData((prev) => {
@@ -176,15 +164,6 @@ const ContactMain = (props) => {
             .catch((err) => console.error(err));
     };
 
-    const deleteContactHandeler = (data) => {
-        setContactData((prev) => {
-            const updatedList = [...prev];
-            const index = prev?.findIndex((el) => el?.contactMobileNumber === data?.contactMobileNumber && el?.contactNameFirstName === data?.contactNameFirstName);
-            updatedList.splice(index, 1);
-            return [...updatedList];
-        });
-    };
-
     const onCheckdefaultAddClick = (e, value) => {
         e.stopPropagation();
         setContactData((prev) => {
@@ -213,7 +192,6 @@ const ContactMain = (props) => {
         form: contactform,
         isEditing,
         setIsEditing,
-        deleteContactHandeler,
         formActionType,
         setEditingData,
         typeData,
@@ -223,7 +201,7 @@ const ContactMain = (props) => {
     };
 
     const onSubmit = () => {
-        let data = { customerId: selectedCustomer?.customerId, customerContact: {...contactData, docId: uploadImgDocId} };
+        let data = { customerId: selectedCustomer?.customerId, customerContact: { ...contactData, docId: uploadImgDocId } };
 
         const onSuccess = (res) => {
             contactform.resetFields();

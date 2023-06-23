@@ -1,12 +1,12 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 
  *   All rights reserved.
- *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER } from 'constants/routingApi';
+import { BASE_URL_CUSTOMER_MASTER_ADDRESS_CORPORATE as baseURL } from 'constants/routingApi';
 
-const PREFIX = 'FAMILY_DETAILS_';
+const PREFIX = 'CUSTOMER_MASTER_ADDRESS_INDIVIDUAL_';
+const moduleName = 'Address Individual';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';
@@ -15,11 +15,9 @@ export const RECIEVE_DATA_DETAIL_ACTION_CONSTANT = PREFIX + 'RECIEVE_DETAIL_DATA
 export const SAVE_DATA_ACTION_CONSTANT = PREFIX + 'SAVE_DATA';
 export const RESET_DATA_ACTION_CONSTANT = PREFIX + 'RESET_DATA';
 
-const baseURL = BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER;
-
-export const familyDetailsDataActions = dataActions({
+export const addressCorporateDataActions = dataActions({
     baseURL,
-    moduleName: 'Family Details',
+    moduleName,
     RECEIVE_DATA_LOADING_ACTION_CONSTANT,
     RECEIVE_DATA_ACTION_CONSTANT,
     RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT,

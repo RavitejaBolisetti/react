@@ -45,6 +45,26 @@
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
 }
+.tooltipAlign {
+    display: flex;
+    align-items: center;
+}
+.tooltipAlign > svg {
+    margin-left: 5px;
+    color: #2782f9;
+}
+.toolTip :global .ant-tooltip-content .ant-tooltip-inner p {
+    padding-left: 12px !important;
+}
+.toolTip :global .ant-tooltip-content {
+    border: 1px solid #2782f9 !important;
+    background: #d3edfe;
+    border-radius: 4px;
+    width: 225px;
+}
+.toolTip :global .ant-tooltip-arrow::before {
+    background: #2782f9;
+}
 
 .content :global .ant-tree-show-line .ant-tree-switcher-line-icon svg {
     width: 1.25em;
@@ -685,6 +705,11 @@
 
 .accordianContainer :global .ant-collapse .ant-collapse-content-box .ant-select .ant-input-group-wrapper .ant-input-affix-wrapper {
     border-width: 0;
+}
+
+.drawerBodyRight .accordianContainer .viewCardSize {
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
 }
 
 .viewCardSize :global .ant-card-body .ant-space .ant-space-item p,
@@ -1383,6 +1408,7 @@
 
 .contentHeaderBackground .selectSearchBg .headerSelectField {
     width: 25%;
+    /* width: auto; */
     position: absolute;
     z-index: 99;
 }
@@ -1394,6 +1420,7 @@
 
 .selectSearchBg :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     height: 26px;
+        /* margin-right: 20px; */
 }
 
 .selectSearchBg :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
@@ -1622,7 +1649,7 @@
 } */
 
 .drawerBodyRight {
-    padding: 30px;
+    padding: 30px 30px 56px;
     margin-left: 0 !important;
     margin-right: 0 !important;
     /* margin-bottom: 40px; */
@@ -1691,7 +1718,7 @@
 .drawerBodyRight :global .ant-card-bordered,
 .drawerBodyRight :global .ant-space-vertical {
     border: 0;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body {
@@ -2066,7 +2093,7 @@
 
 .drawerBodyRight .sectionborder {
     border-top: 1px solid #e6e6e6;
-    padding-top: 20px;
+    /* padding-top: 20px; */
 }
 
 .drawerBodyRight :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box button {
@@ -2093,9 +2120,9 @@
     margin-bottom: 20px;
 } */
 
-.drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
+/* .drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
     border: 1px solid #0b0b0c;
-}
+} */
 
 .drawerBodyRight :global .ant-checkbox + span {
     padding-inline-start: 4px;
@@ -2116,7 +2143,8 @@
 .drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
     width: 18px;
     height: 18px;
-    background-color: transparent;
+    background-color: #fff;
+    border: 1px solid #0b0b0c;
 }
 
 .drawerBodyRight :global .ant-checkbox-wrapper-checked:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
@@ -2142,6 +2170,9 @@
 .drawerBodyRight .collapseable {
     padding-left: 0px;
     padding-top: 3px;
+}
+.drawerBodyRight .accordianContainer .viewCardSize :global .ant-card-body {
+    padding:10px;
 }
 
 .drawerBodyRight .accordianContainer :global .ant-space-item .ant-collapse-item .ant-card {
@@ -2283,6 +2314,9 @@
 .iconsColor {
     color: #ff3e5b !important;
 }
+.activeTextColor {
+    color: #b5b5b6 !important;
+}
 
 .ExchangeCard {
     margin-bottom: 40px;
@@ -2402,6 +2436,7 @@
 }
 
 @media (max-width: 768px) {
+    /* For mobile phones: */
     .headerSearchField {
         vertical-align: middle;
         margin: 0 0px;

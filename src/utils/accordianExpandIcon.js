@@ -11,8 +11,15 @@ import styles from 'components/common/Common.module.css';
 export const accordianExpandIcon = (isActive) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
 
 export const expandIcon = (isActive) => (isActive ? <MinusOutlined className={styles.iconsColor} /> : <PlusOutlined className={styles.iconsColor} />);
-
-export const dynamicExpandIcon = (isActive, ExpandIcon = <AiOutlinePlus className={styles.iconsColor} />, InactiveIcon = <AiOutlineMinus className={styles.iconsColor} />) => {
+export const ActiveText = (isActive, ExpandIcon, InactiveIcon, activeText = 'Edit', inactiveText = 'Edit') => {
+    return (
+        <div>
+            {dynamicExpandIcon(isActive, ExpandIcon, InactiveIcon, activeText, inactiveText)}
+            {isActive ? <div className={styles.activeTextColor}>{activeText}</div> : inactiveText}
+        </div>
+    );
+};
+export const dynamicExpandIcon = (isActive, ExpandIcon = <AiOutlinePlus className={styles.iconsColor} />, InactiveIcon = <AiOutlineMinus className={styles.iconsColor} />, activeText = '', inactiveText = '') => {
     if (isActive) {
         return InactiveIcon;
     }

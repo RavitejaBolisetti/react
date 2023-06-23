@@ -3,11 +3,10 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState, useReducer } from 'react';
-import { bindActionCreators } from 'redux';
+import React, { useState, useReducer, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Collapse, Divider, Form, Space, Row, Col, Typography, Button } from 'antd';
 
-import { Row, Col, Button, Divider, Form, Collapse, Typography, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
@@ -18,7 +17,9 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'components/common/Common.module.css';
 import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { addressIndividualDataActions } from 'store/actions/data/customerMaster/individual/address/individualAddress';
+import { addressCorporateDataActions } from 'store/actions/data/customerMaster/corporate/address/individualAddress';
 
 import AddEditForm from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
@@ -61,10 +62,19 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            fetchConfigList: configParamEditActions.fetchList,
+            listConfigShowLoading: configParamEditActions.listShowLoading,
+
             fetchList: addressIndividualDataActions.fetchList,
             saveData: addressIndividualDataActions.saveData,
             resetData: addressIndividualDataActions.reset,
             listShowLoading: addressIndividualDataActions.listShowLoading,
+
+            fetchListCorporate: addressCorporateDataActions.fetchList,
+            saveDataCorporate: addressCorporateDataActions.saveData,
+            resetDataCorporate: addressCorporateDataActions.reset,
+            listShowLoadingCorporate: addressCorporateDataActions.listShowLoading,
+
 
             listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
             fetchPincodeDetail: geoPincodeDataActions.fetchList,
@@ -76,8 +86,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddressMasterBase = (props) => {
-    const { isViewModeVisible, section, addressIndData, setFormActionType, formActionType, isAddressLoaded, selectedCustomer, saveData, addData } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, handleFormValueChange, isAddressLoading, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification } = props;
+    const { isViewModeVisible, section, isAddDataLoaded, addressIndData, setFormActionType, formActionType, isAddressLoaded, selectedCustomer, isAddLoading, saveData, listConfigShowLoading, fetchConfigList, addData } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, isAddressLoading, formData, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification } = props;
+    const { fetchListCorporate,saveDataCorporate,  customerType } = props;
+console.log('viv customerType ', customerType)
     const [form] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -100,6 +112,14 @@ const AddressMasterBase = (props) => {
     ];
 
     useEffect(() => {
+        if (userId && !isAddDataLoaded && !isAddLoading) {
+            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.ADD_TYPE.id });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isAddDataLoaded]);
+
+
+    useEffect(() => {
         if (userId && addressIndData?.customerAddress?.length) {
             setAddressData(addressIndData?.customerAddress);
         }
@@ -108,7 +128,11 @@ const AddressMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && !isAddressLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+            if(customerType === 'IND'){
+                fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+            }else{
+                fetchListCorporate({ setIsLoading: listShowLoading, userId, extraParams });
+            }  
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAddressLoaded]);
@@ -149,13 +173,20 @@ const AddressMasterBase = (props) => {
             onError,
             onSuccess,
         };
-
-        saveData(requestData);
+        if(customerType === 'IND'){
+            saveData(requestData);
+        }else{
+            saveDataCorporate(requestData)
+        }
 
         setShowAddEditForm(false);
         setIsEditing(false);
         setEditingData({});
         form.resetFields();
+    };
+
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -196,15 +227,18 @@ const AddressMasterBase = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
-
         forceUpdate,
-
         listPinCodeShowLoading,
         fetchPincodeDetail,
         isPinCodeLoading,
         pincodeData,
         addData,
         handleFormValueChange,
+    };
+
+    const viewProps = {
+        formData,
+        styles,
     };
 
     const myProps = {
@@ -244,7 +278,9 @@ const AddressMasterBase = (props) => {
                                 }
                                 key="1"
                             >
+                                {/* {isAddressLoading ? formSkeleton : formContainer} */}
                                 {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
+                                {/* {(showAddEditForm || !addressData?.length > 0) && <AddEditForm {...formProps} />} */}
                                 {isAddressLoading ? formSkeleton : <ViewAddressList {...formProps} />}
                             </Panel>
                         </Collapse>

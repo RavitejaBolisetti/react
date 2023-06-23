@@ -1,3 +1,7 @@
+/*
+ *   Copyright (c) 2023 
+ *   All rights reserved.
+ */
 import React, { useState } from 'react';
 import { Input, Form, Col, Row, Switch } from 'antd';
 import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
