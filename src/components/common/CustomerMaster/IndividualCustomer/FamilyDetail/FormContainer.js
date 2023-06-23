@@ -52,7 +52,7 @@ const FormBase = (props) => {
     };
 
     return (
-        <>
+        <div>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={'Yes'} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
@@ -150,15 +150,15 @@ const FormBase = (props) => {
             </Row>
 
             <Row style={{ display: 'flex' }}>
-                <Button type="primary" onClick={onSave}>
+                <Button type="primary" onClick={onSave} className={styles.marR20}>
                     Save
                 </Button>
 
-                <Button type="primary" onClick={onCancel} style={{ margin: '0 0 0 1rem' }}>
+                <Button type="primary" onClick={onCancel}>
                     Cancel
                 </Button>
             </Row>
-        </>
+        </div>
     );
 };
 

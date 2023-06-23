@@ -10,10 +10,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { customerDetailDataActions } from 'store/actions/customer/customerContacts';
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -33,7 +29,7 @@ const mapStateToProps = (state) => {
             customerContacts: { isLoaded: isCustomerDataLoaded = false, isLoading: isCustomerDataLoading, data: customerData = [] },
         },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, filteredListData: typeData = [] },
         },
     } = state;
 
@@ -53,9 +49,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchContactDetailsList: customerDetailDataActions.fetchList,
             listContactDetailsShowLoading: customerDetailDataActions.listShowLoading,
             saveData: customerDetailDataActions.saveData,
@@ -89,20 +82,9 @@ const ContactMain = (props) => {
         },
     ];
 
-
     useEffect(() => {
         if (userId && !isCustomerDataLoaded && !isConfigLoading) {
             fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
-
-    useEffect(() => {
-        if (userId && !isConfigDataLoaded && !isConfigLoading) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.GENDER_CD.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.TITLE.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.FAMLY_RELTN.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.PURPOSE.id });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -161,10 +143,6 @@ const ContactMain = (props) => {
         form.resetFieldsValue();
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const deleteContactHandeler = (data) => {
         setContactData((prev) => {
             const updatedList = [...prev];
@@ -177,15 +155,13 @@ const ContactMain = (props) => {
     const onCheckdefaultAddClick = (e, value) => {
         e.stopPropagation();
         setContactData((prev) => {
-            let updetedData = prev?.map((contact) => ({...contact, defaultContactIndicator: false}));
+            let updetedData = prev?.map((contact) => ({ ...contact, defaultContactIndicator: false }));
             const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.mobileNumber === value?.mobileNumber && el?.FirstName === value?.FirstName);
-            updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked});
+            updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked });
             return [...updetedData];
         });
         forceUpdate();
     };
-
-    console.log('contactData', contactData)
 
     const addBtnContactHandeler = (e) => {
         e.stopPropagation();
@@ -211,12 +187,9 @@ const ContactMain = (props) => {
         onCheckdefaultAddClick,
     };
 
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
-
-    return (<>
-        {/* <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSaveFormData} onFinishFailed={onFinishFailed}> */}
+    return (
+        <>
+            {/* <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSaveFormData} onFinishFailed={onFinishFailed}> */}
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title} </h2>
@@ -245,7 +218,7 @@ const ContactMain = (props) => {
                     <CustomerFormButton {...props} />
                 </Col>
             </Row>
-        {/* </Form> */}
+            {/* </Form> */}
         </>
     );
 };

@@ -179,8 +179,8 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Maritial Status" initialValue={formData?.maritialStatus} name="martialStatus">
-                                            <Select placeholder={preparePlaceholderSelect('maritial status')} {...disabledProps}>
+                                        <Form.Item label="Maritial Status" initialValue={formData?.maritialStatus || ''} name="martialStatus">
+                                            <Select value={null} placeholder={preparePlaceholderSelect('maritial status')} {...disabledProps}>
                                                 {appCategoryData?.MARITAL_STATUS?.map((item) => (
                                                     <Option key={'ct' + item.value} value={item.value}>
                                                         {item.value}

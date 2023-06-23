@@ -30,19 +30,17 @@ const mapStateToProps = (state) => {
         data: {
             CustomerMaster: {
                 CustomerDetails: { isLoaded: isDataLoaded = false, isLoading, data: customerDetailsData = [] },
-                Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
+                Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData = [] },
                 CustomerParentCompany: { isLoaded: isCustomerParentCompanyDataLoaded = false, isCustomerParentCompanyLoading, data: customerParentCompanyData = [] },
             },
-            ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isTypeDataLoading, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
-
     const moduleTitle = 'Customer Details';
 
     let returnValue = {
         userId,
-        isTypeDataLoaded,
-        isTypeDataLoading,
+
         moduleTitle,
 
         isDataLoaded,
@@ -58,6 +56,7 @@ const mapStateToProps = (state) => {
         isCustomerParentCompanyLoading,
         customerParentCompanyData,
     };
+
     return returnValue;
 };
 
@@ -65,9 +64,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchCorporateLovList: corporateDataActions.fetchFilteredList,
             listCorporateLovShowLoading: corporateDataActions.listShowLoading,
 
@@ -85,9 +81,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyCustomerDetailsMasterBase = (props) => {
-    const { userId, isDataLoaded, isLoading, isTypeDataLoaded, isTypeDataLoading, showGlobalNotification, customerDetailsData, section, fetchConfigList, listConfigShowLoading, fetchList, listShowLoading, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, corporateLovData, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, customerParentCompanyData } = props;
+    const { userId, isDataLoaded, isLoading, showGlobalNotification, customerDetailsData, section, fetchList, listShowLoading, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, customerParentCompanyData } = props;
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData } = props;
-    const { form, handleFormValueChange, onFinishFailed, buttonData, setButtonData, formActionType, handleButtonClick } = props;
+    const { form, setRefreshList, handleFormValueChange, onFinishFailed, buttonData, setButtonData, formActionType, handleButtonClick } = props;
 
     const [customerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -95,27 +91,13 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const [configurableTypedata, setConfigurableTypedata] = useState({});
     const [formData, setFormData] = useState();
     const [refershData, setRefershData] = useState(false);
+    const [corporateData, setCorporateData] = useState();
 
     const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-    useEffect(() => {
-        if (isDataLoaded) {
-            form.setFieldsValue({ ...customerDetailsData });
-            setFormData(customerDetailsData);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, customerDetailsData]);
-
-    useEffect(() => {
-        if (isDataLoaded) {
-            form.setFieldsValue({ ...customerDetailsData });
-            setFormData(customerDetailsData);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, customerDetailsData]);
 
     useEffect(() => {
         if (isDataLoaded) {
@@ -129,21 +111,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     }, [isDataLoaded]);
 
     useEffect(() => {
-        if (userId) {
-            if (!isTypeDataLoaded && !isTypeDataLoading) {
-                fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CUST_TYPE.id });
-                fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CORP_TYPE.id });
-                fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CORP_CATE.id });
-                fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.MEM_TYPE.id });
-            }
-            if (!isDataLoaded && !isLoading && !formActionType?.addMode) {
-                fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams, onErrorAction });
-            }
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded]);
-    useEffect(() => {
         if (userId && !isCorporateLovDataLoaded) {
             fetchCorporateLovList({ setIsLoading: listCorporateLovShowLoading, userId });
         }
@@ -154,7 +121,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         if (typeData) {
             setConfigurableTypedata({ CUST_TYPE: typeData['CUST_TYPE'], CORP_TYPE: typeData['CORP_TYPE'], CORP_CATE: typeData['CORP_CATE'], TITLE: typeData['TITLE'], MEM_TYPE: typeData['MEM_TYPE'] });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [typeData, isDataLoaded]);
 
@@ -173,25 +139,24 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
-    const handeSearchParentCompName = (e) => {
-        console.log(e.target.value);
-    };
-
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
     };
 
     const onFinish = (values) => {
+        setRefreshList(false);
         const recordId = customerDetailsData?.id || '';
         const data = { ...values, customerId: customerDetailsData.customerId, id: recordId };
 
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId });
             setButtonData({ ...buttonData, formBtnActive: false });
 
             if (res.data) {
+                setRefreshList(true);
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
                 setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
                 setSelectedCustomerId(res?.data?.customerId);
@@ -214,15 +179,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const extraParams = [
-        {
-            key: 'customerId',
-            title: 'customerId',
-            value: selectedCustomer?.customerId,
-            name: 'Customer Id',
-        },
-    ];
-
     const validateParentCode = (e) => {
         const parentCompanyData = e?.target?.value;
         if (parentCompanyData) {
@@ -242,7 +198,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         ...props,
         form,
         formData,
-        corporateLovData,
+        corporateLovData: corporateData,
         buttonData,
         onFinish,
 
@@ -256,13 +212,12 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         configurableTypedata,
         handleButtonClick,
         styles,
-        handeSearchParentCompName,
         customerParentCompanyData,
         validateParentCode,
     };
 
     const viewProps = {
-        formData: customerDetailsData,
+        formData,
         styles,
     };
 
