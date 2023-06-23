@@ -1,5 +1,10 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState } from 'react';
-import { Col, Row, Space, Collapse, Typography, Checkbox, Descriptions } from 'antd';
+import { Col, Row, Space, Collapse, Typography, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 
@@ -19,8 +24,6 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
 
-
-
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
@@ -38,8 +41,8 @@ const ViewDetailMain = (props) => {
         }
     };
 
-    const bookingBirthDate = dayjs(formData.bookingCustomer?.birthDate).format("DD/MM/YYYY");
-    const billingBirthDate = dayjs(formData.billingCustomer?.birthDate).format("DD/MM/YYYY");
+    const bookingBirthDate = dayjs(formData.bookingCustomer?.birthDate).format('DD/MM/YYYY');
+    const billingBirthDate = dayjs(formData.billingCustomer?.birthDate).format('DD/MM/YYYY');
 
     return (
         <Row gutter={20}>
@@ -57,7 +60,6 @@ const ViewDetailMain = (props) => {
                         onChange={() => onChange(1)}
                         expandIconPosition="end"
                         className={styles.collapseContainer}
-
                     >
                         <Panel
                             header={

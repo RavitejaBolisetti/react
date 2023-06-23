@@ -73,9 +73,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const OtfDetailsMasterBase = (props) => {
-    const { isTypeDataLoaded, typeData, fetchConfigList, listConfigShowLoading } = props;
+    const { typeData, listConfigShowLoading } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov } = props;
+    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded } = props;
 
     const [formData, setFormData] = useState();
 
@@ -104,17 +104,11 @@ const OtfDetailsMasterBase = (props) => {
     }, [userId, selectedOrderId]);
 
     useEffect(() => {
-        if (!isTypeDataLoaded && userId) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.PRC_TYP?.id, userId });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.SALE_TYP?.id, userId });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.FNC_ARNGD?.id, userId });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.DLVR_AT?.id, userId });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.RFRL?.id, userId });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.PRC_TYP?.id, userId });
+        if (!isSalesConsultantDataLoaded && userId) {
             fetchSalesConsultant({ setIsLoading: listConfigShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isTypeDataLoaded, userId]);
+    }, [isSalesConsultantDataLoaded, userId]);
 
     const onFinish = (values) => {
         const recordId = otfData?.id || '';
