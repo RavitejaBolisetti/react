@@ -57,9 +57,10 @@ supportingDocumentDataActions.uploadFile = withAuthToken((params) => ({ token, a
 });
 
 supportingDocumentDataActions.downloadFile = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, userId, onSuccess, method = 'get', extraParams = [] } = params;
+    const { setIsLoading, onError, data, userId, onSuccess, method = 'get', extraParams = [], selectedDocument = undefined } = params;
     setIsLoading(true);
-
+    // console.log('selectedDocument', selectedDocument);
+    // return false;
     const onSuccessAction = (res) => {
         onSuccess(res.data);
     };
@@ -81,9 +82,8 @@ supportingDocumentDataActions.downloadFile = withAuthToken((params) => ({ token,
             let url = window.URL.createObjectURL(blob);
             let a = document.createElement('a');
             a.href = url;
-            a.download = 'OTF-Report-' + '.txt';
+            a.download = selectedDocument?.documentName + '.pdf';
             a.click();
-            // form.resetFields();
         });
     });
 

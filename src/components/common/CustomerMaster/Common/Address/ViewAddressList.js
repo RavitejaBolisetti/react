@@ -14,7 +14,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewAddressList = (props) => {
-    const { form, setShowAddEditForm, showAddEditForm, formActionType, setAddressData, onSubmit, setIsEditing, isEditing, styles, addressData, onCheckClick, setEditingData } = props;
+    const { form, setShowAddEditForm, showAddEditForm, onCheckdefaultAddClick, formActionType, setAddressData, onSubmit, setIsEditing, isEditing, styles, addressData, onCheckClick, setEditingData } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
 
@@ -71,7 +71,7 @@ const ViewAddressList = (props) => {
                                             </Space>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                            <Checkbox valuePropName="checked" defaultChecked={data?.defaultaddress} onClick={onCheckClick}>
+                                            <Checkbox valuePropName="checked" defaultChecked={data?.defaultaddress} onClick={(e)=>onCheckdefaultAddClick(e,data)}>
                                                 Mark As Default
                                             </Checkbox>
                                             <Divider type="vertical" />

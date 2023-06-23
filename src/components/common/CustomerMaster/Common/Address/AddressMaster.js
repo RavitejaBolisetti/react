@@ -139,8 +139,26 @@ const AddressMasterBase = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
+    const onCheckdefaultAddClick = (e, value) => {
+        e.stopPropagation();
+        setAddressData((prev) => {
+            let formData = [...prev];
+            formData?.forEach((address) => {
+                if (address?.defaultaddress === true) {
+                    address.defaultaddress = false;
+                };
+            });
+            const index = formData?.findIndex((el) =>  el?.addressType === editingData?.addressType && el?.addressLine1 === editingData?.addressLine1 && el?.pinCode === editingData?.pinCode);
+            formData.splice(index, 1, { ...value, deafultAddressIndicator: e.target.checked });
+            return [...formData];
+        })
+    };
+
     const onSubmit = () => {
-        let data = { customerId: selectedCustomer?.customerId, customerAddress: addressData };
+        let data = { customerId: selectedCustomer?.customerId, customerAddress: addressData?.map(el => {
+            const {tehsilName, cityName, districtName, stateName, ...rest } = el;
+            return {...rest}
+        }) };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -205,6 +223,7 @@ const AddressMasterBase = (props) => {
         onSubmit,
         onFinishFailed,
         onCloseAction,
+        onCheckdefaultAddClick,
         form,
         isEditing,
         setIsEditing,
@@ -249,7 +268,8 @@ const AddressMasterBase = (props) => {
                                 header={
                                     <>
                                         <Space>
-                                            <Text strong> Individual Address</Text>
+                                        <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Address' : 'Company Address'}</Text>
+                                            {/* <Text strong> Individual Address</Text> */}
                                             {!isViewModeVisible && formActionType?.editMode && (
                                                 <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary">
                                                     Add
