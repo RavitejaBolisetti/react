@@ -7,10 +7,11 @@ import React, { useState, useEffect } from 'react';
 
 import { Row, Col, Checkbox, Button, Form, Input, Select, Space, AutoComplete } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace, validatePincodeField, validateMobileNoField, validateLettersWithWhitespaces } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace, validatePincodeField, validateMobileNoField, validateLettersWithWhitespaces, duplicateValidator } from 'utils/validation';
 import { addressType } from 'constants/modules/CustomerMaster/individualProfile';
 
 import styles from 'components/common/Common.module.css';
+
 
 const { Option } = Select;
 
@@ -44,10 +45,10 @@ const AddEditForm = (props) => {
         if (selectedPinCode) {
             form.setFieldsValue({
                 pinCode: selectedPinCode?.pinCode,
-                stateCode: selectedPinCode?.stateName,
-                cityCode: selectedPinCode?.cityName,
-                tehsilCode: selectedPinCode?.tehsilName,
-                districtCode: selectedPinCode?.districtName,
+                stateName: selectedPinCode?.stateName,
+                cityName: selectedPinCode?.cityName,
+                tehsilName: selectedPinCode?.tehsilName,
+                districtName: selectedPinCode?.districtName,
             });
             setPinSearchData({
                 pinCode: selectedPinCode?.pinCode,
@@ -176,26 +177,38 @@ const AddEditForm = (props) => {
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={formData?.tehsil} label="Tehsil" name="tehsilCode">
+                        <Form.Item initialValue={formData?.tehsilName} label="Tehsil" name="tehsilName">
                             <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('tehsil')} maxLength={6} />
+                        </Form.Item>
+                        <Form.Item hidden initialValue={formData?.tehsilCode} name="tehsilCode">
+                            <Input />
                         </Form.Item>
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="City" initialValue={formData?.city} name="cityCode">
+                        <Form.Item label="City" initialValue={formData?.cityName} name="cityName">
                             <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('city')} maxLength={50} />
+                        </Form.Item>
+                        <Form.Item hidden initialValue={formData?.cityCode} name="cityCode">
+                            <Input />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="District" initialValue={formData?.district} name="districtCode">
+                        <Form.Item label="District" initialValue={formData?.districtName} name="districtName">
                             <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('district')} maxLength={50} />
+                        </Form.Item>
+                        <Form.Item hidden initialValue={formData?.districtCode} name="districtCode">
+                            <Input  />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={formData?.state} label="State" name="stateCode">
+                        <Form.Item initialValue={formData?.stateName} label="State" name="stateName">
                             <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('state')} maxLength={50} />
+                        </Form.Item>
+                        <Form.Item hidden initialValue={formData?.stateCode}  name="stateCode">
+                            <Input />
                         </Form.Item>
                     </Col>
 

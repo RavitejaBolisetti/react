@@ -23,10 +23,10 @@ const ViewIndividualAddressDetailsBase = (props) => {
                     <Descriptions.Item label="Address Line 1">{formData?.addressLine1}</Descriptions.Item>
                     <Descriptions.Item label="Address Line 2">{formData?.addressLine2}</Descriptions.Item>
                     <Descriptions.Item label="Pincode">{formData?.pinCode}</Descriptions.Item>
-                    <Descriptions.Item label="Tehsil">{formData?.tehsilCode}</Descriptions.Item>
-                    <Descriptions.Item label="City">{formData?.cityCode}</Descriptions.Item>
-                    <Descriptions.Item label="District">{formData?.districtCode}</Descriptions.Item>
-                    <Descriptions.Item label="State">{formData?.stateCode}</Descriptions.Item>
+                    <Descriptions.Item label="Tehsil">{formData?.tehsilName}</Descriptions.Item>
+                    <Descriptions.Item label="City">{formData?.cityName}</Descriptions.Item>
+                    <Descriptions.Item label="District">{formData?.districtName}</Descriptions.Item>
+                    <Descriptions.Item label="State">{formData?.stateName}</Descriptions.Item>
                     <Descriptions.Item label="Contact Name">{formData?.contactName}</Descriptions.Item>
                     <Descriptions.Item label="Contact Mobile">{formData?.mobileNumber}</Descriptions.Item>
                     <Descriptions.Item>{formData?.deafultAddressIndicator}</Descriptions.Item>
