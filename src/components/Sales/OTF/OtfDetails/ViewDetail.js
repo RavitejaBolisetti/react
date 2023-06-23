@@ -35,7 +35,7 @@ const ViewDetailMain = (props) => {
                 <Descriptions.Item label="Influencer/Mitra Type">{formData?.mitraType}</Descriptions.Item>
                 <Descriptions.Item label="Influencer/Mitra Name">{formData?.mitraName}</Descriptions.Item>
                 <Descriptions.Item label="Mode Of Payment">{formData?.modeOfPAyment}</Descriptions.Item>
-                <Descriptions.Item label="Finance Agreed">{formData?.financeArrangedBy}</Descriptions.Item>
+                <Descriptions.Item label="Finance Agreed">{formData?.financeArrangedBy ==="SLF" ? "Self": formData?.financeArrangedBy ==="DLR" ? "Dealer":"DSA" }</Descriptions.Item>
                 <Descriptions.Item label="Exchange">{formData?.exchange === 1 ? <span className={styles.activeText}>Yes</span> : 'No'}</Descriptions.Item>
                 <Descriptions.Item label="Loyality Scheme">{formData?.loyalityScheme === 1 ? <span className={styles.activeText}>Yes</span> : 'No'}</Descriptions.Item>
             </Descriptions>

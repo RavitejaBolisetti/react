@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
             listConfigShowLoading: configParamEditActions.listShowLoading,
 
             fetchOTFSearchedList: otfSearchListAction.fetchList,
-
+            setFilterString: otfDetailsDataActions.setFilter,
             fetchList: otfDetailsDataActions.fetchList,
             saveData: otfDetailsDataActions.saveData,
             resetData: otfDetailsDataActions.reset,
@@ -80,6 +80,7 @@ export const OtfMasterBase = (props) => {
 
     const { filterString, setFilterString } = props;
     const [otfSearchvalue, setOtfSearchvalue] = useState();
+    const [otfSearchSelected, setOtfSearchSelected] = useState();
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const [refershData, setRefershData] = useState();
@@ -184,7 +185,7 @@ export const OtfMasterBase = (props) => {
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         setIsFormVisible(true);
-
+        setOtfSearchSelected(record);
         if (buttonAction === NEXT_ACTION) {
             const section = Object.values(sectionName)?.find((i) => i.id > currentSection);
             section && setCurrentSection(section?.id);
@@ -199,7 +200,8 @@ export const OtfMasterBase = (props) => {
 
     const onSearchHandle = (value) => {
         setShowDataLoading(true);
-        setRefershData(!refershData);
+        //setRefershData(!refershData);
+        fetchOTFSearchedList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
     };
 
     const handleResetFilter = (e) => {
@@ -380,6 +382,7 @@ export const OtfMasterBase = (props) => {
         setCurrentSection,
         setFormData,
         handleFormValueChange,
+        otfSearchSelected,
     };
 
     return (

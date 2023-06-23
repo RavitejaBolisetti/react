@@ -4,15 +4,17 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { Form, Button } from 'antd';
+import { Row, Col, Form, Button } from 'antd';
 
 import { bindActionCreators } from 'redux';
 import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { OTFFormButton } from '../OTFFormButton';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import AddEditForm from './AddEditForm';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -79,16 +81,21 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const CustomerDetailsMain = (props) => {
     const { saveData, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, isLoading } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, otfSearchSelected } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, otfSearchSelected, formActionType, setFormActionType } = props;
     const { isTypeDataLoaded, typeData, fetchConfigList, listConfigShowLoading } = props;
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
     const [formData, setFormData] = useState('');
-    const [edit, setEdit] = useState(false);
-
+    const [otfData, setOtfData] = useState(otfSearchSelected);
+    const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [showDataLoading, setShowDataLoading] = useState(false);
     const [refershData, setRefershData] = useState(false);
-
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
+console.log("formActionType",formActionType)
     useEffect(() => {
         if (userId && isDataLoaded && customerFormData) {
             setFormData(customerFormData);
@@ -105,8 +112,8 @@ export const CustomerDetailsMain = (props) => {
     const selectedOTF = otfSearchSelected?.otfNumber;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        setRefershData(false);
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        //setRefershData(false);
         setShowDataLoading(false);
     };
     const extraParams = [
@@ -127,10 +134,9 @@ export const CustomerDetailsMain = (props) => {
 
     const onFinish = () => {
         form.getFieldsValue();
-        console.log('hello', billCstmForm.getFieldsValue());
-        const data = { bookingCustomer: { ...form.getFieldsValue(), birthDate: dayjs(form.getFieldsValue().birthDate).format('YYYY-MM-DD'), otfNumber: selectedOTF, bookingAndBillingType: 'BOOKING', id: customerFormData.bookingCustomer.id, customerId: 'CUS001' }, billingCustomer: { ...billCstmForm.getFieldsValue(), birthDate: dayjs(billCstmForm.getFieldsValue()?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOTF, bookingAndBillingType: 'BILLING', id: customerFormData.billingCustomer.id, customerId: 'CUS001' } };
-        console.log('submit form', data);
+        const data = { bookingCustomer: { ...form.getFieldsValue(), birthDate: dayjs(form.getFieldsValue().birthDate).format('YYYY-MM-DD'), otfNumber: otfData?.otfNumber, bookingAndBillingType: 'BOOKING', id: customerFormData.bookingCustomer.id, sameAsBookingCustomer:sameAsBookingCustomer }, billingCustomer: { ...billCstmForm.getFieldsValue(), birthDate: dayjs(billCstmForm.getFieldsValue()?.birthDate).format('YYYY-MM-DD'), otfNumber: otfData?.otfNumber, bookingAndBillingType: 'BILLING', id: customerFormData.billingCustomer.id, sameAsBookingCustomer:sameAsBookingCustomer} };
         const onSuccess = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         };
@@ -153,14 +159,42 @@ export const CustomerDetailsMain = (props) => {
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
+    const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
+        //form.resetFields();
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
+        //setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+
+        //setIsFormVisible(true);
+        //setOtfSearchSelected(record);
+        //if (buttonAction === NEXT_ACTION) {
+            //onst section = Object.values(sectionName)?.find((i) => i.id > currentSection);
+            //section && setCurrentSection(section?.id);
+        //}
+
+        //if (buttonAction === VIEW_ACTION || !formVisible) {
+            //setSelectedOrder(record);
+            //record && setSelectedOrderId(record?.otfNumber);
+            //defaultSection && setCurrentSection(defaultSection);
+        //}
+    };
+
+    
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add New ';
+        }
+    }, [formActionType]);
 
     const formProps = {
-        edit,
         form,
         billCstmForm,
         customerFormData,
         formData,
-
+        formActionType,
         onFinish,
         onFinishFailed,
 
@@ -168,18 +202,25 @@ export const CustomerDetailsMain = (props) => {
         fetchPincodeDetail,
         isPinCodeLoading,
         pincodeData,
-
+        handleButtonClick,
         typeData,
-    };
-
-    const handleClick = () => {
-        setEdit(!edit);
+        sameAsBookingCustomer, 
+        setSameAsBookingCustomer,
     };
 
     return (
-        <div className={styles.drawerCustomerMaster}>
-            <AddEditForm {...formProps} />
-            <Button onClick={handleClick}>Edit</Button>
+        <div >
+            <Row gutter={20} className={styles.drawerBodyRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <AddEditForm {...formProps} />
+                </Col>
+                
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <OTFFormButton {...props} />
+                </Col>
+            </Row>
         </div>
     );
 };

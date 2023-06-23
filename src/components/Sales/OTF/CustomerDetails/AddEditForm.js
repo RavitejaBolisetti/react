@@ -23,8 +23,8 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditForm = (props) => {
-    const { onFinish, form, billCstmForm, formData, customerFormData } = props;
-    const { typeData, edit } = props;
+    const { onFinish, form, billCstmForm, formData, customerFormData, formActionType, sameAsBookingCustomer, setSameAsBookingCustomer } = props;
+    const { typeData } = props;
     const [activeKey, setactiveKey] = useState([1]);
 
     const onChange = (values) => {
@@ -64,8 +64,10 @@ const AddEditForm = (props) => {
 
     const handleOnChange = (vall) => {
         if (vall.target.checked) {
+            setSameAsBookingCustomer(true);
             billCstmForm.setFieldsValue(form.getFieldsValue());
-        }
+        }else
+            setSameAsBookingCustomer(false);
     };
 
     const handleDataSet = () => {
@@ -75,7 +77,7 @@ const AddEditForm = (props) => {
 
     return (
         <>
-            {edit ? (
+            {!formActionType?.viewMode ? (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space style={{ display: 'flex' }} size="middle" direction="vertical">
