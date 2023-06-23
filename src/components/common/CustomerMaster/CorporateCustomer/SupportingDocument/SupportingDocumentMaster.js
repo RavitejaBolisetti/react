@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isDocumentDataLoaded = false, data: configData = [], paramdata: typeData = [] },
+            ConfigurableParameterEditing: { isLoaded: isDocumentDataLoaded = false, data: configData = [], filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isDataLoaded = false, isLoading },
         },
     } = state;
@@ -47,9 +47,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            configFetchList: configParamEditActions.fetchList,
-            configListShowLoading: configParamEditActions.listShowLoading,
-
             saveData: supportingDocumentDataActions.saveData,
             uploadFile: supportingDocumentDataActions.uploadFile,
             listShowLoading: supportingDocumentDataActions.listShowLoading,
@@ -61,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupportingDocumentBase = (props) => {
-    const { isDocumentDataLoaded, uploadFile, accessToken, token, configFetchList, configListShowLoading } = props;
+    const { uploadFile, accessToken, token } = props;
 
     const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
@@ -75,13 +72,6 @@ const SupportingDocumentBase = (props) => {
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-
-    useEffect(() => {
-        if (userId && !isDocumentDataLoaded) {
-            configFetchList({ setIsLoading: configListShowLoading, userId, parameterType: PARAM_MASTER?.CUST_FILES.id });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDocumentDataLoaded]);
 
     const onFinish = (values) => {
         const data = { ...values, customerId: 'CUS001', status: true, docId: uploadedFile, id: '' };

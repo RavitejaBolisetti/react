@@ -134,7 +134,7 @@ const AddEditFormMain = (props) => {
                                 >
                                     <Panel
                                         header={
-                                            <Row type="flex" justify="space-between" align="middle" size="large" style={{margin:'0 13px'}}>
+                                            <Row type="flex" justify="space-between" align="middle" size="large" style={{ margin: '0 13px' }}>
                                                 <Row type="flex" justify="space-around" align="middle">
                                                     <Typography>
                                                         {item?.customerName} | {item?.relationship}
@@ -153,7 +153,16 @@ const AddEditFormMain = (props) => {
                                                         </Button>
                                                     )}
                                                 </Row>
-                                                {item?.mnmCustomer === 'Yes' ? <Text type="secondary" style={{fontWeight:'400',fontSize:'14px'}}> M&M user </Text> : item?.mnmCustomer === 'No' ? <Text type="secondary" style={{fontWeight:'400',fontSize:'14px'}}>Non-M&M user</Text> : null}
+                                                {item?.mnmCustomer === 'Yes' ? (
+                                                    <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
+                                                        {' '}
+                                                        M&M user{' '}
+                                                    </Text>
+                                                ) : item?.mnmCustomer === 'No' ? (
+                                                    <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
+                                                        Non-M&M user
+                                                    </Text>
+                                                ) : null}
                                             </Row>
                                         }
                                         key={index}

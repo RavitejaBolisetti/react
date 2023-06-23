@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isDocumentDataLoaded = false, data: configData = [], paramdata: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isDataLoaded = false, isLoading },
         },
     } = state;
@@ -34,8 +34,6 @@ const mapStateToProps = (state) => {
         userId,
         accessToken,
         token,
-        isDocumentDataLoaded,
-        configData,
         typeData: typeData && typeData[PARAM_MASTER.CUST_FILES.id],
         isDataLoaded,
         isLoading,
@@ -47,9 +45,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            configFetchList: configParamEditActions.fetchList,
-            configListShowLoading: configParamEditActions.listShowLoading,
-
             saveData: supportingDocumentDataActions.saveData,
             uploadFile: supportingDocumentDataActions.uploadFile,
             listShowLoading: supportingDocumentDataActions.listShowLoading,

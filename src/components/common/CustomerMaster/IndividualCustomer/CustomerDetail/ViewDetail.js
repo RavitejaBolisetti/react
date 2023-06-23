@@ -9,7 +9,7 @@ import { BiTimeFive } from 'react-icons/bi';
 
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
-    const { styles, formData } = props;
+    const { styles, formData,formActionType:{viewMode} = undefined } = props;
     console.log('🚀 ~ file: ViewDetail.js:13 ~ ViewDetailMain ~ formData:', formData);
     const viewProps = {
         bordered: false,
@@ -54,15 +54,15 @@ const ViewDetailMain = (props) => {
                                     <span>&nbsp;</span>
                                     {formData?.lastName}
                                 </Text>
-                                <Tag color="success">Approved</Tag>
+                                {/* <Tag color="success">Approved</Tag> */}
                             </Col>
                         </Row>
                     </div>
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Email Id">{formData?.emailId}</Descriptions.Item>
-                        <Descriptions.Item label="Do you want to contact over whatsapp?">{formData?.whatsappCommunicationIndicator}</Descriptions.Item>
+                        <Descriptions.Item label="Do you want to contact over whatsapp?">{formData?.whatsappCommunicationIndicator ? 'Yes' : 'No'}</Descriptions.Item>
                         <Descriptions />
-                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?">{formData?.mobileNumberAsWhatsappNumber}</Descriptions.Item>
+                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?">{formData?.mobileNumberAsWhatsappNumber ? 'Yes' : 'No'}</Descriptions.Item>
                         <Descriptions.Item label="Whatsapp Number">{formData?.whatsAppNumber}</Descriptions.Item>
                     </Descriptions>
                     <Descriptions {...viewProps}>
