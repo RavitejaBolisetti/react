@@ -10,9 +10,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
-
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { customerDetailDataActions } from 'store/actions/customer/customerContacts';
 import { customerDetailIndividualDataActions } from 'store/actions/customer/customerContactsIndividual';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -71,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ContactMain = (props) => {
-    const { form, onFinish, section, userId, customerType, fetchConfigList, resetData, listConfigShowLoading, fetchContactDetailsList, customerData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData, isConfigDataLoaded, isConfigLoading } = props;
+    const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData, isConfigDataLoaded, isConfigLoading } = props;
     const { isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData } = props;
     const { buttonData, setButtonData, formActionType } = props;
 
@@ -175,7 +172,6 @@ const ContactMain = (props) => {
         forceUpdate();
     };
 
-    
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
