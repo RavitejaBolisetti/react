@@ -210,6 +210,7 @@ const AddressMasterBase = (props) => {
         form.resetFields();
         setShowAddEditForm(true);
         setOpenAccordian('1');
+        setIsEditing(true);
     };
 
     const formProps = {
