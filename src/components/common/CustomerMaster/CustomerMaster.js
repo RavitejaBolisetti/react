@@ -263,6 +263,7 @@ const CustomerMasterMain = (props) => {
     }, [formActionType]);
 
     const containerProps = {
+        record: selectedCustomer,
         form,
         formActionType,
         setFormActionType,
@@ -303,9 +304,6 @@ const CustomerMasterMain = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
-
-    console.log('CUSTOMER_TYPE', CUSTOMER_TYPE);
-    console.log('customerType', customerType);
 
     return (
         <>

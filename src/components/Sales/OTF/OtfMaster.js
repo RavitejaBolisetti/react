@@ -172,6 +172,7 @@ export const OtfMasterBase = (props) => {
     }, [isSearchDataLoaded, userId, refershData]);
 
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
+        console.log('record', record);
         form.resetFields();
 
         if (buttonAction === ADD_ACTION) {
@@ -185,7 +186,7 @@ export const OtfMasterBase = (props) => {
         }
 
         if (buttonAction === VIEW_ACTION) {
-            setOtfSearchSelected(record);
+            setSelectedOrder(record);
             record && setSelectedOrderId(record?.otfNumber);
             defaultSection && setCurrentSection(defaultSection);
         }
@@ -203,7 +204,6 @@ export const OtfMasterBase = (props) => {
 
     const onSearchHandle = (value) => {
         setShowDataLoading(true);
-        //setRefershData(!refershData);
         fetchOTFSearchedList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
     };
 
