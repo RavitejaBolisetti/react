@@ -20,13 +20,14 @@ import { CustomerFormButton } from '../../CustomerFormButton';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const mapStateToProps = (state) => {
-    console.log('state==>', state);
     const {
         auth: { userId },
         customer: {
@@ -74,8 +75,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ContactMain = (props) => {
     const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData } = props;
-    const { isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData } = props;
-    const { buttonData, setButtonData, formActionType } = props;
+    const { isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
+    const { buttonData, setButtonData, formActionType, handleButtonClick,  setSelectedCustomer,  setSelectedCustomerId } = props;
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
@@ -85,7 +86,10 @@ const ContactMain = (props) => {
     const [editingData, setEditingData] = useState({});
     const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [continueWithOldMobNo, setContinueWithOldMobNo] = useState(false);
+    const [isAdding, setIsAdding] = useState(false); 
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
+
+    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const extraParams = [
         {
@@ -103,11 +107,17 @@ const ContactMain = (props) => {
             } else {
                 fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
             }
-        }
+        };
+
+        return(() => {
+            resetData();
+            resetIndividualData();
+        })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer?.customerId]);
 
     useEffect(() => {
+
         if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
             setContactData(customerIndData?.customerContact);
         } else {
@@ -121,21 +131,19 @@ const ContactMain = (props) => {
     };
 
     const onErrorAction = (message) => {
-        resetData();
         showGlobalNotification({ message });
     };
 
     const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
+        setOpenAccordian(key);
     };
-
     const onSaveFormData = () => {
         contactform
             .validateFields()
             .then((value) => {
                 if (isEditing) {
                     setContactData((prev) => {
-                        let formData = [...prev];
+                        let formData = prev?.length ? [...prev] : [];
                         formData?.forEach((contact) => {
                             if (contact?.defaultaddress === true) {
                                 contact.defaultaddress = false;
@@ -147,7 +155,7 @@ const ContactMain = (props) => {
                     });
                 } else {
                     setContactData((prev) => {
-                        let formData = [...prev];
+                        let formData = prev?.length ? [...prev] : [];;
                         if (value?.defaultaddress && formData?.length >= 1) {
                             formData?.forEach((contact) => {
                                 if (contact?.defaultaddress === true) {
@@ -156,13 +164,15 @@ const ContactMain = (props) => {
                             });
                             return [...formData, value];
                         } else {
-                            return [...prev, { ...value }];
+                            const updVal = prev?.length ? [...prev, { ...value }] : [{ ...value }];
+                            return updVal ;
                         }
                     });
                 }
                 setShowAddEditForm(false);
                 setIsEditing(false);
                 setEditingData({});
+                setIsAdding(false);
                 contactform.resetFields();
             })
             .catch((err) => console.error(err));
@@ -185,6 +195,7 @@ const ContactMain = (props) => {
 
     const addBtnContactHandeler = (e) => {
         e.stopPropagation();
+        setIsAdding(true);
         contactform.resetFields();
         setShowAddEditForm(true);
         setOpenAccordian('1');
@@ -210,6 +221,8 @@ const ContactMain = (props) => {
         setContinueWithOldMobNo,
         uploadImgDocId,
         customerType,
+        isAdding,
+        setIsAdding
     };
 
     const onSubmit = () => {
@@ -218,12 +231,21 @@ const ContactMain = (props) => {
         const onSuccess = (res) => {
             contactform.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+            setButtonData({ ...buttonData, formBtnActive: false });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
+            setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
+            setSelectedCustomerId(res?.data?.customerId);
+            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
+                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+            } else {
+                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+            }
         };
 
         const onError = (message) => {
             showGlobalNotification({ message });
         };
+
         const requestData = {
             data: data,
             method: 'post',
@@ -241,6 +263,7 @@ const ContactMain = (props) => {
 
         setShowAddEditForm(false);
         setIsEditing(false);
+        setIsAdding(false);
         setEditingData({});
         contactform.resetFields();
     };
@@ -261,7 +284,7 @@ const ContactMain = (props) => {
                                     <Space>
                                         <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Contact' : 'Company Contact'}</Text>
                                         {!formActionType?.viewMode && (
-                                            <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary">
+                                            <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isEditing || isAdding}>
                                                 Add Contact
                                             </Button>
                                         )}

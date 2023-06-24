@@ -5,7 +5,7 @@
  */
 import { React, useEffect, useState } from 'react';
 
-import { Col, Input, Collapse, Row, Button, Space, Form, Select, Upload, message, Checkbox, Divider, Typography } from 'antd';
+import { Col, Input, Collapse, Row, Button, Space, Form, Select, Upload, message, Checkbox, Divider, Typography, Card } from 'antd';
 
 import { validateRequiredInputField, validatePanField, validateGSTIN, validatFacebookProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 import style from 'components/common/Common.module.css';
@@ -28,17 +28,13 @@ const { Text } = Typography;
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 
 const AddEditFormMain = (props) => {
-    const { appCategoryData, listShowLoading, userId, formData, form } = props;
+    const { appCategoryData, userId, formData, form, handleOnClick } = props;
     const { uploadListShowLoading, uploadFile, setUploadedFile, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
     console.log('Form Data:', formData);
 
-    // useEffect(() => {
-    //     setFinalFormData({ ...FinalFormData, keyAccountDetails: companyInfoValues, uploadCustomerForm: uploadCustomerFormValues });
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [done]);
     useEffect(() => {
         form.setFieldsValue({
             ...formData,
@@ -61,7 +57,6 @@ const AddEditFormMain = (props) => {
         } else {
             setactiveKey([...activeKey, values]);
         }
-        console.log('values', values);
     };
 
     const onDrop = (e) => {
@@ -179,7 +174,7 @@ const AddEditFormMain = (props) => {
                                                         {item.value}
                                                     </Option>
                                                 ))}
-                                            </Select>{' '}
+                                            </Select>
                                         </Form.Item>
                                     </Col>
 
@@ -191,7 +186,7 @@ const AddEditFormMain = (props) => {
                                                         {item.value}
                                                     </Option>
                                                 ))}
-                                            </Select>{' '}
+                                            </Select>
                                         </Form.Item>
                                     </Col>
 
@@ -199,11 +194,11 @@ const AddEditFormMain = (props) => {
                                         <Form.Item label="Customer Category" initialValue={formData?.customerCategory} name="customerCategory">
                                             <Select maxLength={50} onChange={handleCategoryChange} placeholder={preparePlaceholderSelect('Customer Category')}>
                                                 {appCategoryData.CUS_CAT?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
-                                                        {item.value}
+                                                    <Option key={'ct' + item.key} value={item?.key}>
+                                                        {item?.value}
                                                     </Option>
                                                 ))}
-                                            </Select>{' '}
+                                            </Select>
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -224,7 +219,7 @@ const AddEditFormMain = (props) => {
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Key Role Details" initialValue={formData?.keyRouteDetails} name="KeyRoleDetails">
+                                                <Form.Item label="Key Role Details" initialValue={formData?.keyRouteDetails} name="keyRoleDetails">
                                                     <Input maxLength={50} placeholder={preparePlaceholderText('Key Role Details')} />
                                                 </Form.Item>
                                             </Col>
@@ -432,6 +427,9 @@ const AddEditFormMain = (props) => {
                                                 </p>
                                                 <Button danger>Upload File</Button>
                                             </Dragger>
+                                            <a>
+                                                <Card key={formData?.customerFormDocId} title={formData?.customerFormDocId} extra={<FiEye />} onClick={handleOnClick}></Card>
+                                            </a>
                                         </Col>
                                     </Row>
                                 </div>

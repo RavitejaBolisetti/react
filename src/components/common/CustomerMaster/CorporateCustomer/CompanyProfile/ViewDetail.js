@@ -9,12 +9,13 @@ import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
 import { FiDownload } from 'react-icons/fi';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formData, handleOnClick, isLoading } = props;
+    const { formData, handleOnClick, isLoading, appCategoryData } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const viewProps = {
         bordered: false,
@@ -71,11 +72,11 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
 
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Usage/Application Categorization">{checkAndSetDefaultValue(formData?.applicationCategorization, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Usage/Application Sub-Category">{checkAndSetDefaultValue(formData?.applicationSubCategory, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Category">{checkAndSetDefaultValue(formData?.customerCategory, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Usage/Application Categorization">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_CAT, formData?.applicationCategorization), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Usage/Application Sub-Category">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_SUB_CAT, formData?.applicationSubCategory), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Customer Category">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.CUS_CAT, formData?.customerCategory), isLoading)}</Descriptions.Item>
                         </Descriptions>
-                        {formData?.customerCategory === 'Fleet' && (
+                        {formData?.customerCategory === 'CUS_CAT_2' && (
                             <>
                                 <Descriptions {...viewProps}>
                                     <Descriptions.Item label="Business Details">{checkAndSetDefaultValue(formData?.businessDetails, isLoading)}</Descriptions.Item>
