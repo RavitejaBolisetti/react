@@ -160,6 +160,9 @@ export const OtfMasterBase = (props) => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
             setSection(section);
+
+            const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+            setLastSection(!nextSection?.id);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
@@ -371,6 +374,7 @@ export const OtfMasterBase = (props) => {
     }, [formActionType]);
 
     const containerProps = {
+        record: selectedOrder,
         form,
         formActionType,
         setFormActionType,

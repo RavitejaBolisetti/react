@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const SchemeDetailsMasterBase = (props) => {
     const { schemeData, onCloseAction, fetchList, formActionType, userId, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
+    const { form, selectedOrderId, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
 
     const onErrorAction = (message) => {
         showGlobalNotification(message);
