@@ -4,12 +4,15 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 @import url('./global.css');
+
 .marT30 {
     margin-top: 30px;
 }
+
 .marR5 {
     margin-right: 5px;
 }
+
 .marR20 {
     margin-right: 20px;
 }
@@ -47,23 +50,28 @@
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
 }
+
 .tooltipAlign {
     display: flex;
     align-items: center;
 }
-.tooltipAlign > svg {
+
+.tooltipAlign>svg {
     margin-left: 5px;
     color: #2782f9;
 }
+
 .toolTip :global .ant-tooltip-content .ant-tooltip-inner p {
     padding-left: 12px !important;
 }
+
 .toolTip :global .ant-tooltip-content {
     border: 1px solid #2782f9 !important;
     background: #d3edfe;
     border-radius: 4px;
     width: 225px;
 }
+
 .toolTip :global .ant-tooltip-arrow::before {
     background: #2782f9;
 }
@@ -1422,7 +1430,7 @@
 
 .selectSearchBg :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     height: 26px;
-        /* margin-right: 20px; */
+    /* margin-right: 20px; */
 }
 
 .selectSearchBg :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
@@ -1471,13 +1479,17 @@
 
 .drawerBodyLeft::-webkit-scrollbar {
     background-color: #f4f4f4;
-    width: 5px;
+    width: 8px;
 }
 
 .drawerBodyLeft::-webkit-scrollbar-thumb {
-    background-color: rgba(52, 44, 44, 0.34);
+    background-color: #C1C1C1;
     border-radius: 10px;
-    /* border: 2px solid ; */
+    border: 2px solid #f4f4f4;
+}
+
+.drawerBodyLeft::-webkit-scrollbar-thumb:hover {
+    border: 2px solid #C1C1C1;
 }
 
 .drawerBodyLeft :global .ant-collapse {
@@ -1792,9 +1804,13 @@
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
-    margin-top: 20px;
+    margin-top: 0;
     margin-bottom: 20px;
     border-color: #e6e6e6;
+}
+
+.drawerBodyRight .cardInsideBox :global .ant-divider-horizontal {
+    margin-top: 20px !important;
 }
 
 .drawerBodyRight :global .ant-table-wrapper table {
@@ -1889,13 +1905,18 @@
 }
 
 .drawerBodyRight::-webkit-scrollbar {
-    width: 5px;
+    width: 8px;
     background-color: #ffffff;
 }
 
 .drawerBodyRight::-webkit-scrollbar-thumb {
-    background-color: rgba(52, 44, 44, 0.34);
+    background-color: #C1C1C1;
     border-radius: 10px;
+    border: 2px solid #ffffff;
+}
+
+.drawerBodyRight::-webkit-scrollbar-thumb:hover {
+    border: 2px solid #C1C1C1;
 }
 
 /* .drawerBodyRight :global .ant-btn-dangerous {
@@ -1938,7 +1959,7 @@
     background: #fff;
 }
 
-.drawerBodyRight :global .ant-collapse > .ant-collapse-item-active > .ant-collapse-header {
+.drawerBodyRight :global .ant-collapse>.ant-collapse-item-active>.ant-collapse-header {
     border-radius: 8px 8px 0 0;
     padding: 16px 20px;
 }
@@ -1953,15 +1974,18 @@
     font-size: 16px;
     line-height: 22px;
 }
+
 .drawerBodyRight :global .ant-typography {
     font-weight: 700;
     font-size: 16px;
     line-height: 22px;
     /* margin-bottom: 20px; */
 }
+
 .drawerBodyRight :global .ant-space {
     align-items: normal;
 }
+
 /* .drawerBodyRight :global .ant-input {
     height: 36px;
     border-radius: 4px;
@@ -2098,7 +2122,7 @@
     /* padding-top: 20px; */
 }
 
-.drawerBodyRight :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box button {
+.drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box button {
     margin-bottom: 20px;
 }
 
@@ -2173,8 +2197,9 @@
     padding-left: 0px;
     padding-top: 3px;
 }
+
 .drawerBodyRight .accordianContainer .viewCardSize :global .ant-card-body {
-    padding:10px;
+    padding: 10px;
 }
 
 .drawerBodyRight .accordianContainer :global .ant-space-item .ant-collapse-item .ant-card {
@@ -2279,7 +2304,8 @@
     border-radius: 4px;
     color: #0b0b0c;
     padding: 20px;
-    margin: 20px 0;
+    padding-bottom: 0;
+    margin-bottom: 20px;
 }
 
 .customerName {
@@ -2316,6 +2342,7 @@
 .iconsColor {
     color: #ff3e5b !important;
 }
+
 .activeTextColor {
     color: #b5b5b6 !important;
 }
@@ -2413,18 +2440,6 @@
     background-color: transparent;
 }
 
-.cardInsideBox {
-    border: 1px solid #e6e6e6;
-    border-radius: 4px;
-    color: #0b0b0c;
-    padding: 20px;
-}
-
-.customerName {
-    font-size: 16px;
-    font-weight: 700;
-}
-
 .nameSpacing {
     margin: 0 0 0 0.25rem;
 }
@@ -2438,6 +2453,7 @@
 }
 
 @media (max-width: 768px) {
+
     /* For mobile phones: */
     .headerSearchField {
         vertical-align: middle;
