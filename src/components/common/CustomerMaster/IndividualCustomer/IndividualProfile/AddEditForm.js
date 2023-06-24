@@ -8,7 +8,7 @@ import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, S
 import Svg from 'assets/images/Filter.svg';
 import dayjs from 'dayjs';
 
-import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId, validatFacebookProfileUrl, validattwitterProfileUrl, validatInstagramProfileUrl, validatYoutubeProfileUrl } from 'utils/validation';
+import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, validatInstagramProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
@@ -136,6 +136,7 @@ const AddEditFormMain = (props) => {
                                 }
                                 key="1"
                             >
+                                <div className={styles.headerBox}>
                                 {EDIT_ACTION ? (
                                     <div className={styles.uploadDragger}>
                                         <UploadUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} viewDocument={viewDocument} />
@@ -168,6 +169,7 @@ const AddEditFormMain = (props) => {
                                             </div>
                                         </Col>
                                     </Row>
+                                    
                                 )}
 
                                 <Row gutter={20}>
@@ -290,7 +292,7 @@ const AddEditFormMain = (props) => {
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin'), validateRequiredInputField('gstin')]}>
-                                            <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} maxLength={15} />
+                                            <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -359,6 +361,7 @@ const AddEditFormMain = (props) => {
                                         </Row>
                                     </>
                                 )}
+                                </div>
                             </Panel>
                         </Collapse>
 
@@ -371,44 +374,46 @@ const AddEditFormMain = (props) => {
                                 }
                                 key="2"
                             >
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="M1-MMFSL" initialValue={formData?.mmfsl} name="mmfsl">
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
-                                        </Form.Item>
-                                    </Col>
+                                <div className={styles.headerBox}>
+                                    <Row gutter={20}>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item label="M1-MMFSL" initialValue={formData?.mmfsl} name="mmfsl">
+                                                <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
+                                            </Form.Item>
+                                        </Col>
 
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Facebook Link" initialValue={formData?.facebookLink} name="facebookLink" rules={[validatFacebookProfileUrl('facebookLink')]}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
-                                        </Form.Item>
-                                    </Col>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item label="Facebook Link" initialValue={formData?.facebookLink} name="facebookLink" rules={[validatFacebookProfileUrl('facebookLink')]}>
+                                                <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
+                                            </Form.Item>
+                                        </Col>
 
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Twitter Link" initialValue={formData?.twitterLink} name="twitterLink" rules={[validattwitterProfileUrl('twitterLink')]}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Instagram Link" initialValue={formData?.instagramLink} name="instagramLink" rules={[validatInstagramProfileUrl('instagramLink')]}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
-                                        </Form.Item>
-                                    </Col>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item label="Twitter Link" initialValue={formData?.twitterLink} name="twitterLink" rules={[validattwitterProfileUrl('twitterLink')]}>
+                                                <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={20}>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item label="Instagram Link" initialValue={formData?.instagramLink} name="instagramLink" rules={[validatInstagramProfileUrl('instagramLink')]}>
+                                                <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
+                                            </Form.Item>
+                                        </Col>
 
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Youtube Channel" initialValue={formData?.youtubeChannelLink} name="youtubeChannelLink" rules={[validatYoutubeProfileUrl('youtubeChannelLink')]}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
-                                        </Form.Item>
-                                    </Col>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item label="Youtube Channel" initialValue={formData?.youtubeChannelLink} name="youtubeChannelLink" rules={[validatYoutubeProfileUrl('youtubeChannelLink')]}>
+                                                <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
+                                            </Form.Item>
+                                        </Col>
 
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Team BHP Link" initialValue={formData?.teamBhpLink} name="teamBhpLink">
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item label="Team BHP Link" initialValue={formData?.teamBhpLink} name="teamBhpLink">
+                                                <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                </div>
                             </Panel>
                         </Collapse>
                         <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
@@ -420,38 +425,40 @@ const AddEditFormMain = (props) => {
                                 }
                                 key="3"
                             >
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Code" name="accountCode" initialValue={formData?.keyAccountDetails?.accountCode}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter account code')} disabled />
-                                        </Form.Item>
-                                    </Col>
+                                <div className={styles.headerBox}>
+                                    <Row gutter={20}>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item label="Account Code" name="accountCode" initialValue={formData?.keyAccountDetails?.accountCode}>
+                                                <Input maxLength={50} placeholder={preparePlaceholderText('Enter account code')} disabled />
+                                            </Form.Item>
+                                        </Col>
 
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Name" name="accountName" initialValue={formData?.keyAccountDetails?.accountName}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
-                                        </Form.Item>
-                                    </Col>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item label="Account Name" name="accountName" initialValue={formData?.keyAccountDetails?.accountName}>
+                                                <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
+                                            </Form.Item>
+                                        </Col>
 
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Segement" name="accountSegment" initialValue={formData?.keyAccountDetails?.accountSegment}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} disabled />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Client Name" name="accountClientName" initialValue={formData?.keyAccountDetails?.accountClientName}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} disabled />
-                                        </Form.Item>
-                                    </Col>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item label="Account Segement" name="accountSegment" initialValue={formData?.keyAccountDetails?.accountSegment}>
+                                                <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} disabled />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={20}>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item label="Account Client Name" name="accountClientName" initialValue={formData?.keyAccountDetails?.accountClientName}>
+                                                <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} disabled />
+                                            </Form.Item>
+                                        </Col>
 
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Mapping Date" name="accountMappingDate" initialValue={formData?.keyAccountDetails?.accountMappingDate}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item label="Account Mapping Date" name="accountMappingDate" initialValue={formData?.keyAccountDetails?.accountMappingDate}>
+                                                <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                </div>
                             </Panel>
                         </Collapse>
                         <Collapse defaultActiveKey={['4']} expandIcon={expandIcon} expandIconPosition="end">
@@ -463,32 +470,34 @@ const AddEditFormMain = (props) => {
                                 }
                                 key="4"
                             >
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Name of Person" initialValue={formData?.authorityDetails?.personName} name="personName" rules={[validateRequiredInputField('Name of Person')]}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter name of person')} />
-                                        </Form.Item>
-                                    </Col>
+                                <div className={styles.headerBox}>
+                                    <Row gutter={20}>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item label="Name of Person" initialValue={formData?.authorityDetails?.personName} name="personName" rules={[validateRequiredInputField('Name of Person')]}>
+                                                <Input maxLength={50} placeholder={preparePlaceholderText('Enter name of person')} />
+                                            </Form.Item>
+                                        </Col>
 
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Position" initialValue={formData?.authorityDetails?.postion} name="postion">
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter position')} />
-                                        </Form.Item>
-                                    </Col>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item label="Position" initialValue={formData?.authorityDetails?.postion} name="postion">
+                                                <Input maxLength={50} placeholder={preparePlaceholderText('Enter position')} />
+                                            </Form.Item>
+                                        </Col>
 
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Company Name" initialValue={formData?.authorityDetails?.companyName} name="companyName" rules={[validateRequiredInputField('Company Name')]}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter company name')} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <Form.Item label="Remarks" initialValue={formData?.authorityDetails?.remarks} name="remarks">
-                                            <TextArea maxLength={50} placeholder={preparePlaceholderText('Remarks')} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item label="Company Name" initialValue={formData?.authorityDetails?.companyName} name="companyName" rules={[validateRequiredInputField('Company Name')]}>
+                                                <Input maxLength={50} placeholder={preparePlaceholderText('Enter company name')} />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                            <Form.Item label="Remarks" initialValue={formData?.authorityDetails?.remarks} name="remarks">
+                                                <TextArea maxLength={50} placeholder={preparePlaceholderText('Remarks')} />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                </div>
                             </Panel>
                         </Collapse>
 
@@ -502,30 +511,30 @@ const AddEditFormMain = (props) => {
                                 key="5"
                             >
                                 <>
-                                <div className={styles.marB20}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">
-                                                <Checkbox> I Consent to share my details with Mahindra & Mahindra</Checkbox>
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Dragger {...uploadProps} customRequest={handleUpload} className={styles.uploadContainer}>
-                                                <div>
-                                                    <img src={Svg} alt="" />
-                                                </div>
-                                                <div className={styles.uploadtext}>
-                                                    Click or drop your file here to upload the signed and <br /> scanned customer form.
-                                                </div>
-                                                <div>File type should be png, jpg or pdf and max file size to be 5Mb</div>
-                                                <Button {...disabledProps} type="primary" style={{ marginLeft: '30px', marginTop: '16px' }}>
-                                                    Upload File
-                                                </Button>
-                                            </Dragger>
-                                        </Col>
-                                    </Row>
+                                    <div className={styles.marB20}>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">
+                                                    <Checkbox> I Consent to share my details with Mahindra & Mahindra</Checkbox>
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <Dragger {...uploadProps} customRequest={handleUpload} className={styles.uploadContainer}>
+                                                    <div>
+                                                        <img src={Svg} alt="" />
+                                                    </div>
+                                                    <div className={styles.uploadtext}>
+                                                        Click or drop your file here to upload the signed and <br /> scanned customer form.
+                                                    </div>
+                                                    <div>File type should be png, jpg or pdf and max file size to be 5Mb</div>
+                                                    <Button {...disabledProps} type="primary" style={{ marginLeft: '30px', marginTop: '16px' }}>
+                                                        Upload File
+                                                    </Button>
+                                                </Dragger>
+                                            </Col>
+                                        </Row>
                                     </div>
                                 </>
                             </Panel>
