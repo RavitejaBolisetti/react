@@ -114,25 +114,19 @@ const ReferralsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ReferralsData, userId]);
 
-    const ReferralsMasterProps = {
+    const formProps = {
         ...props,
         form,
         formData,
         onFinish,
         onFinishFailed,
     };
+
     const viewProps = {
         styles,
         formData,
+        isLoading,
     };
-    const formSkeleton = (
-        <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <InputSkeleton height={'100vh'} />
-            </Col>
-        </Row>
-    );
-    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...ReferralsMasterProps} />;
 
     return (
         <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange}>
@@ -146,7 +140,7 @@ const ReferralsMasterBase = (props) => {
                             <OTFStatusBar status={1} />
                         </Col>
                     </Row>
-                    {isLoading ? formSkeleton : formContainer}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

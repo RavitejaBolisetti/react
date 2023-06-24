@@ -10,7 +10,7 @@ import dayjs from 'dayjs';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 const ViewDetailMain = (props) => {
-    const { formData } = props;
+    const { formData, isLoading } = props;
 
     const viewProps = {
         bordered: false,
@@ -25,22 +25,22 @@ const ViewDetailMain = (props) => {
     return (
         <Card className={styles.drawerCardView}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Initial Promise Delivery Date">{checkAndSetDefaultValue(promiseDeliveryDate)}</Descriptions.Item>
-                <Descriptions.Item label="Cust. Expected Delivery Date">{checkAndSetDefaultValue(expectedDeliveryDate)}</Descriptions.Item>
-                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(formData?.saleType)}</Descriptions.Item>
-                <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(formData?.priceType === 'INDV' ? 'Individual' : 'Corporate')}</Descriptions.Item>
-                <Descriptions.Item label="Booking Amount">{checkAndSetDefaultValue(formData?.bookingAmount)}</Descriptions.Item>
-                <Descriptions.Item label="Sales Consultant">{checkAndSetDefaultValue(formData?.saleConsultant)}</Descriptions.Item>
-                <Descriptions.Item label="Special Request">{checkAndSetDefaultValue(formData?.specialRequest)}</Descriptions.Item>
-                <Descriptions.Item label="Place Of Registration">{checkAndSetDefaultValue(formData?.placeOfRegistration)}</Descriptions.Item>
-                <Descriptions.Item label="Delivery At">{checkAndSetDefaultValue(formData?.deliveryAt === 'OFC' ? 'Office' : formData?.deliveryAt === 'HOM' ? 'Home' : 'Showroom')}</Descriptions.Item>
-                <Descriptions.Item label="Referral">{checkAndSetDefaultValue(formData?.referral === 'Y' ? 'Yes' : 'No')}</Descriptions.Item>
-                <Descriptions.Item label="Influencer/Mitra Type">{checkAndSetDefaultValue(formData?.mitraType)}</Descriptions.Item>
-                <Descriptions.Item label="Influencer/Mitra Name">{checkAndSetDefaultValue(formData?.mitraName)}</Descriptions.Item>
-                <Descriptions.Item label="Mode Of Payment">{checkAndSetDefaultValue(formData?.modeOfPAyment)}</Descriptions.Item>
-                <Descriptions.Item label="Finance Agreed">{checkAndSetDefaultValue(formData?.financeArrangedBy)}</Descriptions.Item>
-                <Descriptions.Item label="Exchange">{checkAndSetDefaultValue(formData?.exchange === 1 ? <span className={styles.activeText}>Yes</span> : 'No')}</Descriptions.Item>
-                <Descriptions.Item label="Loyality Scheme">{checkAndSetDefaultValue(formData?.loyalityScheme === 1 ? <span className={styles.activeText}>Yes</span> : 'No')}</Descriptions.Item>
+                <Descriptions.Item label="Initial Promise Delivery Date">{checkAndSetDefaultValue(promiseDeliveryDate, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Cust. Expected Delivery Date">{checkAndSetDefaultValue(expectedDeliveryDate, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(formData?.saleType, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(formData?.priceType === 'INDV' ? 'Individual' : 'Corporate', isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Booking Amount">{checkAndSetDefaultValue(formData?.bookingAmount, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Sales Consultant">{checkAndSetDefaultValue(formData?.saleConsultant, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Special Request">{checkAndSetDefaultValue(formData?.specialRequest, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Place Of Registration">{checkAndSetDefaultValue(formData?.placeOfRegistration, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Delivery At">{checkAndSetDefaultValue(formData?.deliveryAt === 'OFC' ? 'Office' : formData?.deliveryAt === 'HOM' ? 'Home' : 'Showroom', isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Referral">{checkAndSetDefaultValue(formData?.referral === 'Y' ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Influencer/Mitra Type">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Influencer/Mitra Name">{checkAndSetDefaultValue(formData?.mitraName, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Mode Of Payment">{checkAndSetDefaultValue(formData?.modeOfPAyment, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Finance Agreed">{checkAndSetDefaultValue(formData?.financeArrangedBy, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Exchange">{checkAndSetDefaultValue(formData?.exchange === 1 ? <span className={styles.activeText}>Yes</span> : 'No', isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Loyality Scheme">{checkAndSetDefaultValue(formData?.loyalityScheme === 1 ? <span className={styles.activeText}>Yes</span> : 'No', isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

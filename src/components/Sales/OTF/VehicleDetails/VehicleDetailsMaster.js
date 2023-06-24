@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Typography, Space, Collapse, Form } from 'antd';
+import { Form, Row, Col } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -20,7 +20,6 @@ import styles from 'components/common/Common.module.css';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import { OTFFormButton } from '../OTFFormButton';
-import { InputSkeleton } from 'components/common/Skeleton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 import dayjs from 'dayjs';
 
@@ -31,7 +30,7 @@ const mapStateToProps = (state) => {
             OTF: {
                 VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: VehicleDetailsData = [] },
             },
-            ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isTypeDataLoading, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, paramdata: typeData = [] },
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: ProductHierarchyData = [] },
         },
     } = state;
@@ -72,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { VehicleDetailsData, isProductHierarchyLoading, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, ProductHierarchyData, typeData, fetchList, isTypeDataLoaded, resetData, configLoading, fetchconfigList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { VehicleDetailsData, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, ProductHierarchyData, typeData, fetchList, isTypeDataLoaded, resetData, configLoading, fetchconfigList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, section, formActionType, handleFormValueChange } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
@@ -217,6 +216,7 @@ const VehicleDetailsMasterMain = (props) => {
     };
 
     const formProps = {
+        ...props,
         formData,
         formActionType,
         activeKey,
@@ -245,6 +245,7 @@ const VehicleDetailsMasterMain = (props) => {
         setoptionsServicesMapping,
         handleFormValueChange,
     };
+
     const viewProps = {
         activeKey,
         setactiveKey,
@@ -254,15 +255,8 @@ const VehicleDetailsMasterMain = (props) => {
         modelData: ProductHierarchyData['0'],
         tooltTipText,
         settooltTipText,
+        isLoading,
     };
-    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;
-    const formSkeleton = (
-        <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <InputSkeleton height={'100vh'} />
-            </Col>
-        </Row>
-    );
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -276,7 +270,7 @@ const VehicleDetailsMasterMain = (props) => {
                             <OTFStatusBar status={1} />
                         </Col>
                     </Row>
-                    {isLoading ? formSkeleton : formContainer}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

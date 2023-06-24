@@ -90,6 +90,7 @@ export const OtfMasterBase = (props) => {
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
+    const [isLastSection, setLastSection] = useState(false);
 
     const [form] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -106,6 +107,7 @@ export const OtfMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
     const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
+    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const extraParams = [
         {
@@ -170,24 +172,33 @@ export const OtfMasterBase = (props) => {
     }, [isSearchDataLoaded, userId, refershData]);
 
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
-        console.log('🚀 ~ file: OtfMaster.js:183 ~ handleButtonClick ~ buttonAction:', buttonAction);
-
         form.resetFields();
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
-        setIsFormVisible(true);
-        setOtfSearchSelected(record);
-        if (buttonAction === NEXT_ACTION) {
-            const section = Object.values(sectionName)?.find((i) => i.id > currentSection);
-            section && setCurrentSection(section?.id);
+        if (buttonAction === ADD_ACTION) {
+            defaultSection && setCurrentSection(defaultSection);
+        }
+
+        if (buttonAction === EDIT_ACTION) {
+            setSelectedOrder(record);
+            record && setSelectedOrderId(record?.otfNumber);
+            !formVisible && setCurrentSection(defaultSection);
         }
 
         if (buttonAction === VIEW_ACTION) {
-            setSelectedOrder(record);
+            setOtfSearchSelected(record);
             record && setSelectedOrderId(record?.otfNumber);
             defaultSection && setCurrentSection(defaultSection);
         }
+
+        if (buttonAction === NEXT_ACTION || buttonAction === NEXT_EDIT_ACTION) {
+            const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+            section && setCurrentSection(nextSection?.id);
+            setLastSection(!nextSection?.id);
+        }
+
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION || buttonAction === NEXT_EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        setIsFormVisible(true);
     };
 
     const onSearchHandle = (value) => {
@@ -390,6 +401,8 @@ export const OtfMasterBase = (props) => {
         setFormData,
         handleFormValueChange,
         otfSearchSelected,
+        isLastSection,
+        saveButtonName: formActionType?.addMode ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
     };
 
     return (

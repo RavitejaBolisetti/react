@@ -3,11 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-/*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
- *   All rights reserved.
- *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
- */
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -24,7 +19,6 @@ import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/var
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 
-import { InputSkeleton } from 'components/common/Skeleton';
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 
@@ -67,8 +61,6 @@ const mapStateToProps = (state) => {
         isSchemeLovLoading,
         isSchemeLovDataLoaded,
 
-        isConfigDataLoaded,
-        isConfigLoading,
         typeData,
 
         isMakeDataLoaded,
@@ -138,6 +130,7 @@ const ExchangeVehiclesBase = (props) => {
     const viewProps = {
         styles,
         formData,
+        isLoading,
     };
 
     const errorAction = (message) => {
@@ -221,6 +214,7 @@ const ExchangeVehiclesBase = (props) => {
                 console.log('err');
             });
     };
+
     const formProps = {
         ...props,
         form,
@@ -228,7 +222,6 @@ const ExchangeVehiclesBase = (props) => {
         onFinishFailed,
         onFinish,
 
-        isConfigLoading,
         typeData,
 
         isSchemeLovLoading,
@@ -245,16 +238,8 @@ const ExchangeVehiclesBase = (props) => {
 
         isVariantLoading,
         variantData,
+        isLoading,
     };
-
-    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;
-    const formSkeleton = (
-        <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <InputSkeleton height={'100vh'} />
-            </Col>
-        </Row>
-    );
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -269,7 +254,7 @@ const ExchangeVehiclesBase = (props) => {
                         </Col>
                     </Row>
 
-                    {isLoading ? formSkeleton : formContainer}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>
