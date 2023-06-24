@@ -9,7 +9,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 
-
 import { showGlobalNotification } from 'store/actions/notification';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 
@@ -232,6 +231,7 @@ const IndividualProfileBase = (props) => {
     };
 
     const viewProps = {
+        ...props,
         formData: indiviualData,
         styles,
         activeKey,

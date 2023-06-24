@@ -8,12 +8,13 @@ import { Space, Collapse, Typography, Descriptions, Card } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { FiDownload } from 'react-icons/fi';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { setActiveKey, activeKey, styles, formData, viewDocument, handleOnClick, isLoading } = props;
+    const { setActiveKey, activeKey, styles, formData, viewDocument, handleOnClick, isLoading, appCategoryData } = props;
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -71,8 +72,8 @@ const ViewDetailMain = (props) => {
                             <br />
                             <br />
                             <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(formData?.dateOfBirth, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Gender">{checkAndSetDefaultValue(formData?.gender, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Maritial Status">{checkAndSetDefaultValue(formData?.martialStatus, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.GENDER_CD, formData?.gender), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Maritial Status">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.MARITAL_STATUS, formData?.martialStatus), isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Wedding Anniversary Date">{checkAndSetDefaultValue(formData?.weddingAnniversary, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Occupation">{checkAndSetDefaultValue(formData?.occuption, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Annual Income">{checkAndSetDefaultValue(formData?.annualIncome, isLoading)}</Descriptions.Item>
