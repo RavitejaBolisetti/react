@@ -48,7 +48,7 @@ const OTFDetailCard = (props) => {
                     Model: <span>{selectedOrder?.model || 'NA'}</span>
                 </p>
                 <p>
-                    CPD: <span>{selectedOrder?.cpd || 'NA'}</span>
+                    CPD: <span>{convertDateTime(selectedOrder?.cpd, 'DD MMM YYYY') || 'NA'}</span>
                 </p>
             </Panel>
         </Collapse>
