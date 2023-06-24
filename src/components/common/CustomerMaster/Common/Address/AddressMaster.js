@@ -30,12 +30,14 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const mapStateToProps = (state) => {
+    console.log('state', state);
     const {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: addData = [] },
             CustomerMaster: {
                 AddressIndividual: { isLoaded: isAddressLoaded = false, isLoading: isAddressLoading, data: addressIndData = [] },
+                CorporateAddress:  { isLoaded: isCompanyAddressLoaded = false, isLoading: isCompanyAddressLoading, data: addressCompanyData = [] }
             },
             Geo: {
                 Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
@@ -46,7 +48,9 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         addressIndData,
+        addressCompanyData,
         isAddressLoaded,
+        isCompanyAddressLoaded,
         isAddressLoading,
         addData: addData && addData[PARAM_MASTER.ADD_TYPE.id],
         isPinCodeDataLoaded,
@@ -80,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddressMasterBase = (props) => {
-    const { isViewModeVisible, section, addressIndData, setFormActionType, formActionType, isAddressLoaded, selectedCustomer, saveData, addData } = props;
+    const { isViewModeVisible, section, addressIndData, setFormActionType, isCompanyAddressLoaded, formActionType, isAddressLoaded, addressCompanyData, selectedCustomer, saveData, addData } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, isAddressLoading, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification } = props;
     const { fetchListCorporate, saveDataCorporate, customerType } = props;
 
@@ -89,6 +93,7 @@ const AddressMasterBase = (props) => {
     const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [isAdding, setIsAdding] = useState(false);
     const [editingData, setEditingData] = useState({});
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
@@ -109,11 +114,18 @@ const AddressMasterBase = (props) => {
         if (userId && addressIndData?.customerAddress?.length) {
             setAddressData(addressIndData?.customerAddress);
         }
+        if (userId && !isAddressLoaded) {
+            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
+                setAddressData(addressIndData?.customerAddress);
+            } else {
+                setAddressData(addressCompanyData?.customerAddress);
+            }
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [addressIndData]);
+    }, [addressIndData, addressCompanyData]);
 
     useEffect(() => {
-        if (userId && !isAddressLoaded) {
+        if (userId && !isAddressLoaded ) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
             } else {

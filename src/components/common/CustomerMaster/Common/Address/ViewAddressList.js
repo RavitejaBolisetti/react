@@ -19,6 +19,7 @@ const ViewAddressList = (props) => {
     const [openAccordian, setOpenAccordian] = useState('');
 
     const handleCollapse = (key) => {
+        if(isEditing)return;
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 

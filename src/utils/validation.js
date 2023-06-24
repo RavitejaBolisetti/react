@@ -117,7 +117,7 @@ export const validattwitterProfileUrl = (fieldName) => ({
 });
 
 export const duplicateValidator = (value, fieldName, dataList, updateVal) => {
-    let dataListToCheck = [...dataList] || [];
+    let dataListToCheck = dataList?.length ? [...dataList] : [];
     if (updateVal && dataList?.length > 1) {
         let index = dataList?.findIndex((el) => el[fieldName].toLowerCase() === updateVal.toLowerCase());
         if (index !== -1) {

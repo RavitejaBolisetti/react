@@ -101,9 +101,9 @@ const AddEditForm = (props) => {
             .then((value) => {
                 // const value = form.getFieldsValue();
 
-                if (isEditing) {
+                if (editingData?.addressType) {
                     setAddressData((prev) => {
-                        let formData = [...prev];
+                        let formData =  [...prev];
                         formData?.forEach((contact) => {
                             if (contact?.defaultaddress === true) {
                                 contact.defaultaddress = false;
@@ -116,7 +116,7 @@ const AddEditForm = (props) => {
                     });
                 } else {
                     setAddressData((prev) => {
-                        let formData = [...prev];
+                        let formData = prev?.length ?  [...prev] : [];
                         if (value?.defaultaddress && formData?.length >= 1) {
                             formData?.forEach((contact) => {
                                 if (contact?.defaultaddress === true) {
@@ -125,7 +125,7 @@ const AddEditForm = (props) => {
                             });
                             return [...formData, { ...value, ...pinSearchData }];
                         } else {
-                            return [...prev, { ...value, ...pinSearchData }];
+                            return prev?.length ? [...prev, { ...value, ...pinSearchData }] : [{ ...value, ...pinSearchData }];
                         }
                     });
                 }
