@@ -227,6 +227,7 @@ const IndividualProfileBase = (props) => {
         activeKey,
         setActiveKey,
         viewDocument,
+        handleOnClick,
     };
 
     const handleFormValueChange = () => {
