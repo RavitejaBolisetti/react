@@ -10,6 +10,8 @@ import { Form, Row, Col } from 'antd';
 import { familyDetailsDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetails';
 import { familyDetailSearchDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetailSearch';
 import { showGlobalNotification } from 'store/actions/notification';
+
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { GetAge } from 'utils/getAge';
 import { AddEditForm } from './AddEditForm';
