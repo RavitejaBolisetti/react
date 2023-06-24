@@ -223,7 +223,7 @@ const AddEditForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Contact Mobile" name="mobileNumber" rules={[validateRequiredInputField('contact number'), validateMobileNoField('mobile number')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('mobile number')} />
+                            <Input maxLength={10} placeholder={preparePlaceholderText('mobile number')}/>
                         </Form.Item>
                     </Col>
                 </Row>

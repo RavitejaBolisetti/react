@@ -18,6 +18,7 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
+   
     return (
         <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
@@ -47,7 +48,7 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.customerName}>
                                 <Text>
-                                    {formData?.title}
+                                    {formData?.titleCode}
                                     <span>&nbsp;</span>
                                     {formData?.firstName}
                                     <span>&nbsp;</span>
@@ -60,9 +61,9 @@ const ViewDetailMain = (props) => {
                     </div>
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Email Id">{checkAndSetDefaultValue(formData?.emailId)}</Descriptions.Item>
-                        <Descriptions.Item label="Do you want to contact over whatsapp?">{checkAndSetDefaultValue(formData?.whatsappCommunicationIndicator ? 'Yes' : 'No')}</Descriptions.Item>
+                        <Descriptions.Item label="Do you want to contact over whatsapp?"className={formData?.whatsappCommunicationIndicator ? styles.yesText : styles.noText}>{checkAndSetDefaultValue(formData?.whatsappCommunicationIndicator ? 'Yes' : 'No')}</Descriptions.Item>
                         <Descriptions />
-                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?">{checkAndSetDefaultValue(formData?.mobileNumberAsWhatsappNumber ? 'Yes' : 'No')}</Descriptions.Item>
+                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?"className={formData?.whatsappCommunicationIndicator ? styles.yesText : styles.noText}>{checkAndSetDefaultValue(formData?.mobileNumberAsWhatsappNumber ? 'Yes' : 'No')}</Descriptions.Item>
                         <Descriptions.Item label="Whatsapp Number">{checkAndSetDefaultValue(formData?.whatsAppNumber)}</Descriptions.Item>
                     </Descriptions>
                     <Descriptions {...viewProps}>
@@ -74,7 +75,10 @@ const ViewDetailMain = (props) => {
                 </Card>
             </Space>
         </div>
+         
     );
 };
+
+
 
 export const ViewDetail = ViewDetailMain;

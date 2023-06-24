@@ -124,7 +124,7 @@ const CustomerDetailMasterBase = (props) => {
 
     const onFinish = (values) => {
         setRefreshList(false);
-        const data = { ...values, customerId: selectedCustomer?.customerId };
+        const data = { ...values, customerId: selectedCustomer?.customerId};
 
         const onSuccess = (res) => {
             form.resetFields();

@@ -204,7 +204,7 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={''} label="Youtube Channel" name="youTubeChannel" rules={[validatYoutubeProfileUrl('Pincode')]}>
+                            <Form.Item initialValue={''} label="Youtube Channel" name="youTubeChannel" >
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('youtube channel')} {...disabledProps} />
                             </Form.Item>
                         </Col>
