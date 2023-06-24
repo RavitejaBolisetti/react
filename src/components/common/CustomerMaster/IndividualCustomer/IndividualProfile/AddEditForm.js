@@ -23,7 +23,7 @@ const { Dragger } = Upload;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, userId, uploadDocumentFile, viewDocument, setUploadedFile, NEXT_EDIT_ACTION, listDocumentShowLoading, isViewDocumentLoading } = props;
+    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, NEXT_EDIT_ACTION, listDocumentShowLoading, isViewDocumentLoading } = props;
     const { isReadOnly = false } = props;
     const [isRead, setIsRead] = useState(false);
     const [customer, setCustomer] = useState(false);
@@ -40,6 +40,11 @@ const AddEditFormMain = (props) => {
         const values = e;
         if (values == 'S') {
             setIsRead(true);
+            form.setFieldsValue({
+                weddingAnniversary: null,
+            });
+        } else {
+            setIsRead(false);
         }
     };
 
@@ -137,7 +142,7 @@ const AddEditFormMain = (props) => {
                                 key="1"
                             >
                                 <div className={styles.headerBox}>
-                                    {NEXT_EDIT_ACTION ? (
+                                    {NEXT_EDIT_ACTION && formData?.image ? (
                                         <div className={styles.uploadDragger}>
                                             <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} viewDocument={viewDocument} />
                                         </div>
@@ -173,7 +178,7 @@ const AddEditFormMain = (props) => {
 
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Date of Birth" initialValue={dayjs(formData?.dateOfBirth)} name="dateOfBirth">
+                                            <Form.Item label="Date of Birth" name="dateOfBirth">
                                                 <DatePicker format="YYYY-MM-DD" disabled={isReadOnly} className={styles.datepicker} />
                                             </Form.Item>
                                         </Col>
@@ -202,7 +207,7 @@ const AddEditFormMain = (props) => {
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label=" Wedding Anniversary Date" initialValue={dayjs(formData?.weddingAnniversary)} name="weddingAnniversary">
+                                            <Form.Item label=" Wedding Anniversary Date" name="weddingAnniversary">
                                                 <DatePicker format="YYYY-MM-DD" className={styles.datepicker} disabled={isRead} />
                                             </Form.Item>
                                         </Col>
