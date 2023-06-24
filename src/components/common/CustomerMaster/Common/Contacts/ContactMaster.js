@@ -249,14 +249,6 @@ const ContactMain = (props) => {
         console.error(err);
     };
 
-    const formSkeleton = (
-        <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <InputSkeleton height={'100vh'} />
-            </Col>
-        </Row>
-    );
-
     return (
         <>
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSubmit} onFinishFailed={onFinishFailed}>
@@ -279,9 +271,7 @@ const ContactMain = (props) => {
                                 key="1"
                             >
                                 {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                {isCustomerDataLoading ? formSkeleton : <ViewContactList {...formProps} />}
-                                {/* { !formActionType?.viewMode && (showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />} */}
-                                {/* {isCustomerDataLoading ? formSkeleton : formContainer} */}
+                                <ViewContactList {...formProps} />
                             </Panel>
                         </Collapse>{' '}
                     </Col>

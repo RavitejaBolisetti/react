@@ -17,7 +17,6 @@ import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 
-import { InputSkeleton } from 'components/common/Skeleton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 
 import styles from 'components/common/Common.module.css';

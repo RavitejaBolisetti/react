@@ -18,7 +18,6 @@ import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { OTFFormButton } from '../OTFFormButton';
-import { InputSkeleton } from 'components/common/Skeleton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
