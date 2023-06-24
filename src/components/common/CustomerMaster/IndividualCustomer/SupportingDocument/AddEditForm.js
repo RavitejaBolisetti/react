@@ -54,25 +54,25 @@ const AddEditForm = (props) => {
                 return false;
             }
         },
+
         onChange: (info) => {
-            console.log(info, 'INFORMATION');
             handleFormValueChange();
             const { status } = info.file;
             setShowStatus(status);
+           if (status === 'done') {
+                setUploadedFile(info?.file?.response?.docId);
+                message.success(`${info.file.name} file uploaded successfully.`);
+            }
         },
     };
 
-    //${info.file.name}
-
     useEffect(() => {
-        console.log('showStatus');
         if (showStatus === 'uploading') {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Uploading' });
         } else if (showStatus === 'done') {
-            //setUploadedFile(info?.file?.response?.docId);
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Uploaded' });
         } else if (showStatus === 'error') {
-            message.error(` file upload failed.`);
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showStatus]);
