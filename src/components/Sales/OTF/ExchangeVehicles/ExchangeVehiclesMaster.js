@@ -14,7 +14,6 @@ import { bindActionCreators } from 'redux';
 
 import { Row, Col, Form } from 'antd';
 
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetail';
 import { schemeDataActions } from 'store/actions/data/otf/exchangeVehicle';
@@ -31,8 +30,6 @@ import { OTFStatusBar } from '../utils/OTFStatusBar';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
-
 import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
@@ -44,7 +41,7 @@ const mapStateToProps = (state) => {
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isloading: isFinanceLovLoading, data: financeLovData = [] },
                 SchemeDetail: { isLoaded: isSchemeLovDataLoaded = false, isloading: isSchemeLovLoading, data: schemeLovData = [] },
             },
-            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, filteredListData: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Vehicle: {
                 MakeVehicleDetails: { isLoaded: isMakeDataLoaded = false, isMakeLoading, data: makeData = [] },
                 ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isModelLoading, data: modelData = [] },
@@ -108,9 +105,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchVariantLovList: vehicleVariantDetailsDataActions.fetchList,
             listVariantShowLoading: vehicleVariantDetailsDataActions.listShowLoading,
 
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchList: schemeDataActions.fetchList,
             listShowLoading: schemeDataActions.listShowLoading,
             saveData: schemeDataActions.saveData,
@@ -123,7 +117,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ExchangeVehiclesBase = (props) => {
     const { exchangeData, isLoading, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, section } = props;
-    const { fetchConfigList, listConfigShowLoading, isConfigDataLoaded, isConfigLoading, typeData } = props;
+    const { typeData } = props;
     const { fetchMakeLovList, listMakeShowLoading, fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isMakeDataLoaded, isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
     const { financeLovData, isFinanceLovLoading, isFinanceLovDataLoaded, fetchFinanceLovList, listFinanceLovShowLoading } = props;
@@ -153,16 +147,6 @@ const ExchangeVehiclesBase = (props) => {
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
-
-    useEffect(() => {
-        if (!isConfigDataLoaded && userId) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.REL_TYPE?.id, userId });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.YEAR_LIST?.id, userId });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.VEHCL_USAG?.id, userId });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.MONTH?.id, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isConfigDataLoaded, userId]);
 
     useEffect(() => {
         if (userId) {

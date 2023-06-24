@@ -13,12 +13,10 @@ import { OTFFormButton } from '../OTFFormButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 
@@ -28,10 +26,10 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isLoading: isTypeDataLoading, filteredListData: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
                 OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
-                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded = false, isLoading: isSalesConsultantLoading, data: salesConsultantLov = [] },
+                salesConsultantLov: { data: salesConsultantLov = [] },
             },
         },
     } = state;
@@ -40,8 +38,6 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isTypeDataLoaded,
-        isTypeDataLoading,
         typeData,
         isDataLoaded,
 
@@ -57,9 +53,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchList: otfDetailsDataActions.fetchList,
             saveData: otfDetailsDataActions.saveData,
             resetData: otfDetailsDataActions.reset,
