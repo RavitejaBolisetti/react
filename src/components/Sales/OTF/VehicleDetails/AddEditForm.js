@@ -24,19 +24,14 @@ const { Option } = Select;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { activeKey, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, onFinish, onFinishFailed, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
+    const { activeKey, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, onFinish, onFinishFailed, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
     const [optionForm] = Form.useForm();
 
-    const [optionsServicesMapping, setoptionsServicesMapping] = useState([
-        { serviceName: 'tax', amount: 200 },
-        { serviceName: 'shaka', amount: 1000 },
-    ]);
     const disabledProp = { disabled: true };
     useEffect(() => {
         if (formActionType?.editMode && formData) {
             form.setFieldsValue({
                 ...formData,
-                poDate: formData?.podate?.substr(0, 10),
                 poDate: dayjs(formData?.podate?.substr(0, 10)).format('DD/MM/YYYY'),
             });
         }
@@ -79,6 +74,11 @@ const AddEditFormMain = (props) => {
         formData,
         setOpenAccordian,
         addContactHandeler,
+        optionsServiceModified,
+        setoptionsServiceModified,
+        optionsServicesMapping,
+        setoptionsServicesMapping,
+        handleFormValueChange,
     };
 
     return (
@@ -221,7 +221,7 @@ const AddEditFormMain = (props) => {
                             key="3"
                         >
                             {isReadOnly && <OptionServicesForm {...OptionServicesFormProps} />}
-                            <DataTable tableColumn={optionalServicesColumns} tableData={formData['optionalServices']} removePagination={true} />
+                            <DataTable tableColumn={optionalServicesColumns} tableData={optionsServiceModified} removePagination={true} />
                         </Panel>
                     </Collapse>
                 </Space>

@@ -10,7 +10,6 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
-
 import { addToolTip } from 'utils/customMenuLink';
 import { DataTable } from 'utils/dataTable';
 import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
@@ -27,24 +26,24 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
     useEffect(() => {
-        if (modelData?.length > 0) {
+        if (modelData) {
             console.log('modelData', modelData);
             settooltTipText(
                 <div>
                     <p>
-                        Color - <span>{modelData['0']['color']}</span>
+                        Color - <span>{modelData['color']}</span>
                     </p>
                     <p>
-                        Seating - <span>{modelData['0']['seatingCapacity']}</span>
+                        Seating - <span>{modelData['seatingCapacity']}</span>
                     </p>
                     <p>
-                        Fuel - <span>{modelData['0']['fuel']}</span>
+                        Fuel - <span>{modelData['fuel']}</span>
                     </p>
                     <p>
-                        Variant - <span>{modelData['0']['variant']}</span>
+                        Variant - <span>{modelData['variant']}</span>
                     </p>
                     <p>
-                        Name - <span>{modelData['0']['name']}</span>
+                        Name - <span>{modelData['name']}</span>
                     </p>
                 </div>
             );

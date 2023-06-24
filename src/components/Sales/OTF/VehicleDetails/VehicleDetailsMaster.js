@@ -22,6 +22,7 @@ import { ViewDetail } from './ViewDetail';
 import { OTFFormButton } from '../OTFFormButton';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
+import dayjs from 'dayjs';
 
 const mapStateToProps = (state) => {
     const {
@@ -47,6 +48,7 @@ const mapStateToProps = (state) => {
         isTypeDataLoaded,
         ProductHierarchyData,
         isProductHierarchyDataLoaded,
+        isProductHierarchyLoading,
     };
     return returnValue;
 };
@@ -70,12 +72,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { VehicleDetailsData, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, ProductHierarchyData, typeData, fetchList, isTypeDataLoaded, resetData, configLoading, fetchconfigList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { VehicleDetailsData, isProductHierarchyLoading, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, ProductHierarchyData, typeData, fetchList, isTypeDataLoaded, resetData, configLoading, fetchconfigList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, section, formActionType, handleFormValueChange } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setformData] = useState({});
-    const [openAccordian, setOpenAccordian] = useState();
+    const [optionsServiceModified, setoptionsServiceModified] = useState([]);
+    const [optionsServicesMapping, setoptionsServicesMapping] = useState([]);
+    const [openAccordian, setOpenAccordian] = useState('1');
 
     const [tooltTipText, settooltTipText] = useState();
     const [isReadOnly, setIsReadOnly] = useState();
@@ -134,14 +138,14 @@ const VehicleDetailsMasterMain = (props) => {
     }, [userId, isTypeDataLoaded]);
 
     useEffect(() => {
-        if (ProductHierarchyData && isProductHierarchyDataLoaded && userId) {
+        if (ProductHierarchyData && isProductHierarchyDataLoaded && userId && !ProductHierarchyDataOptions?.length) {
             setProductHierarchyDataOptions(ProductHierarchyData);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ProductHierarchyData, isProductHierarchyDataLoaded, userId]);
     useEffect(() => {
-        if (VehicleDetailsData && isDataLoaded) {
+        if (isProductHierarchyDataLoaded && userId && ProductHierarchyData && ProductHierarchyDataOptions) {
             const LovParams = [
                 {
                     key: 'prodctCode',
@@ -150,18 +154,34 @@ const VehicleDetailsMasterMain = (props) => {
                     name: 'Product Code',
                 },
             ];
+            fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraparams: LovParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ProductHierarchyDataOptions]);
+    useEffect(() => {
+        if (VehicleDetailsData && isDataLoaded) {
             setformData(VehicleDetailsData);
-
-            // fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraparams: LovParams });
+            setoptionsServiceModified(VehicleDetailsData['optionalServices']);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [VehicleDetailsData, isDataLoaded]);
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, optionalServices: [] };
+        let data;
+        if (!values.hasOwnProperty('vehicleUsageType')) {
+            // const { taxDetails, ...myvals } = VehicleDetailsData;
+            // console.log('myvals', myvals);
+            data = { otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, podate: dayjs(formData?.podate?.substr(0, 10)).format('DD/MM/YYYY'), vehicleUsageType: VehicleDetailsData?.vehicleUsageType, model: VehicleDetailsData?.model, modelCode: VehicleDetailsData?.modelCode, discountAmount: VehicleDetailsData?.discountAmount, optionalServices: optionsServicesMapping };
+            console.log('data', data);
+        } else {
+            data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, optionalServices: optionsServicesMapping };
+        }
         console.log('data', data, selectedOrderId);
-
         const onSuccess = (res) => {
+            setoptionsServicesMapping([]);
+            setoptionsServiceModified([]);
+            setformData({});
+            setOpenAccordian('1');
             const extraParams = [
                 {
                     key: 'otfNumber',
@@ -219,6 +239,11 @@ const VehicleDetailsMasterMain = (props) => {
         setOpenAccordian,
         isReadOnly,
         setIsReadOnly,
+        optionsServiceModified,
+        setoptionsServiceModified,
+        optionsServicesMapping,
+        setoptionsServicesMapping,
+        handleFormValueChange,
     };
     const viewProps = {
         activeKey,
@@ -226,7 +251,7 @@ const VehicleDetailsMasterMain = (props) => {
         onChange,
         styles,
         formData,
-        modelData: ProductHierarchyData,
+        modelData: ProductHierarchyData['0'],
         tooltTipText,
         settooltTipText,
     };
