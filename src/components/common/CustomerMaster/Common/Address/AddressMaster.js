@@ -36,6 +36,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: addData = [] },
             CustomerMaster: {
                 AddressIndividual: { isLoaded: isAddressLoaded = false, isLoading: isAddressLoading, data: addressIndData = [] },
+                CorporateAddress:  { isLoaded: isCompanyAddressLoaded = false, isLoading: isCompanyAddressLoading, data: addressCompanyData = [] }
             },
             Geo: {
                 Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
@@ -46,7 +47,9 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         addressIndData,
+        addressCompanyData,
         isAddressLoaded,
+        isCompanyAddressLoaded,
         isAddressLoading,
         addData: addData && addData[PARAM_MASTER.ADD_TYPE.id],
         isPinCodeDataLoaded,
@@ -80,8 +83,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddressMasterBase = (props) => {
-    const { isViewModeVisible, section, addressIndData, setFormActionType, formActionType, isAddressLoaded, selectedCustomer, saveData, addData } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, isAddressLoading, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification } = props;
+    const { isViewModeVisible, section, addressIndData, setFormActionType, isCompanyAddressLoaded, formActionType, isAddressLoaded, addressCompanyData, selectedCustomer, saveData, addData } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, isAddressLoading, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification ,handleButtonClick} = props;
     const { fetchListCorporate, saveDataCorporate, customerType } = props;
 
     const [form] = Form.useForm();
@@ -89,12 +92,11 @@ const AddressMasterBase = (props) => {
     const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [isAdding, setIsAdding] = useState(false);
     const [editingData, setEditingData] = useState({});
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const extraParams = [
         {
@@ -109,11 +111,18 @@ const AddressMasterBase = (props) => {
         if (userId && addressIndData?.customerAddress?.length) {
             setAddressData(addressIndData?.customerAddress);
         }
+        if (userId && !isAddressLoaded) {
+            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
+                setAddressData(addressIndData?.customerAddress);
+            } else {
+                setAddressData(addressCompanyData?.customerAddress);
+            }
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [addressIndData]);
+    }, [addressIndData, addressCompanyData]);
 
     useEffect(() => {
-        if (userId && !isAddressLoaded) {
+        if (userId && !isAddressLoaded ) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
             } else {
@@ -123,17 +132,6 @@ const AddressMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAddressLoaded]);
 
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormData([]);
-        forceUpdate();
-
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-
-        record && setFormData(record);
-        setIsFormVisible(true);
-    };
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
@@ -142,16 +140,12 @@ const AddressMasterBase = (props) => {
     const onCheckdefaultAddClick = (e, value) => {
         e.stopPropagation();
         setAddressData((prev) => {
-            let formData = [...prev];
-            formData?.forEach((address) => {
-                if (address?.defaultaddress === true) {
-                    address.defaultaddress = false;
-                };
-            });
-            const index = formData?.findIndex((el) =>  el?.addressType === editingData?.addressType && el?.addressLine1 === editingData?.addressLine1 && el?.pinCode === editingData?.pinCode);
-            formData.splice(index, 1, { ...value, deafultAddressIndicator: e.target.checked });
-            return [...formData];
+            let updetedData = prev?.map((address) => ({ ...address, deafultAddressIndicator: false }));
+            const index = updetedData?.findIndex((el) => el?.addressType === value?.addressType && el?.addressLine1 === value?.addressLine1 && el?.pinCode === value?.pinCode);
+            updetedData.splice(index, 1, { ...value, deafultAddressIndicator: e.target.checked });
+            return [...updetedData];
         })
+        forceUpdate();
     };
 
     const onSubmit = () => {
@@ -164,6 +158,9 @@ const AddressMasterBase = (props) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+            if (res.data) {
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
+            }
         };
 
         const onError = (message) => {
@@ -229,9 +226,6 @@ const AddressMasterBase = (props) => {
         setIsEditing,
         setEditingData,
         editingData,
-        ADD_ACTION,
-        EDIT_ACTION,
-        VIEW_ACTION,
         buttonData,
         setButtonData,
         handleButtonClick,

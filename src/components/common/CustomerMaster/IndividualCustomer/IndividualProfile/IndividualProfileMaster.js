@@ -72,10 +72,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 const IndividualProfileBase = (props) => {
-    const { userId, fecthViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification } = props;
+    const { userId, fecthViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification, handleButtonClick } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, downloadFile } = props;
     const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, selectedCustomerId, setSelectedCustomerId } = props;
-    console.log('indiviualData', indiviualData);
     const [form] = Form.useForm();
 
     const [formData, setFormData] = useState([]);
@@ -86,10 +85,8 @@ const IndividualProfileBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-    const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
+
+    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -145,7 +142,7 @@ const IndividualProfileBase = (props) => {
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             if (res.data) {
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
                 setSelectedCustomerId(res?.data?.customerId);
             }
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -167,14 +164,7 @@ const IndividualProfileBase = (props) => {
 
     const onFinishFailed = (errorInfo) => {};
 
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormData([]);
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        record && setFormData(record);
-        setIsFormVisible(true);
-    };
+   
 
     const handleOnClick = () => {
         const extraParams = [
@@ -203,10 +193,6 @@ const IndividualProfileBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-
-        ADD_ACTION,
-        EDIT_ACTION,
-        VIEW_ACTION,
         buttonData,
         setButtonData,
         handleButtonClick,

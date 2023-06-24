@@ -304,6 +304,10 @@ const CustomerMasterMain = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
+
+    console.log("CUSTOMER_TYPE",CUSTOMER_TYPE )
+    console.log("customerType",customerType )
+
     return (
         <>
             <Row gutter={20}>
@@ -313,6 +317,7 @@ const CustomerMasterMain = (props) => {
                             <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.searchAndLabelAlign}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                     {Object.values(CUSTOMER_TYPE)?.map((item) => {
+                                        console.log()
                                         return (
                                             <Button className={styles.marR5} type={customerType === item?.id ? 'primary' : 'link'} danger onClick={() => setCustomerType(item?.id)}>
                                                 {item?.title}

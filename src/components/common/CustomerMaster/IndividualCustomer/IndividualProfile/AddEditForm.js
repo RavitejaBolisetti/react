@@ -8,7 +8,7 @@ import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, S
 import Svg from 'assets/images/Filter.svg';
 import dayjs from 'dayjs';
 
-import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, validatInstagramProfileUrl } from 'utils/validation';
+import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId, validatFacebookProfileUrl, validattwitterProfileUrl, validatInstagramProfileUrl, validatYoutubeProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
@@ -281,7 +281,7 @@ const AddEditFormMain = (props) => {
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin'), validateRequiredInputField('gstin')]}>
-                                            <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
+                                            <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} maxLength={15} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

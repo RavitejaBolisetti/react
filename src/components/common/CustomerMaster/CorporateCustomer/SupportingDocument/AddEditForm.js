@@ -9,35 +9,50 @@ import { Row, Col, Form, Select, Input, message, Upload, Button, Empty, Card } f
 import { FiEye, FiTrash } from 'react-icons/fi';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-
+import { validateRequiredInputField } from 'utils/validation';
+import Svg from 'assets/images/Filter.svg';
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { typeData, userId, setUploadedFile, uploadFile, listShowLoading, showGlobalNotification } = props;
+    const { handleFormValueChange, typeData, userId, uploadDocumentFile, uploadedFile, setUploadedFile, listShowLoading, downloadFile, viewListShowLoading, setUploadedFileList, showGlobalNotification, viewDocument, handlePreview } = props;
 
     const onDrop = (e) => {
         console.log('Dropped files', e.dataTransfer.files);
     };
+    // const onDownLoadFile =
+
+  
+    const onDownload = (file) => {
+
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+
+        handlePreview(file?.response);
+        let a = document.createElement('a');
+
+        a.href = `data:image/png;base64,${viewDocument?.base64}`;
+        a.download = viewDocument?.fileName;
+        a.click();
+    };
 
     const uploadProps = {
+        multiple: false,
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
-            previewIcon: <FiEye onClick={(e) => console.log(e, 'custom removeIcon event')} />,
-            removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
+            removeIcon: <FiTrash />,
+            downloadIcon: <FiEye onClick={(e) => onDownload(e)} style={{ color: '#ff3e5b' }} />,
             showProgress: true,
         },
         progress: { strokeWidth: 3, showInfo: true },
 
+        
         onDrop,
-        onChange: (info, event) => {
+        onChange: (info) => {
+            handleFormValueChange();
             const { status } = info.file;
-
-            console.log('event', event);
             if (status === 'uploading') {
             } else if (status === 'done') {
                 setUploadedFile(info?.file?.response?.docId);
@@ -64,7 +79,7 @@ const AddEditForm = (props) => {
             onSuccess,
         };
 
-        uploadFile(requestData);
+        uploadDocumentFile(requestData);
     };
 
     const selectProps = {
@@ -78,7 +93,7 @@ const AddEditForm = (props) => {
         <Card>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="Document Type" name="documentTypeId" placeholder={preparePlaceholderSelect('document type')} rules={[validateRequiredSelectField('document type')]}>
+                    <Form.Item label="Document Type" name="documentTypeId" placeholder={preparePlaceholderSelect('document type')}>
                         <Select className={styles.headerSelectField} loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps}>
                             {typeData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
@@ -94,16 +109,18 @@ const AddEditForm = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
-
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div>
-                        <Dragger customRequest={handleUpload} {...uploadProps}>
+                    <div className={styles.uploadContainer}>
+                        <Dragger
+                            //  disabled={uploadedFile?.length > 0}
+                            customRequest={handleUpload}
+                            {...uploadProps}
+                        >
+                            <div>
+                                <img src={Svg} alt="" />
+                            </div>
                             <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 100,
-                                }}
                                 description={
                                     <>
                                         <span>

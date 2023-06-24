@@ -24,7 +24,7 @@ export const ViewDetail = (props) => {
             {supportingData.length > 0 ? (
                 <Card style={{ backgroundColor: '#F2F2F2' }}>
                     {supportingData.map((uploadData) => {
-                        return <Card style={{ backgroundColor: '#E6E6E6' }} key={uploadData.id} title={uploadData?.documentName} extra={<FiEye onClick={() => downloadFile(uploadData)} />}></Card>;
+                        return <Card style={{ backgroundColor: '#E6E6E6' }} key={uploadData.id} title={uploadData?.documentName} extra={<FiEye style={{color: '#ff3e5b'}} onClick={() => downloadFile(uploadData)} />}></Card>;
                     })}
                 </Card>
             ) : (

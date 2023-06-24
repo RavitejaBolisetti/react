@@ -2445,6 +2445,13 @@
 .cursorPointer {
     cursor: pointer;
 }
+.viewDrawerContainer .yesText :global .ant-descriptions-item-container .ant-descriptions-item-content{
+    color: #70C922 !important;
+    font-weight: 600 !important;
+}
+.viewDrawerContainer .noText :global .ant-descriptions-item-container .ant-descriptions-item-content{
+    color: #0B0B0C !important;
+}
 
 @media (max-width: 768px) {
     /* For mobile phones: */

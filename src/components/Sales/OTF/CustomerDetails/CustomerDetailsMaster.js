@@ -11,8 +11,6 @@ import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { OTFFormButton } from '../OTFFormButton';
 
 import AddEditForm from './AddEditForm';
@@ -70,9 +68,6 @@ const mapDispatchToProps = (dispatch) => ({
 
             listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
             fetchPincodeDetail: geoPincodeDataActions.fetchList,
-
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
         },
         dispatch
     ),
@@ -81,7 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const CustomerDetailsMain = (props) => {
     const { saveData, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, otfSearchSelected, formActionType } = props;
-    const { isTypeDataLoaded, typeData, fetchConfigList, listConfigShowLoading } = props;
+    const { typeData } = props;
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
     const [formData, setFormData] = useState('');
@@ -94,13 +89,6 @@ export const CustomerDetailsMain = (props) => {
             setFormData(customerFormData);
         }
     }, [isDataLoaded, userId, customerFormData]);
-
-    useEffect(() => {
-        if (!isTypeDataLoaded && userId) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CUST_TYPE.id });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isTypeDataLoaded]);
 
     const selectedOTF = otfSearchSelected?.otfNumber;
 

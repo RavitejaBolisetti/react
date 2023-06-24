@@ -37,6 +37,7 @@ const AddEditForm = (props) => {
             key: item?.id,
         }));
         setOptions(pinOption);
+        return()=>setEditingData({});
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pincodeData]);
 
@@ -83,10 +84,10 @@ const AddEditForm = (props) => {
         setOptions();
         form.setFieldsValue({
             pinCode: undefined,
-            state: undefined,
-            city: undefined,
-            tehsil: undefined,
-            district: undefined,
+            stateName: undefined,
+            cityName: undefined,
+            tehsilName: undefined,
+            districtName: undefined,
         });
     };
 
@@ -100,12 +101,12 @@ const AddEditForm = (props) => {
             .then((value) => {
                 // const value = form.getFieldsValue();
 
-                if (isEditing) {
+                if (editingData?.addressType) {
                     setAddressData((prev) => {
-                        let formData = [...prev];
-                        formData?.forEach((contact) => {
-                            if (contact?.defaultaddress === true) {
-                                contact.defaultaddress = false;
+                        let formData =  [...prev];
+                        formData?.forEach((address) => {
+                            if (address?.defaultaddress === true) {
+                                address.defaultaddress = false;
                             }
                         });
                         const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode);
@@ -115,16 +116,16 @@ const AddEditForm = (props) => {
                     });
                 } else {
                     setAddressData((prev) => {
-                        let formData = [...prev];
+                        let formData = prev?.length ?  [...prev] : [];
                         if (value?.defaultaddress && formData?.length >= 1) {
-                            formData?.forEach((contact) => {
-                                if (contact?.defaultaddress === true) {
-                                    contact.defaultaddress = false;
+                            formData?.forEach((address) => {
+                                if (address?.defaultaddress === true) {
+                                    address.defaultaddress = false;
                                 }
                             });
                             return [...formData, { ...value, ...pinSearchData }];
                         } else {
-                            return [...prev, { ...value, ...pinSearchData }];
+                            return prev?.length ? [...prev, { ...value, ...pinSearchData }] : [{ ...value, ...pinSearchData }];
                         }
                     });
                 }
@@ -144,7 +145,7 @@ const AddEditForm = (props) => {
             <Form form={form} id="myAdd" onFinish={onSubmit} onFieldsChange={handleFormValueChange}  autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type'), { validator: (rule, value) => duplicateValidator(value, 'addressType', addressData)   }]}>
+                        <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type'), { validator: (rule, value) => duplicateValidator(value, 'addressType', addressData, editingData?.addressType)   }]}>
                             <Select placeholder={preparePlaceholderSelect('address type')}>
                                 {addressType?.map((item) => (
                                     <Option key={'ct' + item?.key} value={item?.key}>
@@ -222,7 +223,7 @@ const AddEditForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Contact Mobile" name="mobileNumber" rules={[validateRequiredInputField('contact number'), validateMobileNoField('mobile number')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('mobile number')} />
+                            <Input maxLength={10} placeholder={preparePlaceholderText('mobile number')}/>
                         </Form.Item>
                     </Col>
                 </Row>

@@ -22,16 +22,16 @@ const ViewDetailBase = (props) => {
 
     return (
         <div className={styles.sectionborder}>
-                    <Descriptions {...viewProps} className={styles.descriptionBox}>
-                        <Descriptions.Item label="M&M Customer">{checkAndSetDefaultValue(props?.mnmCustomer)}</Descriptions.Item>
-                        <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(props?.customerId)}</Descriptions.Item>
-                        {customerType ? <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(props?.customerName)}</Descriptions.Item> : null}
-                        <Descriptions.Item label="Relationship">{checkAndSetDefaultValue(props?.relationship)}</Descriptions.Item>
-                        <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(typeof props?.dateOfBirth === 'object' ? dayjs(props?.dateOfBirth).format('YYYY-MM-DD') : props?.dateOfBirth)}</Descriptions.Item>
-                        <Descriptions.Item label="Age">{checkAndSetDefaultValue(props?.relationAge)}</Descriptions.Item>
-                        <Descriptions.Item label="" />
-                        <Descriptions.Item label="Remark">{checkAndSetDefaultValue(props?.remarks)}</Descriptions.Item>
-                    </Descriptions>
+            <Descriptions {...viewProps} className={styles.descriptionBox}>
+                <Descriptions.Item label="M&M Customer">{checkAndSetDefaultValue(props?.mnmCustomer)}</Descriptions.Item>
+                <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(props?.customerId)}</Descriptions.Item>
+                {customerType ? <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(props?.customerName)}</Descriptions.Item> : null}
+                <Descriptions.Item label="Relationship">{checkAndSetDefaultValue(props?.relationship)}</Descriptions.Item>
+                <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(typeof props?.dateOfBirth === 'object' ? dayjs(props?.dateOfBirth).format('YYYY-MM-DD') : props?.dateOfBirth)}</Descriptions.Item>
+                <Descriptions.Item label="Age">{checkAndSetDefaultValue(props?.relationAge)}</Descriptions.Item>
+                <Descriptions.Item label="" />
+                <Descriptions.Item label="Remark">{checkAndSetDefaultValue(props?.remarks)}</Descriptions.Item>
+            </Descriptions>
         </div>
     );
 };
