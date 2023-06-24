@@ -117,7 +117,6 @@ const CustomerDetailMasterBase = (props) => {
 
     useEffect(() => {
         if (typeData) {
-            console.log('typeData', typeData);
             setConfigurableTypedata({ CUST_TYPE: typeData[PARAM_MASTER?.CUST_TYPE?.id], CORP_TYPE: typeData[PARAM_MASTER?.CORP_TYPE?.id], CORP_CATE: typeData[PARAM_MASTER?.CORP_CATE?.id], TITLE: typeData[PARAM_MASTER?.TITLE?.id], MEM_TYPE: typeData[PARAM_MASTER?.MEM_TYPE?.id] });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -182,11 +181,6 @@ const CustomerDetailMasterBase = (props) => {
         styles,
     };
 
-    const myProps = {
-        ...props,
-        saveButtonName: formActionType?.addMode ? 'Create Customer ID' : 'Save & Next',
-    };
-
     const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;
     const formSkeleton = (
         <Row>
@@ -206,7 +200,7 @@ const CustomerDetailMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CustomerFormButton {...myProps} />
+                    <CustomerFormButton {...props} />
                 </Col>
             </Row>
         </Form>

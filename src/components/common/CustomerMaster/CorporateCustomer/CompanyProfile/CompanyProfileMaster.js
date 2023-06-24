@@ -71,16 +71,21 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CompanyProfileBase = (props) => {
     const { showGlobalNotification, buttonData, setButtonData, formActionType, handleButtonClick, defaultBtnVisiblity, selectedCustomer, selectedCustomerId } = props;
-    const { listShowLoading, section, saveData, uploadFile, userId, fetchCompanyProfileData, downloadFile, appCategoryData, customerProfileData, viewDocument } = props;
+    const { listShowLoading, section, saveData, uploadFile, userId, fetchCompanyProfileData, downloadFile, appCategoryData, customerProfileData, viewDocument, resetData } = props;
     const { uploadListShowLoading } = props;
 
     const [form] = Form.useForm();
     const [uploadedFile, setUploadedFile] = useState();
 
+    const [appCategory, setAppCustomerCategory] = useState();
+    const [appSubCategory, setAppSubCategory] = useState();
+    const [customerCategory, setCustomerCategory] = useState();
+
     const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
 
     useEffect(() => {
         if (userId && selectedCustomer) {
+            resetData();
             const extraParams = [
                 {
                     key: 'customerId',
@@ -96,11 +101,26 @@ const CompanyProfileBase = (props) => {
 
     const onFinish = (values) => {
         const recordId = customerProfileData?.id || '';
-        const customerId = customerProfileData.customerId ? customerProfileData.customerId : selectedCustomerId;
-        // const keyRoleId = customerProfileData?.keyAccountDetails ? customerProfileData?.keyAccountDetails.id : '';
+        if (uploadedFile && !values?.customerConsent) {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please accept consent.', placement: 'bottomRight' });
+            return;
+        }
+        const customerId = selectedCustomerId;
         const authorityId = customerProfileData?.authorityDetails ? customerProfileData?.authorityDetails.id : '';
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
-        const data = { ...rest, customerId: customerId, keyAccountDetails: { customerId: customerId, accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate }, authorityRequest: { id: authorityId, customerId: customerId, personName: values.personName, postion: values.postion, companyName: values.companyName, remarks: values.remarks }, customerFormDocId: uploadedFile, customerConsent: values.customerConsent, id: recordId };
+        const data = {
+            ...rest,
+            customerId: customerId,
+            applicationCategorization: appCategory,
+            applicationSubCategory: appSubCategory,
+            customerCategory: customerCategory,
+            // keyAccountDetails: { customerId: customerId, accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate },
+            authorityRequest: { id: authorityId, personName: values.personName, postion: values.postion, companyName: values.companyName, remarks: values.remarks },
+            customerFormDocId: uploadedFile,
+            customerConsent: values.customerConsent,
+            id: recordId,
+        };
+        // customerId: customerId
 
         const onSuccess = (res) => {
             listShowLoading(false);
@@ -111,16 +131,25 @@ const CompanyProfileBase = (props) => {
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             }
+            const extraParams = [
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: selectedCustomer?.customerId,
+                    name: 'customerId',
+                },
+            ];
+            fetchCompanyProfileData({ setIsLoading: listShowLoading, userId, extraParams });
         };
 
         const onError = (message) => {
             listShowLoading(false);
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: customerProfileData.customerId ? 'put' : 'post',
             setIsLoading: listShowLoading,
             onError,
             onSuccess,
@@ -164,6 +193,12 @@ const CompanyProfileBase = (props) => {
         uploadedFile,
         setUploadedFile,
         handleOnClick,
+        appCategory,
+        setAppCustomerCategory,
+        appSubCategory,
+        setAppSubCategory,
+        customerCategory,
+        setCustomerCategory,
     };
 
     const viewProps = {

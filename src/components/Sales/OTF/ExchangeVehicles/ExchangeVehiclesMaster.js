@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -210,14 +210,12 @@ const ExchangeVehiclesBase = (props) => {
 
         const onSuccess = (res) => {
             form.resetFields();
-
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
         };
 
-        fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
-
         const onError = (message) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
+            showGlobalNotification({ message });
         };
 
         const requestData = {

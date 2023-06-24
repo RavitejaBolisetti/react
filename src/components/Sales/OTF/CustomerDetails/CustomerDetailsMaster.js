@@ -6,13 +6,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Form, Button } from 'antd';
+import { Row, Col, Form } from 'antd';
 
 import { bindActionCreators } from 'redux';
 import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { OTFFormButton } from '../OTFFormButton';
 
 import AddEditForm from './AddEditForm';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -78,16 +79,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMain = (props) => {
-    const { saveData, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, isLoading } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, otfSearchSelected } = props;
+    const { saveData, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, otfSearchSelected, formActionType } = props;
     const { isTypeDataLoaded, typeData, fetchConfigList, listConfigShowLoading } = props;
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
     const [formData, setFormData] = useState('');
-    const [edit, setEdit] = useState(false);
-
+    const [otfData, setOtfData] = useState(otfSearchSelected);
+    const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
     const [showDataLoading, setShowDataLoading] = useState(false);
-    const [refershData, setRefershData] = useState(false);
 
     useEffect(() => {
         if (userId && isDataLoaded && customerFormData) {
@@ -105,10 +105,10 @@ export const CustomerDetailsMain = (props) => {
     const selectedOTF = otfSearchSelected?.otfNumber;
 
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        setRefershData(false);
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setShowDataLoading(false);
     };
+
     const extraParams = [
         {
             key: 'otfNumber',
@@ -127,16 +127,15 @@ export const CustomerDetailsMain = (props) => {
 
     const onFinish = () => {
         form.getFieldsValue();
-        console.log('hello', billCstmForm.getFieldsValue());
-        const data = { bookingCustomer: { ...form.getFieldsValue(), birthDate: dayjs(form.getFieldsValue().birthDate).format('YYYY-MM-DD'), otfNumber: selectedOTF, bookingAndBillingType: 'BOOKING', id: customerFormData.bookingCustomer.id, customerId: 'CUS001' }, billingCustomer: { ...billCstmForm.getFieldsValue(), birthDate: dayjs(billCstmForm.getFieldsValue()?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOTF, bookingAndBillingType: 'BILLING', id: customerFormData.billingCustomer.id, customerId: 'CUS001' } };
-        console.log('submit form', data);
+        const data = { bookingCustomer: { ...form.getFieldsValue(), birthDate: dayjs(form.getFieldsValue().birthDate).format('YYYY-MM-DD'), otfNumber: otfData?.otfNumber, bookingAndBillingType: 'BOOKING', id: customerFormData.bookingCustomer.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...billCstmForm.getFieldsValue(), birthDate: dayjs(billCstmForm.getFieldsValue()?.birthDate).format('YYYY-MM-DD'), otfNumber: otfData?.otfNumber, bookingAndBillingType: 'BILLING', id: customerFormData.billingCustomer.id, sameAsBookingCustomer: sameAsBookingCustomer } };
         const onSuccess = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         };
 
         const onError = (message) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -155,12 +154,11 @@ export const CustomerDetailsMain = (props) => {
     };
 
     const formProps = {
-        edit,
         form,
         billCstmForm,
         customerFormData,
         formData,
-
+        formActionType,
         onFinish,
         onFinishFailed,
 
@@ -168,18 +166,23 @@ export const CustomerDetailsMain = (props) => {
         fetchPincodeDetail,
         isPinCodeLoading,
         pincodeData,
-
         typeData,
-    };
-
-    const handleClick = () => {
-        setEdit(!edit);
+        sameAsBookingCustomer,
+        setSameAsBookingCustomer,
     };
 
     return (
-        <div className={styles.drawerCustomerMaster}>
-            <AddEditForm {...formProps} />
-            <Button onClick={handleClick}>Edit</Button>
+        <div>
+            <Row gutter={20} className={styles.drawerBodyRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <AddEditForm {...formProps} />
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <OTFFormButton {...props} />
+                </Col>
+            </Row>
         </div>
     );
 };

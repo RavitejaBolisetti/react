@@ -114,7 +114,7 @@ const FormBase = (props) => {
                     </Col>
                 ) : null}
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item initial label="Relation Code" name="relationCode" />
+                    <Form.Item label="Relation Code" name="relationCode" />
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>

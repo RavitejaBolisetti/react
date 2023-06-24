@@ -6,6 +6,8 @@
 import React from 'react';
 import { Card, Descriptions } from 'antd';
 import styles from 'components/common/Common.module.css';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+
 
 const ViewDetailMain = (props) => {
     const { formData } = props;
@@ -20,14 +22,14 @@ const ViewDetailMain = (props) => {
     return (
         <Card className={styles.drawerCardView} style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Customer ID">{formData?.customerId??'NA'}</Descriptions.Item>
-                <Descriptions.Item label="Customer Type">{formData?.customerType??'NA'}</Descriptions.Item>
-                <Descriptions.Item label="Customer Name">{formData?.customerName??'NA'}</Descriptions.Item>
-                <Descriptions.Item label="Email ID">{formData?.emailId??'NA'}</Descriptions.Item>
-                <Descriptions.Item label="Mobile Number">{formData?.mobileNumber??'NA'}</Descriptions.Item>
-                <Descriptions.Item label="Reg. Number">{formData?.registrationNumber??'NA'}</Descriptions.Item>
-                <Descriptions.Item label="Chessis Number">{formData?.chasisNumber??'NA'}</Descriptions.Item>
-                <Descriptions.Item label="D.O.B">{formData?.dob??'NA'}</Descriptions.Item>
+                <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData?.customerId)}</Descriptions.Item>
+                <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(formData?.customerType)}</Descriptions.Item>
+                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.customerName)}</Descriptions.Item>
+                <Descriptions.Item label="Email ID">{checkAndSetDefaultValue(formData?.emailId)}</Descriptions.Item>
+                <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber)}</Descriptions.Item>
+                <Descriptions.Item label="Reg. Number">{checkAndSetDefaultValue(formData?.registrationNumber)}</Descriptions.Item>
+                <Descriptions.Item label="Chessis Number">{checkAndSetDefaultValue(formData?.chasisNumber)}</Descriptions.Item>
+                <Descriptions.Item label="D.O.B">{checkAndSetDefaultValue(formData?.dob)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

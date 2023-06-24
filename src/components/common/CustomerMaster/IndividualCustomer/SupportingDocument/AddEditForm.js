@@ -9,7 +9,7 @@ import { Row, Col, Form, Select, Input, message, Upload, Button, Empty, Card } f
 import { FiEye, FiTrash } from 'react-icons/fi';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField } from 'utils/validation';
 import Svg from 'assets/images/Filter.svg';
 import styles from 'components/common/Common.module.css';
 
@@ -17,38 +17,43 @@ const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { typeData, userId, setUploadedFile, uploadFile, listShowLoading, showGlobalNotification } = props;
+    const { handleFormValueChange, typeData, userId, uploadDocumentFile, uploadedFile, setUploadedFile, listShowLoading, downloadFile, viewListShowLoading } = props;
 
     const onDrop = (e) => {
         console.log('Dropped files', e.dataTransfer.files);
     };
 
     const uploadProps = {
+        multiple: false,
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
-            previewIcon: <FiEye onClick={(e) => console.log(e, 'custom removeIcon event')} />,
-            removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
+            previewIcon: <FiEye onClick={(e) => console.log(e, 'Preview icon clicked')} />,
+            removeIcon: <FiTrash onClick={(e) => console.log(e, 'Remove icon clicked')} />,
             showProgress: true,
         },
         progress: { strokeWidth: 3, showInfo: true },
-
+        onDownload: (file) => {
+            const { name } = file;
+            const extraParams = [
+                {
+                    key: 'docId',
+                    title: 'docId',
+                    value: file?.docId,
+                    name: 'docId',
+                },
+            ];
+            downloadFile({ setIsLoading: viewListShowLoading, userId, extraParams, name });
+        },
         onDrop,
-        onChange: (info, event) => {
+        onChange: (info, event, fileList) => {
+            handleFormValueChange();
             const { status } = info.file;
-
-            console.log('event', event);
             if (status === 'uploading') {
-                console.log(' uploading info.file.loaded', info.file.loaded);
-                console.log(' uploading info.file.total', info.file.total);
-                console.log(' uploading info.file.percent', info.file.percent);
             } else if (status === 'done') {
+                // setUploadedFile(info?.fileList?.map((i) => i.response));
                 setUploadedFile(info?.file?.response?.docId);
                 message.success(`${info.file.name} file uploaded successfully.`);
-                console.log('done info.file.loaded', info.file.loaded);
-                console.log('done info.file.total', info.file.total);
-                console.log('done info.file.total', info.file.total);
-                console.log('done info.file.percent', info.file.percent);
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }
@@ -71,7 +76,7 @@ const AddEditForm = (props) => {
             onSuccess,
         };
 
-        uploadFile(requestData);
+        uploadDocumentFile(requestData);
     };
 
     const selectProps = {
@@ -85,7 +90,7 @@ const AddEditForm = (props) => {
         <Card>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="Document Type" name="documentTypeId" placeholder={preparePlaceholderSelect('document type')} rules={[validateRequiredSelectField('document type')]}>
+                    <Form.Item label="Document Type" name="documentTypeId" placeholder={preparePlaceholderSelect('document type')}>
                         <Select className={styles.headerSelectField} loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps}>
                             {typeData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
@@ -104,7 +109,7 @@ const AddEditForm = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.uploadContainer}>
-                        <Dragger customRequest={handleUpload} {...uploadProps}>
+                        <Dragger disabled={uploadedFile?.length > 0} customRequest={handleUpload} {...uploadProps}>
                             <div>
                                 <img src={Svg} alt="" />
                             </div>

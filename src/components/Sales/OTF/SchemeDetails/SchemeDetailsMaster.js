@@ -30,15 +30,11 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('schemeData', schemeData);
-    const moduleTitle = 'Scheme And Offer Details';
-
     let returnValue = {
         userId,
         isDataLoaded,
         schemeData,
         isLoading,
-        moduleTitle,
     };
     return returnValue;
 };
@@ -110,7 +106,8 @@ const SchemeDetailsMasterBase = (props) => {
                             <OTFStatusBar status={1} />
                         </Col>
                     </Row>
-                    {isLoading ? formSkeleton : formContainer}
+                    I am here
+                    {/* {isLoading ? formSkeleton : formContainer} */}
                 </Col>
             </Row>
             <Row>

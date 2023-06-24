@@ -30,7 +30,6 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const mapStateToProps = (state) => {
-    console.log('state', state);
     const {
         auth: { userId },
         data: {

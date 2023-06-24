@@ -8,6 +8,8 @@ import { Space, Collapse, Typography, Divider, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+
 
 import { addToolTip } from 'utils/customMenuLink';
 import { DataTable } from 'utils/dataTable';
@@ -76,26 +78,26 @@ const ViewDetailMain = (props) => {
                     key="1"
                 >
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Vehicle Usage Type ">{formData?.vehicleUsageType ? formData?.vehicleUsageType : 'null'}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Usage Type ">{checkAndSetDefaultValue(formData?.vehicleUsageType ? formData?.vehicleUsageType : 'null')}</Descriptions.Item>
                         <Descriptions.Item label="Model">
                             <div className={styles.tooltipAlign}>
                                 {formData?.model}
                                 {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                             </div>
                         </Descriptions.Item>
-                        <Descriptions.Item label="Model Code">{formData?.modelCode}</Descriptions.Item>
-                        <Descriptions.Item label="Available Stock">{formData?.availableStock}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Allocated Status">{formData?.vehicleAllocationStatus ? formData?.vehicleAllocationStatus : 'null'}</Descriptions.Item>
-                        <Descriptions.Item label="PO Number">{formData?.ponumber}</Descriptions.Item>
-                        <Descriptions.Item label="PO Date">{formData?.podate}</Descriptions.Item>
-                        <Descriptions.Item label="PO Status">{formData?.postatus}</Descriptions.Item>
-                        <Descriptions.Item label="SO Number">{formData?.sonumber}</Descriptions.Item>
-                        <Descriptions.Item label="SO Status">{formData?.sostatus}</Descriptions.Item>
-                        <Descriptions.Item label="VIN Number">{formData?.vinnumber}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Selling Price">{formData?.vehicleSellingPrice}</Descriptions.Item>
-                        <Descriptions.Item label="Discount Amount">{formData?.discountAmount}</Descriptions.Item>
-                        <Descriptions.Item label="Tax Amount">{formData?.taxAmount}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Amount">{formData?.vehicleAmount}</Descriptions.Item>
+                        <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode)}</Descriptions.Item>
+                        <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock)}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Allocated Status">{checkAndSetDefaultValue(formData?.vehicleAllocationStatus ? formData?.vehicleAllocationStatus : 'null')}</Descriptions.Item>
+                        <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.ponumber)}</Descriptions.Item>
+                        <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.podate)}</Descriptions.Item>
+                        <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(formData?.postatus)}</Descriptions.Item>
+                        <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.sonumber)}</Descriptions.Item>
+                        <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.sostatus)}</Descriptions.Item>
+                        <Descriptions.Item label="VIN Number">{checkAndSetDefaultValue(formData?.vinnumber)}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Selling Price">{checkAndSetDefaultValue(formData?.vehicleSellingPrice)}</Descriptions.Item>
+                        <Descriptions.Item label="Discount Amount">{checkAndSetDefaultValue(formData?.discountAmount)}</Descriptions.Item>
+                        <Descriptions.Item label="Tax Amount">{checkAndSetDefaultValue(formData?.taxAmount)}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Amount">{checkAndSetDefaultValue(formData?.vehicleAmount)}</Descriptions.Item>
                     </Descriptions>
                 </Panel>
             </Collapse>

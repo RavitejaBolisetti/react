@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
             listConfigShowLoading: configParamEditActions.listShowLoading,
 
             fetchOTFSearchedList: otfSearchListAction.fetchList,
-
+            setFilterString: otfDetailsDataActions.setFilter,
             fetchList: otfDetailsDataActions.fetchList,
             saveData: otfDetailsDataActions.saveData,
             resetData: otfDetailsDataActions.reset,
@@ -80,6 +80,7 @@ export const OtfMasterBase = (props) => {
 
     const { filterString, setFilterString } = props;
     const [otfSearchvalue, setOtfSearchvalue] = useState();
+    const [otfSearchSelected, setOtfSearchSelected] = useState();
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const [refershData, setRefershData] = useState();
@@ -179,18 +180,20 @@ export const OtfMasterBase = (props) => {
     }, [isSearchDataLoaded, userId, refershData]);
 
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
+        console.log('🚀 ~ file: OtfMaster.js:183 ~ handleButtonClick ~ buttonAction:', buttonAction);
+
         form.resetFields();
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
         setIsFormVisible(true);
-
+        setOtfSearchSelected(record);
         if (buttonAction === NEXT_ACTION) {
             const section = Object.values(sectionName)?.find((i) => i.id > currentSection);
             section && setCurrentSection(section?.id);
         }
 
-        if (buttonAction === VIEW_ACTION || !formVisible) {
+        if (buttonAction === VIEW_ACTION) {
             setSelectedOrder(record);
             record && setSelectedOrderId(record?.otfNumber);
             defaultSection && setCurrentSection(defaultSection);
@@ -199,7 +202,8 @@ export const OtfMasterBase = (props) => {
 
     const onSearchHandle = (value) => {
         setShowDataLoading(true);
-        setRefershData(!refershData);
+        //setRefershData(!refershData);
+        fetchOTFSearchedList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
     };
 
     const handleResetFilter = (e) => {
@@ -231,13 +235,8 @@ export const OtfMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
-            if (buttonData?.saveAndNewBtnClicked) {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            } else {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            }
+
+            setIsFormVisible(false);
         };
 
         const onError = (message) => {
@@ -380,6 +379,7 @@ export const OtfMasterBase = (props) => {
         setCurrentSection,
         setFormData,
         handleFormValueChange,
+        otfSearchSelected,
     };
 
     return (

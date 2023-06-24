@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CompanyCustomerDetailsMasterBase = (props) => {
     const { userId, isDataLoaded, isLoading, showGlobalNotification, customerDetailsData, section, fetchList, listShowLoading, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, customerParentCompanyData, corporateLovData } = props;
-    const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData } = props;
+    const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData, isLastSection } = props;
     const { form, setRefreshList, handleFormValueChange, onFinishFailed, buttonData, setButtonData, formActionType, handleButtonClick } = props;
 
     const [customerDetailsList] = useState([]);
@@ -221,7 +221,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
     const myProps = {
         ...props,
-        saveButtonName: formActionType?.addMode ? 'Create Customer ID' : 'Save & Next',
     };
 
     const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;

@@ -150,11 +150,10 @@ const FamilyDetailMasterBase = (props) => {
         setEditedMode(false);
 
         form.resetFields();
-
         if (values?.mnmCustomer === 'Yes') {
-            setCustomerType(true);
+            setCustomerType('Yes');
         } else if (values?.mnmCustomer === 'No') {
-            setCustomerType(false);
+            setCustomerType('No');
         }
     };
 
@@ -185,11 +184,6 @@ const FamilyDetailMasterBase = (props) => {
         return;
     };
 
-    const myProps = {
-        ...props,
-        saveButtonName: formActionType?.addMode ? 'Family Detail ID' : 'Save & Next',
-    };
-
     useEffect(() => {
         if (familyData?.length > 0) {
             setFamilyDetailsList(() => []);
@@ -202,11 +196,20 @@ const FamilyDetailMasterBase = (props) => {
     }, [familyData]);
 
     useEffect(() => {
-        form.setFieldsValue({
-            customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
-            dateOfBirth: dayjs(familySearchData?.dateOfBirth),
-            relationAge: GetAge(familySearchData?.dateOfBirth),
-        });
+        if (familySearchData?.dateOfBirth === null || familySearchData?.dateOfBirth === undefined || familySearchData?.dateOfBirth === '') {
+            form.setFieldsValue({
+                customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
+                dateOfBirth: null,
+                relationAge: 'NA',
+            });
+        } else {
+            form.setFieldsValue({
+                customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
+                dateOfBirth: dayjs(familySearchData?.dateOfBirth),
+                relationAge: GetAge(familySearchData?.dateOfBirth),
+            });
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [familySearchData]);
 
@@ -249,7 +252,7 @@ const FamilyDetailMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CustomerFormButton {...myProps} />
+                    <CustomerFormButton {...props} />
                 </Col>
             </Row>
         </Form>

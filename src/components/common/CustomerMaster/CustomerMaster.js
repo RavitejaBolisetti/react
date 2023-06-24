@@ -83,6 +83,8 @@ const CustomerMasterMain = (props) => {
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
+    const [isLastSection, setLastSection] = useState(false);
+    console.log('🚀 ~ file: CustomerMaster.js:87 ~ CustomerMasterMain ~ isLastSection:', isLastSection);
 
     const [form] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -159,6 +161,8 @@ const CustomerMasterMain = (props) => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
             setSection(section);
+            const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+            setLastSection(!nextSection?.id);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
@@ -172,22 +176,33 @@ const CustomerMasterMain = (props) => {
     }, [customerType, userId, refreshList]);
 
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
+        console.log('🚀 ~ file: CustomerMaster.js:175 ~ handleButtonClick ~ buttonAction:', buttonAction);
         form.resetFields();
 
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION || buttonAction === NEXT_EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        setIsFormVisible(true);
-
-        if (buttonAction === NEXT_ACTION || buttonAction === NEXT_EDIT_ACTION) {
-            const section = Object.values(sectionName)?.find((i) => i.id > currentSection);
-            section && setCurrentSection(section?.id);
+        if (buttonAction === ADD_ACTION) {
+            defaultSection && setCurrentSection(defaultSection);
         }
 
-        if (buttonAction === EDIT_ACTION || buttonAction === VIEW_ACTION) {
+        if (buttonAction === EDIT_ACTION) {
+            setSelectedCustomer(record);
+            record && setSelectedCustomerId(record?.customerId);
+        }
+
+        if (buttonAction === VIEW_ACTION) {
             setSelectedCustomer(record);
             record && setSelectedCustomerId(record?.customerId);
             defaultSection && setCurrentSection(defaultSection);
         }
+
+        if (buttonAction === NEXT_ACTION || buttonAction === NEXT_EDIT_ACTION) {
+            const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+            section && setCurrentSection(nextSection?.id);
+            setLastSection(!nextSection?.id);
+        }
+
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION || buttonAction === NEXT_EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        setIsFormVisible(true);
     };
 
     const onFinish = (values, e) => {};
@@ -280,6 +295,8 @@ const CustomerMasterMain = (props) => {
         shouldResetForm,
         handleFormValueChange,
         setRefreshList,
+        isLastSection,
+        saveButtonName: formActionType?.addMode ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
     };
 
     const selectProps = {

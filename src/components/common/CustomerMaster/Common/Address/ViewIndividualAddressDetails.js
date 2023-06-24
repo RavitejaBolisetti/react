@@ -1,9 +1,10 @@
 /*
- *   Copyright (c) 2023 
+ *   Copyright (c) 2023
  *   All rights reserved.
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 const ViewIndividualAddressDetailsBase = (props) => {
     const { formData, styles } = props;

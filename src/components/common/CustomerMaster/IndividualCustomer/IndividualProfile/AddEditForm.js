@@ -8,7 +8,7 @@ import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, S
 import Svg from 'assets/images/Filter.svg';
 import dayjs from 'dayjs';
 
-import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId } from 'utils/validation';
+import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, validatInstagramProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
@@ -171,7 +171,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item label="Gender" name="gender" initialValue={formData?.gender} rules={[validateRequiredSelectField('gender')]}>
                                             <Select placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
                                                 {appCategoryData?.GENDER_CD?.map((item) => (
-                                                    <Option key={'ct' + item.value} value={item.value}>
+                                                    <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -182,7 +182,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item label="Maritial Status" initialValue={formData?.maritialStatus || ''} name="martialStatus">
                                             <Select value={null} placeholder={preparePlaceholderSelect('maritial status')} {...disabledProps}>
                                                 {appCategoryData?.MARITAL_STATUS?.map((item) => (
-                                                    <Option key={'ct' + item.value} value={item.value}>
+                                                    <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -197,10 +197,10 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Occupation" initialValue={formData?.occuption || ''} name="occuption">
+                                        <Form.Item label="Occupation" initialValue={formData?.occuption} name="occuption">
                                             <Select value={null} placeholder={preparePlaceholderSelect('occupation')} {...disabledProps}>
                                                 {appCategoryData?.OCC_TYPE?.map((item) => (
-                                                    <Option key={'ct' + item.value} value={item.value}>
+                                                    <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -208,10 +208,10 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Annual Income" initialValue={formData?.annualIncome || ''} name="annualIncome">
+                                        <Form.Item label="Annual Income" initialValue={formData?.annualIncome} name="annualIncome">
                                             <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
                                                 {appCategoryData?.Annual_Income?.map((item) => (
-                                                    <Option key={'ct' + item.value} value={item.value}>
+                                                    <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -226,7 +226,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Aadhar No." name="adharNumber" initialValue={formData?.adharNumber} rules={([validateAadhar('aadhar')], [validateRequiredInputField('aadhar')])}>
+                                        <Form.Item label="Aadhar No." name="adharNumber" initialValue={formData?.adharNumber} rules={[validateAadhar('aadhar'), validateRequiredInputField('aadhar')]}>
                                             <Input value={null} maxLength={12} className={styles.inputBox} placeholder={preparePlaceholderText('aadhar number')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
@@ -241,7 +241,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item label="Vehicle Used" initialValue={formData?.vehicleUsed} name="vehicleUsed">
                                             <Select value={null} placeholder={preparePlaceholderSelect('vehicle used')} {...disabledProps}>
                                                 {appCategoryData?.Vehicle_Used?.map((item) => (
-                                                    <Option key={'ct' + item.value} value={item.value}>
+                                                    <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -252,7 +252,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item label="Mother Tongue" initialValue={formData?.motherTongue} name="motherTongue">
                                             <Select value={null} placeholder={preparePlaceholderSelect('mother tongue')} {...disabledProps}>
                                                 {appCategoryData?.MOTHER_TOUNGE?.map((item) => (
-                                                    <Option key={'ct' + item.value} value={item.value}>
+                                                    <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -263,7 +263,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item label="Religion" initialValue={formData?.religion} name="religion">
                                             <Select value={null} placeholder={preparePlaceholderSelect('religion')} {...disabledProps}>
                                                 {appCategoryData?.RELGION?.map((item) => (
-                                                    <Option key={'ct' + item.value} value={item.value}>
+                                                    <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -274,13 +274,13 @@ const AddEditFormMain = (props) => {
 
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={([validatePanField('pan')], [validateRequiredInputField('pan')])}>
+                                        <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField('pan'), validateRequiredInputField('pan')]}>
                                             <Input value={null} maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={([validateGSTIN('gstin')], [validateRequiredInputField('gstin')])}>
+                                        <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin'), validateRequiredInputField('gstin')]}>
                                             <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
@@ -290,7 +290,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item label="Usage/Application Categorization" initialValue={formData?.applicationCategorization} name="applicationCategorization">
                                             <Select value={null} placeholder={preparePlaceholderSelect('usage/application category')} {...disabledProps}>
                                                 {appCategoryData?.APP_CAT?.map((item) => (
-                                                    <Option key={'ct' + item.value} value={item.value}>
+                                                    <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -301,7 +301,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item label="Usage/Application Sub-Category" initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
                                             <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
                                                 {appCategoryData?.APP_SUB_CAT?.map((item) => (
-                                                    <Option key={'ct' + item.value} value={item.value}>
+                                                    <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -312,7 +312,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item label="Customer Category" initialValue={formData?.customerCategory} name="customerCategory">
                                             <Select value={null} placeholder={preparePlaceholderSelect('annual income')} {...disabledProps} onChange={onCustomerCategoryChange}>
                                                 {appCategoryData?.CUS_CAT?.map((item) => (
-                                                    <Option key={'ct' + item.value} value={item.value}>
+                                                    <Option key={'ct' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
@@ -370,26 +370,26 @@ const AddEditFormMain = (props) => {
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Facebook Link" initialValue={formData?.facebookLink} name="facebookLink">
+                                        <Form.Item label="Facebook Link" initialValue={formData?.facebookLink} name="facebookLink" rules={[validatFacebookProfileUrl('facebookLink')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Twitter Link" initialValue={formData?.twitterLink} name="twitterLink">
+                                        <Form.Item label="Twitter Link" initialValue={formData?.twitterLink} name="twitterLink" rules={[validattwitterProfileUrl('twitterLink')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Instagram Link" initialValue={formData?.instagramLink} name="instagramLink">
+                                        <Form.Item label="Instagram Link" initialValue={formData?.instagramLink} name="instagramLink" rules={[validatInstagramProfileUrl('instagramLink')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Youtube Channel" initialValue={formData?.youtubeChannelLink} name="youtubeChannelLink">
+                                        <Form.Item label="Youtube Channel" initialValue={formData?.youtubeChannelLink} name="youtubeChannelLink" rules={[validatYoutubeProfileUrl('youtubeChannelLink')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
                                         </Form.Item>
                                     </Col>
