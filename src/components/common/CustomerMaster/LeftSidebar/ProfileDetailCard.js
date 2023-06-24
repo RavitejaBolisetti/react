@@ -12,7 +12,7 @@ const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={13} /> : <SlAr
 
 const ProfileDetailCard = (props) => {
     const { selectedCustomer } = props;
-    const fullName = selectedCustomer?.customerName?.split('');
+    const fullName = selectedCustomer?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon}>
@@ -33,7 +33,7 @@ const ProfileDetailCard = (props) => {
                 key={1}
             >
                 <p>
-                    Customer Type: <span>{selectedCustomer?.customerType}</span>
+                    Customer Type: <span>{selectedCustomer?.customerTypeName}</span>
                 </p>
                 <p>
                     Mobile No.: <span>{selectedCustomer?.mobileNumber}</span>

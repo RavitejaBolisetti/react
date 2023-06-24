@@ -259,7 +259,7 @@
 :global .ant-modal-mask,
 :global body {
     width: 100% !important;
-    overflow: inherit !important;
+    /* overflow: inherit !important; */
 }
 
 :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-texts {

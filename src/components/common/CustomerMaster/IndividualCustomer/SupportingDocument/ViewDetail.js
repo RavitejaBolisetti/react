@@ -1,6 +1,7 @@
 /*
- *   Copyright (c) 2023
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
 
@@ -21,18 +22,16 @@ export const ViewDetail = (props) => {
         a.click();
     };
     return (
-        <>
-            <div className={styles.viewDrawerContainer}>
-                {supportingData.length > 0 ? (
-                    <Card>
-                        {supportingData.map((uploadData) => {
-                            return <Card className={styles.viewDocumentStrip} key={uploadData.id} title={uploadData?.documentName} extra={<FiDownload onClick={() => downloadFile(uploadData)} />}></Card>;
-                        })}
-                    </Card>
-                ) : (
-                    <div>No Data Found</div>
-                )}
-            </div>
-        </>
+        <div className={styles.viewDrawerContainer}>
+            {supportingData.length > 0 ? (
+                <Card>
+                    {supportingData.map((uploadData) => {
+                        return <Card className={styles.viewDocumentStrip} key={uploadData.id} title={uploadData?.documentName} extra={<FiDownload onClick={() => downloadFile(uploadData)} />}></Card>;
+                    })}
+                </Card>
+            ) : (
+                <div>No Data Found</div>
+            )}
+        </div>
     );
 };

@@ -184,11 +184,6 @@ const FamilyDetailMasterBase = (props) => {
         return;
     };
 
-    const myProps = {
-        ...props,
-        saveButtonName: formActionType?.addMode ? 'Family Detail ID' : 'Save & Next',
-    };
-
     useEffect(() => {
         if (familyData?.length > 0) {
             setFamilyDetailsList(() => []);
@@ -201,11 +196,11 @@ const FamilyDetailMasterBase = (props) => {
     }, [familyData]);
 
     useEffect(() => {
-        if(familySearchData?.dateOfBirth === null || familySearchData?.dateOfBirth === undefined || familySearchData?.dateOfBirth === ""){
+        if (familySearchData?.dateOfBirth === null || familySearchData?.dateOfBirth === undefined || familySearchData?.dateOfBirth === '') {
             form.setFieldsValue({
                 customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
                 dateOfBirth: null,
-                relationAge:"NA",
+                relationAge: 'NA',
             });
         } else {
             form.setFieldsValue({
@@ -214,7 +209,7 @@ const FamilyDetailMasterBase = (props) => {
                 relationAge: GetAge(familySearchData?.dateOfBirth),
             });
         }
-        
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [familySearchData]);
 
@@ -257,7 +252,7 @@ const FamilyDetailMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CustomerFormButton {...myProps} />
+                    <CustomerFormButton {...props} />
                 </Col>
             </Row>
         </Form>

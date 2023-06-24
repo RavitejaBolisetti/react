@@ -26,10 +26,12 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const mapStateToProps = (state) => {
+    console.log('state==>', state);
     const {
         auth: { userId },
         customer: {
             customerContacts: { isLoaded: isCustomerDataLoaded = false, isLoading: isCustomerDataLoading, data: customerData = [] },
+            customerContactsIndividual: { isLoaded: isCustomerIndDataLoaded = false, isLoading: isCustomerIndDataLoading, data: customerIndData = [] },
         },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
@@ -42,6 +44,10 @@ const mapStateToProps = (state) => {
         isCustomerDataLoading,
         typeData: typeData,
         customerData,
+
+        isCustomerIndDataLoaded,
+        isCustomerIndDataLoading,
+        customerIndData,
     };
     return returnValue;
 };
@@ -67,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ContactMain = (props) => {
-    const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData } = props;
+    const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData } = props;
     const { isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData } = props;
     const { buttonData, setButtonData, formActionType } = props;
 
@@ -78,6 +84,7 @@ const ContactMain = (props) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
     const [uploadImgDocId, setUploadImgDocId] = useState('');
+    const [continueWithOldMobNo, setContinueWithOldMobNo] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const extraParams = [
@@ -90,7 +97,7 @@ const ContactMain = (props) => {
     ];
 
     useEffect(() => {
-        if (userId && selectedCustomer?.customerId && !isCustomerDataLoaded) {
+        if (userId && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
             } else {
@@ -101,11 +108,13 @@ const ContactMain = (props) => {
     }, [userId, selectedCustomer?.customerId]);
 
     useEffect(() => {
-        if (userId && customerData?.customerContact?.length) {
+        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
+            setContactData(customerIndData?.customerContact);
+        } else {
             setContactData(customerData?.customerContact);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerData]);
+    }, [customerData, customerIndData]);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -154,7 +163,7 @@ const ContactMain = (props) => {
                 setShowAddEditForm(false);
                 setIsEditing(false);
                 setEditingData({});
-                contactform.resetFieldsValue();
+                contactform.resetFields();
             })
             .catch((err) => console.error(err));
     };
@@ -162,7 +171,7 @@ const ContactMain = (props) => {
     const onCheckdefaultAddClick = (e, value) => {
         e.stopPropagation();
         setContactData((prev) => {
-            let updetedData = prev?.map((contact) => ({ ...contact, defaultContactIndicator: false }));
+            let updetedData = prev?.map((contact) => ({ ...contact, status: true, defaultContactIndicator: false, continueWith: continueWithOldMobNo }));
             const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.mobileNumber === value?.mobileNumber && el?.FirstName === value?.FirstName);
             updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked });
             return [...updetedData];
@@ -198,10 +207,13 @@ const ContactMain = (props) => {
         setButtonData,
         setUploadImgDocId,
         handleFormValueChange,
+        setContinueWithOldMobNo,
+        uploadImgDocId,
+        customerType,
     };
 
     const onSubmit = () => {
-        let data = { customerId: selectedCustomer?.customerId, customerContact: { ...contactData, docId: uploadImgDocId } };
+        let data = { customerId: selectedCustomer?.customerId, customerContact: contactData?.map((el) => ({ ...el, docId: uploadImgDocId || el?.docId })) };
 
         const onSuccess = (res) => {
             contactform.resetFields();
@@ -237,14 +249,6 @@ const ContactMain = (props) => {
         console.error(err);
     };
 
-    const formSkeleton = (
-        <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <InputSkeleton height={'100vh'} />
-            </Col>
-        </Row>
-    );
-
     return (
         <>
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSubmit} onFinishFailed={onFinishFailed}>
@@ -267,9 +271,7 @@ const ContactMain = (props) => {
                                 key="1"
                             >
                                 {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                {isCustomerDataLoading ? formSkeleton : <ViewContactList {...formProps} />}
-                                {/* { !formActionType?.viewMode && (showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />} */}
-                                {/* {isCustomerDataLoading ? formSkeleton : formContainer} */}
+                                <ViewContactList {...formProps} />
                             </Panel>
                         </Collapse>{' '}
                     </Col>
