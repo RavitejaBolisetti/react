@@ -8,7 +8,6 @@ import { Space, Collapse, Typography, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
-
 const { Panel } = Collapse;
 const { Text } = Typography;
 

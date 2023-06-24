@@ -180,6 +180,8 @@ export const OtfMasterBase = (props) => {
     }, [isSearchDataLoaded, userId, refershData]);
 
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
+        console.log('🚀 ~ file: OtfMaster.js:183 ~ handleButtonClick ~ buttonAction:', buttonAction);
+
         form.resetFields();
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
@@ -191,7 +193,7 @@ export const OtfMasterBase = (props) => {
             section && setCurrentSection(section?.id);
         }
 
-        if (buttonAction === VIEW_ACTION || !formVisible) {
+        if (buttonAction === VIEW_ACTION) {
             setSelectedOrder(record);
             record && setSelectedOrderId(record?.otfNumber);
             defaultSection && setCurrentSection(defaultSection);

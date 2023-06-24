@@ -209,7 +209,6 @@ const AddressMasterBase = (props) => {
 
     const myProps = {
         ...props,
-        saveButtonName: formActionType?.addMode ? 'Create Customer ID' : 'Save & Next',
     };
 
     const formSkeleton = (
