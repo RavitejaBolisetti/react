@@ -10,7 +10,6 @@ import styles from 'components/common/Common.module.css';
 import { FiEye } from 'react-icons/fi';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
-
 const { Panel } = Collapse;
 const { Text } = Typography;
 
@@ -76,7 +75,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Usage/Application Sub-Category">{checkAndSetDefaultValue(formData?.applicationSubCategory)}</Descriptions.Item>
                             <Descriptions.Item label="Customer Category">{checkAndSetDefaultValue(formData?.customerCategory)}</Descriptions.Item>
                         </Descriptions>
-                        {formData?.customerCategory === 'Fleet' && (
+                        {formData?.customerCategory === 'CUS_CAT_2' && (
                             <>
                                 <Descriptions {...viewProps}>
                                     <Descriptions.Item label="Business Details">{checkAndSetDefaultValue(formData?.businessDetails)}</Descriptions.Item>
