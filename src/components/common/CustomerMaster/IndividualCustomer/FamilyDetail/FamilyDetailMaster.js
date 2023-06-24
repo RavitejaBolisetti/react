@@ -11,7 +11,7 @@ import { familyDetailsDataActions } from 'store/actions/data/customerMaster/indi
 import { familyDetailSearchDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetailSearch';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { btnVisiblity } from 'utils/btnVisiblity';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { GetAge } from 'utils/getAge';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const FamilyDetailMasterBase = (props) => {
     const { section, userId, relationData, fetchFamilyDetailsList, listFamilyDetailsShowLoading, familyData, saveData, showGlobalNotification, fetchFamilySearchList, listFamilySearchLoading, familySearchData } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, isSearchLoading, selectedCustomerId } = props;
+    const { buttonData, setButtonData, handleButtonClick, isSearchLoading, selectedCustomerId } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [form] = Form.useForm();
     const [familyDetailList, setFamilyDetailsList] = useState([]);
@@ -71,9 +71,8 @@ const FamilyDetailMasterBase = (props) => {
     const [customerType, setCustomerType] = useState('Yes');
     const [editedMode, setEditedMode] = useState(false);
     const [editedId, setEditedId] = useState(0);
-    const ADD_ACTION = formActionType?.addMode;
-    const EDIT_ACTION = formActionType?.editMode;
-    const VIEW_ACTION = formActionType?.viewMode;
+
+    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const extraParams = [
         {
@@ -119,14 +118,6 @@ const FamilyDetailMasterBase = (props) => {
         fetchFamilySearchList({ setIsLoading: listFamilySearchLoading, userId, extraParams: searchParams, onErrorAction });
     };
 
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        // setFormData([]);
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        // record && setFormData(record);
-    };
-
     const onSave = () => {
         let values = form.getFieldsValue();
         setFamilyDetailsList((items) => [{ ...values, customerId: selectedCustomerId, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
@@ -161,6 +152,7 @@ const FamilyDetailMasterBase = (props) => {
         let data = [...familyDetailList];
         const onSuccess = (res) => {
             form.resetFields();
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, extraParams });
         };
@@ -184,11 +176,6 @@ const FamilyDetailMasterBase = (props) => {
         return;
     };
 
-    const myProps = {
-        ...props,
-        saveButtonName: formActionType?.addMode ? 'Family Detail ID' : 'Save & Next',
-    };
-
     useEffect(() => {
         if (familyData?.length > 0) {
             setFamilyDetailsList(() => []);
@@ -201,11 +188,11 @@ const FamilyDetailMasterBase = (props) => {
     }, [familyData]);
 
     useEffect(() => {
-        if(familySearchData?.dateOfBirth === null || familySearchData?.dateOfBirth === undefined || familySearchData?.dateOfBirth === ""){
+        if (familySearchData?.dateOfBirth === null || familySearchData?.dateOfBirth === undefined || familySearchData?.dateOfBirth === '') {
             form.setFieldsValue({
                 customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
                 dateOfBirth: null,
-                relationAge:"NA",
+                relationAge: 'NA',
             });
         } else {
             form.setFieldsValue({
@@ -214,11 +201,12 @@ const FamilyDetailMasterBase = (props) => {
                 relationAge: GetAge(familySearchData?.dateOfBirth),
             });
         }
-        
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [familySearchData]);
 
     const formProps = {
+        ...props,
         form,
         onChange,
         onFinish,
@@ -235,9 +223,6 @@ const FamilyDetailMasterBase = (props) => {
         editedId,
         setEditedId,
         onSearch,
-        ADD_ACTION,
-        EDIT_ACTION,
-        VIEW_ACTION,
         buttonData,
         setButtonData,
         handleButtonClick,
@@ -257,7 +242,7 @@ const FamilyDetailMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CustomerFormButton {...myProps} />
+                    <CustomerFormButton {...props} />
                 </Col>
             </Row>
         </Form>

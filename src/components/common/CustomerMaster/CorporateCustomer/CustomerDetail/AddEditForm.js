@@ -3,10 +3,11 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+import { useState } from 'react';
 import { Col, Input, Form, Row, Select, Space, Divider, Card, Button } from 'antd';
+
 import { validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { useEffect, useState } from 'react';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { BiLockAlt } from 'react-icons/bi';
 import { CheckOutlined } from '@ant-design/icons';
 import { ValidateMobileNumberModal } from '../../IndividualCustomer/CustomerDetail/ValidateMobileNumberModal';
@@ -88,7 +89,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                            <Select disabled={true} placeholder="Select" fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']} allowClear></Select>
+                            <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']} allowClear></Select>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -114,8 +115,8 @@ const AddEditFormMain = (props) => {
                 <Divider />
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item initialValue={formData?.corporateType} label="Corporate Type" name="corporateType" data-testid="corporateType">
-                            <Select placeholder="Select" loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']} onChange={handleCorporateChange}></Select>
+                        <Form.Item initialValue={formData?.corporateType} label="Corporate Type" name="corporateType" data-testid="corporateType" rules={[validateRequiredSelectField('corporate type')]}>
+                            <Select placeholder={preparePlaceholderSelect('corporate type')} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']} onChange={handleCorporateChange}></Select>
                         </Form.Item>
                     </Col>
 
@@ -123,7 +124,7 @@ const AddEditFormMain = (props) => {
                         <>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                    <Select onSelect={onHandleSelect} loading={false} fieldNames={{ label: 'value', value: 'key' }} placeholder="Select" allowClear options={corporateLovData}></Select>
+                                    <Select onSelect={onHandleSelect} loading={false} fieldNames={{ label: 'value', value: 'key' }} placeholder={preparePlaceholderSelect('corporate name')} allowClear options={corporateLovData}></Select>
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -141,12 +142,12 @@ const AddEditFormMain = (props) => {
                     )}
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.corporateCategory} label="Corporate Category" name="corporateCategory" data-testid="corporateCategory">
-                            <Select placeholder="Select" disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_CATE']}></Select>
+                            <Select placeholder={preparePlaceholderSelect('corporate category')} disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_CATE']}></Select>
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.membershipType} label="Membership Type" name="membershipType" data-testid="membershipType" rules={[validateRequiredSelectField('membership type')]}>
-                            <Select placeholder="Select" loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['MEM_TYPE']}></Select>
+                            <Select placeholder={preparePlaceholderSelect('membership type')} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['MEM_TYPE']}></Select>
                         </Form.Item>
                     </Col>
                 </Row>

@@ -8,16 +8,16 @@ import { Typography, Descriptions, Card, Divider, Col, Row, Space, Button } from
 import { BiTimeFive } from 'react-icons/bi';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
-
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
-    const { styles, formData } = props;
+    const { styles, formData, isLoading } = props;
     const viewProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
+
     return (
         <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
@@ -31,8 +31,8 @@ const ViewDetailMain = (props) => {
                     }
                 >
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber)}</Descriptions.Item>
-                        <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(formData?.customerType)}</Descriptions.Item>
+                        <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(formData?.customerType, isLoading)}</Descriptions.Item>
                     </Descriptions>
                     <div className={styles.cardInsideBox}>
                         <Row>
@@ -47,7 +47,7 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.customerName}>
                                 <Text>
-                                    {formData?.title}
+                                    {formData?.titleCode}
                                     <span>&nbsp;</span>
                                     {formData?.firstName}
                                     <span>&nbsp;</span>
@@ -60,16 +60,20 @@ const ViewDetailMain = (props) => {
                     </div>
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Email Id">{checkAndSetDefaultValue(formData?.emailId)}</Descriptions.Item>
-                        <Descriptions.Item label="Do you want to contact over whatsapp?">{checkAndSetDefaultValue(formData?.whatsappCommunicationIndicator ? 'Yes' : 'No')}</Descriptions.Item>
+                        <Descriptions.Item label="Do you want to contact over whatsapp?" className={formData?.whatsappCommunicationIndicator ? styles.yesText : styles.noText}>
+                            {checkAndSetDefaultValue(formData?.whatsappCommunicationIndicator ? 'Yes' : 'No')}
+                        </Descriptions.Item>
                         <Descriptions />
-                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?">{checkAndSetDefaultValue(formData?.mobileNumberAsWhatsappNumber ? 'Yes' : 'No')}</Descriptions.Item>
+                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?" className={formData?.whatsappCommunicationIndicator ? styles.yesText : styles.noText}>
+                            {checkAndSetDefaultValue(formData?.mobileNumberAsWhatsappNumber ? 'Yes' : 'No')}
+                        </Descriptions.Item>
                         <Descriptions.Item label="Whatsapp Number">{checkAndSetDefaultValue(formData?.whatsAppNumber)}</Descriptions.Item>
                     </Descriptions>
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(formData?.corporateType)}</Descriptions.Item>
-                        <Descriptions.Item label="Corporate Name">{checkAndSetDefaultValue(formData?.corporateName)}</Descriptions.Item>
-                        <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(formData?.corporateCategory)}</Descriptions.Item>
-                        <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(formData?.membershipType)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(formData?.corporateType, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Name">{checkAndSetDefaultValue(formData?.corporateName, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(formData?.corporateCategory, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(formData?.membershipType, isLoading)}</Descriptions.Item>
                     </Descriptions>
                 </Card>
             </Space>

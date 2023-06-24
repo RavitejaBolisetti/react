@@ -11,45 +11,33 @@ import styles from 'components/common/Common.module.css';
 import { validateRequiredInputField } from 'utils/validation';
 
 const OptionServicesFormMain = (props) => {
-    const { handleCancel, showGlobalNotification, selectedOrderId, onErrorAction, formData, fetchList, userId, listShowLoading, saveData, onSuccessAction, optionForm, optionsServicesMapping, setoptionsServicesMapping, setOpenAccordian } = props;
-
+    const { handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, addContactHandeler, showGlobalNotification, selectedOrderId, onErrorAction, formData, fetchList, userId, listShowLoading, saveData, onSuccessAction, optionForm, setOpenAccordian } = props;
+    const isServiceNamePresent = (serviceName) => {
+        let found = false;
+        optionsServiceModified?.find((element, index) => {
+            if (element?.serviceName?.trim()?.toLowerCase() === serviceName?.trim()?.toLowerCase()) {
+                showGlobalNotification({ notificationType: 'error', title: 'ERROR', message: 'Duplicate service Name' });
+                found = true;
+                return;
+            }
+        });
+        return found;
+    };
     const onFinish = () => {
         optionForm
             .validateFields()
             .then(() => {
                 const values = optionForm.getFieldsValue();
+                if (isServiceNamePresent(values?.serviceName)) {
+                    return;
+                }
 
-                const data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: '' };
+                const data = { ...values, id: '' };
+                setoptionsServiceModified([data, ...optionsServiceModified]);
+                setoptionsServicesMapping([...optionsServicesMapping, data]);
+                optionForm.resetFields();
+                handleFormValueChange();
                 console.log('data', data, selectedOrderId);
-                const onSuccess = (res) => {
-                    const extraParams = [
-                        {
-                            key: 'otfNumber',
-                            title: 'otfNumber',
-                            value: selectedOrderId,
-                            name: 'OTF Number',
-                        },
-                    ];
-                    optionForm.resetFields();
-                    showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: 'Optional service data Saved Successfully' });
-                    setOpenAccordian('3');
-                    fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction, extraParams });
-                };
-
-                const onError = (message) => {
-                    showGlobalNotification({ message });
-                };
-
-                const requestData = {
-                    data: [data],
-                    method: 'post',
-                    setIsLoading: listShowLoading,
-                    userId,
-                    onError,
-                    onSuccess,
-                };
-
-                saveData(requestData);
             })
             .catch((err) => {});
     };

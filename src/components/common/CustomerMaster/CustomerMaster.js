@@ -84,6 +84,7 @@ const CustomerMasterMain = (props) => {
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
+    const [isLastSection, setLastSection] = useState(false);
 
     const [form] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -160,6 +161,8 @@ const CustomerMasterMain = (props) => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
             setSection(section);
+            const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+            setLastSection(!nextSection?.id);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
@@ -175,20 +178,31 @@ const CustomerMasterMain = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
         form.resetFields();
 
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION || buttonAction === NEXT_EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        setIsFormVisible(true);
-
-        if (buttonAction === NEXT_ACTION || buttonAction === NEXT_EDIT_ACTION) {
-            const section = Object.values(sectionName)?.find((i) => i.id > currentSection);
-            section && setCurrentSection(section?.id);
+        if (buttonAction === ADD_ACTION) {
+            defaultSection && setCurrentSection(defaultSection);
         }
 
-        if (buttonAction === EDIT_ACTION || buttonAction === VIEW_ACTION) {
+        if (buttonAction === EDIT_ACTION) {
+            setSelectedCustomer(record);
+            record && setSelectedCustomerId(record?.customerId);
+            !formVisible && setCurrentSection(defaultSection);
+        }
+
+        if (buttonAction === VIEW_ACTION) {
             setSelectedCustomer(record);
             record && setSelectedCustomerId(record?.customerId);
             defaultSection && setCurrentSection(defaultSection);
         }
+
+        if (buttonAction === NEXT_ACTION || buttonAction === NEXT_EDIT_ACTION) {
+            const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+            section && setCurrentSection(nextSection?.id);
+            setLastSection(!nextSection?.id);
+        }
+
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION || buttonAction === NEXT_EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        setIsFormVisible(true);
     };
 
     const onFinish = (values, e) => {};
@@ -250,6 +264,7 @@ const CustomerMasterMain = (props) => {
     }, [formActionType]);
 
     const containerProps = {
+        record: selectedCustomer,
         form,
         formActionType,
         setFormActionType,
@@ -281,6 +296,8 @@ const CustomerMasterMain = (props) => {
         shouldResetForm,
         handleFormValueChange,
         setRefreshList,
+        isLastSection,
+        saveButtonName: formActionType?.addMode ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
     };
 
     const selectProps = {
@@ -288,6 +305,7 @@ const CustomerMasterMain = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
+
     return (
         <>
             <Row gutter={20}>
@@ -297,6 +315,7 @@ const CustomerMasterMain = (props) => {
                             <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.searchAndLabelAlign}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                     {Object.values(CUSTOMER_TYPE)?.map((item) => {
+                                        console.log();
                                         return (
                                             <Button className={styles.marR5} type={customerType === item?.id ? 'primary' : 'link'} danger onClick={() => setCustomerType(item?.id)}>
                                                 {item?.title}

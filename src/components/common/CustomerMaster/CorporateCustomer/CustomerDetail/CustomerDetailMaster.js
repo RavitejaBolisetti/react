@@ -8,7 +8,9 @@ import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { customerParentCompanyDataActions } from 'store/actions/data/customerMaster/customerParentCompany';
 import { customerDetailsDataActions } from 'store/actions/data/customerMaster/customerDetails';
+import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { ViewDetail } from './ViewDetail';
@@ -16,11 +18,7 @@ import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
-import { InputSkeleton } from 'components/common/Skeleton';
 import styles from 'components/common/Common.module.css';
-import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
-import { customerParentCompanyDataActions } from 'store/actions/data/customerMaster/customerParentCompany';
 
 const mapStateToProps = (state) => {
     const {
@@ -80,7 +78,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CompanyCustomerDetailsMasterBase = (props) => {
     const { userId, isDataLoaded, isLoading, showGlobalNotification, customerDetailsData, section, fetchList, listShowLoading, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, customerParentCompanyData, corporateLovData } = props;
-    const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData } = props;
+    const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData, isLastSection } = props;
     const { form, setRefreshList, handleFormValueChange, onFinishFailed, buttonData, setButtonData, formActionType, handleButtonClick } = props;
 
     const [customerDetailsList] = useState([]);
@@ -217,28 +215,19 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const viewProps = {
         formData,
         styles,
+        isLoading,
     };
 
     const myProps = {
         ...props,
-        saveButtonName: formActionType?.addMode ? 'Create Customer ID' : 'Save & Next',
     };
-
-    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;
-    const formSkeleton = (
-        <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <InputSkeleton height={'100vh'} />
-            </Col>
-        </Row>
-    );
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title}</h2>
-                    {isLoading ? formSkeleton : formContainer}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

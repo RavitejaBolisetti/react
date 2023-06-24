@@ -51,11 +51,11 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item label="OTF Status" name="orderStatus">
+                    <Form.Item label="OTF Status" name="otfStatus">
                         <Select className={styles.headerSelectField} {...selectProps} placeholder="Select">
                             {otfStatusList?.map((item) => (
-                                <Option key={item?.id} value={item?.id}>
-                                    {item?.title}
+                                <Option key={item?.title} value={item?.title}>
+                                    {item?.desc}
                                 </Option>
                             ))}
                         </Select>

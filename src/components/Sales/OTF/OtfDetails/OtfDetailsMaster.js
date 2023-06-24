@@ -13,13 +13,10 @@ import { OTFFormButton } from '../OTFFormButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { InputSkeleton } from 'components/common/Skeleton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 
 import styles from 'components/common/Common.module.css';
@@ -28,10 +25,10 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isLoading: isTypeDataLoading, filteredListData: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
                 OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
-                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded = false, isLoading: isSalesConsultantLoading, data: salesConsultantLov = [] },
+                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
             },
         },
     } = state;
@@ -40,14 +37,13 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isTypeDataLoaded,
-        isTypeDataLoading,
         typeData,
         isDataLoaded,
 
         otfData,
         isLoading,
         moduleTitle,
+        isSalesConsultantDataLoaded,
         salesConsultantLov,
     };
     return returnValue;
@@ -57,15 +53,13 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchList: otfDetailsDataActions.fetchList,
             saveData: otfDetailsDataActions.saveData,
             resetData: otfDetailsDataActions.reset,
             listShowLoading: otfDetailsDataActions.listShowLoading,
 
             fetchSalesConsultant: salesConsultantActions.fetchList,
+            listConsultantShowLoading: salesConsultantActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -73,9 +67,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const OtfDetailsMasterBase = (props) => {
-    const { typeData, listConfigShowLoading } = props;
+    const { typeData, listConsultantShowLoading } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded } = props;
+    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_EDIT_ACTION, handleButtonClick } = props;
 
     const [formData, setFormData] = useState();
 
@@ -105,7 +99,7 @@ const OtfDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (!isSalesConsultantDataLoaded && userId) {
-            fetchSalesConsultant({ setIsLoading: listConfigShowLoading, userId });
+            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSalesConsultantDataLoaded, userId]);
@@ -121,6 +115,7 @@ const OtfDetailsMasterBase = (props) => {
         delete data?.modeOfPAyment;
 
         const onSuccess = (res) => {
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
         };
@@ -162,16 +157,9 @@ const OtfDetailsMasterBase = (props) => {
     const viewProps = {
         formData,
         styles,
+        isLoading,
     };
 
-    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;
-    const formSkeleton = (
-        <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <InputSkeleton height={'100vh'} />
-            </Col>
-        </Row>
-    );
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
@@ -184,7 +172,7 @@ const OtfDetailsMasterBase = (props) => {
                             <OTFStatusBar status={1} />
                         </Col>
                     </Row>
-                    {isLoading ? formSkeleton : formContainer}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>
