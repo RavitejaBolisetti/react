@@ -7,9 +7,8 @@ import React, { useState } from 'react';
 import { Space, Collapse, Typography, Descriptions, Card } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
-import { FiEye } from 'react-icons/fi';
+import { FiDownload } from 'react-icons/fi';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -208,7 +207,7 @@ const ViewDetailMain = (props) => {
                         key="5"
                     >
                         <a>
-                            <Card key={formData?.customerFormDocId} title={formData?.customerFormDocId} extra={<FiEye />} onClick={handleOnClick}></Card>
+                            <Card className={styles.viewDocumentStrip} key={formData?.customerFormDocId} title={formData?.customerFormDocId} extra={<FiDownload />} onClick={handleOnClick}></Card>
                         </a>
                         {/* {viewDocument && <img width="500" height="200" src={`data:image/png;base64,${viewDocument?.base64}`} />} */}
                     </Panel>

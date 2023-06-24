@@ -7,7 +7,7 @@ import React from 'react';
 import { Space, Collapse, Typography, Descriptions, Card } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { FiEye } from 'react-icons/fi';
+import { FiDownload } from 'react-icons/fi';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -216,7 +216,7 @@ const ViewDetailMain = (props) => {
                         }
                         key="4"
                     >
-                        <Card key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiEye />} onClick={handleOnClick} ></Card>
+                        <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>
                     </Panel>
                 </Collapse>
             </Space>

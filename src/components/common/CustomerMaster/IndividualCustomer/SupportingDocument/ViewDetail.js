@@ -5,7 +5,8 @@
 import React from 'react';
 
 import { Row, Col, Card } from 'antd';
-import { FiEye } from 'react-icons/fi';
+import { FiDownload } from 'react-icons/fi';
+import styles from 'components/common/Common.module.css';
 
 export const ViewDetail = (props) => {
     const { supportingData, handlePreview, viewDocument, showGlobalNotification } = props;
@@ -21,15 +22,17 @@ export const ViewDetail = (props) => {
     };
     return (
         <>
-            {supportingData.length > 0 ? (
-                <Card style={{ backgroundColor: '#F2F2F2' }}>
-                    {supportingData.map((uploadData) => {
-                        return <Card style={{ backgroundColor: '#E6E6E6' }} key={uploadData.id} title={uploadData?.documentName} extra={<FiEye onClick={() => downloadFile(uploadData)} />}></Card>;
-                    })}
-                </Card>
-            ) : (
-                <div>No Data Found</div>
-            )}
+            <div className={styles.viewDrawerContainer}>
+                {supportingData.length > 0 ? (
+                    <Card>
+                        {supportingData.map((uploadData) => {
+                            return <Card className={styles.viewDocumentStrip} key={uploadData.id} title={uploadData?.documentName} extra={<FiDownload onClick={() => downloadFile(uploadData)} />}></Card>;
+                        })}
+                    </Card>
+                ) : (
+                    <div>No Data Found</div>
+                )}
+            </div>
         </>
     );
 };

@@ -5,17 +5,20 @@
 import React from 'react';
 
 import { Row, Col, Card } from 'antd';
-import { FiEye } from 'react-icons/fi';
+import { FiDownload } from 'react-icons/fi';
+import styles from 'components/common/Common.module.css';
 
 export const ViewDetail = (props) => {
     const { supportingData } = props;
     return (
         <>
-            <Card style={{ backgroundColor: '#F2F2F2' }}>
-                {supportingData.map((uploadData) => {
-                    return <Card key={uploadData.id} title={uploadData?.documentTitle} extra={<FiEye />}></Card>;
-                })}
-            </Card>
+            <div className={styles.viewDrawerContainer}>
+                <Card>
+                    {supportingData.map((uploadData) => {
+                        return <Card className={styles.viewDocumentStrip} key={uploadData.id} title={uploadData?.documentTitle} extra={<FiDownload />}></Card>;
+                    })}
+                </Card>
+            </div>
         </>
     );
 };

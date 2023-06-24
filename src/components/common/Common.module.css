@@ -2299,6 +2299,64 @@
     text-align: center;
 }
 
+
+.drawerBodyRight .viewDrawerContainer :global .ant-space-horizontal .ant-avatar.ant-avatar-icon {
+    width: 40px;
+    height: 40px;
+    line-height: 44px;
+    font-size: 30px;
+    background-color: #70C922;
+}
+
+.drawerBodyRight .viewDrawerContainer :global .ant-space-horizontal .ant-space-item h5 {
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #0B0B0C;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+}
+
+.drawerBodyRight .viewDrawerContainer :global .ant-space-vertical {
+    gap: 20px !important;
+    margin-bottom: 0;
+}
+
+.drawerBodyRight .viewDrawerContainer :global .ant-space-vertical .ant-space-horizontal {
+    gap: 10px !important;
+}
+
+.drawerBodyRight .viewDrawerContainer :global .ant-space-horizontal .ant-space-item span.ant-typography {
+    color: #0B0B0C;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.viewDrawerContainer .dashedBorder {
+    margin-bottom: 20px !important;
+}
+
+.viewDrawerContainer .cardInsideBox {
+    padding-bottom: 20px;
+    margin-top: 20px;
+}
+
+.viewDrawerContainer .viewDocumentStrip :global .ant-card-head {
+    padding: 0 20px;
+    min-height: 40px;
+    border-bottom: 1px solid transparent;
+}
+
+.viewDrawerContainer .viewDocumentStrip :global .ant-card-head .ant-card-head-wrapper .ant-card-extra {
+    color: #ff3e5b;
+    cursor: pointer;
+    margin-top: 3px;
+}
+
+.viewDrawerContainer .viewDocumentStrip :global .ant-card-body {
+    display: none;
+}
+
 .cardInsideBox {
     border: 1px solid #e6e6e6;
     border-radius: 4px;
@@ -2324,6 +2382,13 @@
 
 .borderRadiusSix {
     border-radius: 6px !important;
+}
+
+.viewDocumentStrip {
+    margin-bottom: 20px !important;
+    background: #E6E6E6;
+    border-radius: 6px;
+    border: 1px solid #B5B5B6 !important;
 }
 
 .userCircle {
