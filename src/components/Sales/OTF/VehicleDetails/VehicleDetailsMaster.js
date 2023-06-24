@@ -181,6 +181,7 @@ const VehicleDetailsMasterMain = (props) => {
             setoptionsServiceModified([]);
             setformData({});
             setOpenAccordian('1');
+            setIsReadOnly(false);
             const extraParams = [
                 {
                     key: 'otfNumber',

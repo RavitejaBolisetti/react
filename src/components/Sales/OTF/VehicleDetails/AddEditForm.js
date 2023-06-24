@@ -26,6 +26,15 @@ const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
     const { activeKey, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, onFinish, onFinishFailed, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
     const [optionForm] = Form.useForm();
+    const findUsageType = (usage) => {
+        let foundVal;
+        typeData[PARAM_MASTER.VEHCL_TYPE.id]?.map((element, index) => {
+            if (element?.value === usage) {
+                foundVal = element?.key;
+            }
+        });
+        return foundVal;
+    };
 
     const disabledProp = { disabled: true };
     useEffect(() => {
@@ -33,6 +42,7 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 ...formData,
                 poDate: dayjs(formData?.podate?.substr(0, 10)).format('DD/MM/YYYY'),
+                vehicleUsageType: findUsageType(formData?.vehicleUsageType),
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
