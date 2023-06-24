@@ -216,7 +216,7 @@ const ViewDetailMain = (props) => {
                         }
                         key="4"
                     >
-                        <Card key={formData?.image} title={formData?.image} extra={<FiEye />} onClick={handleOnClick}></Card>
+                        <Card key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiEye />} onClick={handleOnClick} ></Card>
                     </Panel>
                 </Collapse>
             </Space>
