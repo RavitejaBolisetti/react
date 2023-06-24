@@ -75,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const CustomerDetailsMain = (props) => {
     const { saveData, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, otfSearchSelected, formActionType } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, otfSearchSelected, formActionType, NEXT_EDIT_ACTION, handleButtonClick } = props;
     const { typeData } = props;
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
@@ -120,6 +120,8 @@ export const CustomerDetailsMain = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
         };
 
         const onError = (message) => {

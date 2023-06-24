@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const SchemeDetailsMasterBase = (props) => {
     const { schemeData, onCloseAction, fetchList, formActionType, userId, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedOrderId, handleFormValueChange, section, isLoading } = props;
+    const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
 
     const onErrorAction = (message) => {
         showGlobalNotification(message);
@@ -85,8 +85,12 @@ const SchemeDetailsMasterBase = (props) => {
         isLoading,
     };
 
+    const onFinish = (values) => {
+        handleButtonClick({ buttonAction: NEXT_ACTION });
+    };
+
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange}>
+        <Form layout="vertical" autoComplete="off" onFinish={onFinish} form={form}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

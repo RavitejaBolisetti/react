@@ -278,6 +278,7 @@ export const OtfMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
+        console.log('🚀 ~ file: OtfMaster.js:281 ~ onFinishFailed ~ errorInfo:', errorInfo);
         return;
     };
 
@@ -383,6 +384,7 @@ export const OtfMasterBase = (props) => {
         EDIT_ACTION,
         VIEW_ACTION,
         NEXT_ACTION,
+        NEXT_EDIT_ACTION,
         buttonData,
 
         setButtonData,
