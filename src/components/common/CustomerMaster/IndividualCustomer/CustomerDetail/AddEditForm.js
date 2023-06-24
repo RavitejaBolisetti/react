@@ -117,7 +117,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Space direction="vertical" size="small" style={{ display: 'flex' }}>
+            <Space direction="vertical" size="small" style={{ display: 'flex' }} >
                 <Card style={{ backgroundColor: '#F2F2F2' }}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -241,32 +241,33 @@ const AddEditFormMain = (props) => {
                         </Row>
                     </div>
                     <Divider />
-
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Email ID" initialValue={formData?.emailId} name="emailId" data-testid="emailId" rules={[validateEmailField('email id'), validateRequiredInputField('email id')]}>
-                                <Input placeholder={preparePlaceholderText('email id')} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Do you want to contacted over whatsapp?" initialValue={formData?.whatsappCommunicationIndicator ? true : false} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
-                                <Switch value={formData?.whatsappCommunicationIndicator ? true : false} checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} defaultChecked={editMode === 'Edit' ? true : false} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Want to use Mobile no as whatsapp no?" initialValue={formData?.mobileNumberAsWhatsappNumber === false || false ? false : true} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
-                                <Switch value={formData?.mobileNumberAsWhatsappNumber === 0 || 0 ? 0 : 1} checkedChildren="Yes" unCheckedChildren="No" onChange={copyWhatsNo} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Whatsapp Number" initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsAppNumber" rules={[validateMobileNoField('whatsapp number')]}>
-                                <Input onChange={(checked) => (checked ? 1 : 0)} placeholder={preparePlaceholderText('whatsapp number')} disabled={!isEnabled} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Divider />
+                    <div className={styles.devidedChange} >
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item label="Email ID" initialValue={formData?.emailId} name="emailId" data-testid="emailId" rules={[validateEmailField('email id'), validateRequiredInputField('email id')]}>
+                                    <Input placeholder={preparePlaceholderText('email id')} />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item label="Do you want to contact over whatsapp?" initialValue={formData?.whatsappCommunicationIndicator ? true : false} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
+                                    <Switch value={formData?.whatsappCommunicationIndicator ? true : false} checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} defaultChecked={editMode === 'Edit' ? true : false} />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item label="Want to use Mobile no as whatsapp no?" initialValue={formData?.mobileNumberAsWhatsappNumber === false || false ? false : true} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
+                                    <Switch value={formData?.mobileNumberAsWhatsappNumber === 0 || 0 ? 0 : 1} checkedChildren="Yes" unCheckedChildren="No" onChange={copyWhatsNo} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item label="Whatsapp Number" initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsAppNumber" rules={[validateMobileNoField('whatsapp number')]}>
+                                    <Input onChange={(checked) => (checked ? 1 : 0)} placeholder={preparePlaceholderText('whatsapp number')} maxLength={10} disabled={!isEnabled} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    </div>
+                    {/* <Divider /> */}
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Corporate Type" initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType" rules={[validateRequiredSelectField('corporate type')]}>

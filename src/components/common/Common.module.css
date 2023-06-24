@@ -13,6 +13,9 @@
 .marR20 {
     margin-right: 20px;
 }
+.marB20 {
+    margin-bottom: 20px;
+}
 
 .padT5 {
     padding-top: 5px;
@@ -652,7 +655,7 @@
 }
 
 .accordianContainer :global .ant-collapse {
-    margin-bottom: 12px;
+    margin-bottom: 12px!important;
     background: #f2f2f2;
 }
 
@@ -1651,7 +1654,7 @@
 } */
 
 .drawerBodyRight {
-    padding: 30px 30px 56px;
+    padding: 30px 30px 36px;
     margin-left: 0 !important;
     margin-right: 0 !important;
     /* margin-bottom: 40px; */
@@ -1790,12 +1793,18 @@
     line-height: 23px;
     font-weight: 400;
 }
+.drawerBodyRight  .devidedChange{
+    margin-top: 0px!important;
+    margin-bottom: 20px;
+    border-bottom: #e6e6e6 1px solid;
+}
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
     margin-top: 20px;
     margin-bottom: 20px;
     border-color: #e6e6e6;
 }
+
 
 .drawerBodyRight :global .ant-table-wrapper table {
     border-radius: 8px;

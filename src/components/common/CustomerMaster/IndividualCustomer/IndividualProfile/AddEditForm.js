@@ -493,6 +493,7 @@ const AddEditFormMain = (props) => {
                                 key="5"
                             >
                                 <>
+                                <div className={styles.marB20}>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">
@@ -516,6 +517,7 @@ const AddEditFormMain = (props) => {
                                             </Dragger>
                                         </Col>
                                     </Row>
+                                    </div>
                                 </>
                             </Panel>
                         </Collapse>
