@@ -4,24 +4,27 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
+import { useState } from 'react';
 import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Empty, message } from 'antd';
+
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
-import { useState } from 'react';
 import Dragger from 'antd/es/upload/Dragger';
+
 import { FiTrash } from 'react-icons/fi';
-import { BiLockAlt, BiTimeFive } from 'react-icons/bi';
+import { BiTimeFive } from 'react-icons/bi';
+
 import { NameChangeHistory } from './NameChangeHistory';
-import Svg from 'assets/images/Filter.svg';
+import UploadUtils from '../../Common/UploadUtils';
 
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { form, configurableTypedata, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [mobileLoader, setmobileLoader] = useState(false);
+    const { form, configurableTypedata, formData, corporateLovData, setUploadImgDocId, isViewModeVisible, formActionType: { editMode } = undefined, customerType } = props;
+    // const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [mobileLoader, setmobileLoader] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [corporateType, setCorporateType] = useState();
@@ -47,26 +50,26 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const handleNumberValidation = (event) => {
-        const Mno = event.target.value;
-        const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
-        if (Mno?.length === 10 && regex.test(Mno)) {
-            setmobileLoader(true);
-            setTimeout(() => {
-                setIsModalOpen(true);
-            }, 1000);
-        } else {
-            setmobileLoader(false);
-        }
-    };
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
+    // const handleNumberValidation = (event) => {
+    //     const Mno = event.target.value;
+    //     const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
+    //     if (Mno?.length === 10 && regex.test(Mno)) {
+    //         setmobileLoader(true);
+    //         setTimeout(() => {
+    //             setIsModalOpen(true);
+    //         }, 1000);
+    //     } else {
+    //         setmobileLoader(false);
+    //     }
+    // };
+    // const showModal = () => {
+    //     setIsModalOpen(true);
+    // };
 
-    const handleCancel = () => {
-        setIsModalOpen(false);
-        setmobileLoader(false);
-    };
+    // const handleCancel = () => {
+    //     setIsModalOpen(false);
+    //     setmobileLoader(false);
+    // };
 
     const onHandleSelect = (value) => {
         form.setFieldsValue({
@@ -74,13 +77,13 @@ const AddEditFormMain = (props) => {
         });
     };
 
-    const modalProps = {
-        isVisible: isModalOpen,
-        icon: <BiLockAlt />,
-        titleOverride: 'Mobile Number Validation',
-        closable: false,
-        onCloseAction: handleCancel,
-    };
+    // const modalProps = {
+    //     isVisible: isModalOpen,
+    //     icon: <BiLockAlt />,
+    //     titleOverride: 'Mobile Number Validation',
+    //     closable: false,
+    //     onCloseAction: handleCancel,
+    // };
 
     const showUploadList = {
         showRemoveIcon: false,
@@ -197,79 +200,49 @@ const AddEditFormMain = (props) => {
                                     <Input placeholder={preparePlaceholderText('last name')} />
                                 </Form.Item>
                             </Col>
+
                             {editMode && (
                                 <>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <div className={styles.uploadDragger}>
-                                            <Dragger showUploadList={showUploadList} {...uploadProps}>
-                                                {/* <div>
-                                                    <img src={Svg} alt="" />
-                                                </div> */}
-                                                <Empty
-                                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                                    imageStyle={{
-                                                        height: 100,
-                                                    }}
-                                                    description={
-                                                        <>
-                                                            <span>
-                                                                Click or drop your file here to upload the signed and <br />
-                                                                scanned customer form.
-                                                            </span>
-                                                            <span>
-                                                                <br />
-                                                                File type should be png, jpg or pdf and max file size to be 5Mb
-                                                            </span>
-                                                        </>
-                                                    }
-                                                />
-
-                                                <Button type="primary">Upload File</Button>
-                                            </Dragger>
-                                        </div>
+                                        <UploadUtils
+                                            {...props}
+                                            // {...uploadProps}
+                                            isViewModeVisible={isViewModeVisible}
+                                            setUploadImgDocId={setUploadImgDocId}
+                                        />
                                     </Col>
-                                    <Row gutter={20} style={{ marginTop: '10px', marginLeft: '3px' }}>
-                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Button type="primary" className={styles.floatRight}>
-                                                Save
-                                            </Button>
-                                        </Col>
-                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Button danger>Cancel</Button>
-                                        </Col>
-                                    </Row>
                                 </>
                             )}
                         </Row>
                     </div>
                     <Divider />
-                    <div className={styles.blockSection}>                               
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Email ID" initialValue={formData?.emailId} name="emailId" data-testid="emailId" rules={[validateEmailField('email id'), validateRequiredInputField('email id')]}>
-                                <Input placeholder={preparePlaceholderText('email id')} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            {/* value={formData?.whatsappCommunicationIndicator === null || false ? false : true}  */}
-                            <Form.Item label="Do you want to contact over whatsapp?" initialValue={editMode ? formData?.whatsappCommunicationIndicator : false} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
-                                <Switch value={formData?.whatsappCommunicationIndicator} checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} defaultChecked={editMode ? true : formData?.whatsappCommunicationIndicator === true || null || undefined ? true : false} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Want to use Mobile no as whatsapp no?" initialValue={editMode ? formData?.mobileNumberAsWhatsappNumber : false} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
-                                <Switch value={formData?.mobileNumberAsWhatsappNumber} checkedChildren="Yes" unCheckedChildren="No" onChange={copyWhatsNo} defaultChecked={editMode ? true : formData?.mobileNumberAsWhatsappNumber === true || null || undefined ? true : false} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Whatsapp Number" initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsAppNumber" rules={[validateMobileNoField('whatsapp number')]}>
-                                <Input onChange={(checked) => (checked ? 1 : 0)} placeholder={preparePlaceholderText('whatsapp number')} disabled={!isEnabled} maxLength={10} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    </div> 
+                    <div className={styles.blockSection}>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item label="Email ID" initialValue={formData?.emailId} name="emailId" data-testid="emailId" rules={[validateEmailField('email id'), validateRequiredInputField('email id')]}>
+                                    <Input placeholder={preparePlaceholderText('email id')} />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                {/* value={formData?.whatsappCommunicationIndicator === null || false ? false : true}  */}
+                                <Form.Item label="Do you want to contact over whatsapp?" initialValue={editMode ? formData?.whatsappCommunicationIndicator : false} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
+                                    <Switch checkedChildren="Yes" unCheckedChildren="No"  onChange={e=> {handleToggle(e);copyWhatsNo()}} defaultChecked={editMode ? true : formData?.whatsappCommunicationIndicator === true || null || undefined ? true : false} />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item label="Want to use Mobile no as whatsapp no?" initialValue={editMode ? formData?.mobileNumberAsWhatsappNumber : false} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
+                                    <Switch  checkedChildren="Yes" unCheckedChildren="No" onChange={copyWhatsNo || handleToggle} defaultChecked={editMode ? true : formData?.mobileNumberAsWhatsappNumber === true || null || undefined ? true : false} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item label="Whatsapp Number" initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsAppNumber" rules={[validateMobileNoField('whatsapp number')]}>
+                                    <Input  placeholder={preparePlaceholderText('whatsapp number')} disabled={editMode ? isEnabled : !isEnabled} maxLength={10} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    </div>
                     {/* <Divider /> */}
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -277,7 +250,15 @@ const AddEditFormMain = (props) => {
                                 <Select placeholder={preparePlaceholderSelect('corporate type')} fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']} onChange={handleCorporateChange} allowClear></Select>
                             </Form.Item>
                         </Col>
-                        {corporateType === 'LIS' ? (
+                        {corporateType === 'NON-LIS' ? (
+                            <>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
+                                        <Input placeholder={preparePlaceholderText('corporate name')} />
+                                    </Form.Item>
+                                </Col>
+                            </>
+                        ) : (
                             <>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
@@ -291,12 +272,6 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                             </>
-                        ) : (
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
-                                    <Input placeholder={preparePlaceholderText('corporate name')} />
-                                </Form.Item>
-                            </Col>
                         )}
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Corporate Category" initialValue={formData?.corporateCategory} name="corporateCategory" data-testid="corporateCategory">

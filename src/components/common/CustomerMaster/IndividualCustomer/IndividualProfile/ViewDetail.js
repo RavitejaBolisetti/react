@@ -7,13 +7,14 @@ import React from 'react';
 import { Space, Collapse, Typography, Descriptions, Card } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { FiEye } from 'react-icons/fi';
+import { FiDownload } from 'react-icons/fi';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { setActiveKey, activeKey, styles, formData, viewDocument, handleOnClick, isLoading } = props;
+    const { setActiveKey, activeKey, styles, formData, viewDocument, handleOnClick, isLoading, appCategoryData } = props;
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -71,24 +72,24 @@ const ViewDetailMain = (props) => {
                             <br />
                             <br />
                             <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(formData?.dateOfBirth, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Gender">{checkAndSetDefaultValue(formData?.gender, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Maritial Status">{checkAndSetDefaultValue(formData?.martialStatus, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.GENDER_CD, formData?.gender), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Maritial Status">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.MARITAL_STATUS, formData?.martialStatus), isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Wedding Anniversary Date">{checkAndSetDefaultValue(formData?.weddingAnniversary, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Occupation">{checkAndSetDefaultValue(formData?.occuption, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Annual Income">{checkAndSetDefaultValue(formData?.annualIncome, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Occupation">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.OCC_TYPE, formData?.occuption), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Annual Income">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.Annual_Income, formData?.annualIncome), isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Driving License No.">{checkAndSetDefaultValue(formData?.drivingLicenseNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Aadhar No.">{checkAndSetDefaultValue(formData?.adharNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Voter ID">{checkAndSetDefaultValue(formData?.voterId, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Vehicle Used">{checkAndSetDefaultValue(formData?.vehicleUsed, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Mother Tongue">{checkAndSetDefaultValue(formData?.preferredLanguage, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Religion">{checkAndSetDefaultValue(formData?.religion, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Vehicle Used">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.Vehicle_Used, formData?.vehicleUsed), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Mother Tongue">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.MOTHER_TOUNGE, formData?.preferredLanguage), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Religion">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.RELGION, formData?.religion), isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="PAN">{checkAndSetDefaultValue(formData?.panNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData?.gstin, isLoading)}</Descriptions.Item>
                         </Descriptions>
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Usage/Application Categorization">{checkAndSetDefaultValue(formData?.applicationCategorization, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Usage/Application Sub-Category">{checkAndSetDefaultValue(formData?.applicationSubCategory, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Category">{checkAndSetDefaultValue(formData?.customerCategory, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Usage/Application Categorization">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_CAT, formData?.applicationCategorization), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Usage/Application Sub-Category">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_SUB_CAT, formData?.applicationSubCategory), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Customer Category">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.CUS_CAT, formData?.customerCategory), isLoading)}</Descriptions.Item>
                         </Descriptions>
                         {formData?.customerCategory === 'Fleet' ? (
                             <Descriptions {...viewProps}>
@@ -216,7 +217,7 @@ const ViewDetailMain = (props) => {
                         }
                         key="4"
                     >
-                        <Card key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiEye />} onClick={handleOnClick}></Card>
+                        <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>
                     </Panel>
                 </Collapse>
             </Space>

@@ -14,6 +14,7 @@ const { Text } = Typography;
 const ViewContactList = (props) => {
     const { styles, contactData, deleteContactHandeler, onCheckdefaultAddClick, setEditingData, typeData } = props;
     const { setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, isEditing, setIsEditing, formActionType } = props;
+    const { isAdding, setIsAdding } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
     const disableProp = {disabled: formActionType?.viewMode };
@@ -60,7 +61,7 @@ const ViewContactList = (props) => {
                                                 <Text strong> {`${data?.firstName ? data?.firstName : ''} ${data?.middleName ? data?.middleName : ''} ${data?.lastName ? data?.lastName : ''}`}</Text>{' '}
                                             </Space>
                                             {!formActionType?.viewMode && (
-                                                <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing}>
+                                                <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding}>
                                                     Edit{' '}
                                                 </Button>
                                             )}

@@ -111,10 +111,6 @@ const CompanyProfileBase = (props) => {
         const data = {
             ...rest,
             customerId: customerId,
-            applicationCategorization: appCategory,
-            applicationSubCategory: appSubCategory,
-            customerCategory: customerCategory,
-            // keyAccountDetails: { customerId: customerId, accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate },
             authorityRequest: { id: authorityId, personName: values.personName, postion: values.postion, companyName: values.companyName, remarks: values.remarks },
             customerFormDocId: uploadedFile,
             customerConsent: values.customerConsent,
@@ -202,6 +198,7 @@ const CompanyProfileBase = (props) => {
     };
 
     const viewProps = {
+        ...props,
         onCloseAction,
         styles,
         formData: customerProfileData,

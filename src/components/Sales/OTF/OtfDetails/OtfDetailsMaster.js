@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 const OtfDetailsMasterBase = (props) => {
     const { typeData, listConsultantShowLoading } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded } = props;
+    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_EDIT_ACTION, handleButtonClick } = props;
 
     const [formData, setFormData] = useState();
 
@@ -115,6 +115,7 @@ const OtfDetailsMasterBase = (props) => {
         delete data?.modeOfPAyment;
 
         const onSuccess = (res) => {
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
         };

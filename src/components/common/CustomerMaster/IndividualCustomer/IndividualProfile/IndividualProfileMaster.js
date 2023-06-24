@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import dayjs from 'dayjs';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
@@ -120,6 +121,29 @@ const IndividualProfileBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isIndiviualProfileLoaded, indiviualData?.image]);
 
+    useEffect(() => {
+        if (indiviualData?.dateOfBirth === null || indiviualData?.dateOfBirth === undefined || indiviualData?.dateOfBirth === '') {
+            form.setFieldsValue({
+                dateOfBirth: null,
+            });
+        } else {
+            form.setFieldsValue({
+                dateOfBirth: dayjs(indiviualData?.dateOfBirth),
+            });
+        }
+        if (indiviualData?.weddingAnniversary === null || indiviualData?.weddingAnniversary === undefined || indiviualData?.weddingAnniversary === '') {
+            form.setFieldsValue({
+                weddingAnniversary: null,
+            });
+        } else {
+            form.setFieldsValue({
+                weddingAnniversary: dayjs(indiviualData?.weddingAnniversary),
+            });
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [indiviualData]);
+
     const onFinish = (values) => {
         const recordId = formData?.id || '';
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
@@ -203,9 +227,11 @@ const IndividualProfileBase = (props) => {
         showDataLoading,
         viewDocument,
         isViewDocumentLoading,
+        NEXT_EDIT_ACTION,
     };
 
     const viewProps = {
+        ...props,
         formData: indiviualData,
         styles,
         activeKey,

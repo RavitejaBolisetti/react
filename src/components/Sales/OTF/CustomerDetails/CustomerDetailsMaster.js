@@ -11,10 +11,14 @@ import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { showGlobalNotification } from 'store/actions/notification';
+
+import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { OTFFormButton } from '../OTFFormButton';
 
-import AddEditForm from './AddEditForm';
-import { showGlobalNotification } from 'store/actions/notification';
+import { ViewDetail } from './ViewDetail';
+import { AddEditForm } from './AddEditForm';
+
 import dayjs from 'dayjs';
 
 import styles from 'components/common/Common.module.css';
@@ -74,8 +78,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMain = (props) => {
-    const { saveData, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, otfSearchSelected, formActionType } = props;
+    const { saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, otfSearchSelected, formActionType, NEXT_EDIT_ACTION, handleButtonClick, handleFormValueChange, section } = props;
     const { typeData } = props;
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
@@ -83,6 +87,7 @@ export const CustomerDetailsMain = (props) => {
     const [otfData, setOtfData] = useState(otfSearchSelected);
     const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
     const [showDataLoading, setShowDataLoading] = useState(false);
+    const [activeKey, setactiveKey] = useState([1]);
 
     useEffect(() => {
         if (userId && isDataLoaded && customerFormData) {
@@ -120,6 +125,8 @@ export const CustomerDetailsMain = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
         };
 
         const onError = (message) => {
@@ -159,11 +166,27 @@ export const CustomerDetailsMain = (props) => {
         setSameAsBookingCustomer,
     };
 
+    const viewProps = {
+        formData,
+        styles,
+        isLoading,
+        activeKey,
+        setactiveKey,
+    };
+
     return (
-        <div>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <AddEditForm {...formProps} />
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Row>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <h2>{section?.title}</h2>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <OTFStatusBar status={1} />
+                        </Col>
+                    </Row>
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>
@@ -171,7 +194,7 @@ export const CustomerDetailsMain = (props) => {
                     <OTFFormButton {...props} />
                 </Col>
             </Row>
-        </div>
+        </Form>
     );
 };
 

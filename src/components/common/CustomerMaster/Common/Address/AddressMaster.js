@@ -133,7 +133,7 @@ const AddressMasterBase = (props) => {
     }, [userId, isAddressLoaded]);
 
     const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
+        setOpenAccordian(key);
     };
 
     const onCheckdefaultAddClick = (e, value) => {
@@ -183,7 +183,7 @@ const AddressMasterBase = (props) => {
         } else {
             saveDataCorporate(requestData);
         }
-
+        setIsAdding(false);
         setShowAddEditForm(false);
         setIsEditing(false);
         setEditingData({});
@@ -207,6 +207,7 @@ const AddressMasterBase = (props) => {
     const addAddressHandeler = (e) => {
         e.stopPropagation();
         form.resetFields();
+        setIsAdding(true);
         setShowAddEditForm(true);
         setOpenAccordian('1');
     };
@@ -238,6 +239,8 @@ const AddressMasterBase = (props) => {
         pincodeData,
         addData,
         handleFormValueChange,
+        isAdding, 
+        setIsAdding
     };
 
     const myProps = {
@@ -251,14 +254,14 @@ const AddressMasterBase = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>
 
-                        <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
+                        <Collapse onChange={() => handleCollapse(1)}  activeKey={openAccordian}>
                             <Panel
                                 header={
                                     <>
                                         <Space>
                                             <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Address' : 'Company Address'}</Text>
                                             {!isViewModeVisible && formActionType?.editMode && (
-                                                <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary">
+                                                <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary" disabled={isAdding || isEditing }>
                                                     Add
                                                 </Button>
                                             )}
@@ -267,6 +270,7 @@ const AddressMasterBase = (props) => {
                                     </>
                                 }
                                 key="1"
+                                showArrow={false}
                             >
                                 {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
                                 <ViewAddressList {...formProps} />

@@ -160,6 +160,9 @@ export const OtfMasterBase = (props) => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
             setSection(section);
+
+            const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+            setLastSection(!nextSection?.id);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
@@ -172,7 +175,6 @@ export const OtfMasterBase = (props) => {
     }, [isSearchDataLoaded, userId, refershData]);
 
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
-        console.log('record', record);
         form.resetFields();
 
         if (buttonAction === ADD_ACTION) {
@@ -279,6 +281,7 @@ export const OtfMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
+        console.log('🚀 ~ file: OtfMaster.js:281 ~ onFinishFailed ~ errorInfo:', errorInfo);
         return;
     };
 
@@ -371,6 +374,7 @@ export const OtfMasterBase = (props) => {
     }, [formActionType]);
 
     const containerProps = {
+        record: selectedOrder,
         form,
         formActionType,
         setFormActionType,
@@ -384,6 +388,7 @@ export const OtfMasterBase = (props) => {
         EDIT_ACTION,
         VIEW_ACTION,
         NEXT_ACTION,
+        NEXT_EDIT_ACTION,
         buttonData,
 
         setButtonData,
