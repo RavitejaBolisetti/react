@@ -7,12 +7,10 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { familyDetailsDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetails';
 import { familyDetailSearchDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetailSearch';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { btnVisiblity } from 'utils/btnVisiblity';
 import { GetAge } from 'utils/getAge';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
@@ -25,7 +23,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isRelationDataLoaded = false, isRelationLoading, paramdata: relationData = [] },
+            ConfigurableParameterEditing: { filteredListData: relationData = [] },
             CustomerMaster: {
                 FamilyDetails: { isLoaded: isFamilyLoaded = false, isLoading: isFamilyLoading, data: familyData = [] },
                 FamilyDetailSearch: { isLoading: isSearchLoading, data: familySearchData = [] },
@@ -35,8 +33,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isRelationDataLoaded,
-        isRelationLoading,
+
         isFamilyLoaded,
         isFamilyLoading,
         relationData: relationData && relationData[PARAM_MASTER.FAMLY_RELTN.id],
@@ -51,9 +48,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchFamilyDetailsList: familyDetailsDataActions.fetchList,
             listFamilyDetailsShowLoading: familyDetailsDataActions.listShowLoading,
             saveData: familyDetailsDataActions.saveData,
@@ -68,8 +62,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const FamilyDetailMasterBase = (props) => {
-    const { section, userId, isRelationDataLoaded, isRelationLoading, relationData, fetchConfigList, listConfigShowLoading, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, fetchFamilySearchList, listFamilySearchLoading, familySearchData } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, isSearchLoading, selectedCustomerId } = props;
+    const { section, userId, relationData, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, fetchFamilySearchList, listFamilySearchLoading, familySearchData } = props;
+    const { buttonData, setButtonData, formActionType, isSearchLoading, selectedCustomerId, handleButtonClick } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [form] = Form.useForm();
     // const [formData, setFormData] = useState([]);
@@ -78,8 +72,8 @@ const FamilyDetailMasterBase = (props) => {
     const [customerType, setCustomerType] = useState('Yes');
     const [editedMode, setEditedMode] = useState(false);
     const [editedId, setEditedId] = useState(0);
-    const ADD_ACTION = formActionType?.addMode;
-    const EDIT_ACTION = formActionType?.editMode;
+
+    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
     const VIEW_ACTION = formActionType?.viewMode;
 
     const extraParams = [
@@ -90,13 +84,6 @@ const FamilyDetailMasterBase = (props) => {
             name: 'Customer ID',
         },
     ];
-
-    useEffect(() => {
-        if (userId && !isRelationDataLoaded && !isRelationLoading) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.FAMLY_RELTN.id });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isRelationDataLoaded]);
 
     useEffect(() => {
         let onErrorAction = (res) => {
@@ -131,12 +118,6 @@ const FamilyDetailMasterBase = (props) => {
         ];
 
         fetchFamilySearchList({ setIsLoading: listFamilySearchLoading, userId, extraParams: searchParams, onErrorAction });
-    };
-
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
     };
 
     const onSave = () => {
@@ -175,6 +156,7 @@ const FamilyDetailMasterBase = (props) => {
         let data = [...familyDetailList];
         const onSuccess = (res) => {
             form.resetFields();
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, extraParams });
         };
@@ -200,7 +182,6 @@ const FamilyDetailMasterBase = (props) => {
 
     const myProps = {
         ...props,
-        saveButtonName: formActionType?.addMode ? 'Family Detail ID' : 'Save & Next',
     };
 
     useEffect(() => {

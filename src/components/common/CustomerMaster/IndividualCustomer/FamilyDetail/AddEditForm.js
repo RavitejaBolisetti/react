@@ -20,7 +20,7 @@ const AddEditFormMain = (props) => {
     const { onFinish, onFinishFailed, form, onChange, showForm, setShowForm, setCustomerType, relationData, VIEW_ACTION } = props;
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode, onSearch, isSearchLoading } = props;
     const [activeKey, setactiveKey] = useState([]);
-    const [ disabled, setDisabled ] = useState(false);
+    const [disabled, setDisabled] = useState(false);
 
     const handleEdit = () => {
         setIsViewModeVisible(false);
@@ -82,13 +82,14 @@ const AddEditFormMain = (props) => {
         });
     };
 
-    useEffect( () => {
-        if(editedMode){
+    useEffect(() => {
+        if (editedMode) {
             setDisabled(true);
-        } else{
+        } else {
             setDisabled(false);
         }
-    },[editedMode] )
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [editedMode]);
 
     const viewProps = {
         activeKey,
@@ -159,7 +160,7 @@ const AddEditFormMain = (props) => {
                                                                 onEdit(item, index);
                                                             }}
                                                             disabled={disabled}
-                                                            style={{color:disabled?'grey':'red'}}
+                                                            style={{ color: disabled ? 'grey' : 'red' }}
                                                         >
                                                             Edit
                                                         </Button>
