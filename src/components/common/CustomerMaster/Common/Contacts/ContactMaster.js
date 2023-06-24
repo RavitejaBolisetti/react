@@ -217,9 +217,10 @@ const ContactMain = (props) => {
         onCheckdefaultAddClick,
         setButtonData,
         setUploadImgDocId,
+        uploadImgDocId,
         handleFormValueChange,
         setContinueWithOldMobNo,
-        uploadImgDocId,
+       
         customerType,
         isAdding,
         setIsAdding

@@ -10,6 +10,8 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 
 import { validateRequiredInputField } from 'utils/validation';
 import { validateMobileNoField } from 'utils/validation';
+import { disableFutureDate } from 'utils/disableFutureDate';
+
 import dayjs from 'dayjs';
 
 const AddEditFormMain = (props) => {
@@ -71,7 +73,7 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="dob" label="D.O.B">
-                        <DatePicker format="YYYY/MM/DD" placeholder={preparePlaceholderSelect('Date of Birth')} style={{ width: '250px' }} />
+                        <DatePicker format="YYYY/MM/DD" disabledDate={disableFutureDate} placeholder={preparePlaceholderSelect('Date of Birth')} style={{ width: '250px' }} />
                     </Form.Item>
                 </Col>
             </Row>
