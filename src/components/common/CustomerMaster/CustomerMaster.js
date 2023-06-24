@@ -84,7 +84,6 @@ const CustomerMasterMain = (props) => {
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
-    console.log('🚀 ~ file: CustomerMaster.js:87 ~ CustomerMasterMain ~ isLastSection:', isLastSection);
 
     const [form] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -176,7 +175,6 @@ const CustomerMasterMain = (props) => {
     }, [customerType, userId, refreshList]);
 
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
-        console.log('🚀 ~ file: CustomerMaster.js:175 ~ handleButtonClick ~ buttonAction:', buttonAction);
         form.resetFields();
 
         if (buttonAction === ADD_ACTION) {
@@ -186,6 +184,7 @@ const CustomerMasterMain = (props) => {
         if (buttonAction === EDIT_ACTION) {
             setSelectedCustomer(record);
             record && setSelectedCustomerId(record?.customerId);
+            !formVisible && setCurrentSection(defaultSection);
         }
 
         if (buttonAction === VIEW_ACTION) {
@@ -305,8 +304,8 @@ const CustomerMasterMain = (props) => {
         className: styles.headerSelectField,
     };
 
-    console.log("CUSTOMER_TYPE",CUSTOMER_TYPE )
-    console.log("customerType",customerType )
+    console.log('CUSTOMER_TYPE', CUSTOMER_TYPE);
+    console.log('customerType', customerType);
 
     return (
         <>
@@ -317,7 +316,7 @@ const CustomerMasterMain = (props) => {
                             <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.searchAndLabelAlign}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                     {Object.values(CUSTOMER_TYPE)?.map((item) => {
-                                        console.log()
+                                        console.log();
                                         return (
                                             <Button className={styles.marR5} type={customerType === item?.id ? 'primary' : 'link'} danger onClick={() => setCustomerType(item?.id)}>
                                                 {item?.title}
