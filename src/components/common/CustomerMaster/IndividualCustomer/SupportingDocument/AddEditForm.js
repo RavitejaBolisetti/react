@@ -17,10 +17,22 @@ const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { handleFormValueChange, typeData, userId, uploadDocumentFile, uploadedFile, setUploadedFile, listShowLoading, downloadFile, viewListShowLoading } = props;
+    const { handleFormValueChange, typeData, userId, uploadDocumentFile, uploadedFile, setUploadedFile, listShowLoading, downloadFile, viewListShowLoading, setUploadedFileList, showGlobalNotification, viewDocument, handlePreview } = props;
 
     const onDrop = (e) => {
         console.log('Dropped files', e.dataTransfer.files);
+    };
+    // const onDownLoadFile =
+
+    const onDownload = (file) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+
+        handlePreview(file?.response);
+        let a = document.createElement('a');
+
+        a.href = `data:image/png;base64,${viewDocument?.base64}`;
+        a.download = viewDocument?.fileName;
+        a.click();
     };
 
     const uploadProps = {
@@ -28,30 +40,23 @@ const AddEditForm = (props) => {
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
-            previewIcon: <FiEye onClick={(e) => console.log(e, 'Preview icon clicked')} />,
-            removeIcon: <FiTrash onClick={(e) => console.log(e, 'Remove icon clicked')} />,
+            removeIcon: <FiTrash />,
+            downloadIcon: <FiEye onClick={(e) => onDownload(e)} style={{ color: '#ff3e5b' }} />,
             showProgress: true,
         },
         progress: { strokeWidth: 3, showInfo: true },
-        onDownload: (file) => {
-            const { name } = file;
-            const extraParams = [
-                {
-                    key: 'docId',
-                    title: 'docId',
-                    value: file?.docId,
-                    name: 'docId',
-                },
-            ];
-            downloadFile({ setIsLoading: viewListShowLoading, userId, extraParams, name });
-        },
         onDrop,
-        onChange: (info, event, fileList) => {
+        beforeUpload: (info) => {
+            if (info?.type !== 'image/png' || info?.type !== 'image/jpeg' || info?.file?.type !== 'application/pdf') {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Upload Correct Format' });
+                return false;
+            } 
+        },
+        onChange: (info) => {
             handleFormValueChange();
             const { status } = info.file;
             if (status === 'uploading') {
             } else if (status === 'done') {
-                // setUploadedFile(info?.fileList?.map((i) => i.response));
                 setUploadedFile(info?.file?.response?.docId);
                 message.success(`${info.file.name} file uploaded successfully.`);
             } else if (status === 'error') {
@@ -108,16 +113,16 @@ const AddEditForm = (props) => {
             </Row>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.uploadContainer}>
-                        <Dragger disabled={uploadedFile?.length > 0} customRequest={handleUpload} {...uploadProps}>
+                    <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                        <Dragger
+                            //  disabled={uploadedFile?.length > 0}
+                            customRequest={handleUpload}
+                            {...uploadProps}
+                        >
                             <div>
                                 <img src={Svg} alt="" />
                             </div>
                             <Empty
-                                //  image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                //      imageStyle={{
-                                //         height: 100,
-                                //      }}
                                 description={
                                     <>
                                         <span>
