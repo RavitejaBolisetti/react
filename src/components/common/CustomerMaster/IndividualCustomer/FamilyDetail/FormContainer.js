@@ -10,7 +10,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import { GetAge } from 'utils/getAge';
-import { disableFutureDate } from 'utils/disableFutureDate';
+import { disableFutureDate } from 'utils/disableDate';
 import dayjs from 'dayjs';
 
 import styles from 'components/common/Common.module.css';
@@ -53,7 +53,7 @@ const FormBase = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={'Yes'} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
-                        <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange} className={styles.inputBox} >
+                        <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange} className={styles.inputBox}>
                             {type?.map((item) => (
                                 <Option key={'mc' + item?.key} value={item?.value}>
                                     {item?.name}

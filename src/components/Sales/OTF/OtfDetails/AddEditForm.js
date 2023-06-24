@@ -10,7 +10,7 @@ import dayjs from 'dayjs';
 
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { disableFutureDate } from 'utils/disableFutureDate';
+import { disablePastDate } from 'utils/disableDate';
 
 import styles from 'components/common/Common.module.css';
 
@@ -26,12 +26,12 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={innitValue} label="Initial Promise Delivery Date" name="initialPromiseDeliveryDate">
-                        <DatePicker disabledDate={disableFutureDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
+                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={expectedValue} label="Cust. Expected Delivery Date" name="custExpectedDeliveryDate">
-                        <DatePicker disabledDate={disableFutureDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
+                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

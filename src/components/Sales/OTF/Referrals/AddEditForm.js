@@ -10,7 +10,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 
 import { validateRequiredInputField } from 'utils/validation';
 import { validateMobileNoField } from 'utils/validation';
-import { disableFutureDate } from 'utils/disableFutureDate';
+import { disableFutureDate } from 'utils/disableDate';
 
 import dayjs from 'dayjs';
 

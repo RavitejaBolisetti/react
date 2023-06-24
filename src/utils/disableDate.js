@@ -6,3 +6,7 @@
 export const disableFutureDate = (value) => {
     return value > new Date();
 };
+
+export const disablePastDate = (value) => {
+    return value < new Date();
+};
