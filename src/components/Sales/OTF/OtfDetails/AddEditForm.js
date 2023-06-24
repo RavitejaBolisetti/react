@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { disableFutureDate } from 'utils/disableFutureDate';
 
 import styles from 'components/common/Common.module.css';
 
@@ -20,9 +21,6 @@ const AddEditFormMain = (props) => {
     const innitValue = dayjs(formData?.initialPromiseDeliveryDate, 'YYYY/MM/DD');
     const expectedValue = dayjs(formData?.custExpectedDeliveryDate, 'YYYY/MM/DD');
 
-    const disableFutureDate = (value) => {
-        return value > new Date();
-    };
     return (
         <Card className={styles.drawerCardView}>
             <Row gutter={20}>
