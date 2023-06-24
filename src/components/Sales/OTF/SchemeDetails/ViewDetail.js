@@ -8,12 +8,11 @@ import { Space, Collapse, Typography, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
-
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, styles, schemeData } = props;
+    const { activeKey, styles, schemeData, isLoading } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -48,13 +47,13 @@ const ViewDetailMain = (props) => {
                             key={schemeForm?.id}
                         >
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(schemeForm?.schemeType)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Category">{checkAndSetDefaultValue(schemeForm?.schemeCategory)}</Descriptions.Item>
-                                <Descriptions.Item label="Amount">{checkAndSetDefaultValue(schemeForm?.amount)}</Descriptions.Item>
-                                <Descriptions.Item label="Valid From">{checkAndSetDefaultValue(schemeForm?.validFrom)}</Descriptions.Item>
-                                <Descriptions.Item label="Valid To">{checkAndSetDefaultValue(schemeForm?.validTo)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(schemeForm?.schemeType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Category">{checkAndSetDefaultValue(schemeForm?.schemeCategory, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Amount">{checkAndSetDefaultValue(schemeForm?.amount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Valid From">{checkAndSetDefaultValue(schemeForm?.validFrom, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Valid To">{checkAndSetDefaultValue(schemeForm?.validTo, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="" />
-                                <Descriptions.Item label="Description">{checkAndSetDefaultValue(schemeForm?.description)}</Descriptions.Item>
+                                <Descriptions.Item label="Description">{checkAndSetDefaultValue(schemeForm?.description, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>

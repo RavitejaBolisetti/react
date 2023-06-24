@@ -11,7 +11,6 @@ import { Form, Row, Col } from 'antd';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-import { InputSkeleton } from 'components/common/Skeleton';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { OTFFormButton } from '../OTFFormButton';
@@ -30,15 +29,11 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('schemeData', schemeData);
-    const moduleTitle = 'Scheme And Offer Details';
-
     let returnValue = {
         userId,
         isDataLoaded,
         schemeData,
         isLoading,
-        moduleTitle,
     };
     return returnValue;
 };
@@ -87,16 +82,8 @@ const SchemeDetailsMasterBase = (props) => {
         styles,
         onCloseAction,
         schemeData,
+        isLoading,
     };
-
-    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...props} />;
-    const formSkeleton = (
-        <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <InputSkeleton height={'100vh'} />
-            </Col>
-        </Row>
-    );
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange}>
@@ -110,7 +97,7 @@ const SchemeDetailsMasterBase = (props) => {
                             <OTFStatusBar status={1} />
                         </Col>
                     </Row>
-                    {isLoading ? formSkeleton : formContainer}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...props} />}
                 </Col>
             </Row>
             <Row>

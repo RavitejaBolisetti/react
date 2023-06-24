@@ -14,9 +14,7 @@ import { supportingDocumentDataActions } from 'store/actions/data/supportingDocu
 import { indiviualProfileDataActions } from 'store/actions/data/customerMaster/individual/individualProfile/indiviualProfile';
 
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
-
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
@@ -29,8 +27,8 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             CustomerMaster: {
-                IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading: isIndiviualLoading, data: indiviualData = [] },
-                ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
+                IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading, data: indiviualData = [] },
+                ViewDocument: { isLoaded: isViewDataLoaded = false, isLoading: isViewDocumentLoading, data: viewDocument },
             },
             ConfigurableParameterEditing: { filteredListData: appCategoryData = [] },
             SupportingDocument: { isLoaded: isDocumentDataLoaded = false, isDocumentLoading },
@@ -40,13 +38,14 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isIndiviualProfileLoaded,
-        isIndiviualLoading,
+        isLoading,
         appCategoryData,
         indiviualData,
         isDocumentDataLoaded,
         isDocumentLoading,
-        viewDocument,
         isViewDataLoaded,
+        isViewDocumentLoading,
+        viewDocument,
     };
     return returnValue;
 };
@@ -72,10 +71,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 const IndividualProfileBase = (props) => {
-    const { userId, fecthViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification } = props;
+    const { userId, isIndiviualProfileLoaded, fecthViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification, handleButtonClick } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, downloadFile } = props;
-    const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, selectedCustomerId, setSelectedCustomerId } = props;
-    console.log('indiviualData', indiviualData);
+    const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, setSelectedCustomerId } = props;
     const [form] = Form.useForm();
 
     const [formData, setFormData] = useState([]);
@@ -86,10 +84,7 @@ const IndividualProfileBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-    const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
+    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -110,20 +105,20 @@ const IndividualProfileBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
-    const extraParams = [
-        {
-            key: 'docId',
-            title: 'docId',
-            value: indiviualData?.image,
-            name: 'docId',
-        },
-    ];
     useEffect(() => {
-        if (userId) {
+        if (userId && isIndiviualProfileLoaded && indiviualData?.image) {
+            const extraParams = [
+                {
+                    key: 'docId',
+                    title: 'docId',
+                    value: indiviualData?.image,
+                    name: 'docId',
+                },
+            ];
             fecthViewDocument({ setIsLoading: listIndiviualShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, isIndiviualProfileLoaded, indiviualData?.image]);
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
@@ -145,7 +140,7 @@ const IndividualProfileBase = (props) => {
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             if (res.data) {
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
                 setSelectedCustomerId(res?.data?.customerId);
             }
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -167,15 +162,6 @@ const IndividualProfileBase = (props) => {
 
     const onFinishFailed = (errorInfo) => {};
 
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormData([]);
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        record && setFormData(record);
-        setIsFormVisible(true);
-    };
-
     const handleOnClick = () => {
         const extraParams = [
             {
@@ -191,6 +177,7 @@ const IndividualProfileBase = (props) => {
         form.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
+        viewDocument = [];
     };
 
     const formProps = {
@@ -203,10 +190,6 @@ const IndividualProfileBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-
-        ADD_ACTION,
-        EDIT_ACTION,
-        VIEW_ACTION,
         buttonData,
         setButtonData,
         handleButtonClick,
@@ -219,6 +202,7 @@ const IndividualProfileBase = (props) => {
         userId,
         showDataLoading,
         viewDocument,
+        isViewDocumentLoading,
     };
 
     const viewProps = {
@@ -227,11 +211,15 @@ const IndividualProfileBase = (props) => {
         activeKey,
         setActiveKey,
         viewDocument,
+        isViewDocumentLoading,
+        handleOnClick,
+        isLoading,
     };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
+
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>

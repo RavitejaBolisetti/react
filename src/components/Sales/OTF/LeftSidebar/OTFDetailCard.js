@@ -7,6 +7,7 @@ import React from 'react';
 import { Collapse, Space, Avatar } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { convertDateTime } from 'utils/formatDateTime';
+import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 const { Panel } = Collapse;
 const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={13} /> : <SlArrowDown size={13} />);
@@ -34,7 +35,7 @@ const OTFDetailCard = (props) => {
                 key={1}
             >
                 <p>
-                    Customer Type: <span>{selectedOrder?.customerType || 'NA'}</span>
+                    Customer Type: <span>{Object.values(CUSTOMER_TYPE).find((i) => i.id === selectedOrder?.customerType)?.title || 'NA'}</span>
                 </p>
                 <p>
                     Mobile No.: <span>{selectedOrder?.mobileNumber || 'NA'}</span>

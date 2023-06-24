@@ -107,7 +107,7 @@ export const validatFacebookProfileUrl = (fieldName) => ({
 });
 
 export const validatYoutubeProfileUrl = (fieldName) => ({
-    pattern: /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)([^#&?]*).*/,
+    pattern: /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/,
     message: 'Please enter valid url ' + fieldName,
 });
 
@@ -117,9 +117,9 @@ export const validattwitterProfileUrl = (fieldName) => ({
 });
 
 export const duplicateValidator = (value, fieldName, dataList, updateVal) => {
-    let dataListToCheck = dataList || [];
+    let dataListToCheck = dataList?.length ? [...dataList] : [];
     if (updateVal && dataList?.length > 1) {
-        let index = dataList?.findIndex((el) => el[fieldName].toLowerCase() === updateVal);
+        let index = dataList?.findIndex((el) => el[fieldName].toLowerCase() === updateVal.toLowerCase());
         if (index !== -1) {
             dataListToCheck?.splice(index, 1);
         }

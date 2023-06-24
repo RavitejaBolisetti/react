@@ -58,26 +58,29 @@ const UploadUtilsMain = (props) => {
     const { uploadTitle, uploadDescription, uploadBtnName, uploadImgTitle, viewDocument, formData } = props;
     const { listShowLoading, userId, uploadFile, fecthViewDocument, listShowLoadingOnLoad, setUploadImgDocId } = props;
     const [uploadedFile, setUploadedFile] = useState();
+    const [visible, setVisible] = useState(false);
+    const [scaleStep, setScaleStep] = useState(0.5);
 
     const onDrop = (e) => {
         console.log('Dropped files', e.dataTransfer.files);
     };
+
     useEffect(() => {
-        if (uploadedFile) {
+        if (uploadedFile || formData?.docId) {
+            setUploadImgDocId(uploadedFile);
             const extraParams = [
                 {
                     key: 'docId',
                     title: 'docId',
-                    value: uploadedFile,
+                    value: uploadedFile || formData?.docId,
                     name: 'docId',
                 },
             ];
-            setUploadImgDocId(uploadedFile);
             fecthViewDocument({ setIsLoading: listShowLoadingOnLoad, userId, extraParams });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [uploadedFile]);
+    }, [uploadedFile, formData?.docId]);
 
     const uploadProps = {
         showUploadList: {
@@ -121,6 +124,8 @@ const UploadUtilsMain = (props) => {
         uploadFile(requestData);
     };
 
+    // const fileURL = `data:image/png;base64${viewDocument?.base64}` || `data:image/png;base64,${formData?.viewDocument?.base64}`;
+
     return (
         <>
             <>
@@ -134,7 +139,20 @@ const UploadUtilsMain = (props) => {
                             </div>
                         </Space>
                         <Space>
-                            <Image style={{ borderRadius: '6px' }} width={150} preview={false} src={`data:image/png;base64,${viewDocument?.base64}` || `data:image/png;base64,${formData?.viewDocument?.base64}`} />
+                            <Image
+                                style={{ borderRadius: '6px' }}
+                                width={150}
+                                preview={{
+                                    visible,
+                                    scaleStep: 0.5,
+                                    src: `data:image/png;base64,${viewDocument?.base64}`,
+                                    onVisibleChange: (value) => {
+                                        setVisible(value);
+                                    },
+                                }}
+                                placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={200} />}
+                                src={`data:image/png;base64,${viewDocument?.base64}`}
+                            />
                             <Button type="link">Replace Image</Button>
                         </Space>
                     </Space>
@@ -143,6 +161,6 @@ const UploadUtilsMain = (props) => {
         </>
     );
 };
-const UploadUtils = connect()(UploadUtilsMain);
+const UploadUtils = connect(mapStateToProps, mapDispatchToProps)(UploadUtilsMain);
 
 export default UploadUtils;

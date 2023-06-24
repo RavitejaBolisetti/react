@@ -9,7 +9,7 @@ import { withModal } from '../../../../withModal/withModal';
 import styles from '../../CustomertMaster.module.css';
 
 const ValidateMobileModalMain = (props) => {
-    const { onCloseAction } = props;
+    const { onCloseAction, onCloseActionOnContinue } = props;
     
     return (
         <>
@@ -24,7 +24,7 @@ const ValidateMobileModalMain = (props) => {
                         <Button ghost onClick={onCloseAction} htmlType="submit" type="primary" className={styles.modalButton}>
                             No
                         </Button>
-                        <Button onClick={onCloseAction} htmlType="submit" type="primary" className={styles.modalButton}>
+                        <Button onClick={onCloseActionOnContinue} htmlType="submit" type="primary" className={styles.modalButton}>
                             Yes, Continue
                         </Button>
                     </Space>
