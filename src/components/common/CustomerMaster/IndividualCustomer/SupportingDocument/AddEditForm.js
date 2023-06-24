@@ -47,10 +47,13 @@ const AddEditForm = (props) => {
         progress: { strokeWidth: 3, showInfo: true },
         onDrop,
         beforeUpload: (info) => {
-            if (info?.type !== 'image/png' || info?.type !== 'image/jpeg' || info?.file?.type !== 'application/pdf') {
+            console.log(info?.type,'TYPE')
+            if (info?.type === 'image/png' || info?.type === 'image/jpeg' || info?.file?.type === 'application/pdf') {
+            } 
+            else{
                 showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Upload Correct Format' });
                 return false;
-            } 
+            }
         },
         onChange: (info) => {
             handleFormValueChange();
