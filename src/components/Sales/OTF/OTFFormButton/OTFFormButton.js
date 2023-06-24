@@ -9,7 +9,7 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from './OTFFormButton.module.css';
 
-export const OTFFormButton = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave }) => {
+export const OTFFormButton = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
         <Row gutter={20} className={styles.formFooter}>
             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
@@ -32,7 +32,7 @@ export const OTFFormButton = ({ formData, onCloseAction, buttonData, setButtonDa
                         Edit
                     </Button>
                 )}
-                {buttonData?.nextBtn && (
+                {buttonData?.nextBtn && !isLastSection && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record: formData })} type="primary">
                         Next
                     </Button>

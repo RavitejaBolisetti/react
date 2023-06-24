@@ -18,7 +18,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, onChange, tooltTipText, settooltTipText, modelData, styles, columns, data, formData, optionalData, optionalColumns } = props;
+    const { isLoading, activeKey, onChange, tooltTipText, settooltTipText, modelData, styles, columns, data, formData, optionalData, optionalColumns } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -77,26 +77,26 @@ const ViewDetailMain = (props) => {
                     key="1"
                 >
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Vehicle Usage Type ">{checkAndSetDefaultValue(formData?.vehicleUsageType ? formData?.vehicleUsageType : 'null')}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Usage Type ">{checkAndSetDefaultValue(formData?.vehicleUsageType ? formData?.vehicleUsageType : 'null', isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Model">
                             <div className={styles.tooltipAlign}>
                                 {formData?.model}
                                 {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                             </div>
                         </Descriptions.Item>
-                        <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode)}</Descriptions.Item>
-                        <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock)}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Allocated Status">{checkAndSetDefaultValue(formData?.vehicleAllocationStatus ? formData?.vehicleAllocationStatus : 'null')}</Descriptions.Item>
-                        <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.ponumber)}</Descriptions.Item>
-                        <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.podate)}</Descriptions.Item>
-                        <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(formData?.postatus)}</Descriptions.Item>
-                        <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.sonumber)}</Descriptions.Item>
-                        <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.sostatus)}</Descriptions.Item>
-                        <Descriptions.Item label="VIN Number">{checkAndSetDefaultValue(formData?.vinnumber)}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Selling Price">{checkAndSetDefaultValue(formData?.vehicleSellingPrice)}</Descriptions.Item>
-                        <Descriptions.Item label="Discount Amount">{checkAndSetDefaultValue(formData?.discountAmount)}</Descriptions.Item>
-                        <Descriptions.Item label="Tax Amount">{checkAndSetDefaultValue(formData?.taxAmount)}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Amount">{checkAndSetDefaultValue(formData?.vehicleAmount)}</Descriptions.Item>
+                        <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Allocated Status">{checkAndSetDefaultValue(formData?.vehicleAllocationStatus ? formData?.vehicleAllocationStatus : 'null', isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.ponumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.podate, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(formData?.postatus, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.sonumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.sostatus, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="VIN Number">{checkAndSetDefaultValue(formData?.vinnumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Selling Price">{checkAndSetDefaultValue(formData?.vehicleSellingPrice, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Discount Amount">{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Tax Amount">{checkAndSetDefaultValue(formData?.taxAmount, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Amount">{checkAndSetDefaultValue(formData?.vehicleAmount, isLoading)}</Descriptions.Item>
                     </Descriptions>
                 </Panel>
             </Collapse>
