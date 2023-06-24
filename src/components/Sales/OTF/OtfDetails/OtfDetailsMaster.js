@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
                 OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
-                salesConsultantLov: { data: salesConsultantLov = [] },
+                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
             },
         },
     } = state;
@@ -44,6 +44,7 @@ const mapStateToProps = (state) => {
         otfData,
         isLoading,
         moduleTitle,
+        isSalesConsultantDataLoaded,
         salesConsultantLov,
     };
     return returnValue;
@@ -59,6 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: otfDetailsDataActions.listShowLoading,
 
             fetchSalesConsultant: salesConsultantActions.fetchList,
+            listConsultantShowLoading: salesConsultantActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -66,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const OtfDetailsMasterBase = (props) => {
-    const { typeData, listConfigShowLoading } = props;
+    const { typeData, listConsultantShowLoading } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
     const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded } = props;
 
@@ -98,7 +100,7 @@ const OtfDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (!isSalesConsultantDataLoaded && userId) {
-            fetchSalesConsultant({ setIsLoading: listConfigShowLoading, userId });
+            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSalesConsultantDataLoaded, userId]);
