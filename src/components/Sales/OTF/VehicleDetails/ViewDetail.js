@@ -25,31 +25,6 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-    useEffect(() => {
-        if (modelData) {
-            console.log('modelData', modelData);
-            settooltTipText(
-                <div>
-                    <p>
-                        Color - <span>{modelData['color']}</span>
-                    </p>
-                    <p>
-                        Seating - <span>{modelData['seatingCapacity']}</span>
-                    </p>
-                    <p>
-                        Fuel - <span>{modelData['fuel']}</span>
-                    </p>
-                    <p>
-                        Variant - <span>{modelData['variant']}</span>
-                    </p>
-                    <p>
-                        Name - <span>{modelData['name']}</span>
-                    </p>
-                </div>
-            );
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [modelData]);
 
     return (
         <Space direction="vertical" size="middle" className={styles.accordianContainer}>
