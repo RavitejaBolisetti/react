@@ -8,7 +8,9 @@ import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { customerParentCompanyDataActions } from 'store/actions/data/customerMaster/customerParentCompany';
 import { customerDetailsDataActions } from 'store/actions/data/customerMaster/customerDetails';
+import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { ViewDetail } from './ViewDetail';
@@ -16,11 +18,7 @@ import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
-import { InputSkeleton } from 'components/common/Skeleton';
 import styles from 'components/common/Common.module.css';
-import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
-import { customerParentCompanyDataActions } from 'store/actions/data/customerMaster/customerParentCompany';
 
 const mapStateToProps = (state) => {
     const {
@@ -217,7 +215,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const viewProps = {
         formData,
         styles,
-        isLoading
+        isLoading,
     };
 
     const myProps = {
