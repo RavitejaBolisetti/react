@@ -145,13 +145,13 @@ const ViewImageUtilsMain = (props) => {
                                 preview={{
                                     visible,
                                     scaleStep: 0.5,
-                                    src: `data:image/png;base64,${viewDocument?.base64}` || '',
+                                    src: `data:image/png;base64,${viewDocument?.base64}`,
                                     onVisibleChange: (value) => {
                                         setVisible(value);
                                     },
                                 }}
-                                placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}` || ''} width={200} />}
-                                src={`data:image/png;base64,${viewDocument?.base64}` || ''} 
+                                placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={200} />}
+                                src={`data:image/png;base64,${viewDocument?.base64}`}
                             />
                             <Button type="link">Replace Image</Button>
                         </Space>

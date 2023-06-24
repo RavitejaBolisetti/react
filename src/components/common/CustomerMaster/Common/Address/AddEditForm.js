@@ -16,7 +16,7 @@ const { Option } = Select;
 
 const AddEditForm = (props) => {
     const { onSubmit, form, setAddressData, isEditing, addressData, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType } = props;
-    const { forceUpdate, handleFormValueChange } = props;
+    const { forceUpdate, handleFormValueChange, setIsAdding } = props;
     const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail } = props;
     const disabledProps = { disabled: formActionType?.editMode && formData?.partyCategory === 'Principal' ? true : false };
 
@@ -92,6 +92,7 @@ const AddEditForm = (props) => {
 
     const handleCancelFormEdit = () => {
         setIsEditing(false);
+        setIsAdding(false);
         setShowAddEditForm(false);
     };
 
@@ -131,6 +132,7 @@ const AddEditForm = (props) => {
                 setPinSearchData({});
                 setShowAddEditForm(false);
                 setIsEditing(false);
+                setIsAdding(false);
                 setEditingData({});
                 form.setFieldsValue();
             })
