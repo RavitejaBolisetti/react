@@ -185,7 +185,7 @@ export const OtfMasterBase = (props) => {
         }
 
         if (buttonAction === VIEW_ACTION) {
-            setOtfSearchSelected(record);
+            setSelectedOrder(record);
             record && setSelectedOrderId(record?.otfNumber);
             defaultSection && setCurrentSection(defaultSection);
         }
