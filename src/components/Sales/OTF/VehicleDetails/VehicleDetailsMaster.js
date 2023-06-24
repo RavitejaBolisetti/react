@@ -72,7 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMasterMain = (props) => {
     const { VehicleDetailsData, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, ProductHierarchyData, typeData, fetchList, isTypeDataLoaded, resetData, configLoading, fetchconfigList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedOrderId, section, formActionType, handleFormValueChange } = props;
+    const { form, selectedOrderId, section, formActionType, handleFormValueChange, NEXT_EDIT_ACTION, handleButtonClick } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setformData] = useState({});
@@ -175,7 +175,7 @@ const VehicleDetailsMasterMain = (props) => {
         } else {
             data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, optionalServices: optionsServicesMapping };
         }
-        console.log('data', data, selectedOrderId);
+
         const onSuccess = (res) => {
             setoptionsServicesMapping([]);
             setoptionsServiceModified([]);
@@ -192,6 +192,7 @@ const VehicleDetailsMasterMain = (props) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction, extraParams });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
         };
 
         const onError = (message) => {
