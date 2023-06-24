@@ -73,6 +73,7 @@ const CustomerDetailMasterBase = (props) => {
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState();
     const [configurableTypedata, setConfigurableTypedata] = useState({});
+    const [uploadImgDocId, setUploadImgDocId] = useState('');
 
     const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
@@ -167,6 +168,8 @@ const CustomerDetailMasterBase = (props) => {
         showForm,
         fetchCorporateLovList,
         setShowForm,
+        setUploadImgDocId,
+        uploadImgDocId,
         setButtonData,
         typeData,
         formData,
