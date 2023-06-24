@@ -117,11 +117,12 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Space direction="vertical" size="small" style={{ display: 'flex' }} >
+            <Space direction="vertical" size="small" style={{ display: 'flex' }}>
                 <Card style={{ backgroundColor: '#F2F2F2' }}>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            {/* {editMode ? (
+                    <div className={styles.blockSection}>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                {/* {editMode ? (
                                 <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
                                     <Input
                                         placeholder={preparePlaceholderText('mobile number')}
@@ -145,17 +146,18 @@ const AddEditFormMain = (props) => {
                             ) : (
                                
                             )} */}
-                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
-                                <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                                <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']} allowClear></Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Divider />
+                                <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
+                                    <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item initialValue={customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
+                                    <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']} allowClear></Select>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    </div>
+                    {/* <Divider /> */}
                     <div className={styles.cardInsideBox}>
                         <Row>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -241,7 +243,7 @@ const AddEditFormMain = (props) => {
                         </Row>
                     </div>
                     <Divider />
-
+                    <div className={styles.blockSection}>                               
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Email ID" initialValue={formData?.emailId} name="emailId" data-testid="emailId" rules={[validateEmailField('email id'), validateRequiredInputField('email id')]}>
@@ -250,12 +252,12 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             {/* value={formData?.whatsappCommunicationIndicator === null || false ? false : true}  */}
-                            <Form.Item label="Do you want to contacted over whatsapp?" initialValue={editMode ? formData?.whatsappCommunicationIndicator : false} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
+                            <Form.Item label="Do you want to contact over whatsapp?" initialValue={editMode ? formData?.whatsappCommunicationIndicator : false} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
                                 <Switch value={formData?.whatsappCommunicationIndicator} checkedChildren="Yes" unCheckedChildren="No" onChange={handleToggle} defaultChecked={editMode ? true : formData?.whatsappCommunicationIndicator === true || null || undefined ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Want to use Mobile no as whatsapp no?"  initialValue={editMode? formData?.mobileNumberAsWhatsappNumber : false} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
+                            <Form.Item label="Want to use Mobile no as whatsapp no?" initialValue={editMode ? formData?.mobileNumberAsWhatsappNumber : false} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
                                 <Switch value={formData?.mobileNumberAsWhatsappNumber} checkedChildren="Yes" unCheckedChildren="No" onChange={copyWhatsNo} defaultChecked={editMode ? true : formData?.mobileNumberAsWhatsappNumber === true || null || undefined ? true : false} />
                             </Form.Item>
                         </Col>
@@ -267,7 +269,8 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Divider />
+                    </div> 
+                    {/* <Divider /> */}
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Corporate Type" initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType" rules={[validateRequiredSelectField('corporate type')]}>
