@@ -179,7 +179,7 @@ const AddEditFormMain = (props) => {
                                                         {item.value}
                                                     </Option>
                                                 ))}
-                                            </Select>{' '}
+                                            </Select>
                                         </Form.Item>
                                     </Col>
 
@@ -191,7 +191,7 @@ const AddEditFormMain = (props) => {
                                                         {item.value}
                                                     </Option>
                                                 ))}
-                                            </Select>{' '}
+                                            </Select>
                                         </Form.Item>
                                     </Col>
 
@@ -203,7 +203,7 @@ const AddEditFormMain = (props) => {
                                                         {item.value}
                                                     </Option>
                                                 ))}
-                                            </Select>{' '}
+                                            </Select>
                                         </Form.Item>
                                     </Col>
                                 </Row>

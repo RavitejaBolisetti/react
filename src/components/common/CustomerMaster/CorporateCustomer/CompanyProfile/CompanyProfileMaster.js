@@ -202,6 +202,7 @@ const CompanyProfileBase = (props) => {
     };
 
     const viewProps = {
+        ...props,
         onCloseAction,
         styles,
         formData: customerProfileData,
