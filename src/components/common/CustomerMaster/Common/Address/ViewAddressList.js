@@ -72,7 +72,7 @@ const ViewAddressList = (props) => {
                                             </Space>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                            <Checkbox valuePropName="checked" defaultChecked={data?.defaultaddress} onClick={(e)=>onCheckdefaultAddClick(e,data)}>
+                                            <Checkbox valuePropName="checked" checked={data?.deafultAddressIndicator} defaultChecked={data?.deafultAddressIndicator} onClick={(e)=>onCheckdefaultAddClick(e,data)}>
                                                 Mark As Default
                                             </Checkbox>
                                             <Divider type="vertical" />

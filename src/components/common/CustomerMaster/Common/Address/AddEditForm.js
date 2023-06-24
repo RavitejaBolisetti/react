@@ -84,10 +84,10 @@ const AddEditForm = (props) => {
         setOptions();
         form.setFieldsValue({
             pinCode: undefined,
-            state: undefined,
-            city: undefined,
-            tehsil: undefined,
-            district: undefined,
+            stateName: undefined,
+            cityName: undefined,
+            tehsilName: undefined,
+            districtName: undefined,
         });
     };
 
@@ -104,9 +104,9 @@ const AddEditForm = (props) => {
                 if (editingData?.addressType) {
                     setAddressData((prev) => {
                         let formData =  [...prev];
-                        formData?.forEach((contact) => {
-                            if (contact?.defaultaddress === true) {
-                                contact.defaultaddress = false;
+                        formData?.forEach((address) => {
+                            if (address?.defaultaddress === true) {
+                                address.defaultaddress = false;
                             }
                         });
                         const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode);
@@ -118,9 +118,9 @@ const AddEditForm = (props) => {
                     setAddressData((prev) => {
                         let formData = prev?.length ?  [...prev] : [];
                         if (value?.defaultaddress && formData?.length >= 1) {
-                            formData?.forEach((contact) => {
-                                if (contact?.defaultaddress === true) {
-                                    contact.defaultaddress = false;
+                            formData?.forEach((address) => {
+                                if (address?.defaultaddress === true) {
+                                    address.defaultaddress = false;
                                 }
                             });
                             return [...formData, { ...value, ...pinSearchData }];

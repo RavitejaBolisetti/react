@@ -153,16 +153,12 @@ const AddressMasterBase = (props) => {
     const onCheckdefaultAddClick = (e, value) => {
         e.stopPropagation();
         setAddressData((prev) => {
-            let formData = [...prev];
-            formData?.forEach((address) => {
-                if (address?.defaultaddress === true) {
-                    address.defaultaddress = false;
-                };
-            });
-            const index = formData?.findIndex((el) =>  el?.addressType === editingData?.addressType && el?.addressLine1 === editingData?.addressLine1 && el?.pinCode === editingData?.pinCode);
-            formData.splice(index, 1, { ...value, deafultAddressIndicator: e.target.checked });
-            return [...formData];
+            let updetedData = prev?.map((address) => ({ ...address, deafultAddressIndicator: false }));
+            const index = updetedData?.findIndex((el) => el?.addressType === value?.addressType && el?.addressLine1 === value?.addressLine1 && el?.pinCode === value?.pinCode);
+            updetedData.splice(index, 1, { ...value, deafultAddressIndicator: e.target.checked });
+            return [...updetedData];
         })
+        forceUpdate();
     };
 
     const onSubmit = () => {
@@ -221,7 +217,6 @@ const AddressMasterBase = (props) => {
         form.resetFields();
         setShowAddEditForm(true);
         setOpenAccordian('1');
-        setIsEditing(true);
     };
 
     const formProps = {
