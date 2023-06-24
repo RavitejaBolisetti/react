@@ -203,6 +203,7 @@ const IndividualProfileBase = (props) => {
         showDataLoading,
         viewDocument,
         isViewDocumentLoading,
+        NEXT_EDIT_ACTION,
     };
 
     const viewProps = {

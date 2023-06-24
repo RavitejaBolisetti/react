@@ -172,7 +172,6 @@ export const OtfMasterBase = (props) => {
     }, [isSearchDataLoaded, userId, refershData]);
 
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
-        console.log('record', record);
         form.resetFields();
 
         if (buttonAction === ADD_ACTION) {
@@ -186,7 +185,7 @@ export const OtfMasterBase = (props) => {
         }
 
         if (buttonAction === VIEW_ACTION) {
-            setSelectedOrder(record);
+            setOtfSearchSelected(record);
             record && setSelectedOrderId(record?.otfNumber);
             defaultSection && setCurrentSection(defaultSection);
         }
