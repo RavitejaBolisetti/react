@@ -1680,7 +1680,7 @@
 }
 .drawerBodyRight :global .ant-empty .ant-empty-image svg {
     height: 60%;
-    border:1px solid red
+    /* border:1px solid red; */
 }
 .drawerBodyRight h2 {
     margin-top: 0;
