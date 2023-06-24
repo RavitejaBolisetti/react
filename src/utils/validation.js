@@ -87,7 +87,7 @@ export const validateGSTIN = (fieldName, lowercase = true) => ({
 });
 
 export const validateNumberWithTwoDecimalPlaces = (fieldName, lowercase = true) => ({
-    pattern: /^[0-9]*\.[0-9]{2}$/,
+    pattern: /^\d+(\.\d{1,2})?$/,
     message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
@@ -132,13 +132,11 @@ export const duplicateValidator = (value, fieldName, dataList, updateVal) => {
     }
 };
 
-export const valueBetween0to100 = (value, fieldName) => {
-    if (value > 100 || value < 0) {
-        return Promise.reject(fieldName + 'value should be greater than 0 and less than 100');
-    } else {
-        return Promise.resolve('');
-    }
-};
+export const valueBetween0to100 = (fieldName) => ({
+    pattern: /^(100|\d{1,2})$/,
+    message: 'Please enter ' + fieldName + ' between 0 to 100',
+});
+
 export const NumberValidation = (fieldName) => ({
     pattern: /^[a-zA-Z0-9]*$/,
     message: 'Please enter valid ' + fieldName,
