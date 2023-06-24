@@ -145,6 +145,7 @@ const FamilyDetailMasterBase = (props) => {
         if (editedMode) {
             const upd_obj = familyDetailList?.map((obj) => {
                 if (obj?.editedId === values?.editedId) {
+                    obj.mnmCustomer = values?.mnmCustomer;
                     obj.customerName = values?.customerName;
                     obj.relationAge = values?.relationAge;
                     obj.relationship = values?.relationship;
@@ -239,8 +240,6 @@ const FamilyDetailMasterBase = (props) => {
         editedId,
         setEditedId,
         onSearch,
-        ADD_ACTION,
-        EDIT_ACTION,
         VIEW_ACTION,
         buttonData,
         setButtonData,
