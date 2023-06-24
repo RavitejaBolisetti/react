@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Select, Input, message, Upload, Button, Empty, Card } from 'antd';
 
 import { FiEye, FiTrash } from 'react-icons/fi';
@@ -19,10 +19,11 @@ const { Dragger } = Upload;
 const AddEditForm = (props) => {
     const { handleFormValueChange, typeData, userId, uploadDocumentFile, uploadedFile, setUploadedFile, listShowLoading, downloadFile, viewListShowLoading, setUploadedFileList, showGlobalNotification, viewDocument, handlePreview } = props;
 
+    const [showStatus, setShowStatus] = useState('');
+
     const onDrop = (e) => {
         console.log('Dropped files', e.dataTransfer.files);
     };
-    // const onDownLoadFile =
 
     const onDownload = (file) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
@@ -47,26 +48,34 @@ const AddEditForm = (props) => {
         progress: { strokeWidth: 3, showInfo: true },
         onDrop,
         beforeUpload: (info) => {
-            console.log(info?.type,'TYPE')
-            if (info?.type === 'image/png' || info?.type === 'image/jpeg' || info?.file?.type === 'application/pdf') {
-            } 
-            else{
+            if (info?.type === 'image/png' || info?.type === 'image/jpeg' || info?.type === 'application/pdf') {
+            } else {
                 showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Upload Correct Format' });
                 return false;
             }
         },
         onChange: (info) => {
+            console.log(info, 'INFORMATION');
             handleFormValueChange();
             const { status } = info.file;
-            if (status === 'uploading') {
-            } else if (status === 'done') {
-                setUploadedFile(info?.file?.response?.docId);
-                message.success(`${info.file.name} file uploaded successfully.`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
+            setShowStatus(status);
         },
     };
+
+    //${info.file.name}
+
+    useEffect(() => {
+        console.log('showStatus');
+        if (showStatus === 'uploading') {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Uploading' });
+        } else if (showStatus === 'done') {
+            //setUploadedFile(info?.file?.response?.docId);
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Uploaded' });
+        } else if (showStatus === 'error') {
+            message.error(` file upload failed.`);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showStatus]);
 
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
