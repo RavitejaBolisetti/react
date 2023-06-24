@@ -17,27 +17,13 @@ import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
 import style from '../../../Common.module.css';
 
 const { Option } = Select;
-// const uploadProps = {
-//     name: 'file',
-//     multiple: true,
-//     action: '',
-//     uploadTitle: 'Upload Your Profile Picture',
-//     uploadDescription: 'File type should be .png and .jpg and max file size to be 5MB',
-//     uploadBtnName: 'Upload File',
-//     onChange(info) {
-//         const { status } = info.file;
-//         if (status === 'done') {
-//             message.success(`${info.file.name} file uploaded successfully.`);
-//         } else if (status === 'error') {
-//             message.error(`${info.file.name} file upload failed.`);
-//         }
-//     },
-// };
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, formActionType, setUploadImgDocId, handleFormValueChange } = props;
+    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
+
+    console.log(' AddEditForm uploadImgDocId', uploadImgDocId);
 
     const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
 
@@ -63,9 +49,16 @@ const AddEditForm = (props) => {
         setIsModalOpen(true);
     };
 
+    const onCloseActionOnContinue = () => {
+        setIsModalOpen(false);
+        setmobileLoader(false);
+        setContinueWithOldMobNo(true);
+    };
+
     const handleCancel = () => {
         setIsModalOpen(false);
         setmobileLoader(false);
+        setContinueWithOldMobNo(false);
     };
     const modalProps = {
         isVisible: isModalOpen,
@@ -73,13 +66,16 @@ const AddEditForm = (props) => {
         titleOverride: 'Mobile Number Validation',
         closable: false,
         onCloseAction: handleCancel,
+        onCloseActionOnContinue,
     };
-
+console.log('typeData', typeData)
+console.log('customerType', customerType)
     return (
         <>
             <Form form={form} autoComplete="off" onFinish={onFinish} onFieldsChange={handleFormValueChange} layout="vertical">
                 <Space direction="vertical">
                     <UploadUtils
+                        {...props}
                         // {...uploadProps}
                         isViewModeVisible={isViewModeVisible}
                         setUploadImgDocId={setUploadImgDocId}
@@ -124,19 +120,35 @@ const AddEditForm = (props) => {
 
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Alternate Mobile Number" name="alternativeMobileNumber" rules={[validateMobileNoField('alternate mobile number')]}>
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate mobile number')} {...disabledProps} />
+                                <Input maxLength={10} className={style.inputBox} placeholder={preparePlaceholderText('alternate mobile number')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Relation" name="relationCode">
-                                <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                    {typeData?.FAMLY_RELTN?.map((item) => (
-                                        <Option key={'ct' + item?.key} value={item?.key}>
-                                            {item?.value}
-                                        </Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
+                            {customerType === 'IND' ? (
+                                <>
+                                    <Form.Item label="Relation" name="relationCode">
+                                        <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                                            {typeData?.FAMLY_RELTN?.map((item) => (
+                                                <Option key={'ct' + item?.key} value={item?.key}>
+                                                    {item?.value}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                    <Form.Item initialValue={""} hidden name="designation">
+                                        <Input />
+                                    </Form.Item>
+                                </>
+                            ) : (
+                                <>
+                                    <Form.Item initialValue={""} hidden name="relationCode">
+                                        <Input />
+                                    </Form.Item>
+                                    <Form.Item initialValue={""} label="Designation" name="designation">
+                                        <Input className={style.inputBox} placeholder={preparePlaceholderText('Designation')} {...disabledProps} />
+                                    </Form.Item>
+                                </>
+                            )}
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Gender" name="gender" rules={[validateRequiredSelectField('gender')]}>
@@ -176,7 +188,7 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="E-mail" name="contactEmailId" rules={[validateEmailField('E-mail')]}>
+                            <Form.Item label="E-mail" initialValue={''} name="contactEmailId" rules={[validateEmailField('E-mail')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('email id')} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -215,11 +227,20 @@ const AddEditForm = (props) => {
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item valuePropName="checked" name="defaultContactIndicator">
+                            <Form.Item initialValue={false} valuePropName="checked" name="defaultContactIndicator">
                                 <Checkbox>Mark As Default</Checkbox>
                             </Form.Item>
                         </Col>
-                        <Form.Item hidden initialValue={'fb5b3d4c-05d3-46bd-be8f-4648b26cf588'} name="docId">
+                        <Form.Item hidden initialValue={''} name="id">
+                            <Input />
+                        </Form.Item>
+                        <Form.Item hidden initialValue={uploadImgDocId} value={uploadImgDocId} name="docId">
+                            <Input />
+                        </Form.Item>
+                        <Form.Item hidden initialValue={true} name="status">
+                            <Input />
+                        </Form.Item>
+                        <Form.Item hidden initialValue={true} name="continueWith">
                             <Input />
                         </Form.Item>
                     </Row>

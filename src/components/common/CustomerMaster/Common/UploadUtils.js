@@ -63,21 +63,21 @@ const UploadUtilsMain = (props) => {
         console.log('Dropped files', e.dataTransfer.files);
     };
     useEffect(() => {
-        if (uploadedFile) {
+        if (uploadedFile || formData?.docId) {
+            setUploadImgDocId(uploadedFile);
             const extraParams = [
                 {
                     key: 'docId',
                     title: 'docId',
-                    value: uploadedFile,
+                    value: uploadedFile || formData?.docId,
                     name: 'docId',
                 },
             ];
-            setUploadImgDocId(uploadedFile);
             fecthViewDocument({ setIsLoading: listShowLoadingOnLoad, userId, extraParams });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [uploadedFile]);
+    }, [uploadedFile, formData?.docId]);
 
     const uploadProps = {
         showUploadList: {
@@ -123,26 +123,53 @@ const UploadUtilsMain = (props) => {
 
     return (
         <>
-            <>
-                <Card className={styles.dashedBorder}>
-                    <Space direction="vertical">
-                        <Space>
-                            <Avatar icon={<HiCheck />} />
-                            <div>
-                                <Title level={5}>{uploadImgTitle || 'Profile Picture'}</Title>
-                                <Text>File type should be .png and .jpg and max file size to be 5Mb</Text>
-                            </div>
+            {!uploadedFile && !formData?.docId ? (
+                <Row gutter={16}>{uploadedFile?.toString() + " / " + formData?.docId?.toString()}
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <div className={styles.uploadDragger}>
+                            <Dragger customRequest={handleUpload} {...uploadProps} multiple={false}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 100,
+                                    }}
+                                    description={
+                                        <>
+                                            <span>{uploadTitle || 'Upload Your Profile Picture temp'}</span>
+                                            <span>
+                                                <br />
+                                                {uploadDescription || 'File type should be .png and .jpg and max file size to be 5MB temp '}
+                                            </span>
+                                        </>
+                                    }
+                                />
+                                <Button type="primary">{uploadBtnName || 'Upload File'}</Button>
+                            </Dragger>
+                        </div>
+                    </Col>
+                </Row>
+            ) : (
+                <>
+                    <Card className={styles.dashedBorder}>{uploadedFile?.toString() + " / " + formData?.docId?.toString()}
+                        <Space direction="vertical">
+                            <Space>
+                                <Avatar icon={<HiCheck />} />
+                                <div>
+                                    <Title level={5}>{uploadImgTitle || 'Profile Picture'}</Title>
+                                    <Text>File type should be .png and .jpg and max file size to be 5Mb</Text>
+                                </div>
+                            </Space>
+                            <Space>
+                                <Image style={{ borderRadius: '6px' }} width={150} preview={false} src={viewDocument?.base64 ? `data:image/png;base64,${viewDocument?.base64}` : `data:image/png;base64,${formData?.viewDocument?.base64}`} />
+                                <Button type="link">Replace Image</Button>
+                            </Space>
                         </Space>
-                        <Space>
-                            <Image style={{ borderRadius: '6px' }} width={150} preview={false} src={`data:image/png;base64,${viewDocument?.base64}` || `data:image/png;base64,${formData?.viewDocument?.base64}`} />
-                            <Button type="link">Replace Image</Button>
-                        </Space>
-                    </Space>
-                </Card>
-            </>
+                    </Card>
+                </>
+            )}
         </>
     );
 };
-const UploadUtils = connect()(UploadUtilsMain);
+const UploadUtils = connect(mapStateToProps, mapDispatchToProps)(UploadUtilsMain);
 
 export default UploadUtils;
