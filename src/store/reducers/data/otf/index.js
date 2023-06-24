@@ -19,6 +19,7 @@ import { LoyaltyScheme } from './loyaltyAndScheme';
 import { Referrals } from './referrals';
 import { ExchangeVehicle } from './exchangeVehicle';
 import { SchemeDetail } from './schemeDetail';
+import { VehicleDetailsLov } from './vehicleDetailsLov';
 
 export const OTF = combineReducers({
     InvoiceDetail,
@@ -34,4 +35,5 @@ export const OTF = combineReducers({
     Referrals,
     ExchangeVehicle,
     SchemeDetail,
+    VehicleDetailsLov,
 });

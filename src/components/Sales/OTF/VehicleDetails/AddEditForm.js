@@ -18,13 +18,16 @@ import dayjs from 'dayjs';
 import { DataTable } from 'utils/dataTable';
 import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 import { ActiveText, dynamicExpandIcon } from 'utils/accordianExpandIcon';
+import { addToolTip } from 'utils/customMenuLink';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
+
 const { Text } = Typography;
 
 const { Option } = Select;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { activeKey, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, onFinish, onFinishFailed, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
+    const { activeKey, tooltTipText, handleFormValueChange, onHandleSelect, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, onFinish, onFinishFailed, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
     const [optionForm] = Form.useForm();
     const findUsageType = (usage) => {
         let foundVal;
@@ -54,11 +57,7 @@ const AddEditFormMain = (props) => {
         }
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
-    const onHandleSelect = (values) => {
-        form.setFieldsValue({
-            modelCode: values,
-        });
-    };
+
     const addContactHandeler = (e) => {
         console.log('called on error');
         optionForm.resetFields();
@@ -112,7 +111,8 @@ const AddEditFormMain = (props) => {
                                         <Select placeholder="Select Vehicle Usage Type" allowClear options={typeData[PARAM_MASTER.VEHCL_TYPE.id]} fieldNames={{ label: 'value', value: 'key' }} />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.modelTooltip}>
+                                    {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                                     <Form.Item label="Model" name="model" data-testid="model">
                                         <Select onSelect={onHandleSelect} placeholder="Select" allowClear options={ProductHierarchyData} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                                     </Form.Item>
