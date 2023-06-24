@@ -30,15 +30,11 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('schemeData', schemeData);
-    const moduleTitle = 'Scheme And Offer Details';
-
     let returnValue = {
         userId,
         isDataLoaded,
         schemeData,
         isLoading,
-        moduleTitle,
     };
     return returnValue;
 };
