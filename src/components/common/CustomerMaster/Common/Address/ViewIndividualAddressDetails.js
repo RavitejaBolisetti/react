@@ -25,10 +25,10 @@ const ViewIndividualAddressDetailsBase = (props) => {
                     <Descriptions.Item label="Address Line 1">{checkAndSetDefaultValue(formData?.addressLine1, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Address Line 2">{checkAndSetDefaultValue(formData?.addressLine2, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(formData?.pinCode, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Tehsil">{checkAndSetDefaultValue(formData?.tehsilCode, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="City">{checkAndSetDefaultValue(formData?.cityCode, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="District">{checkAndSetDefaultValue(formData?.districtCode, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="State">{checkAndSetDefaultValue(formData?.stateCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Tehsil">{checkAndSetDefaultValue(formData?.tehsilName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="City">{checkAndSetDefaultValue(formData?.cityName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="District">{checkAndSetDefaultValue(formData?.districtName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="State">{checkAndSetDefaultValue(formData?.stateName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Contact Name">{checkAndSetDefaultValue(formData?.contactName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Contact Mobile">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
                     <Descriptions.Item>{formData?.deafultAddressIndicator}</Descriptions.Item>

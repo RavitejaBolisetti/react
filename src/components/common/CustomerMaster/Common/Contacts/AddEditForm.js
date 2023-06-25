@@ -19,11 +19,9 @@ import style from '../../../Common.module.css';
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
+    const { formData, isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
-
-    // console.log(' AddEditForm uploadImgDocId', uploadImgDocId);
 
     const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
 
@@ -130,9 +128,9 @@ const AddEditForm = (props) => {
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             {customerType === 'IND' ? (
                                 <>
-                                    <Form.Item initialValue={'Select'} label="Relation" name="relationCode">
+                                    <Form.Item initialValue={''} label="Relation" name="relationCode">
                                         <Select placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                        <Option key={'ctdefau'} value="">Select</Option>
+                                        {/* <Option key={'ctdefau'} value="">Select</Option> */}
                                             {typeData?.FAMLY_RELTN?.map((item) => (
                                                 <Option key={'ct' + item?.key} value={item?.key}>
                                                     {item?.value}
@@ -173,7 +171,7 @@ const AddEditForm = (props) => {
                                 <Option key={'ct001'} value="">Select</Option>
                                     {typeData?.TITLE?.map((item) => (
                                         <Option key={'ct' + item?.key} value={item?.key}>
-                                            {item?.name}
+                                            {item?.value}
                                         </Option>
                                     ))}
                                 </Select>

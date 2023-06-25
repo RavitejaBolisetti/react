@@ -72,13 +72,13 @@ const ViewAddressList = (props) => {
                                             </Space>
                                         </Col>
                                         <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                                            <div style={{ float: 'right' }}>
-                                                <Checkbox valuePropName="checked" checked={data?.deafultAddressIndicator} defaultChecked={data?.deafultAddressIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)}>
+                                          {!(isEditing || isAdding) &&  <div style={{ float: 'right' }}>
+                                                <Checkbox valuePropName="checked" checked={data?.deafultAddressIndicator} defaultChecked={data?.deafultAddressIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)} >
                                                     Mark As Default
                                                 </Checkbox>
                                                 <Divider type="vertical" />
                                                 <Text type="secondary">{data?.addressType}</Text>
-                                            </div>
+                                            </div>}
                                         </Col>
                                     </Row>
                                 }

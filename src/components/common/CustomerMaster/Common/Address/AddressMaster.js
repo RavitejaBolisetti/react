@@ -85,7 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
 const AddressMasterBase = (props) => {
     const { isViewModeVisible, section, addressIndData, setFormActionType, isCompanyAddressLoaded, formActionType, isAddressLoaded, addressCompanyData, selectedCustomer, saveData, addData } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, isAddressLoading, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification, handleButtonClick } = props;
-    const { fetchListCorporate, saveDataCorporate, customerType } = props;
+    const { fetchListCorporate, saveDataCorporate, customerType, resetData, resetDataCorporate } = props;
 
     const [form] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
@@ -129,6 +129,10 @@ const AddressMasterBase = (props) => {
                 fetchListCorporate({ setIsLoading: listShowLoading, userId, extraParams });
             }
         }
+        return(() => {
+            resetData();
+            resetDataCorporate();
+        })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAddressLoaded]);
 
@@ -144,6 +148,7 @@ const AddressMasterBase = (props) => {
             updetedData.splice(index, 1, { ...value, deafultAddressIndicator: e.target.checked });
             return [...updetedData];
         });
+        setButtonData({ ...buttonData, formBtnActive: true });
         forceUpdate();
     };
 

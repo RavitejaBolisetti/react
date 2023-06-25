@@ -109,7 +109,8 @@ const AddEditForm = (props) => {
                                 address.defaultaddress = false;
                             }
                         });
-                        const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode);
+                        const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType);
+                        //  && el?.address === editingData?.address && el?.pincode === editingData?.pincode
                         formData.splice(index, 1, { ...value, ...pinSearchData });
 
                         return [...formData];
