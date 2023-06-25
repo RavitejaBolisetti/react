@@ -17,10 +17,9 @@ const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { handleFormValueChange, typeData, userId, uploadDocumentFile, uploadedFile, setUploadedFile, listShowLoading, downloadFile, viewListShowLoading, setUploadedFileList, showGlobalNotification, viewDocument, handlePreview } = props;
+    const { handleFormValueChange, typeData, userId, uploadDocumentFile, uploadedFile, setUploadedFile, listShowLoading, downloadFile, viewListShowLoading, setUploadedFileList, showGlobalNotification, viewDocument, handlePreview,emptyList, setEmptyList  } = props;
 
     const [showStatus, setShowStatus] = useState('');
-    const [ correctFormat, setCorrectFormat ] = useState(true);
 
     const onDrop = (e) => {
         console.log('Dropped files', e.dataTransfer.files);
@@ -68,9 +67,8 @@ const AddEditForm = (props) => {
     }, [showStatus]);
 
     const handleUpload = (options) => {
-        setCorrectFormat(false);
         const { file, onSuccess, onError } = options;
-
+        setEmptyList(true);
         const data = new FormData();
         data.append('applicationId', 'app');
         data.append('file', file);
@@ -123,6 +121,7 @@ const AddEditForm = (props) => {
                             {...uploadProps}
                            // showUploadList={correctFormat ? true : false}
                             accept=".png,.jpeg,.pdf,.jpg"
+                            showUploadList={emptyList}
                         >
                             <div>
                                 <img src={Svg} alt="" />

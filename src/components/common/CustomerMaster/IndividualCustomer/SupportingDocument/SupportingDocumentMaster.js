@@ -72,6 +72,7 @@ const SupportingDocumentBase = (props) => {
     const { selectedCustomerId, viewDocument, viewListShowLoading, downloadFile } = props;
 
     const [uploadedFile, setUploadedFile] = useState();
+    const [emptyList, setEmptyList] = useState(true);
     //const [uploadedFileList, setUploadedFileList] = useState();
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
@@ -97,6 +98,7 @@ const SupportingDocumentBase = (props) => {
 
         const onSuccess = (res) => {
             //setUploadedFileList();
+            setEmptyList(false);
             setUploadedFile();
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -163,6 +165,8 @@ const SupportingDocumentBase = (props) => {
         uploadedFile,
         setUploadedFile,
         uploadDocumentFile,
+        emptyList,
+        setEmptyList,
         //setUploadedFileList,
     };
 
