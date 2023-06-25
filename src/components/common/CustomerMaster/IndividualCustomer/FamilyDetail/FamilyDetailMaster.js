@@ -122,38 +122,41 @@ const FamilyDetailMasterBase = (props) => {
     };
 
     const onSave = () => {
-        let values = form.getFieldsValue();
-        console.log(values, 'ValueMDikkat');
-        setFamilyDetailsList((items) => [{ ...values, customerId: selectedCustomerId, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
-        if (editedMode) {
-            const upd_obj = familyDetailList?.map((obj) => {
-                if (obj?.editedId === values?.editedId) {
-                    obj.id = values?.id;
-                    obj.mnmCustomer = values?.mnmCustomer;
-                    obj.customerName = values?.customerName;
-                    obj.relationAge = values?.relationAge;
-                    obj.relationship = values?.relationship;
-                    obj.relationCode = values?.relationCode;
-                    obj.relationCustomerId = values?.relationCustomerId;
-                    obj.dateOfBirth = typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth;
-                    obj.remarks = values?.remarks;
+        form.validateFields()
+            .then(() => {
+                let values = form.getFieldsValue();
+                setFamilyDetailsList((items) => [{ ...values, customerId: selectedCustomerId, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
+                if (editedMode) {
+                    const upd_obj = familyDetailList?.map((obj) => {
+                        if (obj?.editedId === values?.editedId) {
+                            obj.id = values?.id;
+                            obj.mnmCustomer = values?.mnmCustomer;
+                            obj.customerName = values?.customerName;
+                            obj.relationAge = values?.relationAge;
+                            obj.relationship = values?.relationship;
+                            obj.relationCode = values?.relationCode;
+                            obj.relationCustomerId = values?.relationCustomerId;
+                            obj.dateOfBirth = typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth;
+                            obj.remarks = values?.remarks;
+                        }
+                        return obj;
+                    });
+
+                    setFamilyDetailsList([...upd_obj]);
                 }
-                return obj;
-            });
 
-            setFamilyDetailsList([...upd_obj]);
-        }
+                setShowForm(false);
+                setEditedMode(false);
 
-        setShowForm(false);
-        setEditedMode(false);
+                form.resetFields();
 
-        form.resetFields();
-
-        if (values?.mnmCustomer === 'Yes') {
-            setCustomerType('Yes');
-        } else if (values?.mnmCustomer === 'No') {
-            setCustomerType('No');
-        }
+                if (values?.mnmCustomer === 'Yes') {
+                    setCustomerType('Yes');
+                } else if (values?.mnmCustomer === 'No') {
+                    setCustomerType('No');
+                }
+            })
+            .catch((err) => console.error(err));
     };
 
     const onFinish = () => {

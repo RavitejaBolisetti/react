@@ -83,13 +83,13 @@ const FormBase = (props) => {
                 </Col>
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
+                        <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId" rules={[validateRequiredInputField('Customer Id')]}>
                             <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading} />
                         </Form.Item>
                     </Col>
                 ) : (
                     <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                        <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
+                        <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId" rules={[validateRequiredInputField('Customer Id')]}>
                             <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading} />
                         </Form.Item>
                     </Col>
