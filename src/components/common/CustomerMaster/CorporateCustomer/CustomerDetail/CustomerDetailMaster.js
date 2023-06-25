@@ -206,6 +206,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     };
 
     const viewProps = {
+        ...formProps,
         formData,
         styles,
         isLoading,

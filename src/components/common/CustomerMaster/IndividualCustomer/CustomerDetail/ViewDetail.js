@@ -8,7 +8,6 @@ import { Typography, Descriptions, Card, Divider, Col, Row, Space, Button } from
 import { BiTimeFive } from 'react-icons/bi';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
-import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
@@ -34,7 +33,7 @@ const ViewDetailMain = (props) => {
                 >
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(formData?.customerType, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CUST_TYPE,formData?.customerType), isLoading)}</Descriptions.Item>
                     </Descriptions>
                     <div className={styles.cardInsideBox}>
                         <Row>
@@ -72,10 +71,10 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label="Whatsapp Number">{checkAndSetDefaultValue(formData?.whatsAppNumber)}</Descriptions.Item>
                     </Descriptions>
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(formData?.corporateType, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE,formData?.corporateType), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Corporate Name">{checkAndSetDefaultValue(formData?.corporateName, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(formData?.corporateCategory, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(formData?.membershipType, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_CATE,formData?.corporateCategory), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(getCodeValue(typeData?.MEM_TYPE,formData?.membershipType), isLoading)}</Descriptions.Item>
                     </Descriptions>
                 </Card>
             </Space>
