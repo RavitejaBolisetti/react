@@ -7,10 +7,12 @@ import React from 'react';
 import { Typography, Descriptions, Card, Divider, Col, Row, Space, Button } from 'antd';
 import { BiTimeFive } from 'react-icons/bi';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { getCodeValue } from 'utils/getCodeValue';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading } = props;
+    const { styles, formData, isLoading, typeData, configurableTypedata } = props;
     const viewProps = {
         bordered: false,
         colon: false,

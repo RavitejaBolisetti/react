@@ -177,6 +177,7 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const viewProps = {
+        ...formProps,
         formActionType,
         formData,
         styles,
