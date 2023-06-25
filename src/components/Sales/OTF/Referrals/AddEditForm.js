@@ -14,8 +14,16 @@ import { disableFutureDate } from 'utils/disableDate';
 
 import dayjs from 'dayjs';
 
+const { Search } = Input;
+
 const AddEditFormMain = (props) => {
-    const { formData, form } = props;
+    const { formData, form, onSearch, isCustomerLoading, isDataCustomerLoaded, customerDetail } = props;
+    console.log('🚀 ~ file: AddEditForm.js:21 ~ AddEditFormMain ~ customerDetail:', customerDetail);
+
+    if (isDataCustomerLoaded && customerDetail && customerDetail?.customerMasterDetails && customerDetail?.customerMasterDetails[0]) {
+        const customer = customerDetail?.customerMasterDetails[0];
+        form.setFieldsValue({ customerId: customer?.customerId, customerType: customer?.customerTypeName, customerName: customer?.customerName, emailId: customer?.emailId, mobileNumber: customer?.mobileNumber, registrationNumber: customer?.registrationNumber, chassisNumber: customer?.chassisNumber });
+    }
 
     useEffect(() => {
         if (formData?.hasOwnProperty('customerName')) {
@@ -33,7 +41,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="mobileNumber" label="Mobile Number" initialValue={formData?.customerName} rules={[validateRequiredInputField('Mobile Number'), validateMobileNoField('Mobile Number'), { min: 10, message: 'Phone number must be minimum 10 digits Long.' }]}>
-                        <Input placeholder={preparePlaceholderText('Mobile Number')} maxLength={10} />
+                        <Search loading={isCustomerLoading} placeholder={preparePlaceholderText('Mobile Number')} style={{ width: '100%' }} maxLength={10} allowClear type="text" onSearch={onSearch} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -60,14 +68,14 @@ const AddEditFormMain = (props) => {
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="registrationNumber" label="Reg. Number" initialValue={formData?.address}>
+                    <Form.Item name="registrationNumber" label="Reg. Number" initialValue={formData?.registrationNumber}>
                         <Input disabled={true} placeholder={preparePlaceholderText('Regestration Number')} maxLength={50} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="chasisNumber" label="Chessis Number" initialValue={formData?.chessisNumber}>
+                    <Form.Item name="chassisNumber" label="Chessis Number" initialValue={formData?.chassisNumber}>
                         <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('Chessis Number')} />
                     </Form.Item>
                 </Col>

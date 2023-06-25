@@ -9,6 +9,7 @@ import { Row, Col, Form } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -29,6 +30,9 @@ const mapStateToProps = (state) => {
                 Referrals: { isLoaded: isDataLoaded = false, isLoading, data: ReferralsData = [] },
             },
         },
+        customer: {
+            customerDetail: { isLoaded: isDataCustomerLoaded = false, isLoading: isCustomerLoading = false, data: customerDetail = [] },
+        },
     } = state;
 
     let returnValue = {
@@ -36,6 +40,9 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         ReferralsData,
         isLoading,
+        isDataCustomerLoaded,
+        isCustomerLoading,
+        customerDetail,
     };
     return returnValue;
 };
@@ -44,6 +51,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            fetchCustomerList: customerDetailDataActions.fetchList,
+            listCustomerShowLoading: customerDetailDataActions.listShowLoading,
             fetchList: otfReferralsDataActions.fetchList,
             listShowLoading: otfReferralsDataActions.listShowLoading,
             resetData: otfReferralsDataActions.reset,
@@ -56,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ReferralsMasterBase = (props) => {
     const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, isDataLoaded, ReferralsData, isLoading } = props;
-    const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, refreshList } = props;
+    const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, listCustomerShowLoading } = props;
 
     const [formData, setformData] = useState();
     const extraParams = [
@@ -113,13 +122,17 @@ const ReferralsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ReferralsData, userId]);
-     
-    const onSearch = () =>{
+
+    const onSearch = (value) => {
+        if (!value) {
+            //Reset Fields Here
+            return false;
+        }
         const defaultExtraParam = [
             {
                 key: 'customerType',
                 title: 'Customer Type',
-                value: customerType,
+                value: 'ALL',
                 canRemove: true,
             },
             {
@@ -134,32 +147,23 @@ const ReferralsMasterBase = (props) => {
                 value: 1,
                 canRemove: true,
             },
-        ];
 
-        const extraParams = [
-            ...defaultExtraParam,
             {
                 key: 'searchType',
                 title: 'Type',
-                value: filterString?.searchType,
+                value: 'mobileNumber',
                 canRemove: true,
             },
             {
                 key: 'searchParam',
                 title: 'Value',
-                value: filterString?.searchParam,
+                value: value,
                 canRemove: true,
             },
         ];
 
-        useEffect(() => {
-            if (userId && customerType) {
-                resetData();
-                fetchList({ setIsLoading: listShowLoading, extraParams: defaultExtraParam, userId, onSuccessAction, onErrorAction });
-            }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [customerType, userId, refreshList]);
-    }
+        fetchCustomerList({ setIsLoading: listCustomerShowLoading, extraParams: defaultExtraParam, userId, onSuccessAction, onErrorAction });
+    };
 
     const formProps = {
         ...props,
@@ -167,6 +171,7 @@ const ReferralsMasterBase = (props) => {
         formData,
         onFinish,
         onFinishFailed,
+        onSearch,
     };
 
     const viewProps = {
