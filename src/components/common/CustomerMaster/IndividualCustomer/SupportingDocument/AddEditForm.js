@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Select, Input, message, Upload, Button, Empty, Card } from 'antd';
+import { Row, Col, Form, Select, Input, Upload, Button, Empty, Card } from 'antd';
 
 import { FiEye, FiTrash } from 'react-icons/fi';
 
@@ -20,6 +20,7 @@ const AddEditForm = (props) => {
     const { handleFormValueChange, typeData, userId, uploadDocumentFile, uploadedFile, setUploadedFile, listShowLoading, downloadFile, viewListShowLoading, setUploadedFileList, showGlobalNotification, viewDocument, handlePreview } = props;
 
     const [showStatus, setShowStatus] = useState('');
+    const [ correctFormat, setCorrectFormat ] = useState(true);
 
     const onDrop = (e) => {
         console.log('Dropped files', e.dataTransfer.files);
@@ -47,37 +48,27 @@ const AddEditForm = (props) => {
         },
         progress: { strokeWidth: 3, showInfo: true },
         onDrop,
-        beforeUpload: (info) => {
-            if (info?.type === 'image/png' || info?.type === 'image/jpeg' || info?.type === 'application/pdf') {
-            } else {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Upload Correct Format' });
-                return false;
-            }
-        },
-
         onChange: (info) => {
             handleFormValueChange();
             const { status } = info.file;
-            setShowStatus(status);
+            setShowStatus(info.file);
            if (status === 'done') {
                 setUploadedFile(info?.file?.response?.docId);
-                message.success(`${info.file.name} file uploaded successfully.`);
             }
         },
     };
 
     useEffect(() => {
-        if (showStatus === 'uploading') {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Uploading' });
-        } else if (showStatus === 'done') {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Uploaded' });
-        } else if (showStatus === 'error') {
+         if (showStatus.status === 'done') {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: (`${showStatus.name + " file uploaded successfully"}`) });
+        } else if (showStatus.status === 'error') {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showStatus]);
 
     const handleUpload = (options) => {
+        setCorrectFormat(false);
         const { file, onSuccess, onError } = options;
 
         const data = new FormData();
@@ -130,6 +121,8 @@ const AddEditForm = (props) => {
                             //  disabled={uploadedFile?.length > 0}
                             customRequest={handleUpload}
                             {...uploadProps}
+                           // showUploadList={correctFormat ? true : false}
+                            accept=".png,.jpeg,.pdf,.jpg"
                         >
                             <div>
                                 <img src={Svg} alt="" />
