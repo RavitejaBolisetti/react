@@ -16,11 +16,9 @@ import { OTFMainConatiner } from './OTFMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { OTF_STATUS } from 'constants/OTFStatus';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { OTF_SECTION } from 'constants/OTFSection';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
 
@@ -43,7 +41,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        typeData: typeData && typeData[PARAM_MASTER.OTF_SER.id],
+        typeData,
         isDataLoaded,
         data: data?.otfDetails,
         otfData,
@@ -365,6 +363,7 @@ export const OtfMasterBase = (props) => {
         setAdvanceSearchVisible,
         otfStatusList: Object.values(OTF_STATUS),
         onFinishAdvanceFilter,
+        typeData,
     };
 
     const drawerTitle = useMemo(() => {
@@ -411,6 +410,7 @@ export const OtfMasterBase = (props) => {
         handleFormValueChange,
         otfSearchSelected,
         isLastSection,
+        typeData,
         saveButtonName: formActionType?.addMode ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
     };
 

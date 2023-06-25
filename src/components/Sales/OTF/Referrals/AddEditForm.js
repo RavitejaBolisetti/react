@@ -5,7 +5,7 @@
  */
 import React, { useEffect } from 'react';
 
-import { Col, Input, Form, Row, DatePicker, Card } from 'antd';
+import { Col, Input, Form, Row, DatePicker, Card, Select } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { validateRequiredInputField } from 'utils/validation';
@@ -14,16 +14,20 @@ import { disableFutureDate } from 'utils/disableDate';
 
 import dayjs from 'dayjs';
 
-const AddEditFormMain = (props) => {
-    const { formData, form } = props;
+const { Search } = Input;
 
+const AddEditFormMain = (props) => {
+    const { formData, form, onSearch, isCustomerLoading, typeData } = props;
     useEffect(() => {
-        if (formData?.hasOwnProperty('customerName')) {
+        if (formData?.hasOwnProperty('mobileNumber')) {
             form.setFieldsValue({
                 ...formData,
                 registrationNumber: formData?.registrationNumber ?? 'NA',
                 dob: dayjs(formData?.dob),
             });
+        } else {
+            form.resetFields();
+            form.setFieldsValue({ customerId: undefined, customerType: undefined, emailId: undefined, customerName: undefined, registrationNumber: undefined, chasisNumber: undefined, dob: undefined });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
@@ -32,8 +36,8 @@ const AddEditFormMain = (props) => {
         <Card style={{ backgroundColor: '#F2F2F2' }}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="mobileNumber" label="Mobile Number" initialValue={formData?.customerName} rules={[validateRequiredInputField('Mobile Number'), validateMobileNoField('Mobile Number'), { min: 10, message: 'Phone number must be minimum 10 digits Long.' }]}>
-                        <Input placeholder={preparePlaceholderText('Mobile Number')} maxLength={10} />
+                    <Form.Item name="mobileNumber" label="Mobile Number" initialValue={formData?.mobileNumber} rules={[validateRequiredInputField('Mobile Number'), validateMobileNoField('Mobile Number'), { min: 10, message: 'Phone number must be minimum 10 digits Long.' }]}>
+                        <Search loading={isCustomerLoading} placeholder={preparePlaceholderText('Mobile Number')} style={{ width: '100%' }} maxLength={10} allowClear type="text" onSearch={onSearch} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -42,8 +46,8 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="customerType" label="Customer Type" initialValue={formData?.customerType}>
-                        <Input disabled={true} placeholder={preparePlaceholderText('customer type')} maxLength={50} />
+                    <Form.Item initialValue={formData?.customerType} label="Customer Type" name="customerType" data-testid="customerType">
+                        <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.CUST_TYPE} allowClear></Select>
                     </Form.Item>
                 </Col>
             </Row>
@@ -60,14 +64,14 @@ const AddEditFormMain = (props) => {
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="registrationNumber" label="Reg. Number" initialValue={formData?.address}>
+                    <Form.Item name="registrationNumber" label="Reg. Number" initialValue={formData?.registrationNumber}>
                         <Input disabled={true} placeholder={preparePlaceholderText('Regestration Number')} maxLength={50} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="chasisNumber" label="Chessis Number" initialValue={formData?.chessisNumber}>
+                    <Form.Item name="chasisNumber" label="Chessis Number" initialValue={formData?.chasisNumber}>
                         <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('Chessis Number')} />
                     </Form.Item>
                 </Col>

@@ -111,7 +111,7 @@ const AddressMasterBase = (props) => {
         if (userId && addressIndData?.customerAddress?.length) {
             setAddressData(addressIndData?.customerAddress);
         }
-        if (userId && !isAddressLoaded) {
+        if (userId && !isCompanyAddressLoaded) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 setAddressData(addressIndData?.customerAddress);
             } else {
@@ -119,22 +119,23 @@ const AddressMasterBase = (props) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [addressIndData, addressCompanyData]);
+    }, [addressIndData, isCompanyAddressLoaded]);
 
     useEffect(() => {
-        if (userId && !isAddressLoaded) {
+        if (userId && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
             } else {
                 fetchListCorporate({ setIsLoading: listShowLoading, userId, extraParams });
             }
-        }
+        };
+
         return(() => {
             resetData();
             resetDataCorporate();
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isAddressLoaded]);
+    }, [userId, selectedCustomer?.customerId]);
 
     const handleCollapse = (key) => {
         setOpenAccordian(key);

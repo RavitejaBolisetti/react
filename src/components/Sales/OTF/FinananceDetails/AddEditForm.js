@@ -6,6 +6,8 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Card, DatePicker, Space } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+
 import dayjs from 'dayjs';
 
 import styles from 'components/common/Common.module.css';
@@ -14,14 +16,14 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { formData, FinanceLovData } = props;
-    const [selected, setSelected] = useState();
+    const [doReceived, setDoReceived] = useState(formData?.doReceived || 'No');
 
     const datePickerStyle = {
         width: '100%',
     };
 
     const handleDOChange = (item) => {
-        setSelected(item);
+        setDoReceived(item);
     };
 
     const selectProps = {
@@ -63,12 +65,12 @@ const AddEditFormMain = (props) => {
 
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.loanAmount} label="Loan Amount" name="loanAmount">
+                                        <Form.Item initialValue={formData?.loanAmount} label="Loan Amount" name="loanAmount" rules={[validateNumberWithTwoDecimalPlaces('loan amount')]}>
                                             <Input placeholder={preparePlaceholderText('loan amount')} maxLength={55} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.emi} label="EMI" name="emi">
+                                        <Form.Item initialValue={formData?.emi} label="EMI" name="emi" rules={[validateNumberWithTwoDecimalPlaces('emi')]}>
                                             <Input placeholder={preparePlaceholderText('emi')} maxLength={55} />
                                         </Form.Item>
                                     </Col>
@@ -82,16 +84,16 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
-                                    {selected === 'yes' && (
+                                    {doReceived === 'yes' && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="D.O. Number" name="doNumber">
+                                            <Form.Item initialValue={formData?.doNumber} label="D.O. Number" name="doNumber">
                                                 <Input placeholder={preparePlaceholderText('d.o. number')}></Input>
                                             </Form.Item>
                                         </Col>
                                     )}
-                                    {selected === 'yes' && (
+                                    {doReceived === 'yes' && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="D.O. Date" name="doDate">
+                                            <Form.Item initialValue={formData?.doDate ? dayjs(formData?.doDate) : null} label="D.O. Date" name="doDate">
                                                 <DatePicker disabledDate={(date) => date > dayjs()} placeholder={preparePlaceholderSelect('date')} style={datePickerStyle} />
                                             </Form.Item>
                                         </Col>

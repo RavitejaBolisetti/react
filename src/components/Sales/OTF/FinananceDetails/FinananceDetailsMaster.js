@@ -70,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { saveData, fetchList, userId, listShowLoading, isLoaded, financeData, showGlobalNotification, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
+    const { saveData, fetchList, userId, listShowLoading,  financeData, showGlobalNotification, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
 
     const { form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick } = props;
 
@@ -93,15 +93,18 @@ export const FinananceDetailsMasterBase = (props) => {
     ];
 
     useEffect(() => {
-        if (!isLoaded && userId) {
+        if (userId && selectedOrderId) {
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedOrderId]);
 
+    useEffect(() => {
         if (userId && !isFinanceLovDataLoaded) {
             fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isLoaded, userId]);
+    }, [userId, isFinanceLovDataLoaded]);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -118,7 +121,7 @@ export const FinananceDetailsMasterBase = (props) => {
             form.resetFields();
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
 
             setButtonData({ ...buttonData, formBtnActive: false });
         };
@@ -158,8 +161,6 @@ export const FinananceDetailsMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        tableData: financeData,
-
         isFinanceLovDataLoaded,
         isFinanceLovLoading,
         FinanceLovData,

@@ -120,7 +120,15 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
 
-                    {corporateType === 'LIS' ? (
+                    {corporateType === 'NON-LIS' ? (
+                        <>
+                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                                    <Input placeholder={preparePlaceholderText('corporate name')} />
+                                </Form.Item>
+                            </Col>
+                        </>
+                    ) : (
                         <>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
@@ -133,12 +141,6 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                         </>
-                    ) : (
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
-                                <Input placeholder={preparePlaceholderText('corporate name')} />
-                            </Form.Item>
-                        </Col>
                     )}
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.corporateCategory} label="Corporate Category" name="corporateCategory" data-testid="corporateCategory">

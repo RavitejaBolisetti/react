@@ -117,7 +117,6 @@ export const validattwitterProfileUrl = (fieldName) => ({
 });
 
 export const duplicateValidator = (value, fieldName, dataList, updateVal) => {
-    console.log("value", value, "fieldName", fieldName, "dataList", "dataList", dataList, "updateVal", updateVal)
     let dataListToCheck = dataList?.length ? [...dataList] : [];
     if (updateVal && dataList?.length > 0) {
         let index = dataList?.findIndex((el) => el[fieldName].toLowerCase() === updateVal.toLowerCase());
@@ -183,6 +182,10 @@ export const validateTin = (fieldName) => ({
 });
 export const validateDrivingLicenseNo = (fieldName) => ({
     pattern: /^([A-Z]{2})(\d{2}|\d{3})[a-zA-Z]{0,1}(\d{4})(\d{7})$/,
+    message: 'Please enter valid ' + fieldName,
+});
+export const validateDrivingLicenseNoWithSpace = (fieldName) => ({
+    pattern: /^([A-Z]{2})(\d{2}|\d{3})( )[a-zA-Z]{0,1}(\d{4})(\d{7})$/,
     message: 'Please enter valid ' + fieldName,
 });
 export const validateAadhar = (fieldName) => ({

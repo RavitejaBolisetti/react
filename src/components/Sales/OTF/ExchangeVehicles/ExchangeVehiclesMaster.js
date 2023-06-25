@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 
 import { Row, Col, Form } from 'antd';
 
+import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetail';
 import { schemeDataActions } from 'store/actions/data/otf/exchangeVehicle';
@@ -42,6 +43,9 @@ const mapStateToProps = (state) => {
                 VariantVehicleDetails: { isLoaded: isVariantDataLoaded = false, isVariantLoading, data: variantData = [] },
             },
         },
+        customer: {
+            customerDetail: { isLoaded: isDataCustomerLoaded = false, isLoading: isCustomerLoading = false, data: customerDetail = [] },
+        },
     } = state;
 
     const moduleTitle = 'Exchange Vehichle';
@@ -74,6 +78,10 @@ const mapStateToProps = (state) => {
         isVariantDataLoaded,
         isVariantLoading,
         variantData,
+
+        isDataCustomerLoaded,
+        isCustomerLoading,
+        customerDetail,
     };
     return returnValue;
 };
@@ -82,6 +90,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            fetchCustomerList: customerDetailDataActions.fetchList,
+            listCustomerShowLoading: customerDetailDataActions.listShowLoading,
+
             fetchFinanceLovList: financeLovDataActions.fetchList,
             listFinanceLovShowLoading: financeLovDataActions.listShowLoading,
 
@@ -115,6 +126,7 @@ const ExchangeVehiclesBase = (props) => {
     const { financeLovData, isFinanceLovLoading, isFinanceLovDataLoaded, fetchFinanceLovList, listFinanceLovShowLoading } = props;
     const { schemeLovData, isSchemeLovLoading, isSchemeLovDataLoaded, fetchSchemeLovList, listSchemeLovShowLoading } = props;
     const { form, selectedOrderId, formActionType, handleFormValueChange } = props;
+    const { fetchCustomerList, listCustomerShowLoading } = props;
 
     const [formData, setFormData] = useState('');
 
@@ -170,6 +182,10 @@ const ExchangeVehiclesBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId, exchangeData]);
 
+    const onErrorAction = (message) => {
+        showGlobalNotification(message);
+    };
+
     const onFinish = (values) => {
         const data = { ...values, otfNumber: selectedOrderId };
         delete data.hypothicatedTo;
@@ -185,16 +201,12 @@ const ExchangeVehiclesBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
         };
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-
         const requestData = {
             data: data,
             method: 'put',
             setIsLoading: listShowLoading,
             userId,
-            onError,
+            onError: onErrorAction,
             onSuccess,
         };
 
@@ -207,6 +219,56 @@ const ExchangeVehiclesBase = (props) => {
             .catch((err) => {
                 console.log('err');
             });
+    };
+
+    const onSearch = (value) => {
+        if (!value) {
+            return false;
+        }
+        const defaultExtraParam = [
+            {
+                key: 'customerType',
+                title: 'Customer Type',
+                value: 'ALL',
+                canRemove: true,
+            },
+            {
+                key: 'pageSize',
+                title: 'Value',
+                value: 1000,
+                canRemove: true,
+            },
+            {
+                key: 'pageNumber',
+                title: 'Value',
+                value: 1,
+                canRemove: true,
+            },
+
+            {
+                key: 'searchType',
+                title: 'Type',
+                value: 'customerId',
+                canRemove: true,
+            },
+            {
+                key: 'searchParam',
+                title: 'Value',
+                value: value,
+                canRemove: true,
+            },
+        ];
+
+        fetchCustomerList({
+            setIsLoading: listCustomerShowLoading,
+            extraParams: defaultExtraParam,
+            userId,
+            onSuccessAction: (res) => {
+                console.log('res?.data?.customerMasterDetails[0]', res);
+                // setFormData(res?.data?.customerMasterDetails[0]);
+            },
+            onErrorAction,
+        });
     };
 
     const formProps = {
@@ -233,6 +295,7 @@ const ExchangeVehiclesBase = (props) => {
         isVariantLoading,
         variantData,
         isLoading,
+        onSearch,
     };
 
     const viewProps = {

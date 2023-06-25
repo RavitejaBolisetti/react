@@ -55,8 +55,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const UploadUtilsMain = (props) => {
-    const { uploadTitle, uploadDescription, uploadBtnName, uploadImgTitle, viewDocument, formData } = props;
-    const { listShowLoading, userId, uploadFile, fecthViewDocument, listShowLoadingOnLoad, setUploadImgDocId } = props;
+    const { uploadTitle, uploadDescription, uploadBtnName, uploadImgTitle, viewDocument, formData, setButtonData,  buttonData } = props;
+    const { listShowLoading, userId, uploadFile, fecthViewDocument, listShowLoadingOnLoad, setUploadImgDocId, uploadImgDocId } = props;
     const [uploadedFile, setUploadedFile] = useState();
     const [visible, setVisible] = useState(false);
 
@@ -95,11 +95,15 @@ const UploadUtilsMain = (props) => {
         onChange: (info, event) => {
             const { status } = info.file;
             if (status === 'uploading') {
+                setButtonData({ ...buttonData, formBtnActive: false });
             } else if (status === 'done') {
                 setUploadedFile(info?.file?.response?.docId);
                 message.success(`${info.file.name} file uploaded successfully.`);
+                setButtonData({ ...buttonData, formBtnActive: true });
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
+                setButtonData({ ...buttonData, formBtnActive: true });
+
             }
         },
     };
@@ -125,6 +129,7 @@ const UploadUtilsMain = (props) => {
 
     return (
         <>
+        <div className={styles.uploadDragger}>
             {!uploadedFile && !formData?.docId ? (
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -182,6 +187,7 @@ const UploadUtilsMain = (props) => {
                     </Card>
                 </>
             )}
+            </div>
         </>
     );
 };

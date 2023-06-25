@@ -17,7 +17,6 @@ const AddEditFormBase = (props) => {
     const { form, billCstmForm, formData, customerFormData, setSameAsBookingCustomer } = props;
     const { typeData } = props;
     const [activeKey, setactiveKey] = useState([1]);
-    console.log('formData', formData);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -48,7 +47,7 @@ const AddEditFormBase = (props) => {
         ...props,
         AutoComplete,
         typeData,
-        formData: formData?.billingCustomer,
+        formData: formData?.bookingCustomer,
         formType: 'bookingCustomer',
     };
 
@@ -137,7 +136,7 @@ const AddEditFormBase = (props) => {
                         >
                             <Row>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Checkbox valuePropName="checked" onClick={handleOnChange} name="sameAsBookingCustomer">
+                                    <Checkbox valuePropName="checked" style={{ margin: '5px 0px 15px 0px' }} onClick={handleOnChange} name="sameAsBookingCustomer">
                                         Same as Booking Customer
                                     </Checkbox>
                                 </Col>
