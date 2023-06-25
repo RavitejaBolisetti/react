@@ -21,6 +21,8 @@ const AddEditFormMain = (props) => {
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode, onSearch, isSearchLoading } = props;
     const [activeKey, setactiveKey] = useState([]);
     const [disabled, setDisabled] = useState(false);
+    const [initialVal, setInitialVal] = useState(null);
+    const [editedValues, setEditedValues] = useState({});
 
     const handleEdit = () => {
         setIsViewModeVisible(false);
@@ -42,16 +44,21 @@ const AddEditFormMain = (props) => {
     };
 
     const onEdit = (values, index) => {
+        console.log(values, 'VALUES');
         setEditedMode(true);
         setactiveKey(index);
         setShowForm(false);
+
+        setInitialVal(values?.mnmCustomer);
+
         if (values?.mnmCustomer === 'Yes') {
             setCustomerType('Yes');
         } else if (values?.mnmCustomer === 'No') {
             setCustomerType('No');
         }
 
-        form.setFieldsValue({
+        const Val = {
+            id: values?.id,
             mnmCustomer: values?.mnmCustomer,
             customerId: values?.customerId,
             customerName: values?.customerName,
@@ -62,7 +69,11 @@ const AddEditFormMain = (props) => {
             dateOfBirth: typeof values?.dateOfBirth === 'object' ? values?.dateOfBirth : dayjs(values?.dateOfBirth),
             relationAge: values?.relationAge,
             remarks: values?.remarks,
-        });
+        };
+
+        setEditedValues(Val);
+
+        form.setFieldsValue(Val);
     };
 
     const onCancel = (values) => {
@@ -106,13 +117,16 @@ const AddEditFormMain = (props) => {
         onFinishFailed,
         form,
         onChange,
-        editedMode,
         onSave,
         customerType,
         relationData,
         onSearch,
         isSearchLoading,
         onCancel,
+        showForm,
+        initialVal,
+        editedValues,
+        setEditedValues,
     };
 
     return (

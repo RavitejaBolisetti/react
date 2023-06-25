@@ -124,15 +124,18 @@ const FamilyDetailMasterBase = (props) => {
 
     const onSave = () => {
         let values = form.getFieldsValue();
+        console.log(values, 'ValueMDikkat');
         setFamilyDetailsList((items) => [{ ...values, customerId: selectedCustomerId, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
         if (editedMode) {
             const upd_obj = familyDetailList?.map((obj) => {
                 if (obj?.editedId === values?.editedId) {
+                    obj.id = values?.id;
                     obj.mnmCustomer = values?.mnmCustomer;
                     obj.customerName = values?.customerName;
                     obj.relationAge = values?.relationAge;
                     obj.relationship = values?.relationship;
                     obj.relationCode = values?.relationCode;
+                    obj.relationCustomerId = values?.relationCustomerId;
                     obj.dateOfBirth = typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth;
                     obj.remarks = values?.remarks;
                 }
@@ -156,7 +159,7 @@ const FamilyDetailMasterBase = (props) => {
 
     const onFinish = () => {
         if (!familyDetailList || familyDetailList.length <= 0) {
-            showGlobalNotification({ message: 'Please add faily detail before submit' });
+            showGlobalNotification({ message: 'Please add family detail before submit' });
             return false;
         }
 
@@ -205,8 +208,8 @@ const FamilyDetailMasterBase = (props) => {
     useEffect(() => {
         form.setFieldsValue({
             customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
-            dateOfBirth: dayjs(familySearchData?.dateOfBirth),
-            relationAge: GetAge(familySearchData?.dateOfBirth),
+            dateOfBirth: familySearchData?.dateOfBirth === null ? null : dayjs(familySearchData?.dateOfBirth),
+            relationAge: familySearchData?.dateOfBirth === null ? 'NA' : GetAge(familySearchData?.dateOfBirth),
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [familySearchData]);

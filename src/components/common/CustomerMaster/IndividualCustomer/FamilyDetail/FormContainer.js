@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Input, Select, DatePicker, Row, Col, Button, Form } from 'antd';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -19,7 +19,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const FormBase = (props) => {
-    const { customerType, onSave, form, onChange, relationData, onSearch, isSearchLoading, onCancel } = props;
+    const { customerType, onSave, form, onChange, relationData, onSearch, isSearchLoading, onCancel, showForm, initialVal, editedValues } = props;
 
     const type = [
         { name: 'Yes', key: 'Yes', value: 'Yes' },
@@ -48,12 +48,31 @@ const FormBase = (props) => {
         });
     };
 
+    useEffect(() => {
+        if (showForm) {
+            form.resetFields();
+        }
+        if (customerType === initialVal) {
+            form.setFieldsValue(editedValues);
+        } else {
+            form.setFieldsValue({
+                customerName: null,
+                relationship: null,
+                relationCode: null,
+                dateOfBirth: null,
+                relationAge: null,
+                remarks: null,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [customerType]);
+
     return (
         <div>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={'Yes'} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
-                        <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange} className={styles.inputBox} >
+                    <Form.Item initialValue={customerType} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
+                        <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange} className={styles.inputBox}>
                             {type?.map((item) => (
                                 <Option key={'mc' + item?.key} value={item?.value}>
                                     {item?.name}
@@ -147,7 +166,14 @@ const FormBase = (props) => {
             </Row>
 
             <Row style={{ display: 'flex' }}>
-                <Button type="primary" onClick={onSave} className={styles.marR20}>
+                <Button
+                    type="primary"
+                    onClick={() => {
+                        // form.submit();
+                        onSave();
+                    }}
+                    className={styles.marR20}
+                >
                     Save
                 </Button>
 
