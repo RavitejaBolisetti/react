@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ReferralsMasterBase = (props) => {
     const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, isDataLoaded, ReferralsData, isLoading } = props;
-    const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, listCustomerShowLoading } = props;
+    const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, listCustomerShowLoading, typeData } = props;
 
     const [formData, setformData] = useState();
     const extraParams = [
@@ -178,6 +178,7 @@ const ReferralsMasterBase = (props) => {
         styles,
         formData,
         isLoading,
+        typeData,
     };
 
     return (
