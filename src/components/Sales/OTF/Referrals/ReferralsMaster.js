@@ -56,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ReferralsMasterBase = (props) => {
     const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, isDataLoaded, ReferralsData, isLoading } = props;
-    const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed } = props;
+    const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, refreshList } = props;
 
     const [formData, setformData] = useState();
     const extraParams = [
@@ -113,6 +113,53 @@ const ReferralsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ReferralsData, userId]);
+     
+    const onSearch = () =>{
+        const defaultExtraParam = [
+            {
+                key: 'customerType',
+                title: 'Customer Type',
+                value: customerType,
+                canRemove: true,
+            },
+            {
+                key: 'pageSize',
+                title: 'Value',
+                value: 1000,
+                canRemove: true,
+            },
+            {
+                key: 'pageNumber',
+                title: 'Value',
+                value: 1,
+                canRemove: true,
+            },
+        ];
+
+        const extraParams = [
+            ...defaultExtraParam,
+            {
+                key: 'searchType',
+                title: 'Type',
+                value: filterString?.searchType,
+                canRemove: true,
+            },
+            {
+                key: 'searchParam',
+                title: 'Value',
+                value: filterString?.searchParam,
+                canRemove: true,
+            },
+        ];
+
+        useEffect(() => {
+            if (userId && customerType) {
+                resetData();
+                fetchList({ setIsLoading: listShowLoading, extraParams: defaultExtraParam, userId, onSuccessAction, onErrorAction });
+            }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [customerType, userId, refreshList]);
+    }
 
     const formProps = {
         ...props,
