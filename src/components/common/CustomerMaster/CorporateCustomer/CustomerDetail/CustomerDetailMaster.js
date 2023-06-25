@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         customerDetailsData,
-        typeData: typeData,
+        typeData,
 
         isCorporateLovDataLoaded,
         isCorporateLovLoading,
@@ -84,10 +84,9 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const [customerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
-    const [configurableTypedata, setConfigurableTypedata] = useState({});
     const [formData, setFormData] = useState();
     const [refershData, setRefershData] = useState(false);
-    const [corporateData, setCorporateData] = useState();
+
 
     const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
@@ -113,12 +112,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isCorporateLovDataLoaded]);
 
-    useEffect(() => {
-        if (typeData) {
-            setConfigurableTypedata({ CUST_TYPE: typeData['CUST_TYPE'], CORP_TYPE: typeData['CORP_TYPE'], CORP_CATE: typeData['CORP_CATE'], TITLE: typeData['TITLE'], MEM_TYPE: typeData['MEM_TYPE'] });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [typeData, isDataLoaded]);
 
     useEffect(() => {
         if (userId && selectedCustomerId) {
@@ -205,7 +198,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         setShowForm,
         formActionType,
         typeData,
-        configurableTypedata,
+        typeData,
         handleButtonClick,
         styles,
         customerParentCompanyData,
