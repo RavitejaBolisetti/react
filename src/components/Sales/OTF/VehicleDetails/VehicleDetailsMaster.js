@@ -133,7 +133,7 @@ const VehicleDetailsMasterMain = (props) => {
         if (ProductHierarchyData && isProductHierarchyDataLoaded && userId) {
             setmodelData(ProductHierarchyData['0']);
             form.setFieldsValue({
-                modelCode: ProductHierarchyData['0']['model'],
+                modelCode: ProductHierarchyData['0']['model'] ?? 'NA',
             });
             settooltTipText(
                 <div>
@@ -202,7 +202,6 @@ const VehicleDetailsMasterMain = (props) => {
         } else {
             data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, optionalServices: optionsServicesMapping };
             console.log('data', data);
-
         }
 
         const onSuccess = (res) => {
