@@ -3,12 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
-import { Space, Collapse, Typography, Divider, Descriptions } from 'antd';
+import React from 'react';
+import { Space, Collapse, Typography, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { getCodeValue } from 'utils/getCodeValue';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { InputSkeleton } from 'components/common/Skeleton';
 
 import { addToolTip } from 'utils/customMenuLink';
 import { DataTable } from 'utils/dataTable';
@@ -18,7 +18,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { isLoading, activeKey, onChange, tooltTipText, typeData, styles, formData } = props;
+    const { isLoading, activeKey, onChange, tooltTipText, styles, formData } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -52,16 +52,17 @@ const ViewDetailMain = (props) => {
                     key="1"
                 >
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Vehicle Usage Type ">{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_TYPE,formData?.vehicleUsageType), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Usage Type ">{checkAndSetDefaultValue(formData?.vehicleUsageType, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Model">
+                            {isLoading && <InputSkeleton width={'100px'} height={20} theme={'card'} />}
                             <div className={styles.tooltipAlign}>
                                 {formData?.model}
-                                {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                                {!isLoading && addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                             </div>
                         </Descriptions.Item>
                         <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Allocated Status">{checkAndSetDefaultValue(formData?.vehicleAllocationStatus ? formData?.vehicleAllocationStatus : 'null', isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Allocated Status">{checkAndSetDefaultValue(formData?.vehicleAllocatedStatus, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.ponumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.podate, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(formData?.postatus, isLoading)}</Descriptions.Item>
