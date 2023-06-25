@@ -185,6 +185,10 @@ export const validateDrivingLicenseNo = (fieldName) => ({
     pattern: /^([A-Z]{2})(\d{2}|\d{3})[a-zA-Z]{0,1}(\d{4})(\d{7})$/,
     message: 'Please enter valid ' + fieldName,
 });
+export const validateDrivingLicenseNoWithSpace = (fieldName) => ({
+    pattern: /^([A-Z]{2})(\d{2}|\d{3})( )[a-zA-Z]{0,1}(\d{4})(\d{7})$/,
+    message: 'Please enter valid ' + fieldName,
+});
 export const validateAadhar = (fieldName) => ({
     pattern: /^\d{4}\d{4}\d{4}$/,
     message: 'Please enter valid ' + fieldName,
