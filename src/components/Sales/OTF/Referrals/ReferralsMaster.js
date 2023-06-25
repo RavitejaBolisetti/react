@@ -78,7 +78,7 @@ const ReferralsMasterBase = (props) => {
     ];
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: 'OTF001', dob: dayjs(values?.dob).format('YYYY-MM-DD'), id: formData?.id };
+        const data = { ...values, otfNumber: selectedOrderId, dob: dayjs(values?.dob).format('YYYY-MM-DD'), id: formData?.id };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -92,7 +92,7 @@ const ReferralsMasterBase = (props) => {
 
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: ReferralsData?.id ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
