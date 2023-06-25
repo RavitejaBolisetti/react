@@ -4,11 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-
-import { Col, Row, Checkbox, Space, Collapse, Typography, AutoComplete, Button } from 'antd';
+import { Col, Row, Checkbox, Space, Collapse, Typography, AutoComplete } from 'antd';
 import { FiEdit } from 'react-icons/fi';
-
-import { FormCommon } from './FormCommon';
+import { AddressCommonForm } from './AddressCommonForm';
 
 import styles from 'components/common/Common.module.css';
 
@@ -16,9 +14,10 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormBase = (props) => {
-    const { onFinish, form, billCstmForm, formData, customerFormData, setSameAsBookingCustomer } = props;
+    const { form, billCstmForm, formData, customerFormData, setSameAsBookingCustomer } = props;
     const { typeData } = props;
     const [activeKey, setactiveKey] = useState([1]);
+    console.log('formData', formData);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -37,12 +36,20 @@ const AddEditFormBase = (props) => {
         }
     };
 
-    const commonFormProps = {
+    const bilingCustomerProps = {
         ...props,
         AutoComplete,
         typeData,
-        onFinish,
-        formData,
+        formData: formData?.billingCustomer,
+        formType: 'billingCustomer',
+    };
+
+    const bookingCustomerProps = {
+        ...props,
+        AutoComplete,
+        typeData,
+        formData: formData?.billingCustomer,
+        formType: 'bookingCustomer',
     };
 
     const handleOnChange = (vall) => {
@@ -93,7 +100,7 @@ const AddEditFormBase = (props) => {
                             }
                             key="1"
                         >
-                            <FormCommon key="3" {...commonFormProps} data={customerFormData.bookingCustomer} form={props.form} isBillingCustmrForm={false} />
+                            <AddressCommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} />
                         </Panel>
                     </Collapse>
                     <Collapse
@@ -135,17 +142,10 @@ const AddEditFormBase = (props) => {
                                     </Checkbox>
                                 </Col>
                             </Row>
-                            <FormCommon key="4" {...commonFormProps} data={customerFormData.billingCustomer} form={props.billCstmForm} isBillingCustmrForm={true} />
+                            <AddressCommonForm key="4" {...bilingCustomerProps} isBillingCustmrForm={true} />
                         </Panel>
                     </Collapse>
                 </Space>
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Button onClick={onFinish} type="primary">
-                            SUBMIT
-                        </Button>
-                    </Col>
-                </Row>
             </Col>
         </Row>
     );

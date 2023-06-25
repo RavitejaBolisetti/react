@@ -20,7 +20,6 @@ import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 
 import dayjs from 'dayjs';
-
 import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
@@ -113,9 +112,10 @@ export const CustomerDetailsMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    const onFinish = () => {
+    const onFinish = (values) => {
         form.getFieldsValue();
-        const data = { bookingCustomer: { ...form.getFieldsValue(), birthDate: dayjs(form.getFieldsValue().birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData.bookingCustomer.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...billCstmForm.getFieldsValue(), birthDate: dayjs(billCstmForm.getFieldsValue()?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData.billingCustomer.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+        const data = { bookingCustomer: { ...values?.bookingCustomer, birthDate: dayjs(values?.bookingCustomer?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, birthDate: dayjs(values?.billingCustomer?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });

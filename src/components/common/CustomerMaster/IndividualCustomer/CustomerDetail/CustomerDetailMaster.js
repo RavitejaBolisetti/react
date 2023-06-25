@@ -112,8 +112,6 @@ const CustomerDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
-
-
     const onFinish = (values) => {
         setRefreshList(false);
         const data = { ...values, customerId: selectedCustomer?.customerId };
