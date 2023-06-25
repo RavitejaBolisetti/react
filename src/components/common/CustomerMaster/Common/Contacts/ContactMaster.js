@@ -119,9 +119,9 @@ const ContactMain = (props) => {
     useEffect(() => {
 
         if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-            setContactData(customerIndData?.customerContact);
+            setContactData(customerIndData?.customerContact || []);
         } else {
-            setContactData(customerData?.customerContact);
+            setContactData(customerData?.customerContact || []);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerData, customerIndData]);
@@ -141,6 +141,7 @@ const ContactMain = (props) => {
         contactform
             .validateFields()
             .then((value) => {
+                debugger
                 if (isEditing) {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
@@ -155,16 +156,21 @@ const ContactMain = (props) => {
                     });
                 } else {
                     setContactData((prev) => {
-                        let formData = prev?.length ? [...prev] : [];;
+                        console.log('prev', prev);
+                        let formData = prev?.length ? [...prev] : [];
+                        console.log('formData', formData);
                         if (value?.defaultaddress && formData?.length >= 1) {
                             formData?.forEach((contact) => {
                                 if (contact?.defaultaddress === true) {
                                     contact.defaultaddress = false;
                                 }
                             });
+                            console.log('formData', formData)
                             return [...formData, value];
                         } else {
                             const updVal = prev?.length ? [...prev, { ...value }] : [{ ...value }];
+                            console.log('updVal', updVal)
+
                             return updVal ;
                         }
                     });
@@ -223,7 +229,8 @@ const ContactMain = (props) => {
        
         customerType,
         isAdding,
-        setIsAdding
+        setIsAdding,
+        buttonData,
     };
 
     const onSubmit = () => {
