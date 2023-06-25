@@ -108,7 +108,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label="Vehicle Usage Type" name="vehicleUsageType" data-testid="usageType" rules={[validateRequiredSelectField('vehicle usage Type')]}>
-                                        <Select placeholder="Select Vehicle Usage Type" allowClear options={typeData[PARAM_MASTER.VEHCL_TYPE.id]} fieldNames={{ label: 'value', value: 'key' }} />
+                                        <Select placeholder="Select Vehicle Usage Type" allowClear options={typeData['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.modelTooltip}>

@@ -178,6 +178,7 @@ export const FinananceDetailsMasterBase = (props) => {
         formData: financeData,
         styles,
         isLoading,
+        FinanceLovData,
     };
 
     return (

@@ -10,3 +10,8 @@ import { convertDate } from 'utils/formatDateTime';
 export const checkAndSetDefaultValue = (value, isLoading, type) => {
     return isLoading ? <InputSkeleton width={'100px'} height={20} theme={'card'} /> : type === 'date' ? convertDate(value, 'DD MMM YYYY') : value || 'NA';
 };
+
+export const getNameFromKey = (list, key) => {
+    let name = list?.find(el => el?.key === key)?.value;
+    return name;
+};

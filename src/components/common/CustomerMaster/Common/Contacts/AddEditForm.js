@@ -19,11 +19,9 @@ import style from '../../../Common.module.css';
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
+    const { formData, isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
-
-    // console.log(' AddEditForm uploadImgDocId', uploadImgDocId);
 
     const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
 
@@ -85,16 +83,7 @@ const AddEditForm = (props) => {
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Purpose of Contact" name="purposeOfContact" rules={[validateRequiredSelectField('purpose of contact')]}>
-                                <Select placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                    <Option key={'ctdef'} value="">
-                                        Select
-                                    </Option>
-                                    {typeData?.PURPOSE?.map((item) => (
-                                        <Option key={'ct' + item?.key} value={item?.key}>
-                                            {item?.value}
-                                        </Option>
-                                    ))}
-                                </Select>
+                                <Select {...disabledProps} placeholder={preparePlaceholderSelect('purpose of contact')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['PURPOSE']} allowClear></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -130,17 +119,10 @@ const AddEditForm = (props) => {
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             {customerType === 'IND' ? (
                                 <>
-                                    <Form.Item initialValue={'Select'} label="Relation" name="relationCode">
-                                        <Select placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                        <Option key={'ctdefau'} value="">Select</Option>
-                                            {typeData?.FAMLY_RELTN?.map((item) => (
-                                                <Option key={'ct' + item?.key} value={item?.key}>
-                                                    {item?.value}
-                                                </Option>
-                                            ))}
-                                        </Select>
+                                    <Form.Item initialValue={''} label="Relation" name="relationCode">
+                                        <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['FAMLY_RELTN']} allowClear></Select>
                                     </Form.Item>
-                                    <Form.Item initialValue={''} hidden name="designation"  rules={[validateLettersWithWhitespaces('First Name')]}>
+                                    <Form.Item initialValue={''} hidden name="designation" rules={[validateLettersWithWhitespaces('First Name')]}>
                                         <Input />
                                     </Form.Item>
                                 </>
@@ -156,27 +138,13 @@ const AddEditForm = (props) => {
                             )}
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Gender" name="gender" >
-                                <Select placeholder={preparePlaceholderSelect('gender')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                <Option key={'gender001'} value="">Select</Option>
-                                    {typeData?.GENDER_CD?.map((item) => (
-                                        <Option key={'ct' + item?.key} value={item.key}>
-                                            {item?.value}
-                                        </Option>
-                                    ))}
-                                </Select>
+                            <Form.Item label="Gender" name="gender">
+                                <Select {...disabledProps} placeholder={preparePlaceholderSelect('gender')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['GENDER_CD']} allowClear></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Title" name="title" >
-                                <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('title')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                <Option key={'ct001'} value="">Select</Option>
-                                    {typeData?.TITLE?.map((item) => (
-                                        <Option key={'ct' + item?.key} value={item?.key}>
-                                            {item?.name}
-                                        </Option>
-                                    ))}
-                                </Select>
+                            <Form.Item label="Title" name="title">
+                                <Select {...disabledProps} placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['TITLE']} allowClear></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>

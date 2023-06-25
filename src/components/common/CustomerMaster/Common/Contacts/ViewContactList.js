@@ -8,6 +8,9 @@ import { Collapse, Space, Typography, Row, Col, Checkbox, Divider, Button } from
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { FiEdit } from 'react-icons/fi';
 
+import { getNameFromKey } from 'utils/checkAndSetDefaultValue';
+
+
 const { Panel } = Collapse;
 const { Text } = Typography;
 
@@ -66,13 +69,13 @@ const ViewContactList = (props) => {
                                                 </Button>
                                             )}
                                         </Col>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                       {!(isEditing || isAdding) && <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                             <Checkbox valuePropName="checked" checked={data?.defaultContactIndicator} defaultChecked={data?.defaultContactIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)} {...disableProp}>
                                                 Mark As Default
                                             </Checkbox >
                                             <Divider type="vertical" />
-                                            <Text type="secondary">{data?.purposeOfContact}</Text>
-                                        </Col>
+                                            <Text type="secondary">{getNameFromKey(typeData['PURPOSE'], data?.purposeOfContact)}</Text>
+                                        </Col>}
                                     </Row>
                                 }
                             >

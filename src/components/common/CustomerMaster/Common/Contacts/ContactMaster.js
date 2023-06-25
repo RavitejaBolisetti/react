@@ -286,7 +286,7 @@ const ContactMain = (props) => {
                                         <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Contact' : 'Company Contact'}</Text>
                                         {!formActionType?.viewMode && (
                                             <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isEditing || isAdding}>
-                                                Add Contact
+                                                Add
                                             </Button>
                                         )}
                                     </Space>

@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
                 VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: VehicleDetailsData = [] },
                 VehicleDetailsLov: { isFilteredListLoaded: isVehicleLovDataLoaded = false, isLoading: isVehicleLovDataLoading, filteredListData: VehicleLovData },
             },
-            ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [] },
         },
     } = state;
@@ -45,8 +45,8 @@ const mapStateToProps = (state) => {
         VehicleDetailsData,
         isLoading,
         moduleTitle,
-        typeData: typeData,
-        isTypeDataLoaded,
+        typeData,
+
         ProductHierarchyData: VehicleLovCodeData,
         isProductHierarchyDataLoaded,
         isProductHierarchyLoading,
@@ -66,7 +66,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchProductLov: otfvehicleDetailsLovDataActions.fetchFilteredList,
             ProductLovCodeLoading: productHierarchyDataActions.listShowLoading,
             ProductLovLoading: otfvehicleDetailsLovDataActions.listShowLoading,
-            fetchconfigList: configParamEditActions.fetchList,
             configLoading: configParamEditActions.listShowLoading,
             listShowLoading: otfvehicleDetailsDataActions.listShowLoading,
             resetData: otfvehicleDetailsDataActions.reset,
@@ -77,7 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { VehicleDetailsData, VehicleLovData, isVehicleLovDataLoaded, ProductHierarchyData, fetchProductLovCode, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, typeData, fetchList, isTypeDataLoaded, resetData, configLoading, fetchconfigList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { VehicleDetailsData, VehicleLovData, isVehicleLovDataLoaded, ProductHierarchyData, fetchProductLovCode, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, section, formActionType, handleFormValueChange, NEXT_EDIT_ACTION, handleButtonClick } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
@@ -101,7 +100,6 @@ const VehicleDetailsMasterMain = (props) => {
         showGlobalNotification({ message });
     };
     const loadDependendData = () => {
-        fetchconfigList({ setIsLoading: configLoading, userId, onErrorAction, parameterType: PARAM_MASTER.VEHCL_TYPE.id });
         fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
     };
 
@@ -136,12 +134,6 @@ const VehicleDetailsMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
-    useEffect(() => {
-        if (userId && !isTypeDataLoaded) {
-            loadDependendData();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isTypeDataLoaded]);
 
     useEffect(() => {
         if (ProductHierarchyData && isProductHierarchyDataLoaded && userId) {
@@ -301,6 +293,7 @@ const VehicleDetailsMasterMain = (props) => {
         modelData,
         tooltTipText,
         settooltTipText,
+        typeData,
         isLoading,
     };
 

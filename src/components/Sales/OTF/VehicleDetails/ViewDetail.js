@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
 import { Space, Collapse, Typography, Divider, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import styles from 'components/common/Common.module.css';
+import { getCodeValue } from 'utils/getCodeValue';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import { addToolTip } from 'utils/customMenuLink';
@@ -18,7 +18,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { isLoading, activeKey, onChange, tooltTipText, settooltTipText, modelData, styles, columns, data, formData, optionalData, optionalColumns } = props;
+    const { isLoading, activeKey, onChange, tooltTipText, typeData, styles, formData } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -52,7 +52,7 @@ const ViewDetailMain = (props) => {
                     key="1"
                 >
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Vehicle Usage Type ">{checkAndSetDefaultValue(formData?.vehicleUsageType ? formData?.vehicleUsageType : 'null', isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Vehicle Usage Type ">{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_TYPE,formData?.vehicleUsageType), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Model">
                             <div className={styles.tooltipAlign}>
                                 {formData?.model}
