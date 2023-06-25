@@ -8,7 +8,7 @@ import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 const ViewDetailMain = (props) => {
-    const { insuranceData } = props;
+    const { insuranceData, isLoading } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -19,11 +19,11 @@ const ViewDetailMain = (props) => {
     return (
         <Card>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Insurance Company">{checkAndSetDefaultValue(insuranceData?.insuranceCompany)}</Descriptions.Item>
-                <Descriptions.Item label="Insurance Cover Note">{checkAndSetDefaultValue(insuranceData?.insuranceCoverNote)}</Descriptions.Item>
-                <Descriptions.Item label="Insurance Amount">{checkAndSetDefaultValue(insuranceData?.insuranceAmount)}</Descriptions.Item>
-                <Descriptions.Item label="Date">{checkAndSetDefaultValue(insuranceData?.insuranceDate)}</Descriptions.Item>
-                <Descriptions.Item label="Registration Number">{checkAndSetDefaultValue(insuranceData?.registrationNumber)}</Descriptions.Item>
+                <Descriptions.Item label="Insurance Company">{checkAndSetDefaultValue(insuranceData?.insuranceCompany, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Insurance Cover Note">{checkAndSetDefaultValue(insuranceData?.insuranceCoverNote, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Insurance Amount">{checkAndSetDefaultValue(insuranceData?.insuranceAmount, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Date">{checkAndSetDefaultValue(insuranceData?.insuranceDate, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Registration Number">{checkAndSetDefaultValue(insuranceData?.registrationNumber, isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

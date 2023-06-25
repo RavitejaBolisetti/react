@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Collapse, Space, Card, Typography, Button, Row } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { ViewDetail } from './ViewDetail';
@@ -20,6 +20,7 @@ const AddEditFormMain = (props) => {
     const { onFinish, onFinishFailed, form, onChange, showForm, setShowForm, setCustomerType, relationData, VIEW_ACTION } = props;
     const { onCloseAction, isViewModeVisible, setIsViewModeVisible, familyDetailList, customerType, onSave, editedMode, setEditedMode, onSearch, isSearchLoading } = props;
     const [activeKey, setactiveKey] = useState([]);
+    const [disabled, setDisabled] = useState(false);
 
     const handleEdit = () => {
         setIsViewModeVisible(false);
@@ -41,8 +42,6 @@ const AddEditFormMain = (props) => {
     };
 
     const onEdit = (values, index) => {
-        console.log(values,'OnValues');
-        console.log(index,'OnIndex')
         setEditedMode(true);
         setactiveKey(index);
         setShowForm(false);
@@ -59,6 +58,7 @@ const AddEditFormMain = (props) => {
             editedId: values?.editedId,
             relationship: values?.relationship,
             relationCode: values?.relationCode,
+            relationCustomerId: values?.relationCustomerId,
             dateOfBirth: typeof values?.dateOfBirth === 'object' ? values?.dateOfBirth : dayjs(values?.dateOfBirth),
             relationAge: values?.relationAge,
             remarks: values?.remarks,
@@ -75,11 +75,21 @@ const AddEditFormMain = (props) => {
             editedId: values?.editedId,
             relationship: values?.relationship,
             relationCode: values?.relationCode,
+            relationCustomerId: values?.relationCustomerId,
             dateOfBirth: typeof values?.dateOfBirth === 'object' ? values?.dateOfBirth : dayjs(values?.dateOfBirth),
             relationAge: values?.relationAge,
             remarks: values?.remarks,
         });
     };
+
+    useEffect(() => {
+        if (editedMode) {
+            setDisabled(true);
+        } else {
+            setDisabled(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [editedMode]);
 
     const viewProps = {
         activeKey,
@@ -149,7 +159,8 @@ const AddEditFormMain = (props) => {
                                                             onClick={() => {
                                                                 onEdit(item, index);
                                                             }}
-                                                            // disabled={editedMode}
+                                                            disabled={disabled}
+                                                            style={{ color: disabled ? 'grey' : 'red' }}
                                                         >
                                                             Edit
                                                         </Button>

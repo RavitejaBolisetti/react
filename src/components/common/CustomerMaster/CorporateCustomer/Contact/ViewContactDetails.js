@@ -7,9 +7,9 @@ import React from 'react';
 import { Descriptions, Row, Col, Button } from 'antd';
 import styles from 'components/common/Common.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { getCodeValue } from 'utils/getCodeValue';
 
-
-const ViewDetailBase = ({ formData, styles }) => {
+const ViewDetailBase = ({ formData, styles, isLoading, typeData }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -25,24 +25,24 @@ const ViewDetailBase = ({ formData, styles }) => {
         <div className={styles.viewDrawerContainer}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Purpose of Contact">{checkAndSetDefaultValue(formData?.purposeOfContact)}</Descriptions.Item>
-                    <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.contactMobileNumber)}</Descriptions.Item>
-                    <Descriptions.Item label="Alternate Mobile Numbe">{checkAndSetDefaultValue(formData?.alternativeMobileNumber)}</Descriptions.Item>
-                    <Descriptions.Item label="Relation">{checkAndSetDefaultValue(formData?.relationwithCustomer)}</Descriptions.Item>
-                    <Descriptions.Item label="Gender">{checkAndSetDefaultValue(formData?.gender)}</Descriptions.Item>
-                    <Descriptions.Item label="Title">{checkAndSetDefaultValue(formData?.contactNameTitle)}</Descriptions.Item>
-                    <Descriptions.Item label="First Name">{checkAndSetDefaultValue(formData?.contactNameFirstName)}</Descriptions.Item>
-                    <Descriptions.Item label="Middle Name">{checkAndSetDefaultValue(formData?.contactNameMiddleName)}</Descriptions.Item>
-                    <Descriptions.Item label="Last/Surname">{checkAndSetDefaultValue(formData?.contactNameLastName)}</Descriptions.Item>
-                    <Descriptions.Item label="E-mail">{checkAndSetDefaultValue(formData?.contactEmail)}</Descriptions.Item>
-                    <Descriptions.Item label="Alternate Email ID">{checkAndSetDefaultValue(formData?.alternativeEmail)}</Descriptions.Item>
+                    <Descriptions.Item label="Purpose of Contact">{checkAndSetDefaultValue(getCodeValue(typeData?.PURPOSE,formData?.purposeOfContact), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.contactMobileNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Alternate Mobile Numbe">{checkAndSetDefaultValue(formData?.alternativeMobileNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Relation">{checkAndSetDefaultValue(getCodeValue(typeData?.FAMLY_RELTN,formData?.relationwithCustomer), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(typeData?.GENDER_CD,formData?.gender), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE,formData?.contactNameTitle), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="First Name">{checkAndSetDefaultValue(formData?.contactNameFirstName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Middle Name">{checkAndSetDefaultValue(formData?.contactNameMiddleName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Last/Surname">{checkAndSetDefaultValue(formData?.contactNameLastName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="E-mail">{checkAndSetDefaultValue(formData?.contactEmail, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Alternate Email ID">{checkAndSetDefaultValue(formData?.alternativeEmail, isLoading)}</Descriptions.Item>
 
-                    <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebook)}</Descriptions.Item>
-                    <Descriptions.Item label="Twitter Link">{checkAndSetDefaultValue(formData?.twitter)}</Descriptions.Item>
-                    <Descriptions.Item label="Instagram Link">{checkAndSetDefaultValue(formData?.instagram)}</Descriptions.Item>
-                    <Descriptions.Item label="Youtube Channel">{checkAndSetDefaultValue(formData?.youtube)}</Descriptions.Item>
-                    <Descriptions.Item label="Team BHP Link">{checkAndSetDefaultValue(formData?.teamBhp)}</Descriptions.Item>
-                    <Descriptions.Item label="Mark As Default">{checkAndSetDefaultValue(formData?.defaultaddress ? 'Yes' : 'No')}</Descriptions.Item>
+                    <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebook, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Twitter Link">{checkAndSetDefaultValue(formData?.twitter, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Instagram Link">{checkAndSetDefaultValue(formData?.instagram, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Youtube Channel">{checkAndSetDefaultValue(formData?.youtube, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Team BHP Link">{checkAndSetDefaultValue(formData?.teamBhp, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Mark As Default">{checkAndSetDefaultValue(formData?.defaultaddress ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
                 </Descriptions>
                 <Row justify="left">
                     <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>

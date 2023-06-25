@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CompanyProfileBase = (props) => {
     const { showGlobalNotification, buttonData, setButtonData, formActionType, handleButtonClick, defaultBtnVisiblity, selectedCustomer, selectedCustomerId } = props;
-    const { listShowLoading, section, saveData, uploadFile, userId, fetchCompanyProfileData, downloadFile, appCategoryData, customerProfileData, viewDocument, resetData } = props;
+    const { listShowLoading, section, saveData, uploadFile, userId, fetchCompanyProfileData, downloadFile, appCategoryData, customerProfileData, fecthViewDocument, viewDocument, resetData } = props;
     const { uploadListShowLoading } = props;
 
     const [form] = Form.useForm();
@@ -99,6 +99,21 @@ const CompanyProfileBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer]);
 
+    useEffect(() => {
+        if (userId && customerProfileData?.customerFormDocId) {
+            const extraParams = [
+                {
+                    key: 'docId',
+                    title: 'docId',
+                    value: customerProfileData?.customerFormDocId,
+                    name: 'docId',
+                },
+            ];
+            fecthViewDocument({ setIsLoading: listShowLoading, userId, extraParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, customerProfileData?.customerFormDocId]);
+
     const onFinish = (values) => {
         const recordId = customerProfileData?.id || '';
         if (uploadedFile && !values?.customerConsent) {
@@ -111,12 +126,8 @@ const CompanyProfileBase = (props) => {
         const data = {
             ...rest,
             customerId: customerId,
-            applicationCategorization: appCategory,
-            applicationSubCategory: appSubCategory,
-            customerCategory: customerCategory,
-            // keyAccountDetails: { customerId: customerId, accountCode: values.accountCode, accountName: values.accountName, accountSegment: values.accountSegment, accountClientName: values.accountClientName, accountMappingDate: values.accountMappingDate },
             authorityRequest: { id: authorityId, personName: values.personName, postion: values.postion, companyName: values.companyName, remarks: values.remarks },
-            customerFormDocId: uploadedFile,
+            customerFormDocId: uploadedFile ? uploadedFile : values?.customerFormDocId,
             customerConsent: values.customerConsent,
             id: recordId,
         };
@@ -199,9 +210,11 @@ const CompanyProfileBase = (props) => {
         setAppSubCategory,
         customerCategory,
         setCustomerCategory,
+        viewDocument,
     };
 
     const viewProps = {
+        ...props,
         onCloseAction,
         styles,
         formData: customerProfileData,

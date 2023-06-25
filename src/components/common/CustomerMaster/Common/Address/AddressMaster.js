@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: addData = [] },
             CustomerMaster: {
                 AddressIndividual: { isLoaded: isAddressLoaded = false, isLoading: isAddressLoading, data: addressIndData = [] },
-                CorporateAddress:  { isLoaded: isCompanyAddressLoaded = false, isLoading: isCompanyAddressLoading, data: addressCompanyData = [] }
+                CorporateAddress: { isLoaded: isCompanyAddressLoaded = false, isLoading: isCompanyAddressLoading, data: addressCompanyData = [] },
             },
             Geo: {
                 Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
@@ -84,8 +84,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AddressMasterBase = (props) => {
     const { isViewModeVisible, section, addressIndData, setFormActionType, isCompanyAddressLoaded, formActionType, isAddressLoaded, addressCompanyData, selectedCustomer, saveData, addData } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, isAddressLoading, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification ,handleButtonClick} = props;
-    const { fetchListCorporate, saveDataCorporate, customerType } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, isAddressLoading, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification, handleButtonClick } = props;
+    const { fetchListCorporate, saveDataCorporate, customerType, resetData, resetDataCorporate } = props;
 
     const [form] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
@@ -122,19 +122,22 @@ const AddressMasterBase = (props) => {
     }, [addressIndData, addressCompanyData]);
 
     useEffect(() => {
-        if (userId && !isAddressLoaded ) {
+        if (userId && !isAddressLoaded) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
             } else {
                 fetchListCorporate({ setIsLoading: listShowLoading, userId, extraParams });
             }
         }
+        return(() => {
+            resetData();
+            resetDataCorporate();
+        })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isAddressLoaded]);
 
-
     const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
+        setOpenAccordian(key);
     };
 
     const onCheckdefaultAddClick = (e, value) => {
@@ -144,15 +147,19 @@ const AddressMasterBase = (props) => {
             const index = updetedData?.findIndex((el) => el?.addressType === value?.addressType && el?.addressLine1 === value?.addressLine1 && el?.pinCode === value?.pinCode);
             updetedData.splice(index, 1, { ...value, deafultAddressIndicator: e.target.checked });
             return [...updetedData];
-        })
+        });
+        setButtonData({ ...buttonData, formBtnActive: true });
         forceUpdate();
     };
 
     const onSubmit = () => {
-        let data = { customerId: selectedCustomer?.customerId, customerAddress: addressData?.map(el => {
-            const {tehsilName, cityName, districtName, stateName, ...rest } = el;
-            return {...rest}
-        }) };
+        let data = {
+            customerId: selectedCustomer?.customerId,
+            customerAddress: addressData?.map((el) => {
+                const { tehsilName, cityName, districtName, stateName, ...rest } = el;
+                return { ...rest };
+            }),
+        };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -181,7 +188,7 @@ const AddressMasterBase = (props) => {
         } else {
             saveDataCorporate(requestData);
         }
-
+        setIsAdding(false);
         setShowAddEditForm(false);
         setIsEditing(false);
         setEditingData({});
@@ -205,6 +212,7 @@ const AddressMasterBase = (props) => {
     const addAddressHandeler = (e) => {
         e.stopPropagation();
         form.resetFields();
+        setIsAdding(true);
         setShowAddEditForm(true);
         setOpenAccordian('1');
     };
@@ -236,19 +244,13 @@ const AddressMasterBase = (props) => {
         pincodeData,
         addData,
         handleFormValueChange,
+        isAdding, 
+        setIsAdding
     };
 
     const myProps = {
         ...props,
     };
-
-    const formSkeleton = (
-        <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <InputSkeleton height={'100vh'} />
-            </Col>
-        </Row>
-    );
 
     return (
         <>
@@ -257,15 +259,14 @@ const AddressMasterBase = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>
 
-                        <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
+                        <Collapse onChange={() => handleCollapse(1)}  activeKey={openAccordian}>
                             <Panel
                                 header={
                                     <>
                                         <Space>
-                                        <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Address' : 'Company Address'}</Text>
-                                            {/* <Text strong> Individual Address</Text> */}
+                                            <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Address' : 'Company Address'}</Text>
                                             {!isViewModeVisible && formActionType?.editMode && (
-                                                <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary">
+                                                <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary" disabled={isAdding || isEditing }>
                                                     Add
                                                 </Button>
                                             )}
@@ -274,9 +275,10 @@ const AddressMasterBase = (props) => {
                                     </>
                                 }
                                 key="1"
+                                showArrow={false}
                             >
                                 {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                {isAddressLoading ? formSkeleton : <ViewAddressList {...formProps} />}
+                                <ViewAddressList {...formProps} />
                             </Panel>
                         </Collapse>
                     </Col>

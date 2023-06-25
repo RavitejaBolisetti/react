@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
@@ -17,7 +17,6 @@ import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 
-import { InputSkeleton } from 'components/common/Skeleton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 
 import styles from 'components/common/Common.module.css';
@@ -29,7 +28,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
                 OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
-                salesConsultantLov: { data: salesConsultantLov = [] },
+                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
             },
         },
     } = state;
@@ -44,6 +43,7 @@ const mapStateToProps = (state) => {
         otfData,
         isLoading,
         moduleTitle,
+        isSalesConsultantDataLoaded,
         salesConsultantLov,
     };
     return returnValue;
@@ -59,6 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: otfDetailsDataActions.listShowLoading,
 
             fetchSalesConsultant: salesConsultantActions.fetchList,
+            listConsultantShowLoading: salesConsultantActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -66,20 +67,22 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const OtfDetailsMasterBase = (props) => {
-    const { typeData, listConfigShowLoading } = props;
+    const { typeData, listConsultantShowLoading } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded } = props;
-
-    const [formData, setFormData] = useState();
-
-    useEffect(() => {
-        setFormData(otfData);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [otfData]);
+    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_EDIT_ACTION, handleButtonClick } = props;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+
+    const extraParams = [
+        {
+            key: 'otfNumber',
+            title: 'otfNumber',
+            value: selectedOrderId,
+            name: 'OTF Number',
+        },
+    ];
 
     useEffect(() => {
         if (userId && selectedOrderId) {
@@ -98,7 +101,7 @@ const OtfDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (!isSalesConsultantDataLoaded && userId) {
-            fetchSalesConsultant({ setIsLoading: listConfigShowLoading, userId });
+            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSalesConsultantDataLoaded, userId]);
@@ -114,8 +117,9 @@ const OtfDetailsMasterBase = (props) => {
         delete data?.modeOfPAyment;
 
         const onSuccess = (res) => {
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         };
 
         const onError = (message) => {
@@ -139,7 +143,6 @@ const OtfDetailsMasterBase = (props) => {
     const formProps = {
         ...props,
         form,
-        otfData,
         onFinish,
         onFinishFailed,
         fetchList,
@@ -147,24 +150,18 @@ const OtfDetailsMasterBase = (props) => {
 
         userId,
         isDataLoaded,
-        formData,
+        formData: otfData,
         isLoading,
         salesConsultantLov,
     };
 
     const viewProps = {
-        formData,
+        typeData,
+        formData: otfData,
         styles,
+        isLoading,
     };
 
-    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;
-    const formSkeleton = (
-        <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <InputSkeleton height={'100vh'} />
-            </Col>
-        </Row>
-    );
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
@@ -177,7 +174,7 @@ const OtfDetailsMasterBase = (props) => {
                             <OTFStatusBar status={1} />
                         </Col>
                     </Row>
-                    {isLoading ? formSkeleton : formContainer}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

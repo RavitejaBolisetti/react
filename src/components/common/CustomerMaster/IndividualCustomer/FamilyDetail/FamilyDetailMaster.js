@@ -10,8 +10,9 @@ import { Form, Row, Col } from 'antd';
 import { familyDetailsDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetails';
 import { familyDetailSearchDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetailSearch';
 import { showGlobalNotification } from 'store/actions/notification';
+
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { btnVisiblity } from 'utils/btnVisiblity';
 import { GetAge } from 'utils/getAge';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
@@ -34,6 +35,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
+
         isFamilyLoaded,
         isFamilyLoading,
         relationData: relationData && relationData[PARAM_MASTER.FAMLY_RELTN.id],
@@ -62,17 +64,18 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const FamilyDetailMasterBase = (props) => {
-    const { section, userId, relationData, fetchFamilyDetailsList, listFamilyDetailsShowLoading, familyData, saveData, showGlobalNotification, fetchFamilySearchList, listFamilySearchLoading, familySearchData } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, isSearchLoading, selectedCustomerId } = props;
+    const { section, userId, relationData, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, fetchFamilySearchList, listFamilySearchLoading, familySearchData } = props;
+    const { buttonData, setButtonData, formActionType, isSearchLoading, selectedCustomerId, handleButtonClick } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [form] = Form.useForm();
+    // const [formData, setFormData] = useState([]);
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [customerType, setCustomerType] = useState('Yes');
     const [editedMode, setEditedMode] = useState(false);
     const [editedId, setEditedId] = useState(0);
-    const ADD_ACTION = formActionType?.addMode;
-    const EDIT_ACTION = formActionType?.editMode;
+
+    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
     const VIEW_ACTION = formActionType?.viewMode;
 
     const extraParams = [
@@ -119,20 +122,13 @@ const FamilyDetailMasterBase = (props) => {
         fetchFamilySearchList({ setIsLoading: listFamilySearchLoading, userId, extraParams: searchParams, onErrorAction });
     };
 
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        // setFormData([]);
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        // record && setFormData(record);
-    };
-
     const onSave = () => {
         let values = form.getFieldsValue();
         setFamilyDetailsList((items) => [{ ...values, customerId: selectedCustomerId, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
         if (editedMode) {
             const upd_obj = familyDetailList?.map((obj) => {
                 if (obj?.editedId === values?.editedId) {
+                    obj.mnmCustomer = values?.mnmCustomer;
                     obj.customerName = values?.customerName;
                     obj.relationAge = values?.relationAge;
                     obj.relationship = values?.relationship;
@@ -150,6 +146,7 @@ const FamilyDetailMasterBase = (props) => {
         setEditedMode(false);
 
         form.resetFields();
+
         if (values?.mnmCustomer === 'Yes') {
             setCustomerType('Yes');
         } else if (values?.mnmCustomer === 'No') {
@@ -158,9 +155,15 @@ const FamilyDetailMasterBase = (props) => {
     };
 
     const onFinish = () => {
+        if (!familyDetailList || familyDetailList.length <= 0) {
+            showGlobalNotification({ message: 'Please add faily detail before submit' });
+            return false;
+        }
+
         let data = [...familyDetailList];
         const onSuccess = (res) => {
             form.resetFields();
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, extraParams });
         };
@@ -184,6 +187,10 @@ const FamilyDetailMasterBase = (props) => {
         return;
     };
 
+    const myProps = {
+        ...props,
+    };
+
     useEffect(() => {
         if (familyData?.length > 0) {
             setFamilyDetailsList(() => []);
@@ -196,20 +203,11 @@ const FamilyDetailMasterBase = (props) => {
     }, [familyData]);
 
     useEffect(() => {
-        if (familySearchData?.dateOfBirth === null || familySearchData?.dateOfBirth === undefined || familySearchData?.dateOfBirth === '') {
-            form.setFieldsValue({
-                customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
-                dateOfBirth: null,
-                relationAge: 'NA',
-            });
-        } else {
-            form.setFieldsValue({
-                customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
-                dateOfBirth: dayjs(familySearchData?.dateOfBirth),
-                relationAge: GetAge(familySearchData?.dateOfBirth),
-            });
-        }
-
+        form.setFieldsValue({
+            customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
+            dateOfBirth: dayjs(familySearchData?.dateOfBirth),
+            relationAge: GetAge(familySearchData?.dateOfBirth),
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [familySearchData]);
 
@@ -230,8 +228,6 @@ const FamilyDetailMasterBase = (props) => {
         editedId,
         setEditedId,
         onSearch,
-        ADD_ACTION,
-        EDIT_ACTION,
         VIEW_ACTION,
         buttonData,
         setButtonData,
@@ -252,7 +248,7 @@ const FamilyDetailMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CustomerFormButton {...props} />
+                    <CustomerFormButton {...myProps} />
                 </Col>
             </Row>
         </Form>

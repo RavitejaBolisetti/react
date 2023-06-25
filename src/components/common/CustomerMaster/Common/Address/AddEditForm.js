@@ -12,12 +12,11 @@ import { addressType } from 'constants/modules/CustomerMaster/individualProfile'
 
 import styles from 'components/common/Common.module.css';
 
-
 const { Option } = Select;
 
 const AddEditForm = (props) => {
     const { onSubmit, form, setAddressData, isEditing, addressData, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType } = props;
-    const { forceUpdate, handleFormValueChange } = props;
+    const { forceUpdate, handleFormValueChange, setIsAdding } = props;
     const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail } = props;
     const disabledProps = { disabled: formActionType?.editMode && formData?.partyCategory === 'Principal' ? true : false };
 
@@ -37,7 +36,7 @@ const AddEditForm = (props) => {
             key: item?.id,
         }));
         setOptions(pinOption);
-        return()=>setEditingData({});
+        return () => setEditingData({});
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pincodeData]);
 
@@ -93,6 +92,7 @@ const AddEditForm = (props) => {
 
     const handleCancelFormEdit = () => {
         setIsEditing(false);
+        setIsAdding(false);
         setShowAddEditForm(false);
     };
 
@@ -103,20 +103,21 @@ const AddEditForm = (props) => {
 
                 if (editingData?.addressType) {
                     setAddressData((prev) => {
-                        let formData =  [...prev];
+                        let formData = [...prev];
                         formData?.forEach((address) => {
                             if (address?.defaultaddress === true) {
                                 address.defaultaddress = false;
                             }
                         });
-                        const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType && el?.address === editingData?.address && el?.pincode === editingData?.pincode);
+                        const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType);
+                        //  && el?.address === editingData?.address && el?.pincode === editingData?.pincode
                         formData.splice(index, 1, { ...value, ...pinSearchData });
 
                         return [...formData];
                     });
                 } else {
                     setAddressData((prev) => {
-                        let formData = prev?.length ?  [...prev] : [];
+                        let formData = prev?.length ? [...prev] : [];
                         if (value?.defaultaddress && formData?.length >= 1) {
                             formData?.forEach((address) => {
                                 if (address?.defaultaddress === true) {
@@ -132,6 +133,7 @@ const AddEditForm = (props) => {
                 setPinSearchData({});
                 setShowAddEditForm(false);
                 setIsEditing(false);
+                setIsAdding(false);
                 setEditingData({});
                 form.setFieldsValue();
             })
@@ -142,10 +144,10 @@ const AddEditForm = (props) => {
 
     return (
         <>
-            <Form form={form} id="myAdd" onFinish={onSubmit} onFieldsChange={handleFormValueChange}  autoComplete="off" layout="vertical">
+            <Form form={form} id="myAdd" onFinish={onSubmit} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type'), { validator: (rule, value) => duplicateValidator(value, 'addressType', addressData, editingData?.addressType)   }]}>
+                        <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type'), { validator: (rule, value) => duplicateValidator(value, 'addressType', addressData, editingData?.addressType) }]}>
                             <Select placeholder={preparePlaceholderSelect('address type')}>
                                 {addressType?.map((item) => (
                                     <Option key={'ct' + item?.key} value={item?.key}>
@@ -201,14 +203,14 @@ const AddEditForm = (props) => {
                             <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('district')} maxLength={50} />
                         </Form.Item>
                         <Form.Item hidden initialValue={formData?.districtCode} name="districtCode">
-                            <Input  />
+                            <Input />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.stateName} label="State" name="stateName">
                             <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('state')} maxLength={50} />
                         </Form.Item>
-                        <Form.Item hidden initialValue={formData?.stateCode}  name="stateCode">
+                        <Form.Item hidden initialValue={formData?.stateCode} name="stateCode">
                             <Input />
                         </Form.Item>
                     </Col>
@@ -223,7 +225,7 @@ const AddEditForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Contact Mobile" name="mobileNumber" rules={[validateRequiredInputField('contact number'), validateMobileNoField('mobile number')]}>
-                            <Input maxLength={10} placeholder={preparePlaceholderText('mobile number')}/>
+                            <Input maxLength={10} placeholder={preparePlaceholderText('mobile number')} />
                         </Form.Item>
                     </Col>
                 </Row>

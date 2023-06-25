@@ -11,12 +11,15 @@ import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { showGlobalNotification } from 'store/actions/notification';
+
+import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { OTFFormButton } from '../OTFFormButton';
 
-import AddEditForm from './AddEditForm';
-import { showGlobalNotification } from 'store/actions/notification';
-import dayjs from 'dayjs';
+import { ViewDetail } from './ViewDetail';
+import { AddEditForm } from './AddEditForm';
 
+import dayjs from 'dayjs';
 import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
@@ -74,15 +77,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMain = (props) => {
-    const { saveData, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, otfSearchSelected, formActionType } = props;
-    const { typeData } = props;
+    const { saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_EDIT_ACTION, handleButtonClick, handleFormValueChange, section } = props;
+    const { typeData, selectedOrderId } = props;
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
     const [formData, setFormData] = useState('');
-    const [otfData, setOtfData] = useState(otfSearchSelected);
     const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
-    const [showDataLoading, setShowDataLoading] = useState(false);
+    const [activeKey, setactiveKey] = useState([1]);
 
     useEffect(() => {
         if (userId && isDataLoaded && customerFormData) {
@@ -90,18 +92,15 @@ export const CustomerDetailsMain = (props) => {
         }
     }, [isDataLoaded, userId, customerFormData]);
 
-    const selectedOTF = otfSearchSelected?.otfNumber;
-
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        setShowDataLoading(false);
     };
 
     const extraParams = [
         {
             key: 'otfNumber',
             title: 'otfNumber',
-            value: selectedOTF,
+            value: selectedOrderId,
             name: 'OTF Number',
         },
     ];
@@ -113,13 +112,14 @@ export const CustomerDetailsMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    const onFinish = () => {
+    const onFinish = (values) => {
         form.getFieldsValue();
-        const data = { bookingCustomer: { ...form.getFieldsValue(), birthDate: dayjs(form.getFieldsValue().birthDate).format('YYYY-MM-DD'), otfNumber: otfData?.otfNumber, bookingAndBillingType: 'BOOKING', id: customerFormData.bookingCustomer.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...billCstmForm.getFieldsValue(), birthDate: dayjs(billCstmForm.getFieldsValue()?.birthDate).format('YYYY-MM-DD'), otfNumber: otfData?.otfNumber, bookingAndBillingType: 'BILLING', id: customerFormData.billingCustomer.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+        const data = { bookingCustomer: { ...values?.bookingCustomer, birthDate: dayjs(values?.bookingCustomer?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, birthDate: dayjs(values?.billingCustomer?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            setShowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
         };
 
         const onError = (message) => {
@@ -137,11 +137,8 @@ export const CustomerDetailsMain = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
-
     const formProps = {
+        ...props,
         form,
         billCstmForm,
         customerFormData,
@@ -159,11 +156,27 @@ export const CustomerDetailsMain = (props) => {
         setSameAsBookingCustomer,
     };
 
+    const viewProps = {
+        formData,
+        styles,
+        isLoading,
+        activeKey,
+        setactiveKey,
+    };
+
     return (
-        <div>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <AddEditForm {...formProps} />
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Row>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <h2>{section?.title}</h2>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <OTFStatusBar status={1} />
+                        </Col>
+                    </Row>
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>
@@ -171,7 +184,7 @@ export const CustomerDetailsMain = (props) => {
                     <OTFFormButton {...props} />
                 </Col>
             </Row>
-        </div>
+        </Form>
     );
 };
 

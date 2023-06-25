@@ -58,10 +58,12 @@ const UploadUtilsMain = (props) => {
     const { uploadTitle, uploadDescription, uploadBtnName, uploadImgTitle, viewDocument, formData } = props;
     const { listShowLoading, userId, uploadFile, fecthViewDocument, listShowLoadingOnLoad, setUploadImgDocId } = props;
     const [uploadedFile, setUploadedFile] = useState();
+    const [visible, setVisible] = useState(false);
 
     const onDrop = (e) => {
         console.log('Dropped files', e.dataTransfer.files);
     };
+
     useEffect(() => {
         if (uploadedFile || formData?.docId) {
             setUploadImgDocId(uploadedFile);
@@ -124,7 +126,7 @@ const UploadUtilsMain = (props) => {
     return (
         <>
             {!uploadedFile && !formData?.docId ? (
-                <Row gutter={16}>{uploadedFile?.toString() + " / " + formData?.docId?.toString()}
+                <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <div className={styles.uploadDragger}>
                             <Dragger customRequest={handleUpload} {...uploadProps} multiple={false}>
@@ -150,7 +152,7 @@ const UploadUtilsMain = (props) => {
                 </Row>
             ) : (
                 <>
-                    <Card className={styles.dashedBorder}>{uploadedFile?.toString() + " / " + formData?.docId?.toString()}
+                    <Card className={styles.dashedBorder}>
                         <Space direction="vertical">
                             <Space>
                                 <Avatar icon={<HiCheck />} />
@@ -160,7 +162,20 @@ const UploadUtilsMain = (props) => {
                                 </div>
                             </Space>
                             <Space>
-                                <Image style={{ borderRadius: '6px' }} width={150} preview={false} src={viewDocument?.base64 ? `data:image/png;base64,${viewDocument?.base64}` : `data:image/png;base64,${formData?.viewDocument?.base64}`} />
+                                <Image
+                                    style={{ borderRadius: '6px' }}
+                                    width={150}
+                                    preview={{
+                                        visible,
+                                        scaleStep: 0.5,
+                                        src: `data:image/png;base64,${viewDocument?.base64}`,
+                                        onVisibleChange: (value) => {
+                                            setVisible(value);
+                                        },
+                                    }}
+                                    placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={200} />}
+                                    src={`data:image/png;base64,${viewDocument?.base64}`}
+                                />
                                 <Button type="link">Replace Image</Button>
                             </Space>
                         </Space>

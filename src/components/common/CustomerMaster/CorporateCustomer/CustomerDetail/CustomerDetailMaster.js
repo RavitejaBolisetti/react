@@ -8,7 +8,9 @@ import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { customerParentCompanyDataActions } from 'store/actions/data/customerMaster/customerParentCompany';
 import { customerDetailsDataActions } from 'store/actions/data/customerMaster/customerDetails';
+import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { ViewDetail } from './ViewDetail';
@@ -16,11 +18,7 @@ import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
-import { InputSkeleton } from 'components/common/Skeleton';
 import styles from 'components/common/Common.module.css';
-import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
-import { customerParentCompanyDataActions } from 'store/actions/data/customerMaster/customerParentCompany';
 
 const mapStateToProps = (state) => {
     const {
@@ -44,7 +42,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         customerDetailsData,
-        typeData: typeData,
+        typeData,
 
         isCorporateLovDataLoaded,
         isCorporateLovLoading,
@@ -86,10 +84,9 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const [customerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
-    const [configurableTypedata, setConfigurableTypedata] = useState({});
     const [formData, setFormData] = useState();
     const [refershData, setRefershData] = useState(false);
-    const [corporateData, setCorporateData] = useState();
+
 
     const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
@@ -115,12 +112,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isCorporateLovDataLoaded]);
 
-    useEffect(() => {
-        if (typeData) {
-            setConfigurableTypedata({ CUST_TYPE: typeData['CUST_TYPE'], CORP_TYPE: typeData['CORP_TYPE'], CORP_CATE: typeData['CORP_CATE'], TITLE: typeData['TITLE'], MEM_TYPE: typeData['MEM_TYPE'] });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [typeData, isDataLoaded]);
 
     useEffect(() => {
         if (userId && selectedCustomerId) {
@@ -207,7 +198,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         setShowForm,
         formActionType,
         typeData,
-        configurableTypedata,
+        typeData,
         handleButtonClick,
         styles,
         customerParentCompanyData,
@@ -215,29 +206,22 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     };
 
     const viewProps = {
+        ...formProps,
         formData,
         styles,
+        isLoading,
     };
 
     const myProps = {
         ...props,
     };
 
-    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;
-    const formSkeleton = (
-        <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <InputSkeleton height={'100vh'} />
-            </Col>
-        </Row>
-    );
-
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title}</h2>
-                    {isLoading ? formSkeleton : formContainer}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

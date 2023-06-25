@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
 import { ViewDetail } from './ViewDetail';
-import { InputSkeleton } from 'components/common/Skeleton';
 import { Form, Row, Col } from 'antd';
 import { insuranceDetailDataActions } from 'store/actions/data/otf/insuranceDetail';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
@@ -53,12 +52,13 @@ const mapDispatchToProps = (dispatch) => ({
 
 const InsuranceDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedOrderId, handleFormValueChange, section, isLoading } = props;
+    const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed } = props;
 
     const [formData, setFormData] = useState();
 
     useEffect(() => {
         setFormData(insuranceData);
+        handleFormValueChange();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [insuranceData]);
 
@@ -89,6 +89,7 @@ const InsuranceDetailsMasterBase = (props) => {
         styles,
         onCloseAction,
         insuranceData,
+        isLoading,
     };
 
     const formProps = {
@@ -102,17 +103,17 @@ const InsuranceDetailsMasterBase = (props) => {
         insuranceData,
     };
 
-    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;
-    const formSkeleton = (
-        <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <InputSkeleton height={'100vh'} />
-            </Col>
-        </Row>
-    );
+    const myProps = {
+        ...props,
+        buttonData: { ...props.buttonData, nextBtn: true, saveBtn: false },
+    };
+
+    const onFinish = (values) => {
+        handleButtonClick({ record: undefined, buttonAction: NEXT_ACTION });
+    };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
@@ -124,12 +125,12 @@ const InsuranceDetailsMasterBase = (props) => {
                         </Col>
                     </Row>
 
-                    {isLoading ? formSkeleton : formContainer}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...props} />
+                    <OTFFormButton {...myProps} />
                 </Col>
             </Row>
         </Form>

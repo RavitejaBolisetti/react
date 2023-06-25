@@ -12,23 +12,22 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 
 import UploadUtils from './../UploadUtils';
 
-import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
+// import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
 
 import style from '../../../Common.module.css';
 
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange } = props;
+    const { formData, isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
-
-    console.log(' AddEditForm uploadImgDocId', uploadImgDocId);
 
     const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
 
     const handleCancelFormEdit = () => {
         form.resetFields();
+        setIsAdding(false);
         setIsEditing(false);
         setShowAddEditForm(false);
     };
@@ -59,6 +58,7 @@ const AddEditForm = (props) => {
         setIsModalOpen(false);
         setmobileLoader(false);
         setContinueWithOldMobNo(false);
+        setIsAdding(false);
     };
     const modalProps = {
         isVisible: isModalOpen,
@@ -68,8 +68,7 @@ const AddEditForm = (props) => {
         onCloseAction: handleCancel,
         onCloseActionOnContinue,
     };
-console.log('typeData', typeData)
-console.log('customerType', customerType)
+
     return (
         <>
             <Form form={form} autoComplete="off" onFinish={onFinish} onFieldsChange={handleFormValueChange} layout="vertical">
@@ -83,14 +82,8 @@ console.log('customerType', customerType)
                     <Divider className={style.contactDivider} />
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Purpose of Contact" name="purposeOfContact">
-                                <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                    {typeData?.PURPOSE?.map((item) => (
-                                        <Option key={'ct' + item?.key} value={item?.key}>
-                                            {item?.value}
-                                        </Option>
-                                    ))}
-                                </Select>
+                            <Form.Item label="Purpose of Contact" name="purposeOfContact" rules={[validateRequiredSelectField('purpose of contact')]}>
+                                <Select {...disabledProps} placeholder={preparePlaceholderSelect('purpose of contact')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['PURPOSE']} allowClear></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -102,74 +95,56 @@ console.log('customerType', customerType)
                                     allowClear
                                     // enterButton="Send OTP"
                                     size="small"
-                                    suffix={
-                                        <>
-                                            {false ? (
-                                                <Button loading={mobileLoader} onClick={showModal} type="link">
-                                                    Validate
-                                                </Button>
-                                            ) : (
-                                                <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
-                                            )}
-                                            <ValidateMobileNumberModal {...modalProps} />
-                                        </>
-                                    }
+                                    // suffix={
+                                    //     <>
+                                    //         {false ? (
+                                    //             <Button loading={mobileLoader} onClick={showModal} type="link">
+                                    //                 Validate
+                                    //             </Button>
+                                    //         ) : (
+                                    //             <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
+                                    //         )}
+                                    //         <ValidateMobileNumberModal {...modalProps} />
+                                    //     </>
+                                    // }
                                 />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Alternate Mobile Number" name="alternativeMobileNumber" rules={[validateMobileNoField('alternate mobile number')]}>
+                            <Form.Item initialValue={''} label="Alternate Mobile Number" name="alternativeMobileNumber" rules={[validateMobileNoField('alternate mobile number')]}>
                                 <Input maxLength={10} className={style.inputBox} placeholder={preparePlaceholderText('alternate mobile number')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             {customerType === 'IND' ? (
                                 <>
-                                    <Form.Item label="Relation" name="relationCode">
-                                        <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                            {typeData?.FAMLY_RELTN?.map((item) => (
-                                                <Option key={'ct' + item?.key} value={item?.key}>
-                                                    {item?.value}
-                                                </Option>
-                                            ))}
-                                        </Select>
+                                    <Form.Item initialValue={''} label="Relation" name="relationCode">
+                                        <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['FAMLY_RELTN']} allowClear></Select>
                                     </Form.Item>
-                                    <Form.Item initialValue={""} hidden name="designation">
+                                    <Form.Item initialValue={''} hidden name="designation" rules={[validateLettersWithWhitespaces('First Name')]}>
                                         <Input />
                                     </Form.Item>
                                 </>
                             ) : (
                                 <>
-                                    <Form.Item initialValue={""} hidden name="relationCode">
-                                        <Input />
-                                    </Form.Item>
-                                    <Form.Item initialValue={""} label="Designation" name="designation">
+                                    <Form.Item initialValue={''} label="Designation" name="designation">
                                         <Input className={style.inputBox} placeholder={preparePlaceholderText('Designation')} {...disabledProps} />
+                                    </Form.Item>
+                                    <Form.Item initialValue={''} hidden name="relationCode">
+                                        <Input />
                                     </Form.Item>
                                 </>
                             )}
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Gender" name="gender" rules={[validateRequiredSelectField('gender')]}>
-                                <Select placeholder={preparePlaceholderSelect('gender')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                    {typeData?.GENDER_CD?.map((item) => (
-                                        <Option key={'ct' + item?.key} value={item.key}>
-                                            {item?.value}
-                                        </Option>
-                                    ))}
-                                </Select>
+                            <Form.Item label="Gender" name="gender">
+                                <Select {...disabledProps} placeholder={preparePlaceholderSelect('gender')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['GENDER_CD']} allowClear></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Title" name="title" rules={[validateRequiredSelectField('title')]}>
-                                <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('title')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                    {typeData?.TITLE?.map((item) => (
-                                        <Option key={'ct' + item?.key} value={item?.key}>
-                                            {item?.name}
-                                        </Option>
-                                    ))}
-                                </Select>
+                            <Form.Item label="Title" name="title">
+                                <Select {...disabledProps} placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['TITLE']} allowClear></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -178,12 +153,12 @@ console.log('customerType', customerType)
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Middle Name" name="middleName">
+                            <Form.Item initialValue={''} label="Middle Name" name="middleName" rules={[validateLettersWithWhitespaces('First Name')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('middle name')} rules={[validateLettersWithWhitespaces('middle name')]} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Last/Surname" name="lastName">
+                            <Form.Item label="Last/Surname" name="lastName" rules={[validateRequiredInputField('lastName'), validateLettersWithWhitespaces('First Name')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} rules={[validateLettersWithWhitespaces('last name')]} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -216,7 +191,7 @@ console.log('customerType', customerType)
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={''} label="Youtube Channel" name="youTubeChannel" >
+                            <Form.Item initialValue={''} label="Youtube Channel" name="youTubeChannel">
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('youtube channel')} {...disabledProps} />
                             </Form.Item>
                         </Col>

@@ -10,6 +10,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import { GetAge } from 'utils/getAge';
+import { disableFutureDate } from 'utils/disableDate';
 import dayjs from 'dayjs';
 
 import styles from 'components/common/Common.module.css';
@@ -45,10 +46,6 @@ const FormBase = (props) => {
         form.setFieldsValue({
             relationCode: relationCode?.key,
         });
-    };
-
-    const disableFutureDate = (value) => {
-        return value > new Date();
     };
 
     return (
@@ -154,7 +151,7 @@ const FormBase = (props) => {
                     Save
                 </Button>
 
-                <Button type="primary" onClick={onCancel}>
+                <Button onClick={onCancel} danger>
                     Cancel
                 </Button>
             </Row>

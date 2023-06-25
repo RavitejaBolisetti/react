@@ -6,9 +6,10 @@
 import React from 'react';
 import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const ViewDetailMain = (props) => {
-    const { styles, formData } = props;
+    const { styles, formData, isLoading, makeData, modelData, variantData, typeData, schemeLovData, financeLovData } = props;
 
     const viewProps = {
         bordered: false,
@@ -20,23 +21,23 @@ const ViewDetailMain = (props) => {
     return (
         <Card className={styles.drawerCardView}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData?.customerId)}</Descriptions.Item>
-                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.customerName)}</Descriptions.Item>
-                <Descriptions.Item label="Make">{checkAndSetDefaultValue(formData?.make)}</Descriptions.Item>
-                <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(formData?.modelGroup)}</Descriptions.Item>
-                <Descriptions.Item label="Variant">{checkAndSetDefaultValue(formData?.variant)}</Descriptions.Item>
-                <Descriptions.Item label="Old Reg. Number">{checkAndSetDefaultValue(formData?.oldRegistrationNumber)}</Descriptions.Item>
-                <Descriptions.Item label="Old Chassis Number">{checkAndSetDefaultValue(formData?.oldChessisNumber)}</Descriptions.Item>
-                <Descriptions.Item label="Relationship">{checkAndSetDefaultValue(formData?.relationship)}</Descriptions.Item>
-                <Descriptions.Item label="Month of Registration">{checkAndSetDefaultValue(formData?.monthOfRegistration)}</Descriptions.Item>
-                <Descriptions.Item label="Year of Registration">{checkAndSetDefaultValue(formData?.yearOfRegistration)}</Descriptions.Item>
-                <Descriptions.Item label="Usage">{checkAndSetDefaultValue(formData?.usage)}</Descriptions.Item>
-                <Descriptions.Item label="Scheme Name">{checkAndSetDefaultValue(formData?.schemeName)}</Descriptions.Item>
-                <Descriptions.Item label="Scheme Amount">{checkAndSetDefaultValue(formData?.schemeAmount)}</Descriptions.Item>
-                <Descriptions.Item label="KM">{checkAndSetDefaultValue(formData?.kilometer)}</Descriptions.Item>
-                <Descriptions.Item label="Customer Expected Price">{checkAndSetDefaultValue(formData?.customerExpectedPrice)}</Descriptions.Item>
-                <Descriptions.Item label="Procurement Price">{checkAndSetDefaultValue(formData?.procurementPrice)}</Descriptions.Item>
-                <Descriptions.Item label="Hypothecated To">{checkAndSetDefaultValue(formData?.hypothicatedTo)}</Descriptions.Item>
+                <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData?.customerId, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Make">{checkAndSetDefaultValue(getCodeValue(makeData, formData?.make), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(getCodeValue(modelData, formData?.modelGroup), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Variant">{checkAndSetDefaultValue(getCodeValue(variantData, formData?.variant), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Old Reg. Number">{checkAndSetDefaultValue(formData?.oldRegistrationNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Old Chassis Number">{checkAndSetDefaultValue(formData?.oldChessisNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Relationship">{checkAndSetDefaultValue(getCodeValue(typeData?.REL_TYPE, formData?.relationship), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Month of Registration">{checkAndSetDefaultValue(getCodeValue(typeData?.MONTH, formData?.monthOfRegistration), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Year of Registration">{checkAndSetDefaultValue(getCodeValue(typeData?.YEAR_LIST, formData?.yearOfRegistration), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Usage">{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_USAG, formData?.usage), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Scheme Name">{checkAndSetDefaultValue(getCodeValue(schemeLovData, formData?.schemeName), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Scheme Amount">{checkAndSetDefaultValue(formData?.schemeAmount, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="KM">{checkAndSetDefaultValue(formData?.kilometer, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Customer Expected Price">{checkAndSetDefaultValue(formData?.customerExpectedPrice, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Procurement Price">{checkAndSetDefaultValue(formData?.procurementPrice, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Hypothecated To">{checkAndSetDefaultValue(getCodeValue(financeLovData, formData?.hypothicatedTo), isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

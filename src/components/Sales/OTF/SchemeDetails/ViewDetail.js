@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Space, Collapse, Typography, Descriptions } from 'antd';
+import { Space, Card, Collapse, Typography, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
@@ -12,7 +12,8 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, styles, schemeData } = props;
+    const { activeKey, styles, schemeData, isLoading } = props;
+    console.log('🚀 ~ file: ViewDetail.js:16 ~ ViewDetailMain ~ schemeData:', schemeData);
     const viewProps = {
         bordered: false,
         colon: false,
@@ -23,41 +24,45 @@ const ViewDetailMain = (props) => {
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <Space direction="vertical" size="middle" className={styles.accordianContainer}>
-                {schemeData[0]?.schemes?.map((schemeForm, index) => (
-                    <Collapse
-                        expandIcon={() => {
-                            if (activeKey?.includes(schemeForm?.id)) {
-                                return <MinusOutlined className={styles.iconsColor} />;
-                            } else {
-                                return <PlusOutlined className={styles.iconsColor} />;
-                            }
-                        }}
-                        activeKey={activeKey}
-                        expandIconPosition="end"
-                        className={styles.collapseContainer}
-                    >
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        {`Scheme ${index + 1}`}
-                                    </Text>
-                                </div>
-                            }
-                            key={schemeForm?.id}
+                {schemeData ? (
+                    schemeData?.schemes?.map((schemeForm, index) => (
+                        <Collapse
+                            expandIcon={() => {
+                                if (activeKey?.includes(schemeForm?.id)) {
+                                    return <MinusOutlined className={styles.iconsColor} />;
+                                } else {
+                                    return <PlusOutlined className={styles.iconsColor} />;
+                                }
+                            }}
+                            activeKey={activeKey}
+                            expandIconPosition="end"
+                            className={styles.collapseContainer}
                         >
-                            <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(schemeForm?.schemeType)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Category">{checkAndSetDefaultValue(schemeForm?.schemeCategory)}</Descriptions.Item>
-                                <Descriptions.Item label="Amount">{checkAndSetDefaultValue(schemeForm?.amount)}</Descriptions.Item>
-                                <Descriptions.Item label="Valid From">{checkAndSetDefaultValue(schemeForm?.validFrom)}</Descriptions.Item>
-                                <Descriptions.Item label="Valid To">{checkAndSetDefaultValue(schemeForm?.validTo)}</Descriptions.Item>
-                                <Descriptions.Item label="" />
-                                <Descriptions.Item label="Description">{checkAndSetDefaultValue(schemeForm?.description)}</Descriptions.Item>
-                            </Descriptions>
-                        </Panel>
-                    </Collapse>
-                ))}
+                            <Panel
+                                header={
+                                    <div className={styles.alignUser}>
+                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                            {`Scheme ${index + 1}`}
+                                        </Text>
+                                    </div>
+                                }
+                                key={schemeForm?.id}
+                            >
+                                <Descriptions {...viewProps}>
+                                    <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(schemeForm?.schemeType, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Scheme Category">{checkAndSetDefaultValue(schemeForm?.schemeCategory, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Amount">{checkAndSetDefaultValue(schemeForm?.amount, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Valid From">{checkAndSetDefaultValue(schemeForm?.validFrom, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Valid To">{checkAndSetDefaultValue(schemeForm?.validTo, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="" />
+                                    <Descriptions.Item label="Description">{checkAndSetDefaultValue(schemeForm?.description, isLoading)}</Descriptions.Item>
+                                </Descriptions>
+                            </Panel>
+                        </Collapse>
+                    ))
+                ) : (
+                    <Card className={styles.viewCardSize}>No Scheme and Offer Details Available</Card>
+                )}
             </Space>
         </div>
     );

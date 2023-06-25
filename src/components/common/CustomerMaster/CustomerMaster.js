@@ -10,6 +10,7 @@ import { Button, Col, Row, Input, Form, Empty, ConfigProvider, Select } from 'an
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { showGlobalNotification } from 'store/actions/notification';
+import { searchValidator, validateRequiredInputField } from 'utils/validation';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { tableColumn } from './tableColumn';
@@ -84,7 +85,6 @@ const CustomerMasterMain = (props) => {
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
-    console.log('🚀 ~ file: CustomerMaster.js:87 ~ CustomerMasterMain ~ isLastSection:', isLastSection);
 
     const [form] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -176,7 +176,6 @@ const CustomerMasterMain = (props) => {
     }, [customerType, userId, refreshList]);
 
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
-        console.log('🚀 ~ file: CustomerMaster.js:175 ~ handleButtonClick ~ buttonAction:', buttonAction);
         form.resetFields();
 
         if (buttonAction === ADD_ACTION) {
@@ -186,6 +185,7 @@ const CustomerMasterMain = (props) => {
         if (buttonAction === EDIT_ACTION) {
             setSelectedCustomer(record);
             record && setSelectedCustomerId(record?.customerId);
+            !formVisible && setCurrentSection(defaultSection);
         }
 
         if (buttonAction === VIEW_ACTION) {
@@ -264,6 +264,7 @@ const CustomerMasterMain = (props) => {
     }, [formActionType]);
 
     const containerProps = {
+        record: selectedCustomer,
         form,
         formActionType,
         setFormActionType,
@@ -305,9 +306,6 @@ const CustomerMasterMain = (props) => {
         className: styles.headerSelectField,
     };
 
-    console.log("CUSTOMER_TYPE",CUSTOMER_TYPE )
-    console.log("customerType",customerType )
-
     return (
         <>
             <Row gutter={20}>
@@ -317,7 +315,7 @@ const CustomerMasterMain = (props) => {
                             <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.searchAndLabelAlign}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                     {Object.values(CUSTOMER_TYPE)?.map((item) => {
-                                        console.log()
+                                        console.log();
                                         return (
                                             <Button className={styles.marR5} type={customerType === item?.id ? 'primary' : 'link'} danger onClick={() => setCustomerType(item?.id)}>
                                                 {item?.title}
@@ -333,7 +331,11 @@ const CustomerMasterMain = (props) => {
                                             </Option>
                                         ))}
                                     </Select>
-                                    <Search placeholder="Search" value={filterString?.searchParam} onChange={onChangeHandle} allowClear onSearch={onSearchHandle} className={styles.headerSearchField} />
+                                    {/* <Form layout="vertical" autoComplete="off" onFinish={onSearchHandle}> */}
+                                    <Form.Item name="keyword" rules={[validateRequiredInputField('keyword')]}>
+                                        <Search placeholder="Search" value={filterString?.searchParam} onChange={onChangeHandle} onSearch={onSearchHandle} allowClear className={styles.headerSearchField} />
+                                    </Form.Item>
+                                    {/* </Form> */}
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>

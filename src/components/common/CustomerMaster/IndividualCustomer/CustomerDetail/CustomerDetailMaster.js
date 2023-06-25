@@ -12,14 +12,11 @@ import { customerDetailsIndividualDataActions } from 'store/actions/data/custome
 import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
-
-import { InputSkeleton } from 'components/common/Skeleton';
 
 import styles from 'components/common/Common.module.css';
 
@@ -40,7 +37,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         data,
-        typeData: typeData,
+        typeData,
         isCorporateLovDataLoaded,
         isCorporateLovLoading,
         corporateLovData,
@@ -74,7 +71,7 @@ const CustomerDetailMasterBase = (props) => {
 
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState();
-    const [configurableTypedata, setConfigurableTypedata] = useState({});
+    const [uploadImgDocId, setUploadImgDocId] = useState('');
 
     const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
@@ -115,16 +112,9 @@ const CustomerDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
-    useEffect(() => {
-        if (typeData) {
-            setConfigurableTypedata({ CUST_TYPE: typeData[PARAM_MASTER?.CUST_TYPE?.id], CORP_TYPE: typeData[PARAM_MASTER?.CORP_TYPE?.id], CORP_CATE: typeData[PARAM_MASTER?.CORP_CATE?.id], TITLE: typeData[PARAM_MASTER?.TITLE?.id], MEM_TYPE: typeData[PARAM_MASTER?.MEM_TYPE?.id] });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [typeData]);
-
     const onFinish = (values) => {
         setRefreshList(false);
-        const data = { ...values, customerId: selectedCustomer?.customerId};
+        const data = { ...values, customerId: selectedCustomer?.customerId };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -169,33 +159,28 @@ const CustomerDetailMasterBase = (props) => {
         showForm,
         fetchCorporateLovList,
         setShowForm,
+        setUploadImgDocId,
+        uploadImgDocId,
         setButtonData,
         typeData,
         formData,
-        configurableTypedata,
+        typeData,
     };
 
     const viewProps = {
+        ...formProps,
         formActionType,
         formData,
         styles,
+        isLoading,
     };
-
-    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;
-    const formSkeleton = (
-        <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <InputSkeleton height={'100vh'} />
-            </Col>
-        </Row>
-    );
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title}</h2>
-                    {isLoading ? formSkeleton : formContainer}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

@@ -6,9 +6,9 @@
 import React from 'react';
 import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-
+import { getCodeValue } from 'utils/getCodeValue';
 const ViewDetailMain = (props) => {
-    const { styles, formData } = props;
+    const { styles, formData, isLoading,FinanceLovData } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -18,14 +18,14 @@ const ViewDetailMain = (props) => {
     return (
         <Card className={styles.drawerCardView} style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Financier">{checkAndSetDefaultValue(formData?.financier)}</Descriptions.Item>
-                <Descriptions.Item label="Branch">{checkAndSetDefaultValue(formData?.branch)}</Descriptions.Item>
-                <Descriptions.Item label="File Number">{checkAndSetDefaultValue(formData?.fileNumber)}</Descriptions.Item>
-                <Descriptions.Item label="Loan Amount">{checkAndSetDefaultValue(formData?.loanAmount)}</Descriptions.Item>
-                <Descriptions.Item label="EMI">{checkAndSetDefaultValue(formData?.emi)}</Descriptions.Item>
-                <Descriptions.Item label="D.O. Recived">{checkAndSetDefaultValue(formData?.doReceived)}</Descriptions.Item>
-                <Descriptions.Item label="D.O. Number">{checkAndSetDefaultValue(formData?.doNumber)}</Descriptions.Item>
-                <Descriptions.Item label="D.O. Date">{checkAndSetDefaultValue(formData?.doDate)}</Descriptions.Item>
+                <Descriptions.Item label="Financier">{checkAndSetDefaultValue(getCodeValue(FinanceLovData,formData?.financier), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Branch">{checkAndSetDefaultValue(formData?.branch, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="File Number">{checkAndSetDefaultValue(formData?.fileNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Loan Amount">{checkAndSetDefaultValue(formData?.loanAmount, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="EMI">{checkAndSetDefaultValue(formData?.emi, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="D.O. Recived">{checkAndSetDefaultValue(formData?.doReceived, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="D.O. Number">{checkAndSetDefaultValue(formData?.doNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="D.O. Date">{checkAndSetDefaultValue(formData?.doDate, isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );
