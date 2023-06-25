@@ -13,6 +13,7 @@ const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
     const { activeKey, styles, schemeData, isLoading } = props;
+    console.log('🚀 ~ file: ViewDetail.js:16 ~ ViewDetailMain ~ schemeData:', schemeData);
     const viewProps = {
         bordered: false,
         colon: false,
@@ -23,8 +24,8 @@ const ViewDetailMain = (props) => {
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <Space direction="vertical" size="middle" className={styles.accordianContainer}>
-                {schemeData && schemeData[0] ? (
-                    schemeData[0]?.schemes?.map((schemeForm, index) => (
+                {schemeData ? (
+                    schemeData?.schemes?.map((schemeForm, index) => (
                         <Collapse
                             expandIcon={() => {
                                 if (activeKey?.includes(schemeForm?.id)) {
