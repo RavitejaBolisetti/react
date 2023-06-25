@@ -12,8 +12,10 @@ import { BiLockAlt } from 'react-icons/bi';
 import { CheckOutlined } from '@ant-design/icons';
 import { ValidateMobileNumberModal } from '../../IndividualCustomer/CustomerDetail/ValidateMobileNumberModal';
 
+const { Option } = Select;
+
 const AddEditFormMain = (props) => {
-    const { configurableTypedata, formData, form, corporateLovData, formActionType: { editMode } = undefined, validateParentCode, customerType, customerParentCompanyData } = props;
+    const { typeData, formData, form, corporateLovData, formActionType: { editMode } = undefined, validateParentCode, customerType, customerParentCompanyData } = props;
     const [corporateType, setCorporateType] = useState();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
@@ -89,7 +91,13 @@ const AddEditFormMain = (props) => {
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                            <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CUST_TYPE']} allowClear></Select>
+                            <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} allowClear>
+                                {typeData?.CUST_TYPE?.map((item) => (
+                                    <Option key={'ct' + item.key} value={item.key}>
+                                        {item.value}
+                                    </Option>
+                                ))}
+                            </Select>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -116,7 +124,13 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.corporateType} label="Corporate Type" name="corporateType" data-testid="corporateType" rules={[validateRequiredSelectField('corporate type')]}>
-                            <Select placeholder={preparePlaceholderSelect('corporate type')} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_TYPE']} onChange={handleCorporateChange}></Select>
+                            <Select placeholder={preparePlaceholderSelect('corporate type')} loading={false} allowClear onChange={handleCorporateChange}>
+                                {typeData?.CORP_TYPE?.map((item) => (
+                                    <Option key={'ct' + item.key} value={item.key}>
+                                        {item.value}
+                                    </Option>
+                                ))}
+                            </Select>
                         </Form.Item>
                     </Col>
 
@@ -142,12 +156,24 @@ const AddEditFormMain = (props) => {
                     )}
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.corporateCategory} label="Corporate Category" name="corporateCategory" data-testid="corporateCategory">
-                            <Select placeholder={preparePlaceholderSelect('corporate category')} disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['CORP_CATE']}></Select>
+                            <Select placeholder={preparePlaceholderSelect('corporate category')} disabled={editMode} loading={false} allowClear>
+                                {typeData?.CORP_CATE?.map((item) => (
+                                    <Option key={'cct' + item.key} value={item.key}>
+                                        {item.value}
+                                    </Option>
+                                ))}
+                            </Select>
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.membershipType} label="Membership Type" name="membershipType" data-testid="membershipType" rules={[validateRequiredSelectField('membership type')]}>
-                            <Select placeholder={preparePlaceholderSelect('membership type')} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={configurableTypedata['MEM_TYPE']}></Select>
+                            <Select placeholder={preparePlaceholderSelect('membership type')} loading={false} allowClear>
+                                {typeData?.MEM_TYPE?.map((item) => (
+                                    <Option key={'mt' + item.key} value={item.key}>
+                                        {item.value}
+                                    </Option>
+                                ))}
+                            </Select>
                         </Form.Item>
                     </Col>
                 </Row>
