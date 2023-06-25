@@ -68,6 +68,12 @@ const ReferralsMasterBase = (props) => {
 
     const [formData, setFormData] = useState();
     const [resetField, setResetField] = useState(false);
+
+    useEffect(() => {
+        setFormData(referralData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [referralData]);
+
     const extraParams = [
         {
             key: 'otfNumber',

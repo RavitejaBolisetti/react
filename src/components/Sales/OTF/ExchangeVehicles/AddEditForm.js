@@ -11,8 +11,10 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
+const { Search } = Input;
+
 const AddEditFormMain = (props) => {
-    const { formData, form } = props;
+    const { formData, form, isCustomerLoading, onSearch } = props;
     const { financeLovData, schemeLovData, typeData, makeData, modelData, variantData } = props;
     const { isConfigLoading, isSchemeLovLoading, isFinanceLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
 
@@ -57,8 +59,8 @@ const AddEditFormMain = (props) => {
         <Card className={styles.ExchangeCard}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="customerId" label="Customer ID" initialValue={formData?.customerId} rules={[validateRequiredInputField('id')]}>
-                        <Input maxLength={6} placeholder={preparePlaceholderText('id')} />
+                    <Form.Item name="customerId" label="Customer ID" initialValue={formData?.customerId} rules={[validateRequiredInputField('customer id')]}>
+                        <Search loading={isCustomerLoading} placeholder={preparePlaceholderText('customer id')} style={{ width: '100%' }} maxLength={35} allowClear type="text" onSearch={onSearch} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
