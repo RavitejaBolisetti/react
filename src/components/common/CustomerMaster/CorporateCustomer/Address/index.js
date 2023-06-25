@@ -5,4 +5,4 @@
  */
 import { ContactMasterMain as CompanyAddressMaster } from './AddressMaster';
 
-export { CompanyAddressMaster  };
+export { CompanyAddressMaster };

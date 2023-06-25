@@ -164,6 +164,8 @@ export const OtfMasterBase = (props) => {
             const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
             setLastSection(!nextSection?.id);
         }
+        form.resetFields();
+        form.setFieldsValue(undefined);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
@@ -176,6 +178,7 @@ export const OtfMasterBase = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
         form.resetFields();
+        form.setFieldsValue(undefined);
 
         if (buttonAction === ADD_ACTION) {
             defaultSection && setCurrentSection(defaultSection);
@@ -291,6 +294,7 @@ export const OtfMasterBase = (props) => {
 
     const onCloseAction = () => {
         form.resetFields();
+        form.setFieldsValue();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };

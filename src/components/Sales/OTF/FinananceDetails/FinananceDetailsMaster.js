@@ -70,9 +70,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { saveData, fetchList, userId, listShowLoading, isLoaded, financeData, showGlobalNotification, moduleTitle, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
+    const { saveData, fetchList, userId, listShowLoading, isLoaded, financeData, showGlobalNotification, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
 
-    const { form, selectedOrderId, formActionType, handleFormValueChange } = props;
+    const { form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -96,6 +96,7 @@ export const FinananceDetailsMasterBase = (props) => {
         if (!isLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
         }
+
         if (userId && !isFinanceLovDataLoaded) {
             fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId });
         }
@@ -108,15 +109,6 @@ export const FinananceDetailsMasterBase = (props) => {
 
     const errorAction = (message) => {
         showGlobalNotification(message);
-    };
-
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-
-        setIsFormVisible(true);
     };
 
     const onFinish = (values) => {
@@ -155,17 +147,8 @@ export const FinananceDetailsMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
+        ...props,
         form,
         formData: financeData,
         formActionType,
@@ -175,7 +158,6 @@ export const FinananceDetailsMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
         tableData: financeData,
 
         isFinanceLovDataLoaded,

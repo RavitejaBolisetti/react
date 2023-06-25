@@ -71,16 +71,18 @@ const OtfDetailsMasterBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
     const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_EDIT_ACTION, handleButtonClick } = props;
 
-    const [formData, setFormData] = useState();
-
-    useEffect(() => {
-        setFormData(otfData);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [otfData]);
-
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+
+    const extraParams = [
+        {
+            key: 'otfNumber',
+            title: 'otfNumber',
+            value: selectedOrderId,
+            name: 'OTF Number',
+        },
+    ];
 
     useEffect(() => {
         if (userId && selectedOrderId) {
@@ -117,7 +119,7 @@ const OtfDetailsMasterBase = (props) => {
         const onSuccess = (res) => {
             handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         };
 
         const onError = (message) => {
@@ -141,7 +143,6 @@ const OtfDetailsMasterBase = (props) => {
     const formProps = {
         ...props,
         form,
-        otfData,
         onFinish,
         onFinishFailed,
         fetchList,
@@ -149,13 +150,13 @@ const OtfDetailsMasterBase = (props) => {
 
         userId,
         isDataLoaded,
-        formData,
+        formData: otfData,
         isLoading,
         salesConsultantLov,
     };
 
     const viewProps = {
-        formData,
+        formData: otfData,
         styles,
         isLoading,
     };
