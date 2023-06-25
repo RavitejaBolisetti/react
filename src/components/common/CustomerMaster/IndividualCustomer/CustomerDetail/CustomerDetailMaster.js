@@ -12,7 +12,6 @@ import { customerDetailsIndividualDataActions } from 'store/actions/data/custome
 import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { ViewDetail } from './ViewDetail';
@@ -38,7 +37,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         data,
-        typeData: typeData,
+        typeData,
         isCorporateLovDataLoaded,
         isCorporateLovLoading,
         corporateLovData,
@@ -72,7 +71,6 @@ const CustomerDetailMasterBase = (props) => {
 
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState();
-    const [configurableTypedata, setConfigurableTypedata] = useState({});
     const [uploadImgDocId, setUploadImgDocId] = useState('');
 
     const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
@@ -114,12 +112,7 @@ const CustomerDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
-    useEffect(() => {
-        if (typeData) {
-            setConfigurableTypedata({ CUST_TYPE: typeData[PARAM_MASTER?.CUST_TYPE?.id], CORP_TYPE: typeData[PARAM_MASTER?.CORP_TYPE?.id], CORP_CATE: typeData[PARAM_MASTER?.CORP_CATE?.id], TITLE: typeData[PARAM_MASTER?.TITLE?.id], MEM_TYPE: typeData[PARAM_MASTER?.MEM_TYPE?.id] });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [typeData]);
+
 
     const onFinish = (values) => {
         setRefreshList(false);
@@ -173,10 +166,11 @@ const CustomerDetailMasterBase = (props) => {
         setButtonData,
         typeData,
         formData,
-        configurableTypedata,
+        typeData,
     };
 
     const viewProps = {
+        ...formProps,
         formActionType,
         formData,
         styles,
