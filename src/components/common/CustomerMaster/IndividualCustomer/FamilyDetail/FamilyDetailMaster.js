@@ -155,6 +155,11 @@ const FamilyDetailMasterBase = (props) => {
     };
 
     const onFinish = () => {
+        if (!familyDetailList || familyDetailList.length <= 0) {
+            showGlobalNotification({ message: 'Please add faily detail before submit' });
+            return false;
+        }
+
         let data = [...familyDetailList];
         const onSuccess = (res) => {
             form.resetFields();

@@ -151,7 +151,7 @@ const FormBase = (props) => {
                     Save
                 </Button>
 
-                <Button type="primary" onClick={onCancel}>
+                <Button onClick={onCancel} danger>
                     Cancel
                 </Button>
             </Row>
