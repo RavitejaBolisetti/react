@@ -11,7 +11,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, typeData, configurableTypedata } = props;
+    const { styles, formData, isLoading, typeData, corporateLovData, corporateType } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -33,7 +33,7 @@ const ViewDetailMain = (props) => {
                 >
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CUST_TYPE,formData?.customerType), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CUST_TYPE, formData?.customerType), isLoading)}</Descriptions.Item>
                     </Descriptions>
                     <div className={styles.cardInsideBox}>
                         <Row>
@@ -48,7 +48,7 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.customerName}>
                                 <Text>
-                                    {formData?.titleCode}
+                                    {getCodeValue(typeData?.TITLE, formData?.titleCode)}
                                     <span>&nbsp;</span>
                                     {formData?.firstName}
                                     <span>&nbsp;</span>
@@ -71,10 +71,10 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label="Whatsapp Number">{checkAndSetDefaultValue(formData?.whatsAppNumber)}</Descriptions.Item>
                     </Descriptions>
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE,formData?.corporateType), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Corporate Name">{checkAndSetDefaultValue(formData?.corporateName, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_CATE,formData?.corporateCategory), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(getCodeValue(typeData?.MEM_TYPE,formData?.membershipType), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Name">{checkAndSetDefaultValue(getCodeValue(corporateLovData, formData?.corporateName), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_CATE, formData?.corporateCategory), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(getCodeValue(typeData?.MEM_TYPE, formData?.membershipType), isLoading)}</Descriptions.Item>
                     </Descriptions>
                 </Card>
             </Space>

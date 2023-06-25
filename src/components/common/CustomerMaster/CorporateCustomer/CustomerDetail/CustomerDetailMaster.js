@@ -136,7 +136,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     const onFinish = (values) => {
         setRefreshList(false);
         const recordId = customerDetailsData?.id || '';
-        const data = { ...values, customerId: customerDetailsData.customerId, id: recordId };
+        const data = { ...values, customerId: selectedCustomer?.customerId, id: recordId };
 
         const onSuccess = (res) => {
             form.resetFields();
