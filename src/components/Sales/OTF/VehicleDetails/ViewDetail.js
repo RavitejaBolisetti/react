@@ -54,11 +54,14 @@ const ViewDetailMain = (props) => {
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Vehicle Usage Type ">{checkAndSetDefaultValue(formData?.vehicleUsageType, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Model">
-                            {isLoading && <InputSkeleton width={'100px'} height={20} theme={'card'} />}
-                            <div className={styles.tooltipAlign}>
-                                {formData?.model}
-                                {!isLoading && addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
-                            </div>
+                            {isLoading ? (
+                                <InputSkeleton width={'100px'} height={20} theme={'card'} />
+                            ) : (
+                                <div className={styles.tooltipAlign}>
+                                    {formData?.model}
+                                    {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                                </div>
+                            )}
                         </Descriptions.Item>
                         <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>

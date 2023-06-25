@@ -130,7 +130,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Vehicle Allocated Status" name="vehicleAllocationStatus" data-testid="vehicleAllocatedStatus">
+                                    <Form.Item label="Vehicle Allocated Status" name="vehicleAllocatedStatus" data-testid="vehicleAllocatedStatus">
                                         <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Allocated Status')} />
                                     </Form.Item>
                                 </Col>

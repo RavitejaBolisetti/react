@@ -112,6 +112,7 @@ const VehicleDetailsMasterMain = (props) => {
             setactiveKey([...activeKey, values]);
         }
     };
+
     useEffect(() => {
         if (userId && selectedOrderId) {
             const extraParams = [
@@ -132,7 +133,7 @@ const VehicleDetailsMasterMain = (props) => {
         if (ProductHierarchyData && isProductHierarchyDataLoaded && userId) {
             setmodelData(ProductHierarchyData['0']);
             form.setFieldsValue({
-                modelCode: ProductHierarchyData['0']['model'],
+                modelCode: ProductHierarchyData['0']['model'] ?? 'NA',
             });
             settooltTipText(
                 <div>
@@ -197,6 +198,7 @@ const VehicleDetailsMasterMain = (props) => {
         let data;
         if (!values.hasOwnProperty('vehicleUsageType')) {
             data = { otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, podate: dayjs(formData?.podate?.substr(0, 10)).format('DD/MM/YYYY'), vehicleUsageType: VehicleDetailsData?.vehicleUsageType, model: VehicleDetailsData?.model, modelCode: VehicleDetailsData?.modelCode, discountAmount: VehicleDetailsData?.discountAmount, optionalServices: optionsServicesMapping };
+            console.log('data', data);
         } else {
             data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, optionalServices: optionsServicesMapping };
         }
