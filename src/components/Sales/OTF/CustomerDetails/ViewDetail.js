@@ -6,8 +6,8 @@
 import React, { useState } from 'react';
 import { Col, Row, Space, Collapse, Typography, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import dayjs from 'dayjs';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+// import { convertCalenderDate } from 'utils/formatDateTime';
 
 import styles from 'components/common/Common.module.css';
 
@@ -42,8 +42,8 @@ const ViewDetailMain = (props) => {
         }
     };
 
-    const bookingBirthDate = dayjs(formData.bookingCustomer?.birthDate).format('DD/MM/YYYY');
-    const billingBirthDate = dayjs(formData.billingCustomer?.birthDate).format('DD/MM/YYYY');
+    const bookingBirthDate = formData?.bookingCustomer?.birthDate;
+    const billingBirthDate = formData?.billingCustomer?.birthDate;
 
     return (
         <div className={styles.viewDrawerContainer}>
@@ -90,7 +90,7 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData.bookingCustomer?.gstin, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Driving License">{checkAndSetDefaultValue(formData.bookingCustomer?.drivingLicense, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Trade Licence">{checkAndSetDefaultValue(formData.bookingCustomer?.tradeLicense, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(bookingBirthDate)} </Descriptions.Item>
+                                    <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(bookingBirthDate, isLoading, 'date')} </Descriptions.Item>
                                     {/* <Descriptions.Item label="Do You Want to Add Corporate Details">{checkAndSetDefaultValue(formData.bookingCustomer?.sameAsBookingCustomer, isLoading)}</Descriptions.Item> */}
                                 </Descriptions>
                             </Panel>
@@ -136,7 +136,7 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData.billingCustomer?.gstin, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Driving License">{checkAndSetDefaultValue(formData.billingCustomer?.drivingLicense, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Trade Licence">{checkAndSetDefaultValue(formData.billingCustomer?.tradeLicense, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(billingBirthDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(billingBirthDate, isLoading, 'date')}</Descriptions.Item>
                                     {/* <Descriptions.Item label="Do You Want to Add Corporate Details">{checkAndSetDefaultValue(formData.billingCustomer?.sameAsBookingCustomer, isLoading)}</Descriptions.Item> */}
                                 </Descriptions>
                             </Panel>

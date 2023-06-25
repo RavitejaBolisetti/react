@@ -12,8 +12,8 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 
 export const FormCommon = (props) => {
     const [options, setOptions] = useState(false);
-    const { formActionType, onFinishFailed, form,  onFinish } = props;
-    const { userId, pincodeData,  listPinCodeShowLoading, fetchPincodeDetail, data } = props;
+    const { formActionType, onFinishFailed, form, onFinish } = props;
+    const { userId, pincodeData, listPinCodeShowLoading, fetchPincodeDetail, data } = props;
     const { forceUpdate, isVisible } = props;
     const innitValue = dayjs(data?.birthDate, 'YYYY/MM/DD');
 

@@ -5,7 +5,8 @@
  */
 
 import { InputSkeleton } from 'components/common/Skeleton';
+import { convertDate } from 'utils/formatDateTime';
 
-export const checkAndSetDefaultValue = (value, isLoading) => {
-    return isLoading ? <InputSkeleton width={'100px'} height={20} theme={'card'} /> : value || 'NA';
+export const checkAndSetDefaultValue = (value, isLoading, type) => {
+    return isLoading ? <InputSkeleton width={'100px'} height={20} theme={'card'} /> : type === 'date' ? convertDate(value, 'DD MMM YYYY') : value || 'NA';
 };

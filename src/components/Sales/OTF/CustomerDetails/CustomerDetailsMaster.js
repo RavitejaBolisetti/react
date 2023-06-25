@@ -78,15 +78,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMain = (props) => {
-    const { saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, otfSearchSelected, formActionType, NEXT_EDIT_ACTION, handleButtonClick, handleFormValueChange, section } = props;
-    const { typeData } = props;
+    const { saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_EDIT_ACTION, handleButtonClick, handleFormValueChange, section } = props;
+    const { typeData, selectedOrderId } = props;
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
     const [formData, setFormData] = useState('');
-    const [otfData, setOtfData] = useState(otfSearchSelected);
     const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
-    const [showDataLoading, setShowDataLoading] = useState(false);
     const [activeKey, setactiveKey] = useState([1]);
 
     useEffect(() => {
@@ -95,18 +93,15 @@ export const CustomerDetailsMain = (props) => {
         }
     }, [isDataLoaded, userId, customerFormData]);
 
-    const selectedOTF = otfSearchSelected?.otfNumber;
-
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        setShowDataLoading(false);
     };
 
     const extraParams = [
         {
             key: 'otfNumber',
             title: 'otfNumber',
-            value: selectedOTF,
+            value: selectedOrderId,
             name: 'OTF Number',
         },
     ];
@@ -120,12 +115,10 @@ export const CustomerDetailsMain = (props) => {
 
     const onFinish = () => {
         form.getFieldsValue();
-        const data = { bookingCustomer: { ...form.getFieldsValue(), birthDate: dayjs(form.getFieldsValue().birthDate).format('YYYY-MM-DD'), otfNumber: otfData?.otfNumber, bookingAndBillingType: 'BOOKING', id: customerFormData.bookingCustomer.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...billCstmForm.getFieldsValue(), birthDate: dayjs(billCstmForm.getFieldsValue()?.birthDate).format('YYYY-MM-DD'), otfNumber: otfData?.otfNumber, bookingAndBillingType: 'BILLING', id: customerFormData.billingCustomer.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+        const data = { bookingCustomer: { ...form.getFieldsValue(), birthDate: dayjs(form.getFieldsValue().birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData.bookingCustomer.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...billCstmForm.getFieldsValue(), birthDate: dayjs(billCstmForm.getFieldsValue()?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData.billingCustomer.id, sameAsBookingCustomer: sameAsBookingCustomer } };
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            setShowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
         };
 
@@ -144,11 +137,8 @@ export const CustomerDetailsMain = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
-
     const formProps = {
+        ...props,
         form,
         billCstmForm,
         customerFormData,
