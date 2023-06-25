@@ -13,7 +13,7 @@ const { Search } = Input;
 const { Option } = Select;
 
 export default function AdvanceOtfFilter(props) {
-    const { advanceFilter = false, otfFilter = false, title, filterString, handleOTFChange, typeData, ChangeSearchHandler, onSearchHandle, setAdvanceSearchVisible, typeData } = props;
+    const { advanceFilter = false, otfFilter = false, title, filterString, handleOTFChange, typeData, ChangeSearchHandler, onSearchHandle, setAdvanceSearchVisible } = props;
 
     return (
         <>

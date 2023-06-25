@@ -5,7 +5,7 @@
  */
 import React, { useEffect } from 'react';
 
-import { Col, Input, Form, Row, DatePicker, Card } from 'antd';
+import { Col, Input, Form, Row, DatePicker, Card, Select } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { validateRequiredInputField } from 'utils/validation';
@@ -17,21 +17,17 @@ import dayjs from 'dayjs';
 const { Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { formData, form, onSearch, isCustomerLoading, isDataCustomerLoaded, customerDetail } = props;
-    console.log('🚀 ~ file: AddEditForm.js:21 ~ AddEditFormMain ~ customerDetail:', customerDetail);
-
-    if (isDataCustomerLoaded && customerDetail && customerDetail?.customerMasterDetails && customerDetail?.customerMasterDetails[0]) {
-        const customer = customerDetail?.customerMasterDetails[0];
-        form.setFieldsValue({ customerId: customer?.customerId, customerType: customer?.customerTypeName, customerName: customer?.customerName, emailId: customer?.emailId, mobileNumber: customer?.mobileNumber, registrationNumber: customer?.registrationNumber, chasisNumber: customer?.chasisNumber });
-    }
-
+    const { formData, form, onSearch, isCustomerLoading, typeData } = props;
     useEffect(() => {
-        if (formData?.hasOwnProperty('customerName')) {
+        if (formData?.hasOwnProperty('mobileNumber')) {
             form.setFieldsValue({
                 ...formData,
                 registrationNumber: formData?.registrationNumber ?? 'NA',
                 dob: dayjs(formData?.dob),
             });
+        } else {
+            form.resetFields();
+            form.setFieldsValue({ customerId: undefined, customerType: undefined, emailId: undefined, customerName: undefined, registrationNumber: undefined, chasisNumber: undefined, dob: undefined });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
@@ -50,8 +46,8 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="customerType" label="Customer Type" initialValue={formData?.customerType}>
-                        <Input disabled={true} placeholder={preparePlaceholderText('customer type')} maxLength={50} />
+                    <Form.Item initialValue={formData?.customerType} label="Customer Type" name="customerType" data-testid="customerType">
+                        <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.CUST_TYPE} allowClear></Select>
                     </Form.Item>
                 </Col>
             </Row>

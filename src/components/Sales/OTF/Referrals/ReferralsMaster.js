@@ -18,7 +18,6 @@ import styles from 'components/common/Common.module.css';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import dayjs from 'dayjs';
-import { InputSkeleton } from 'components/common/Skeleton';
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 
@@ -27,7 +26,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             OTF: {
-                Referrals: { isLoaded: isDataLoaded = false, isLoading, data: ReferralsData = [] },
+                Referrals: { isLoaded: isDataLoaded = false, isLoading, data: referralData = [] },
             },
         },
         customer: {
@@ -38,7 +37,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        ReferralsData,
+        referralData,
         isLoading,
         isDataCustomerLoaded,
         isCustomerLoading,
@@ -64,10 +63,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ReferralsMasterBase = (props) => {
-    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, isDataLoaded, ReferralsData, isLoading } = props;
+    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading } = props;
     const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, listCustomerShowLoading, typeData } = props;
 
-    const [formData, setformData] = useState();
+    const [formData, setFormData] = useState();
+    const [resetField, setResetField] = useState(false);
     const extraParams = [
         {
             key: 'otfNumber',
@@ -78,7 +78,7 @@ const ReferralsMasterBase = (props) => {
     ];
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId, dob: dayjs(values?.dob).format('YYYY-MM-DD'), id: formData?.id };
+        const data = { ...values, otfNumber: selectedOrderId, dob: dayjs(values?.dob).format('YYYY-MM-DD'), id: referralData?.id };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -92,7 +92,7 @@ const ReferralsMasterBase = (props) => {
 
         const requestData = {
             data: data,
-            method: ReferralsData?.id ? 'put' : 'post',
+            method: referralData?.id ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -116,16 +116,11 @@ const ReferralsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
-    useEffect(() => {
-        if (isDataLoaded && ReferralsData && userId) {
-            setformData(ReferralsData);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ReferralsData, userId]);
 
     const onSearch = (value) => {
+        setResetField(false);
         if (!value) {
-            //Reset Fields Here
+            setFormData();
             return false;
         }
         const defaultExtraParam = [
@@ -162,7 +157,15 @@ const ReferralsMasterBase = (props) => {
             },
         ];
 
-        fetchCustomerList({ setIsLoading: listCustomerShowLoading, extraParams: defaultExtraParam, userId, onSuccessAction, onErrorAction });
+        fetchCustomerList({
+            setIsLoading: listCustomerShowLoading,
+            extraParams: defaultExtraParam,
+            userId,
+            onSuccessAction: (res) => {
+                setFormData(res?.data?.customerMasterDetails[0]);
+            },
+            onErrorAction,
+        });
     };
 
     const formProps = {
@@ -172,6 +175,8 @@ const ReferralsMasterBase = (props) => {
         onFinish,
         onFinishFailed,
         onSearch,
+
+        resetField,
     };
 
     const viewProps = {
