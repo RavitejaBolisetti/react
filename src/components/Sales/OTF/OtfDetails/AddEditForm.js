@@ -3,10 +3,10 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Row, Col, Input, Form, Select, DatePicker, Switch, Card } from 'antd';
 
-import dayjs from 'dayjs';
+import { convertCalenderDate } from 'utils/formatDateTime';
 
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -17,7 +17,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, formActionType, typeData, salesConsultantLov } = props;
+    const { formData, formActionType, typeData, salesConsultantLov } = props;
 
     // useEffect(() => {
     //     // form.setFieldsValue({ ...formData, initialPromiseDeliveryDate: dayjs(formData?.initialPromiseDeliveryDate, 'YYYY/MM/DD'), custExpectedDeliveryDate: dayjs(formData?.custExpectedDeliveryDate, 'YYYY/MM/DD') });
@@ -28,12 +28,12 @@ const AddEditFormMain = (props) => {
         <Card className={styles.drawerCardView}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={dayjs(formData?.initialPromiseDeliveryDate, 'YYYY/MM/DD')} label="Initial Promise Delivery Date" name="initialPromiseDeliveryDate">
+                    <Form.Item initialValue={convertCalenderDate(formData?.initialPromiseDeliveryDate, 'YYYY/MM/DD')} label="Initial Promise Delivery Date" name="initialPromiseDeliveryDate">
                         <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={dayjs(formData?.custExpectedDeliveryDate, 'YYYY/MM/DD')} label="Cust. Expected Delivery Date" name="custExpectedDeliveryDate">
+                    <Form.Item initialValue={convertCalenderDate(formData?.custExpectedDeliveryDate, 'YYYY/MM/DD')} label="Cust. Expected Delivery Date" name="custExpectedDeliveryDate">
                         <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
