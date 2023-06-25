@@ -59,7 +59,6 @@ const AddEditFormMain = (props) => {
     };
 
     const addContactHandeler = (e) => {
-        console.log('called on error');
         optionForm.resetFields();
         setOpenAccordian('3');
         setIsReadOnly(true);

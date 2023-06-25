@@ -23,14 +23,12 @@ const { Dragger } = Upload;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, NEXT_EDIT_ACTION, listDocumentShowLoading, isViewDocumentLoading } = props;
+    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, NEXT_ACTION, listDocumentShowLoading, isViewDocumentLoading } = props;
     const { isReadOnly = false } = props;
     const [isRead, setIsRead] = useState(false);
     const [customer, setCustomer] = useState(false);
 
     const [activeKey, setActiveKey] = useState([1]);
-
-    console.log('formData', formData);
 
     const onCustomerCategoryChange = (values) => {
         setCustomer(values);
@@ -66,7 +64,7 @@ const AddEditFormMain = (props) => {
     };
 
     const onDrop = (e) => {
-        console.log('Dropped files', e.dataTransfer.files);
+        // console.log('Dropped files', e.dataTransfer.files);
     };
 
     const uploadProps = {
@@ -78,18 +76,10 @@ const AddEditFormMain = (props) => {
         onDrop,
         onChange: (info, event) => {
             const { status } = info.file;
-            console.log('event', event);
             if (status === 'uploading') {
-                console.log(' uploading info.file.loaded', info.file.loaded);
-                console.log(' uploading info.file.total', info.file.total);
-                console.log(' uploading info.file.percent', info.file.percent);
             } else if (status === 'done') {
                 setUploadedFile(info?.file?.response?.docId);
                 message.success(`${info.file.name} file uploaded successfully.`);
-                console.log('done info.file.loaded', info.file.loaded);
-                console.log('done info.file.total', info.file.total);
-                console.log('done info.file.total', info.file.total);
-                console.log('done info.file.percent', info.file.percent);
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }
@@ -142,7 +132,7 @@ const AddEditFormMain = (props) => {
                                 key="1"
                             >
                                 <div className={styles.headerBox}>
-                                    {NEXT_EDIT_ACTION && formData?.image ? (
+                                    {NEXT_ACTION && formData?.image ? (
                                         <div className={styles.uploadDragger}>
                                             <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} viewDocument={viewDocument} />
                                         </div>

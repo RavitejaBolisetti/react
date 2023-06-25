@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useEffect, useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -239,7 +244,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         setShowSaveBtn(true);
         setFormData(record);
         setIsViewModeVisible(false);
-        console.log(record, 'formData', formData);
         setIsFormVisible(true);
     };
     const handleView = (record) => {

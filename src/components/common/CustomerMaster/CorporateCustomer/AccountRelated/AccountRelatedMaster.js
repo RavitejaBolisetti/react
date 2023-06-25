@@ -58,9 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const AccountRelatedMasterBase = (props) => {
     const { form, handleFormValueChange, onFinishFailed } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, accountData, saveData, isDataLoaded, isLoading, resetData } = props;
-    const { formActionType, selectedCustomerId, handleButtonClick } = props;
-
-    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
+    const { formActionType, selectedCustomerId, handleButtonClick, NEXT_ACTION } = props;
 
     const [formData, setFormData] = useState();
 
@@ -105,7 +103,7 @@ export const AccountRelatedMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
         const onError = (message) => {

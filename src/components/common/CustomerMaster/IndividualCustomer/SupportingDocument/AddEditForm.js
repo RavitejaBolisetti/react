@@ -19,9 +19,7 @@ const { Dragger } = Upload;
 const AddEditForm = (props) => {
     const { handleFormValueChange, typeData, userId, uploadDocumentFile, uploadedFile, setUploadedFile, listShowLoading, downloadFile, viewListShowLoading, setUploadedFileList, showGlobalNotification, viewDocument, handlePreview } = props;
 
-    const onDrop = (e) => {
-        console.log('Dropped files', e.dataTransfer.files);
-    };
+    const onDrop = (e) => {};
     // const onDownLoadFile =
 
     const onDownload = (file) => {
@@ -50,7 +48,7 @@ const AddEditForm = (props) => {
             if (info?.type !== 'image/png' || info?.type !== 'image/jpeg' || info?.file?.type !== 'application/pdf') {
                 showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Upload Correct Format' });
                 return false;
-            } 
+            }
         },
         onChange: (info) => {
             handleFormValueChange();

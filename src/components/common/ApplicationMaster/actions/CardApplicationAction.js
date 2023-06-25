@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -50,7 +50,6 @@ const CardApplicationAction = (props) => {
 
     const handleDeleteAction = (val) => {
         setFinalFormdata((prev) => {
-            console.log(prev, 'deleter');
             const newList = prev?.applicationAction;
             const indx = prev?.applicationAction?.findIndex((el) => el?.actionId === val.actionId);
             newList.splice(indx, 1);

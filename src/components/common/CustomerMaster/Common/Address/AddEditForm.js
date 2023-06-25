@@ -24,7 +24,6 @@ const AddEditForm = (props) => {
     const [pinSearchData, setPinSearchData] = useState({});
 
     const onErrorAction = (res) => {
-        console.log('error');
     };
 
     const onSuccessAction = () => {};

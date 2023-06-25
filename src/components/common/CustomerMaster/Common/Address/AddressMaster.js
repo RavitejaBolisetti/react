@@ -85,7 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
 const AddressMasterBase = (props) => {
     const { isViewModeVisible, section, addressIndData, setFormActionType, isCompanyAddressLoaded, formActionType, isAddressLoaded, addressCompanyData, selectedCustomer, saveData, addData } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, isAddressLoading, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification, handleButtonClick } = props;
-    const { fetchListCorporate, saveDataCorporate, customerType, resetData, resetDataCorporate } = props;
+    const { fetchListCorporate, saveDataCorporate, customerType, resetData, resetDataCorporate, NEXT_ACTION } = props;
 
     const [form] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
@@ -95,8 +95,6 @@ const AddressMasterBase = (props) => {
     const [isAdding, setIsAdding] = useState(false);
     const [editingData, setEditingData] = useState({});
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-
-    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const extraParams = [
         {
@@ -128,12 +126,12 @@ const AddressMasterBase = (props) => {
             } else {
                 fetchListCorporate({ setIsLoading: listShowLoading, userId, extraParams });
             }
-        };
+        }
 
-        return(() => {
+        return () => {
             resetData();
             resetDataCorporate();
-        })
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer?.customerId]);
 
@@ -167,7 +165,7 @@ const AddressMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
             if (res.data) {
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             }
         };
 
@@ -245,8 +243,8 @@ const AddressMasterBase = (props) => {
         pincodeData,
         addData,
         handleFormValueChange,
-        isAdding, 
-        setIsAdding
+        isAdding,
+        setIsAdding,
     };
 
     const myProps = {
@@ -260,14 +258,14 @@ const AddressMasterBase = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>
 
-                        <Collapse onChange={() => handleCollapse(1)}  activeKey={openAccordian}>
+                        <Collapse onChange={() => handleCollapse(1)} activeKey={openAccordian}>
                             <Panel
                                 header={
                                     <>
                                         <Space>
                                             <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Address' : 'Company Address'}</Text>
                                             {!isViewModeVisible && formActionType?.editMode && (
-                                                <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary" disabled={isAdding || isEditing }>
+                                                <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary" disabled={isAdding || isEditing}>
                                                     Add
                                                 </Button>
                                             )}

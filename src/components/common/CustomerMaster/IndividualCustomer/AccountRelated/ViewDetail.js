@@ -10,7 +10,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 const ViewDetailBase = (props) => {
     const { styles, formData, isLoading } = props;
-    console.log('🚀 ~ file: ViewDetail.js:12 ~ ViewDetailBase ~ Kuldeep:', formData);
+    // console.log('🚀 ~ file: ViewDetail.js:12 ~ ViewDetailBase ~ Kuldeep:', formData);
 
     const viewProps = {
         bordered: false,

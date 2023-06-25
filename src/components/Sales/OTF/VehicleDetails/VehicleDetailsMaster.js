@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMasterMain = (props) => {
     const { VehicleDetailsData, VehicleLovData, isVehicleLovDataLoaded, ProductHierarchyData, fetchProductLovCode, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedOrderId, section, formActionType, handleFormValueChange, NEXT_EDIT_ACTION, handleButtonClick } = props;
+    const { form, selectedOrderId, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setformData] = useState({});
@@ -119,7 +119,6 @@ const VehicleDetailsMasterMain = (props) => {
             setactiveKey([...activeKey, values]);
         }
     };
-    console.log('shaka', VehicleDetailsData, VehicleLovData, ProductHierarchyData);
     useEffect(() => {
         if (userId && selectedOrderId) {
             const extraParams = [
@@ -190,7 +189,6 @@ const VehicleDetailsMasterMain = (props) => {
     }, [VehicleDetailsData, isDataLoaded]);
 
     const onHandleSelect = (values) => {
-        console.log('api call');
         const LovParams = [
             {
                 key: 'prodctCode',
@@ -205,7 +203,6 @@ const VehicleDetailsMasterMain = (props) => {
         let data;
         if (!values.hasOwnProperty('vehicleUsageType')) {
             data = { otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, podate: dayjs(formData?.podate?.substr(0, 10)).format('DD/MM/YYYY'), vehicleUsageType: VehicleDetailsData?.vehicleUsageType, model: VehicleDetailsData?.model, modelCode: VehicleDetailsData?.modelCode, discountAmount: VehicleDetailsData?.discountAmount, optionalServices: optionsServicesMapping };
-            console.log('data', data);
         } else {
             data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, optionalServices: optionsServicesMapping };
         }
@@ -227,7 +224,7 @@ const VehicleDetailsMasterMain = (props) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction, extraParams });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
         const onError = (message) => {

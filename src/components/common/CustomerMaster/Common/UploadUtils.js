@@ -55,13 +55,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const UploadUtilsMain = (props) => {
-    const { uploadTitle, uploadDescription, uploadBtnName, uploadImgTitle, viewDocument, formData, setButtonData,  buttonData } = props;
+    const { uploadTitle, uploadDescription, uploadBtnName, uploadImgTitle, viewDocument, formData, setButtonData, buttonData } = props;
     const { listShowLoading, userId, uploadFile, fecthViewDocument, listShowLoadingOnLoad, setUploadImgDocId, uploadImgDocId } = props;
     const [uploadedFile, setUploadedFile] = useState();
     const [visible, setVisible] = useState(false);
 
     const onDrop = (e) => {
-        console.log('Dropped files', e.dataTransfer.files);
+        // console.log('Dropped files', e.dataTransfer.files);
     };
 
     useEffect(() => {
@@ -103,7 +103,6 @@ const UploadUtilsMain = (props) => {
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
                 setButtonData({ ...buttonData, formBtnActive: true });
-
             }
         },
     };
@@ -129,64 +128,64 @@ const UploadUtilsMain = (props) => {
 
     return (
         <>
-        <div className={styles.uploadDragger}>
-            {!uploadedFile && !formData?.docId ? (
-                <Row gutter={16}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <div className={styles.uploadDragger}>
-                            <Dragger customRequest={handleUpload} {...uploadProps} multiple={false}>
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 100,
-                                    }}
-                                    description={
-                                        <>
-                                            <span>{uploadTitle || 'Upload Your Profile Picture temp'}</span>
-                                            <span>
-                                                <br />
-                                                {uploadDescription || 'File type should be .png and .jpg and max file size to be 5MB temp '}
-                                            </span>
-                                        </>
-                                    }
-                                />
-                                <Button type="primary">{uploadBtnName || 'Upload File'}</Button>
-                            </Dragger>
-                        </div>
-                    </Col>
-                </Row>
-            ) : (
-                <>
-                    <Card className={styles.dashedBorder}>
-                        <Space direction="vertical">
-                            <Space>
-                                <Avatar icon={<HiCheck />} />
-                                <div>
-                                    <Title level={5}>{uploadImgTitle || 'Profile Picture'}</Title>
-                                    <Text>File type should be .png and .jpg and max file size to be 5Mb</Text>
-                                </div>
+            <div className={styles.uploadDragger}>
+                {!uploadedFile && !formData?.docId ? (
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className={styles.uploadDragger}>
+                                <Dragger customRequest={handleUpload} {...uploadProps} multiple={false}>
+                                    <Empty
+                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                        imageStyle={{
+                                            height: 100,
+                                        }}
+                                        description={
+                                            <>
+                                                <span>{uploadTitle || 'Upload Your Profile Picture temp'}</span>
+                                                <span>
+                                                    <br />
+                                                    {uploadDescription || 'File type should be .png and .jpg and max file size to be 5MB temp '}
+                                                </span>
+                                            </>
+                                        }
+                                    />
+                                    <Button type="primary">{uploadBtnName || 'Upload File'}</Button>
+                                </Dragger>
+                            </div>
+                        </Col>
+                    </Row>
+                ) : (
+                    <>
+                        <Card className={styles.dashedBorder}>
+                            <Space direction="vertical">
+                                <Space>
+                                    <Avatar icon={<HiCheck />} />
+                                    <div>
+                                        <Title level={5}>{uploadImgTitle || 'Profile Picture'}</Title>
+                                        <Text>File type should be .png and .jpg and max file size to be 5Mb</Text>
+                                    </div>
+                                </Space>
+                                <Space>
+                                    <Image
+                                        style={{ borderRadius: '6px' }}
+                                        width={150}
+                                        preview={{
+                                            visible,
+                                            scaleStep: 0.5,
+                                            src: `data:image/png;base64,${viewDocument?.base64}`,
+                                            onVisibleChange: (value) => {
+                                                setVisible(value);
+                                            },
+                                        }}
+                                        placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={200} />}
+                                        src={`data:image/png;base64,${viewDocument?.base64}`}
+                                    />
+                                    <Button type="link">Replace Image</Button>
+                                </Space>
                             </Space>
-                            <Space>
-                                <Image
-                                    style={{ borderRadius: '6px' }}
-                                    width={150}
-                                    preview={{
-                                        visible,
-                                        scaleStep: 0.5,
-                                        src: `data:image/png;base64,${viewDocument?.base64}`,
-                                        onVisibleChange: (value) => {
-                                            setVisible(value);
-                                        },
-                                    }}
-                                    placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={200} />}
-                                    src={`data:image/png;base64,${viewDocument?.base64}`}
-                                />
-                                <Button type="link">Replace Image</Button>
-                            </Space>
-                        </Space>
-                    </Card>
-                </>
-            )}
+                        </Card>
+                    </>
+                )}
             </div>
         </>
     );

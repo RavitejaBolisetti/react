@@ -64,8 +64,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const FamilyDetailMasterBase = (props) => {
-    const { section, userId, relationData, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, fetchFamilySearchList, listFamilySearchLoading, familySearchData } = props;
-    const { buttonData, setButtonData, formActionType, isSearchLoading, selectedCustomerId, handleButtonClick } = props;
+    const { section, userId, relationData, fetchFamilyDetailsList, listFamilyDetailsShowLoading, familyData, saveData, showGlobalNotification, fetchFamilySearchList, listFamilySearchLoading, familySearchData } = props;
+    const { buttonData, setButtonData, formActionType, isSearchLoading, selectedCustomerId, handleButtonClick, NEXT_ACTION } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [form] = Form.useForm();
     // const [formData, setFormData] = useState([]);
@@ -75,7 +75,6 @@ const FamilyDetailMasterBase = (props) => {
     const [editedMode, setEditedMode] = useState(false);
     const [editedId, setEditedId] = useState(0);
 
-    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
     const VIEW_ACTION = formActionType?.viewMode;
 
     const extraParams = [
@@ -163,7 +162,7 @@ const FamilyDetailMasterBase = (props) => {
         let data = [...familyDetailList];
         const onSuccess = (res) => {
             form.resetFields();
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, extraParams });
         };

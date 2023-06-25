@@ -11,7 +11,6 @@ import { getCodeValue } from 'utils/getCodeValue';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, typeData } = props;
-    console.log('🚀 ~ file: ViewDetail.js:14 ~ ViewDetailMain ~ formData:', formData, typeData);
 
     const viewProps = {
         bordered: false,

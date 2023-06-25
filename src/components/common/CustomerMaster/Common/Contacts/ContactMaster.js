@@ -76,7 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
 const ContactMain = (props) => {
     const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData } = props;
     const { isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
-    const { buttonData, setButtonData, formActionType, handleButtonClick,  setSelectedCustomer,  setSelectedCustomerId } = props;
+    const { buttonData, setButtonData, formActionType, handleButtonClick, setSelectedCustomer, setSelectedCustomerId, NEXT_ACTION } = props;
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
@@ -86,10 +86,8 @@ const ContactMain = (props) => {
     const [editingData, setEditingData] = useState({});
     const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [continueWithOldMobNo, setContinueWithOldMobNo] = useState(false);
-    const [isAdding, setIsAdding] = useState(false); 
+    const [isAdding, setIsAdding] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-
-    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const extraParams = [
         {
@@ -107,17 +105,16 @@ const ContactMain = (props) => {
             } else {
                 fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
             }
-        };
+        }
 
-        return(() => {
+        return () => {
             resetData();
             resetIndividualData();
-        })
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer?.customerId]);
 
     useEffect(() => {
-
         if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
             setContactData(customerIndData?.customerContact || []);
         } else {
@@ -141,7 +138,7 @@ const ContactMain = (props) => {
         contactform
             .validateFields()
             .then((value) => {
-                debugger
+                debugger;
                 if (isEditing) {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
@@ -156,22 +153,18 @@ const ContactMain = (props) => {
                     });
                 } else {
                     setContactData((prev) => {
-                        console.log('prev', prev);
                         let formData = prev?.length ? [...prev] : [];
-                        console.log('formData', formData);
                         if (value?.defaultaddress && formData?.length >= 1) {
                             formData?.forEach((contact) => {
                                 if (contact?.defaultaddress === true) {
                                     contact.defaultaddress = false;
                                 }
                             });
-                            console.log('formData', formData)
                             return [...formData, value];
                         } else {
                             const updVal = prev?.length ? [...prev, { ...value }] : [{ ...value }];
-                            console.log('updVal', updVal)
 
-                            return updVal ;
+                            return updVal;
                         }
                     });
                 }
@@ -226,7 +219,7 @@ const ContactMain = (props) => {
         uploadImgDocId,
         handleFormValueChange,
         setContinueWithOldMobNo,
-       
+
         customerType,
         isAdding,
         setIsAdding,
@@ -240,7 +233,7 @@ const ContactMain = (props) => {
             contactform.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
             setSelectedCustomerId(res?.data?.customerId);
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {

@@ -37,7 +37,6 @@ const OptionServicesFormMain = (props) => {
                 setoptionsServicesMapping([...optionsServicesMapping, data]);
                 optionForm.resetFields();
                 handleFormValueChange();
-                console.log('data', data, selectedOrderId);
             })
             .catch((err) => {});
     };

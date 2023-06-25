@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -120,7 +125,6 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
     }, [forceFormReset]);
 
     useEffect(() => {
-        console.log(DealerSearchvalue);
         if (DealerSearchvalue?.length > 0) {
             fetchManufacturerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue });
         }

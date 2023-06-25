@@ -19,8 +19,6 @@ import styles from 'components/common/Common.module.css';
 
 const CustomerMainConatinerMain = (props) => {
     const { customerType, currentSection } = props;
-    console.log('🚀 ~ file: CustomerMainConatiner.js:22 ~ CustomerMainConatinerMain ~ customerType:', customerType);
-
     const myProps = {
         ...props,
     };
