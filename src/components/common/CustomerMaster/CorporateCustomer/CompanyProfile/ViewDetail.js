@@ -15,7 +15,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formData, handleOnClick, isLoading, appCategoryData } = props;
+    const { formData, handleOnClick, isLoading, appCategoryData, viewDocument } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const viewProps = {
         bordered: false,
@@ -208,7 +208,7 @@ const ViewDetailMain = (props) => {
                         key="5"
                     >
                         <a>
-                            <Card className={styles.viewDocumentStrip} key={formData?.customerFormDocId} title={formData?.customerFormDocId} extra={<FiDownload />} onClick={handleOnClick}></Card>
+                            <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>
                         </a>
                         {/* {viewDocument && <img width="500" height="200" src={`data:image/png;base64,${viewDocument?.base64}`} />} */}
                     </Panel>

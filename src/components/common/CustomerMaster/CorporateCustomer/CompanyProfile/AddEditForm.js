@@ -12,7 +12,7 @@ import style from 'components/common/Common.module.css';
 import styles from 'components/Auth/Auth.module.css';
 
 import Svg from 'assets/images/Filter.svg';
-import { FiEye, FiTrash } from 'react-icons/fi';
+import { FiDownload, FiTrash } from 'react-icons/fi';
 
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
@@ -29,7 +29,7 @@ const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlin
 
 const AddEditFormMain = (props) => {
     const { appCategoryData, userId, formData, form, handleOnClick } = props;
-    const { uploadListShowLoading, uploadFile, setUploadedFile, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory } = props;
+    const { uploadListShowLoading, uploadFile, setUploadedFile, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory, viewDocument } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -67,7 +67,7 @@ const AddEditFormMain = (props) => {
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
-            previewIcon: <FiEye onClick={(e) => console.log(e, 'custom removeIcon event')} />,
+            previewIcon: <FiDownload onClick={(e) => console.log(e, 'custom removeIcon event')} />,
             removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
             showProgress: true,
         },
@@ -428,7 +428,10 @@ const AddEditFormMain = (props) => {
                                                 <Button danger>Upload File</Button>
                                             </Dragger>
                                             <a>
-                                                <Card key={formData?.customerFormDocId} title={formData?.customerFormDocId} extra={<FiEye />} onClick={handleOnClick}></Card>
+                                                <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>
+                                                <Form.Item hidden="true" label="Document" initialValue={formData?.customerFormDocId} name="customerFormDocId">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Document')} />
+                                                </Form.Item>
                                             </a>
                                         </Col>
                                     </Row>
