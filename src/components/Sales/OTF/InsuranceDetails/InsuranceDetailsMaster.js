@@ -103,9 +103,12 @@ const InsuranceDetailsMasterBase = (props) => {
         insuranceData,
     };
 
+    const myProps = {
+        ...props,
+        buttonData: { ...props.buttonData, nextBtn: true, saveBtn: false },
+    };
+
     const onFinish = (values) => {
-        console.log('🚀 ~ file: InsuranceDetailsMaster.js:107 ~ onFinish ~ values:', values);
-        console.log('🚀 ~ file: InsuranceDetailsMaster.js:107 ~ onFinish ~ values:', values);
         handleButtonClick({ record: undefined, buttonAction: NEXT_ACTION });
     };
 
@@ -127,7 +130,7 @@ const InsuranceDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...props} />
+                    <OTFFormButton {...myProps} />
                 </Col>
             </Row>
         </Form>
