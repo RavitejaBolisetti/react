@@ -64,11 +64,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const FamilyDetailMasterBase = (props) => {
-    const { section, userId, relationData, fetchFamilyDetailsList, listFamilyDetailsShowLoading, isFamilyLoaded, familyData, saveData, showGlobalNotification, fetchFamilySearchList, listFamilySearchLoading, familySearchData } = props;
+    const { section, userId, relationData, fetchFamilyDetailsList, listFamilyDetailsShowLoading, familyData, saveData, showGlobalNotification, fetchFamilySearchList, listFamilySearchLoading, familySearchData } = props;
     const { buttonData, setButtonData, formActionType, isSearchLoading, selectedCustomerId, handleButtonClick } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [form] = Form.useForm();
-    // const [formData, setFormData] = useState([]);
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [customerType, setCustomerType] = useState('Yes');
