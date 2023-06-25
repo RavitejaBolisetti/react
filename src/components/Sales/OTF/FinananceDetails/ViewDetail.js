@@ -6,9 +6,9 @@
 import React from 'react';
 import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-
+import { getCodeValue } from 'utils/getCodeValue';
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading } = props;
+    const { styles, formData, isLoading,FinanceLovData } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -18,7 +18,7 @@ const ViewDetailMain = (props) => {
     return (
         <Card className={styles.drawerCardView} style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Financier">{checkAndSetDefaultValue(formData?.financier, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Financier">{checkAndSetDefaultValue(getCodeValue(FinanceLovData,formData?.financier), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Branch">{checkAndSetDefaultValue(formData?.branch, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="File Number">{checkAndSetDefaultValue(formData?.fileNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Loan Amount">{checkAndSetDefaultValue(formData?.loanAmount, isLoading)}</Descriptions.Item>

@@ -8,9 +8,10 @@ import { Card, Descriptions } from 'antd';
 import styles from 'components/common/Common.module.css';
 import dayjs from 'dayjs';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading } = props;
+    const { formData, isLoading, typeData } = props;
 
     const viewProps = {
         bordered: false,
@@ -27,18 +28,18 @@ const ViewDetailMain = (props) => {
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Initial Promise Delivery Date">{checkAndSetDefaultValue(promiseDeliveryDate, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Cust. Expected Delivery Date">{checkAndSetDefaultValue(expectedDeliveryDate, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(formData?.saleType, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(formData?.priceType === 'INDV' ? 'Individual' : 'Corporate', isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYP, formData?.saleType), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Booking Amount">{checkAndSetDefaultValue(formData?.bookingAmount, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Sales Consultant">{checkAndSetDefaultValue(formData?.saleConsultant, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Special Request">{checkAndSetDefaultValue(formData?.specialRequest, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Place Of Registration">{checkAndSetDefaultValue(formData?.placeOfRegistration, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Delivery At">{checkAndSetDefaultValue(formData?.deliveryAt === 'OFC' ? 'Office' : formData?.deliveryAt === 'HOM' ? 'Home' : 'Showroom', isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Referral">{checkAndSetDefaultValue(formData?.referral === 'Y' ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Delivery At">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_AT, formData?.deliveryAt), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Referral">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.referral), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Influencer/Mitra Type">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Influencer/Mitra Name">{checkAndSetDefaultValue(formData?.mitraName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Mode Of Payment">{checkAndSetDefaultValue(formData?.modeOfPAyment, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Finance Agreed">{checkAndSetDefaultValue(formData?.financeArrangedBy, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Finance Agreed">{checkAndSetDefaultValue(getCodeValue(typeData?.FNC_ARNGD, formData?.financeArrangedBy), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Exchange">{checkAndSetDefaultValue(formData?.exchange === 1 ? <span className={styles.activeText}>Yes</span> : 'No', isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Loyality Scheme">{checkAndSetDefaultValue(formData?.loyalityScheme === 1 ? <span className={styles.activeText}>Yes</span> : 'No', isLoading)}</Descriptions.Item>
             </Descriptions>

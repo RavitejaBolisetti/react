@@ -83,6 +83,7 @@ const SchemeDetailsMasterBase = (props) => {
         onCloseAction,
         schemeData,
         isLoading,
+        ...props,
     };
 
     const onFinish = (values) => {

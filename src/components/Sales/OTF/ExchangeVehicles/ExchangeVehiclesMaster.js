@@ -127,12 +127,6 @@ const ExchangeVehiclesBase = (props) => {
         },
     ];
 
-    const viewProps = {
-        styles,
-        formData,
-        isLoading,
-    };
-
     const errorAction = (message) => {
         showGlobalNotification(message);
     };
@@ -239,6 +233,18 @@ const ExchangeVehiclesBase = (props) => {
         isVariantLoading,
         variantData,
         isLoading,
+    };
+
+    const viewProps = {
+        styles,
+        formData,
+        isLoading,
+        makeData,
+        modelData,
+        variantData,
+        typeData,
+        schemeLovData,
+        financeLovData,
     };
 
     return (

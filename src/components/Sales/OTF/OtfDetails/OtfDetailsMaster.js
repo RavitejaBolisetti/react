@@ -156,6 +156,7 @@ const OtfDetailsMasterBase = (props) => {
     };
 
     const viewProps = {
+        typeData,
         formData: otfData,
         styles,
         isLoading,
