@@ -117,7 +117,7 @@ const AddEditForm = (props) => {
                     <div className={styles.uploadContainer} style={{ opacity: '100' }}>
                         <Dragger
                             //  disabled={uploadedFile?.length > 0}
-                            beforeUpload={() => false}
+                            // beforeUpload={() => false}
                             customRequest={handleUpload}
                             {...uploadProps}
                            // showUploadList={correctFormat ? true : false}
