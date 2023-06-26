@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import * as React from 'react';
 export const SVGComponent = (props) => (
     <svg viewBox="64 64 896 896" focusable="false" data-icon="right" width="1em" height="1em" fill="red" style={{ margin: '0 0 0.6rem -0.2rem', fontSize: '0.9rem' }} aria-hidden="true">

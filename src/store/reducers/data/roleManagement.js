@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import { ROLE_MANAGEMENT_DATA_LOADED, ROLE_MANAGEMENT_SET_FORM_IS_VISIBLE, ROLE_MANAGEMENT_SET_FORM_DATA, ROLE_MANAGEMENT_DATA_SHOW_LOADING,ROLE_MANAGEMENT_DATA_ON_SAVE_SHOW_LOADING, MENU_DATA_LOADED, ROLE_MANAGEMENT_ROLES } from 'store/actions/data/roleManagement';
 
 const initialState = {

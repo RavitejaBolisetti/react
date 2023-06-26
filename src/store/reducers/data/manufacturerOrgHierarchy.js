@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import { MANUFACTURER_ORG_HIERARCHY_DATA_LOADED, MANUFACTURER_ORG_HIERARCHY_SET_FORM_IS_VISIBLE, MANUFACTURER_ORG_HIERARCHY_SET_FORM_DATA, MANUFACTURER_ORG_HIERARCHY_DATA_SHOW_LOADING, MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_DATA_LOADED, MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING,MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_VISIBLE  } from 'store/actions/data/manufacturerOrgHierarchy';
 
 const initialState = {

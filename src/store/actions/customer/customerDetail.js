@@ -1,6 +1,7 @@
 /*
- *   Copyright (c) 2023
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_CUSTOMER_MASTER_LIST as baseURL } from 'constants/routingApi';
