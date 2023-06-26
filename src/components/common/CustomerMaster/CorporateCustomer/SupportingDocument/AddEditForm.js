@@ -3,8 +3,8 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
-import { Row, Col, Form, Select, Input, message, Upload, Button, Empty, Card } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Form, Select, Input, Upload, Button, Empty, Card } from 'antd';
 
 import { FiEye, FiTrash } from 'react-icons/fi';
 
@@ -17,7 +17,9 @@ const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview } = props;
+    const { handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview, emptyList, setEmptyList } = props;
+
+    const [showStatus, setShowStatus] = useState('');
 
     const onDrop = (e) => {};
 
@@ -43,23 +45,30 @@ const AddEditForm = (props) => {
             showProgress: true,
         },
         progress: { strokeWidth: 3, showInfo: true },
-
         onDrop,
         onChange: (info) => {
             handleFormValueChange();
             const { status } = info.file;
-            if (status === 'uploading') {
-            } else if (status === 'done') {
+            setShowStatus(info.file);
+            if (status === 'done') {
                 setUploadedFile(info?.file?.response?.docId);
-                message.success(`${info.file.name} file uploaded successfully.`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
             }
         },
     };
 
+    useEffect(() => {
+        if (showStatus.status === 'done') {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
+        } else if (showStatus.status === 'error') {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showStatus]);
+
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
+        setEmptyList(true);
+
 
         const data = new FormData();
         data.append('applicationId', 'app');
@@ -106,12 +115,8 @@ const AddEditForm = (props) => {
             </Row>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.uploadContainer}>
-                        <Dragger
-                            //  disabled={uploadedFile?.length > 0}
-                            customRequest={handleUpload}
-                            {...uploadProps}
-                        >
+                    <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                        <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
                             <div>
                                 <img src={Svg} alt="" />
                             </div>
