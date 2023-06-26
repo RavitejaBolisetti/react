@@ -10,12 +10,12 @@ import { Button, Col, Row, Input, Form, Empty, ConfigProvider, Select } from 'an
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { showGlobalNotification } from 'store/actions/notification';
-import { validateRequiredInputField } from 'utils/validation';
+import { searchValidator, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { tableColumn } from './tableColumn';
 
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { btnVisiblity } from 'utils/btnVisiblity';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -84,9 +84,9 @@ const CustomerMasterMain = (props) => {
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
-    const [isLastSection, setLastSection] = useState(false);
 
     const [form] = Form.useForm();
+    const [searchForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -95,6 +95,12 @@ const CustomerMasterMain = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
+    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const defaultExtraParam = [
         {
@@ -155,8 +161,6 @@ const CustomerMasterMain = (props) => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
             setSection(section);
-            const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
-            setLastSection(!nextSection?.id);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
@@ -169,50 +173,29 @@ const CustomerMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType, userId, refreshList]);
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
         form.resetFields();
 
-        switch (buttonAction) {
-            case ADD_ACTION:
-                defaultSection && setCurrentSection(defaultSection);
-                break;
-            case EDIT_ACTION:
-                setSelectedCustomer(record);
-                record && setSelectedCustomerId(record?.customerId);
-                openDefaultSection && setCurrentSection(defaultSection);
-                break;
-            case VIEW_ACTION:
-                setSelectedCustomer(record);
-                record && setSelectedCustomerId(record?.customerId);
-                defaultSection && setCurrentSection(defaultSection);
-                break;
-
-            case NEXT_ACTION:
-                const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
-                section && setCurrentSection(nextSection?.id);
-                setLastSection(!nextSection?.id);
-                break;
-
-            default:
-                break;
-        }
-
-        if (buttonAction !== NEXT_ACTION) {
-            setFormActionType({
-                addMode: buttonAction === ADD_ACTION,
-                editMode: buttonAction === EDIT_ACTION,
-                viewMode: buttonAction === VIEW_ACTION,
-            });
-            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        }
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION || buttonAction === NEXT_EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
         setIsFormVisible(true);
+
+        if (buttonAction === NEXT_ACTION || buttonAction === NEXT_EDIT_ACTION) {
+            const section = Object.values(sectionName)?.find((i) => i.id > currentSection);
+            section && setCurrentSection(section?.id);
+        }
+
+        if (buttonAction === EDIT_ACTION || buttonAction === VIEW_ACTION) {
+            setSelectedCustomer(record);
+            record && setSelectedCustomerId(record?.customerId);
+            defaultSection && setCurrentSection(defaultSection);
+        }
     };
 
     const onFinish = (values, e) => {};
 
     const onFinishFailed = (errorInfo) => {
-        console.error(errorInfo);
-        // form.validateFields().then((values) => {});
+        form.validateFields().then((values) => {});
     };
 
     const tableProps = {
@@ -225,19 +208,43 @@ const CustomerMasterMain = (props) => {
         form.resetFields();
     };
 
+    const [customerSearchRules, setCustomerSearchRules] = useState({ rules: [validateRequiredInputField('Keyword')] });
     const onSearchHandle = (value) => {
+        searchForm
+            .validateFields()
+            .then((values) => {
+                setShowDataLoading(true);
+                fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
+            })
+            .catch((err) => {
+                console.log(err);
+                return;
+            });
+    };
+
+    const onFinishSearch = (value) => {
         setShowDataLoading(true);
         fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
     };
 
     const handleChange = (selectedvalue) => {
         setFilterString({ searchType: selectedvalue });
+        setCustomerSearchRules({});
+        // setFilterString({ ...filterString, searchParam: '' });
+        // console.log('filterString', filterString);
     };
 
     const onChangeHandle = (event) => {
         if (event.target.value === undefined) {
             return false;
         }
+        if (filterString?.searchType === 'mobileNumber') {
+            setCustomerSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
+        }
+        if (filterString?.searchType === 'customerName') {
+            setCustomerSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
+        }
+
         setFilterString({ ...filterString, searchParam: event.target.value });
     };
 
@@ -268,7 +275,6 @@ const CustomerMasterMain = (props) => {
     }, [formActionType]);
 
     const containerProps = {
-        record: selectedCustomer,
         form,
         formActionType,
         setFormActionType,
@@ -300,14 +306,16 @@ const CustomerMasterMain = (props) => {
         shouldResetForm,
         handleFormValueChange,
         setRefreshList,
-        isLastSection,
-        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next', 
     };
 
     const selectProps = {
         optionFilterProp: 'children',
         allowClear: true,
         className: styles.headerSelectField,
+    };
+
+    const onKeyPressHandler = (e) => {
+        e.key === 'Enter' && e.preventDefault();
     };
 
     return (
@@ -327,20 +335,38 @@ const CustomerMasterMain = (props) => {
                                     })}
                                 </div>
                                 <div className={styles.selectSearchBg}>
-                                    <Select {...selectProps} value={filterString?.searchType} className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter">
-                                        {typeData?.map((item) => (
-                                            <Option key={'pnc' + item?.key} value={item?.key}>
-                                                {item?.value}
-                                            </Option>
-                                        ))}
-                                    </Select>
-                                    {/* <Form layout="vertical" autoComplete="off" onFinish={onSearchHandle}> */}
-                                    <Form.Item name="keyword" rules={[validateRequiredInputField('keyword')]}>
-                                        <Search placeholder="Search" value={filterString?.searchParam} onChange={onChangeHandle} onSearch={onSearchHandle} allowClear className={styles.headerSearchField} />
-                                    </Form.Item>
-                                    {/* </Form> */}
+                                    <Form onKeyPress={onKeyPressHandler} form={searchForm} layout="vertical" autoComplete="off" onFinish={onFinishSearch}>
+                                        {/* <Form.Item name="parameter" rules={[validateRequiredSelectField('parameter')]} validateTrigger={['onSearch']}> */}
+                                        <Select {...selectProps} value={filterString?.searchType} className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter">
+                                            {typeData?.map((item) => (
+                                                <Option key={'pnc' + item?.key} value={item?.key}>
+                                                    {item?.value}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                        {/* </Form.Item> */}
+                                        <Form.Item {...customerSearchRules} name="keyword" validateTrigger={['onChange', 'onSearch']}>
+                                            <Search placeholder="Search" value={filterString?.searchParam} onChange={onChangeHandle} onSearch={onSearchHandle} allowClear className={styles.headerSearchField} htmlType="submit" />
+                                        </Form.Item>
+                                    </Form>
                                 </div>
                             </Col>
+                            {/* <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <Form onKeyPress={onKeyPressHandler} form={searchForm} layout="vertical" autoComplete="off" onFinish={onFinishSearch}>
+                                    <Form.Item name="parameter" rules={[validateRequiredSelectField('parameter')]} validateTrigger={['onSearch']}>
+                                        <Select {...selectProps} value={filterString?.searchType} className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter">
+                                            {typeData?.map((item) => (
+                                                <Option key={'pnc' + item?.key} value={item?.key}>
+                                                    {item?.value}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                    <Form.Item {...customerSearchRules} name="keyword" validateTrigger={['onChange', 'onSearch']}>
+                                        <Search placeholder="Search" value={filterString?.searchParam} onChange={onChangeHandle} onSearch={onSearchHandle} allowClear className={styles.headerSearchField} htmlType="submit" />
+                                    </Form.Item>
+                                </Form>
+                            </Col> */}
                             <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
                                 <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                     Add

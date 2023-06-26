@@ -11,6 +11,12 @@ export const validateRequiredInputField = (fieldName, lowercase = true) => ({
     message: 'Please enter ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
+export const validateRequiredInputFieldMinLength = (fieldName, lowercase = true) => ({
+    required: true,
+    min: 3,
+    message: 'Please enter atleast 3 character to search ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
+});
+
 export const validateRequiredSelectField = (fieldName, lowercase = true) => ({
     required: true,
     message: 'Please select ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
