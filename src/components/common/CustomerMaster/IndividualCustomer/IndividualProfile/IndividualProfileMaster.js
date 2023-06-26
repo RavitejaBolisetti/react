@@ -163,7 +163,6 @@ const IndividualProfileBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                setSelectedCustomerId(res?.data?.customerId);
             }
             setButtonData({ ...buttonData, formBtnActive: false });
         };
