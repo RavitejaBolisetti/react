@@ -4,12 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Collapse, Space, Card, Typography, Button, Row } from 'antd';
+import { Collapse, Space, Card, Typography, Button, Row, Divider, Empty } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { ViewDetail } from './ViewDetail';
 import { FiEdit } from 'react-icons/fi';
 import { FormContainer } from './FormContainer';
 import dayjs from 'dayjs';
+import { LANGUAGE_EN } from 'language/en';
 
 import styles from 'components/common/Common.module.css';
 
@@ -23,6 +24,8 @@ const AddEditFormMain = (props) => {
     const [disabled, setDisabled] = useState(false);
     const [initialVal, setInitialVal] = useState(null);
     const [editedValues, setEditedValues] = useState({});
+
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
     const handleEdit = () => {
         setIsViewModeVisible(false);
@@ -58,7 +61,7 @@ const AddEditFormMain = (props) => {
             editedId: values?.editedId,
             relationship: values?.relationship,
             relationCode: values?.relationCode,
-            relationCustomerId: values?.mnmCustomer === "Yes" ? values?.relationCustomerId : "",
+            relationCustomerId: values?.mnmCustomer === 'Yes' ? values?.relationCustomerId : '',
             dateOfBirth: typeof values?.dateOfBirth === 'object' ? values?.dateOfBirth : dayjs(values?.dateOfBirth),
             relationAge: values?.relationAge,
             remarks: values?.remarks,
@@ -71,7 +74,6 @@ const AddEditFormMain = (props) => {
             setCustomerType('No');
         }
         form.setFieldsValue(Val);
-
     };
 
     const onCancel = (values) => {
@@ -141,7 +143,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
                         {showForm && !editedMode && <FormContainer {...formProps} />}
-                        {familyDetailList?.length > 0 &&
+                        {familyDetailList?.length > 0 ? (
                             familyDetailList?.map((item, index) => (
                                 <Collapse
                                     expandIcon={() => {
@@ -192,10 +194,26 @@ const AddEditFormMain = (props) => {
                                         key={index}
                                         style={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
                                     >
-                                        {editedMode && !showForm ? <FormContainer {...formProps} item /> : <ViewDetail {...viewProps} mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} relationCustomerId={item?.relationCustomerId}/>}
+                                        {editedMode && !showForm ? <FormContainer {...formProps} item /> : <ViewDetail {...viewProps} mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} relationCustomerId={item?.relationCustomerId} />}
                                     </Panel>
                                 </Collapse>
-                            ))}
+                            ))
+                        ) : (
+                            <>
+                                <Divider />
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        <span>
+                                            {noDataTitle} <br />
+                                        </span>
+                                    }
+                                ></Empty>
+                            </>
+                        )}
                     </Space>
                 </Card>
             ) : (
