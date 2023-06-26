@@ -56,11 +56,11 @@ const SchemeDetailsMasterBase = (props) => {
     const { form, selectedOrderId, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
 
     const onErrorAction = (message) => {
-        showGlobalNotification(message);
+        // showGlobalNotification(message);
     };
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     useEffect(() => {

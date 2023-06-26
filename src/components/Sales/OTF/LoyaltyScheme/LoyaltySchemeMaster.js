@@ -57,7 +57,7 @@ const LoyaltySchemeMasterMain = (props) => {
     const [formdata, setformdata] = useState();
 
     const onErrorAction = (message) => {
-        showGlobalNotification({ message });
+        // showGlobalNotification({ message });
     };
 
     const onFinish = (values) => {

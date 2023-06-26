@@ -84,11 +84,11 @@ export const InvoiceDetailsMasterBase = (props) => {
     ];
 
     const errorAction = (message) => {
-        showGlobalNotification(message);
+        // showGlobalNotification(message);
     };
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     useEffect(() => {

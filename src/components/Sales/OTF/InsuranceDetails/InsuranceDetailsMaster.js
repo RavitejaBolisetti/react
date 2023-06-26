@@ -78,11 +78,11 @@ const InsuranceDetailsMasterBase = (props) => {
     }, [userId, selectedOrderId]);
 
     const onErrorAction = (message) => {
-        showGlobalNotification(message);
+        // showGlobalNotification(message);
     };
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const viewProps = {

@@ -83,6 +83,9 @@ export const FinananceDetailsMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
+
+
+
     const extraParams = [
         {
             key: 'otfNumber',
@@ -107,11 +110,11 @@ export const FinananceDetailsMasterBase = (props) => {
     }, [userId, isFinanceLovDataLoaded]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const errorAction = (message) => {
-        showGlobalNotification(message);
+        // showGlobalNotification(message);
     };
 
     const onFinish = (values) => {
@@ -120,14 +123,14 @@ export const FinananceDetailsMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
 
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {

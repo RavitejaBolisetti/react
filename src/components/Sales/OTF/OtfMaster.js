@@ -165,13 +165,13 @@ export const OtfMasterBase = (props) => {
     ];
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setShowDataLoading(false);
         setRefershData(false);
     };
 
     const onErrorAction = (message) => {
-        showGlobalNotification({ message });
+        // showGlobalNotification({ message });
         setShowDataLoading(false);
         setRefershData(false);
     };
