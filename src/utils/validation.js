@@ -107,7 +107,8 @@ export const validatFacebookProfileUrl = (fieldName) => ({
 });
 
 export const validatYoutubeProfileUrl = (fieldName) => ({
-    pattern: /(?:http:\/\/)?(?:www\.)?(?:youtube\.com\/)([a-zA-Z0-9_-]{11})$/,
+    // pattern: /(?:http:\/\/)?(?:www\.)?(?:youtube\.com\/)([a-zA-Z0-9_-]{11})$/,
+    pattern: /^https?:\/\/(www\.)?youtube\.com\/(#!\/)?([^/]+)(\/\w+)*$/,
     message: 'Please enter valid url ' + fieldName,
 });
 
