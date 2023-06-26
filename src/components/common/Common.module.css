@@ -1427,14 +1427,14 @@
 
 .contentHeaderBackground .subheading .selectSearchBg .headerSelectField,
 .contentHeaderBackground .selectSearchBg .headerSelectField {
-    width: 142px;
+    width: 140px;
     position: absolute;
     z-index: 99;
 }
 
 .contentHeaderBackground .subheading .selectSearchBg .headerSearchField,
 .contentHeaderBackground .selectSearchBg .headerSearchField {
-    width: calc(100% - 134px);
+    width: calc(100% - 132px);
     float: right;
 }
 
@@ -1453,7 +1453,7 @@
 
 .selectSearchBg .headerSelectField :global .ant-select-selector .ant-select-selection-placeholder,
 .selectSearchBg .headerSelectField :global .ant-select-selector .ant-select-selection-item {
-    padding-inline-end: 0;
+    padding-inline-end: 12px;
     color: #0b0b0c;
     font-size: 12px;
     font-weight: 500;
@@ -1673,7 +1673,7 @@
 } */
 
 .drawerBodyRight {
-    padding: 30px 30px 36px;
+    padding: 30px 30px 80px;
     margin-left: 0 !important;
     margin-right: 0 !important;
     /* margin-bottom: 40px; */
@@ -1747,7 +1747,8 @@
 .drawerBodyRight :global .ant-card-bordered,
 .drawerBodyRight :global .ant-space-vertical {
     border: 0;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
+    width: 100%;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body {
@@ -2032,7 +2033,7 @@
 .drawerBodyRight .uploadDragger :global .ant-card .ant-card-body .ant-space button {
     padding: 0;
     position: absolute;
-    bottom: 0;
+    bottom: 20px;
 }
 
 .drawerBodyRight .uploadDragger :global .ant-space-horizontal .ant-avatar.ant-avatar-icon {
@@ -2078,10 +2079,25 @@
 }
 
 .drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
+    /* height: 40px; */
+    margin-top: 20px;
+    background-color: #e6e6e6;
+    border-radius: 6px;
+    padding: 6px 20px;
+    border: #b5b5b6 1px solid;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item {
+    margin-top: 0px;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action.ant-btn-sm,
+.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
     height: 40px;
     margin-top: 20px;
     background-color: #e6e6e6;
     border-radius: 6px;
+    color: #0b0b0c;
 }
 
 .drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
@@ -2133,7 +2149,7 @@
 .drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     background: #f2f2f2;
     border-radius: 0 0 8px 8px;
-    padding: 0 30px 0px;
+    padding: 0 20px 0px;
 }
 
 .drawerBodyRight .sectionborder {
@@ -2145,9 +2161,9 @@
     border-bottom: none;
 }
 
-.drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box button {
+/* .drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box button {
     margin-bottom: 20px;
-}
+} */
 
 .drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-form-item button {
     margin-bottom: 0;
@@ -2248,6 +2264,7 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 23px;
+    align-items: center;
 }
 
 .viewDrawerContainer :global .ant-card .ant-card-body .ant-divider-horizontal {
@@ -2359,6 +2376,10 @@
     margin-bottom: 20px !important;
 }
 
+.viewDrawerContainer .otfcontanerBox {
+    margin-bottom: 20px !important;
+}
+
 .viewDrawerContainer .cardInsideBox {
     padding-bottom: 20px;
     margin-top: 20px;
@@ -2370,10 +2391,22 @@
     border-bottom: 1px solid transparent;
 }
 
+.viewDrawerContainer .viewDocumentStrip :global .ant-card-head .ant-card-head-title {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 23px;
+    color: #0b0b0c;
+}
+
 .viewDrawerContainer .viewDocumentStrip :global .ant-card-head .ant-card-head-wrapper .ant-card-extra {
     color: #ff3e5b;
     cursor: pointer;
     margin-top: 3px;
+    margin-left: 12px;
+}
+
+.viewDrawerContainer .viewDocumentStrip :global .ant-card-head .ant-card-head-wrapper .ant-card-extra svg {
+    margin-left: 10px;
 }
 
 .viewDrawerContainer .viewDocumentStrip :global .ant-card-body {
@@ -2387,6 +2420,14 @@
     padding: 20px;
     padding-bottom: 0;
     margin-bottom: 20px;
+}
+
+.cardInsideBox .viewHistory {
+    text-align: right;
+}
+
+.cardInsideBox .viewHistory :global .ant-btn {
+    padding-right: 0px;
 }
 
 .customerName {
@@ -2526,6 +2567,15 @@
 
 .drawerBodyRight .uploadContainer :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item:hover {
     background-color: transparent;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.drawerBodyRight .uploadContainer :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action .anticon {
+    color: #ff3e5b;
 }
 
 .nameSpacing {
