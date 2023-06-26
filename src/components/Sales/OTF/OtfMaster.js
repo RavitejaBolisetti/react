@@ -9,9 +9,9 @@ import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import AdvanceOtfFilter from './AdvanceOtfFilter';
-import { btnVisiblity } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+
 import { OTFMainConatiner } from './OTFMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
@@ -101,11 +101,6 @@ export const OtfMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-    const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
-    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const extraParams = [
         {
@@ -174,34 +169,41 @@ export const OtfMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSearchDataLoaded, userId, refershData]);
 
-    const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
+        switch (buttonAction) {
+            case ADD_ACTION:
+                defaultSection && setCurrentSection(defaultSection);
+                break;
+            case EDIT_ACTION:
+                setSelectedOrder(record);
+                record && setSelectedOrderId(record?.otfNumber);
+                openDefaultSection && setCurrentSection(defaultSection);
+                break;
+            case VIEW_ACTION:
+                setSelectedOrder(record);
+                record && setSelectedOrderId(record?.otfNumber);
+                defaultSection && setCurrentSection(defaultSection);
+                break;
+            case NEXT_ACTION:
+                const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+                section && setCurrentSection(nextSection?.id);
+                setLastSection(!nextSection?.id);
+                break;
 
-        if (buttonAction === ADD_ACTION) {
-            defaultSection && setCurrentSection(defaultSection);
+            default:
+                break;
         }
 
-        if (buttonAction === EDIT_ACTION) {
-            setSelectedOrder(record);
-            record && setSelectedOrderId(record?.otfNumber);
-            !formVisible && setCurrentSection(defaultSection);
+        if (buttonAction !== NEXT_ACTION) {
+            setFormActionType({
+                addMode: buttonAction === ADD_ACTION,
+                editMode: buttonAction === EDIT_ACTION,
+                viewMode: buttonAction === VIEW_ACTION,
+            });
+            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
         }
-
-        if (buttonAction === VIEW_ACTION) {
-            setSelectedOrder(record);
-            record && setSelectedOrderId(record?.otfNumber);
-            defaultSection && setCurrentSection(defaultSection);
-        }
-
-        if (buttonAction === NEXT_ACTION || buttonAction === NEXT_EDIT_ACTION) {
-            const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
-            section && setCurrentSection(nextSection?.id);
-            setLastSection(!nextSection?.id);
-        }
-
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION || buttonAction === NEXT_EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
         setIsFormVisible(true);
     };
 
@@ -282,7 +284,6 @@ export const OtfMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        console.log('🚀 ~ file: OtfMaster.js:281 ~ onFinishFailed ~ errorInfo:', errorInfo);
         return;
     };
 
@@ -391,7 +392,6 @@ export const OtfMasterBase = (props) => {
         EDIT_ACTION,
         VIEW_ACTION,
         NEXT_ACTION,
-        NEXT_EDIT_ACTION,
         buttonData,
 
         setButtonData,

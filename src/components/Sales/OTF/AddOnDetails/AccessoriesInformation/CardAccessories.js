@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, Fragment, useEffect } from 'react';
 import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
@@ -30,7 +35,6 @@ const CardAccessories = (prop) => {
     const onUpdate = (value) => {
         form.validateFields()
             .then((newFormData) => {
-                console.log('newFormData', newFormData);
                 setAddOnItemInfo((prev) => {
                     const newList = [...prev];
                     const indx = prev?.findIndex((el) => el?.partNumber === partNumber);
@@ -72,7 +76,7 @@ const CardAccessories = (prop) => {
         requiredQuantity,
         partDescription,
         onCancel,
-        onUpdate
+        onUpdate,
     };
 
     return (
@@ -87,7 +91,7 @@ const CardAccessories = (prop) => {
                         </Row>
                         <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text type="secondary">{"Quantity" + requiredQuantity}</Text>
+                                <Text type="secondary">{'Quantity' + requiredQuantity}</Text>
                             </Col>
                         </Row>
                     </Col>

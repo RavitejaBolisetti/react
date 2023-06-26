@@ -32,7 +32,6 @@ const ValidateMobileModalMain = (props) => {
     const handleOTPInput = (value) => {
         setOTPInput(value);
         setInValidOTP(false);
-        console.log('value', value);
         if (value?.length === 6) {
             setDisableVerifyOTP(false);
         } else {

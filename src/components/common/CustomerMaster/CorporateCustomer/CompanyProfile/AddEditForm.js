@@ -33,8 +33,6 @@ const AddEditFormMain = (props) => {
 
     const [activeKey, setactiveKey] = useState([1]);
 
-    console.log('Form Data:', formData);
-
     useEffect(() => {
         form.setFieldsValue({
             ...formData,
@@ -60,7 +58,7 @@ const AddEditFormMain = (props) => {
     };
 
     const onDrop = (e) => {
-        console.log('Dropped files', e.dataTransfer.files);
+        // console.log('Dropped files', e.dataTransfer.files);
     };
 
     const uploadProps = {

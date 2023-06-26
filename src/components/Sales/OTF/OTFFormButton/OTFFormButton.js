@@ -28,7 +28,7 @@ export const OTFFormButton = ({ record, onCloseAction, buttonData, setButtonData
 
             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
                 {buttonData?.editBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, formVisible: true })} type="primary">
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                         Edit
                     </Button>
                 )}

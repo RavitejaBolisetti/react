@@ -4,7 +4,7 @@
  */
 import React, { useState } from 'react';
 import { ViewDetail } from './ViewContactDetails';
-import { Collapse, Space, Typography, Row, Col, Checkbox, Divider, Button } from 'antd';
+import { Collapse, Space, Typography, Row, Col, Checkbox, Divider, Button, Empty } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { FiEdit } from 'react-icons/fi';
 
@@ -16,7 +16,7 @@ const { Text } = Typography;
 
 const ViewContactList = (props) => {
     const { styles, contactData, deleteContactHandeler, onCheckdefaultAddClick, setEditingData, typeData } = props;
-    const { setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, isEditing, setIsEditing, formActionType } = props;
+    const { setShowAddEditForm, showAddEditForm, setContactData, onFinish, form,contactform, isEditing, setIsEditing, formActionType } = props;
     const { isAdding, setIsAdding } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
@@ -27,7 +27,7 @@ const ViewContactList = (props) => {
         setOpenAccordian(i);
         setIsEditing(true);
         setEditingData(data);
-        form.setFieldsValue(data);
+        contactform.setFieldsValue(data);
     };
 
     const handleCollapse = (key) => {
@@ -42,6 +42,7 @@ const ViewContactList = (props) => {
         setContactData,
         onFinish,
         form,
+        contactform,
         isEditing,
         setIsEditing,
         deleteContactHandeler,

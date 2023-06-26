@@ -15,7 +15,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { onSubmit, form, setAddressData, isEditing, addressData, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType } = props;
+    const { onSubmit, addressForm, setAddressData, isEditing, addressData, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType } = props;
     const { forceUpdate, handleFormValueChange, setIsAdding } = props;
     const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail } = props;
     const disabledProps = { disabled: formActionType?.editMode && formData?.partyCategory === 'Principal' ? true : false };
@@ -24,7 +24,6 @@ const AddEditForm = (props) => {
     const [pinSearchData, setPinSearchData] = useState({});
 
     const onErrorAction = (res) => {
-        console.log('error');
     };
 
     const onSuccessAction = () => {};
@@ -43,7 +42,7 @@ const AddEditForm = (props) => {
     const handleOnSelect = (key) => {
         const selectedPinCode = pincodeData?.find((i) => i.id === key);
         if (selectedPinCode) {
-            form.setFieldsValue({
+            addressForm.setFieldsValue({
                 pinCode: selectedPinCode?.pinCode,
                 stateName: selectedPinCode?.stateName,
                 cityName: selectedPinCode?.cityName,
@@ -67,7 +66,7 @@ const AddEditForm = (props) => {
         }
         setOptions();
         if (value.length <= 5) {
-            form.validateFields(['pinCode']);
+            addressForm.validateFields(['pinCode']);
         } else if (value.length > 5) {
             const extraParams = [
                 {
@@ -81,7 +80,7 @@ const AddEditForm = (props) => {
 
     const handleOnClear = () => {
         setOptions();
-        form.setFieldsValue({
+        addressForm.setFieldsValue({
             pinCode: undefined,
             stateName: undefined,
             cityName: undefined,
@@ -97,7 +96,7 @@ const AddEditForm = (props) => {
     };
 
     const handleSave = () => {
-        form.validateFields()
+        addressForm.validateFields()
             .then((value) => {
                 // const value = form.getFieldsValue();
 
@@ -105,8 +104,8 @@ const AddEditForm = (props) => {
                     setAddressData((prev) => {
                         let formData = [...prev];
                         formData?.forEach((address) => {
-                            if (address?.defaultaddress === true) {
-                                address.defaultaddress = false;
+                            if (address?.deafultAddressIndicator === true) {
+                                address.deafultAddressIndicator = false;
                             }
                         });
                         const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType);
@@ -117,7 +116,10 @@ const AddEditForm = (props) => {
                     });
                 } else {
                     setAddressData((prev) => {
+                        console.log('prev',prev)
                         let formData = prev?.length ? [...prev] : [];
+                        console.log('formData',formData)
+
                         if (value?.defaultaddress && formData?.length >= 1) {
                             formData?.forEach((address) => {
                                 if (address?.defaultaddress === true) {
@@ -135,7 +137,7 @@ const AddEditForm = (props) => {
                 setIsEditing(false);
                 setIsAdding(false);
                 setEditingData({});
-                form.setFieldsValue();
+                addressForm.setFieldsValue();
             })
             .catch((err) => {
                 console.error('err', err);
@@ -144,7 +146,7 @@ const AddEditForm = (props) => {
 
     return (
         <>
-            <Form form={form} id="myAdd" onFinish={onSubmit} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical">
+            <Form form={addressForm} id="myAdd" onFinish={onSubmit} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type'), { validator: (rule, value) => duplicateValidator(value, 'addressType', addressData, editingData?.addressType) }]}>

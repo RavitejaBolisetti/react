@@ -15,22 +15,23 @@ import { CUSTOMER_TYPE } from 'constants/CustomerType';
 import styles from 'components/common/Common.module.css';
 
 const MenuNav = (props) => {
-    const { customerType, currentSection, setCurrentSection, formActionType: { addMode, editMode, viewMode } = undefined } = props;
+    const { customerType, currentSection, setCurrentSection, formActionType: { addMode } = undefined, selectedCustomerId } = props;
 
     const profileOptions = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION;
 
     const onHandle = (item) => {
-        if ((addMode && item.enableOnAdd) || editMode || viewMode) {
+        if (selectedCustomerId) {
             setCurrentSection(item?.id);
         }
     };
 
     const className = (item) => {
-        return addMode && !item.enableOnAdd ? styles.cursorNotAllowed : styles.cursorPointer;
+        return !selectedCustomerId && !item.enableOnAdd ? styles.cursorNotAllowed : styles.cursorPointer;
     };
 
+    // dot: addMode && !i.enableOnAdd ? <BsRecordCircleFill className={className(i)} color={'grey'} /> : i.id === currentSection ? <BsRecordCircleFill className={`${styles.activeForm} ${className(i)}`} /> : <FaCheckCircle className={className(i)} />,
     const items = Object.values(profileOptions)?.map((i) => ({
-        dot: addMode && !i.enableOnAdd ? <BsRecordCircleFill className={className(i)} color={'grey'} /> : i.id === currentSection ? <BsRecordCircleFill className={`${styles.activeForm} ${className(i)}`} /> : <FaCheckCircle className={className(i)} />,
+        dot: i.id === currentSection ? <BsRecordCircleFill className={`${styles.activeForm} ${className(i)}`} /> : addMode && !i.enableOnAdd ? <BsRecordCircleFill className={className(i)} color={'grey'} /> : <FaCheckCircle className={className(i)} />,
         children: (
             <div style={{ margin: '10px 0px' }} className={className(i)} onClick={() => onHandle(i)}>
                 {i.title}

@@ -17,16 +17,11 @@ const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { handleFormValueChange, typeData, userId, uploadDocumentFile, uploadedFile, setUploadedFile, listShowLoading, downloadFile, viewListShowLoading, setUploadedFileList, showGlobalNotification, viewDocument, handlePreview } = props;
+    const { handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview } = props;
 
-    const onDrop = (e) => {
-        console.log('Dropped files', e.dataTransfer.files);
-    };
-    // const onDownLoadFile =
+    const onDrop = (e) => {};
 
-  
     const onDownload = (file) => {
-
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
 
         handlePreview(file?.response);
@@ -39,6 +34,7 @@ const AddEditForm = (props) => {
 
     const uploadProps = {
         multiple: false,
+        accept: 'image/png, image/jpeg, application/pdf',
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
@@ -48,7 +44,6 @@ const AddEditForm = (props) => {
         },
         progress: { strokeWidth: 3, showInfo: true },
 
-        
         onDrop,
         onChange: (info) => {
             handleFormValueChange();

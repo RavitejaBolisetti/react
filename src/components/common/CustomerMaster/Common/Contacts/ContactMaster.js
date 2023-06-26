@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useReducer, useEffect } from 'react';
-import { Row, Col, Collapse, Form, Space, Typography, Button } from 'antd';
+import { Row, Col, Collapse, Form, Space, Typography, Button, Empty, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { bindActionCreators } from 'redux';
@@ -19,6 +19,7 @@ import ViewContactList from './ViewContactList';
 import { CustomerFormButton } from '../../CustomerFormButton';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
+import { LANGUAGE_EN } from 'language/en';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
@@ -74,9 +75,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ContactMain = (props) => {
-    const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData } = props;
-    const { isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
-    const { buttonData, setButtonData, formActionType, handleButtonClick,  setSelectedCustomer,  setSelectedCustomerId } = props;
+    const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, saveData, showGlobalNotification, typeData } = props;
+    const { selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
+    const { buttonData, setButtonData, formActionType, handleButtonClick, setSelectedCustomer, setSelectedCustomerId, NEXT_ACTION } = props;
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
@@ -86,10 +87,10 @@ const ContactMain = (props) => {
     const [editingData, setEditingData] = useState({});
     const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [continueWithOldMobNo, setContinueWithOldMobNo] = useState(false);
-    const [isAdding, setIsAdding] = useState(false); 
+    const [isAdding, setIsAdding] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
     const extraParams = [
         {
@@ -107,17 +108,16 @@ const ContactMain = (props) => {
             } else {
                 fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
             }
-        };
+        }
 
-        return(() => {
+        return () => {
             resetData();
             resetIndividualData();
-        })
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer?.customerId]);
 
     useEffect(() => {
-
         if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
             setContactData(customerIndData?.customerContact || []);
         } else {
@@ -137,17 +137,17 @@ const ContactMain = (props) => {
     const handleCollapse = (key) => {
         setOpenAccordian(key);
     };
+
     const onSaveFormData = () => {
         contactform
             .validateFields()
             .then((value) => {
-                debugger
                 if (isEditing) {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         formData?.forEach((contact) => {
-                            if (contact?.defaultaddress === true) {
-                                contact.defaultaddress = false;
+                            if (contact?.defaultContactIndicator === true) {
+                                contact.defaultContactIndicator = false;
                             }
                         });
                         const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
@@ -156,22 +156,17 @@ const ContactMain = (props) => {
                     });
                 } else {
                     setContactData((prev) => {
-                        console.log('prev', prev);
                         let formData = prev?.length ? [...prev] : [];
-                        console.log('formData', formData);
                         if (value?.defaultaddress && formData?.length >= 1) {
                             formData?.forEach((contact) => {
                                 if (contact?.defaultaddress === true) {
                                     contact.defaultaddress = false;
                                 }
                             });
-                            console.log('formData', formData)
                             return [...formData, value];
                         } else {
                             const updVal = prev?.length ? [...prev, { ...value }] : [{ ...value }];
-                            console.log('updVal', updVal)
-
-                            return updVal ;
+                            return updVal;
                         }
                     });
                 }
@@ -188,7 +183,7 @@ const ContactMain = (props) => {
         e.stopPropagation();
         setContactData((prev) => {
             let updetedData = prev?.map((contact) => ({ ...contact, status: true, defaultContactIndicator: false, continueWith: continueWithOldMobNo }));
-            const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.mobileNumber === value?.mobileNumber && el?.FirstName === value?.FirstName);
+            const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact);
             updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked });
             return [...updetedData];
         });
@@ -214,7 +209,8 @@ const ContactMain = (props) => {
         contactData,
         onFinish: onSaveFormData,
         styles,
-        form: contactform,
+        form,
+        contactform,
         isEditing,
         setIsEditing,
         formActionType,
@@ -226,7 +222,7 @@ const ContactMain = (props) => {
         uploadImgDocId,
         handleFormValueChange,
         setContinueWithOldMobNo,
-       
+
         customerType,
         isAdding,
         setIsAdding,
@@ -240,7 +236,7 @@ const ContactMain = (props) => {
             contactform.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
             setSelectedCustomerId(res?.data?.customerId);
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
@@ -302,7 +298,24 @@ const ContactMain = (props) => {
                                 key="1"
                             >
                                 {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                <ViewContactList {...formProps} />
+                                {!contactData?.length && !isAdding ? (
+                                    <>
+                                        <Divider />
+                                        <Empty
+                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                            imageStyle={{
+                                                height: 60,
+                                            }}
+                                            description={
+                                                <span>
+                                                    {noDataTitle} <br />
+                                                </span>
+                                            }
+                                        ></Empty>
+                                    </>
+                                ) : (
+                                    <ViewContactList {...formProps} />
+                                )}
                             </Panel>
                         </Collapse>{' '}
                     </Col>

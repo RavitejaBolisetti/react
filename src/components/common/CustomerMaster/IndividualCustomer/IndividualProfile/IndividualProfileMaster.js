@@ -74,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 const IndividualProfileBase = (props) => {
     const { userId, isIndiviualProfileLoaded, fecthViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification, handleButtonClick } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, downloadFile } = props;
-    const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, setSelectedCustomerId } = props;
+    const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, setSelectedCustomerId, NEXT_ACTION } = props;
     const [form] = Form.useForm();
 
     const [formData, setFormData] = useState([]);
@@ -84,8 +84,6 @@ const IndividualProfileBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
-
-    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -164,7 +162,7 @@ const IndividualProfileBase = (props) => {
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             if (res.data) {
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
                 setSelectedCustomerId(res?.data?.customerId);
             }
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -227,7 +225,7 @@ const IndividualProfileBase = (props) => {
         showDataLoading,
         viewDocument,
         isViewDocumentLoading,
-        NEXT_EDIT_ACTION,
+        NEXT_ACTION,
     };
 
     const viewProps = {

@@ -13,7 +13,6 @@ const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
     const { activeKey, styles, schemeData, isLoading } = props;
-    console.log('🚀 ~ file: ViewDetail.js:16 ~ ViewDetailMain ~ schemeData:', schemeData);
     const viewProps = {
         bordered: false,
         colon: false,

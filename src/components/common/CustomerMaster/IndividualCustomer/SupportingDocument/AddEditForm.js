@@ -17,13 +17,11 @@ const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { handleFormValueChange, typeData, userId, uploadDocumentFile, uploadedFile, setUploadedFile, listShowLoading, downloadFile, viewListShowLoading, setUploadedFileList, showGlobalNotification, viewDocument, handlePreview,emptyList, setEmptyList  } = props;
+    const { handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview, emptyList, setEmptyList } = props;
 
     const [showStatus, setShowStatus] = useState('');
 
-    const onDrop = (e) => {
-        console.log('Dropped files', e.dataTransfer.files);
-    };
+    const onDrop = (e) => {};
 
     const onDownload = (file) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
@@ -38,6 +36,7 @@ const AddEditForm = (props) => {
 
     const uploadProps = {
         multiple: false,
+        accept: 'image/png, image/jpeg, application/pdf',
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
@@ -51,19 +50,19 @@ const AddEditForm = (props) => {
             handleFormValueChange();
             const { status } = info.file;
             setShowStatus(info.file);
-           if (status === 'done') {
+            if (status === 'done') {
                 setUploadedFile(info?.file?.response?.docId);
             }
         },
     };
 
     useEffect(() => {
-         if (showStatus.status === 'done') {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: (`${showStatus.name + " file uploaded successfully"}`) });
+        if (showStatus.status === 'done') {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
         } else if (showStatus.status === 'error') {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showStatus]);
 
     const handleUpload = (options) => {
@@ -115,15 +114,7 @@ const AddEditForm = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                        <Dragger
-                            //  disabled={uploadedFile?.length > 0}
-                            // beforeUpload={() => false}
-                            customRequest={handleUpload}
-                            {...uploadProps}
-                           // showUploadList={correctFormat ? true : false}
-                            accept=".png,.jpeg,.pdf,.jpg"
-                            showUploadList={emptyList}
-                        >
+                        <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
                             <div>
                                 <img src={Svg} alt="" />
                             </div>

@@ -5,15 +5,15 @@
  */
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
-const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
+export const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+export const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+export const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+export const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
 
 export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn = true }) => {
-    if (buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION) {
+    if (buttonAction === VIEW_ACTION) {
         return { ...defaultBtnVisiblity, closeBtn: true, editBtn: true, nextBtn: true };
-    } else if (buttonAction === EDIT_ACTION || buttonAction === NEXT_EDIT_ACTION) {
+    } else if (buttonAction === EDIT_ACTION) {
         return { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true };
     } else {
         return { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: saveAndNewBtn, cancelBtn: true };

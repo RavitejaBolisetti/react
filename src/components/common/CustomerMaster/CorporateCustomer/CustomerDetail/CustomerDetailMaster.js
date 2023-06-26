@@ -17,7 +17,6 @@ import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
@@ -78,17 +77,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CompanyCustomerDetailsMasterBase = (props) => {
     const { userId, isDataLoaded, isLoading, showGlobalNotification, customerDetailsData, section, fetchList, listShowLoading, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, customerParentCompanyData, corporateLovData } = props;
-    const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData, isLastSection } = props;
-    const { form, setRefreshList, handleFormValueChange, onFinishFailed, buttonData, setButtonData, formActionType, handleButtonClick } = props;
+    const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData } = props;
+    const { form, setRefreshList, handleFormValueChange, onFinishFailed, buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
     const [customerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
     const [formData, setFormData] = useState();
     const [refershData, setRefershData] = useState(false);
-
-
-    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -111,7 +107,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isCorporateLovDataLoaded]);
-
 
     useEffect(() => {
         if (userId && selectedCustomerId) {
@@ -146,7 +141,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
             if (res.data) {
                 setRefreshList(true);
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
                 setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
                 setSelectedCustomerId(res?.data?.customerId);
             }
@@ -197,7 +192,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
         showForm,
         setShowForm,
         formActionType,
-        typeData,
         typeData,
         handleButtonClick,
         styles,

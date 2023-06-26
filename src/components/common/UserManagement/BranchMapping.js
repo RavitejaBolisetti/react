@@ -1,11 +1,14 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { Col, Row, Space, Checkbox } from 'antd';
 
 const BranchMapping = ({ BranchMappingData, finalFormdata, setfinalFormdata }) => {
-    const onChanges = (values) => {
-        console.log(values);
-    };
-    
+    const onChanges = (values) => {};
+
     return (
         <Space
             direction="vertical"

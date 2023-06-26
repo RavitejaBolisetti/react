@@ -67,13 +67,11 @@ const CustomerDetailMasterBase = (props) => {
     const { typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
     const { setRefreshList, userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
 
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState();
     const [uploadImgDocId, setUploadImgDocId] = useState('');
-
-    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -124,7 +122,7 @@ const CustomerDetailMasterBase = (props) => {
             setRefreshList(true);
 
             if (res.data) {
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
                 setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
                 setSelectedCustomerId(res?.data?.customerId);
             }
