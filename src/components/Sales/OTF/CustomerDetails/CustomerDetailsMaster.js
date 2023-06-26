@@ -67,6 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: otfCustomerDetailsAction.listShowLoading,
             fetchList: otfCustomerDetailsAction.fetchList,
             saveData: otfCustomerDetailsAction.saveData,
+            resetData: otfCustomerDetailsAction.reset,
             showGlobalNotification,
 
             listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
@@ -77,7 +78,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMain = (props) => {
-    const { saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
+    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, handleFormValueChange, section } = props;
     const { typeData, selectedOrderId } = props;
     const [form] = Form.useForm();
@@ -87,9 +88,19 @@ export const CustomerDetailsMain = (props) => {
     const [activeKey, setactiveKey] = useState([1]);
 
     useEffect(() => {
-        setFormData(customerFormData);
+        if (userId && customerFormData) {
+            setFormData(customerFormData);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerFormData]);
+    }, [userId, customerFormData]);
+
+    useEffect(() => {
+        return () => {
+            setFormData();
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -105,11 +116,11 @@ export const CustomerDetailsMain = (props) => {
     ];
 
     useEffect(() => {
-        if (userId) {
+        if (userId && selectedOrderId) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, selectedOrderId]);
 
     const onFinish = (values) => {
         form.getFieldsValue();
@@ -153,6 +164,8 @@ export const CustomerDetailsMain = (props) => {
         typeData,
         sameAsBookingCustomer,
         setSameAsBookingCustomer,
+        isDataLoaded,
+        isLoading,
     };
 
     const viewProps = {

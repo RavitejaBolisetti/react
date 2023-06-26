@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -17,6 +17,7 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { OTF_SECTION } from 'constants/OTFSection';
+import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
@@ -91,6 +92,7 @@ export const OtfMasterBase = (props) => {
     const [isLastSection, setLastSection] = useState(false);
 
     const [form] = Form.useForm();
+    const [searchForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -116,6 +118,8 @@ export const OtfMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
+    const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('Value')] });
+    const reff = useRef(null);
 
     // useEffect(() => {
     //     if (selectedOrder) {
@@ -243,8 +247,16 @@ export const OtfMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        setShowDataLoading(true);
-        fetchOTFSearchedList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
+        searchForm
+            .validateFields()
+            .then((values) => {
+                setShowDataLoading(true);
+                fetchOTFSearchedList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
+            })
+            .catch((err) => {
+                console.log(err);
+                return;
+            });
     };
 
     const handleResetFilter = (e) => {
@@ -340,12 +352,22 @@ export const OtfMasterBase = (props) => {
 
     const handleOTFChange = (selectedvalue) => {
         setFilterString({ searchType: selectedvalue });
-        setOtfSearchvalue(''); // Cleared search value
+        setOtfSearchRules({ rules: [validateRequiredInputField('Value')] });
+        //console.log(reff);
     };
 
     const ChangeSearchHandler = (event) => {
         if (event.target.value === undefined) {
             return false;
+        }
+        if (filterString?.searchType === 'mobileNumber') {
+            setOtfSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
+        }
+        if (filterString?.searchType === 'customerName') {
+            setOtfSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
+        }
+        if (filterString?.searchType === 'otfNumber') {
+            setOtfSearchRules({ rules: [validateRequiredInputField('OTF Number')] });
         }
         setFilterString({ ...filterString, searchParam: event.target.value });
     };
@@ -382,6 +404,10 @@ export const OtfMasterBase = (props) => {
         otfSearchvalue,
         setAdvanceSearchVisible,
         typeData,
+        otfSearchRules, 
+        setOtfSearchRules,
+        searchForm,
+        reff,
     };
 
     const advanceFilterProps = {
