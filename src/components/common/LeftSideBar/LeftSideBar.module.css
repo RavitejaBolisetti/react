@@ -175,7 +175,7 @@
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical {
     border-inline-end: none;
     overflow-y: overlay;
-    max-height: 71vh;
+    max-height: calc(100vh - 180px);
     padding: 0px 14px;
 }
 
@@ -333,7 +333,7 @@
 
 .logoContainer {
     padding: 0px 14px;
-    margin-bottom: 2px;
+    /* margin-bottom: 2px; */
 }
 
 .logoContainerCollapsed {
@@ -343,7 +343,7 @@
 
 .brandLink {
     display: block;
-    padding: 19px 0 11px;
+    padding: 20px 0 20px;
     transition: width 0.3s ease-in-out;
     white-space: nowrap;
 }
@@ -440,7 +440,6 @@
     background: transparent !important;
 }
 
-
 .searchMenuContainer {
     display: inline-flex;
     padding-left: 8px !important;
@@ -464,7 +463,11 @@
 
 .leftMenuBox .searchContainer {
     text-align: center;
-    margin: 5px auto 10px auto;
+    margin-bottom: 10px;
+}
+
+.leftMenuBox .searchContainer :global .ant-form .ant-form-item {
+    margin-bottom: 0;
 }
 
 @media (min-width: 576px) and (max-width: 768px) {
