@@ -131,7 +131,7 @@ const AddEditFormMain = (props) => {
                                 key="1"
                             >
                                 <div className={styles.headerBox}>
-                                    {uploadedFile && formData?.image ? (
+                                    { formData?.image ? (
                                         <div className={styles.uploadDragger}>
                                             <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} viewDocument={viewDocument} />
                                         </div>
