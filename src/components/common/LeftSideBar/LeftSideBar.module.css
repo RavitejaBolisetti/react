@@ -45,7 +45,7 @@
 }
 
 .leftMenuBox li.subMenuParent {
-    min-height: 40px;
+    min-height: 36px;
 }
 
 .leftMenuBox li.subMenuParent:hover {
@@ -53,8 +53,8 @@
 }
 
 .leftMenuBox li.subMenuItem {
-    /* min-height: 32px; */
-    min-height: 40px;
+    min-height: 36px;
+    margin-bottom: 0 !important;
 }
 
 .leftMenuBox li.subMenuItem:hover {
@@ -216,8 +216,7 @@
 }
 
 :global .ant-menu-inline .ant-menu-sub.ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title {
-    /* height: 32px !important; */
-    height: 40px !important;
+    height: 36px !important;
 }
 
 :global .ant-input-affix-wrapper {
