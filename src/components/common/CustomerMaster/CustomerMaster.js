@@ -300,7 +300,7 @@ const CustomerMasterMain = (props) => {
         handleFormValueChange,
         setRefreshList,
         isLastSection,
-        saveButtonName: formActionType?.addMode ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next', 
     };
 
     const selectProps = {

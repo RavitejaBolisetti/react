@@ -162,7 +162,6 @@ const CustomerDetailMasterBase = (props) => {
         setButtonData,
         typeData,
         formData,
-        typeData,
     };
 
     const viewProps = {
