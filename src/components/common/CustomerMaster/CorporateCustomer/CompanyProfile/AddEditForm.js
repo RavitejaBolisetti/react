@@ -426,10 +426,14 @@ const AddEditFormMain = (props) => {
                                                 <Button danger>Upload File</Button>
                                             </Dragger>
                                             <a>
-                                                <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>
-                                                <Form.Item hidden="true" label="Document" initialValue={formData?.customerFormDocId} name="customerFormDocId">
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Document')} />
-                                                </Form.Item>
+                                                {formData?.customerFormDocId && (
+                                                    <>
+                                                        <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>
+                                                        <Form.Item hidden="true" label="Document" initialValue={formData?.customerFormDocId} name="customerFormDocId">
+                                                            <Input maxLength={50} placeholder={preparePlaceholderText('Document')} />
+                                                        </Form.Item>
+                                                    </>
+                                                )}
                                             </a>
                                         </Col>
                                     </Row>
