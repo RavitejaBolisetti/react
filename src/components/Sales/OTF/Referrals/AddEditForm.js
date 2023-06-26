@@ -8,11 +8,9 @@ import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, DatePicker, Card, Select } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField } from 'utils/validation';
-import { validateMobileNoField } from 'utils/validation';
+import { validateRequiredInputField, validateMobileNoField } from 'utils/validation';
 import { disableFutureDate } from 'utils/disableDate';
-
-import dayjs from 'dayjs';
+import { convertCalenderDate } from 'utils/formatDateTime';
 
 const { Search } = Input;
 
@@ -23,7 +21,7 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 ...formData,
                 registrationNumber: formData?.registrationNumber ?? 'NA',
-                dob: dayjs(formData?.dob),
+                dob: convertCalenderDate(formData?.dob, 'YYYY-MM-DD'),
             });
         } else {
             form.resetFields();
