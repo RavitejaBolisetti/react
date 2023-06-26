@@ -44,18 +44,11 @@ const AddEditFormMain = (props) => {
     };
 
     const onEdit = (values, index) => {
-        console.log(values, 'VALUES');
         setEditedMode(true);
         setactiveKey(index);
         setShowForm(false);
 
         setInitialVal(values?.mnmCustomer);
-
-        if (values?.mnmCustomer === 'Yes') {
-            setCustomerType('Yes');
-        } else if (values?.mnmCustomer === 'No') {
-            setCustomerType('No');
-        }
 
         const Val = {
             id: values?.id,
@@ -65,15 +58,20 @@ const AddEditFormMain = (props) => {
             editedId: values?.editedId,
             relationship: values?.relationship,
             relationCode: values?.relationCode,
-            relationCustomerId: values?.relationCustomerId,
+            relationCustomerId: values?.mnmCustomer === "Yes" ? values?.relationCustomerId : "",
             dateOfBirth: typeof values?.dateOfBirth === 'object' ? values?.dateOfBirth : dayjs(values?.dateOfBirth),
             relationAge: values?.relationAge,
             remarks: values?.remarks,
         };
 
         setEditedValues(Val);
-
+        if (values?.mnmCustomer === 'Yes') {
+            setCustomerType('Yes');
+        } else if (values?.mnmCustomer === 'No') {
+            setCustomerType('No');
+        }
         form.setFieldsValue(Val);
+
     };
 
     const onCancel = (values) => {
@@ -141,7 +139,6 @@ const AddEditFormMain = (props) => {
                             </Button>
                         )}
                     </Row>
-                    {/* {showForm || familyDetailList?.length > 0 ? <Divider /> : null} */}
                     <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
                         {showForm && !editedMode && <FormContainer {...formProps} />}
                         {familyDetailList?.length > 0 &&
@@ -195,7 +192,7 @@ const AddEditFormMain = (props) => {
                                         key={index}
                                         style={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
                                     >
-                                        {editedMode && !showForm ? <FormContainer {...formProps} item /> : <ViewDetail mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} />}
+                                        {editedMode && !showForm ? <FormContainer {...formProps} item /> : <ViewDetail {...viewProps} mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} relationCustomerId={item?.relationCustomerId}/>}
                                     </Panel>
                                 </Collapse>
                             ))}
