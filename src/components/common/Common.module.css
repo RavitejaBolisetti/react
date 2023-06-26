@@ -1639,12 +1639,12 @@
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item {
-    padding-bottom: 10px;
+    padding-bottom: 21px;
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item .ant-timeline-item-content p {
     padding-left: 0 !important;
-    padding-bottom: 10px;
+    /* padding-bottom: 10px; */
     font-size: 14px;
     color: #0b0b0c;
     font-weight: 400;
@@ -1673,6 +1673,7 @@
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item-tail {
     inset-block-start: 9px;
+    height: calc(100% - 21px);
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item-head-custom {
