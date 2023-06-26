@@ -30,7 +30,7 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Outstanding Amount" initialValue={formData?.outstandingAmount} name="outstandingAmount" rules={[validateNumberWithTwoDecimalPlaces('credit limit')]}>
+                        <Form.Item label="Outstanding Amount" initialValue={formData?.outstandingAmount} name="outstandingAmount" rules={[validateNumberWithTwoDecimalPlaces('outstanding amount')]}>
                             <Input placeholder={preparePlaceholderText('amount')} />
                         </Form.Item>
                     </Col>
