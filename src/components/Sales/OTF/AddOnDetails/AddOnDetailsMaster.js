@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
@@ -11,17 +11,129 @@ import { AddEditForm } from './AddEditForm';
 import { OTFFormButton } from '../OTFFormButton';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { otfAddOnDetailsDataActions } from 'store/actions/data/otf/addOnDetails';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'components/common/Common.module.css';
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            OTF: {
+                AddonDetails: { isLoaded: isDataLoaded = false, isLoading, data: AddonDetailsData = [] },
+            },
+        },
+    } = state;
 
-export const AddOnDetailsMaster = (props) => {
-    const { section, form, handleFormValueChange, formActionType, onFinishFailed, formData } = props;
+    const moduleTitle = 'Add on Details';
 
-    const onFinish = (values) => {};
+    let returnValue = {
+        userId,
+        isDataLoaded,
+        isLoading,
+        moduleTitle,
+        AddonDetailsData,
+    };
+    return returnValue;
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchList: otfAddOnDetailsDataActions.fetchList,
+            saveData: otfAddOnDetailsDataActions.saveData,
+            listShowLoading: otfAddOnDetailsDataActions.listShowLoading,
+            resetData: otfAddOnDetailsDataActions.reset,
+            showGlobalNotification,
+        },
+        dispatch
+    ),
+});
+
+export const AddOnDetailsMasterMain = (props) => {
+    const { fetchList, resetData, AddonDetailsData, isDataLoaded, userId, listShowLoading, saveData, onFinishFailed } = props;
+    const { form, section, selectedOrderId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
+
+    const [formData, setformData] = useState();
+    const onSuccessAction = (res) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    };
+
+    const onErrorAction = (message) => {
+        resetData();
+        showGlobalNotification({ message });
+    };
+    const onFinish = (values) => {
+        const data = { ...values };
+        console.log('data', data);
+        return;
+        // const onSuccess = (res) => {
+        //     setoptionsServicesMapping([]);
+        //     setoptionsServiceModified([]);
+        //     setformData({});
+        //     setOpenAccordian('1');
+        //     setIsReadOnly(false);
+        //     const extraParams = [
+        //         {
+        //             key: 'otfNumber',
+        //             title: 'otfNumber',
+        //             value: selectedOrderId,
+        //             name: 'OTF Number',
+        //         },
+        //     ];
+        //     form.resetFields();
+        //     showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+        //     fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction, extraParams });
+        //     handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+        // };
+
+        // const onError = (message) => {
+        //     showGlobalNotification({ message });
+        // };
+
+        // const requestData = {
+        //     data: data,
+        //     method: 'put',
+        //     setIsLoading: listShowLoading,
+        //     userId,
+        //     onError,
+        //     onSuccess,
+        // };
+
+        // saveData(requestData);
+    };
+    const onChange = (values) => {};
+    useEffect(() => {
+        if (userId && selectedOrderId) {
+            const extraParams = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOrderId,
+                    name: 'OTF Number',
+                },
+            ];
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedOrderId]);
+    useEffect(() => {
+        if (isDataLoaded && AddonDetailsData) {
+            setformData(AddonDetailsData);
+        }
+    }, [isDataLoaded, AddonDetailsData]);
 
     const viewProps = {
         formData,
         styles,
+        onChange,
+    };
+    const formProps = {
+        formData,
+        formActionType,
     };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -35,7 +147,7 @@ export const AddOnDetailsMaster = (props) => {
                             <OTFStatusBar status={1} />
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...props} />}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>
@@ -46,3 +158,4 @@ export const AddOnDetailsMaster = (props) => {
         </Form>
     );
 };
+export const AddOnDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(AddOnDetailsMasterMain);

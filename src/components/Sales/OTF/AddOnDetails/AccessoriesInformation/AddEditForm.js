@@ -1,4 +1,9 @@
-import React from 'react';
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+import React, { useEffect } from 'react';
 import { Input, Form, Col, Row, Button, Divider } from 'antd';
 
 import { validateRequiredInputField } from 'utils/validation';
@@ -7,15 +12,26 @@ import styles from 'components/common/Common.module.css';
 
 const { TextArea } = Input;
 
-function AddEditForm({ onUpdate, onCancel, form, onFieldsChange, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
+function AddEditForm({ onUpdate, formData, onCancel, accessoryForm, onFieldsChange, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
     const disableProp = { disabled: true };
+    useEffect(() => {
+        if (formData === undefined) {
+            return;
+        }
+        if (formData['partDetailsResponses']?.length) {
+            accessoryForm.setFieldsValue({
+                ...formData['partDetailsResponses']['0'],
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
     const onFinishFailed = (err) => {
         console.error(err);
     };
 
     const handleOnSearch = (value) => {
         if (value?.length < 3) return;
-        form.setFieldsValue({
+        accessoryForm.setFieldsValue({
             partType: 'wert',
             sellingPrice: 'serg',
             mrp: 'wef',
@@ -25,7 +41,7 @@ function AddEditForm({ onUpdate, onCancel, form, onFieldsChange, onFinish, isEdi
     };
 
     return (
-        <Form form={form} onFieldsChange={onFieldsChange} autoComplete="off" id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form form={accessoryForm} onFieldsChange={onFieldsChange} autoComplete="off" id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Part Number" name="partNumber" rules={[validateRequiredInputField('part number')]}>
@@ -36,7 +52,7 @@ function AddEditForm({ onUpdate, onCancel, form, onFieldsChange, onFinish, isEdi
             <Divider />
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="Part Type" name="partType">
+                    <Form.Item label="Part Type" name="type">
                         <Input {...disableProp} placeholder={preparePlaceholderText('part type')} />
                     </Form.Item>
                 </Col>

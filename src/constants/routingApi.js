@@ -137,6 +137,8 @@ export const BASE_URL_OTF_DOWNLAOD_REPORT = BASE_URL + 'customreports/otf/regist
 export const BASE_URL_OTF_INVOICE_DETAILS = BASE_URL + 'otf/invoice';
 export const BASE_URL_OTF_DETAILS = BASE_URL_OTF + 'details';
 export const BASE_URL_OTF_VEHICLE_DETAILS = BASE_URL_OTF + 'vehicledetails';
+export const BASE_URL_ADD_ON_DETAILS = BASE_URL_OTF + 'addons';
+
 export const BASE_URL_OTF_INVOICE = BASE_URL + 'otf/invoice';
 export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';
 export const BASE_URL_OTF_SCHEME_DETAIL = BASE_URL + 'otf/schemes';
