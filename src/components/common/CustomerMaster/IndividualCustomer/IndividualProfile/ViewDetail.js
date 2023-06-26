@@ -212,7 +212,7 @@ const ViewDetailMain = (props) => {
                             <div className={styles.alignUser}>
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     Upload Customer Form
-                                </Text>
+                                </Text> 
                             </div>
                         }
                         key="4"
