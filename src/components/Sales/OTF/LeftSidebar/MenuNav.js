@@ -12,6 +12,7 @@ import { OTF_SECTION } from 'constants/OTFSection';
 
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection } = props;
+    const otfSectionList = Object.values(OTF_SECTION);
 
     useEffect(() => {
         if (currentSection) {
@@ -36,7 +37,11 @@ const MenuNav = (props) => {
         setCurrentSection(key);
     };
 
-    const items = Object.values(OTF_SECTION)?.map((i) => ({ dot: i.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />, children: <p onClick={() => onHandle(i.id)}>{i.title}</p> }));
+    const items = otfSectionList?.map((i) => ({
+        dot: i.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
+        children: <p onClick={() => onHandle(i.id)}>{i.title}</p>,
+    }));
+
     return <Timeline items={items} />;
 };
 

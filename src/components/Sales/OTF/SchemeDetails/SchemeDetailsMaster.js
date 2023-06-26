@@ -56,11 +56,11 @@ const SchemeDetailsMasterBase = (props) => {
     const { form, selectedOrderId, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
 
     const onErrorAction = (message) => {
-        showGlobalNotification(message);
+        // showGlobalNotification(message);
     };
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     useEffect(() => {
@@ -85,6 +85,10 @@ const SchemeDetailsMasterBase = (props) => {
         isLoading,
         ...props,
     };
+    const myProps = {
+        ...props,
+        buttonData: { ...props.buttonData, nextBtn: true, saveBtn: false },
+    };
 
     const onFinish = (values) => {
         handleButtonClick({ buttonAction: NEXT_ACTION });
@@ -99,7 +103,7 @@ const SchemeDetailsMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={1} />
+                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...props} />}
@@ -107,7 +111,7 @@ const SchemeDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...props} />
+                    <OTFFormButton {...myProps} />
                 </Col>
             </Row>
         </Form>

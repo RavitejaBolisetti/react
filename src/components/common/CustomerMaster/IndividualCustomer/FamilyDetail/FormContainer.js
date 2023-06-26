@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input, Select, DatePicker, Row, Col, Button, Form } from 'antd';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -26,12 +26,7 @@ const FormBase = (props) => {
         { name: 'No', key: 'No', value: 'No' },
     ];
 
-    let customer;
-    if (customerType === 'Yes') {
-        customer = true;
-    } else if (customerType === 'No') {
-        customer = false;
-    }
+    const [customer, setCustomer] = useState(null);
 
     const onDateChange = (prop) => {
         let dateString = dayjs(prop).format('YYYY-MM-DD');
@@ -51,8 +46,7 @@ const FormBase = (props) => {
     useEffect(() => {
         if (showForm) {
             form.resetFields();
-        }
-        if (customerType === initialVal) {
+        } else if (customerType === initialVal) {
             form.setFieldsValue(editedValues);
         } else {
             form.setFieldsValue({
@@ -63,6 +57,12 @@ const FormBase = (props) => {
                 relationAge: null,
                 remarks: null,
             });
+        }
+
+        if (customerType === 'Yes') {
+            setCustomer(true);
+        } else if (customerType === 'No') {
+            setCustomer(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType]);
@@ -83,13 +83,13 @@ const FormBase = (props) => {
                 </Col>
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId" rules={[validateRequiredInputField('Customer Id')]}>
+                        <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
                             <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading} />
                         </Form.Item>
                     </Col>
                 ) : (
                     <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                        <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId" rules={[validateRequiredInputField('Customer Id')]}>
+                        <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
                             <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading} />
                         </Form.Item>
                     </Col>
@@ -153,7 +153,7 @@ const FormBase = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item label="Generated ID" name="editedId" />
+                    <Form.Item initialValue={props?.editedId ? props?.editedId : ''} label="Generated ID" name="editedId" />
                 </Col>
 
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>

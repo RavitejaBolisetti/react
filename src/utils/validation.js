@@ -11,6 +11,12 @@ export const validateRequiredInputField = (fieldName, lowercase = true) => ({
     message: 'Please enter ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
+export const validateRequiredInputFieldMinLength = (fieldName, lowercase = true) => ({
+    required: true,
+    min:3,
+    message: 'Please enter ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
+});
+
 export const validateRequiredSelectField = (fieldName, lowercase = true) => ({
     required: true,
     message: 'Please select ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
@@ -107,9 +113,11 @@ export const validatFacebookProfileUrl = (fieldName) => ({
 });
 
 export const validatYoutubeProfileUrl = (fieldName) => ({
-    pattern: /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/,
+    // pattern: /(?:http:\/\/)?(?:www\.)?(?:youtube\.com\/)([a-zA-Z0-9_-]{11})$/,
+    pattern: /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$/,
     message: 'Please enter valid url ' + fieldName,
 });
+
 
 export const validattwitterProfileUrl = (fieldName) => ({
     pattern: /^https?:\/\/(www\.)?twitter\.com\/(#!\/)?([^/]+)(\/\w+)*$/,

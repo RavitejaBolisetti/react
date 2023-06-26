@@ -15,7 +15,6 @@ import { supportingDocumentDataActions } from 'store/actions/data/supportingDocu
 import { indiviualProfileDataActions } from 'store/actions/data/customerMaster/individual/individualProfile/indiviualProfile';
 
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
@@ -74,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
 const IndividualProfileBase = (props) => {
     const { userId, isIndiviualProfileLoaded, fecthViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification, handleButtonClick } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, downloadFile } = props;
-    const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, setSelectedCustomerId, NEXT_ACTION } = props;
+    const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, NEXT_ACTION } = props;
     const [form] = Form.useForm();
 
     const [formData, setFormData] = useState([]);
@@ -90,7 +89,8 @@ const IndividualProfileBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId && selectedCustomerId) {
+        if (!formActionType?.addMode && userId && selectedCustomerId) {
+            {
             const extraParams = [
                 {
                     key: 'customerId',
@@ -101,6 +101,7 @@ const IndividualProfileBase = (props) => {
             ];
             fetchList({ setIsLoading: listIndiviualShowLoading, userId, extraParams, onErrorAction });
         }
+    }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
@@ -163,7 +164,6 @@ const IndividualProfileBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                setSelectedCustomerId(res?.data?.customerId);
             }
             setButtonData({ ...buttonData, formBtnActive: false });
         };
@@ -173,7 +173,7 @@ const IndividualProfileBase = (props) => {
         };
         const requestData = {
             data: data,
-            method: 'post',
+            method: indiviualData.customerId ? 'put' : 'post',
             setIsLoading: listIndiviualShowLoading,
             userId,
             onError,
@@ -219,6 +219,7 @@ const IndividualProfileBase = (props) => {
         listDocumentShowLoading,
         uploadDocumentFile,
         setUploadedFile,
+        uploadedFile,
 
         saveDocumentData,
         userId,

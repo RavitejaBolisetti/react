@@ -7,7 +7,6 @@ import React from 'react';
 import { Collapse, Space, Avatar, Typography } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { convertDateTime } from 'utils/formatDateTime';
-import { CUSTOMER_TYPE } from 'constants/CustomerType';
 import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
@@ -15,7 +14,7 @@ const { Text, Title } = Typography;
 const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={13} /> : <SlArrowDown size={13} />);
 
 const OTFDetailCard = (props) => {
-    const { selectedOrder } = props;
+    const { selectedOrder, typeData } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
@@ -35,7 +34,7 @@ const OTFDetailCard = (props) => {
                 key={1}
             >
                 <p>
-                    Customer Type: <span>{selectedOrder && getCodeValue(CUSTOMER_TYPE, selectedOrder?.customerType)}</span>
+                    Customer Type: <span>{selectedOrder && getCodeValue(typeData['CUST_TYPE'], selectedOrder?.customerType)}</span>
                 </p>
                 <p>
                     Mobile No.: <span>{selectedOrder?.mobileNumber || 'NA'}</span>

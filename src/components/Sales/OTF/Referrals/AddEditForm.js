@@ -8,9 +8,9 @@ import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, DatePicker, Card, Select } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField } from 'utils/validation';
-import { validateMobileNoField } from 'utils/validation';
+import { validateRequiredInputField, validateMobileNoField } from 'utils/validation';
 import { disableFutureDate } from 'utils/disableDate';
+import { convertCalenderDate } from 'utils/formatDateTime';
 
 import dayjs from 'dayjs';
 import styles from 'components/common/Common.module.css';
@@ -19,16 +19,18 @@ const { Search } = Input;
 
 const AddEditFormMain = (props) => {
     const { formData, form, onSearch, isCustomerLoading, typeData } = props;
+
+
     useEffect(() => {
         if (formData?.hasOwnProperty('mobileNumber')) {
             form.setFieldsValue({
                 ...formData,
                 registrationNumber: formData?.registrationNumber ?? 'NA',
-                dob: dayjs(formData?.dob),
+                dob: dayjs(formData?.dob, 'YYYY/MM/DD'),
             });
         } else {
             form.resetFields();
-            form.setFieldsValue({ customerId: undefined, customerType: undefined, emailId: undefined, customerName: undefined, registrationNumber: undefined, chasisNumber: undefined, dob: undefined });
+            form.setFieldsValue({ customerId: undefined, customerType: undefined, emailId: undefined, customerName: undefined, registrationNumber: undefined, chasisNumber: undefined });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
@@ -77,8 +79,8 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="dob" label="D.O.B">
-                        <DatePicker format="YYYY/MM/DD" disabledDate={disableFutureDate} placeholder={preparePlaceholderSelect('Date of Birth')} style={{ width: '250px' }} />
+                    <Form.Item initialValue={formData?.dob && dayjs(formData?.dob,'YYYY/MM/DD')} name="dob" label="D.O.B">
+                        <DatePicker format="YYYY-MM-DD" disabledDate={disableFutureDate} placeholder={preparePlaceholderSelect('Date of Birth')} style={{ width: '250px' }} />
                     </Form.Item>
                 </Col>
             </Row>

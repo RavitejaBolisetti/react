@@ -844,6 +844,7 @@
     margin-right: -1px;
 }
 
+
 .contentHeaderBackground .subheading .selectSearchBg :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary),
 .contentHeaderBackground .selectSearchBg :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     margin-top: -4px;
@@ -2689,6 +2690,12 @@
 .viewDrawerContainer .noText :global .ant-descriptions-item-container .ant-descriptions-item-content {
     color: #0b0b0c !important;
 }
+
+.viewDrawerContainer .viewNoDataFound {
+    padding: 20px 30px !important
+}
+
+.viewDrawerContainer .viewNoDataFound .ant-card .ant-card-body {}
 
 @media (max-width: 768px) {
 

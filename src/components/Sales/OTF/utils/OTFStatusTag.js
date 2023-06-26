@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import { Tag } from 'antd';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import styles from 'components/common/Common.module.css';
@@ -15,7 +20,7 @@ export const OTFStatusTag = (status) => {
             tag = <Tag className={styles.error}>{OTF_STATUS.CANCELLED.desc}</Tag>;
             break;
         case OTF_STATUS.INVOICED.title:
-            tag = <Tag className={styles.violet} >{OTF_STATUS.INVOICED.desc}</Tag>;
+            tag = <Tag className={styles.violet}>{OTF_STATUS.INVOICED.desc}</Tag>;
             break;
         case OTF_STATUS.DELIVERED.title:
             tag = <Tag className={styles.success}>{OTF_STATUS.DELIVERED.desc}</Tag>;
