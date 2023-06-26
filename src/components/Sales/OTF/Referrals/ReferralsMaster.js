@@ -20,6 +20,7 @@ import { ViewDetail } from './ViewDetail';
 import dayjs from 'dayjs';
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
+import { convertCalenderDate } from 'utils/formatDateTime';
 
 const mapStateToProps = (state) => {
     const {
@@ -63,7 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ReferralsMasterBase = (props) => {
-    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading } = props;
+    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading, resetData } = props;
     const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, listCustomerShowLoading, typeData, handleButtonClick, NEXT_ACTION } = props;
 
     const [formData, setFormData] = useState();
@@ -84,7 +85,7 @@ const ReferralsMasterBase = (props) => {
     ];
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId, dob: dayjs(values?.dob).format('YYYY-MM-DD'), id: referralData?.id };
+        const data = { ...values, otfNumber: selectedOrderId, dob: convertCalenderDate(values?.dob, 'YYYY-MM-DD'), id: referralData?.id };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -108,6 +109,11 @@ const ReferralsMasterBase = (props) => {
 
         saveData(requestData);
     };
+
+    useEffect(() => {
+        resetData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const onErrorAction = (message) => {
         showGlobalNotification(message);
