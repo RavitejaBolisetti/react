@@ -15,7 +15,6 @@ import { supportingDocumentDataActions } from 'store/actions/data/supportingDocu
 import { indiviualProfileDataActions } from 'store/actions/data/customerMaster/individual/individualProfile/indiviualProfile';
 
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
@@ -163,8 +162,6 @@ const IndividualProfileBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                setSelectedCustomer({ ...res.data });
-                setSelectedCustomerId(res?.data?.customerId);
             }
             setButtonData({ ...buttonData, formBtnActive: false });
         };
@@ -174,7 +171,7 @@ const IndividualProfileBase = (props) => {
         };
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: indiviualData.customerId ? 'put' : 'post',
             setIsLoading: listIndiviualShowLoading,
             userId,
             onError,
