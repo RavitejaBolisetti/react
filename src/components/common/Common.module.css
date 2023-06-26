@@ -1791,6 +1791,7 @@
     color: #858585;
     background-color: #e6e6e6;
     border-color: #858585;
+    padding-left: 0;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input::placeholder {
@@ -1978,6 +1979,7 @@
 .drawerBodyRight .sectionborder :global .ant-checkbox {
     margin-right: 10px;
     background: #fff;
+    border-radius: 4px;
 }
 
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item-active>.ant-collapse-header {

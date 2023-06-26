@@ -53,6 +53,14 @@
     color: #ff3e5b;
 }
 
+:global .ant-select.ant-select-disabled .ant-select-arrow {
+    color: #b5b5b6;
+}
+
+:global .ant-select.ant-select-disabled .ant-select-selector .ant-select-selection-item {
+    color: #858585 !important;
+}
+
 :global .ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
     background-color: #ffd8de;
     color: #ff3e5b;
@@ -311,7 +319,7 @@
     border-color: #545454 !important;
 }
 
-:global  .ant-input {
+:global .ant-input {
     padding: 5px 12px;
     border-color: #b5b5b6;
     color: #0b0b0c;
