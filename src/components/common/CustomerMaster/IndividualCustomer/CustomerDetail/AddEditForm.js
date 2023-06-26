@@ -24,7 +24,7 @@ const AddEditFormMain = (props) => {
     // const [mobileLoader, setmobileLoader] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
-    const [corporateType, setCorporateType] = useState();
+    const [corporateType, setCorporateType] = useState('');
 
     const handleToggle = () => {
         setIsEnabled(!isEnabled);
@@ -32,6 +32,12 @@ const AddEditFormMain = (props) => {
 
     const handleCorporateChange = (value) => {
         setCorporateType(value);
+        if(value === 'NON-LIS'){
+            form.setFieldsValue({
+                corporateName: null,
+            });
+        }
+    
     };
 
     const copyWhatsNo = (props) => {
@@ -227,29 +233,21 @@ const AddEditFormMain = (props) => {
                                 <Select placeholder={preparePlaceholderSelect('corporate type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_TYPE']} onChange={handleCorporateChange} allowClear></Select>
                             </Form.Item>
                         </Col>
-                        {corporateType === 'NON-LIS' ? (
-                            <>
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
-                                        <Input placeholder={preparePlaceholderText('corporate name')} />
-                                    </Form.Item>
-                                </Col>
-                            </>
-                        ) : (
-                            <>
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
-                                        <Select onSelect={onHandleSelect} disabled={false} loading={false} placeholder={preparePlaceholderSelect('corporate name')} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select>
-                                    </Form.Item>
-                                </Col>
 
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code" rules={[validateRequiredInputField('corporate name')]}>
-                                        <Input placeholder={preparePlaceholderText('parent company name')} disabled />
-                                    </Form.Item>
-                                </Col>
-                            </>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                            <Form.Item label="Corporate Name" initialValue={corporateType === 'NON-LIS' ? '' : formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
+                                {corporateType === 'NON-LIS' ? <Input placeholder={preparePlaceholderText('corporate name')} /> : <Select onSelect={onHandleSelect} disabled={false} loading={false} placeholder={preparePlaceholderSelect('corporate name')} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select>}
+                            </Form.Item>
+                        </Col>
+
+                        {(corporateType === 'LIS' || corporateType === '') && (
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item initialValue={corporateType === 'LIS' ?  formData?.corporateCode : ''} label="Corporate Code" name="corporateCode" data-testid="corporate code" rules={[validateRequiredInputField('corporate name')]}>
+                                    <Input placeholder={preparePlaceholderText('parent company name')} disabled />
+                                </Form.Item>
+                            </Col>
                         )}
+
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Corporate Category" initialValue={formData?.corporateCategory} name="corporateCategory" data-testid="corporateCategory">
                                 <Select placeholder={preparePlaceholderSelect('corporate category')} disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_CATE']}></Select>
