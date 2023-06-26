@@ -32,12 +32,11 @@ const AddEditFormMain = (props) => {
 
     const handleCorporateChange = (value) => {
         setCorporateType(value);
-        if(value === 'NON-LIS'){
+        if (value === 'NON-LIS') {
             form.setFieldsValue({
                 corporateName: null,
             });
         }
-    
     };
 
     const copyWhatsNo = (props) => {
@@ -242,7 +241,7 @@ const AddEditFormMain = (props) => {
 
                         {(corporateType === 'LIS' || corporateType === '') && (
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={corporateType === 'LIS' ?  formData?.corporateCode : ''} label="Corporate Code" name="corporateCode" data-testid="corporate code" rules={[validateRequiredInputField('corporate name')]}>
+                                <Form.Item initialValue={corporateType === 'LIS' ? formData?.corporateCode : ''} label="Corporate Code" name="corporateCode" data-testid="corporate code" rules={[validateRequiredInputField('corporate name')]}>
                                     <Input placeholder={preparePlaceholderText('parent company name')} disabled />
                                 </Form.Item>
                             </Col>

@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Row, Checkbox, Space, Collapse, Typography, AutoComplete } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 import { AddressCommonForm } from './AddressCommonForm';
@@ -17,6 +17,15 @@ const AddEditFormBase = (props) => {
     const { form, billCstmForm, formData, customerFormData, setSameAsBookingCustomer } = props;
     const { typeData } = props;
     const [activeKey, setactiveKey] = useState([1]);
+
+    useEffect(() => {
+        if (formData) {
+            form.setFieldsValue({
+                ...formData,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);

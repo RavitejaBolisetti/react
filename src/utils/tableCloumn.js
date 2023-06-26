@@ -35,7 +35,7 @@ export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellips
     };
 };
 
-export const tblSerialNumberColumn = ({ page = 1, pageSize = DEFAULT_PAGE_SIZE, width = '8%', fixed = '', title = 'Srl.' }) => {
+export const tblSerialNumberColumn = ({ page = 1, pageSize = DEFAULT_PAGE_SIZE, width = '8%', fixed = '', title = '#' }) => {
     return {
         title,
         dataIndex: 'srl',
