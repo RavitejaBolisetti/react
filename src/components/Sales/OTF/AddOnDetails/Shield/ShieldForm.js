@@ -3,13 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form, Button } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const ShieldForm = ({ formData, shieldForm }) => {
+    const [isReadOnly, setisReadOnly] = useState(false);
     useEffect(() => {
         if (Object?.keys(formData['shield'])?.length) {
+            setisReadOnly(true);
             shieldForm.setFieldsValue({
                 ...formData['shield'],
             });
@@ -24,12 +26,12 @@ const ShieldForm = ({ formData, shieldForm }) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Shield" name="shieldType">
-                        <Input placeholder={preparePlaceholderText('Shield')} />
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('Shield')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Shield Rate" name="shieldRate">
-                        <Input placeholder={preparePlaceholderText('Shield Rate')} />
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('Shield Rate')} />
                     </Form.Item>
                 </Col>
             </Row>

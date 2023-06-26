@@ -14,15 +14,18 @@ import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { otfAddOnDetailsDataActions } from 'store/actions/data/otf/addOnDetails';
+import { otfAddOnPartsDataActions } from 'store/actions/data/otf/addonParts';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'components/common/Common.module.css';
 const mapStateToProps = (state) => {
+    console.log(state);
     const {
         auth: { userId },
         data: {
             OTF: {
                 AddonDetails: { isLoaded: isDataLoaded = false, isLoading, data: AddonDetailsData = [] },
+                AddonParts: { isLoaded: isAddonPartsDataLoaded = false, isAddonPartsLoading, data: AddonPartsData = [] },
             },
         },
     } = state;
@@ -35,6 +38,8 @@ const mapStateToProps = (state) => {
         isLoading,
         moduleTitle,
         AddonDetailsData,
+        AddonPartsData,
+        isAddonPartsDataLoaded,
     };
     return returnValue;
 };
@@ -43,6 +48,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            fetchSearchPartList: otfAddOnPartsDataActions.fetchList,
+            partListLoading: otfAddOnPartsDataActions.listShowLoading,
+
             fetchList: otfAddOnDetailsDataActions.fetchList,
             saveData: otfAddOnDetailsDataActions.saveData,
             listShowLoading: otfAddOnDetailsDataActions.listShowLoading,
@@ -54,10 +62,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AddOnDetailsMasterMain = (props) => {
-    const { fetchList, resetData, AddonDetailsData, isDataLoaded, userId, listShowLoading, saveData, onFinishFailed } = props;
+    const { fetchList, partListLoading, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, isDataLoaded, userId, listShowLoading, saveData, onFinishFailed } = props;
     const { form, section, selectedOrderId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
 
     const [formData, setformData] = useState();
+    const [searchData, setsearchData] = useState();
+
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
@@ -105,6 +115,17 @@ export const AddOnDetailsMasterMain = (props) => {
 
         // saveData(requestData);
     };
+    const onSearchPart = (searchvalue) => {
+        const extraParams = [
+            {
+                key: 'partNumber',
+                title: 'partNumber',
+                value: searchvalue,
+                name: 'partNumber',
+            },
+        ];
+        fetchSearchPartList({ setIsLoading: partListLoading, userId, extraParams, onSuccessAction, onErrorAction });
+    };
     const onChange = (values) => {};
     useEffect(() => {
         if (userId && selectedOrderId) {
@@ -124,7 +145,14 @@ export const AddOnDetailsMasterMain = (props) => {
         if (isDataLoaded && AddonDetailsData) {
             setformData(AddonDetailsData);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, AddonDetailsData]);
+    useEffect(() => {
+        if (isAddonPartsDataLoaded && AddonPartsData) {
+            setsearchData(AddonPartsData);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAddonPartsDataLoaded, AddonPartsData]);
 
     const viewProps = {
         formData,
@@ -134,6 +162,10 @@ export const AddOnDetailsMasterMain = (props) => {
     const formProps = {
         formData,
         formActionType,
+        onSearchPart,
+        AddonPartsData,
+        setsearchData,
+        searchData,
     };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>

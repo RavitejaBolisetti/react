@@ -3,13 +3,16 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form, Button } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const AMCForm = ({ formData, amcForm }) => {
+    const [isReadOnly, setisReadOnly] = useState(false);
+
     useEffect(() => {
         if (Object?.keys(formData['amc'])?.length) {
+            setisReadOnly(true);
             amcForm.setFieldsValue({
                 ...formData['amc'],
             });
@@ -26,12 +29,12 @@ const AMCForm = ({ formData, amcForm }) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="AMC" name="amc">
-                        <Input placeholder={preparePlaceholderText('RSA')} />
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('RSA')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="AMC Rate" name="amcRate">
-                        <Input placeholder={preparePlaceholderText('amc rate')} />
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('amc rate')} />
                     </Form.Item>
                 </Col>
             </Row>

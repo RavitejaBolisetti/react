@@ -138,6 +138,7 @@ export const BASE_URL_OTF_INVOICE_DETAILS = BASE_URL + 'otf/invoice';
 export const BASE_URL_OTF_DETAILS = BASE_URL_OTF + 'details';
 export const BASE_URL_OTF_VEHICLE_DETAILS = BASE_URL_OTF + 'vehicledetails';
 export const BASE_URL_ADD_ON_DETAILS = BASE_URL_OTF + 'addons';
+export const BASE_URL_ADD_ON_PART = BASE_URL_OTF + 'part/details';
 
 export const BASE_URL_OTF_INVOICE = BASE_URL + 'otf/invoice';
 export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';

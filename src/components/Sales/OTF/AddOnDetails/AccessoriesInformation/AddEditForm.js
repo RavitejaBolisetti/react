@@ -12,36 +12,39 @@ import styles from 'components/common/Common.module.css';
 
 const { TextArea } = Input;
 
-function AddEditForm({ onUpdate, formData, onCancel, accessoryForm, onFieldsChange, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
+function AddEditForm({ onUpdate, onSearchPart, setsearchData, searchData, addButtonDisabled, setaddButtonDisabled, setAddOnItemInfo, addOnItemInfo, AddonPartsData, onCancel, accessoryForm, onFieldsChange, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
     const disableProp = { disabled: true };
     useEffect(() => {
-        if (formData === undefined) {
-            return;
-        }
-        if (formData['partDetailsResponses']?.length) {
+        if (searchData?.length) {
             accessoryForm.setFieldsValue({
-                ...formData['partDetailsResponses']['0'],
+                ...searchData['0'],
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    }, [searchData]);
+    console.log('AddonPartsData', AddonPartsData);
+    const handleAccesoriesForm = () => {
+        accessoryForm
+            .validateFields()
+            .then((values) => {
+                setAddOnItemInfo((prev) => [values, ...prev]);
+                accessoryForm.resetFields();
+                setsearchData([]);
+                setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
+            })
+            .catch(() => {});
+    };
+
     const onFinishFailed = (err) => {
         console.error(err);
     };
 
     const handleOnSearch = (value) => {
-        if (value?.length < 3) return;
-        accessoryForm.setFieldsValue({
-            partType: 'wert',
-            sellingPrice: 'serg',
-            mrp: 'wef',
-            requiredQuantity: '12',
-            partDescription: 'wertgtr32e',
-        });
+        onSearchPart(value);
     };
 
     return (
-        <Form form={accessoryForm} onFieldsChange={onFieldsChange} autoComplete="off" id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Part Number" name="partNumber" rules={[validateRequiredInputField('part number')]}>
@@ -93,7 +96,7 @@ function AddEditForm({ onUpdate, formData, onCancel, accessoryForm, onFieldsChan
                 </Form.Item>
             </Row>
             {!isEditing ? (
-                <Button disabled={isBtnDisabled} type="primary" danger htmlType="submit">
+                <Button disabled={isBtnDisabled} onClick={() => handleAccesoriesForm()} type="primary" danger>
                     Add
                 </Button>
             ) : (

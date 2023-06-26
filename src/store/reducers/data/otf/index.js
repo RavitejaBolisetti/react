@@ -21,6 +21,7 @@ import { ExchangeVehicle } from './exchangeVehicle';
 import { SchemeDetail } from './schemeDetail';
 import { VehicleDetailsLov } from './vehicleDetailsLov';
 import { AddonDetails } from './addOnDetails';
+import { AddonParts } from './addonParts';
 export const OTF = combineReducers({
     InvoiceDetail,
     FinanceDetail,
@@ -37,4 +38,5 @@ export const OTF = combineReducers({
     SchemeDetail,
     VehicleDetailsLov,
     AddonDetails,
+    AddonParts,
 });
