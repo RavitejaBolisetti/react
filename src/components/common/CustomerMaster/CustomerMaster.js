@@ -85,6 +85,7 @@ const CustomerMasterMain = (props) => {
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
+    const [searchValue, setSearchvalue] = useState();
     const [customerSearchRules, setCustomerSearchRules] = useState({ rules: [validateRequiredInputField('Keyword')] });
 
     const [form] = Form.useForm();
@@ -171,6 +172,10 @@ const CustomerMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType, userId, refreshList]);
 
+    // useEffect(() => {
+    //     setFilterString(() => '');
+    // }, [filterString]);
+
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
 
@@ -241,10 +246,12 @@ const CustomerMasterMain = (props) => {
     };
 
     const handleChange = (selectedvalue) => {
-        setFilterString({ searchType: selectedvalue });
-        setCustomerSearchRules({});
+        setFilterString({ searchType: selectedvalue, searchParam: '' });
+        setCustomerSearchRules({ rules: [validateRequiredInputField('Keyword')] });
+
+        //setSearchvalue(''); // Cleared search value
         // setFilterString({ ...filterString, searchParam: '' });
-        // console.log('filterString', filterString);
+        console.log('filterString', filterString);
     };
 
     const onChangeHandle = (event) => {
@@ -334,6 +341,12 @@ const CustomerMasterMain = (props) => {
         e.key === 'Enter' && e.preventDefault();
     };
 
+    // useEffect(() => {
+    //     setFilterString({ searchParam: null });
+    // }, [filterString?.searchType]);
+
+    // console.log(filterString, 'FILTERSTRING');
+
     return (
         <>
             <Row gutter={20}>
@@ -351,7 +364,8 @@ const CustomerMasterMain = (props) => {
                                     })}
                                 </div>
                                 <div className={styles.selectSearchBg}>
-                                    <Form onKeyPress={onKeyPressHandler} form={searchForm} layout="vertical" autoComplete="off">
+                                    <Form form={searchForm} layout="vertical" autoComplete="off">
+                                        {/* onKeyPress={onKeyPressHandler} */}
                                         {/* <Form.Item name="parameter" rules={[validateRequiredSelectField('parameter')]} validateTrigger={['onSearch']}> */}
                                         <Select {...selectProps} value={filterString?.searchType} className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter">
                                             {typeData?.map((item) => (
