@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useReducer, useEffect } from 'react';
-import { Row, Col, Collapse, Form, Space, Typography, Button, Empty } from 'antd';
+import { Row, Col, Collapse, Form, Space, Typography, Button, Empty, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { bindActionCreators } from 'redux';
@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 const ContactMain = (props) => {
     const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData } = props;
     const { isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
-    const { buttonData, setButtonData, formActionType, handleButtonClick,  setSelectedCustomer,  setSelectedCustomerId } = props;
+    const { buttonData, setButtonData, formActionType, handleButtonClick, setSelectedCustomer, setSelectedCustomerId } = props;
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
@@ -87,7 +87,7 @@ const ContactMain = (props) => {
     const [editingData, setEditingData] = useState({});
     const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [continueWithOldMobNo, setContinueWithOldMobNo] = useState(false);
-    const [isAdding, setIsAdding] = useState(false); 
+    const [isAdding, setIsAdding] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
@@ -109,17 +109,16 @@ const ContactMain = (props) => {
             } else {
                 fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
             }
-        };
+        }
 
-        return(() => {
+        return () => {
             resetData();
             resetIndividualData();
-        })
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer?.customerId]);
 
     useEffect(() => {
-
         if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
             setContactData(customerIndData?.customerContact || []);
         } else {
@@ -168,7 +167,7 @@ const ContactMain = (props) => {
                             return [...formData, value];
                         } else {
                             const updVal = prev?.length ? [...prev, { ...value }] : [{ ...value }];
-                            return updVal ;
+                            return updVal;
                         }
                     });
                 }
@@ -224,7 +223,7 @@ const ContactMain = (props) => {
         uploadImgDocId,
         handleFormValueChange,
         setContinueWithOldMobNo,
-       
+
         customerType,
         isAdding,
         setIsAdding,
@@ -301,20 +300,23 @@ const ContactMain = (props) => {
                             >
                                 {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
                                 {!contactData?.length && !isAdding ? (
-                                    <Empty
-                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                        imageStyle={{
-                                            height: 60,
-                                        }}
-                                        description={
-                                            <span>
-                                                {noDataTitle} <br />
-                                            </span>
-                                        }
-                                    ></Empty>)
-                                    :
+                                    <>
+                                        <Divider />
+                                        <Empty
+                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                            imageStyle={{
+                                                height: 60,
+                                            }}
+                                            description={
+                                                <span>
+                                                    {noDataTitle} <br />
+                                                </span>
+                                            }
+                                        ></Empty>
+                                    </>
+                                ) : (
                                     <ViewContactList {...formProps} />
-                                }
+                                )}
                             </Panel>
                         </Collapse>{' '}
                     </Col>

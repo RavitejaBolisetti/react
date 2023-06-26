@@ -278,8 +278,9 @@ const AddressMasterBase = (props) => {
                                 key="1"
                                 showArrow={false}
                             >
-                                {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                {!addressData?.length && !isAdding ? (
+                                { (!formActionType?.viewMode && showAddEditForm) && <AddEditForm {...formProps} />}
+                                {!addressData?.length && !isAdding ? (<>
+                                    <Divider />
                                     <Empty
                                         image={Empty.PRESENTED_IMAGE_SIMPLE}
                                         imageStyle={{
@@ -291,6 +292,7 @@ const AddressMasterBase = (props) => {
                                             </span>
                                         }
                                     ></Empty>
+                                    </>
                                 ) : (
                                     <ViewAddressList {...formProps} />
                                 )}
