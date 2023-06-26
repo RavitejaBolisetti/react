@@ -5,13 +5,13 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Divider } from 'antd';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderText,preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
-import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validateRequiredSelectField } from 'utils/validation';
 
 const OptionServicesFormMain = (props) => {
-    const { handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, addContactHandeler, showGlobalNotification, selectedOrderId, onErrorAction, formData, fetchList, userId, listShowLoading, saveData, onSuccessAction, optionForm, setOpenAccordian } = props;
+    const { typeData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, addContactHandeler, showGlobalNotification, selectedOrderId, onErrorAction, formData, fetchList, userId, listShowLoading, saveData, onSuccessAction, optionForm, setOpenAccordian } = props;
     const isServiceNamePresent = (serviceName) => {
         let found = false;
         optionsServiceModified?.find((element, index) => {
@@ -45,11 +45,18 @@ const OptionServicesFormMain = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form autoComplete="off" layout="vertical" form={optionForm}>
+                    <Form autoComplete="off" layout="vertical" form={optionForm} onFinish={onFinish}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Service Name" name="serviceName" rules={[validateRequiredInputField('Service Name')]}>
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('Service Name')} />
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
+                                <Form.Item name="serviceName" label="Service Name" initialValue={formData?.serviceName} rules={[validateRequiredSelectField('Service Name')]}>
+                                    <Select
+                                        style={{
+                                            width: '100%',
+                                        }}
+                                        options={typeData['OPT_SRV']}
+                                        fieldNames={{ label: 'value', value: 'value' }}
+                                        placeholder={preparePlaceholderSelect('Service Name')}
+                                    />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>

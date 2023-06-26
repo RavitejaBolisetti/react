@@ -12,7 +12,7 @@ import styles from './OTFFormButton.module.css';
 export const OTFFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
         <Row gutter={20} className={styles.formFooter}>
-            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+            <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>
                 {buttonData?.closeBtn && (
                     <Button danger onClick={onCloseAction}>
                         Close
@@ -26,12 +26,49 @@ export const OTFFormButton = ({ record, onCloseAction, buttonData, setButtonData
                 )}
             </Col>
 
-            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+            <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
                 {buttonData?.editBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                         Edit
                     </Button>
                 )}
+
+                {buttonData?.transferBtn && (
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER, record })} type="primary">
+                        Transfer
+                    </Button>
+                )}
+
+                {buttonData?.allotBtn && (
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} type="primary">
+                        Allot
+                    </Button>
+                )}
+
+                {buttonData?.unAllot && (
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
+                        Un-Allot
+                    </Button>
+                )}
+
+                {buttonData?.invoiceBtn && (
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.INVOICE, record })} type="primary">
+                        Invoice
+                    </Button>
+                )}
+
+                {buttonData?.deliveryNoteBtn && (
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.DELIVERY_NOTE, record })} type="primary">
+                        Delivery Note
+                    </Button>
+                )}
+
+                {buttonData?.cancelOtfBtn && (
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
+                        Cancel OTF
+                    </Button>
+                )}
+
                 {buttonData?.nextBtn && !isLastSection && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                         Next
@@ -43,6 +80,8 @@ export const OTFFormButton = ({ record, onCloseAction, buttonData, setButtonData
                         {saveButtonName}
                     </Button>
                 )}
+
+                {}
             </Col>
         </Row>
     );

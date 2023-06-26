@@ -13,9 +13,6 @@ import { disableFutureDate } from 'utils/disableDate';
 
 export const AddressCommonForm = (props) => {
     const { formActionType, formType, formData } = props;
-    // const innitValue = formData?.birthDate ? dayjs(formData?.birthDate, 'YYYY/MM/DD') : '';
-    const innitValue = undefined;
-
     return (
         <>
             <Row gutter={20}>
@@ -111,9 +108,9 @@ export const AddressCommonForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    {/* <Form.Item name={[formType, 'birthDate']} label="Birth Date">
+                    <Form.Item name={[formType, 'birthDate']} initalValue={formData?.birthDate && dayjs(formData?.birthDate, 'YYYY/MM/DD')} label="Birth Date">
                         <DatePicker disabledDate={disableFutureDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
-                    </Form.Item> */}
+                    </Form.Item>
                 </Col>
             </Row>
         </>

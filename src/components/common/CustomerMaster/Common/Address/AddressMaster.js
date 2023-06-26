@@ -110,9 +110,9 @@ const AddressMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
-            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
+            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id && addressIndData?.customerAddress) {
                 setAddressData(addressIndData?.customerAddress);
-            } else {
+            } else if(addressCompanyData?.customerAddress) {
                 setAddressData(addressCompanyData?.customerAddress);
             }
         }
@@ -124,7 +124,7 @@ const AddressMasterBase = (props) => {
         if (!formActionType?.addMode && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
-            } else {
+            } else if(customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
                 fetchListCorporate({ setIsLoading: listShowLoading, userId, extraParams });
             }
         }
@@ -151,7 +151,7 @@ const AddressMasterBase = (props) => {
         forceUpdate();
     };
 
-    const onSubmit = () => {
+    const onFinish = () => {
         let data = {
             customerId: selectedCustomer?.customerId,
             customerAddress: addressData?.map((el) => {
@@ -225,7 +225,7 @@ const AddressMasterBase = (props) => {
         styles,
         addressData,
         setAddressData,
-        onSubmit,
+        onFinish,
         onFinishFailed,
         onCloseAction,
         onCheckdefaultAddClick,
@@ -247,6 +247,7 @@ const AddressMasterBase = (props) => {
         handleFormValueChange,
         isAdding,
         setIsAdding,
+        showGlobalNotification,
     };
 
     const myProps = {
@@ -255,7 +256,7 @@ const AddressMasterBase = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSubmit} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>

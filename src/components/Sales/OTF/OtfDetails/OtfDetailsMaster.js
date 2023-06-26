@@ -72,7 +72,7 @@ const OtfDetailsMasterBase = (props) => {
     const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
 
     const onErrorAction = (message) => {
-        showGlobalNotification({ message });
+        // showGlobalNotification({ message });
     };
 
     const extraParams = [
@@ -118,12 +118,12 @@ const OtfDetailsMasterBase = (props) => {
 
         const onSuccess = (res) => {
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -160,6 +160,7 @@ const OtfDetailsMasterBase = (props) => {
         formData: otfData,
         styles,
         isLoading,
+        salesConsultantLov,
     };
 
     return (
@@ -171,7 +172,7 @@ const OtfDetailsMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={1} />
+                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
