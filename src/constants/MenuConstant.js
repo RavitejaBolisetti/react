@@ -50,6 +50,13 @@ export const MenuConstant = {
         parentMenuId: 'OTD',
     },
 
+    [getMenyKey('COMN-10.01')]: {
+        key: 'COMN-10.01',
+        link: routing.ROUTING_COMMON_CUSTOMER_MASTER,
+        icon: undefined,
+        parentMenuId: 'COMN-10',
+    },
+
     [getMenyKey('COMN-05.01')]: {
         key: 'COMN-05.01',
         link: routing.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY,
