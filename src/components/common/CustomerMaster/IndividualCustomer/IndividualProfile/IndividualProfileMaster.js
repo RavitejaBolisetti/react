@@ -89,7 +89,8 @@ const IndividualProfileBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId && selectedCustomerId) {
+        if (!formActionType?.addMode && userId && selectedCustomerId) {
+            {
             const extraParams = [
                 {
                     key: 'customerId',
@@ -100,6 +101,7 @@ const IndividualProfileBase = (props) => {
             ];
             fetchList({ setIsLoading: listIndiviualShowLoading, userId, extraParams, onErrorAction });
         }
+    }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 

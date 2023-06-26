@@ -84,7 +84,7 @@ const CompanyProfileBase = (props) => {
     const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
 
     useEffect(() => {
-        if (userId && selectedCustomer) {
+        if (!formActionType?.addMode && userId && selectedCustomerId) {
             resetData();
             const extraParams = [
                 {

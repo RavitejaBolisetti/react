@@ -84,13 +84,15 @@ const FamilyDetailMasterBase = (props) => {
     ];
 
     useEffect(() => {
-        let onErrorAction = (res) => {
-            showGlobalNotification({ message: 'Family Data Not Exists' });
-            setFamilyDetailsList(() => []);
-        };
-        fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, onErrorAction, extraParams });
+        if (!formActionType?.addMode && userId && selectedCustomerId) {
+            let onErrorAction = (res) => {
+                showGlobalNotification({ message: 'Family Data Not Exists' });
+                setFamilyDetailsList(() => []);
+            };
+            fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, onErrorAction, extraParams });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedCustomerId]);
+    }, [userId, selectedCustomerId]);
 
     const onChange = (value) => {
         console.log(value, 'CHANGE');

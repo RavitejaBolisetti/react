@@ -102,18 +102,20 @@ const ContactMain = (props) => {
     ];
 
     useEffect(() => {
-        if (userId && selectedCustomer?.customerId) {
-            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
-            } else {
-                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+        if (!formActionType?.addMode && selectedCustomer?.customerId) {
+            {
+                if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
+                    fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+                } else {
+                    fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+                }
             }
-        }
 
-        return () => {
-            resetData();
-            resetIndividualData();
-        };
+            return () => {
+                resetData();
+                resetIndividualData();
+            };
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer?.customerId]);
 

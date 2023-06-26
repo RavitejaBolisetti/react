@@ -120,7 +120,8 @@ const AddressMasterBase = (props) => {
     }, [addressIndData?.customerAddress, addressCompanyData?.customerAddress]);
 
     useEffect(() => {
-        if (userId && selectedCustomer?.customerId) {
+        
+        if (!formActionType?.addMode && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
             } else {

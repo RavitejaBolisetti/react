@@ -87,8 +87,10 @@ const SupportingDocumentBase = (props) => {
     ];
 
     useEffect(() => {
-        if (userId && selectedCustomerId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+        if (!formActionType?.addMode && selectedCustomerId) {
+            {
+                fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
