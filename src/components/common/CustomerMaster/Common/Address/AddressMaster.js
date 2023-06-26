@@ -84,11 +84,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddressMasterBase = (props) => {
-    const { form, isViewModeVisible, section, addressIndData, setFormActionType, isCompanyAddressLoaded, formActionType, isAddressLoaded, addressCompanyData, selectedCustomer, saveData, addData } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, isAddressLoading, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification, handleButtonClick } = props;
+    const { form, isViewModeVisible, section, addressIndData, formActionType, addressCompanyData, selectedCustomer, saveData, addData } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, buttonData, setButtonData, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification, handleButtonClick } = props;
     const { fetchListCorporate, saveDataCorporate, customerType, resetData, resetDataCorporate, NEXT_ACTION } = props;
 
-    // const [form] = Form.useForm();
     const [addressForm] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -98,7 +97,6 @@ const AddressMasterBase = (props) => {
     const [editingData, setEditingData] = useState({});
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
     const extraParams = [
@@ -278,20 +276,21 @@ const AddressMasterBase = (props) => {
                                 key="1"
                                 showArrow={false}
                             >
-                                { (!formActionType?.viewMode && showAddEditForm) && <AddEditForm {...formProps} />}
-                                {!addressData?.length && !isAdding ? (<>
-                                    <Divider />
-                                    <Empty
-                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                        imageStyle={{
-                                            height: 60,
-                                        }}
-                                        description={
-                                            <span>
-                                                {noDataTitle} <br />
-                                            </span>
-                                        }
-                                    ></Empty>
+                                {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
+                                {!addressData?.length && !isAdding ? (
+                                    <>
+                                        <Divider />
+                                        <Empty
+                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                            imageStyle={{
+                                                height: 60,
+                                            }}
+                                            description={
+                                                <span>
+                                                    {noDataTitle} <br />
+                                                </span>
+                                            }
+                                        ></Empty>
                                     </>
                                 ) : (
                                     <ViewAddressList {...formProps} />

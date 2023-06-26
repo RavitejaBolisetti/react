@@ -17,10 +17,9 @@ const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { handleFormValueChange, typeData, userId, uploadDocumentFile, uploadedFile, setUploadedFile, listShowLoading, downloadFile, viewListShowLoading, setUploadedFileList, showGlobalNotification, viewDocument, handlePreview } = props;
+    const { handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview } = props;
 
     const onDrop = (e) => {};
-    // const onDownLoadFile =
 
     const onDownload = (file) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
@@ -35,6 +34,8 @@ const AddEditForm = (props) => {
 
     const uploadProps = {
         multiple: false,
+        accept: 'image/png, image/jpeg, application/pdf',
+
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
@@ -44,12 +45,12 @@ const AddEditForm = (props) => {
         },
         progress: { strokeWidth: 3, showInfo: true },
         onDrop,
-        beforeUpload: (info) => {
-            if (info?.type !== 'image/png' || info?.type !== 'image/jpeg' || info?.file?.type !== 'application/pdf') {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Upload Correct Format' });
-                return false;
-            }
-        },
+        // beforeUpload: (info) => {
+        //     if (info?.type !== 'image/png' || info?.type !== 'image/jpeg' || info?.file?.type !== 'application/pdf') {
+        //         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Upload Correct Format' });
+        //         return false;
+        //     }
+        // },
         onChange: (info) => {
             handleFormValueChange();
             const { status } = info.file;
