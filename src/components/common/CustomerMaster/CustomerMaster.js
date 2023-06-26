@@ -211,7 +211,8 @@ const CustomerMasterMain = (props) => {
     const onFinish = (values, e) => {};
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        console.error(errorInfo);
+        // form.validateFields().then((values) => {});
     };
 
     const tableProps = {

@@ -198,6 +198,7 @@ const AddressMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
+        
         return;
     };
 
@@ -264,7 +265,7 @@ const AddressMasterBase = (props) => {
                                     <>
                                         <Space>
                                             <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Address' : 'Company Address'}</Text>
-                                            {!isViewModeVisible && formActionType?.editMode && (
+                                            {!isViewModeVisible && !formActionType?.viewMode && (
                                                 <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary" disabled={isAdding || isEditing}>
                                                     Add
                                                 </Button>

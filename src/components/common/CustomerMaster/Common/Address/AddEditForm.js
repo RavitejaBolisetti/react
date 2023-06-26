@@ -245,7 +245,7 @@ const AddEditForm = (props) => {
                     </Col>
                 </Row>
                 <br></br>
-                {formActionType?.editMode && (
+                {!formActionType?.viewMode && (
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Space>

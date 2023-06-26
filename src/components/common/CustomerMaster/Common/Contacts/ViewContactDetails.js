@@ -37,7 +37,7 @@ const ViewDetailBase = (props) => {
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Purpose of Contact">{checkAndSetDefaultValue(getCodeValue(typeData?.PURPOSE,formData?.purposeOfContact), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Alternate Mobile Numbe">{checkAndSetDefaultValue(formData?.alternateMobileNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Alternate Mobile Numbe">{checkAndSetDefaultValue(formData?.alternativeMobileNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Relation">{checkAndSetDefaultValue(getCodeValue(typeData?.FAMLY_RELTN,formData?.relationCode), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(typeData?.GENDER_CD,formData?.gender), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE,formData?.title), isLoading)}</Descriptions.Item>
