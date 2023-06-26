@@ -198,7 +198,7 @@ const AddEditFormMain = (props) => {
                                     </Panel>
                                 </Collapse>
                             ))
-                        ) : (
+                        ) : !showForm && !editedMode ? (
                             <>
                                 <Divider />
                                 <Empty
@@ -213,7 +213,7 @@ const AddEditFormMain = (props) => {
                                     }
                                 ></Empty>
                             </>
-                        )}
+                        ) : null}
                     </Space>
                 </Card>
             ) : (
