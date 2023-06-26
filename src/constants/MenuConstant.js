@@ -43,6 +43,13 @@ export const MenuConstant = {
         parentMenuId: 'FAV',
     },
 
+    [getMenyKey('SACT-06.01')]: {
+        key: 'SACT-06.01',
+        link: routing.ROUTING_OTF,
+        icon: undefined,
+        parentMenuId: 'OTD',
+    },
+
     [getMenyKey('COMN-05.01')]: {
         key: 'COMN-05.01',
         link: routing.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY,
