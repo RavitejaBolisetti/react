@@ -94,13 +94,48 @@ export const OtfMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const defaultBtnVisiblity = {
+        editBtn: false,
+        saveBtn: false,
+        saveAndNewBtn: false,
+        saveAndNewBtnClicked: false,
+        closeBtn: false,
+        cancelBtn: false,
+        formBtnActive: false,
+        transferBtn: false,
+        allotBtn: false,
+        unAllotBtn: false,
+        invoiceBtn: false,
+        deliveryNote: false,
+        cancelOtfBtn: false,
+    };
+
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
+
+    // useEffect(() => {
+    //     if (selectedOrder) {
+    //         setDefaultBtnVisiblity({ ...defaultBtnVisiblity });
+    //         switch (selectedOrder?.orderStatus) {
+    //             case OTF_STATUS?.BOOKED?.title:
+    //                 setDefaultBtnVisiblity({ ...defaultBtnVisiblity, transferBtn: true, allotBtn: true, cancelOtfBtn: true });
+    //                 break;
+    //             case OTF_STATUS?.ALLOTED?.title:
+    //                 setDefaultBtnVisiblity({ ...defaultBtnVisiblity, transferBtn: true, unAllotBtn: true, invoiceBtn: true });
+    //                 break;
+    //             case OTF_STATUS?.CANCELLED?.title:
+    //                 setDefaultBtnVisiblity({ ...defaultBtnVisiblity, editMode: false });
+    //                 break;
+    //             default:
+    //                 break;
+    //         }
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [selectedOrder]);
 
     const extraParams = [
         {
@@ -202,7 +237,7 @@ export const OtfMasterBase = (props) => {
                 editMode: buttonAction === EDIT_ACTION,
                 viewMode: buttonAction === VIEW_ACTION,
             });
-            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
         }
         setIsFormVisible(true);
     };
@@ -262,7 +297,6 @@ export const OtfMasterBase = (props) => {
     };
 
     const onFinishAdvanceFilter = (values) => {
-        //let extraParams = [...extraParams, ...searchedParams];
         extraParams.push(
             { key: 'fromDate', title: 'Type', value: values?.fromDate ? dayjs(values?.fromDate).format('YYYY-MM-DD') : undefined, canRemove: true },
             {
@@ -294,6 +328,7 @@ export const OtfMasterBase = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
+        setSelectedOrder();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };

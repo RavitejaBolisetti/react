@@ -191,7 +191,7 @@ export const FinananceDetailsMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={1} />
+                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
                     </Row>
 
