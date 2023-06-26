@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import ReactRecaptcha3 from 'react-google-recaptcha3';
 import React, { useEffect, useState } from 'react';
 
@@ -13,9 +18,7 @@ function Captcha() {
             (resp) => {
                 setToken(resp);
             },
-            (error) => {
-                console.log(error);
-            }
+            (error) => {}
         );
     };
     return (

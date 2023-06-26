@@ -20,7 +20,7 @@ const AddEditForm = (props) => {
     const { handleFormValueChange, typeData, userId, uploadDocumentFile, uploadedFile, setUploadedFile, listShowLoading, downloadFile, viewListShowLoading, setUploadedFileList, showGlobalNotification, viewDocument, handlePreview } = props;
 
     const onDrop = (e) => {
-        console.log('Dropped files', e.dataTransfer.files);
+        // console.log('Dropped files', e.dataTransfer.files);
     };
     // const onDownLoadFile =
 

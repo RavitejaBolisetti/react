@@ -30,7 +30,7 @@ export const ViewDetail = (props) => {
                     })}
                 </Card>
             ) : (
-                <div>No Data Found</div>
+                <Card>No Data Found</Card>
             )}
         </div>
     );

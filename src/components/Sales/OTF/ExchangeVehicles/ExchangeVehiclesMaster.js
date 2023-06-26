@@ -126,7 +126,7 @@ const ExchangeVehiclesBase = (props) => {
     const { financeLovData, isFinanceLovLoading, isFinanceLovDataLoaded, fetchFinanceLovList, listFinanceLovShowLoading } = props;
     const { schemeLovData, isSchemeLovLoading, isSchemeLovDataLoaded, fetchSchemeLovList, listSchemeLovShowLoading } = props;
     const { form, selectedOrderId, formActionType, handleFormValueChange } = props;
-    const { fetchCustomerList, listCustomerShowLoading } = props;
+    const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
 
     const [formData, setFormData] = useState('');
 
@@ -199,6 +199,7 @@ const ExchangeVehiclesBase = (props) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
         const requestData = {
@@ -217,7 +218,6 @@ const ExchangeVehiclesBase = (props) => {
         form.validateFields()
             .then(() => {})
             .catch((err) => {
-                console.log('err');
             });
     };
 
@@ -264,7 +264,6 @@ const ExchangeVehiclesBase = (props) => {
             extraParams: defaultExtraParam,
             userId,
             onSuccessAction: (res) => {
-                console.log('res?.data?.customerMasterDetails[0]', res);
                 // setFormData(res?.data?.customerMasterDetails[0]);
             },
             onErrorAction,

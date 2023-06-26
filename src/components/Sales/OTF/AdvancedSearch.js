@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect } from 'react';
 import { Col, Form, Row, Select, Button, DatePicker } from 'antd';
 import { withModal } from 'components/withModal';
@@ -7,7 +12,7 @@ const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
     const { handleFilterChange } = props;
-    const { filterString, setFilterString, form, handleResetFilter, setAdvanceSearchVisible, otfStatusList , onFinishAdvanceFilter} = props;
+    const { filterString, setFilterString, form, handleResetFilter, setAdvanceSearchVisible, otfStatusList, onFinishAdvanceFilter } = props;
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState();
 

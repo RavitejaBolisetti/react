@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
 const AddressMasterBase = (props) => {
     const { form, isViewModeVisible, section, addressIndData, setFormActionType, isCompanyAddressLoaded, formActionType, isAddressLoaded, addressCompanyData, selectedCustomer, saveData, addData } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, isAddressLoading, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification, handleButtonClick } = props;
-    const { fetchListCorporate, saveDataCorporate, customerType, resetData, resetDataCorporate } = props;
+    const { fetchListCorporate, saveDataCorporate, customerType, resetData, resetDataCorporate, NEXT_ACTION } = props;
 
     // const [form] = Form.useForm();
     const [addressForm] = Form.useForm();
@@ -166,7 +166,7 @@ const AddressMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
             if (res.data) {
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             }
         };
 

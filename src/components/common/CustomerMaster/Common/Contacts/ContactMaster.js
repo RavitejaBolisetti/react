@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 const ContactMain = (props) => {
     const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, isCustomerDataLoaded, saveData, showGlobalNotification, typeData } = props;
     const { isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
-    const { buttonData, setButtonData, formActionType, handleButtonClick, setSelectedCustomer, setSelectedCustomerId } = props;
+    const { buttonData, setButtonData, formActionType, handleButtonClick, setSelectedCustomer, setSelectedCustomerId, NEXT_ACTION } = props;
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
@@ -237,7 +237,7 @@ const ContactMain = (props) => {
             contactform.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_EDIT_ACTION });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
             setSelectedCustomerId(res?.data?.customerId);
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {

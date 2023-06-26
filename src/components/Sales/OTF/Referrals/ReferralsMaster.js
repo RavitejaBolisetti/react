@@ -64,7 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ReferralsMasterBase = (props) => {
     const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading } = props;
-    const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, listCustomerShowLoading, typeData } = props;
+    const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, listCustomerShowLoading, typeData, handleButtonClick, NEXT_ACTION } = props;
 
     const [formData, setFormData] = useState();
     const [resetField, setResetField] = useState(false);
@@ -90,6 +90,7 @@ const ReferralsMasterBase = (props) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
         const onError = (message) => {

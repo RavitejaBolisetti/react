@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { Button, Form, Row, Col, Upload, message } from 'antd';
 import { connect } from 'react-redux';
@@ -38,18 +43,12 @@ const uploadProps = {
     action: '',
     onChange(info) {
         const { status } = info.file;
-        //   if (status !== 'uploading') {
-        //     console.log(info.file, info.fileList);
-        //   }
         if (status === 'done') {
             message.success(`${info.file.name} file uploaded successfully.`);
         } else if (status === 'error') {
             message.error(`${info.file.name} file upload failed.`);
         }
     },
-    // onDrop(e) {
-    //   console.log('Dropped files', e.dataTransfer.files);
-    // },
 };
 
 const UploadMain = (props) => {

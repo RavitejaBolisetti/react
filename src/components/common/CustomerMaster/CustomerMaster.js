@@ -10,12 +10,12 @@ import { Button, Col, Row, Input, Form, Empty, ConfigProvider, Select } from 'an
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { showGlobalNotification } from 'store/actions/notification';
-import { searchValidator, validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField } from 'utils/validation';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { tableColumn } from './tableColumn';
 
-import { btnVisiblity } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -96,12 +96,6 @@ const CustomerMasterMain = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-    const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
-    const NEXT_EDIT_ACTION = FROM_ACTION_TYPE?.NEXT_EDIT;
-
     const defaultExtraParam = [
         {
             key: 'customerType',
@@ -175,33 +169,42 @@ const CustomerMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType, userId, refreshList]);
 
-    const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
 
-        if (buttonAction === ADD_ACTION) {
-            defaultSection && setCurrentSection(defaultSection);
+        switch (buttonAction) {
+            case ADD_ACTION:
+                defaultSection && setCurrentSection(defaultSection);
+                break;
+            case EDIT_ACTION:
+                setSelectedCustomer(record);
+                record && setSelectedCustomerId(record?.customerId);
+                openDefaultSection && setCurrentSection(defaultSection);
+                break;
+            case VIEW_ACTION:
+                setSelectedCustomer(record);
+                record && setSelectedCustomerId(record?.customerId);
+                defaultSection && setCurrentSection(defaultSection);
+                break;
+
+            case NEXT_ACTION:
+                const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+                section && setCurrentSection(nextSection?.id);
+                setLastSection(!nextSection?.id);
+                break;
+
+            default:
+                break;
         }
 
-        if (buttonAction === EDIT_ACTION) {
-            setSelectedCustomer(record);
-            record && setSelectedCustomerId(record?.customerId);
-            !formVisible && setCurrentSection(defaultSection);
+        if (buttonAction !== NEXT_ACTION) {
+            setFormActionType({
+                addMode: buttonAction === ADD_ACTION,
+                editMode: buttonAction === EDIT_ACTION,
+                viewMode: buttonAction === VIEW_ACTION,
+            });
+            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
         }
-
-        if (buttonAction === VIEW_ACTION) {
-            setSelectedCustomer(record);
-            record && setSelectedCustomerId(record?.customerId);
-            defaultSection && setCurrentSection(defaultSection);
-        }
-
-        if (buttonAction === NEXT_ACTION || buttonAction === NEXT_EDIT_ACTION) {
-            const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
-            section && setCurrentSection(nextSection?.id);
-            setLastSection(!nextSection?.id);
-        }
-
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION || buttonAction === NEXT_EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
         setIsFormVisible(true);
     };
 
@@ -315,7 +318,6 @@ const CustomerMasterMain = (props) => {
                             <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.searchAndLabelAlign}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                     {Object.values(CUSTOMER_TYPE)?.map((item) => {
-                                        console.log();
                                         return (
                                             <Button className={styles.marR5} type={customerType === item?.id ? 'primary' : 'link'} danger onClick={() => setCustomerType(item?.id)}>
                                                 {item?.title}

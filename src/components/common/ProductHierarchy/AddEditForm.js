@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useEffect, useState } from 'react';
 import { Input, Form, Collapse, Col, Row, Switch, Select, Button } from 'antd';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
@@ -75,7 +80,6 @@ const AddEditFormMain = (props) => {
     };
 
     const onActionFormFinish = (val) => {
-        console.log(val,'finalValue')
         const { value, label } = val?.attributeName;
         setSKUAttributes((prev) => [...prev, { attributeName: label, id: value, attributeValue: val.attributeValue }]);
         actionForm.resetFields();

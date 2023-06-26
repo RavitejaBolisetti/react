@@ -1,6 +1,11 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import CommonCard from './CommonCard';
-import { Col, Input, Form, Descriptions, Row,  Button,   Space,  Collapse } from 'antd';
+import { Col, Input, Form, Descriptions, Row, Button, Space, Collapse } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import MacIdCard from './MacIdCard';
 import AssignUserRole from './AssignUserRole';
@@ -10,7 +15,6 @@ import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
 const { Panel } = Collapse;
 
 const ViewUserManagementDealerMain = ({ formData, styles, DealerSearchvalue, handleCollapse, openAccordian, productHierarchyData, finalFormdata, AccessMacid, isViewModeVisible, handleDelete, DealerData, setfinalFormdata }) => {
-    console.log('AccessMacid in View', AccessMacid);
     const viewProps = {
         bordered: false,
         colon: false,
@@ -20,8 +24,7 @@ const ViewUserManagementDealerMain = ({ formData, styles, DealerSearchvalue, han
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
-                <Descriptions {...viewProps}>
-                </Descriptions>
+                <Descriptions {...viewProps}></Descriptions>
                 <Space
                     direction="vertical"
                     size="middle"

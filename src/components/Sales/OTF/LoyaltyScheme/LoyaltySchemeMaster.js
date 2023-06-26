@@ -52,7 +52,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const LoyaltySchemeMasterMain = (props) => {
     const { isLoyaltySchemeDataLoaded, isLoading, section, listShowLoading, fetchList, LoyaltySchemeData, userId, showGlobalNotification } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange, onFinishFailed } = props;
+    const { form, selectedOrderId, formActionType, handleFormValueChange, onFinishFailed, handleButtonClick, NEXT_ACTION } = props;
 
     const [formdata, setformdata] = useState();
 
@@ -60,7 +60,9 @@ const LoyaltySchemeMasterMain = (props) => {
         showGlobalNotification({ message });
     };
 
-    const onFinish = (values) => {};
+    const onFinish = (values) => {
+        handleButtonClick({ record: undefined, buttonAction: NEXT_ACTION });
+    };
 
     useEffect(() => {
         if (userId && selectedOrderId) {
@@ -94,6 +96,12 @@ const LoyaltySchemeMasterMain = (props) => {
         setformdata,
         isLoyaltySchemeDataLoaded,
     };
+
+    const myProps = {
+        ...props,
+        buttonData: { ...props.buttonData, nextBtn: true, saveBtn: false },
+    };
+
     const viewProps = {
         styles,
         customerForm: formdata,
@@ -118,7 +126,7 @@ const LoyaltySchemeMasterMain = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...props} />
+                    <OTFFormButton {...myProps} />
                 </Col>
             </Row>
         </Form>

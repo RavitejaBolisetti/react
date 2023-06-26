@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { Row, Col } from 'antd';
 import { tblPrepareColumns } from 'utils/tableCloumn';
@@ -60,7 +65,6 @@ const ChangeHistoryMain = (props) => {
         tableColumn,
         tableData: ChangeHistoryTermsConditionsData,
     };
-    console.log('ChangeHistoryTermsConditionsData', ChangeHistoryTermsConditionsData);
     return (
         <>
             <Row gutter={20}>

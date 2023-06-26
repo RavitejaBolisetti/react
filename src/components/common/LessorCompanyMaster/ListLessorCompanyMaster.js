@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
@@ -73,9 +78,7 @@ export const ListLessorCompanyMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const onErrorAction = () => {
-        console.log('error');
-    };
+    const onErrorAction = () => {};
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });

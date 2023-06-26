@@ -18,7 +18,6 @@ const ViewDetailBase = ({ formData, styles, isLoading, typeData }) => {
     };
 
     const editContactHandeler = (data) => {
-        console.log('formData', formData);
     };
 
     return (
