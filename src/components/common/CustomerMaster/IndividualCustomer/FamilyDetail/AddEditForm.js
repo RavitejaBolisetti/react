@@ -145,7 +145,7 @@ const AddEditFormMain = (props) => {
                             familyDetailList?.map((item, index) => (
                                 <Collapse
                                     expandIcon={() => {
-                                        if (activeKey === item?.editedId) {
+                                        if (activeKey === index) {
                                             return <MinusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px', margin: '8px 0 0 0' }} />;
                                         } else {
                                             return <PlusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px', margin: '8px 0 0 0' }} />;
