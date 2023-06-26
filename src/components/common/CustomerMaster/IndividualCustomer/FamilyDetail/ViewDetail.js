@@ -20,9 +20,6 @@ const ViewDetailBase = (props) => {
         column: { xxl: 3, xl: 3, lg: 3, md: 2, sm: 1, xs: 1 },
     };
 
-    console.log(props?.relationAge,'jj')
-
-
     return (
         <div className={styles.sectionborder}>
             <Descriptions {...viewProps} className={styles.descriptionBox}>
