@@ -840,8 +840,12 @@
     margin-right: -1px;
 }
 
-.contentHeaderBackground .selectSearchBg :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.contentHeaderBackground .subheading .selectSearchBg :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     margin-top: -4px;
+}
+
+.contentHeaderBackground .selectSearchBg :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+    margin-top: -6px;
 }
 
 .contentHeaderBackground :global .ant-input-search>.ant-input-group .ant-input-affix-wrapper:not(:last-child) {
@@ -1421,26 +1425,16 @@
     border-radius: 4px;
 }
 
-.contentHeaderBackground .subheading .selectSearchBg .headerSelectField {
-    width: 30%;
-    position: absolute;
-    z-index: 99;
-}
-
-.contentHeaderBackground .subheading .selectSearchBg .headerSearchField {
-    width: 69%;
-    float: right;
-}
-
+.contentHeaderBackground .subheading .selectSearchBg .headerSelectField,
 .contentHeaderBackground .selectSearchBg .headerSelectField {
-    width: 25%;
-    /* width: auto; */
+    width: 142px;
     position: absolute;
     z-index: 99;
 }
 
+.contentHeaderBackground .subheading .selectSearchBg .headerSearchField,
 .contentHeaderBackground .selectSearchBg .headerSearchField {
-    width: 58%;
+    width: calc(100% - 134px);
     float: right;
 }
 
@@ -2144,7 +2138,11 @@
 
 .drawerBodyRight .sectionborder {
     border-top: 1px solid #e6e6e6;
-    /* padding-top: 20px; */
+    padding-top: 20px;
+}
+
+.drawerBodyRight .sectionborder :global .ant-collapse>.ant-collapse-item {
+    border-bottom: none;
 }
 
 .drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box button {
