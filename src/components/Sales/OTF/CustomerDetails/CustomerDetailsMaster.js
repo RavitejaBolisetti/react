@@ -87,10 +87,9 @@ export const CustomerDetailsMain = (props) => {
     const [activeKey, setactiveKey] = useState([1]);
 
     useEffect(() => {
-        if (userId && isDataLoaded && customerFormData) {
-            setFormData(customerFormData);
-        }
-    }, [isDataLoaded, userId, customerFormData]);
+        setFormData(customerFormData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [customerFormData]);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
