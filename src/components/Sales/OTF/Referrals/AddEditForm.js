@@ -13,6 +13,7 @@ import { validateMobileNoField } from 'utils/validation';
 import { disableFutureDate } from 'utils/disableDate';
 
 import dayjs from 'dayjs';
+import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
 
@@ -35,7 +36,7 @@ const AddEditFormMain = (props) => {
     return (
         <Card style={{ backgroundColor: '#F2F2F2' }}>
             <Row gutter={20}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                     <Form.Item name="mobileNumber" label="Mobile Number" initialValue={formData?.mobileNumber} rules={[validateRequiredInputField('Mobile Number'), validateMobileNoField('Mobile Number'), { min: 10, message: 'Phone number must be minimum 10 digits Long.' }]}>
                         <Search loading={isCustomerLoading} placeholder={preparePlaceholderText('Mobile Number')} style={{ width: '100%' }} maxLength={10} allowClear type="text" onSearch={onSearch} />
                     </Form.Item>
