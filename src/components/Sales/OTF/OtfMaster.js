@@ -411,7 +411,7 @@ export const OtfMasterBase = (props) => {
         otfSearchSelected,
         isLastSection,
         typeData,
-        saveButtonName: formActionType?.addMode ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
     };
 
     return (

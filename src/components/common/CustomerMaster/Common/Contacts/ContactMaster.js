@@ -102,18 +102,20 @@ const ContactMain = (props) => {
     ];
 
     useEffect(() => {
-        if (userId && selectedCustomer?.customerId) {
-            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
-            } else {
-                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+        if (!formActionType?.addMode && selectedCustomer?.customerId) {
+            {
+                if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
+                    fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+                } else {
+                    fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+                }
             }
-        }
 
-        return () => {
-            resetData();
-            resetIndividualData();
-        };
+            return () => {
+                resetData();
+                resetIndividualData();
+            };
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer?.customerId]);
 
@@ -237,8 +239,6 @@ const ContactMain = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
-            setSelectedCustomerId(res?.data?.customerId);
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
             } else {

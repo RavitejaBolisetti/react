@@ -73,6 +73,7 @@ export const AccountRelatedMasterBase = (props) => {
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
+        resetData();
     };
 
     const onSuccessAction = (res) => {
@@ -91,7 +92,7 @@ export const AccountRelatedMasterBase = (props) => {
     }, [isDataLoaded]);
 
     useEffect(() => {
-        if (userId && selectedCustomerId) {
+        if (!formActionType?.addMode && userId && selectedCustomerId) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

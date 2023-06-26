@@ -211,7 +211,8 @@ const CustomerMasterMain = (props) => {
     const onFinish = (values, e) => {};
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        console.error(errorInfo);
+        // form.validateFields().then((values) => {});
     };
 
     const tableProps = {
@@ -300,7 +301,7 @@ const CustomerMasterMain = (props) => {
         handleFormValueChange,
         setRefreshList,
         isLastSection,
-        saveButtonName: formActionType?.addMode ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next', 
     };
 
     const selectProps = {

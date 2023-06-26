@@ -8,7 +8,7 @@ import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Div
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
-import { validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
 const OptionServicesFormMain = (props) => {
     const { handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, addContactHandeler, showGlobalNotification, selectedOrderId, onErrorAction, formData, fetchList, userId, listShowLoading, saveData, onSuccessAction, optionForm, setOpenAccordian } = props;
@@ -53,7 +53,7 @@ const OptionServicesFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Amount" name="amount" rules={[validateRequiredInputField('Amount')]}>
+                                <Form.Item label="Amount" name="amount" rules={[validateRequiredInputField('Amount'), validateNumberWithTwoDecimalPlaces('Amount')]}>
                                     <Input maxLength={50} placeholder={preparePlaceholderText('Amount')} />
                                 </Form.Item>
                             </Col>

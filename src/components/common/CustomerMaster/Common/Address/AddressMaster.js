@@ -120,7 +120,8 @@ const AddressMasterBase = (props) => {
     }, [addressIndData?.customerAddress, addressCompanyData?.customerAddress]);
 
     useEffect(() => {
-        if (userId && selectedCustomer?.customerId) {
+        
+        if (!formActionType?.addMode && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
             } else {
@@ -198,6 +199,7 @@ const AddressMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
+        
         return;
     };
 
@@ -264,7 +266,7 @@ const AddressMasterBase = (props) => {
                                     <>
                                         <Space>
                                             <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Address' : 'Company Address'}</Text>
-                                            {!isViewModeVisible && formActionType?.editMode && (
+                                            {!isViewModeVisible && !formActionType?.viewMode && (
                                                 <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary" disabled={isAdding || isEditing}>
                                                     Add
                                                 </Button>

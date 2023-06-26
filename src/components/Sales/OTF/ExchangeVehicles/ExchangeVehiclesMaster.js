@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
             OTF: {
                 ExchangeVehicle: { isLoaded: isDataLoaded = false, isLoading, data: exchangeData = [] },
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isloading: isFinanceLovLoading, data: financeLovData = [] },
-                SchemeDetail: { isLoaded: isSchemeLovDataLoaded = false, isloading: isSchemeLovLoading, data: schemeLovData = [] },
+                SchemeDetail: { isFilteredListLoaded: isSchemeLovDataLoaded = false, isloading: isSchemeLovLoading, filteredListData: schemeLovData = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Vehicle: {
@@ -130,6 +130,11 @@ const ExchangeVehiclesBase = (props) => {
 
     const [formData, setFormData] = useState('');
 
+    useEffect(() => {
+        setFormData(exchangeData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [exchangeData]);
+
     const extraParams = [
         {
             key: 'otfNumber',
@@ -169,18 +174,11 @@ const ExchangeVehiclesBase = (props) => {
     }, [userId, isMakeDataLoaded, isModelDataLoaded, isVariantDataLoaded]);
 
     useEffect(() => {
-        if (!isDataLoaded && userId) {
+        if (userId && selectedOrderId) {
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, userId]);
-
-    useEffect(() => {
-        if (isDataLoaded && userId && exchangeData) {
-            setFormData(exchangeData);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, userId, exchangeData]);
+    }, [userId, selectedOrderId]);
 
     const onErrorAction = (message) => {
         showGlobalNotification(message);
@@ -214,11 +212,10 @@ const ExchangeVehiclesBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (values) => {
+    const onFinishFailed = (values1) => {
         form.validateFields()
             .then(() => {})
-            .catch((err) => {
-            });
+            .catch((err) => {});
     };
 
     const onSearch = (value) => {
@@ -229,7 +226,7 @@ const ExchangeVehiclesBase = (props) => {
             {
                 key: 'customerType',
                 title: 'Customer Type',
-                value: 'ALL',
+                value: 'IND',
                 canRemove: true,
             },
             {

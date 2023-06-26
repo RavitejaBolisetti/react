@@ -81,7 +81,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Aadhar No.">{checkAndSetDefaultValue(formData?.adharNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Voter ID">{checkAndSetDefaultValue(formData?.voterId, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Vehicle Used">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.Vehicle_Used, formData?.vehicleUsed), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Mother Tongue">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.MOTHER_TOUNGE, formData?.preferredLanguage), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Mother Tongue">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.MOTHER_TOUNGE, formData?.motherTongue), isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Religion">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.RELGION, formData?.religion), isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="PAN">{checkAndSetDefaultValue(formData?.panNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData?.gstin, isLoading)}</Descriptions.Item>
@@ -188,10 +188,10 @@ const ViewDetailMain = (props) => {
                         key="3"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Name Of Person">{checkAndSetDefaultValue(formData?.personName, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Position">{checkAndSetDefaultValue(formData?.postion, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Company Name">{checkAndSetDefaultValue(formData?.companyName, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.remarks, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Name Of Person">{checkAndSetDefaultValue(formData?.authorityDetails?.personName, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Position">{checkAndSetDefaultValue(formData?.authorityDetails?.postion, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Company Name">{checkAndSetDefaultValue(formData?.authorityDetails?.companyName, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.authorityDetails?.remarks, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>

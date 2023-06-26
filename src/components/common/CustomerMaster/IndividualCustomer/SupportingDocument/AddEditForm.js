@@ -68,6 +68,8 @@ const AddEditForm = (props) => {
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
         setEmptyList(true);
+
+
         const data = new FormData();
         data.append('applicationId', 'app');
         data.append('file', file);

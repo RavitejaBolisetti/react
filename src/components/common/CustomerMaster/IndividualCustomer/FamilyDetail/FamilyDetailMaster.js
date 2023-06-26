@@ -10,8 +10,6 @@ import { Form, Row, Col } from 'antd';
 import { familyDetailsDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetails';
 import { familyDetailSearchDataActions } from 'store/actions/data/customerMaster/individual/familyDetails/familyDetailSearch';
 import { showGlobalNotification } from 'store/actions/notification';
-
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { GetAge } from 'utils/getAge';
 import { AddEditForm } from './AddEditForm';
@@ -86,15 +84,18 @@ const FamilyDetailMasterBase = (props) => {
     ];
 
     useEffect(() => {
-        let onErrorAction = (res) => {
-            showGlobalNotification({ message: 'Family Data Not Exists' });
-            setFamilyDetailsList(() => []);
-        };
-        fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, onErrorAction, extraParams });
+        if (!formActionType?.addMode && userId && selectedCustomerId) {
+            let onErrorAction = (res) => {
+                showGlobalNotification({ message: 'Family Data Not Exists' });
+                setFamilyDetailsList(() => []);
+            };
+            fetchFamilyDetailsList({ setIsLoading: listFamilyDetailsShowLoading, userId, onErrorAction, extraParams });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedCustomerId]);
+    }, [userId, selectedCustomerId]);
 
     const onChange = (value) => {
+        console.log(value, 'CHANGE');
         setCustomerType(value);
     };
 
@@ -108,6 +109,17 @@ const FamilyDetailMasterBase = (props) => {
     };
 
     const onSearch = (value) => {
+        if (value === selectedCustomerId) {
+            showGlobalNotification({ message: 'Can not Add Same User as family member' });
+            return;
+        } else {
+            let found = null;
+            found = familyDetailList?.find((e) => e?.relationCustomerId === value);
+            if (found) {
+                showGlobalNotification({ message: 'Entered Customer Id is already added to this customer' });
+                return;
+            }
+        }
         let searchParams = [
             {
                 key: 'customerId',
@@ -199,7 +211,8 @@ const FamilyDetailMasterBase = (props) => {
         if (familyData?.length > 0) {
             setFamilyDetailsList(() => []);
             for (let i = 0; i < familyData?.length; i++) {
-                setFamilyDetailsList((object) => [...object, { ...familyData[i], editedId: i }]);
+                let id = Math.floor(Math.random() * 100000000 + 1);
+                setFamilyDetailsList((object) => [...object, { ...familyData[i], editedId: id, relationCustomerId: familyData[i]?.relationCustomerId === null ? '' : familyData[i]?.relationCustomerId }]);
             }
         }
         forceUpdate();

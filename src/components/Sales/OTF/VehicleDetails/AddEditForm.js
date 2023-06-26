@@ -5,7 +5,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Divider } from 'antd';
-import { validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
@@ -176,7 +176,7 @@ const AddEditFormMain = (props) => {
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Discount Amount" name="discountAmount">
+                                    <Form.Item label="Discount Amount" name="discountAmount" rules={[validateNumberWithTwoDecimalPlaces('Discount Amount')]}>
                                         <Input placeholder={preparePlaceholderText('Discount Amount')} />
                                     </Form.Item>
                                 </Col>

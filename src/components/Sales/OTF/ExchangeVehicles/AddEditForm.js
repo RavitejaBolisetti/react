@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Input, Form, Select, Card } from 'antd';
 
 import styles from 'components/common/Common.module.css';
@@ -17,6 +17,15 @@ const AddEditFormMain = (props) => {
     const { formData, form, isCustomerLoading, onSearch } = props;
     const { financeLovData, schemeLovData, typeData, makeData, modelData, variantData } = props;
     const { isConfigLoading, isSchemeLovLoading, isFinanceLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
+
+    useEffect(() => {
+        if (formData) {
+            form.setFieldsValue({
+                ...formData,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const handleRelationshipChange = (value) => {
         form.setFieldsValue({
@@ -188,7 +197,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="hypothicatedTo" label="Hypothecated To" initialValue={formData?.hypothicatedTo} fieldNames={{ label: 'value', value: 'key' }} rules={[validateRequiredSelectField('Scheme Name')]}>
+                    <Form.Item name="hypothicatedTo" label="Hypothecated To" initialValue={formData?.hypothicatedTo} fieldNames={{ label: 'value', value: 'key' }} rules={[validateRequiredSelectField('hypothecated')]}>
                         <Select
                             style={{
                                 width: '100%',
