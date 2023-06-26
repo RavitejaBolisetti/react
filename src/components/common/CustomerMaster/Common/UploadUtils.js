@@ -90,7 +90,7 @@ const UploadUtilsMain = (props) => {
             showProgress: true,
         },
         progress: { strokeWidth: 3, showInfo: true },
-
+        accept:"image/png, image/jpeg",
         onDrop,
         onChange: (info, event) => {
             const { status } = info.file;

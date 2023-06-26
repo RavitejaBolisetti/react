@@ -19,14 +19,14 @@ import style from '../../../Common.module.css';
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { formData, isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
+    const { formData, isReadOnly = false, onFinish, form, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
     const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
 
     const handleCancelFormEdit = () => {
-        form.resetFields();
+        contactform.resetFields();
         setIsAdding(false);
         setIsEditing(false);
         setShowAddEditForm(false);
@@ -71,7 +71,7 @@ const AddEditForm = (props) => {
 
     return (
         <>
-            <Form form={form} autoComplete="off" onFinish={onFinish} onFieldsChange={handleFormValueChange} layout="vertical">
+            <Form form={contactform} autoComplete="off" onFinish={onFinish} onFieldsChange={handleFormValueChange} layout="vertical">
                 <Space direction="vertical">
                     <UploadUtils
                         {...props}
@@ -120,7 +120,8 @@ const AddEditForm = (props) => {
                             {customerType === 'IND' ? (
                                 <>
                                     <Form.Item initialValue={''} label="Relation" name="relationCode">
-                                        <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['FAMLY_RELTN']} allowClear></Select>
+                                        <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={[{key: '', value: 'Select'}, ...typeData['FAMLY_RELTN']]} allowClear></Select>
+                                        {/* <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['FAMLY_RELTN']} allowClear></Select> */}
                                     </Form.Item>
                                     <Form.Item initialValue={''} hidden name="designation" rules={[validateLettersWithWhitespaces('First Name')]}>
                                         <Input />

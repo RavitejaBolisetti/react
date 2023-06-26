@@ -14,7 +14,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewAddressList = (props) => {
-    const { form, setShowAddEditForm, showAddEditForm, onCheckdefaultAddClick, formActionType, setAddressData, onSubmit, setIsEditing, isEditing, styles, addressData, onCheckClick, setEditingData, isAdding, setIsAdding } = props;
+    const { form,addressForm, setShowAddEditForm, showAddEditForm, onCheckdefaultAddClick, formActionType, setAddressData, onSubmit, setIsEditing, isEditing, styles, addressData, onCheckClick, setEditingData, isAdding, setIsAdding } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
 
@@ -29,7 +29,7 @@ const ViewAddressList = (props) => {
         setIsEditing(true);
         setEditingData(data);
         setIsAdding(true)
-        form.setFieldsValue(data);
+        addressForm.setFieldsValue(data);
     };
 
     const detailProps = {
@@ -38,6 +38,7 @@ const ViewAddressList = (props) => {
         setAddressData,
         onSubmit,
         form,
+        addressForm,
         isEditing,
         setIsEditing,
         editContactHandeler,
@@ -48,6 +49,7 @@ const ViewAddressList = (props) => {
         setAddressData,
         onSubmit,
         form,
+        addressForm,
         ...props,
     };
 
