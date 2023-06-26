@@ -10,7 +10,13 @@ import { FiDownload } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
 
 export const ViewDetail = (props) => {
-    const { supportingData, handlePreview, viewDocument, showGlobalNotification } = props;
+    const {
+        formActionType: { viewMode },
+        supportingData,
+        handlePreview,
+        viewDocument,
+        showGlobalNotification,
+    } = props;
 
     const downloadFile = (uploadData) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your donload will start soon' });
@@ -30,7 +36,7 @@ export const ViewDetail = (props) => {
                     })}
                 </Card>
             ) : (
-                <Card>No Data Found</Card>
+                viewMode && <div className={styles.viewNoDataFound}>No Supporting Document Available</div>
             )}
         </div>
     );

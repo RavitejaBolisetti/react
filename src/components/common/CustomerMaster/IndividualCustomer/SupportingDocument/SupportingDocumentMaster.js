@@ -73,6 +73,8 @@ const SupportingDocumentBase = (props) => {
 
     const [uploadedFile, setUploadedFile] = useState();
     const [emptyList, setEmptyList] = useState(true);
+
+    const [supportingDataView, setSupportingDataView] = useState();
     //const [uploadedFileList, setUploadedFileList] = useState();
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
@@ -96,6 +98,8 @@ const SupportingDocumentBase = (props) => {
     }, [userId, selectedCustomerId]);
 
     const onFinish = (values) => {
+        
+
         const data = { ...values, customerId: selectedCustomerId, status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId'), id: '' };
 
         const onSuccess = (res) => {
@@ -133,13 +137,21 @@ const SupportingDocumentBase = (props) => {
             },
         ];
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, selectedDocument });
+        setSupportingDataView(supportingData);
     };
 
     const viewProps = {
         supportingData,
+        supportingDataView,
+        setSupportingDataView,
+
         handlePreview,
         viewDocument,
         showGlobalNotification,
+        formActionType,
+        listShowLoading,
+        saveData,
+        userId,
     };
 
     const formProps = {

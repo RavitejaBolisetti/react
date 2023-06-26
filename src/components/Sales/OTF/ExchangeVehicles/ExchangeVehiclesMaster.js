@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
             OTF: {
                 ExchangeVehicle: { isLoaded: isDataLoaded = false, isLoading, data: exchangeData = [] },
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isloading: isFinanceLovLoading, data: financeLovData = [] },
-                SchemeDetail: { isLoaded: isSchemeLovDataLoaded = false, isloading: isSchemeLovLoading, data: schemeLovData = [] },
+                SchemeDetail: { isFilteredListLoaded: isSchemeLovDataLoaded = false, isloading: isSchemeLovLoading, filteredListData: schemeLovData = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Vehicle: {

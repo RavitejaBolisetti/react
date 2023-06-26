@@ -188,7 +188,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="hypothicatedTo" label="Hypothecated To" initialValue={formData?.hypothicatedTo} fieldNames={{ label: 'value', value: 'key' }} rules={[validateRequiredSelectField('Scheme Name')]}>
+                    <Form.Item name="hypothicatedTo" label="Hypothecated To" initialValue={formData?.hypothicatedTo} fieldNames={{ label: 'value', value: 'key' }} rules={[validateRequiredSelectField('hypothecated')]}>
                         <Select
                             style={{
                                 width: '100%',

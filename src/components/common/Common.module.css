@@ -2599,6 +2599,12 @@
     color: #0b0b0c !important;
 }
 
+.viewDrawerContainer .viewNoDataFound {
+    padding: 20px 30px !important
+}
+
+.viewDrawerContainer .viewNoDataFound .ant-card .ant-card-body {}
+
 @media (max-width: 768px) {
 
     /* For mobile phones: */
