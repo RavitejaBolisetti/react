@@ -74,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 const IndividualProfileBase = (props) => {
     const { userId, isIndiviualProfileLoaded, fecthViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification, handleButtonClick } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, downloadFile } = props;
-    const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, setSelectedCustomerId, NEXT_ACTION } = props;
+    const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, NEXT_ACTION } = props;
     const [form] = Form.useForm();
 
     const [formData, setFormData] = useState([]);
@@ -163,6 +163,7 @@ const IndividualProfileBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                setSelectedCustomer({ ...res.data });
                 setSelectedCustomerId(res?.data?.customerId);
             }
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -173,7 +174,7 @@ const IndividualProfileBase = (props) => {
         };
         const requestData = {
             data: data,
-            method: 'post',
+            method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listIndiviualShowLoading,
             userId,
             onError,
@@ -219,6 +220,7 @@ const IndividualProfileBase = (props) => {
         listDocumentShowLoading,
         uploadDocumentFile,
         setUploadedFile,
+        uploadedFile,
 
         saveDocumentData,
         userId,
