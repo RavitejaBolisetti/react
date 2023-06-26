@@ -291,7 +291,7 @@
 :global .ant-pagination .ant-pagination-total-text {
     position: absolute;
     left: 0px;
-    z-index: 9999;
+    z-index: 99;
     width: 110px;
     color: #0b0b0c;
     font-weight: 500;
