@@ -9,21 +9,59 @@ import { Form } from 'antd';
 import CardMapping from './CardMapping';
 import AddEditForm from './AddEditForm';
 
-const AccessoriesAddonMain = ({ setIsBtnDisabled, setsearchData, searchData, setaddButtonDisabled, onSearchPart, AddonPartsData, addButtonDisabled, accessoryForm, isBtnDisabled, setFormBtnDisable, setAddOnItemInfo, addOnItemInfo, formData }) => {
+const AccessoriesAddonMain = ({ setIsBtnDisabled, isEditing, setisEditing, selectedOrderId, handleFormValueChange, showGlobalNotification, setsearchData, searchData, setaddButtonDisabled, onSearchPart, AddonPartsData, addButtonDisabled, accessoryForm, isBtnDisabled, setFormBtnDisable, setAddOnItemInfo, addOnItemInfo, formData }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [EditingForm] = Form.useForm();
-    const [isEditing, setisEditing] = useState(false);
+    const [identification, setidentification] = useState();
     const addOnformOnFinish = (val) => {
         setAddOnItemInfo((prev) => [...prev, val]);
         accessoryForm.resetFields();
         forceUpdate();
     };
+    const isPresent = (values) => {
+        const found = addOnItemInfo.filter((element, index) => {
+            if (element?.partNumber === values) return element;
+        });
+        console.log('found', found);
+        if (found?.length === 2 || addOnItemInfo?.length === 1) {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Duplicate Part Number' });
+            return true;
+        }
+
+        return false;
+    };
+    const onUpdate = (index, seteditCardForm) => {
+        accessoryForm
+            .validateFields()
+            .then((values) => {
+                if (isPresent(values?.partNumber)) {
+                    return;
+                }
+                if (!values['type'] || !values['sellingPrice']) {
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Part Number to continue' });
+                    return;
+                }
+                addOnItemInfo?.map((element, i) => {
+                    if (i === index) {
+                        addOnItemInfo[i] = { ...values };
+                        return;
+                    }
+                });
+                seteditCardForm(false);
+                setisEditing(false);
+                handleFormValueChange();
+                console.log('this is update', index);
+            })
+            .catch(() => {});
+    };
     const handleDelete = (index) => {
         setAddOnItemInfo(addOnItemInfo?.filter((element, i) => i !== index));
     };
-    const handleEdit = (index) => {
-        setisEditing(true);
+    const onCancel = () => {
+        accessoryForm.resetFields();
+        setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
     };
+
     const onFieldsChange = () => {
         // setCanFormSave(true);
     };
@@ -44,13 +82,19 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, setsearchData, searchData, set
         onFieldsChange,
         setaddButtonDisabled,
         addButtonDisabled,
+        showGlobalNotification,
+        onCancel,
+        handleFormValueChange,
+        selectedOrderId,
+        onUpdate,
+        isPresent,
     };
     return (
         <>
             {addButtonDisabled?.partDetailsResponses && <AddEditForm {...AddEditFormProps} />}
 
             {addOnItemInfo?.map((element, index) => {
-                return <CardMapping element={element} isEditing={isEditing} setisEditing={setisEditing} handleDelete={handleDelete} index={index} />;
+                return <CardMapping AddEditFormProps={AddEditFormProps} identification={identification} element={element} isEditing={isEditing} setisEditing={setisEditing} handleDelete={handleDelete} index={index} />;
             })}
         </>
     );

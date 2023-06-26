@@ -62,12 +62,19 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AddOnDetailsMasterMain = (props) => {
-    const { fetchList, partListLoading, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, isDataLoaded, userId, listShowLoading, saveData, onFinishFailed } = props;
+    const { fetchList, partListLoading, showGlobalNotification, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, isDataLoaded, userId, listShowLoading, saveData, onFinishFailed } = props;
     const { form, section, selectedOrderId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
 
     const [formData, setformData] = useState();
+    const [formDataSetter, setformDataSetter] = useState({
+        shield: {},
+        rsa: {},
+        amc: {},
+        fms: {},
+        partDetailsResponses: [],
+    });
     const [searchData, setsearchData] = useState();
-
+    const [addOnItemInfo, setAddOnItemInfo] = useState([]);
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
@@ -77,43 +84,37 @@ export const AddOnDetailsMasterMain = (props) => {
         showGlobalNotification({ message });
     };
     const onFinish = (values) => {
-        const data = { ...values };
+        let detailsRequest = [];
+        formDataSetter?.partDetailsResponses?.map((element, index) => {
+            const { id, otfNumber, partNumber, requiredQuantity } = element;
+            detailsRequest.push({ id, otfNumber, partNumber, requiredQuantity });
+        });
+        const data = { id: formData?.id ?? '', otfNumber: selectedOrderId, partDetailsRequests: detailsRequest, shield: formDataSetter?.shield, rsa: formDataSetter?.rsa, amc: formDataSetter?.amc, fms: formDataSetter?.fms };
         console.log('data', data);
-        return;
-        // const onSuccess = (res) => {
-        //     setoptionsServicesMapping([]);
-        //     setoptionsServiceModified([]);
-        //     setformData({});
-        //     setOpenAccordian('1');
-        //     setIsReadOnly(false);
-        //     const extraParams = [
-        //         {
-        //             key: 'otfNumber',
-        //             title: 'otfNumber',
-        //             value: selectedOrderId,
-        //             name: 'OTF Number',
-        //         },
-        //     ];
-        //     form.resetFields();
-        //     showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-        //     fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction, extraParams });
-        //     handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-        // };
 
-        // const onError = (message) => {
-        //     showGlobalNotification({ message });
-        // };
+        const onSuccess = (res) => {
+            setformDataSetter({});
+            setformData({});
+            form.resetFields();
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+        };
 
-        // const requestData = {
-        //     data: data,
-        //     method: 'put',
-        //     setIsLoading: listShowLoading,
-        //     userId,
-        //     onError,
-        //     onSuccess,
-        // };
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
 
-        // saveData(requestData);
+        const requestData = {
+            data: data,
+            method: 'put',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveData(requestData);
     };
     const onSearchPart = (searchvalue) => {
         const extraParams = [
@@ -144,6 +145,12 @@ export const AddOnDetailsMasterMain = (props) => {
     useEffect(() => {
         if (isDataLoaded && AddonDetailsData) {
             setformData(AddonDetailsData);
+            setformDataSetter(AddonDetailsData);
+            setAddOnItemInfo(
+                AddonDetailsData['partDetailsResponses']?.map((element, index) => {
+                    return { ...element, isDeleting: false };
+                })
+            );
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, AddonDetailsData]);
@@ -166,6 +173,13 @@ export const AddOnDetailsMasterMain = (props) => {
         AddonPartsData,
         setsearchData,
         searchData,
+        showGlobalNotification,
+        handleFormValueChange,
+        formDataSetter,
+        setformDataSetter,
+        selectedOrderId,
+        addOnItemInfo,
+        setAddOnItemInfo,
     };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>

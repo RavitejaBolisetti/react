@@ -18,7 +18,7 @@ const ViewDetailMain = (props) => {
     const addonAccessoriesAccessories = [{ accessoriesName: 'Shield' }, { accessoriesName: 'RSA' }, { accessoriesName: 'AMC' }, { accessoriesName: 'FMS' }];
 
     return (
-        <Space style={{ display: 'flex' }} direction="vertical" size="middle">
+        <Space style={{ display: 'flex' }} direction="vertical" size="large">
             <Collapse
                 expandIcon={() => {
                     if (activeKey === 'ci') {

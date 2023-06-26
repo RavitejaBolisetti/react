@@ -29,9 +29,8 @@ const serviceData = {
 };
 
 const AddEditFormMain = (props) => {
-    const { formData, formActionType, onSearchPart, AddonPartsData, setsearchData, searchData } = props;
+    const { formData, addOnItemInfo, setAddOnItemInfo, formActionType, selectedOrderId, formDataSetter, setformDataSetter, handleFormValueChange, showGlobalNotification, onSearchPart, AddonPartsData, setsearchData, searchData } = props;
 
-    const [addOnItemInfo, setAddOnItemInfo] = useState([{}, {}]);
     const [openAccordian, setOpenAccordian] = useState('');
 
     const [accessoryForm] = Form.useForm();
@@ -46,6 +45,15 @@ const AddEditFormMain = (props) => {
         fms: false,
         partDetailsResponses: false,
     });
+    const [isEditing, setisEditing] = useState(false);
+
+    useEffect(() => {
+        setformDataSetter({ ...formDataSetter, partDetailsResponses: addOnItemInfo });
+    }, [addOnItemInfo]);
+
+    useEffect(() => {
+        console.log('formDataSetter', formDataSetter);
+    }, [formDataSetter]);
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
@@ -65,6 +73,11 @@ const AddEditFormMain = (props) => {
         AddonPartsData,
         setsearchData,
         searchData,
+        showGlobalNotification,
+        handleFormValueChange,
+        selectedOrderId,
+        isEditing,
+        setisEditing,
     };
     const commonProps = {
         formData,
@@ -82,6 +95,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleCollapseAdd = (openKey, dataKey, event) => {
+        accessoryForm.resetFields();
         event.stopPropagation();
         setOpenAccordian(openKey);
         setaddButtonDisabled({ shield: false, rsa: false, amc: false, fms: false, partDetailsResponses: false, [dataKey]: true });
@@ -96,7 +110,7 @@ const AddEditFormMain = (props) => {
                 <Text strong> {headerText}</Text>
                 {(!formActionType?.viewMode && toShowAddButton) ||
                     (dataKey === 'partDetailsResponses' && (
-                        <Button disabled={addButtonDisabled[dataKey]} style={{ marginLeft: '20px' }} onClick={(event) => handleCollapseAdd(openKey, dataKey, event)} icon={<PlusOutlined />} type="primary">
+                        <Button disabled={addButtonDisabled[dataKey] || isEditing} style={{ marginLeft: '20px' }} onClick={(event) => handleCollapseAdd(openKey, dataKey, event)} icon={<PlusOutlined />} type="primary">
                             Add
                         </Button>
                     ))}
@@ -105,39 +119,37 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <div className={styles.drawerBodyRight}>
-            <Space direction="vertical" size="small" className={styles.accordianContainer}>
-                <Collapse onChange={() => handleCollapse('Accessories Information')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                    <Panel header={headerPropsFn('Accessories Information', 'partDetailsResponses', 'Accessories Information', 'array')} key="Accessories Information">
-                        {!formActionType?.viewMode ? <AccessoriesAddonMain {...AccerssoriesInformationProps} /> : <AccessoriesInformationCard {...viewProps} />}
-                    </Panel>
-                </Collapse>
+        <Space direction="vertical" size="small" className={styles.accordianContainer}>
+            <Collapse onChange={() => handleCollapse('Accessories Information')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                <Panel header={headerPropsFn('Accessories Information', 'partDetailsResponses', 'Accessories Information', 'array')} key="Accessories Information">
+                    {!formActionType?.viewMode ? <AccessoriesAddonMain {...AccerssoriesInformationProps} /> : <AccessoriesInformationCard {...viewProps} />}
+                </Panel>
+            </Collapse>
 
-                <Collapse onChange={() => handleCollapse('Shield')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                    <Panel header={headerPropsFn('Shield', 'shield', 'shield', 'object')} key="Shield">
-                        {!formActionType?.viewMode ? <ShieldForm {...commonProps} /> : <ViewDetail name={'Shield'} data={serviceData?.shieldFormData} />}
-                    </Panel>
-                </Collapse>
+            <Collapse onChange={() => handleCollapse('Shield')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                <Panel header={headerPropsFn('Shield', 'shield', 'shield', 'object')} key="Shield">
+                    {!formActionType?.viewMode ? <ShieldForm {...commonProps} /> : <ViewDetail name={'Shield'} data={serviceData?.shieldFormData} />}
+                </Panel>
+            </Collapse>
 
-                <Collapse onChange={() => handleCollapse('RSA')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                    <Panel header={headerPropsFn('RSA', 'rsa', 'rsa', 'object')} key="RSA">
-                        {!formActionType?.viewMode ? <RSAForm {...commonProps} /> : <ViewDetail name={'RSA'} data={serviceData?.rsaFormData} />}
-                    </Panel>
-                </Collapse>
+            <Collapse onChange={() => handleCollapse('RSA')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                <Panel header={headerPropsFn('RSA', 'rsa', 'rsa', 'object')} key="RSA">
+                    {!formActionType?.viewMode ? <RSAForm {...commonProps} /> : <ViewDetail name={'RSA'} data={serviceData?.rsaFormData} />}
+                </Panel>
+            </Collapse>
 
-                <Collapse onChange={() => handleCollapse('AMC')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                    <Panel header={headerPropsFn('AMC', 'amc', 'amc', 'object')} key="AMC">
-                        {!formActionType?.viewMode ? <AMCForm {...commonProps} /> : <ViewDetail name={'AMC'} data={serviceData?.amcFormData} />}
-                    </Panel>
-                </Collapse>
+            <Collapse onChange={() => handleCollapse('AMC')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                <Panel header={headerPropsFn('AMC', 'amc', 'amc', 'object')} key="AMC">
+                    {!formActionType?.viewMode ? <AMCForm {...commonProps} /> : <ViewDetail name={'AMC'} data={serviceData?.amcFormData} />}
+                </Panel>
+            </Collapse>
 
-                <Collapse onChange={() => handleCollapse('FMS')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                    <Panel header={headerPropsFn('FMS', 'fms', 'fms', 'object')} key="FMS">
-                        {!formActionType?.viewMode ? <FMSForm {...commonProps} /> : <ViewDetail name={'AMC'} data={serviceData?.fmsFormData} />}
-                    </Panel>
-                </Collapse>
-            </Space>
-        </div>
+            <Collapse onChange={() => handleCollapse('FMS')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                <Panel header={headerPropsFn('FMS', 'fms', 'fms', 'object')} key="FMS">
+                    {!formActionType?.viewMode ? <FMSForm {...commonProps} /> : <ViewDetail name={'AMC'} data={serviceData?.fmsFormData} />}
+                </Panel>
+            </Collapse>
+        </Space>
     );
 };
 
