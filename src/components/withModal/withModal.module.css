@@ -10,3 +10,8 @@
 .modalContainer :global .ant-input-suffix {
     margin-inline-end: 6px
 }
+
+.modalContainer :global .ant-select-single .ant-select-selector .ant-select-selection-item,
+.modalContainer :global .ant-select-single .ant-select-selector .ant-select-selection-placeholder {
+    line-height: 34px;
+}

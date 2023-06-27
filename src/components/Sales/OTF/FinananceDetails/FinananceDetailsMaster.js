@@ -70,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { saveData, fetchList, userId, listShowLoading, financeData, showGlobalNotification, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
+    const { saveData, resetData, fetchList, userId, listShowLoading, financeData, showGlobalNotification, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
 
     const { form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
 
@@ -83,8 +83,23 @@ export const FinananceDetailsMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
+    const [formData, setFormData] = useState();
 
+    useEffect(() => {
+        if (financeData) {
+            form.setFieldsValue({ ...financeData });
+            setFormData(financeData);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [financeData]);
 
+    useEffect(() => {
+        return () => {
+            setFormData();
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const extraParams = [
         {
@@ -156,7 +171,7 @@ export const FinananceDetailsMasterBase = (props) => {
     const formProps = {
         ...props,
         form,
-        formData: financeData,
+        formData,
         formActionType,
         setFormActionType,
         fetchList,
@@ -179,7 +194,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const viewProps = {
-        formData: financeData,
+        formData,
         styles,
         isLoading,
         FinanceLovData,

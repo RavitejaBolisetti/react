@@ -73,7 +73,7 @@ const AddEditFormMain = (props) => {
     return (
         <Card className={styles.ExchangeCard}>
             <Row gutter={20}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                     <Form.Item name="customerId" label="Customer ID" initialValue={formData?.customerId} rules={[validateRequiredInputField('customer id')]}>
                         <Search loading={isCustomerLoading} placeholder={preparePlaceholderText('customer id')} style={{ width: '100%' }} maxLength={35} allowClear type="text" onSearch={onSearch} />
                     </Form.Item>

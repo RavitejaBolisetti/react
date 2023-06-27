@@ -24,7 +24,7 @@ const MenuNav = (props) => {
                     TimeLineClass[i].firstChild.style.backgroundColor = '#ff3e5b';
                     TimeLineClass[i].lastChild.firstChild.style.color = '#ff3e5b';
                 } else {
-                    TimeLineClass[i].firstChild.style.backgroundColor = '#b6b6b6';
+                    TimeLineClass[i].firstChild.style.backgroundColor = '#ff3e5b';
                     TimeLineClass[i].lastChild.firstChild.style.color = '#0b0b0c';
                 }
             }

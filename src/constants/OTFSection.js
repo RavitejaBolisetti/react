@@ -48,4 +48,8 @@ export const OTF_SECTION = {
         id: 11,
         title: 'Add On details',
     },
+    THANK_YOU_PAGE: {
+        id: 12,
+        title: 'Thank You',
+    },
 };

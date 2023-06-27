@@ -58,7 +58,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
         <>
             <Form form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                         <Form.Item label="Part Number" name="partNumber" rules={[validateRequiredInputField('part number')]}>
                             <Input.Search onSearch={handleOnSearch} onChange={() => accessoryForm.resetFields(['type', 'sellingPrice', 'mrp', 'partDescription'])} placeholder={preparePlaceholderText('part number')} className={styles.searchField} />
                         </Form.Item>
