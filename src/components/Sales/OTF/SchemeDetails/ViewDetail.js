@@ -23,7 +23,7 @@ const ViewDetailMain = (props) => {
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <Space direction="vertical" size="middle" className={styles.accordianContainer}>
-                {schemeData ? (
+                {schemeData && schemeData?.schemes?.length > 0 ? (
                     schemeData?.schemes?.map((schemeForm, index) => (
                         <Collapse
                             expandIcon={() => {
