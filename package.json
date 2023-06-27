@@ -6,8 +6,6 @@
         "@ckeditor/ckeditor5-build-classic": "^38.0.1",
         "@ckeditor/ckeditor5-react": "^6.0.0",
         "@nastyox/rando.js": "^2.0.5",
-        "@testing-library/jest-dom": "^5.16.5",
-        "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^13.5.0",
         "antd": "^5.3.3",
         "axios": "^1.2.3",
@@ -15,7 +13,6 @@
         "ckeditor4-react": "^4.2.0",
         "encrypt-storage": "^2.12.14",
         "history": "^5.3.0",
-        "jest": "^27.5.1",
         "jest-sonar": "^0.2.15",
         "jwt-decode": "^3.1.2",
         "moment": "^2.29.4",
@@ -41,9 +38,9 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "react-scripts test --coverage",
+        "test": "jest",
         "eject": "react-scripts eject",
-        "coverage": "react-scripts test --coverage --watchAll=false  --transformIgnorePatterns \"node_modules/(?!axios)/\"",
+        "test:coverage": "jest --coverage",
         "sonar": "ts-node sonar-scanner.ts"
     },
     "eslintConfig": {
@@ -66,23 +63,26 @@
     },
     "devDependencies": {
         "@babel/preset-env": "^7.20.2",
+        "@testing-library/jest-dom": "^5.16.5",
+        "@testing-library/react": "^14.0.0",
+        "babel-jest": "^27.5.1",
+        "jest": "^27.5.1",
+        "jest-environment-jsdom": "^27.5.1",
         "react-app-rewired": "^2.2.1",
+        "react-test-renderer": "^18.2.0",
         "redux-devtools-extension": "^2.13.9",
         "redux-mock-store": "^1.5.4",
         "sonarqube-scanner": "^3.0.1"
     },
-    "jest": {
-        "coverageThreshold": {
-            "global": {
-                "branches": 3,
-                "functions": 3,
-                "lines": 3,
-                "statements": -10,
-                "isolatedModules": true
-            }
-        },
-        "moduleNameMapper": {
-            "axios": "axios/dist/node/axios.cjs"
-        }
+    "filesNames": {
+        "scriptFilesGlobs": [
+            "src/**/*.?(js?(x)|less)"
+        ],
+        "testFilesGlobs": [
+            "src/__tests__/**/*.js?(x)"
+        ],
+        "foldersGlobs": [
+            "src/**/!(*.*)"
+        ]
     }
 }
