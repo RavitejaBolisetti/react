@@ -113,7 +113,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                 {addButtonDisabled?.partDetailsResponses ? (
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Space size="large" style={{ marginBottom: '20px' }}>
-                            <Button disabled={isBtnDisabled} onClick={() => handleAccesoriesForm()} type="primary" danger>
+                            <Button style={{ marginRight: '12px', height: '36px' }} disabled={isBtnDisabled} onClick={() => handleAccesoriesForm()} type="primary" danger>
                                 Add
                             </Button>
                             <Button danger onClick={() => onCancel()}>
@@ -124,7 +124,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                 ) : (
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Space className={styles.accessoryFormButton} size="large" style={{ marginBottom: '20px' }}>
-                            <Button type="primary" onClick={() => onUpdate(index, seteditCardForm, editCardForm)}>
+                            <Button style={{ marginRight: '12px', height: '36px' }} type="primary" onClick={() => onUpdate(index, seteditCardForm, editCardForm)}>
                                 Save
                             </Button>
                             <Button danger onClick={() => onCancel()}>

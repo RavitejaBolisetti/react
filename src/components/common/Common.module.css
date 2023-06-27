@@ -1823,6 +1823,11 @@
     text-align: end;
 }
 
+.drawerBodyRight :global .ant-steps.ant-steps-label-vertical {
+    display: inherit;
+    padding-right: 6px;
+}
+
 .drawerBodyRight :global .ant-steps.ant-steps-label-vertical .ant-steps-item-tail {
     padding: 4px 11px;
     margin-inline-start: 68px;
@@ -2291,7 +2296,7 @@
 .drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     background: #f2f2f2;
     border-radius: 0 0 8px 8px;
-    padding: 0 20px 0px;
+    padding: 0 20px 20px;
 }
 
 .drawerBodyRight .sectionborder {
@@ -2735,7 +2740,7 @@
 .drawerBodyRight :global .ant-result-success .ant-result-icon>.anticon-check-circle {
     border: 47px solid #EEFCD2;
     border-radius: 100px;
-  }
+}
 
 .nameSpacing {
     margin: 0 0 0 0.25rem;
