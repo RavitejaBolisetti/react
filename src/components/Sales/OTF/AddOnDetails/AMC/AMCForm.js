@@ -11,12 +11,11 @@ const AMCForm = ({ formData, amcForm }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
 
     useEffect(() => {
-        if (Object?.keys(formData['amc'])?.length) {
-            setisReadOnly(true);
-            amcForm.setFieldsValue({
-                ...formData['amc'],
-            });
-        }
+        setisReadOnly(true);
+        amcForm.setFieldsValue({
+            amc: formData?.amc ? formData?.amc : 'NA',
+            amcRate: formData?.amcRate ? formData?.amcRate : 'NA',
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 

@@ -75,6 +75,12 @@ export const AddOnDetailsMasterMain = (props) => {
     });
     const [searchData, setsearchData] = useState();
     const [addOnItemInfo, setAddOnItemInfo] = useState([]);
+    const [openAccordian, setopenAccordian] = useState(['ci']);
+    const [accessoryForm] = Form.useForm();
+    const [shieldForm] = Form.useForm();
+    const [rsaForm] = Form.useForm();
+    const [amcForm] = Form.useForm();
+    const [fmsForm] = Form.useForm();
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
@@ -126,7 +132,10 @@ export const AddOnDetailsMasterMain = (props) => {
         ];
         fetchSearchPartList({ setIsLoading: partListLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
-    const onChange = (values) => {};
+    const handleCollapse = (values) => {
+        console.log('values', values);
+        openAccordian?.includes(values) ? setopenAccordian('') : setopenAccordian([values]);
+    };
     useEffect(() => {
         if (userId && selectedOrderId) {
             const extraParams = [
@@ -163,7 +172,14 @@ export const AddOnDetailsMasterMain = (props) => {
     const viewProps = {
         formData,
         styles,
-        onChange,
+        openAccordian,
+        setopenAccordian,
+        handleCollapse,
+        shieldForm,
+        rsaForm,
+        amcForm,
+        fmsForm,
+        accessoryForm,
     };
     const formProps = {
         formData,
@@ -179,6 +195,11 @@ export const AddOnDetailsMasterMain = (props) => {
         selectedOrderId,
         addOnItemInfo,
         setAddOnItemInfo,
+        shieldForm,
+        rsaForm,
+        amcForm,
+        fmsForm,
+        accessoryForm,
     };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>

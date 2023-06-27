@@ -29,15 +29,10 @@ const serviceData = {
 };
 
 const AddEditFormMain = (props) => {
-    const { formData, addOnItemInfo, setAddOnItemInfo, formActionType, selectedOrderId, formDataSetter, setformDataSetter, handleFormValueChange, showGlobalNotification, onSearchPart, AddonPartsData, setsearchData, searchData } = props;
+    const { formData, accessoryForm, shieldForm, rsaForm, amcForm, fmsForm, addOnItemInfo, setAddOnItemInfo, formActionType, selectedOrderId, formDataSetter, setformDataSetter, handleFormValueChange, showGlobalNotification, onSearchPart, AddonPartsData, setsearchData, searchData } = props;
 
-    const [openAccordian, setOpenAccordian] = useState('');
+    const [openAccordian, setOpenAccordian] = useState(['ci']);
 
-    const [accessoryForm] = Form.useForm();
-    const [shieldForm] = Form.useForm();
-    const [rsaForm] = Form.useForm();
-    const [amcForm] = Form.useForm();
-    const [fmsForm] = Form.useForm();
     const [addButtonDisabled, setaddButtonDisabled] = useState({
         shield: false,
         rsa: false,
@@ -92,6 +87,11 @@ const AddEditFormMain = (props) => {
     const viewProps = {
         styles,
         handleEdit,
+        handleCollapse,
+        shieldForm,
+        rsaForm,
+        amcForm,
+        fmsForm,
     };
 
     const handleCollapseAdd = (openKey, dataKey, event) => {

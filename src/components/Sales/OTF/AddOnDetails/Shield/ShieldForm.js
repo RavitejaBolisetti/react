@@ -10,12 +10,11 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 const ShieldForm = ({ formData, shieldForm }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
     useEffect(() => {
-        if (Object?.keys(formData['shield'])?.length) {
-            setisReadOnly(true);
-            shieldForm.setFieldsValue({
-                ...formData['shield'],
-            });
-        }
+        setisReadOnly(true);
+        shieldForm.setFieldsValue({
+            shieldType: formData?.shieldType ? formData?.shieldType : 'NA',
+            shieldRate: formData?.shieldRate ? formData?.shieldRate : 'NA',
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
     const onFieldsChange = () => {};

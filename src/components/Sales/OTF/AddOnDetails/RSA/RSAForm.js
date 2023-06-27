@@ -11,12 +11,11 @@ const RSAForm = ({ formData, rsaForm }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
 
     useEffect(() => {
-        if (Object?.keys(formData['rsa'])?.length) {
-            setisReadOnly(true);
-            rsaForm.setFieldsValue({
-                ...formData['rsa'],
-            });
-        }
+        setisReadOnly(true);
+        rsaForm.setFieldsValue({
+            rsa: formData?.rsa ? formData?.rsa : 'NA',
+            rsaRate: formData?.rsaRate ? formData?.rsaRate : 'NA',
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 

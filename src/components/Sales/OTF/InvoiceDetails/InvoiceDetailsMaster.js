@@ -106,6 +106,7 @@ export const InvoiceDetailsMasterBase = (props) => {
     const onFinish = (values) => {
         handleButtonClick({ record: undefined, buttonAction: NEXT_ACTION });
     };
+    const onFinishFailed = () => {};
 
     const displaySection = {
         invoiceInformation: orderStatus === OTF_STATUS?.INVOICED.title || orderStatus === OTF_STATUS?.DELIVERED.title,

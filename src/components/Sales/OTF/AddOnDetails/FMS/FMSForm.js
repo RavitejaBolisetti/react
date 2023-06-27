@@ -13,12 +13,11 @@ const FMSForm = ({ formData, fmsForm }) => {
     const onFieldsChange = () => {};
     const onFinishFailed = () => {};
     useEffect(() => {
-        if (Object?.keys(formData['fms'])?.length) {
-            setisReadOnly(true);
-            fmsForm.setFieldsValue({
-                ...formData['fms'],
-            });
-        }
+        setisReadOnly(true);
+        fmsForm.setFieldsValue({
+            fms: formData?.fms ? formData?.fms : 'NA',
+            fmsRate: formData?.fmsRate ? formData?.fmsRate : 'NA',
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
