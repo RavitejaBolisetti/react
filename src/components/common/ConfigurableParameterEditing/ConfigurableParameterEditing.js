@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -140,7 +140,6 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
             setIsFormVisible(true);
         }
         setIsReadOnly(false);
-        console.log('formData', formData);
     };
 
     const handleView = (record) => {
@@ -269,7 +268,6 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
     };
 
     const onFinish = (values) => {
-        console.log(parameterType, 'gdhcgdw');
         const recordId = formData?.id || '';
         let data = { ...values, id: recordId, isActive: true, configurableParameterType: parameterType, fromDate: values?.fromDate?.format('YYYY-MM-DD'), toDate: values?.toDate?.format('YYYY-MM-DD') };
         const onSuccess = (res) => {
@@ -337,7 +335,6 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
             setFormBtnActive(false);
             form.resetFields();
             setFormData([]);
-            console.log('hello');
         },
         titleOverride: drawerTitle.concat(moduleTitle),
         onFinish,

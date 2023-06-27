@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { Input, Form, Col, Row, Switch, Button, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -19,7 +24,7 @@ const ApplicationActionsForm = ({ finalFormdata, form, onFinish, status, name, i
                     <Form form={form} onFieldsChange={onFieldsChange} autoComplete="off" id="applicationActionsForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item label="Action" name="applicationName" rules={[validateRequiredSelectField('application action'), { validator: (rule, value) => duplicateValidator(value?.label, 'actionName', finalFormdata?.applicationAction)   }]}>  
+                                <Form.Item label="Action" name="applicationName" rules={[validateRequiredSelectField('application action'),  { validator: (rule, value) => duplicateValidator(value?.label, 'actionName', finalFormdata?.applicationAction)   }]}>  
                                     <Select
                                         getPopupContainer={(triggerNode) => triggerNode.parentElement}
                                         labelInValue

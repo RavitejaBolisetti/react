@@ -3,13 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input, Select, DatePicker, Row, Col, Button, Form } from 'antd';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import { GetAge } from 'utils/getAge';
+import { disableFutureDate } from 'utils/disableDate';
 import dayjs from 'dayjs';
 
 import styles from 'components/common/Common.module.css';
@@ -18,19 +19,14 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const FormBase = (props) => {
-    const { customerType, onSave, form, onChange, relationData, onSearch, isSearchLoading, onCancel } = props;
+    const { customerType, onSave, form, onChange, relationData, onSearch, isSearchLoading, onCancel, showForm, initialVal, editedValues } = props;
 
     const type = [
         { name: 'Yes', key: 'Yes', value: 'Yes' },
         { name: 'No', key: 'No', value: 'No' },
     ];
 
-    let customer;
-    if (customerType === 'Yes') {
-        customer = true;
-    } else if (customerType === 'No') {
-        customer = false;
-    }
+    const [customer, setCustomer] = useState(null);
 
     const onDateChange = (prop) => {
         let dateString = dayjs(prop).format('YYYY-MM-DD');
@@ -47,16 +43,36 @@ const FormBase = (props) => {
         });
     };
 
-    const disableFutureDate = (value) => {
-        return value > new Date();
-    };
+    useEffect(() => {
+        if (showForm) {
+            form.resetFields();
+        } else if (customerType === initialVal) {
+            form.setFieldsValue(editedValues);
+        } else {
+            form.setFieldsValue({
+                customerName: null,
+                relationship: null,
+                relationCode: null,
+                dateOfBirth: null,
+                relationAge: null,
+                remarks: null,
+            });
+        }
+
+        if (customerType === 'Yes') {
+            setCustomer(true);
+        } else if (customerType === 'No') {
+            setCustomer(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [customerType]);
 
     return (
-        <>
+        <div>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={'Yes'} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
-                        <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange} className={styles.inputBox} allowClear>
+                    <Form.Item initialValue={customerType} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
+                        <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange} className={styles.inputBox}>
                             {type?.map((item) => (
                                 <Option key={'mc' + item?.key} value={item?.value}>
                                     {item?.name}
@@ -114,7 +130,7 @@ const FormBase = (props) => {
                     </Col>
                 ) : null}
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item initial label="Relation Code" name="relationCode" />
+                    <Form.Item label="Relation Code" name="relationCode" />
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>
@@ -137,7 +153,7 @@ const FormBase = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item label="Generated ID" name="editedId" />
+                    <Form.Item initialValue={props?.editedId ? props?.editedId : ''} label="Generated ID" name="editedId" />
                 </Col>
 
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
@@ -150,15 +166,22 @@ const FormBase = (props) => {
             </Row>
 
             <Row style={{ display: 'flex' }}>
-                <Button type="primary" onClick={onSave}>
+                <Button
+                    type="primary"
+                    onClick={() => {
+                        // form.submit();
+                        onSave();
+                    }}
+                    className={styles.marR20}
+                >
                     Save
                 </Button>
 
-                <Button type="primary" onClick={onCancel} style={{ margin: '0 0 0 1rem' }}>
+                <Button onClick={onCancel} danger>
                     Cancel
                 </Button>
             </Row>
-        </>
+        </div>
     );
 };
 

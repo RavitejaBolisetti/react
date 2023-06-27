@@ -1,50 +1,56 @@
-import React, { useState, useEffect, useMemo } from 'react';
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import AdvanceOtfFilter from './AdvanceOtfFilter';
-import { btnVisiblity } from 'utils/btnVisiblity';
-import { AddEditForm } from './AddEditForm';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+
+import { OTFMainConatiner } from './OTFMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { OTF_STATUS } from 'constants/OTFStatus';
-import { PARAM_MASTER } from 'constants/paramMaster';
+import { OTF_SECTION } from 'constants/OTFSection';
+import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
 
 import { FilterIcon } from 'Icons';
+import dayjs from 'dayjs';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
-                OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
-                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data: otfSearchList = [] },
+                OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [], filter: filterString },
+                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data },
             },
         },
     } = state;
-    console.log('state', state);
 
-    const moduleTitle = 'OTF Details';
+    const moduleTitle = 'Order Tracking Form';
 
     let returnValue = {
         userId,
-        typeData: typeData && typeData[PARAM_MASTER.OTF_SER.id],
+        typeData,
         isDataLoaded,
-        otfSearchList: otfSearchList?.otfDetails,
+        data: data?.otfDetails,
         otfData,
         isLoading,
         moduleTitle,
         isOTFSearchLoading,
         isSearchDataLoaded,
+        filterString,
     };
     return returnValue;
 };
@@ -53,11 +59,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchOTFSearchedList: otfSearchListAction.fetchList,
-
+            setFilterString: otfDetailsDataActions.setFilter,
             fetchList: otfDetailsDataActions.fetchList,
             saveData: otfDetailsDataActions.saveData,
             resetData: otfDetailsDataActions.reset,
@@ -69,31 +72,74 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, otfSearchList, isDataLoaded, otfData, isOTFSearchLoading, isSearchDataLoaded } = props;
-    const { isConfigDataLoaded, isConfigLoading, typeData, listConfigShowLoading, fetchConfigList } = props;
+    const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, isSearchDataLoaded, otfData } = props;
+    const { typeData, moduleTitle } = props;
+    const { filterString, setFilterString } = props;
+    const [otfSearchvalue, setOtfSearchvalue] = useState();
+    const [otfSearchSelected, setOtfSearchSelected] = useState();
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+
+    const [refershData, setRefershData] = useState();
+    const [listFilterForm] = Form.useForm();
+
+    const [selectedOrder, setSelectedOrder] = useState();
+    const [selectedOrderId, setSelectedOrderId] = useState();
+
+    const [section, setSection] = useState();
+    const [defaultSection, setDefaultSection] = useState();
+    const [currentSection, setCurrentSection] = useState();
+    const [sectionName, setSetionName] = useState();
+    const [isLastSection, setLastSection] = useState(false);
 
     const [form] = Form.useForm();
-    const [otfSearchResult, setOtfSearchResult] = useState();
-    const [listFilterForm] = Form.useForm();
+    const [searchForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [searchData, setSearchdata] = useState('');
-    const [isNewDataLoading, setIsNewDataLoading] = useState(false);
-
-    const [formData, setFormData] = useState([]);
-    const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+
+    const defaultBtnVisiblity = {
+        editBtn: false,
+        saveBtn: false,
+        saveAndNewBtn: false,
+        saveAndNewBtnClicked: false,
+        closeBtn: false,
+        cancelBtn: false,
+        formBtnActive: false,
+        transferBtn: false,
+        allotBtn: false,
+        unAllotBtn: false,
+        invoiceBtn: false,
+        deliveryNote: false,
+        cancelOtfBtn: false,
+    };
+
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    const [otfSearchvalue, setOtfSearchvalue] = useState();
-    const [otfSearchSelected, setOtfSearchSelected] = useState('');
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+    const [formData, setFormData] = useState([]);
+    const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('Value')] });
+    const reff = useRef(null);
 
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    // useEffect(() => {
+    //     if (selectedOrder) {
+    //         setDefaultBtnVisiblity({ ...defaultBtnVisiblity });
+    //         switch (selectedOrder?.orderStatus) {
+    //             case OTF_STATUS?.BOOKED?.title:
+    //                 setDefaultBtnVisiblity({ ...defaultBtnVisiblity, transferBtn: true, allotBtn: true, cancelOtfBtn: true });
+    //                 break;
+    //             case OTF_STATUS?.ALLOTED?.title:
+    //                 setDefaultBtnVisiblity({ ...defaultBtnVisiblity, transferBtn: true, unAllotBtn: true, invoiceBtn: true });
+    //                 break;
+    //             case OTF_STATUS?.CANCELLED?.title:
+    //                 setDefaultBtnVisiblity({ ...defaultBtnVisiblity, editMode: false });
+    //                 break;
+    //             default:
+    //                 break;
+    //         }
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [selectedOrder]);
 
     const extraParams = [
         {
@@ -123,67 +169,94 @@ export const OtfMasterBase = (props) => {
     ];
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setShowDataLoading(false);
+        setRefershData(false);
     };
 
     const onErrorAction = (message) => {
-        showGlobalNotification({ message });
+        // showGlobalNotification({ message });
         setShowDataLoading(false);
-    };
-
-    const errorAction = (message) => {
-        showGlobalNotification(message);
+        setRefershData(false);
     };
 
     useEffect(() => {
-        if (!isConfigDataLoaded && !isConfigLoading) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.OTF_SER.id });
+        const defaultSection = OTF_SECTION.OTF_DETAILS.id;
+        setDefaultSection(defaultSection);
+        setSetionName(OTF_SECTION);
+        setSection(defaultSection);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (currentSection && sectionName) {
+            const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
+            setSection(section);
+
+            const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+            setLastSection(!nextSection?.id);
         }
-    }, [isConfigDataLoaded, userId, isConfigLoading]);
+        form.resetFields();
+        form.setFieldsValue(undefined);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentSection, sectionName]);
 
     useEffect(() => {
         if (userId) {
             fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isSearchDataLoaded, userId]);
+    }, [isSearchDataLoaded, userId, refershData]);
 
-    const handleButtonClick = ({ record = null, buttonAction }) => {
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
-        setFormData([]);
-        const extraParams = [
-            {
-                key: 'otfNumber',
-                title: 'otfNumber',
-                value: record?.otfNumber,
-                name: 'OTF Number',
-            },
-        ];
+        form.setFieldsValue(undefined);
+        switch (buttonAction) {
+            case ADD_ACTION:
+                defaultSection && setCurrentSection(defaultSection);
+                break;
+            case EDIT_ACTION:
+                setSelectedOrder(record);
+                record && setSelectedOrderId(record?.otfNumber);
+                openDefaultSection && setCurrentSection(defaultSection);
+                break;
+            case VIEW_ACTION:
+                setSelectedOrder(record);
+                record && setSelectedOrderId(record?.otfNumber);
+                defaultSection && setCurrentSection(defaultSection);
+                break;
+            case NEXT_ACTION:
+                const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+                section && setCurrentSection(nextSection?.id);
+                setLastSection(!nextSection?.id);
+                break;
 
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
+            default:
+                break;
+        }
 
+        if (buttonAction !== NEXT_ACTION) {
+            setFormActionType({
+                addMode: buttonAction === ADD_ACTION,
+                editMode: buttonAction === EDIT_ACTION,
+                viewMode: buttonAction === VIEW_ACTION,
+            });
+            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
+        }
         setIsFormVisible(true);
     };
 
-    //const onSearchHandle = (value) => {
-    //     if (value === '') {
-    //         return;
-    //     }
-    //     if (value?.trim()?.length >= 3) {
-    //         //setFilterString({ ...filterString, searchParam: value });
-    //     }
-
-    //     // if (otfSearchSelected !== undefined && otfSearchSelected && otfSearchSelected?.length > 0) console.log('otfSearchSelected', otfSearchSelected);
-    //     // if (otfSearchSelected === 'OTF No') setOtfSearchResult(initialTableData.filter((data) => data.otfNumber.includes(value)));
-    //     // else if (otfSearchSelected === 'Mobile No') setOtfSearchResult(initialTableData.filter((data) => data.mobileNumber.includes(value)));
-    //     // else if (otfSearchSelected === 'Customer Name') setOtfSearchResult(initialTableData.filter((data) => data.customerName.includes(value)));
-    // };
-
     const onSearchHandle = (value) => {
-        setShowDataLoading(true);
+        searchForm
+            .validateFields()
+            .then((values) => {
+                setShowDataLoading(true);
+                fetchOTFSearchedList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
+            })
+            .catch((err) => {
+                console.log(err);
+                return;
+            });
     };
 
     const handleResetFilter = (e) => {
@@ -215,13 +288,8 @@ export const OtfMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
-            if (buttonData?.saveAndNewBtnClicked) {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            } else {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            }
+
+            setIsFormVisible(false);
         };
 
         const onError = (message) => {
@@ -240,59 +308,67 @@ export const OtfMasterBase = (props) => {
         saveData(requestData);
     };
 
+    const onFinishAdvanceFilter = (values) => {
+        extraParams.push(
+            { key: 'fromDate', title: 'Type', value: values?.fromDate ? dayjs(values?.fromDate).format('YYYY-MM-DD') : undefined, canRemove: true },
+            {
+                key: 'toDate',
+                title: 'Type',
+                value: values?.toDate ? dayjs(values?.toDate).format('YYYY-MM-DD') : undefined,
+                canRemove: true,
+            },
+            {
+                key: 'otfStatus',
+                title: 'Type',
+                value: values?.otfStatus,
+                canRemove: true,
+            }
+        );
+        setShowDataLoading(true);
+        fetchOTFSearchedList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
+        onAdvanceSearchCloseAction();
+    };
+
     const onFinishFailed = (errorInfo) => {
         return;
     };
 
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
+
     const onCloseAction = () => {
         form.resetFields();
+        form.setFieldsValue();
+        setSelectedOrder();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
-    const formProps = {
-        form,
-        formData,
-        setFormData,
-        formActionType,
-        setFormActionType,
-        onFinish,
-        onFinishFailed,
-        isVisible: isFormVisible,
-        onCloseAction,
-        titleOverride: drawerTitle.concat('OTF Details'),
-        tableData: otfSearchList,
-        buttonData,
-        setButtonData,
-        handleButtonClick,
-        handleResetFilter,
-        listShowLoading,
-    };
-
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-        tableData: otfSearchList,
+        tableData: data,
+        showAddButton: false,
     };
 
     const handleOTFChange = (selectedvalue) => {
         setFilterString({ searchType: selectedvalue });
-        setOtfSearchSelected(selectedvalue);
-        setOtfSearchvalue(''); // Cleared search value
+        setOtfSearchRules({ rules: [validateRequiredInputField('Value')] });
+        //console.log(reff);
     };
 
     const ChangeSearchHandler = (event) => {
         if (event.target.value === undefined) {
             return false;
+        }
+        if (filterString?.searchType === 'mobileNumber') {
+            setOtfSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
+        }
+        if (filterString?.searchType === 'customerName') {
+            setOtfSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
+        }
+        if (filterString?.searchType === 'otfNumber') {
+            setOtfSearchRules({ rules: [validateRequiredInputField('OTF Number')] });
         }
         setFilterString({ ...filterString, searchParam: event.target.value });
     };
@@ -314,6 +390,7 @@ export const OtfMasterBase = (props) => {
         advanceFilter: true,
         otfFilter: true,
         filterString,
+        setFilterString,
         from: listFilterForm,
         onFinish,
         onFinishFailed,
@@ -322,12 +399,16 @@ export const OtfMasterBase = (props) => {
         handleClearInSearch,
         handleButtonClick,
         title,
-        otfSearchList,
+        data,
         ChangeSearchHandler,
         handleOTFChange,
         otfSearchvalue,
         setAdvanceSearchVisible,
         typeData,
+        otfSearchRules,
+        setOtfSearchRules,
+        searchForm,
+        reff,
     };
 
     const advanceFilterProps = {
@@ -344,6 +425,56 @@ export const OtfMasterBase = (props) => {
         form,
         setAdvanceSearchVisible,
         otfStatusList: Object.values(OTF_STATUS),
+        onFinishAdvanceFilter,
+        typeData,
+    };
+
+    const drawerTitle = useMemo(() => {
+        if (formActionType?.viewMode) {
+            return 'View ';
+        } else if (formActionType?.editMode) {
+            return 'Edit ';
+        } else {
+            return 'Add New ';
+        }
+    }, [formActionType]);
+
+    const containerProps = {
+        record: selectedOrder,
+        form,
+        formActionType,
+        setFormActionType,
+        onFinish,
+        onFinishFailed,
+        isVisible: isFormVisible,
+        onCloseAction,
+        titleOverride: drawerTitle.concat(moduleTitle),
+        tableData: data,
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        NEXT_ACTION,
+        buttonData,
+
+        setButtonData,
+        handleButtonClick,
+        defaultFormActionType,
+        defaultBtnVisiblity,
+        selectedOrderId,
+        setSelectedOrderId,
+        selectedOrder,
+        setSelectedOrder,
+        section,
+        currentSection,
+        sectionName,
+        setCurrentSection,
+        setFormData,
+        handleFormValueChange,
+        otfSearchSelected,
+        isLastSection,
+        typeData,
+        otfData,
+        saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
     };
 
     return (
@@ -351,11 +482,11 @@ export const OtfMasterBase = (props) => {
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} />
+                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
-            <AddEditForm {...formProps} />
+            <OTFMainConatiner {...containerProps} />
         </>
     );
 };

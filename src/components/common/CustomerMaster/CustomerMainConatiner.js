@@ -19,7 +19,6 @@ import styles from 'components/common/Common.module.css';
 
 const CustomerMainConatinerMain = (props) => {
     const { customerType, currentSection } = props;
-
     const myProps = {
         ...props,
     };
@@ -50,7 +49,7 @@ const CustomerMainConatinerMain = (props) => {
                         return <IndividualSupportingDocument {...myProps} />;
                     }
                     default: {
-                        return <IndivisualCustomerDetailMaster {...myProps} />;
+                        return;
                     }
                 }
             }
@@ -75,7 +74,7 @@ const CustomerMainConatinerMain = (props) => {
                         return <IndividualSupportingDocument {...myProps} />;
                     }
                     default: {
-                        return <CorporateCustomerDetailMaster {...myProps} />;
+                        return;
                     }
                 }
             }
@@ -86,16 +85,14 @@ const CustomerMainConatinerMain = (props) => {
     };
 
     return (
-        <>
-            <Row gutter={0}>
-                <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
-                    <LeftSidebar {...myProps} />
-                </Col>
-                <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18} className={styles.drawerRightMainContainer}>
-                    <div className={styles.marginBottom60}>{renderElement()}</div>
-                </Col>
-            </Row>
-        </>
+        <Row gutter={0}>
+            <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
+                <LeftSidebar {...myProps} />
+            </Col>
+            <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18} className={styles.drawerRightMainContainer}>
+                <div className={styles.marginBottom60}>{renderElement()}</div>
+            </Col>
+        </Row>
     );
 };
 

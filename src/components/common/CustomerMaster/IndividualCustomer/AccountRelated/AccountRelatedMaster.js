@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
@@ -12,8 +12,6 @@ import { indivisualAccountsRelatedDataActions } from 'store/actions/data/custome
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { btnVisiblity } from 'utils/btnVisiblity';
-
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
@@ -25,7 +23,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             CustomerMaster: {
-                IndivisualAccounts: { isLoaded = false, isLoading, data },
+                IndivisualAccounts: { isLoaded: isDataLoaded = false, isLoading, data: accountData = {} },
             },
         },
     } = state;
@@ -34,8 +32,8 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isLoaded,
-        data,
+        isDataLoaded,
+        accountData,
         isLoading,
         moduleTitle,
     };
@@ -57,80 +55,56 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AccountRelatedMasterBase = (props) => {
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, moduleTitle, isLoaded, data, saveData } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
+    const { form, handleFormValueChange, onFinishFailed } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, accountData, saveData, isDataLoaded, isLoading, resetData } = props;
+    const { formActionType, selectedCustomerId, handleButtonClick, NEXT_ACTION } = props;
 
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    const [formData, setFormData] = useState();
 
-    const [showDataLoading, setShowDataLoading] = useState(true);
-    const [refershData, setRefershData] = useState(false);
-
-    const [form] = Form.useForm();
-
-    const [formData, setFormData] = useState([]);
-    const [isFormVisible, setIsFormVisible] = useState(false);
-
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-
-    const indivisualCustomer = 'CUS1687196336704';
     const extraParams = [
         {
             key: 'customerId',
             title: 'customerId',
-            value: indivisualCustomer,
+            value: selectedCustomerId,
             name: 'Customer ID',
         },
     ];
 
-    const errorAction = (message) => {
-        showGlobalNotification(message);
+    const onErrorAction = (message) => {
+        resetData();
+        
+        showGlobalNotification({ message });
     };
+
     const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        setRefershData(false);
-        setShowDataLoading(false);
-        forceUpdate();
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     useEffect(() => {
-        if (userId && !isLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, errorAction });
+        if (isDataLoaded) {
+            form.setFieldsValue({ ...accountData });
+            setFormData(accountData);
+        }
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded]);
+
+    useEffect(() => {
+        if (!formActionType?.addMode && userId && selectedCustomerId) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isLoaded]);
-
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormData([]);
-
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-
-        record && setFormData(record);
-        setIsFormVisible(true);
-    };
+    }, [userId, selectedCustomerId]);
 
     const onFinish = (values) => {
-        const data = { ...values, customerId: 'CUS1687196336704' };
+        const data = { ...values, customerId: selectedCustomerId };
 
         const onSuccess = (res) => {
             form.resetFields();
-            setShowDataLoading(true);
-
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, errorAction });
-
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-
-            setButtonData({ ...buttonData, formBtnActive: false });
-            if (buttonData?.saveAndNewBtnClicked) {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            } else {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            }
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
         const onError = (message) => {
@@ -139,7 +113,7 @@ export const AccountRelatedMasterBase = (props) => {
 
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: accountData?.customerId ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -148,53 +122,16 @@ export const AccountRelatedMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
-    const onCloseAction = () => {
-        form.resetFields();
-        setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
-    };
-
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
-        form,
-        formData: data[0],
-        formActionType,
-        setFormActionType,
-        onFinish,
-        onFinishFailed,
-        isVisible: isFormVisible,
-        onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
-        tableData: data,
-
-        ADD_ACTION,
-        EDIT_ACTION,
-        VIEW_ACTION,
-        buttonData,
-        setButtonData,
-        handleButtonClick,
+        formData,
     };
+
     const viewProps = {
-        formData: data[0],
+        formData,
         styles,
+        isLoading,
     };
 
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>

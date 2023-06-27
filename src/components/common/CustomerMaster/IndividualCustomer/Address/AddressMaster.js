@@ -3,15 +3,13 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useReducer, useEffect, useMemo } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Collapse, Divider, Form, Space, Typography, Button } from 'antd';
 
+import { Row, Col, Button, Divider, Form, Collapse, Typography, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { FaRegUserCircle } from 'react-icons/fa'
-
 import { expandIcon } from 'utils/accordianExpandIcon';
-import { filterFunction } from 'utils/filterFunction';
 
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -20,11 +18,12 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'components/common/Common.module.css';
 import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { addressIndividualDataActions } from 'store/actions/data/customerMaster/individual/address/individualAddress';
 
-import ViewAddressList from './ViewAddressList';
 import AddEditForm from './AddEditForm';
+import { CustomerFormButton } from '../../CustomerFormButton';
+import { InputSkeleton } from 'components/common/Skeleton';
+import ViewAddressList from './ViewAddressList';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -33,7 +32,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isAddDataLoaded = false, isAddLoading, paramdata: addData = [] },
+            ConfigurableParameterEditing: { filteredListData: addData = [] },
             CustomerMaster: {
                 AddressIndividual: { isLoaded: isAddressLoaded = false, isLoading: isAddressLoading, data: addressIndData = [] },
             },
@@ -42,7 +41,6 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-
 
     let returnValue = {
         userId,
@@ -55,7 +53,6 @@ const mapStateToProps = (state) => {
         isPinCodeDataLoaded,
         isPinCodeLoading,
         pincodeData,
-
     };
     return returnValue;
 };
@@ -64,9 +61,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchList: addressIndividualDataActions.fetchList,
             saveData: addressIndividualDataActions.saveData,
             resetData: addressIndividualDataActions.reset,
@@ -82,8 +76,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddressMasterBase = (props) => {
-    const { selectedRowData, isViewModeVisible, isAddDataLoaded, isAddressLoaded, addressIndData, isAddLoading, saveData, listConfigShowLoading, fetchConfigList, addData } = props
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, resetData, pincodeData, userId, fetchList, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { isViewModeVisible, section, addressIndData, setFormActionType, formActionType, isAddressLoaded, selectedCustomer, saveData, addData } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, handleFormValueChange, isAddressLoading, setFormData, buttonData, setButtonData, btnVisiblity, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification } = props;
     const [form] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
@@ -91,40 +85,26 @@ const AddressMasterBase = (props) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [refershData, setRefershData] = useState(false);
-    const [showDataLoading, setShowDataLoading] = useState(true);
-    const [filterString, setFilterString] = useState();
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const selectedCustomer = 'CUS1686812277115';
     const extraParams = [
         {
             key: 'customerId',
             title: 'customerId',
-            value: selectedRowData?.customerId,
+            value: selectedCustomer?.customerId,
             name: 'Customer ID',
         },
     ];
 
-
-
     useEffect(() => {
-        if (userId && !isAddDataLoaded && !isAddLoading) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.ADD_TYPE.id });
+        if (userId && addressIndData?.customerAddress?.length) {
+            setAddressData(addressIndData?.customerAddress);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isAddDataLoaded]);
-    
-    // useEffect(() => {
-    //     setAddressData(addressIndData?.customerAddress);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // },[addressIndData])
+    }, [addressIndData]);
 
     useEffect(() => {
         if (userId && !isAddressLoaded) {
@@ -150,7 +130,7 @@ const AddressMasterBase = (props) => {
     };
 
     const onSubmit = () => {
-        let data = { customerId: selectedRowData?.customerId, customerAddress: addressData };
+        let data = { customerId: selectedCustomer?.customerId, customerAddress: addressData };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -163,7 +143,7 @@ const AddressMasterBase = (props) => {
         };
         const requestData = {
             data: data,
-            method: 'post',
+            method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -188,14 +168,12 @@ const AddressMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-
     const addAddressHandeler = (e) => {
         e.stopPropagation();
         form.resetFields();
         setShowAddEditForm(true);
         setOpenAccordian('1');
     };
-
 
     const formProps = {
         setShowAddEditForm,
@@ -226,36 +204,57 @@ const AddressMasterBase = (props) => {
         isPinCodeLoading,
         pincodeData,
         addData,
+        handleFormValueChange,
     };
+
+    const myProps = {
+        ...props,
+    };
+
+    const formSkeleton = (
+        <Row>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <InputSkeleton height={'100vh'} />
+            </Col>
+        </Row>
+    );
 
     return (
         <>
-            <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
-                <Panel
-                    header={
-                        <>
-                            <Space>
-                                <Text strong> Individual Address</Text>
-                                {!isViewModeVisible && (
-                                    <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary">
-                                        Add
-                                    </Button>
-                                )}
-                            </Space>
-                            <Divider type="vertical" />
-                        </>
-                    }
-                    key="1"
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSubmit} onFinishFailed={onFinishFailed}>
+                <Row gutter={20} className={styles.drawerBodyRight}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <h2>{section?.title} </h2>
 
-                >
-                    {(showAddEditForm || !addressData?.length > 0) && <AddEditForm {...formProps} />}
-                    <ViewAddressList {...formProps} />
-                </Panel>
-            </Collapse>
-            <br></br>
-            <Button onClick={() => onSubmit()} type="primary">
-                Submit
-            </Button>
+                        <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
+                            <Panel
+                                header={
+                                    <>
+                                        <Space>
+                                            <Text strong> Individual Address</Text>
+                                            {!isViewModeVisible && formActionType?.editMode && (
+                                                <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary">
+                                                    Add
+                                                </Button>
+                                            )}
+                                        </Space>
+                                        <Divider type="vertical" />
+                                    </>
+                                }
+                                key="1"
+                            >
+                                {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
+                                {isAddressLoading ? formSkeleton : <ViewAddressList {...formProps} />}
+                            </Panel>
+                        </Collapse>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <CustomerFormButton {...myProps} />
+                    </Col>
+                </Row>
+            </Form>
         </>
     );
 };

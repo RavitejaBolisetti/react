@@ -7,16 +7,14 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import dayjs from 'dayjs';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 
 import { indiviualProfileDataActions } from 'store/actions/data/customerMaster/individual/individualProfile/indiviualProfile';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { PARAM_MASTER } from 'constants/paramMaster';
 
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { btnVisiblity } from 'utils/btnVisiblity';
+import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
@@ -29,9 +27,10 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             CustomerMaster: {
-                IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading: isIndiviualLoading, data: indiviualData = [] },
+                IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading, data: indiviualData = [] },
+                ViewDocument: { isLoaded: isViewDataLoaded = false, isLoading: isViewDocumentLoading, data: viewDocument },
             },
-            ConfigurableParameterEditing: { isLoaded: isAppCategoryDataLoaded = false, paramdata: appCategoryData = [] },
+            ConfigurableParameterEditing: { filteredListData: appCategoryData = [] },
             SupportingDocument: { isLoaded: isDocumentDataLoaded = false, isDocumentLoading },
         },
     } = state;
@@ -39,14 +38,15 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isIndiviualProfileLoaded,
-        isIndiviualLoading,
-        isAppCategoryDataLoaded,
+        isLoading,
         appCategoryData,
         indiviualData,
         isDocumentDataLoaded,
         isDocumentLoading,
+        isViewDataLoaded,
+        isViewDocumentLoading,
+        viewDocument,
     };
-    console.log(appCategoryData, 'dhgsfdjhsakgS');
     return returnValue;
 };
 
@@ -58,20 +58,12 @@ const mapDispatchToProps = (dispatch) => ({
             listIndiviualShowLoading: indiviualProfileDataActions.listShowLoading,
             saveData: indiviualProfileDataActions.saveData,
 
-            fetchApplicationCategorization: configParamEditActions.fetchList,
-            fetchApplicationSubCategory: configParamEditActions.fetchList,
-            fetchCustomerCategory: configParamEditActions.fetchList,
-            fetchGenderCategory: configParamEditActions.fetchList,
-            fetchMartialStatus: configParamEditActions.fetchList,
-            fetchOccupationList: configParamEditActions.fetchList,
-            fetchAnnualIncome: configParamEditActions.fetchList,
-            fetchVehicleUsed: configParamEditActions.fetchList,
-            fetchMotherTongue: configParamEditActions.fetchList,
-            fetchReligionList: configParamEditActions.fetchList,
-
             saveDocumentData: supportingDocumentDataActions.saveData,
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
             listDocumentShowLoading: supportingDocumentDataActions.listShowLoading,
+
+            fecthViewDocument: documentViewDataActions.fetchList,
+            downloadFile: supportingDocumentDataActions.downloadFile,
 
             showGlobalNotification,
         },
@@ -79,66 +71,90 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 const IndividualProfileBase = (props) => {
-    const { userId, fetchVehicleUsed, fetchMotherTongue, fetchReligionList, fetchAnnualIncome, fetchOccupationList, appCategoryData, listIndiviualShowLoading, fetchGenderCategory, fetchMartialStatus, fetchApplicationCategorization, fetchApplicationSubCategory, fetchCustomerCategory, isAppCategoryDataLoaded, isIndiviualProfileLoaded, fetchList, indiviualData, saveData, showGlobalNotification } = props;
-    const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity } = props;
-    const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading } = props;
-
+    const { userId, isIndiviualProfileLoaded, fecthViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification, handleButtonClick } = props;
+    const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, downloadFile } = props;
+    const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, NEXT_ACTION } = props;
     const [form] = Form.useForm();
 
     const [formData, setFormData] = useState([]);
     const [activeKey, setActiveKey] = useState([1]);
+    const [uploadedFile, setUploadedFile] = useState();
+    const [isBorder, setIsBorder] = useState(false);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
 
     useEffect(() => {
-        if (userId && !isIndiviualProfileLoaded) {
-            fetchList({ setIsLoading: listIndiviualShowLoading, userId, extraParams });
+        if (!formActionType?.addMode && userId && selectedCustomerId) {
+            {
+            const extraParams = [
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: selectedCustomerId,
+                    name: 'Customer ID',
+                },
+            ];
+            fetchList({ setIsLoading: listIndiviualShowLoading, userId, extraParams, onErrorAction });
+        }
+    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedCustomerId]);
+
+    useEffect(() => {
+        if (userId && isIndiviualProfileLoaded && indiviualData?.image) {
+            const extraParams = [
+                {
+                    key: 'docId',
+                    title: 'docId',
+                    value: indiviualData?.image,
+                    name: 'docId',
+                },
+            ];
+            fecthViewDocument({ setIsLoading: listIndiviualShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isIndiviualProfileLoaded]);
+    }, [userId, isIndiviualProfileLoaded, indiviualData?.image]);
 
     useEffect(() => {
-        fetchApplicationCategorization({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_CAT.id });
-        fetchApplicationSubCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_APP_SUB_CAT.id });
-        fetchCustomerCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.CUST_CAT.id });
-        fetchGenderCategory({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.GENDER_CD.id });
-        fetchMartialStatus({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.MARITAL_STATUS.id });
-        fetchOccupationList({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.OCC_TYPE.id });
-        fetchAnnualIncome({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.Annual_Income.id });
-        fetchVehicleUsed({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.Vehicle_Used.id });
-        fetchMotherTongue({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.MOTHER_TOUNGE.id });
-        fetchReligionList({ setIsLoading: listIndiviualShowLoading, userId, parameterType: PARAM_MASTER.RELGION.id });
+        if (indiviualData?.dateOfBirth === null || indiviualData?.dateOfBirth === undefined || indiviualData?.dateOfBirth === '') {
+            form.setFieldsValue({
+                dateOfBirth: null,
+            });
+        } else {
+            form.setFieldsValue({
+                dateOfBirth: dayjs(indiviualData?.dateOfBirth),
+            });
+        }
+        if (indiviualData?.weddingAnniversary === null || indiviualData?.weddingAnniversary === undefined || indiviualData?.weddingAnniversary === '') {
+            form.setFieldsValue({
+                weddingAnniversary: null,
+            });
+        } else {
+            form.setFieldsValue({
+                weddingAnniversary: dayjs(indiviualData?.weddingAnniversary),
+            });
+        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isAppCategoryDataLoaded]);
-
-    const extraParams = [
-        {
-            key: 'customerId',
-            title: 'Customer',
-            value: 'CUS1686811036620',
-            name: 'customerId',
-        },
-    ];
+    }, [indiviualData]);
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const restObj = {};
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
 
         const data = {
             ...rest,
-            customerId: 'CUS1686810869696',
-            keyAccountDetails: { customerId: 'CUS1686810869696', accountCode: values?.accountCode || null, accountName: values?.accountName, accountSegment: values?.accountSegment || null, accountClientName: values?.accountClientName || null, accountMappingDate: values?.accountMappingDate || null },
-            authorityRequest: { customerId: 'CUS1686810869696', personName: values.personName, postion: values.postion, companyName: values.companyName, remarks: values.remarks, id: recordId },
+            customerId: selectedCustomerId,
+            keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode || '', accountName: values?.accountName || '', accountSegment: values?.accountSegment || '', accountClientName: values?.accountClientName || '', accountMappingDate: values?.accountMappingDate || '' },
+            authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
             id: recordId,
-            customerFormDocId: 'd54902cf-a716-4ae9-b08c-23f9371013bc',
-            customerConsent: 'true',
+            profileFileDocId: uploadedFile ? uploadedFile : '',
+            customerFormDocId: uploadedFile ? uploadedFile : '',
         };
 
         const onSuccess = (res) => {
@@ -146,15 +162,10 @@ const IndividualProfileBase = (props) => {
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-
-            setButtonData({ ...buttonData, formBtnActive: false });
-            if (buttonData?.saveAndNewBtnClicked) {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            } else {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            if (res.data) {
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             }
+            setButtonData({ ...buttonData, formBtnActive: false });
         };
 
         const onError = (message) => {
@@ -162,7 +173,7 @@ const IndividualProfileBase = (props) => {
         };
         const requestData = {
             data: data,
-            method: 'post',
+            method: indiviualData.customerId ? 'put' : 'post',
             setIsLoading: listIndiviualShowLoading,
             userId,
             onError,
@@ -171,26 +182,28 @@ const IndividualProfileBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('errorInfo', errorInfo);
-    };
+    const onFinishFailed = (errorInfo) => {};
 
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormData([]);
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        record && setFormData(record);
-        setIsFormVisible(true);
+    const handleOnClick = () => {
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: indiviualData?.image,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: listIndiviualShowLoading, userId, extraParams });
     };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
+        viewDocument = [];
     };
 
     const formProps = {
+        isBorder,
         form,
         formData: indiviualData,
         formActionType,
@@ -199,31 +212,39 @@ const IndividualProfileBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-
-        ADD_ACTION,
-        EDIT_ACTION,
-        VIEW_ACTION,
         buttonData,
         setButtonData,
         handleButtonClick,
         appCategoryData,
         listDocumentShowLoading,
         uploadDocumentFile,
+        setUploadedFile,
+        uploadedFile,
+
         saveDocumentData,
         userId,
         showDataLoading,
+        viewDocument,
+        isViewDocumentLoading,
+        NEXT_ACTION,
     };
 
     const viewProps = {
+        ...props,
         formData: indiviualData,
         styles,
         activeKey,
         setActiveKey,
+        viewDocument,
+        isViewDocumentLoading,
+        handleOnClick,
+        isLoading,
     };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
+
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>

@@ -19,7 +19,7 @@ const AddEditFormMain = (props) => {
             <Card style={{ backgroundColor: '#F2F2F2' }}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Credit Limit" name="creditAmount" initialValue={formData?.creditAmount}>
+                        <Form.Item label="Credit Limit" name="creditAmount" initialValue={formData?.creditAmount} rules={[validateNumberWithTwoDecimalPlaces('credit limit')]}>
                             <Input placeholder={preparePlaceholderText('limit')} />
                         </Form.Item>
                     </Col>
@@ -31,19 +31,19 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Outstanding Amount" initialValue={formData?.outstandingAmount} name="outstandingAmount">
+                        <Form.Item label="Outstanding Amount" initialValue={formData?.outstandingAmount} name="outstandingAmount" rules={[validateNumberWithTwoDecimalPlaces('outstanding amount')]}>
                             <Input placeholder={preparePlaceholderText('amount')} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Parts Discount %" name="partsDiscount" initialValue={formData?.partsDiscount} rules={[{ validator: (fieldData, value) => valueBetween0to100(value, 'parts discount') }]}>
+                        <Form.Item label="Parts Discount %" name="partsDiscount" initialValue={formData?.partsDiscount} rules={[valueBetween0to100('parts discount')]}>
                             <Input placeholder={preparePlaceholderText('discount')} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Labour Discount %" name="labourDiscount" initialValue={formData?.labourDiscount} rules={[{ validator: (fieldData, value) => valueBetween0to100(value, 'labour discount') }]}>
+                        <Form.Item label="Labour Discount %" name="labourDiscount" initialValue={formData?.labourDiscount} rules={[valueBetween0to100('labour discount')]}>
                             <Input placeholder={preparePlaceholderText('discount')} />
                         </Form.Item>
                     </Col>

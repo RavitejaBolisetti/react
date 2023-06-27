@@ -1,40 +1,50 @@
-import React, { useEffect, useState, useReducer } from 'react';
-import { Form } from 'antd';
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+import React, { useEffect } from 'react';
+import { Form, Row, Col } from 'antd';
 
-import AddEditForm from './AddEditForm';
+import { ViewDetail } from './ViewDetail';
+import { AddEditForm } from './AddEditForm';
+import { OTFFormButton } from '../OTFFormButton';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { showGlobalNotification } from 'store/actions/notification';
+import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
+import { OTFStatusBar } from '../utils/OTFStatusBar';
+
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
-
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
                 OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
+                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
             },
         },
     } = state;
+
     const moduleTitle = 'OTF Details';
 
     let returnValue = {
         userId,
-        isConfigDataLoaded,
-        isConfigLoading,
         typeData,
         isDataLoaded,
 
         otfData,
         isLoading,
         moduleTitle,
+        isSalesConsultantDataLoaded,
+        salesConsultantLov,
     };
     return returnValue;
 };
@@ -43,13 +53,13 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchList: otfDetailsDataActions.fetchList,
             saveData: otfDetailsDataActions.saveData,
             resetData: otfDetailsDataActions.reset,
             listShowLoading: otfDetailsDataActions.listShowLoading,
+
+            fetchSalesConsultant: salesConsultantActions.fetchList,
+            listConsultantShowLoading: salesConsultantActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -57,55 +67,62 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const OtfDetailsMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchConfigList, listConfigShowLoading, isConfigDataLoaded, isConfigLoading, typeData, isDataLoaded, otfData, isLoading, formData, setFormData, isNewDataLoading } = props;
+    const { typeData, listConsultantShowLoading } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
+    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
 
-    const [form] = Form.useForm();
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
-
-    useEffect(() => {
-        setFormData(otfData);
-    }, [otfData]);
-
-   
-    const errorAction = (message) => {
-        showGlobalNotification(message);
+    const onErrorAction = (message) => {
+        // showGlobalNotification({ message });
     };
 
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
+    const extraParams = [
+        {
+            key: 'otfNumber',
+            title: 'otfNumber',
+            value: selectedOrderId,
+            name: 'OTF Number',
+        },
+    ];
+
     useEffect(() => {
-        if (!isConfigDataLoaded && userId) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.PRC_TYP?.id, userId });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.SALE_TYP?.id, userId });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.FNC_ARNGD?.id, userId });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.DLVR_AT?.id, userId });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.REF?.id, userId });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, parameterType: PARAM_MASTER?.PRC_TYP?.id, userId });
+        if (userId && selectedOrderId) {
+            const extraParams = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOrderId,
+                    name: 'OTF Number',
+                },
+            ];
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isConfigDataLoaded, userId]);
+    }, [userId, selectedOrderId]);
 
-    
+    useEffect(() => {
+        if (!isSalesConsultantDataLoaded && userId) {
+            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isSalesConsultantDataLoaded, userId]);
 
     const onFinish = (values) => {
-        const recordId = formData?.id || '';
-        const otfNum = formData?.otfNumber || '';
-        const exchange = values?.exchange == true ? 1 : 0;
-        const loyalityScheme = values?.loyaltyScheme == true ? 1 : 0;
-        const data = { ...values, id: recordId, otfNumber: otfNum, loyaltyScheme: loyalityScheme, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
+        const recordId = otfData?.id || '';
+        const otfNum = otfData?.otfNumber || '';
+        const exchange = values?.exchange === true ? 1 : 0;
+        const data = { ...values, id: recordId, otfNumber: otfNum, loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
         delete data?.mitraName;
         delete data?.mitraType;
         delete data?.modeOfPAyment;
 
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         };
 
-        fetchList({ setIsLoading: listShowLoading, userId });
-
         const onError = (message) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -125,7 +142,6 @@ const OtfDetailsMasterBase = (props) => {
     const formProps = {
         ...props,
         form,
-        formData,
         onFinish,
         onFinishFailed,
         fetchList,
@@ -133,11 +149,41 @@ const OtfDetailsMasterBase = (props) => {
 
         userId,
         isDataLoaded,
-        otfData,
+        formData: otfData,
         isLoading,
+        salesConsultantLov,
     };
 
-    return <AddEditForm {...formProps} />;
+    const viewProps = {
+        typeData,
+        formData: otfData,
+        styles,
+        isLoading,
+        salesConsultantLov,
+    };
+
+    return (
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Row gutter={20} className={styles.drawerBodyRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Row>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <h2>{section?.title}</h2>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
+                        </Col>
+                    </Row>
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <OTFFormButton {...props} />
+                </Col>
+            </Row>
+        </Form>
+    );
 };
 
 export const OtfDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(OtfDetailsMasterBase);

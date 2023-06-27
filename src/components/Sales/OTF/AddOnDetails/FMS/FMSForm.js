@@ -1,35 +1,39 @@
-import React from 'react';
-import { Row, Col, Input, Form, Button } from 'antd';
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+import React, { useEffect, useState } from 'react';
+import { Row, Col, Input, Form } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-const FMSForm = ({ data }) => {
-    const disableProps = { disabled: !!data?.name };
-    const { form } = Form.useForm();
+const FMSForm = ({ formData, fmsForm }) => {
+    const [isReadOnly, setisReadOnly] = useState(false);
 
     const onFieldsChange = () => {};
-    const onFinish = (data) => {};
     const onFinishFailed = () => {};
+    useEffect(() => {
+        setisReadOnly(true);
+        fmsForm.setFieldsValue({
+            fms: formData?.fms?.fms ? formData?.fms?.fms : 'NA',
+            fmsRate: formData?.fms?.fmsRate ? formData?.fms?.fmsRate : 'NA',
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     return (
-        <Form form={form} onFieldsChange={onFieldsChange} autoComplete="off" id="shieldForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form form={fmsForm} onFieldsChange={onFieldsChange} autoComplete="off" id="shieldForm" layout="vertical" onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="FMS" name="fms">
-                        <Input {...disableProps} placeholder={preparePlaceholderText('fms')} />
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('fms')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="FMS Rate" name="shieldRate">
-                        <Input {...disableProps} placeholder={preparePlaceholderText('fms rate')} />
+                    <Form.Item label="FMS Rate" name="fmsRate">
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('fms rate')} />
                     </Form.Item>
                 </Col>
-                {!data?.name && (
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Button htmlType="submit" danger type="primary">
-                            Save
-                        </Button>
-                    </Col>
-                )}
             </Row>
         </Form>
     );

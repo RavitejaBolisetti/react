@@ -3,6 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -118,7 +119,6 @@ export const ListDistrictBase = (props) => {
 
     useEffect(() => {
         return () => {
-            console.log('reset data called');
             resetData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 export const OTF_STATUS = {
     BOOKED: {
         id: 1,
@@ -7,8 +12,8 @@ export const OTF_STATUS = {
     },
     ALLOTED: {
         id: 2,
-        title: 'Alloted',
-        desc: 'Alloted',
+        title: 'Allotted',
+        desc: 'Allotted',
         displayOnView: true,
     },
     CANCELLED: {
@@ -45,12 +50,12 @@ export const OTF_STATUS = {
         id: 8,
         title: 'Cancellation Requested',
         desc: 'Cancellation Requested',
-        displayOnView: true,
+        displayOnView: false,
     },
     REJECTED: {
         id: 7,
         title: 'Rejected',
         desc: 'Rejected',
-        displayOnView: true,
-    }
+        displayOnView: false,
+    },
 };

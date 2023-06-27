@@ -1,6 +1,7 @@
 /*
- *   Copyright (c) 2023 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
  *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
@@ -25,7 +26,6 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { searchValidatorPincode } from 'utils/validation';
 import { FilterIcon } from 'Icons';
 
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { geoCountryDataActions } from 'store/actions/data/geo/country';
 import { geoStateDataActions } from 'store/actions/data/geo/state';
 import { geoDistrictDataActions } from 'store/actions/data/geo/district';
@@ -40,7 +40,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId, token },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Geo: {
                 Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData = [] },
                 State: { isFilteredListLoaded: isStateDataLoaded = false, isLoading: isStateLoading, filteredListData: stateData },
@@ -80,8 +80,6 @@ const mapStateToProps = (state) => {
         data,
         stateData,
         isDataLoaded,
-        isConfigDataLoaded,
-        isConfigLoading,
         typeData: typeData && typeData[PARAM_MASTER.PIN_CATG.id],
         moduleTitle,
         token,
@@ -93,8 +91,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
             fetchCountryList: geoCountryDataActions.fetchList,
             listCountryShowLoading: geoCountryDataActions.listShowLoading,
             fetchStateLovList: geoStateDataActions.fetchFilteredList,
@@ -115,6 +111,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
+
 const ListPinCodeMasterBase = (props) => {
     const { data, saveData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
@@ -123,7 +120,7 @@ const ListPinCodeMasterBase = (props) => {
     const { isDistrictDataLoaded, isDistrictLoading, districtData, listDistrictShowLoading, fetchDistrictLovList } = props;
     const { isTehsilDataLoaded, isTehsilLoading, tehsilData, listTehsilShowLoading, fetchTehsilLovList } = props;
     const { isCityDataLoaded, isCityLoading, cityData, listCityShowLoading, fetchCityLovList } = props;
-    const { isConfigDataLoaded, isConfigLoading, typeData, listConfigShowLoading, fetchConfigList } = props;
+    const { typeData } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -196,10 +193,6 @@ const ListPinCodeMasterBase = (props) => {
 
             if (!isTehsilDataLoaded && !isTehsilLoading) {
                 fetchTehsilLovList({ setIsLoading: listTehsilShowLoading, userId });
-            }
-
-            if (!isConfigDataLoaded && !isConfigLoading) {
-                fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: 'PIN_CATG' });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -318,7 +311,6 @@ const ListPinCodeMasterBase = (props) => {
         if (userId && filterString) {
             loadPinCodeDataList();
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, userId]);
 

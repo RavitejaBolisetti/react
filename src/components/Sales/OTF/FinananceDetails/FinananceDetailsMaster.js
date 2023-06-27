@@ -1,12 +1,24 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useMemo, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Form } from 'antd';
+import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { otfFinanceDetailDataActions } from 'store/actions/data/otf/financeDetail';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { showGlobalNotification } from 'store/actions/notification';
 
+import { OTFFormButton } from '../OTFFormButton';
+import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { AddEditForm } from './AddEditForm';
@@ -18,7 +30,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             OTF: {
-                FinanceDetail: { isLoaded, isLoading, data },
+                FinanceDetail: { isLoaded, isLoading, data: financeData = [] },
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isloading: isFinanceLovLoading, data: FinanceLovData = [] },
             },
         },
@@ -29,7 +41,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isLoaded,
-        data,
+        financeData,
         isLoading,
         moduleTitle,
 
@@ -58,91 +70,87 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { saveData, fetchList, userId, listShowLoading, isLoaded, data, showGlobalNotification, moduleTitle, isFinanceLovDataLoaded, formActionType, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading } = props;
+    const { saveData, resetData, fetchList, userId, listShowLoading, financeData, showGlobalNotification, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
 
-    const [form] = Form.useForm();
+    const { form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: true };
-    // const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const selectedOTP = 'OTF001';
+    const [formData, setFormData] = useState();
+
+    useEffect(() => {
+        if (financeData) {
+            form.setFieldsValue({ ...financeData });
+            setFormData(financeData);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [financeData]);
+
+    useEffect(() => {
+        return () => {
+            setFormData();
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const extraParams = [
         {
             key: 'otfNumber',
             title: 'otfNumber',
-            value: selectedOTP,
+            value: selectedOrderId,
             name: 'OTF Number',
-        },
-        {
-            key: 'id',
-            title: 'id',
-            value: 'a0368e0e-ac87-4beb-b0f5-f4f8b69ff8f7',
-            name: 'OTF ID',
         },
     ];
 
     useEffect(() => {
-        if (!isLoaded && userId) {
+        if (userId && selectedOrderId) {
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedOrderId]);
+
+    useEffect(() => {
         if (userId && !isFinanceLovDataLoaded) {
             fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isLoaded, userId]);
+    }, [userId, isFinanceLovDataLoaded]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const errorAction = (message) => {
-        showGlobalNotification(message);
-    };
-
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-
-        setIsFormVisible(true);
+        // showGlobalNotification(message);
     };
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: 'OTF001', id: 'a0368e0e-ac87-4beb-b0f5-f4f8b69ff8f7' };
+        const data = { ...values, id: financeData?.id, otfNumber: selectedOrderId };
 
         const onSuccess = (res) => {
             form.resetFields();
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
 
-            setButtonData({ ...buttonData, formBtnActive: false });
-            if (buttonData?.saveAndNewBtnClicked) {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            } else {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            }
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: financeData?.id ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -160,19 +168,10 @@ export const FinananceDetailsMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const drawerTitle = useMemo(() => {
-        if (formActionType?.viewMode) {
-            return 'View ';
-        } else if (formActionType?.editMode) {
-            return 'Edit ';
-        } else {
-            return 'Add ';
-        }
-    }, [formActionType]);
-
     const formProps = {
+        ...props,
         form,
-        formData: data,
+        formData,
         formActionType,
         setFormActionType,
         fetchList,
@@ -180,9 +179,6 @@ export const FinananceDetailsMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
-        tableData: data,
-
         isFinanceLovDataLoaded,
         isFinanceLovLoading,
         FinanceLovData,
@@ -198,11 +194,35 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const viewProps = {
-        formData: data,
+        formData,
         styles,
+        isLoading,
+        FinanceLovData,
     };
 
-    return <>{formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}</>;
+    return (
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Row gutter={20} className={styles.drawerBodyRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Row>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <h2>{section?.title}</h2>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
+                        </Col>
+                    </Row>
+
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <OTFFormButton {...props} />
+                </Col>
+            </Row>
+        </Form>
+    );
 };
 
 const FinananceDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(FinananceDetailsMasterBase);

@@ -4,11 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Descriptions, Card, Space } from 'antd';
+import { Descriptions } from 'antd';
 import dayjs from 'dayjs';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+
+import styles from 'components/common/Common.module.css';
 
 const ViewDetailBase = (props) => {
-    const { customerType } = props;
+    const { isLoading } = props;
 
     const viewProps = {
         bordered: false,
@@ -18,21 +21,17 @@ const ViewDetailBase = (props) => {
     };
 
     return (
-        <div>
-            <Space direction="vertical" size="middle">
-                <Card>
-                    <Descriptions {...viewProps}>
-                        <Descriptions.Item label="M&M Customer">{props?.mnmCustomer}</Descriptions.Item>
-                        <Descriptions.Item label="Customer ID">{props?.customerId}</Descriptions.Item>
-                        {customerType ? <Descriptions.Item label="Customer Name">{props?.customerName}</Descriptions.Item> : null}
-                        <Descriptions.Item label="Relationship">{props?.relationship}</Descriptions.Item>
-                        <Descriptions.Item label="Date of Birth">{typeof props?.dateOfBirth === 'object' ? dayjs(props?.dateOfBirth).format('YYYY-MM-DD') : props?.dateOfBirth}</Descriptions.Item>
-                        <Descriptions.Item label="Age">{props?.relationAge}</Descriptions.Item>
-                        <Descriptions.Item label="" />
-                        <Descriptions.Item label="Remark">{props?.remarks}</Descriptions.Item>
-                    </Descriptions>
-                </Card>
-            </Space>
+        <div className={styles.sectionborder}>
+            <Descriptions {...viewProps} className={styles.descriptionBox}>
+                <Descriptions.Item label="M&M Customer">{checkAndSetDefaultValue(props?.mnmCustomer, isLoading)}</Descriptions.Item>
+                {props?.mnmCustomer === 'Yes' ? <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(props?.relationCustomerId, isLoading)}</Descriptions.Item> : null}
+                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(props?.customerName, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Relationship">{checkAndSetDefaultValue(props?.relationship, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(typeof props?.dateOfBirth === 'object' ? dayjs(props?.dateOfBirth).format('YYYY-MM-DD') : props?.dateOfBirth, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Age">{checkAndSetDefaultValue(props?.relationAge, isLoading)}</Descriptions.Item>
+                {props?.mnmCustomer === 'No' ? <Descriptions.Item label="" /> : null}
+                <Descriptions.Item label="Remark">{checkAndSetDefaultValue(props?.remarks, isLoading)}</Descriptions.Item>
+            </Descriptions>
         </div>
     );
 };

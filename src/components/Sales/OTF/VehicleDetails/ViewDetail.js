@@ -1,148 +1,145 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
-import { Space, Collapse, Typography, Divider, Descriptions } from 'antd';
+import { Row, Col, Space, Collapse, Typography, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import style from 'utils/PasswordStrengthMeter/PasswordStrengthMeter.module.css';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { InputSkeleton } from 'components/common/Skeleton';
+
 import { addToolTip } from 'utils/customMenuLink';
 import { DataTable } from 'utils/dataTable';
+import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { activeKey, onChange, styles, columns, data, optionalData, optionalColumns } = props;
+    const { isLoading, activeKey, onChange, tooltTipText, styles, formData } = props;
     const viewProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-    const vehicleForm = {
-        vehicleUsageType: 'uttar pradesh',
-        vehicleModel: 'ssss',
-        model: '12312',
-        stock: 'Delhi',
-        allotedStatus: 'status',
-        PONumber: '123122737328',
-        PODate: '12/06/2023',
-        POStatus: 'Status',
-        SONumber: '653728438213',
-        SOStatus: 'Status',
-        VINNumber: 'MAFCL723849203VIN',
-        discountAmount: '24500',
-        sellingPrice: '2454324',
-        taxAmount: '222',
-        vehicleAmount: '12640',
-    };
-
-    const text = 'Color - RED Seating Capacity - 7 Fuel - Diesel Variant - XUV 500 Name - XUV';
 
     return (
-        <Space direction="vertical" size="middle" className={styles.accordianContainer}>
-            <Collapse
-                expandIcon={() => {
-                    if (activeKey.includes(1)) {
-                        return <MinusOutlined className={styles.iconsColor} />;
-                    } else {
-                        return <PlusOutlined className={styles.iconsColor} />;
-                    }
-                }}
-                activeKey={activeKey}
-                onChange={() => onChange(1)}
-                expandIconPosition="end"
-                className={styles.collapseContainer}
+        <div className={styles.viewDrawerContainer}>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Space direction="vertical" size="middle" className={styles.accordianContainer}>
+                        <Collapse
+                            expandIcon={() => {
+                                if (activeKey.includes(1)) {
+                                    return <MinusOutlined className={styles.iconsColor} />;
+                                } else {
+                                    return <PlusOutlined className={styles.iconsColor} />;
+                                }
+                            }}
+                            activeKey={activeKey}
+                            onChange={() => onChange(1)}
+                            expandIconPosition="end"
+                            className={styles.collapseContainer}
+                        >
+                            <Panel
+                                header={
+                                    <div className={styles.alignUser}>
+                                        <Text strong level={5} style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                            Vehicle Information
+                                        </Text>
+                                    </div>
+                                }
+                                key="1"
+                            >
+                                <Descriptions {...viewProps}>
+                                    <Descriptions.Item label="Vehicle Usage Type ">{checkAndSetDefaultValue(formData?.vehicleUsageType, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Model">
+                                        {isLoading ? (
+                                            <InputSkeleton width={'100px'} height={20} theme={'card'} />
+                                        ) : (
+                                            <div className={styles.tooltipAlign}>
+                                                {formData?.model}
+                                                {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                                            </div>
+                                        )}
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Vehicle Allocated Status">{checkAndSetDefaultValue(formData?.vehicleAllocatedStatus, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.ponumber, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.podate, isLoading, 'date')}</Descriptions.Item>
+                                    <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(formData?.postatus, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.sonumber, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.sostatus, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="VIN Number">{checkAndSetDefaultValue(formData?.vinnumber, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Vehicle Selling Price">{checkAndSetDefaultValue(formData?.vehicleSellingPrice, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Discount Amount">{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Tax Amount">{checkAndSetDefaultValue(formData?.taxAmount, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Vehicle Amount">{checkAndSetDefaultValue(formData?.vehicleAmount, isLoading)}</Descriptions.Item>
+                                </Descriptions>
+                            </Panel>
+                        </Collapse>
 
-            >
-                <Panel
-                    header={
-                        <div className={styles.alignUser}>
-                            <Text strong level={5} style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                Vehicle Information
-                            </Text>
-                        </div>
-                    }
-                    key="1"
-                >
-                    <Divider />
-                    <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Vehicle Usage Type ">{vehicleForm?.vehicleUsageType}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Model">{vehicleForm?.vehicleModel}</Descriptions.Item>
-                        <Descriptions.Item label="Model">
-                            {vehicleForm?.model}
-                            {addToolTip(text, 'bottom', '#20232C', style.infoTooltipDesign)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Available Stock">{vehicleForm?.stock}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Allocated Status">{vehicleForm?.allotedStatus}</Descriptions.Item>
-                        <Descriptions.Item label="PO Number">{vehicleForm?.PONumber}</Descriptions.Item>
-                        <Descriptions.Item label="PO Date">{vehicleForm?.PODate}</Descriptions.Item>
-                        <Descriptions.Item label="PO Status">{vehicleForm?.POStatus}</Descriptions.Item>
-                        <Descriptions.Item label="SO Number">{vehicleForm?.SONumber}</Descriptions.Item>
-                        <Descriptions.Item label="SO Status">{vehicleForm?.SOStatus}</Descriptions.Item>
-                        <Descriptions.Item label="VIN Number">{vehicleForm?.VINNumber}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Selling Price">{vehicleForm?.sellingPrice}</Descriptions.Item>
-                        <Descriptions.Item label="Discount Amount">{vehicleForm?.discountAmount}</Descriptions.Item>
-                        <Descriptions.Item label="Tax Amount">{vehicleForm?.taxAmount}</Descriptions.Item>
-                        <Descriptions.Item label="Vehicle Amount">{vehicleForm?.vehicleAmount}</Descriptions.Item>
-                    </Descriptions>
-                </Panel>
-            </Collapse>
+                        <Collapse
+                            expandIcon={() => {
+                                if (activeKey.includes(2)) {
+                                    return <MinusOutlined className={styles.iconsColor} />;
+                                } else {
+                                    return <PlusOutlined className={styles.iconsColor} />;
+                                }
+                            }}
+                            activeKey={activeKey}
+                            onChange={() => onChange(2)}
+                            expandIconPosition="end"
+                            className={styles.collapseContainer}
+                        >
+                            <Panel
+                                header={
+                                    <div className={styles.alignUser}>
+                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                            Tax Details
+                                        </Text>
+                                    </div>
+                                }
+                                key="2"
+                            >
+                                <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
+                            </Panel>
+                        </Collapse>
 
-            <Collapse
-                expandIcon={() => {
-                    if (activeKey.includes(2)) {
-                        return <MinusOutlined className={styles.iconsColor} />;
-                    } else {
-                        return <PlusOutlined className={styles.iconsColor} />;
-                    }
-                }}
-                activeKey={activeKey}
-                onChange={() => onChange(2)}
-                expandIconPosition="end"
-                className={styles.collapseContainer}
-
-            >
-                <Panel
-                    header={
-                        <div className={styles.alignUser}>
-                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                Tax Details
-                            </Text>
-                        </div>
-                    }
-                    key="2"
-                >
-                    <DataTable tableColumn={columns} tableData={data} pagination={false} removePagination={true} />
-                </Panel>
-            </Collapse>
-
-            <Collapse
-                expandIcon={() => {
-                    if (activeKey.includes(3)) {
-                        return <MinusOutlined className={styles.iconsColor} />;
-                    } else {
-                        return <PlusOutlined className={styles.iconsColor} />;
-                    }
-                }}
-                activeKey={activeKey}
-                onChange={() => onChange(3)}
-                expandIconPosition="end"
-                className={styles.collapseContainer}
-
-            >
-                <Panel
-                    header={
-                        <div className={styles.alignUser}>
-                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                Optional Service
-                            </Text>
-                        </div>
-                    }
-                    key="3"
-                >
-                    <DataTable tableColumn={optionalColumns} tableData={optionalData} pagination={false} removePagination={true} />
-                </Panel>
-            </Collapse>
-        </Space>
+                        <Collapse
+                            expandIcon={() => {
+                                if (activeKey.includes(3)) {
+                                    return <MinusOutlined className={styles.iconsColor} />;
+                                } else {
+                                    return <PlusOutlined className={styles.iconsColor} />;
+                                }
+                            }}
+                            activeKey={activeKey}
+                            onChange={() => onChange(3)}
+                            expandIconPosition="end"
+                            className={styles.collapseContainer}
+                        >
+                            <Panel
+                                header={
+                                    <div className={styles.alignUser}>
+                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                            Charges
+                                        </Text>
+                                    </div>
+                                }
+                                key="3"
+                            >
+                                <DataTable tableColumn={optionalServicesColumns} tableData={formData['optionalServices']} removePagination={true} />
+                            </Panel>
+                        </Collapse>
+                    </Space>
+                </Col>
+            </Row>
+        </div>
     );
 };
 

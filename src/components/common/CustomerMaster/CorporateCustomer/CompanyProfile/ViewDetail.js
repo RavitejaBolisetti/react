@@ -4,15 +4,18 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Space, Collapse, Typography, Descriptions } from 'antd';
+import { Space, Collapse, Typography, Descriptions, Card } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
+import { FiDownload } from 'react-icons/fi';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formData } = props;
+    const { formData, handleOnClick, isLoading, appCategoryData, viewDocument } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const viewProps = {
         bordered: false,
@@ -64,22 +67,22 @@ const ViewDetailMain = (props) => {
                         key="1"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="PAN">{formData?.panNumber}</Descriptions.Item>
-                            <Descriptions.Item label="GSTIN">{formData?.gstinNumber}</Descriptions.Item>
+                            <Descriptions.Item label="PAN">{checkAndSetDefaultValue(formData?.panNumber, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData?.gstinNumber, isLoading)}</Descriptions.Item>
                         </Descriptions>
 
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Usage/Application Categorization">{formData?.applicationCategorization}</Descriptions.Item>
-                            <Descriptions.Item label="Usage/Application Sub-Category">{formData?.applicationSubCategory}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Category">{formData?.customerCategory}</Descriptions.Item>
+                            <Descriptions.Item label="Usage/Application Categorization">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_CAT, formData?.applicationCategorization), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Usage/Application Sub-Category">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_SUB_CAT, formData?.applicationSubCategory), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Customer Category">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.CUS_CAT, formData?.customerCategory), isLoading)}</Descriptions.Item>
                         </Descriptions>
-                        {formData?.customerCategory === 'Fleet' && (
+                        {formData?.customerCategory === 'CUS_CAT_2' && (
                             <>
                                 <Descriptions {...viewProps}>
-                                    <Descriptions.Item label="Business Details">{formData?.businessDetails}</Descriptions.Item>
-                                    <Descriptions.Item label="Vehicle Deployment Detail">{formData?.vechileDeploymentDetails}</Descriptions.Item>
-                                    <Descriptions.Item label="Key Role Details">{formData?.keyRouteDetails}</Descriptions.Item>
-                                    <Descriptions.Item label="Major Route Details">{formData?.majorRouteDetails}</Descriptions.Item>
+                                    <Descriptions.Item label="Business Details">{checkAndSetDefaultValue(formData?.businessDetails, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Vehicle Deployment Detail">{checkAndSetDefaultValue(formData?.vechileDeploymentDetails, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Key Role Details">{checkAndSetDefaultValue(formData?.keyRouteDetails, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Major Route Details">{checkAndSetDefaultValue(formData?.majorRouteDetails, isLoading)}</Descriptions.Item>
                                 </Descriptions>
                             </>
                         )}
@@ -109,9 +112,9 @@ const ViewDetailMain = (props) => {
                         key="2"
                     >
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="M1-MMFSL">{formData?.m1mmfsl}</Descriptions.Item>
-                            <Descriptions.Item label="Facebook Link">{formData?.facebookLink}</Descriptions.Item>
-                            <Descriptions.Item label="Twitter Link">{formData?.twitterLink}</Descriptions.Item>
+                            <Descriptions.Item label="M1-MMFSL">{checkAndSetDefaultValue(formData?.m1mmfsl, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookLink, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Twitter Link">{checkAndSetDefaultValue(formData?.twitterLink, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>
@@ -138,13 +141,13 @@ const ViewDetailMain = (props) => {
                         }
                         key="3"
                     >
-                        {formData?.keyAccountDetails && formData?.keyAccountDetails.length > 0 && (
+                        {formData?.keyAccountDetails && (
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Account Code">{formData?.keyAccountDetails[0]?.accountCode}</Descriptions.Item>
-                                <Descriptions.Item label="Account Name">{formData?.keyAccountDetails[0]?.accountName}</Descriptions.Item>
-                                <Descriptions.Item label="Account Segment">{formData?.keyAccountDetails[0]?.accountSegment}</Descriptions.Item>
-                                <Descriptions.Item label="Account Client Name">{formData?.keyAccountDetails[0]?.accountClientName}</Descriptions.Item>
-                                <Descriptions.Item label="Account Mapping Date">{formData?.keyAccountDetails[0]?.accountMappingDate}</Descriptions.Item>
+                                <Descriptions.Item label="Account Code">{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountCode, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Account Name">{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Account Segment">{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountSegment, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Account Client Name">{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountClientName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Account Mapping Date">{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountMappingDate, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         )}
                     </Panel>
@@ -172,12 +175,12 @@ const ViewDetailMain = (props) => {
                         }
                         key="4"
                     >
-                        {formData?.authorityDetails && formData?.authorityDetails.length > 0 && (
+                        {formData?.authorityDetails && (
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Name Of Person">{formData?.authorityDetails[0].personName}</Descriptions.Item>
-                                <Descriptions.Item label="Position">{formData?.authorityDetails[0].postion}</Descriptions.Item>
-                                <Descriptions.Item label="Company Name">{formData?.authorityDetails[0].companyName}</Descriptions.Item>
-                                <Descriptions.Item label="Remarks">{formData?.authorityDetails[0].remarks}</Descriptions.Item>
+                                <Descriptions.Item label="Name Of Person">{checkAndSetDefaultValue(formData?.authorityDetails.personName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Position">{checkAndSetDefaultValue(formData?.authorityDetails.postion, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Company Name">{checkAndSetDefaultValue(formData?.authorityDetails.companyName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.authorityDetails.remarks, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         )}
                     </Panel>
@@ -203,7 +206,12 @@ const ViewDetailMain = (props) => {
                             </div>
                         }
                         key="5"
-                    ></Panel>
+                    >
+                        <a>
+                            <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>
+                        </a>
+                        {/* {viewDocument && <img width="500" height="200" src={`data:image/png;base64,${viewDocument?.base64}`} />} */}
+                    </Panel>
                 </Collapse>
             </Space>
         </div>

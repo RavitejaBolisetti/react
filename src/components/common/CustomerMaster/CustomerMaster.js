@@ -8,14 +8,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Input, Form, Empty, ConfigProvider, Select } from 'antd';
 
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { showGlobalNotification } from 'store/actions/notification';
+import { validateRequiredInputField } from 'utils/validation';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { tableColumn } from './tableColumn';
 
-import { btnVisiblity } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
         customer: {
             customerDetail: { isLoaded: isDataLoaded = false, isLoading, data, filter: filterString = {} },
@@ -46,11 +46,9 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        data,
+        data: data?.customerMasterDetails || [],
         isLoading,
         moduleTitle,
-        isConfigDataLoaded,
-        isConfigLoading,
         typeData: typeData && typeData[PARAM_MASTER.CUST_MST.id],
         filterString,
     };
@@ -61,9 +59,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchList: customerDetailDataActions.fetchList,
             saveData: customerDetailDataActions.saveData,
             setFilterString: customerDetailDataActions.setFilter,
@@ -76,19 +71,20 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerMasterMain = (props) => {
-    const { data, fetchList, userId, isLoading, listShowLoading, showGlobalNotification, resetData, moduleTitle } = props;
-    const { isConfigDataLoaded, isConfigLoading, typeData, listConfigShowLoading, fetchConfigList } = props;
+    const { data, fetchList, userId, isLoading, listShowLoading, showGlobalNotification, resetData, moduleTitle, typeData } = props;
     const { filterString, setFilterString } = props;
 
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
     const [selectedCustomer, setSelectedCustomer] = useState();
     const [selectedCustomerId, setSelectedCustomerId] = useState();
     const [shouldResetForm, setShouldResetForm] = useState(false);
+    const [refreshList, setRefreshList] = useState(false);
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
+    const [isLastSection, setLastSection] = useState(false);
 
     const [form] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -100,16 +96,23 @@ const CustomerMasterMain = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
-    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
-    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-    const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
-
     const defaultExtraParam = [
         {
             key: 'customerType',
             title: 'Customer Type',
             value: customerType,
+            canRemove: true,
+        },
+        {
+            key: 'pageSize',
+            title: 'Value',
+            value: 1000,
+            canRemove: true,
+        },
+        {
+            key: 'pageNumber',
+            title: 'Value',
+            value: 1,
             canRemove: true,
         },
     ];
@@ -152,16 +155,11 @@ const CustomerMasterMain = (props) => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
             setSection(section);
+            const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+            setLastSection(!nextSection?.id);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
-
-    useEffect(() => {
-        if (!isConfigDataLoaded && !isConfigLoading && userId) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CUST_MST.id });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isConfigDataLoaded, userId]);
 
     useEffect(() => {
         if (userId && customerType) {
@@ -169,31 +167,52 @@ const CustomerMasterMain = (props) => {
             fetchList({ setIsLoading: listShowLoading, extraParams: defaultExtraParam, userId, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerType, userId]);
+    }, [customerType, userId, refreshList]);
 
-    const handleButtonClick = ({ record = null, buttonAction, formVisible = false }) => {
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION || buttonAction === NEXT_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
+        switch (buttonAction) {
+            case ADD_ACTION:
+                defaultSection && setCurrentSection(defaultSection);
+                break;
+            case EDIT_ACTION:
+                setSelectedCustomer(record);
+                record && setSelectedCustomerId(record?.customerId);
+                openDefaultSection && setCurrentSection(defaultSection);
+                break;
+            case VIEW_ACTION:
+                setSelectedCustomer(record);
+                record && setSelectedCustomerId(record?.customerId);
+                defaultSection && setCurrentSection(defaultSection);
+                break;
+
+            case NEXT_ACTION:
+                const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+                section && setCurrentSection(nextSection?.id);
+                setLastSection(!nextSection?.id);
+                break;
+
+            default:
+                break;
+        }
+
+        if (buttonAction !== NEXT_ACTION) {
+            setFormActionType({
+                addMode: buttonAction === ADD_ACTION,
+                editMode: buttonAction === EDIT_ACTION,
+                viewMode: buttonAction === VIEW_ACTION,
+            });
+            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        }
         setIsFormVisible(true);
-
-        if (buttonAction === NEXT_ACTION) {
-            const section = Object.values(sectionName)?.find((i) => i.id > currentSection);
-            section && setCurrentSection(section?.id);
-        }
-
-        if (buttonAction === VIEW_ACTION || !formVisible) {
-            setSelectedCustomer(record);
-            record && setSelectedCustomerId(record?.customerId);
-            defaultSection && setCurrentSection(defaultSection);
-        }
     };
 
     const onFinish = (values, e) => {};
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        console.error(errorInfo);
+        // form.validateFields().then((values) => {});
     };
 
     const tableProps = {
@@ -222,8 +241,14 @@ const CustomerMasterMain = (props) => {
         setFilterString({ ...filterString, searchParam: event.target.value });
     };
 
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
+
     const onCloseAction = () => {
         form.resetFields();
+        form.setFieldsValue({});
+
         setIsFormVisible(false);
         setFormActionType(defaultFormActionType);
         setButtonData(defaultBtnVisiblity);
@@ -243,6 +268,7 @@ const CustomerMasterMain = (props) => {
     }, [formActionType]);
 
     const containerProps = {
+        record: selectedCustomer,
         form,
         formActionType,
         setFormActionType,
@@ -272,6 +298,10 @@ const CustomerMasterMain = (props) => {
         sectionName,
         setCurrentSection,
         shouldResetForm,
+        handleFormValueChange,
+        setRefreshList,
+        isLastSection,
+        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
     };
 
     const selectProps = {
@@ -279,6 +309,7 @@ const CustomerMasterMain = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
+
     return (
         <>
             <Row gutter={20}>
@@ -289,7 +320,7 @@ const CustomerMasterMain = (props) => {
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                     {Object.values(CUSTOMER_TYPE)?.map((item) => {
                                         return (
-                                            <Button className={styles.marR5} type={customerType === item?.id ? 'primary' : 'link'} danger onClick={() => setCustomerType(item?.id)}>
+                                            <Button type={customerType === item?.id ? 'primary' : 'link'} danger onClick={() => setCustomerType(item?.id)}>
                                                 {item?.title}
                                             </Button>
                                         );
@@ -303,7 +334,11 @@ const CustomerMasterMain = (props) => {
                                             </Option>
                                         ))}
                                     </Select>
-                                    <Search placeholder="Search" value={filterString?.searchParam} onChange={onChangeHandle} allowClear onSearch={onSearchHandle} className={styles.headerSearchField} />
+                                    {/* <Form layout="vertical" autoComplete="off" onFinish={onSearchHandle}> */}
+                                    <Form.Item name="keyword" rules={[validateRequiredInputField('keyword')]}>
+                                        <Search placeholder="Search" value={filterString?.searchParam} onChange={onChangeHandle} onSearch={onSearchHandle} allowClear className={styles.headerSearchField} />
+                                    </Form.Item>
+                                    {/* </Form> */}
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>

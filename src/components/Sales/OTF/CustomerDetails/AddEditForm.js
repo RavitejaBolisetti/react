@@ -3,33 +3,29 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
-
-import { Col, Input, Form, Row, Checkbox, Space, Collapse, Typography } from 'antd';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import React, { useEffect, useState } from 'react';
+import { Col, Row, Checkbox, Space, Collapse, Typography, AutoComplete } from 'antd';
 import { FiEdit } from 'react-icons/fi';
-import { validateRequiredInputField } from 'utils/validation';
+import { AddressCommonForm } from './AddressCommonForm';
 
 import styles from 'components/common/Common.module.css';
-import { ViewDetail } from './ViewDetail';
 
 const { Text } = Typography;
-
 const { Panel } = Collapse;
 
-const AddEditForm = (props) => {
-    const { formActionType, onFinish, onFinishFailed, form, formData } = props;
+const AddEditFormBase = (props) => {
+    const { form, billCstmForm, formData, customerFormData, setSameAsBookingCustomer } = props;
+    const { typeData } = props;
     const [activeKey, setactiveKey] = useState([1]);
 
-    const viewProps = {
-        bordered: false,
-        colon: false,
-        layout: 'vertical',
-        column: { xxl: 3, xl: 3, lg: 3, md: 3, sm: 3, xs: 3 },
-        styles,
-        activeKey,
-        setactiveKey,
-    };
+    useEffect(() => {
+        if (formData) {
+            form.setFieldsValue({
+                ...formData,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -48,303 +44,119 @@ const AddEditForm = (props) => {
         }
     };
 
+    const bilingCustomerProps = {
+        ...props,
+        AutoComplete,
+        typeData,
+        formData: formData?.billingCustomer,
+        formType: 'billingCustomer',
+    };
+
+    const bookingCustomerProps = {
+        ...props,
+        AutoComplete,
+        typeData,
+        formData: formData?.bookingCustomer,
+        formType: 'bookingCustomer',
+    };
+
+    const handleOnChange = (vall) => {
+        if (vall.target.checked) {
+            setSameAsBookingCustomer(true);
+            billCstmForm.setFieldsValue(form.getFieldsValue());
+        } else setSameAsBookingCustomer(false);
+    };
+
+    const handleDataSet = () => {
+        form.setFieldsValue(customerFormData.bookingCustomer);
+        billCstmForm.setFieldsValue(customerFormData.billingCustomer);
+    };
+
     return (
-        <>
-            {!formActionType?.viewMode ? (
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                            <Collapse
-                                expandIcon={() => {
-                                    if (activeKey.includes(1)) {
-                                        return (
-                                            <>
-                                                <FiEdit />
-                                                <span>Edit</span>
-                                            </>
-                                        );
-                                    } else {
-                                        return (
-                                            <>
-                                                <FiEdit />
-                                                <span>Edit</span>
-                                            </>
-                                        );
-                                    }
-                                }}
-                                activeKey={activeKey}
-                                onChange={() => onChange(1)}
-                                expandIconPosition="end"
-                            >
-                                <Panel
-                                    header={
-                                        <div className={styles.alignUser}>
-                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                Booking Customer
-                                            </Text>
-                                        </div>
-                                    }
-                                    key="1"
-                                >
-                                    <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="customerId" label="Customer ID" initialValue={formData?.customerId} rules={[validateRequiredInputField('id')]}>
-                                                    <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={formActionType?.editMode ? true : false} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="customerType" label="Customer Type" initialValue={formData?.customerType} rules={[validateRequiredInputField('customer type')]}>
-                                                    <Input placeholder={preparePlaceholderText('customer type')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="mobileNumber" label="Mobile Number" initialValue={formData?.customerType} rules={[validateRequiredInputField('Mobile Number')]}>
-                                                    <Input placeholder={preparePlaceholderText('Mobile Number')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="salutation" label="Salutation" initialValue={formData?.Salutation} rules={[validateRequiredInputField('Salutation')]}>
-                                                    <Input maxLength={6} placeholder={preparePlaceholderText('Salutation')} disabled={formActionType?.editMode ? true : false} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="customerName" label="Customer Name" initialValue={formData?.customerName} rules={[validateRequiredInputField('Customer Name')]}>
-                                                    <Input placeholder={preparePlaceholderText('Customer Name')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="address" label="Address" initialValue={formData?.address} rules={[validateRequiredInputField('Address')]}>
-                                                    <Input placeholder={preparePlaceholderText('Address')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="City/District" label="City/District" initialValue={formData?.CityDistrict} rules={[validateRequiredInputField('City/District')]}>
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('City/District')} disabled={formActionType?.editMode ? true : false} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="State" label="State" initialValue={formData?.State} rules={[validateRequiredInputField('State')]}>
-                                                    <Input placeholder={preparePlaceholderText('State')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="pinCode" label="Pin Code" initialValue={formData?.pinCode} rules={[validateRequiredInputField('Pin Code')]}>
-                                                    <Input placeholder={preparePlaceholderText('Pin Code')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="alternateNumber" label="Alternate Number" initialValue={formData?.alternateNumber} rules={[validateRequiredInputField('alternate Number')]}>
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('alternate Number')} disabled={formActionType?.editMode ? true : false} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="Email" label="Email" initialValue={formData?.Email} rules={[validateRequiredInputField('Email')]}>
-                                                    <Input placeholder={preparePlaceholderText('Email')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="PAN" label="PAN" initialValue={formData?.PAN} rules={[validateRequiredInputField('PAN')]}>
-                                                    <Input placeholder={preparePlaceholderText('PAN')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="aadhar" label="Aadhar" initialValue={formData?.aadhar} rules={[validateRequiredInputField('Aadhar')]}>
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Aadhar')} disabled={formActionType?.editMode ? true : false} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="GSTIN" label="GSTIN" initialValue={formData?.GSTIN} rules={[validateRequiredInputField('GSTIN')]}>
-                                                    <Input placeholder={preparePlaceholderText('GSTIN')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="drivingLicense" label="Driving License" initialValue={formData?.drivingLicense} rules={[validateRequiredInputField('Driving License')]}>
-                                                    <Input placeholder={preparePlaceholderText('Driving License')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="tradeLicence" label="Trade Licence" initialValue={formData?.tradeLicence} rules={[validateRequiredInputField('trade Licence')]}>
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Trade Licence')} disabled={formActionType?.editMode ? true : false} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="birthDate" label="Birth Date" initialValue={formData?.birthDate} rules={[validateRequiredInputField('Birth Date')]}>
-                                                    <Input placeholder={preparePlaceholderText('Birth Date')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="addCorporateDetails" label="Do You Want to Add Corporate Details" initialValue={formData?.addCorporateDetails} rules={[validateRequiredInputField('Do You Want to Add Corporate Details')]}>
-                                                    <Input placeholder={preparePlaceholderText('Do You Want to Add Corporate Details')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                    </Form>
-                                </Panel>
-                            </Collapse>
-                            <Collapse
-                                expandIcon={() => {
-                                    if (activeKey.includes(2)) {
-                                        return (
-                                            <>
-                                                <FiEdit />
-                                                <span>Edit</span>
-                                            </>
-                                        );
-                                    } else {
-                                        return (
-                                            <>
-                                                <FiEdit />
-                                                <span>Edit</span>
-                                            </>
-                                        );
-                                    }
-                                }}
-                                activeKey={activeKey}
-                                onChange={() => onChange(2)}
-                                expandIconPosition="end"
-                            >
-                                <Panel
-                                    header={
-                                        <div className={styles.alignUser}>
-                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                Billing Customer
-                                            </Text>
-                                        </div>
-                                    }
-                                    key="2"
-                                >
-                                    <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                <Form.Item name="checkbox">
-                                                    <Checkbox>Same as Booking Customer</Checkbox>
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="customerId" label="Customer ID" initialValue={formData?.customerId} rules={[validateRequiredInputField('id')]}>
-                                                    <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={formActionType?.editMode ? true : false} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="customerType" label="Customer Type" initialValue={formData?.customerType} rules={[validateRequiredInputField('customer type')]}>
-                                                    <Input placeholder={preparePlaceholderText('customer type')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="mobileNumber" label="Mobile Number" initialValue={formData?.customerType} rules={[validateRequiredInputField('Mobile Number')]}>
-                                                    <Input placeholder={preparePlaceholderText('Mobile Number')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="salutation" label="Salutation" initialValue={formData?.Salutation} rules={[validateRequiredInputField('Salutation')]}>
-                                                    <Input maxLength={6} placeholder={preparePlaceholderText('Salutation')} disabled={formActionType?.editMode ? true : false} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="customerName" label="Customer Name" initialValue={formData?.customerName} rules={[validateRequiredInputField('Customer Name')]}>
-                                                    <Input placeholder={preparePlaceholderText('Customer Name')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="address" label="Address" initialValue={formData?.address} rules={[validateRequiredInputField('Address')]}>
-                                                    <Input placeholder={preparePlaceholderText('Address')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="City/District" label="City/District" initialValue={formData?.CityDistrict} rules={[validateRequiredInputField('City/District')]}>
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('City/District')} disabled={formActionType?.editMode ? true : false} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="State" label="State" initialValue={formData?.State} rules={[validateRequiredInputField('State')]}>
-                                                    <Input placeholder={preparePlaceholderText('State')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="pinCode" label="Pin Code" initialValue={formData?.pinCode} rules={[validateRequiredInputField('Pin Code')]}>
-                                                    <Input placeholder={preparePlaceholderText('Pin Code')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="alternateNumber" label="Alternate Number" initialValue={formData?.alternateNumber} rules={[validateRequiredInputField('alternate Number')]}>
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('alternate Number')} disabled={formActionType?.editMode ? true : false} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="Email" label="Email" initialValue={formData?.Email} rules={[validateRequiredInputField('Email')]}>
-                                                    <Input placeholder={preparePlaceholderText('Email')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="PAN" label="PAN" initialValue={formData?.PAN} rules={[validateRequiredInputField('PAN')]}>
-                                                    <Input placeholder={preparePlaceholderText('PAN')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="aadhar" label="Aadhar" initialValue={formData?.aadhar} rules={[validateRequiredInputField('Aadhar')]}>
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Aadhar')} disabled={formActionType?.editMode ? true : false} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="GSTIN" label="GSTIN" initialValue={formData?.GSTIN} rules={[validateRequiredInputField('GSTIN')]}>
-                                                    <Input placeholder={preparePlaceholderText('GSTIN')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="drivingLicense" label="Driving License" initialValue={formData?.drivingLicense} rules={[validateRequiredInputField('Driving License')]}>
-                                                    <Input placeholder={preparePlaceholderText('Driving License')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="tradeLicence" label="Trade Licence" initialValue={formData?.tradeLicence} rules={[validateRequiredInputField('trade Licence')]}>
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Trade Licence')} disabled={formActionType?.editMode ? true : false} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="birthDate" label="Birth Date" initialValue={formData?.birthDate} rules={[validateRequiredInputField('Birth Date')]}>
-                                                    <Input placeholder={preparePlaceholderText('Birth Date')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item name="addCorporateDetails" label="Do You Want to Add Corporate Details" initialValue={formData?.addCorporateDetails} rules={[validateRequiredInputField('Do You Want to Add Corporate Details')]}>
-                                                    <Input placeholder={preparePlaceholderText('Do You Want to Add Corporate Details')} maxLength={50} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                    </Form>
-                                </Panel>
-                            </Collapse>
-                        </Space>
-                    </Col>
-                </Row>
-            ) : (
-                <ViewDetail {...viewProps} />
-            )}
-        </>
+        <Row gutter={20}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Space style={{ display: 'flex' }} size="middle" direction="vertical">
+                    <Collapse
+                        expandIcon={() => {
+                            if (activeKey.includes(1)) {
+                                return (
+                                    <>
+                                        <FiEdit onClick={handleDataSet} />
+                                        <span>Edit</span>
+                                    </>
+                                );
+                            } else {
+                                return (
+                                    <>
+                                        <FiEdit />
+                                        <span>Edit</span>
+                                    </>
+                                );
+                            }
+                        }}
+                        activeKey={activeKey}
+                        onChange={() => onChange(1)}
+                        expandIconPosition="end"
+                    >
+                        <Panel
+                            header={
+                                <div className={styles.alignUser}>
+                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                        Booking Customer
+                                    </Text>
+                                </div>
+                            }
+                            key="1"
+                        >
+                            <AddressCommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} />
+                        </Panel>
+                    </Collapse>
+                    <Collapse
+                        expandIcon={() => {
+                            if (activeKey.includes(2)) {
+                                return (
+                                    <>
+                                        <FiEdit />
+                                        <span>Edit</span>
+                                    </>
+                                );
+                            } else {
+                                return (
+                                    <>
+                                        <FiEdit />
+                                        <span>Edit</span>
+                                    </>
+                                );
+                            }
+                        }}
+                        activeKey={activeKey}
+                        onChange={() => onChange(2)}
+                        expandIconPosition="end"
+                    >
+                        <Panel
+                            header={
+                                <div className={styles.alignUser}>
+                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                        Billing Customer
+                                    </Text>
+                                </div>
+                            }
+                            key="2"
+                        >
+                            <Row>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                    <Checkbox valuePropName="checked" style={{ margin: '5px 0px 15px 0px' }} onClick={handleOnChange} name="sameAsBookingCustomer">
+                                        Same as Booking Customer
+                                    </Checkbox>
+                                </Col>
+                            </Row>
+                            <AddressCommonForm key="4" {...bilingCustomerProps} isBillingCustmrForm={true} />
+                        </Panel>
+                    </Collapse>
+                </Space>
+            </Col>
+        </Row>
     );
 };
 
-export default AddEditForm;
+export const AddEditForm = AddEditFormBase;

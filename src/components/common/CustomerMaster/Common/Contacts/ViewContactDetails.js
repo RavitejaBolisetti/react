@@ -1,15 +1,21 @@
 /*
- *   Copyright (c) 2023 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
 import { Descriptions } from 'antd';
 import AddEditForm from './AddEditForm';
-import styles from 'components/common/Common.module.css';
+import UploadUtils from './../UploadUtils';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { getCodeValue } from 'utils/getCodeValue';
+
+import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 const ViewDetailBase = (props) => {
     const { formData, styles } = props;
-    const { setShowAddEditForm, setContactData, onFinish, form, isEditing } = props;
+    const { setShowAddEditForm, setContactData, onFinish, form, isEditing, isLoading, typeData } = props;
+    const { customerType } = props;
 
     const viewProps = {
         bordered: false,
@@ -23,40 +29,35 @@ const ViewDetailBase = (props) => {
         setContactData,
         onFinish,
         form,
-        ...props
+        ...props,
     };
 
     return (
         <div className={styles.viewDrawerContainer}>
             {!isEditing ? (
                 <>
+                    <UploadUtils {...formProps} />
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Purpose of Contact">{formData?.purposeOfContact}</Descriptions.Item>
-                        <Descriptions.Item label="Mobile Number">{formData?.mobileNumber}</Descriptions.Item>
-                        <Descriptions.Item label="Alternate Mobile Numbe">{formData?.alternateMobileNumber}</Descriptions.Item>
-                        <Descriptions.Item label="Relation">{formData?.relationCode}</Descriptions.Item>
-                        <Descriptions.Item label="Gender">{formData?.gender}</Descriptions.Item>
-                        <Descriptions.Item label="Title">{formData?.title}</Descriptions.Item>
-                        <Descriptions.Item label="First Name">{formData?.firstName}</Descriptions.Item>
-                        <Descriptions.Item label="Middle Name">{formData?.middleName}</Descriptions.Item>
-                        <Descriptions.Item label="Last/Surname">{formData?.lastName}</Descriptions.Item>
-                        <Descriptions.Item label="E-mail">{formData?.contactEmailId}</Descriptions.Item>
-                        <Descriptions.Item label="Alternate Email ID">{formData?.alternateEmailId}</Descriptions.Item>
+                        <Descriptions.Item label="Purpose of Contact">{checkAndSetDefaultValue(getCodeValue(typeData?.PURPOSE, formData?.purposeOfContact), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Alternate Mobile Numbe">{checkAndSetDefaultValue(formData?.alternateMobileNumber, isLoading)}</Descriptions.Item>
+                        {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? <Descriptions.Item label="Relation">{checkAndSetDefaultValue(getCodeValue(typeData?.FAMLY_RELTN, formData?.relationCode), isLoading)}</Descriptions.Item> : <Descriptions.Item label="Designation">{checkAndSetDefaultValue(formData?.designation, isLoading)}</Descriptions.Item>}
 
-                        <Descriptions.Item label="Facebook Link">{formData?.facebookId}</Descriptions.Item>
-                        <Descriptions.Item label="Twitter Link">{formData?.twitterId}</Descriptions.Item>
-                        <Descriptions.Item label="Instagram Link">{formData?.instagramId}</Descriptions.Item>
-                        <Descriptions.Item label="Youtube Channel">{formData?.youTubeChannel}</Descriptions.Item>
-                        <Descriptions.Item label="Team BHP Link">{formData?.teamBhp}</Descriptions.Item>
-                        <Descriptions.Item label="Mark As Default">{formData?.defaultContactIndicator ? 'Yes' : 'No'}</Descriptions.Item>
+                        <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(typeData?.GENDER_CD, formData?.gender), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.title), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="First Name">{checkAndSetDefaultValue(formData?.firstName, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Middle Name">{checkAndSetDefaultValue(formData?.middleName, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Last/Surname">{checkAndSetDefaultValue(formData?.lastName, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="E-mail">{checkAndSetDefaultValue(formData?.contactEmailId, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Alternate Email ID">{checkAndSetDefaultValue(formData?.alternateEmailId, isLoading)}</Descriptions.Item>
+
+                        <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookId, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Twitter Link">{checkAndSetDefaultValue(formData?.twitterId, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Instagram Link">{checkAndSetDefaultValue(formData?.instagramId, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Youtube Channel">{checkAndSetDefaultValue(formData?.youTubeChannel, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Team BHP Link">{checkAndSetDefaultValue(formData?.teamBhp, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Mark As Default">{checkAndSetDefaultValue(formData?.defaultContactIndicator ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
                     </Descriptions>
-
-                    {/* <Space>
-                        <Button type="primary" onClick={() => editContactHandeler({ formData, index })}>
-                            Edit
-                        </Button>
-                        <Button danger onClick={() => deleteContactHandeler( formData, index )}>Delete</Button>
-                    </Space> */}
                 </>
             ) : (
                 <AddEditForm {...formProps} />

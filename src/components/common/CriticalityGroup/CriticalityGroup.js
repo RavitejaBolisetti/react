@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect, useReducer, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -56,7 +61,6 @@ export const CriticalityGroupMain = (props) => {
     const { saveFormShowLoading, isLoadingOnSave, moduleTitle, fetchList, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
-    console.log('isLoadingOnSave', isLoadingOnSave);
     const [refershData, setRefershData] = useState(false);
     const [formData, setFormData] = useState({});
     const [forceFormReset, setForceFormReset] = useState(false);

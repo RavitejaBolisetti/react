@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Select, Button, Space, Card, Checkbox } from 'antd';
 import style from 'components/common/DrawerAndTable.module.css';
@@ -26,7 +31,6 @@ const AssignUserRole = ({ userRoleOptions, DealerSearchvalue, finalFormdata, set
     const onChange = (values) => {
         const newValues = [];
         Object.entries(values).forEach(([key, value]) => {
-            console.log(`${key} ${value}`);
             const SelectedDetails = FindRoleDetails(value);
             newValues.push(SelectedDetails);
         });
@@ -86,7 +90,6 @@ const AssignUserRole = ({ userRoleOptions, DealerSearchvalue, finalFormdata, set
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     {addroles &&
                         checked?.map((el) => {
-                            console.log('This is the el', el['0']?.roleName);
                             return (
                                 <Card className={style.usermanagementCard}>
                                     <Row gutter={20}>

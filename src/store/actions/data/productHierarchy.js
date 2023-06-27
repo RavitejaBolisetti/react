@@ -1,8 +1,14 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
 import { BASE_URL_PRODUCT_HIERARCHY, BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY, BASE_URL_PRODUCT_HIERARCHY_SAVE, BASE_URL_PRODUCT_HIERARCHY_SKU, BASE_URL_PRODUCT_NAME_DROPDOWN } from 'constants/routingApi';
 import { message } from 'antd';
+import { LANGUAGE_EN } from 'language/en';
 
 export const PRODUCT_HIERARCHY_DATA_LOADED = 'PRODUCT_HIERARCHY_DATA_LOADED';
 export const PRODUCT_HIERARCHY_DATA_SHOW_LOADING = 'PRODUCT_HIERARCHY_DATA_SHOW_LOADING';
@@ -14,6 +20,7 @@ export const PRODUCT_HIERARCHY_CARD_BTN_DISABLE = 'PRODUCT_HIERARCHY_CARD_BTN_DI
 export const PRODUCT_HIERARCHY_ATTRIBUTE_NAME_DROPDOWN = 'PRODUCT_HIERARCHY_ATTRIBUTE_NAME_DROPDOWN';
 export const PRODUCT_HIERARCHY_SELECTED_ORGANIZATION_ID = 'PRODUCT_HIERARCHY_SELECTED_ORGANIZATION_ID';
 export const PRODUCT_HIERARCHY_RESET_DATA = 'PRODUCT_HIERARCHY_RESET_DATA';
+export const PRODUCT_HIERARCHY_FILTERED_DATA_ACTION_CONSTANT = 'PRODUCT_HIERARCHY_FILTERED_DATA_ACTION_CONSTANT';
 
 const receiveProductHierarchyData = (data) => ({
     type: PRODUCT_HIERARCHY_DATA_LOADED,
@@ -37,6 +44,10 @@ const receiverProductAttributeName = (data) => ({
     type: PRODUCT_HIERARCHY_ATTRIBUTE_NAME_DROPDOWN,
     isLoaded: true,
     data,
+});
+const filteredRecieveData = (filteredListData) => ({
+    type: PRODUCT_HIERARCHY_FILTERED_DATA_ACTION_CONSTANT,
+    filteredListData,
 });
 
 const productHierarchyDataActions = {};
@@ -214,6 +225,36 @@ productHierarchyDataActions.fetchAttributeNameList = withAuthToken((params) => (
         onSuccess,
         onError,
         onTimeout: () => onError('Request timed out, Please try again'),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+productHierarchyDataActions.fetchFilteredList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, data, extraparams } = params;
+    setIsLoading(true);
+    const onError = (errorMessage) => message.error(errorMessage);
+
+    const onSuccess = (res) => {
+        if (res?.data) {
+            dispatch(filteredRecieveData(res?.data));
+        } else {
+            onError(LANGUAGE_EN.INTERNAL_SERVER_ERROR);
+        }
+    };
+
+    const apiCallParams = {
+        data,
+        method: 'get',
+        url: BASE_URL_PRODUCT_HIERARCHY + '/lov' + (extraparams ? '?' + extraparams['0']['key'] + '=' + extraparams['0']['value'] : ''),
+        token,
+        accessToken,
+        userId,
+        onSuccess,
+        onError,
+        onTimeout: () => onError(LANGUAGE_EN.REQUEST_TIMEOUT),
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
         postRequest: () => setIsLoading(false),

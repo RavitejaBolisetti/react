@@ -8,15 +8,35 @@ import { combineReducers } from 'redux';
 import { InvoiceDetail } from './invoiceDetail';
 import { FinanceDetail } from './financeDetail';
 import { OtfDetails } from './otfDetails';
+import { OtfCustomerDetails } from './customerDetails';
+import { VehicleDetails } from './vehicleDetails';
 import { InsuranceDetail } from './insuranceDetail';
 import { OtfSearchList } from './otfSearch';
-import { FinanceLov } from './financeLov';
+import { salesConsultantLov } from './salesConsultant';
 
+import { FinanceLov } from './financeLov';
+import { LoyaltyScheme } from './loyaltyAndScheme';
+import { Referrals } from './referrals';
+import { ExchangeVehicle } from './exchangeVehicle';
+import { SchemeDetail } from './schemeDetail';
+import { VehicleDetailsLov } from './vehicleDetailsLov';
+import { AddonDetails } from './addOnDetails';
+import { AddonParts } from './addonParts';
 export const OTF = combineReducers({
     InvoiceDetail,
     FinanceDetail,
     OtfDetails,
+    OtfCustomerDetails,
+    VehicleDetails,
     InsuranceDetail,
     OtfSearchList,
+    salesConsultantLov,
     FinanceLov,
+    LoyaltyScheme,
+    Referrals,
+    ExchangeVehicle,
+    SchemeDetail,
+    VehicleDetailsLov,
+    AddonDetails,
+    AddonParts,
 });

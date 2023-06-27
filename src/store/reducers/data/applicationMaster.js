@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import { APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED, APPLICATION_CRITICALITY_GROUP_LOADED, DEALER_LOCATIONS_LOADED, APPLICATION_MASTER_DATA_SHOW_LOADING, APPLICATION_DATA_LOADED, CONFIG_PARAM_DATA_LOADED, APPLICATION_ACTON_DATA_LOADED, APPLICATION_ON_SAVE_DATA_SHOW_LOADING, APPLICATION_MASTER_DETAIL_DATA_SHOW_LOADING, APPLICATION_LOCATION_DATA } from 'store/actions/data/applicationMaster';
 
 const initialState = {

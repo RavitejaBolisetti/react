@@ -8,19 +8,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Row, Col, Form } from 'antd';
 
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
-
-import { InputSkeleton } from 'components/common/Skeleton';
 
 import styles from 'components/common/Common.module.css';
 
@@ -32,20 +28,16 @@ const mapStateToProps = (state) => {
                 CustomerDetailsIndividual: { isLoaded: isDataLoaded = false, isLoading, data },
                 Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
             },
-            ConfigurableParameterEditing: { isLoaded: isTypeDataLoaded = false, isTypeDataLoading, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
 
     let returnValue = {
         userId,
-        isTypeDataLoaded,
-        isTypeDataLoading,
-
         isDataLoaded,
         isLoading,
         data,
-        typeData: typeData,
-
+        typeData,
         isCorporateLovDataLoaded,
         isCorporateLovLoading,
         corporateLovData,
@@ -57,9 +49,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchCorporateLovList: corporateDataActions.fetchFilteredList,
             listCorporateLovShowLoading: corporateDataActions.listShowLoading,
 
@@ -75,18 +64,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerDetailMasterBase = (props) => {
-    const { isTypeDataLoaded, isTypeDataLoading, typeData, fetchConfigList, listConfigShowLoading, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form } = props;
+    const { typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
+    const { setRefreshList, userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
 
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState();
-    const [configurableTypedata, setConfigurableTypedata] = useState({});
-
-    const [showDataLoading, setShowDataLoading] = useState(true);
-
-    const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
+    const [uploadImgDocId, setUploadImgDocId] = useState('');
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -96,24 +81,12 @@ const CustomerDetailMasterBase = (props) => {
         if (isDataLoaded) {
             form.setFieldsValue({ ...data });
             setFormData(data);
-            setShowDataLoading(false);
         }
         return () => {
             resetData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, data]);
-
-    useEffect(() => {
-        if (userId && !isTypeDataLoaded && !isTypeDataLoading) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CUST_TYPE.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CORP_TYPE.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.CORP_CATE.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.TITLE.id });
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.MEM_TYPE.id });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isTypeDataLoaded]);
+    }, [isDataLoaded]);
 
     useEffect(() => {
         if (userId && !isCorporateLovDataLoaded) {
@@ -137,21 +110,16 @@ const CustomerDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
-    useEffect(() => {
-        if (typeData) {
-            setConfigurableTypedata({ CUST_TYPE: typeData['CUST_TYPE'], CORP_TYPE: typeData['CORP_TYPE'], CORP_CATE: typeData['CORP_CATE'], TITLE: typeData['TITLE'], MEM_TYPE: typeData['MEM_TYPE'] });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [typeData]);
-
     const onFinish = (values) => {
+        setRefreshList(false);
         const data = { ...values, customerId: selectedCustomer?.customerId };
 
         const onSuccess = (res) => {
             form.resetFields();
-            setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId });
             setButtonData({ ...buttonData, formBtnActive: false });
+            setRefreshList(true);
 
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
@@ -176,11 +144,8 @@ const CustomerDetailMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
     const formProps = {
+        ...props,
         formActionType,
         form,
         onFinish,
@@ -192,47 +157,32 @@ const CustomerDetailMasterBase = (props) => {
         showForm,
         fetchCorporateLovList,
         setShowForm,
+        setUploadImgDocId,
+        uploadImgDocId,
         setButtonData,
         typeData,
         formData,
-        configurableTypedata,
-        showDataLoading,
     };
 
     const viewProps = {
+        ...formProps,
+        formActionType,
         formData,
         styles,
+        isLoading,
     };
-
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
-
-    const myProps = {
-        ...props,
-        saveButtonName: formActionType?.addMode ? 'Create Customer ID' : 'Save & Next',
-    };
-
-    const formContainer = formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;
-    const formSkeleton = (
-        <Row>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <InputSkeleton height={'100vh'} />
-            </Col>
-        </Row>
-    );
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title}</h2>
-                    {isLoading ? formSkeleton : formContainer}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CustomerFormButton {...myProps} />
+                    <CustomerFormButton {...props} />
                 </Col>
             </Row>
         </Form>

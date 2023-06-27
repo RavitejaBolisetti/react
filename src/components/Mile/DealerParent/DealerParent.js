@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
@@ -19,7 +24,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             DealerHierarchy: {
                 DealerParent: { isLoaded: isDataLoaded = false, isLoading, data = [] },
             },
@@ -34,8 +39,6 @@ const mapStateToProps = (state) => {
         data,
         isLoading,
         moduleTitle,
-        isConfigDataLoaded,
-        isConfigLoading,
         typeData: typeData && typeData[PARAM_MASTER.TITLE.id],
     };
     return returnValue;
@@ -45,9 +48,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchConfigList: configParamEditActions.fetchList,
-            listConfigShowLoading: configParamEditActions.listShowLoading,
-
             fetchList: dealerParentDataActions.fetchList,
             saveData: dealerParentDataActions.saveData,
             listShowLoading: dealerParentDataActions.listShowLoading,
@@ -60,7 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const DealerParentBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { isConfigDataLoaded, isConfigLoading, typeData, listConfigShowLoading, fetchConfigList } = props;
+    const { typeData } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -98,13 +98,6 @@ export const DealerParentBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded]);
-
-    useEffect(() => {
-        if (userId && !isConfigDataLoaded && !isConfigLoading) {
-            fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: PARAM_MASTER.TITLE.id });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isConfigDataLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {

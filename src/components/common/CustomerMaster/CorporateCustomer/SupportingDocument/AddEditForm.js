@@ -3,60 +3,72 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
-import { Row, Col, Form, Select, Input, message, Upload, Button, Empty, Card } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Form, Select, Input, Upload, Button, Empty, Card } from 'antd';
 
 import { FiEye, FiTrash } from 'react-icons/fi';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-
+import { validateRequiredInputField } from 'utils/validation';
+import Svg from 'assets/images/Filter.svg';
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { typeData, userId, setUploadedFile, uploadFile, listShowLoading, showGlobalNotification } = props;
+    const { handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview, emptyList, setEmptyList } = props;
 
-    const onDrop = (e) => {
-        console.log('Dropped files', e.dataTransfer.files);
+    const [showStatus, setShowStatus] = useState('');
+
+    const onDrop = (e) => {};
+
+    const onDownload = (file) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+
+        handlePreview(file?.response);
+        let a = document.createElement('a');
+
+        a.href = `data:image/png;base64,${viewDocument?.base64}`;
+        a.download = viewDocument?.fileName;
+        a.click();
     };
 
     const uploadProps = {
+        multiple: false,
+        accept: 'image/png, image/jpeg, application/pdf',
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
-            previewIcon: <FiEye onClick={(e) => console.log(e, 'custom removeIcon event')} />,
-            removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
+            removeIcon: <FiTrash />,
+            downloadIcon: <FiEye onClick={(e) => onDownload(e)} style={{ color: '#ff3e5b' }} />,
             showProgress: true,
         },
         progress: { strokeWidth: 3, showInfo: true },
-
         onDrop,
-        onChange: (info, event) => {
+        onChange: (info) => {
+            handleFormValueChange();
             const { status } = info.file;
-
-            console.log('event', event);
-            if (status === 'uploading') {
-                console.log(' uploading info.file.loaded', info.file.loaded);
-                console.log(' uploading info.file.total', info.file.total);
-                console.log(' uploading info.file.percent', info.file.percent);
-            } else if (status === 'done') {
+            setShowStatus(info.file);
+            if (status === 'done') {
                 setUploadedFile(info?.file?.response?.docId);
-                message.success(`${info.file.name} file uploaded successfully.`);
-                console.log('done info.file.loaded', info.file.loaded);
-                console.log('done info.file.total', info.file.total);
-                console.log('done info.file.total', info.file.total);
-                console.log('done info.file.percent', info.file.percent);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
             }
         },
     };
 
+    useEffect(() => {
+        if (showStatus.status === 'done') {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
+        } else if (showStatus.status === 'error') {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showStatus]);
+
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
+        setEmptyList(true);
+
 
         const data = new FormData();
         data.append('applicationId', 'app');
@@ -71,7 +83,7 @@ const AddEditForm = (props) => {
             onSuccess,
         };
 
-        uploadFile(requestData);
+        uploadDocumentFile(requestData);
     };
 
     const selectProps = {
@@ -85,7 +97,7 @@ const AddEditForm = (props) => {
         <Card>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="Document Type" name="documentTypeId" placeholder={preparePlaceholderSelect('document type')} rules={[validateRequiredSelectField('document type')]}>
+                    <Form.Item label="Document Type" name="documentTypeId" placeholder={preparePlaceholderSelect('document type')}>
                         <Select className={styles.headerSelectField} loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps}>
                             {typeData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
@@ -101,16 +113,14 @@ const AddEditForm = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
-
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div style={{ border: 'red 1px solid' }}>
-                        <Dragger customRequest={handleUpload} {...uploadProps}>
+                    <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                        <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
+                            <div>
+                                <img src={Svg} alt="" />
+                            </div>
                             <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 100,
-                                }}
                                 description={
                                     <>
                                         <span>

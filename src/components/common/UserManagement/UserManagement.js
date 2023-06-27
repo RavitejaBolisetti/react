@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -168,26 +173,20 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const FetchError = (message) => {
         setError(true);
         setDealerData({});
-        console.log('I am fetching Error');
     };
     useEffect(() => {
-        console.log('UserManagementDealerData : ', UserManagementDealerData);
         setDealerData(UserManagementDealerData);
         if (Object.entries(UserManagementDealerData)?.length > 0) {
             // setSearchdata([UserManagementDealerData]);
         }
     }, [UserManagementDealerData]);
-    useEffect(() => {
-        console.log('This is the Final Form data : ', finalFormdata);
-    }, [finalFormdata]);
+    useEffect(() => {}, [finalFormdata]);
     useEffect(() => {
         form.resetFields();
         form.setFieldValue(formData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
-    useEffect(() => {
-        console.log('This is the dealer Data :: ', DealerData);
-    }, [DealerData]);
+    useEffect(() => {}, [DealerData]);
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -200,13 +199,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     useEffect(() => {
         //setSearchdata(qualificationData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        console.log('productHierarchyData', productHierarchyData);
-        console.log('attributeData', attributeData);
     }, [productHierarchyData, attributeData, qualificationData]);
 
     useEffect(() => {
-        console.log('DealerSelected', DealerSelected);
-
         if (DealerSelected?.length > 0 && DealerSelected !== undefined) {
             setdisabled(false);
             setDealerData({});
@@ -490,7 +485,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     };
 
     const onSearchHandle = (value) => {
-        console.log('This is the searched Value : ', value);
         setDealerSearchvalue(value);
         if (value === '') {
             return;

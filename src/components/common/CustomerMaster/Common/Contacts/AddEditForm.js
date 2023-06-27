@@ -1,49 +1,35 @@
 /*
- *   Copyright (c) 2023
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
  *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { useState } from 'react';
-import { Button, Form, message, Typography, Row, Col, Space, Select, Input, Divider, Checkbox } from 'antd';
+import { Button, Form, Row, Col, Space, Select, Input, Divider, Checkbox } from 'antd';
 import { BiLockAlt } from 'react-icons/bi';
 import { CheckOutlined } from '@ant-design/icons';
 
-import { validateLettersWithWhitespaces, validateEmailField, validateAlphanumericWithSpace, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
+import { validateLettersWithWhitespaces, validateEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import UploadUtils from './../UploadUtils';
 
-import { contactPurpose, title, gender } from 'constants/modules/CustomerMaster/individualProfile';
-import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
+// import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
+import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import style from '../../../Common.module.css';
 
 const { Option } = Select;
-const uploadProps = {
-    name: 'file',
-    multiple: true,
-    action: '',
-    uploadTitle: 'Upload Your Profile Picture',
-    uploadDescription: 'File type should be .png and .jpg and max file size to be 5MB',
-    uploadBtnName: 'Upload File',
-    onChange(info) {
-        const { status } = info.file;
-        if (status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully.`);
-        } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-};
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onFinish, form, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData } = props;
+    const { formData, isReadOnly = false, onFinish, onSaveFormData, form, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
-    const disabledProps = { disabled: isReadOnly };
+    const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
 
     const handleCancelFormEdit = () => {
-        form.resetFields();
+        contactform.resetFields();
+        setIsAdding(false);
         setIsEditing(false);
         setShowAddEditForm(false);
     };
@@ -64,9 +50,17 @@ const AddEditForm = (props) => {
         setIsModalOpen(true);
     };
 
+    const onCloseActionOnContinue = () => {
+        setIsModalOpen(false);
+        setmobileLoader(false);
+        setContinueWithOldMobNo(true);
+    };
+
     const handleCancel = () => {
         setIsModalOpen(false);
         setmobileLoader(false);
+        setContinueWithOldMobNo(false);
+        setIsAdding(false);
     };
     const modalProps = {
         isVisible: isModalOpen,
@@ -74,27 +68,24 @@ const AddEditForm = (props) => {
         titleOverride: 'Mobile Number Validation',
         closable: false,
         onCloseAction: handleCancel,
+        onCloseActionOnContinue,
     };
 
     return (
         <>
-            <Form form={form} autoComplete="off" onFinish={onFinish} layout="vertical">
+            <Form form={contactform} autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
                 <Space direction="vertical">
-                    {/* <Row>
-                        <Typography.Text strong>Add New Contact</Typography.Text>
-                    </Row> */}
-                    <UploadUtils {...uploadProps} isViewModeVisible={isViewModeVisible} />
+                    <UploadUtils
+                        {...props}
+                        // {...uploadProps}
+                        isViewModeVisible={isViewModeVisible}
+                        setUploadImgDocId={setUploadImgDocId}
+                    />
                     <Divider className={style.contactDivider} />
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Purpose of Contact" name="purposeOfContact">
-                                <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                    {typeData?.PURPOSE?.map((item) => (
-                                        <Option key={'ct' + item?.key} value={item?.key}>
-                                            {item?.value}
-                                        </Option>
-                                    ))}
-                                </Select>
+                            <Form.Item label="Purpose of Contact" name="purposeOfContact" rules={[validateRequiredSelectField('purpose of contact')]}>
+                                <Select {...disabledProps} placeholder={preparePlaceholderSelect('purpose of contact')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['PURPOSE']} allowClear></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -106,58 +97,57 @@ const AddEditForm = (props) => {
                                     allowClear
                                     // enterButton="Send OTP"
                                     size="small"
-                                    suffix={
-                                        <>
-                                            {false ? (
-                                                <Button loading={mobileLoader} onClick={showModal} type="link">
-                                                    Validate
-                                                </Button>
-                                            ) : (
-                                                <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
-                                            )}
-                                            <ValidateMobileNumberModal {...modalProps} />
-                                        </>
-                                    }
+                                    // suffix={
+                                    //     <>
+                                    //         {false ? (
+                                    //             <Button loading={mobileLoader} onClick={showModal} type="link">
+                                    //                 Validate
+                                    //             </Button>
+                                    //         ) : (
+                                    //             <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
+                                    //         )}
+                                    //         <ValidateMobileNumberModal {...modalProps} />
+                                    //     </>
+                                    // }
                                 />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Alternate Mobile Number" name="alternativeMobileNumber" rules={[validateMobileNoField('alternate mobile number')]}>
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate mobile number')} {...disabledProps} />
+                            <Form.Item initialValue={''} label="Alternate Mobile Number" name="alternateMobileNumber" rules={[validateMobileNoField('alternate mobile number')]}>
+                                <Input maxLength={10} className={style.inputBox} placeholder={preparePlaceholderText('alternate mobile number')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Relation" name="relationCode">
-                                <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                    {typeData?.FAMLY_RELTN?.map((item) => (
-                                        <Option key={'ct' + item?.key} value={item?.key}>
-                                            {item?.value}
-                                        </Option>
-                                    ))}
-                                </Select>
+                            {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? (
+                                <>
+                                    <Form.Item label="Relation" name="relationCode">
+                                        <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={[ ...typeData['FAMLY_RELTN']]} allowClear></Select>
+                                        {/* <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['FAMLY_RELTN']} allowClear></Select> */}
+                                    </Form.Item>
+                                    <Form.Item initialValue={''} hidden name="designation" >
+                                        <Input />
+                                    </Form.Item>
+                                </>
+                            ) : (
+                                <>
+                                    <Form.Item initialValue={''} label="Designation" name="designation">
+                                        <Input className={style.inputBox} placeholder={preparePlaceholderText('Designation')} {...disabledProps} />
+                                    </Form.Item>
+                                    <Form.Item initialValue={''} hidden name="relationCode">
+                                        <Input />
+                                    </Form.Item>
+                                </>
+                            )}
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                            <Form.Item label="Gender" name="gender">
+                                <Select {...disabledProps} placeholder={preparePlaceholderSelect('gender')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['GENDER_CD']} allowClear></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Gender" name="gender" rules={[validateRequiredSelectField('gender')]}>
-                                <Select placeholder={preparePlaceholderSelect('gender')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                    {typeData?.GENDER_CD?.map((item) => (
-                                        <Option key={'ct' + item?.key} value={item.key}>
-                                            {item?.value}
-                                        </Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Title" name="title" rules={[validateRequiredSelectField('title')]}>
-                                <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('title')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                    {typeData?.TITLE?.map((item) => (
-                                        <Option key={'ct' + item?.key} value={item?.key}>
-                                            {item?.name}
-                                        </Option>
-                                    ))}
-                                </Select>
+                            <Form.Item label="Title" name="title" rules={[validateRequiredSelectField('title')]} >
+                                <Select {...disabledProps} placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['TITLE']} allowClear></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -166,22 +156,22 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Middle Name" name="middleName">
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('middle name')} rules={[validateLettersWithWhitespaces('middle name')]} {...disabledProps} />
+                            <Form.Item initialValue={''} label="Middle Name" name="middleName" rules={[validateLettersWithWhitespaces('middle name')]}>
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('middle name')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Last/Surname" name="lastName">
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} rules={[validateLettersWithWhitespaces('last name')]} {...disabledProps} />
+                            <Form.Item label="Last/Surname" name="lastName" rules={[validateRequiredInputField('lastName'), validateLettersWithWhitespaces('last name')]}>
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="E-mail" name="contactEmailId" rules={[validateEmailField('E-mail')]}>
+                            <Form.Item label="E-mail" initialValue={''} name="contactEmailId" rules={[validateEmailField('E-mail')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('email id')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Alternate Email ID" name="alternateEmailId" rules={[validateEmailField('E-mail')]}>
+                            <Form.Item initialValue={''} label="Alternate Email ID" name="alternateEmailId" rules={[validateEmailField('E-mail')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate email id')} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -189,48 +179,59 @@ const AddEditForm = (props) => {
                         <Divider />
 
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Facebook Link" name="facebookId" rules={[validatFacebookProfileUrl('facebook')]}>
+                            <Form.Item initialValue={''} label="Facebook Link" name="facebookId" rules={[validatFacebookProfileUrl('facebook')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('facebook link')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Twitter Link" name="twitterId" rules={[validattwitterProfileUrl('twitter')]}>
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
+                            <Form.Item initialValue={''} label="Twitter Link" name="twitterId" rules={[validattwitterProfileUrl('twitter')]}>
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('Twitter Link')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Instagram Link" name="instagramId" rules={[validatInstagramProfileUrl('instagram')]}>
+                            <Form.Item initialValue={''} label="Instagram Link" name="instagramId" rules={[validatInstagramProfileUrl('instagram')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('instagram link')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Youtube Channel" name="youTubeChannel" rules={[validatYoutubeProfileUrl('Pincode')]}>
+                            <Form.Item initialValue={''} label="Youtube Channel" name="youTubeChannel" rules={[validatYoutubeProfileUrl('youtube channel')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('youtube channel')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Team BHP Link" name="teamBhp">
+                            <Form.Item initialValue={''} label="Team BHP Link" name="teamBhp">
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('team BHP link')} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item valuePropName="checked" name="defaultContactIndicator">
+                            <Form.Item initialValue={false} valuePropName="checked" name="defaultContactIndicator">
                                 <Checkbox>Mark As Default</Checkbox>
                             </Form.Item>
                         </Col>
-                        <Form.Item hidden name="docId">
+                        <Form.Item hidden initialValue={''} name="id">
+                            <Input />
+                        </Form.Item>
+                        <Form.Item hidden initialValue={uploadImgDocId} value={uploadImgDocId} name="docId">
+                            <Input />
+                        </Form.Item>
+                        <Form.Item hidden initialValue={true} name="status">
+                            <Input />
+                        </Form.Item>
+                        <Form.Item hidden initialValue={true} name="continueWith">
                             <Input />
                         </Form.Item>
                     </Row>
-                    <Space>
-                        <Button htmlType="submit" type="primary">
-                            Save
-                        </Button>
-                        <Button onClick={handleCancelFormEdit} danger>
-                            Cancel
-                        </Button>
-                    </Space>
+                    {!formActionType?.viewMode && (
+                        <Space>
+                            <Button onClick={onSaveFormData} type="primary">
+                                    Save
+                            </Button>
+                            <Button onClick={handleCancelFormEdit} danger>
+                                Cancel
+                            </Button>
+                        </Space>
+                    )}
                 </Space>
             </Form>
         </>

@@ -11,6 +11,12 @@ export const validateRequiredInputField = (fieldName, lowercase = true) => ({
     message: 'Please enter ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
+export const validateRequiredInputFieldMinLength = (fieldName, lowercase = true) => ({
+    required: true,
+    min:3,
+    message: 'Please enter ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
+});
+
 export const validateRequiredSelectField = (fieldName, lowercase = true) => ({
     required: true,
     message: 'Please select ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
@@ -87,7 +93,7 @@ export const validateGSTIN = (fieldName, lowercase = true) => ({
 });
 
 export const validateNumberWithTwoDecimalPlaces = (fieldName, lowercase = true) => ({
-    pattern: /^[0-9]*\.[0-9]{2}$/,
+    pattern: /^\d+(\.\d{1,2})?$/,
     message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
@@ -107,9 +113,11 @@ export const validatFacebookProfileUrl = (fieldName) => ({
 });
 
 export const validatYoutubeProfileUrl = (fieldName) => ({
-    pattern: /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)([^#&?]*).*/,
+    // pattern: /(?:http:\/\/)?(?:www\.)?(?:youtube\.com\/)([a-zA-Z0-9_-]{11})$/,
+    pattern: /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$/,
     message: 'Please enter valid url ' + fieldName,
 });
+
 
 export const validattwitterProfileUrl = (fieldName) => ({
     pattern: /^https?:\/\/(www\.)?twitter\.com\/(#!\/)?([^/]+)(\/\w+)*$/,
@@ -117,9 +125,9 @@ export const validattwitterProfileUrl = (fieldName) => ({
 });
 
 export const duplicateValidator = (value, fieldName, dataList, updateVal) => {
-    let dataListToCheck = dataList || [];
-    if (updateVal && dataList?.length > 1) {
-        let index = dataList?.findIndex((el) => el[fieldName].toLowerCase() === updateVal);
+    let dataListToCheck = dataList?.length ? [...dataList] : [];
+    if (updateVal && dataList?.length > 0) {
+        let index = dataList?.findIndex((el) => el[fieldName].toLowerCase() === updateVal.toLowerCase());
         if (index !== -1) {
             dataListToCheck?.splice(index, 1);
         }
@@ -132,13 +140,15 @@ export const duplicateValidator = (value, fieldName, dataList, updateVal) => {
     }
 };
 
-export const valueBetween0to100 = (value, fieldName) => {
-    if (value > 100 || value < 0) {
-        return Promise.reject(fieldName + 'value should be greater than 0 and less than 100');
-    } else {
-        return Promise.resolve('');
-    }
-};
+export const valueBetween0to100 = (fieldName) => ({
+    pattern: /^(100|\d{1,2})$/,
+    message: 'Please enter ' + fieldName + ' between 0 to 100',
+});
+
+export const NumberValidation = (fieldName) => ({
+    pattern: /^[a-zA-Z0-9]*$/,
+    message: 'Please enter valid ' + fieldName,
+});
 
 export const duplicateProductValidator = (value, dataList, props) => {
     if (dataList?.length > 0) {
@@ -179,7 +189,11 @@ export const validateTin = (fieldName) => ({
     message: 'Please enter valid ' + fieldName,
 });
 export const validateDrivingLicenseNo = (fieldName) => ({
-    pattern: /^([A-Z]{2})(\d{2}|\d{3})[a-zA-Z]?(\d{4})(\d{7})$/,
+    pattern: /^([A-Z]{2})(\d{2}|\d{3})[a-zA-Z]{0,1}(\d{4})(\d{7})$/,
+    message: 'Please enter valid ' + fieldName,
+});
+export const validateDrivingLicenseNoWithSpace = (fieldName) => ({
+    pattern: /^([A-Z]{2})(\d{2}|\d{3})( )[a-zA-Z]{0,1}(\d{4})(\d{7})$/,
     message: 'Please enter valid ' + fieldName,
 });
 export const validateAadhar = (fieldName) => ({

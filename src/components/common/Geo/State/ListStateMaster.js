@@ -201,8 +201,6 @@ export const ListStateMasterBase = (props) => {
 
     const onFinish = (values) => {
         let data = { ...values };
-        console.log('🚀 ~ file: ListStateMaster.js:199 ~ onFinish ~ data:', data);
-
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
