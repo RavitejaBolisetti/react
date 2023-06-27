@@ -25,6 +25,10 @@
     padding-top: 5px;
 }
 
+.invertIcon {
+    transform: scaleX(-1);
+}
+
 .lineHeight33 {
     line-height: 33px;
     padding-right: 0 !important;
