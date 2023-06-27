@@ -1645,12 +1645,15 @@
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item .ant-timeline-item-content p {
     padding-left: 0 !important;
-    /* padding-bottom: 10px; */
     font-size: 14px;
     color: #0b0b0c;
-    font-weight: 400;
-    line-height: 22px;
+    font-weight: 500;
+    line-height: 23px;
     cursor: pointer;
+}
+
+.drawerBodyLeft :global .ant-timeline .ant-timeline-item-last .ant-timeline-item-content p {
+    color: #70C922 !important;
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item .ant-timeline-item-content p:hover {
@@ -1675,6 +1678,7 @@
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item-tail {
     inset-block-start: 9px;
     height: calc(100% - 21px);
+    background-color: #70C922 !important;
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item-head-custom {
@@ -2388,12 +2392,12 @@
     padding-bottom: 20px !important;
 }
 
-.viewDrawerContainer :global .ant-space {
+/* .viewDrawerContainer :global .ant-space {
     gap: 10px !important;
-}
+} */
 
 .viewDrawerContainer :global .ant-space .ant-collapse {
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
 }
 
 .viewDrawerContainer .cardInsideBox :global .ant-typography {
@@ -2694,8 +2698,6 @@
 .viewDrawerContainer .viewNoDataFound {
     padding: 20px 30px !important
 }
-
-.viewDrawerContainer .viewNoDataFound .ant-card .ant-card-body {}
 
 @media (max-width: 768px) {
 

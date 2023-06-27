@@ -421,7 +421,7 @@
 }
 
 :global .ant-input {
-    height: 36px;
+    /* height: 36px; */
     padding: 5px 12px;
     border-color: #b5b5b6;
     color: #0b0b0c;

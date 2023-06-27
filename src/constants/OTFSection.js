@@ -49,4 +49,12 @@ export const OTF_SECTION = {
         id: 10,
         title: 'Invoice Information',
     },
+    ADDON_DETAIL: {
+        id: 11,
+        title: 'Add On Details',
+    },
+    THANK_YOU_PAGE: {
+        id: 12,
+        title: 'Thank You',
+    },
 };
