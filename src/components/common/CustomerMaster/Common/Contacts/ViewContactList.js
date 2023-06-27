@@ -1,28 +1,27 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { ViewDetail } from './ViewContactDetails';
-import { Collapse, Space, Typography, Row, Col, Checkbox, Divider, Button, Empty } from 'antd';
-import { expandIcon } from 'utils/accordianExpandIcon';
+import { Collapse, Space, Typography, Row, Col, Checkbox, Divider, Button } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 
+import { expandIcon } from 'utils/accordianExpandIcon';
 import { getNameFromKey } from 'utils/checkAndSetDefaultValue';
 
+import { ViewDetail } from './ViewContactDetails';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewContactList = (props) => {
     const { styles, contactData, deleteContactHandeler, onCheckdefaultAddClick, setEditingData, typeData } = props;
-    const { setShowAddEditForm, showAddEditForm, setContactData, onFinish, form,contactform, isEditing, setIsEditing, formActionType } = props;
-    const { isAdding, setIsAdding } = props;
+    const { isAdding, setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, contactform, isEditing, setIsEditing, formActionType } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
-    const disableProp = {disabled: formActionType?.viewMode };
-    
+    const disableProp = { disabled: formActionType?.viewMode };
+
     const editContactHandeler = (e, data, i) => {
         e.stopPropagation();
         setOpenAccordian(i);
@@ -71,13 +70,15 @@ const ViewContactList = (props) => {
                                                 </Button>
                                             )}
                                         </Col>
-                                       {!(isEditing || isAdding) && <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                            <Checkbox valuePropName="checked" checked={data?.defaultContactIndicator} defaultChecked={data?.defaultContactIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)} {...disableProp}>
-                                                Mark As Default
-                                            </Checkbox >
-                                            <Divider type="vertical" />
-                                            <Text type="secondary">{getNameFromKey(typeData['PURPOSE'], data?.purposeOfContact)}</Text>
-                                        </Col>}
+                                        {!(isEditing || isAdding) && (
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                                <Checkbox valuePropName="checked" checked={data?.defaultContactIndicator} defaultChecked={data?.defaultContactIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)} {...disableProp}>
+                                                    Mark As Default
+                                                </Checkbox>
+                                                <Divider type="vertical" />
+                                                <Text type="secondary">{getNameFromKey(typeData['PURPOSE'], data?.purposeOfContact)}</Text>
+                                            </Col>
+                                        )}
                                     </Row>
                                 }
                             >

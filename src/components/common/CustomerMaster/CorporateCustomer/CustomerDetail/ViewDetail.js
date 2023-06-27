@@ -5,11 +5,8 @@
  */
 import React from 'react';
 import { Card, Descriptions, Divider } from 'antd';
-import { Typography } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
-
-const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
     const { formData, styles, isLoading, typeData, corporateLovData } = props;

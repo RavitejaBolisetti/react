@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button } from 'antd';
 
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -20,15 +20,20 @@ const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
     const { form, typeData, formData, corporateLovData, setUploadImgDocId, isViewModeVisible, formActionType: { editMode } = undefined, customerType } = props;
-    // const [isModalOpen, setIsModalOpen] = useState(false);
-    // const [mobileLoader, setmobileLoader] = useState(false);
-    const [isEnabled, setIsEnabled] = useState(false);
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [corporateType, setCorporateType] = useState('');
 
-    const handleToggle = () => {
-        setIsEnabled(!isEnabled);
+    const [firstToggle, setFirstToggle] = useState(false);
+    const [secondToggle, setSecondToggle] = useState(false);
+    const [disableWhatsapp, setDisableWhatsapp] = useState(true);
+
+    const firstToggleFun = () => {
+        setFirstToggle(!firstToggle);
     };
+
+    const secondToggleFun = () => {
+        setSecondToggle(!secondToggle);
+    }
 
     const handleCorporateChange = (value) => {
         setCorporateType(value);
@@ -39,53 +44,11 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const copyWhatsNo = (props) => {
-        if (props) {
-            let number = form.getFieldsValue();
-            form.setFieldsValue({
-                whatsAppNumber: number?.mobileNumber,
-            });
-        } else {
-            form.setFieldsValue({
-                whatsAppNumber: null,
-            });
-        }
-    };
-
-    // const handleNumberValidation = (event) => {
-    //     const Mno = event.target.value;
-    //     const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
-    //     if (Mno?.length === 10 && regex.test(Mno)) {
-    //         setmobileLoader(true);
-    //         setTimeout(() => {
-    //             setIsModalOpen(true);
-    //         }, 1000);
-    //     } else {
-    //         setmobileLoader(false);
-    //     }
-    // };
-    // const showModal = () => {
-    //     setIsModalOpen(true);
-    // };
-
-    // const handleCancel = () => {
-    //     setIsModalOpen(false);
-    //     setmobileLoader(false);
-    // };
-
     const onHandleSelect = (value) => {
         form.setFieldsValue({
             corporateCode: value,
         });
     };
-
-    // const modalProps = {
-    //     isVisible: isModalOpen,
-    //     icon: <BiLockAlt />,
-    //     titleOverride: 'Mobile Number Validation',
-    //     closable: false,
-    //     onCloseAction: handleCancel,
-    // };
 
     const changeHistoryClose = () => {
         setIsHistoryVisible(false);
@@ -95,6 +58,48 @@ const AddEditFormMain = (props) => {
         isVisible: isHistoryVisible,
         onCloseAction: changeHistoryClose,
     };
+
+    console.log(formData,"formData")
+
+    useEffect( () => {
+        setFirstToggle(formData?.whatsappCommunicationIndicator);
+    },[formData] )
+
+    useEffect( () => {
+        setSecondToggle(formData?.mobileNumberAsWhatsappNumber);
+    },[formData] )
+
+    useEffect( () => {
+        
+        if(firstToggle && !secondToggle){
+            setDisableWhatsapp(false)
+        } else if(!firstToggle && !secondToggle){
+            setDisableWhatsapp(true);
+            form.setFieldsValue({
+                whatsAppNumber: null,
+            });
+        } else if(!firstToggle && secondToggle){
+            setSecondToggle(false);
+        }
+         // eslint-disable-next-line react-hooks/exhaustive-deps
+    } ,[firstToggle, ] );
+
+    useEffect( () => {
+        if(secondToggle && firstToggle){
+            setDisableWhatsapp(true);
+            let number = form.getFieldsValue();
+            form.setFieldsValue({
+                whatsAppNumber: number?.mobileNumber,
+            });
+        }else if(firstToggle && !secondToggle){
+            setDisableWhatsapp(false);
+        } else{
+            form.setFieldsValue({
+                whatsAppNumber: null,
+            });
+        }
+         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [secondToggle] )
 
     return (
         <>
@@ -199,28 +204,31 @@ const AddEditFormMain = (props) => {
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 {/* value={formData?.whatsappCommunicationIndicator === null || false ? false : true}  */}
-                                <Form.Item label="Do you want to contact over whatsapp?" initialValue={editMode ? formData?.whatsappCommunicationIndicator : false} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
+                                <Form.Item label="Contact over WhatsApp?" initialValue={formData?.whatsappCommunicationIndicator} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
                                     <Switch
-                                        checkedChildren="Yes"
-                                        unCheckedChildren="No"
-                                        onChange={(e) => {
-                                            handleToggle(e);
-                                            copyWhatsNo();
-                                        }}
-                                        defaultChecked={editMode ? true : formData?.whatsappCommunicationIndicator === true || null || undefined ? true : false}
+                                        onChange={firstToggleFun}
+                                        defaultChecked={formData?.whatsappCommunicationIndicator}
+                                        checked={firstToggle}
+                                        // defaultChecked={editMode ? true : formData?.whatsappCommunicationIndicator === true || null || undefined ? true : false}
                                     />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Want to use Mobile no as whatsapp no?" initialValue={editMode ? formData?.mobileNumberAsWhatsappNumber : false} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
-                                    <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={copyWhatsNo || handleToggle} defaultChecked={editMode ? true : formData?.mobileNumberAsWhatsappNumber === true || null || undefined ? true : false} />
+                                <Form.Item label="Want to use mobile no as WhatsApp no?" initialValue={formData?.mobileNumberAsWhatsappNumber} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
+                                    <Switch
+                                        onChange={secondToggleFun}
+                                        disabled={!firstToggle}
+                                        checked={secondToggle}
+                                        defaultChecked={formData?.whatsappCommunicationIndicator}
+                                        // defaultChecked={editMode ? true : formData?.mobileNumberAsWhatsappNumber === true || null || undefined ? true : false}
+                                    />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Whatsapp Number" initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsAppNumber" rules={[validateMobileNoField('whatsapp number')]}>
-                                    <Input placeholder={preparePlaceholderText('whatsapp number')} disabled={editMode ? isEnabled : !isEnabled} maxLength={10} />
+                                <Form.Item label="Whatsapp Number" initialValue={editMode ? formData?.whatsAppNumber : false} name="whatsAppNumber" data-testid="whatsAppNumber" rules={[validateMobileNoField('whatsapp number')]}>
+                                    <Input placeholder={preparePlaceholderText('WhatsApp Number')} disabled={disableWhatsapp} maxLength={10} />
                                 </Form.Item>
                             </Col>
                         </Row>

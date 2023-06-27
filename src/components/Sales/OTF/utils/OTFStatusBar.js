@@ -17,11 +17,22 @@ export const OTFStatusBar = (props) => {
     const otfStatusList = Object.values(OTF_STATUS);
     const currentStatusId = otfStatusList?.find((i) => i.title === status)?.id;
 
-    const displayItem = otfStatusList
-        .filter((i) => i.displayOnView)
-        .map((i) => ({
-            ...i,
-            icon: i.id <= currentStatusId ? <FaCheckCircle color={'#70C922'} /> : <BsRecordCircleFill color={'#b5b5b6'} />,
-        }));
-    return <Steps current={0} size="small" labelPlacement="vertical" items={displayItem} />;
+    let displayItem = '';
+    if (status === OTF_STATUS.CANCELLED.title) {
+        displayItem = otfStatusList.filter((i) => i.displayOnView && (i?.id === OTF_STATUS.CANCELLED.id || i?.id === OTF_STATUS.BOOKED.id));
+    } else {
+        displayItem = otfStatusList.filter((i) => i.displayOnView && i?.id !== OTF_STATUS.CANCELLED.id);
+    }
+
+    return (
+        <Steps
+            current={0}
+            size="small"
+            labelPlacement="vertical"
+            items={displayItem.map((i) => ({
+                ...i,
+                icon: i.id <= currentStatusId ? <FaCheckCircle color={'#70C922'} /> : <BsRecordCircleFill color={'#b5b5b6'} />,
+            }))}
+        />
+    );
 };
