@@ -25,7 +25,7 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space direction="vertical" size="middle" className={styles.accordianContainer}>
-                        {schemeData ? (
+                        {schemeData && schemeData?.schemes?.length > 0 ? (
                             schemeData?.schemes?.map((schemeForm, index) => (
                                 <Collapse
                                     expandIcon={() => {

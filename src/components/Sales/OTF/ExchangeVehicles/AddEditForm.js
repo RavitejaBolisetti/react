@@ -9,7 +9,7 @@ import { Row, Col, Input, Form, Select, Card } from 'antd';
 import styles from 'components/common/Common.module.css';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
 const { Search } = Input;
 
@@ -181,24 +181,24 @@ const AddEditFormMain = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="schemeAmount" label="Scheme Amount" initialValue={formData?.schemeAmount} rules={[validateRequiredInputField('Scheme Amount')]}>
+                    <Form.Item name="schemeAmount" label="Scheme Amount" initialValue={formData?.schemeAmount} rules={[validateRequiredInputField('Scheme Amount'), validateNumberWithTwoDecimalPlaces('Scheme Amount')]}>
                         <Input maxLength={50} placeholder={preparePlaceholderText('Scheme Amount')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="kilometer" label="KM" initialValue={formData?.kilometer} rules={[validateRequiredInputField('kilometer')]}>
+                    <Form.Item name="kilometer" label="KM" initialValue={formData?.kilometer} rules={[validateRequiredInputField('kilometer'), validateNumberWithTwoDecimalPlaces('kilometer')]}>
                         <Input placeholder={preparePlaceholderText('kilometer')} maxLength={50} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="customerExpectedPrice" label="Customer Expected Price" initialValue={formData?.customerExpectedPrice} rules={[validateRequiredInputField('Customer Expected Price')]}>
+                    <Form.Item name="customerExpectedPrice" label="Customer Expected Price" initialValue={formData?.customerExpectedPrice} rules={[validateRequiredInputField('Customer Expected Price'), validateNumberWithTwoDecimalPlaces('Customer Expected Price')]}>
                         <Input placeholder={preparePlaceholderText('Customer Expected Price')} maxLength={50} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="procurementPrice" label="Procurement Price" initialValue={formData?.procurementPrice} rules={[validateRequiredInputField('Procurement Price')]}>
+                    <Form.Item name="procurementPrice" label="Procurement Price" initialValue={formData?.procurementPrice} rules={[validateRequiredInputField('Procurement Price'), validateNumberWithTwoDecimalPlaces('Procurement Price')]}>
                         <Input maxLength={50} placeholder={preparePlaceholderText('Procurement Price')} />
                     </Form.Item>
                 </Col>

@@ -127,7 +127,7 @@ const ViewDetailMain = (props) => {
                                 header={
                                     <div className={styles.alignUser}>
                                         <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Optional Service
+                                            Charges
                                         </Text>
                                     </div>
                                 }

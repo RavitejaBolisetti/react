@@ -72,7 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, isSearchDataLoaded } = props;
+    const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, isSearchDataLoaded, otfData } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString } = props;
     const [otfSearchvalue, setOtfSearchvalue] = useState();
@@ -348,6 +348,7 @@ export const OtfMasterBase = (props) => {
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
+        showAddButton: false,
     };
 
     const handleOTFChange = (selectedvalue) => {
@@ -404,7 +405,7 @@ export const OtfMasterBase = (props) => {
         otfSearchvalue,
         setAdvanceSearchVisible,
         typeData,
-        otfSearchRules, 
+        otfSearchRules,
         setOtfSearchRules,
         searchForm,
         reff,
@@ -472,6 +473,7 @@ export const OtfMasterBase = (props) => {
         otfSearchSelected,
         isLastSection,
         typeData,
+        otfData,
         saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
     };
 
@@ -480,7 +482,7 @@ export const OtfMasterBase = (props) => {
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} />
+                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
