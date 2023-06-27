@@ -9,7 +9,7 @@ import { Row, Col, Input, Form, Select, Card } from 'antd';
 import styles from 'components/common/Common.module.css';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
 const { Search } = Input;
 
@@ -156,7 +156,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="yearOfRegistration" label="Year of Registration" initialValue={formData?.yearOfRegistration} rules={[validateRequiredInputField('year of reg')]}>
-                        <Select onChange={handleYearOfRegChange} placeholder="Select"  allowClear fieldNames={{ label: 'value', value: 'key' }} options={yearsList}></Select>
+                        <Select onChange={handleYearOfRegChange} placeholder="Select" allowClear fieldNames={{ label: 'value', value: 'key' }} options={yearsList}></Select>
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -186,7 +186,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="kilometer" label="KM" initialValue={formData?.kilometer} rules={[validateRequiredInputField('kilometer')]}>
+                    <Form.Item name="kilometer" label="KM" initialValue={formData?.kilometer} rules={[validateRequiredInputField('kilometer'), validateNumberWithTwoDecimalPlaces('kilometer')]}>
                         <Input placeholder={preparePlaceholderText('kilometer')} maxLength={50} />
                     </Form.Item>
                 </Col>
