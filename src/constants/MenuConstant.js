@@ -8,8 +8,10 @@ import { FaAddressBook, FaCreativeCommonsShare } from 'react-icons/fa';
 import { HiCurrencyRupee } from 'react-icons/hi';
 import { MdStars } from 'react-icons/md';
 import { TbReport } from 'react-icons/tb';
+import { IoPeopleCircle } from 'react-icons/io5';
 import { HomeIcon, AdminIcon, CrmIcon, HrIcon, ServiceIcon, SparesIcon } from 'Icons';
 
+import styles from 'components/common/Common.module.css';
 import { getMenyKey } from 'utils/menuKey';
 
 import * as routing from './routing';
@@ -285,7 +287,7 @@ export const MenuConstant = {
 
     [getMenyKey('HR')]: {
         link: undefined,
-        icon: <HrIcon fontSize={22} />,
+        icon: <IoPeopleCircle className={styles.invertIcon} fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
