@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { Button, Row, Col, Input, Select } from 'antd';
+import { Form, Button, Row, Col, Input, Select } from 'antd';
 import { FilterIcon } from 'Icons';
 import styles from 'components/common/Common.module.css';
 
@@ -13,8 +13,8 @@ const { Search } = Input;
 const { Option } = Select;
 
 export default function AdvanceOtfFilter(props) {
-    const { advanceFilter = false, otfFilter = false, title, filterString, handleOTFChange, typeData, ChangeSearchHandler, onSearchHandle, setAdvanceSearchVisible } = props;
-
+    const { advanceFilter = false, otfFilter = false, title, filterString, handleOTFChange, typeData, ChangeSearchHandler, onSearchHandle, setAdvanceSearchVisible, searchForm, otfSearchRules, reff } = props;
+   
     return (
         <>
             <div className={styles.contentHeaderBackground}>
@@ -25,12 +25,16 @@ export default function AdvanceOtfFilter(props) {
                             {otfFilter && (
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
                                     <div className={styles.selectSearchBg}>
-                                        <Select className={styles.headerSelectField} onChange={handleOTFChange} placeholder="Select Parameter" allowClear>
-                                            {typeData[PARAM_MASTER.OTF_SER.id]?.map((item) => (
-                                                <Option value={item.key}>{item.value}</Option>
-                                            ))}
-                                        </Select>
-                                        <Search placeholder="Search" value={filterString?.searchParam} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} className={styles.headerSearchField} />
+                                        <Form form={searchForm} layout="vertical" autoComplete="off">
+                                            <Select className={styles.headerSelectField} onChange={ handleOTFChange }placeholder="Select Parameter" allowClear>
+                                                {typeData[PARAM_MASTER.OTF_SER.id]?.map((item) => (
+                                                    <Option value={item.key}>{item.value}</Option>
+                                                ))}
+                                            </Select>
+                                            <Form.Item {...otfSearchRules}  name="keyword"  validateTrigger={['onChange', 'onSearch']}>
+                                                <Search placeholder="Search" value={filterString?.searchParam} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} className={styles.headerSearchField} />
+                                            </Form.Item>
+                                        </Form>
                                     </div>
                                 </Col>
                             )}

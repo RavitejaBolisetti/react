@@ -64,6 +64,12 @@ const AddEditFormMain = (props) => {
         });
     };
 
+    const currentYear = new Date().getFullYear();
+    const yearsList = [];
+    for (let i = currentYear; i >= currentYear - 15; i--) {
+        yearsList.push({ key: i, value: i });
+    }
+
     return (
         <Card className={styles.ExchangeCard}>
             <Row gutter={20}>
@@ -150,7 +156,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="yearOfRegistration" label="Year of Registration" initialValue={formData?.yearOfRegistration} rules={[validateRequiredInputField('year of reg')]}>
-                        <Select onChange={handleYearOfRegChange} placeholder="Select" loading={isConfigLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['YEAR_LIST']}></Select>
+                        <Select onChange={handleYearOfRegChange} placeholder="Select"  allowClear fieldNames={{ label: 'value', value: 'key' }} options={yearsList}></Select>
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

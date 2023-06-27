@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ListDealerLocationTypeMasterBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { isApplicableToDataLoaded, isApplicableToDataLoading, applicableToData, listTypeShowLoading, fetchTypeList } = props;
+    const { isApplicableToDataLoaded, isApplicableToDataLoading, applicableToData } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -95,8 +95,6 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         if (userId && !isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
-
-        fetchTypeList({ setIsLoading: listTypeShowLoading, userId, parameterType: PARAM_MASTER.DLR_APP_TYPE.id });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded]);
 

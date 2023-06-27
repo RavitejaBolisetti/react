@@ -301,7 +301,7 @@ const CustomerMasterMain = (props) => {
         handleFormValueChange,
         setRefreshList,
         isLastSection,
-        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next', 
+        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
     };
 
     const selectProps = {
@@ -320,7 +320,7 @@ const CustomerMasterMain = (props) => {
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                     {Object.values(CUSTOMER_TYPE)?.map((item) => {
                                         return (
-                                            <Button className={styles.marR5} type={customerType === item?.id ? 'primary' : 'link'} danger onClick={() => setCustomerType(item?.id)}>
+                                            <Button type={customerType === item?.id ? 'primary' : 'link'} danger onClick={() => setCustomerType(item?.id)}>
                                                 {item?.title}
                                             </Button>
                                         );

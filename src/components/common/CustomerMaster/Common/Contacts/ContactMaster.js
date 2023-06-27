@@ -102,28 +102,32 @@ const ContactMain = (props) => {
     ];
 
     useEffect(() => {
-        if (!formActionType?.addMode && selectedCustomer?.customerId) {
-            {
-                if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-                    fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
-                } else {
-                    fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
-                }
-            }
+        return () => {
+            resetData();
+            resetIndividualData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-            return () => {
-                resetData();
-                resetIndividualData();
-            };
+    useEffect(() => {
+        if (userId && selectedCustomer?.customerId) {
+            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
+                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+            } else if(customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
+                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+            }
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer?.customerId]);
 
     useEffect(() => {
-        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
+        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id && selectedCustomer?.customerId && customerIndData?.customerContact ) {
             setContactData(customerIndData?.customerContact || []);
-        } else {
+            setUploadImgDocId(customerIndData?.customerContact[0].docId);
+        } else if(customerData?.customerContact && selectedCustomer?.customerId) {
             setContactData(customerData?.customerContact || []);
+            setUploadImgDocId(customerData?.customerContact[0]['docId']);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerData, customerIndData]);
@@ -153,7 +157,7 @@ const ContactMain = (props) => {
                             }
                         });
                         const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
-                        formData.splice(index, 1, { ...value });
+                        formData.splice(index, 1, {relationCode: "", ...value });
                         return [...formData];
                     });
                 } else {
@@ -165,9 +169,9 @@ const ContactMain = (props) => {
                                     contact.defaultaddress = false;
                                 }
                             });
-                            return [...formData, value];
+                            return [...formData, {relationCode: "", ...value}];
                         } else {
-                            const updVal = prev?.length ? [...prev, { ...value }] : [{ ...value }];
+                            const updVal = prev?.length ? [...prev, { relationCode: "", ...value }] : [{relationCode: "", ...value }];
                             return updVal;
                         }
                     });
@@ -185,7 +189,7 @@ const ContactMain = (props) => {
         e.stopPropagation();
         setContactData((prev) => {
             let updetedData = prev?.map((contact) => ({ ...contact, status: true, defaultContactIndicator: false, continueWith: continueWithOldMobNo }));
-            const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact);
+            const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.firstName === value?.firstName && el?.mobileNumber === value?.mobileNumber );
             updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked });
             return [...updetedData];
         });
@@ -209,7 +213,7 @@ const ContactMain = (props) => {
         showAddEditForm,
         setContactData,
         contactData,
-        onFinish: onSaveFormData,
+        onSaveFormData,
         styles,
         form,
         contactform,
@@ -231,7 +235,7 @@ const ContactMain = (props) => {
         buttonData,
     };
 
-    const onSubmit = () => {
+    const onFinish = () => {
         let data = { customerId: selectedCustomer?.customerId, customerContact: contactData?.map((el) => ({ ...el, docId: uploadImgDocId || el?.docId })) };
 
         const onSuccess = (res) => {
@@ -278,7 +282,7 @@ const ContactMain = (props) => {
 
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onSubmit} onFinishFailed={onFinishFailed}>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>

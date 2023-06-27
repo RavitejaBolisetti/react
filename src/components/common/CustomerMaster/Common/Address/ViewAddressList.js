@@ -1,7 +1,9 @@
 /*
- *   Copyright (c) 2023
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
  *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+
 import React, { useState } from 'react';
 import { ViewIndividualAddressDetails } from './ViewIndividualAddressDetails';
 import { Button, Collapse, Space, Typography, Row, Col, Checkbox, Divider } from 'antd';
@@ -14,9 +16,10 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewAddressList = (props) => {
-    const { form,addressForm, setShowAddEditForm, showAddEditForm, onCheckdefaultAddClick, formActionType, setAddressData, onSubmit, setIsEditing, isEditing, styles, addressData, onCheckClick, setEditingData, isAdding, setIsAdding } = props;
+    const { form,addressForm, setShowAddEditForm, showAddEditForm, onCheckdefaultAddClick, formActionType, setAddressData, onFinish, setIsEditing, isEditing, styles, addressData, onCheckClick, setEditingData, isAdding, setIsAdding } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
+    const disableProp = {disabled: formActionType?.viewMode };
 
     const handleCollapse = (key) => {
         if (isEditing) return;
@@ -36,7 +39,7 @@ const ViewAddressList = (props) => {
         setShowAddEditForm,
         showAddEditForm,
         setAddressData,
-        onSubmit,
+        onFinish,
         form,
         addressForm,
         isEditing,
@@ -47,7 +50,7 @@ const ViewAddressList = (props) => {
     const formProps = {
         setShowAddEditForm,
         setAddressData,
-        onSubmit,
+        onFinish,
         form,
         addressForm,
         ...props,
@@ -75,7 +78,7 @@ const ViewAddressList = (props) => {
                                         </Col>
                                         <Col xs={10} sm={10} md={10} lg={10} xl={10}>
                                           {!(isEditing || isAdding) &&  <div style={{ float: 'right' }}>
-                                                <Checkbox valuePropName="checked" checked={data?.deafultAddressIndicator} defaultChecked={data?.deafultAddressIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)} >
+                                                <Checkbox valuePropName="checked" checked={data?.deafultAddressIndicator} defaultChecked={data?.deafultAddressIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)}  {...disableProp} >
                                                     Mark As Default
                                                 </Checkbox>
                                                 <Divider type="vertical" />
