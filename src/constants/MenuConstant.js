@@ -11,6 +11,7 @@ import { TbReport } from 'react-icons/tb';
 import { IoPeopleCircle } from 'react-icons/io5';
 import { HomeIcon, AdminIcon, CrmIcon, ServiceIcon, SparesIcon } from 'Icons';
 
+import styles from 'components/common/Common.module.css';
 import { getMenyKey } from 'utils/menuKey';
 
 import * as routing from './routing';
@@ -286,7 +287,7 @@ export const MenuConstant = {
 
     [getMenyKey('HR')]: {
         link: undefined,
-        icon: <IoPeopleCircle fontSize={22} />,
+        icon: <IoPeopleCircle className={styles.invertIcon} fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
