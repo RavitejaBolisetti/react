@@ -17,9 +17,9 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
     const disableProp = { disabled: true };
 
     useEffect(() => {
-        if (searchData?.length) {
+        if (searchData) {
             accessoryForm.setFieldsValue({
-                ...searchData['0'],
+                ...searchData,
             });
         }
         console.log('searchData', searchData);

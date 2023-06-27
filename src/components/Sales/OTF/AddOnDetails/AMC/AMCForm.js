@@ -13,8 +13,8 @@ const AMCForm = ({ formData, amcForm }) => {
     useEffect(() => {
         setisReadOnly(true);
         amcForm.setFieldsValue({
-            amc: formData?.amc ? formData?.amc : 'NA',
-            amcRate: formData?.amcRate ? formData?.amcRate : 'NA',
+            amc: formData?.amc?.amc ? formData?.amc?.amc : 'NA',
+            amcRate: formData?.amc?.amcRate ? formData?.amc?.amcRate : 'NA',
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);

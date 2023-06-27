@@ -15,8 +15,8 @@ const FMSForm = ({ formData, fmsForm }) => {
     useEffect(() => {
         setisReadOnly(true);
         fmsForm.setFieldsValue({
-            fms: formData?.fms ? formData?.fms : 'NA',
-            fmsRate: formData?.fmsRate ? formData?.fmsRate : 'NA',
+            fms: formData?.fms?.fms ? formData?.fms?.fms : 'NA',
+            fmsRate: formData?.fms?.fmsRate ? formData?.fms?.fmsRate : 'NA',
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);

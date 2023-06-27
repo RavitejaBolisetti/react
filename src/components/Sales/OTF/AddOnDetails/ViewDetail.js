@@ -111,7 +111,7 @@ const ViewDetailMain = (props) => {
                                 }
                                 key="shield"
                             >
-                                <ShieldForm formData={formData?.shield ? formData?.shield : {}} shieldForm={shieldForm} />
+                                <ShieldForm formData={formData} shieldForm={shieldForm} />
                             </Panel>
                         </Collapse>
                         <Collapse
@@ -136,7 +136,7 @@ const ViewDetailMain = (props) => {
                                 }
                                 key={'Amc'}
                             >
-                                <AMCForm formData={formData?.amc ? formData?.amc : {}} amcForm={amcForm} />
+                                <AMCForm formData={formData} amcForm={amcForm} />
                             </Panel>
                         </Collapse>
                         <Collapse
@@ -161,7 +161,7 @@ const ViewDetailMain = (props) => {
                                 }
                                 key={'Rsa'}
                             >
-                                <RSAForm formData={formData?.rsa ? formData?.rsa : {}} rsaForm={rsaForm} />
+                                <RSAForm formData={formData} rsaForm={rsaForm} />
                             </Panel>
                         </Collapse>
                         <Collapse
@@ -186,7 +186,7 @@ const ViewDetailMain = (props) => {
                                 }
                                 key={'fMS'}
                             >
-                                <FMSForm formData={formData?.fms ? formData?.fms : {}} fmsForm={fmsForm} />
+                                <FMSForm formData={formData} fmsForm={fmsForm} />
                             </Panel>
                         </Collapse>
                     </Space>
