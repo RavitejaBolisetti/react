@@ -11,6 +11,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 
 const { TextArea } = Input;
+const { Search } = Input;
 
 function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm, selectedOrderId, handleFormValueChange, showGlobalNotification, onSearchPart, setsearchData, searchData, addButtonDisabled, setaddButtonDisabled, setAddOnItemInfo, addOnItemInfo, AddonPartsData, onCancel, accessoryForm, onFieldsChange, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
     const disableProp = { disabled: true };
@@ -60,7 +61,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                         <Form.Item label="Part Number" name="partNumber" rules={[validateRequiredInputField('part number')]}>
-                            <Input.Search onSearch={handleOnSearch} onChange={() => accessoryForm.resetFields(['type', 'sellingPrice', 'mrp', 'partDescription'])} placeholder={preparePlaceholderText('part number')} className={styles.searchField} />
+                            <Search placeholder={preparePlaceholderText('customer id')} style={{ width: '100%' }} maxLength={35} allowClear type="text" onSearch={handleOnSearch} onChange={() => accessoryForm.resetFields(['type', 'sellingPrice', 'mrp', 'partDescription'])} />
                         </Form.Item>
                     </Col>
                 </Row>
