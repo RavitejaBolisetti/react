@@ -22,7 +22,7 @@ const { Dragger } = Upload;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile,uploadedFile, NEXT_ACTION, listDocumentShowLoading, isViewDocumentLoading } = props;
+    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, listDocumentShowLoading, isViewDocumentLoading } = props;
     const { isReadOnly = false } = props;
     const [isRead, setIsRead] = useState(false);
     const [customer, setCustomer] = useState(false);
@@ -35,7 +35,7 @@ const AddEditFormMain = (props) => {
 
     const handleOnChange = (e) => {
         const values = e;
-        if (values == 'S') {
+        if (values === 'S') {
             setIsRead(true);
             form.setFieldsValue({
                 weddingAnniversary: null,
@@ -131,7 +131,7 @@ const AddEditFormMain = (props) => {
                                 key="1"
                             >
                                 <div className={styles.headerBox}>
-                                    { formData?.image ? (
+                                    {formData?.image ? (
                                         <div className={styles.uploadDragger}>
                                             <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} viewDocument={viewDocument} />
                                         </div>
