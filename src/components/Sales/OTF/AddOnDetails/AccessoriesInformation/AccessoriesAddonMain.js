@@ -23,7 +23,7 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, isEditing, setisEditing, selec
             if (element?.partNumber === values) return element;
         });
         console.log('found', found);
-        if (found?.length === 2 || addOnItemInfo?.length === 1) {
+        if (found?.length === 2) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Duplicate Part Number' });
             return true;
         }

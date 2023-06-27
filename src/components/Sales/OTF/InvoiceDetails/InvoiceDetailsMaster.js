@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Typography, Space, Collapse } from 'antd';
+import { Row, Col, Typography, Space, Collapse, Form } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -59,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const InvoiceDetailsMasterBase = (props) => {
-    const { invoiceData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { form, invoiceData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, onFinishFailed, handleButtonClick, NEXT_ACTION } = props;
     const { section, selectedOrderId } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
@@ -96,8 +96,17 @@ export const InvoiceDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
+    const myProps = {
+        ...props,
+        buttonData: { ...props.buttonData, nextBtn: true, saveBtn: false },
+    };
+
+    const onFinish = (values) => {
+        handleButtonClick({ record: undefined, buttonAction: NEXT_ACTION });
+    };
+
     return (
-        <>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
@@ -142,10 +151,10 @@ export const InvoiceDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...props} />
+                    <OTFFormButton {...myProps} />
                 </Col>
             </Row>
-        </>
+        </Form>
     );
 };
 

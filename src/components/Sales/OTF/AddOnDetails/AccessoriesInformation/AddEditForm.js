@@ -94,7 +94,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                             <TextArea
                                 {...disableProp}
                                 autoSize={{
-                                    minRows: 2,
+                                    minRows: 1,
                                     maxRows: 2,
                                 }}
                                 showCount

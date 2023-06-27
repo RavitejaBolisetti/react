@@ -90,7 +90,6 @@ export const AddOnDetailsMasterMain = (props) => {
             detailsRequest.push({ id, otfNumber, partNumber, requiredQuantity });
         });
         const data = { id: formData?.id ?? '', otfNumber: selectedOrderId, partDetailsRequests: detailsRequest, shield: formDataSetter?.shield, rsa: formDataSetter?.rsa, amc: formDataSetter?.amc, fms: formDataSetter?.fms };
-        console.log('data', data);
 
         const onSuccess = (res) => {
             setformDataSetter({});
