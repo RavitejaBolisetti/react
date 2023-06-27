@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -11,7 +11,7 @@ import styles from './Header.module.css';
 
 export const HeaderSkeleton = () => {
     return (
-        <Row gutter={0}>
+        <Row gutter={20}>
             <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
                 <div className={styles.headerLeft} style={{ marginTop: '5px' }}>
                     <Space>

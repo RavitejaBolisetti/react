@@ -6,7 +6,10 @@
 .menuIcon {
     font-size: 22px !important;
     vertical-align: middle;
-    padding-right: 4px;
+}
+
+.menuTitle {
+    padding-left: 4px;
 }
 
 .homeIcon {
@@ -245,8 +248,22 @@
 }
 
 /* border color on input search in left-menu */
-.searchContainer :global .ant-input-affix-wrapper {
+.leftMenuBox .searchContainer :global .ant-input-affix-wrapper {
     border-width: 0px;
+}
+
+.leftMenuBox .searchContainer :global .ant-form-vertical:hover {
+    color: #ff3e5b;
+}
+
+.leftMenuBox .searchContainer {
+    text-align: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.leftMenuBox .searchContainer :global .ant-form .ant-form-item {
+    margin-bottom: 0;
 }
 
 /* :global .ant-input-affix-wrapper>input.ant-input {
@@ -472,15 +489,6 @@
 .leftMenuBox .searchField {
     border: #000000;
     width: 100%;
-}
-
-.leftMenuBox .searchContainer {
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.leftMenuBox .searchContainer :global .ant-form .ant-form-item {
-    margin-bottom: 0;
 }
 
 @media (min-width: 576px) and (max-width: 768px) {

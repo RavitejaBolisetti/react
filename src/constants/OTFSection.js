@@ -3,11 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-
-// ADDON_DETAIL: {
-//     id: 11,
-//     title: 'Add On Details',
-// },
 export const OTF_SECTION = {
     OTF_DETAILS: {
         id: 1,
@@ -48,5 +43,13 @@ export const OTF_SECTION = {
     INVOICE_INFORMATION: {
         id: 10,
         title: 'Invoice Information',
+    },
+    ADDON_DETAIL: {
+        id: 11,
+        title: 'Add On details',
+    },
+    THANK_YOU_PAGE: {
+        id: 12,
+        title: 'Thank You',
     },
 };

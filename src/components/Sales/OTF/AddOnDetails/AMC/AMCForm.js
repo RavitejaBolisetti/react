@@ -3,40 +3,39 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form, Button } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-const AMCForm = ({ data }) => {
-    const disableProps = { disabled: !!data?.name };
-    const { form } = Form.useForm();
+const AMCForm = ({ formData, amcForm }) => {
+    const [isReadOnly, setisReadOnly] = useState(false);
+
+    useEffect(() => {
+        setisReadOnly(true);
+        amcForm.setFieldsValue({
+            amc: formData?.amc ? formData?.amc : 'NA',
+            amcRate: formData?.amcRate ? formData?.amcRate : 'NA',
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const onFieldsChange = () => {};
 
-    const onFinish = (values) => {
-    };
     const onFinishFailed = () => {};
 
     return (
-        <Form form={form} onFieldsChange={onFieldsChange} autoComplete="off" id="rsaForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form form={amcForm} onFieldsChange={onFieldsChange} autoComplete="off" id="rsaForm" layout="vertical" onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="AMC" name="amc">
-                        <Input initialValue={data?.name} {...disableProps} placeholder={preparePlaceholderText('RSA')} />
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('RSA')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="AMC Rate" name="amcRate">
-                        <Input initialValue={data?.price} {...disableProps} placeholder={preparePlaceholderText('amc rate')} />
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('amc rate')} />
                     </Form.Item>
                 </Col>
-                {data?.name && (
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Button htmlType="submit" danger type="primary">
-                            Save
-                        </Button>
-                    </Col>
-                )}
             </Row>
         </Form>
     );

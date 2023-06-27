@@ -14,13 +14,14 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import UploadUtils from './../UploadUtils';
 
 // import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
+import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import style from '../../../Common.module.css';
 
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { formData, isReadOnly = false, onFinish, form, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
+    const { formData, isReadOnly = false, onFinish, onSaveFormData, form, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
@@ -72,7 +73,7 @@ const AddEditForm = (props) => {
 
     return (
         <>
-            <Form form={contactform} autoComplete="off" onFinish={onFinish} onFieldsChange={handleFormValueChange} layout="vertical">
+            <Form form={contactform} autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
                 <Space direction="vertical">
                     <UploadUtils
                         {...props}
@@ -113,18 +114,18 @@ const AddEditForm = (props) => {
                         </Col>
 
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={''} label="Alternate Mobile Number" name="alternativeMobileNumber" rules={[validateMobileNoField('alternate mobile number')]}>
+                            <Form.Item initialValue={''} label="Alternate Mobile Number" name="alternateMobileNumber" rules={[validateMobileNoField('alternate mobile number')]}>
                                 <Input maxLength={10} className={style.inputBox} placeholder={preparePlaceholderText('alternate mobile number')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            {customerType === 'IND' ? (
+                            {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? (
                                 <>
-                                    <Form.Item initialValue={''} label="Relation" name="relationCode">
-                                        <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={[{key: '', value: 'Select'}, ...typeData['FAMLY_RELTN']]} allowClear></Select>
+                                    <Form.Item label="Relation" name="relationCode">
+                                        <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={[ ...typeData['FAMLY_RELTN']]} allowClear></Select>
                                         {/* <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['FAMLY_RELTN']} allowClear></Select> */}
                                     </Form.Item>
-                                    <Form.Item initialValue={''} hidden name="designation" rules={[validateLettersWithWhitespaces('First Name')]}>
+                                    <Form.Item initialValue={''} hidden name="designation" >
                                         <Input />
                                     </Form.Item>
                                 </>
@@ -145,7 +146,7 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Title" name="title">
+                            <Form.Item label="Title" name="title" rules={[validateRequiredSelectField('title')]} >
                                 <Select {...disabledProps} placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['TITLE']} allowClear></Select>
                             </Form.Item>
                         </Col>
@@ -155,13 +156,13 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={''} label="Middle Name" name="middleName" rules={[validateLettersWithWhitespaces('First Name')]}>
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('middle name')} rules={[validateLettersWithWhitespaces('middle name')]} {...disabledProps} />
+                            <Form.Item initialValue={''} label="Middle Name" name="middleName" rules={[validateLettersWithWhitespaces('middle name')]}>
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('middle name')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Last/Surname" name="lastName" rules={[validateRequiredInputField('lastName'), validateLettersWithWhitespaces('First Name')]}>
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} rules={[validateLettersWithWhitespaces('last name')]} {...disabledProps} />
+                            <Form.Item label="Last/Surname" name="lastName" rules={[validateRequiredInputField('lastName'), validateLettersWithWhitespaces('last name')]}>
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -184,7 +185,7 @@ const AddEditForm = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item initialValue={''} label="Twitter Link" name="twitterId" rules={[validattwitterProfileUrl('twitter')]}>
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('Twitter Link')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -193,7 +194,7 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={''} label="Youtube Channel" name="youTubeChannel">
+                            <Form.Item initialValue={''} label="Youtube Channel" name="youTubeChannel" rules={[validatYoutubeProfileUrl('youtube channel')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('youtube channel')} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -223,8 +224,8 @@ const AddEditForm = (props) => {
                     </Row>
                     {!formActionType?.viewMode && (
                         <Space>
-                            <Button onClick={onFinish} type="primary">
-                                Save
+                            <Button onClick={onSaveFormData} type="primary">
+                                    Save
                             </Button>
                             <Button onClick={handleCancelFormEdit} danger>
                                 Cancel

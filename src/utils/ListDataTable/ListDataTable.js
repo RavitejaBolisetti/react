@@ -19,8 +19,8 @@ export default function ListDataTable({
     srl,
     noDataMessage = (
         <>
-            No records found. Please add new parameter <br />
-            using below button
+            Use <b>"Search"</b> at top to find customer and <br />
+            select the same to update customer details.
         </>
     ),
 }) {
@@ -46,7 +46,7 @@ export default function ListDataTable({
                 )}
             >
                 <div className={styles.tableProduct}>
-                    <DataTable isLoading={isLoading} tableData={tableData} srl={srl} tableColumn={tableColumn} scroll={scroll} />
+                    <DataTable isLoading={isLoading} tableData={tableData} srl={srl} tableColumn={tableColumn} showAddButton={showAddButton} scroll={scroll} />
                 </div>
             </ConfigProvider>
         </>

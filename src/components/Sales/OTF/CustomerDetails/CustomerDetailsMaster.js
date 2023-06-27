@@ -67,6 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: otfCustomerDetailsAction.listShowLoading,
             fetchList: otfCustomerDetailsAction.fetchList,
             saveData: otfCustomerDetailsAction.saveData,
+            resetData: otfCustomerDetailsAction.reset,
             showGlobalNotification,
 
             listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
@@ -77,7 +78,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMain = (props) => {
-    const { saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
+    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, handleFormValueChange, section } = props;
     const { typeData, selectedOrderId } = props;
     const [form] = Form.useForm();
@@ -87,12 +88,22 @@ export const CustomerDetailsMain = (props) => {
     const [activeKey, setactiveKey] = useState([1]);
 
     useEffect(() => {
-        setFormData(customerFormData);
+        if (userId && customerFormData) {
+            setFormData(customerFormData);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerFormData]);
+    }, [userId, customerFormData]);
+
+    useEffect(() => {
+        return () => {
+            setFormData();
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const extraParams = [
@@ -105,24 +116,24 @@ export const CustomerDetailsMain = (props) => {
     ];
 
     useEffect(() => {
-        if (userId) {
+        if (userId && selectedOrderId) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, selectedOrderId]);
 
     const onFinish = (values) => {
         form.getFieldsValue();
         const data = { bookingCustomer: { ...values?.bookingCustomer, birthDate: dayjs(values?.bookingCustomer?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, birthDate: dayjs(values?.billingCustomer?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
 
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -153,6 +164,8 @@ export const CustomerDetailsMain = (props) => {
         typeData,
         sameAsBookingCustomer,
         setSameAsBookingCustomer,
+        isDataLoaded,
+        isLoading,
     };
 
     const viewProps = {
@@ -172,7 +185,7 @@ export const CustomerDetailsMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={1} />
+                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}

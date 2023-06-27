@@ -34,85 +34,89 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
-            <Space style={{ display: 'flex' }} size="middle" direction="vertical" className={styles.accordianContainer}>
-                {schemeData ? (
-                    schemeData?.schemes?.map((schemeForm, index) => (
-                        <Collapse
-                            expandIcon={() => {
-                                if (activeKey.includes(schemeForm?.id)) {
-                                    return <MinusOutlined className={styles.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(schemeForm?.id)}
-                            expandIconPosition="end"
-                        >
-                            <Panel
-                                header={
-                                    <div className={styles.alignUser}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            {schemeForm?.schemeName}
-                                        </Text>
-                                    </div>
-                                }
-                                key={schemeForm?.id}
+        <Row gutter={20}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Space style={{ display: 'flex' }} size="middle" direction="vertical" className={styles.accordianContainer}>
+                    {schemeData ? (
+                        schemeData?.schemes?.map((schemeForm, index) => (
+                            <Collapse
+                                expandIcon={() => {
+                                    if (activeKey.includes(schemeForm?.id)) {
+                                        return <MinusOutlined className={styles.iconsColor} />;
+                                    } else {
+                                        return <PlusOutlined className={styles.iconsColor} />;
+                                    }
+                                }}
+                                activeKey={activeKey}
+                                onChange={() => onChange(schemeForm?.id)}
+                                expandIconPosition="end"
                             >
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={schemeForm?.schemeType} label="Scheme Type" name="schemeType">
-                                            <Select
-                                                disabled={true}
-                                                placeholder={preparePlaceholderSelect('Scheme Type')}
-                                                style={{
-                                                    width: '100%',
-                                                }}
-                                                className={styles.inputBox}
-                                            ></Select>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={schemeForm?.schemeCategory} label="Scheme Category" name="schemeCategory">
-                                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('Scheme Category')} disabled={true} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={schemeForm?.amount} label="Amount" name="amount">
-                                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('Amount')} disabled={true} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                                <Panel
+                                    header={
+                                        <div className={styles.alignUser}>
+                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                                {schemeForm?.schemeName}
+                                            </Text>
+                                        </div>
+                                    }
+                                    key={schemeForm?.id}
+                                >
+                                    <div className={styles.sectionborder}>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item initialValue={schemeForm?.schemeType} label="Scheme Type" name="schemeType">
+                                                    <Select
+                                                        disabled={true}
+                                                        placeholder={preparePlaceholderSelect('Scheme Type')}
+                                                        style={{
+                                                            width: '100%',
+                                                        }}
+                                                        className={styles.inputBox}
+                                                    ></Select>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item initialValue={schemeForm?.schemeCategory} label="Scheme Category" name="schemeCategory">
+                                                    <Input className={styles.inputBox} placeholder={preparePlaceholderText('Scheme Category')} disabled={true} />
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item initialValue={schemeForm?.amount} label="Amount" name="amount">
+                                                    <Input className={styles.inputBox} placeholder={preparePlaceholderText('Amount')} disabled={true} />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                    </div>
 
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={convertCalenderDate(schemeForm?.validFrom, 'YYYY-MM-DD')} label="Valid From" name="validFrom">
-                                            <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={convertCalenderDate(schemeForm?.validTo, 'YYYY-MM-DD')} label="Valid To" name="validTo">
-                                            <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item initialValue={convertCalenderDate(schemeForm?.validFrom, 'YYYY-MM-DD')} label="Valid From" name="validFrom">
+                                                <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item initialValue={convertCalenderDate(schemeForm?.validTo, 'YYYY-MM-DD')} label="Valid To" name="validTo">
+                                                <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
 
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item initialValue={schemeForm?.description} label="Description" name="description">
-                                            <TextArea className={styles.inputBox} placeholder={preparePlaceholderText('Description')} disabled={true} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                            </Panel>
-                        </Collapse>
-                    ))
-                ) : (
-                    <Card className={styles.viewCardSize}>No Scheme and Offer Details Available</Card>
-                )}
-            </Space>
-        </div>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Form.Item initialValue={schemeForm?.description} label="Description" name="description">
+                                                <TextArea className={styles.inputBox} placeholder={preparePlaceholderText('Description')} disabled={true} />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                </Panel>
+                            </Collapse>
+                        ))
+                    ) : (
+                        <Card className={styles.viewCardSize}>No Scheme and Offer Details Available</Card>
+                    )}
+                </Space>
+            </Col>
+        </Row>
     );
 };
 
