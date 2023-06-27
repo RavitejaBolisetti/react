@@ -12,8 +12,8 @@ const ShieldForm = ({ formData, shieldForm }) => {
     useEffect(() => {
         setisReadOnly(true);
         shieldForm.setFieldsValue({
-            shieldType: formData?.shieldType ? formData?.shieldType : 'NA',
-            shieldRate: formData?.shieldRate ? formData?.shieldRate : 'NA',
+            shieldType: formData?.shield?.shieldType ? formData?.shield?.shieldType : 'NA',
+            shieldRate: formData?.shield?.shieldRate ? formData?.shield?.shieldRate : 'NA',
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
@@ -21,7 +21,7 @@ const ShieldForm = ({ formData, shieldForm }) => {
     const onFinishFailed = () => {};
 
     return (
-        <Form form={shieldForm} onFieldsChange={onFieldsChange} autoComplete="off" id="shieldForm" layout="vertical" onFinishFailed={onFinishFailed}>
+        <Form form={shieldForm} onFieldsChange={onFieldsChange} autoComplete="off"  layout="vertical" onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Shield" name="shieldType">
