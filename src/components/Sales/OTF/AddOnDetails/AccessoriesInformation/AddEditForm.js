@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -32,7 +32,7 @@ function AddEditForm({ onUpdate, onCancel, form, onFieldsChange, onFinish, isEdi
     return (
         <Form form={form} onFieldsChange={onFieldsChange} autoComplete="off" id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                     <Form.Item label="Part Number" name="partNumber" rules={[validateRequiredInputField('part number')]}>
                         <Input.Search onSearch={handleOnSearch} placeholder={preparePlaceholderText('part number')} className={styles.searchField} />
                     </Form.Item>

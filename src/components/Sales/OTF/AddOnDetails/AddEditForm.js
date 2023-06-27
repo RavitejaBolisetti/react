@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Space, Collapse, Divider, Typography, Button } from 'antd';
+import { Row, Col, Space, Collapse, Divider, Typography, Button } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
@@ -61,39 +61,41 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <div className={styles.drawerBodyRight}>
-            <Space direction="vertical" size="small" className={styles.accordianContainer}>
-                <Collapse onChange={() => handleCollapse('Accessories Information')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                    <Panel header={headerPropsFn('Accessories Information', onAddAccessories, null)} key="Accessories Information">
-                        {!formActionType?.viewMode ? <AccessoriesAddonMain addOnItemInfo={addOnItemInfo} setAddOnItemInfo={setAddOnItemInfo} /> : <AccessoriesInformationCard {...viewProps} />}
-                    </Panel>
-                </Collapse>
+        <Row gutter={20}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Space direction="vertical" size="small" className={styles.accordianContainer}>
+                    <Collapse onChange={() => handleCollapse('Accessories Information')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                        <Panel header={headerPropsFn('Accessories Information', onAddAccessories, null)} key="Accessories Information">
+                            {!formActionType?.viewMode ? <AccessoriesAddonMain addOnItemInfo={addOnItemInfo} setAddOnItemInfo={setAddOnItemInfo} /> : <AccessoriesInformationCard {...viewProps} />}
+                        </Panel>
+                    </Collapse>
 
-                <Collapse onChange={() => handleCollapse('Shield')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                    <Panel header={headerPropsFn('Shield', onAddAccessories, 'shieldFormData', openAccordian)} key="Shield">
-                        {!formActionType?.viewMode ? <ShieldForm data={serviceData?.shieldFormData} /> : <ViewDetail name={'Shield'} data={serviceData?.shieldFormData} />}
-                    </Panel>
-                </Collapse>
+                    <Collapse onChange={() => handleCollapse('Shield')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                        <Panel header={headerPropsFn('Shield', onAddAccessories, 'shieldFormData', openAccordian)} key="Shield">
+                            {!formActionType?.viewMode ? <ShieldForm data={serviceData?.shieldFormData} /> : <ViewDetail name={'Shield'} data={serviceData?.shieldFormData} />}
+                        </Panel>
+                    </Collapse>
 
-                <Collapse onChange={() => handleCollapse('RSA')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                    <Panel header={headerPropsFn('RSA', onAddAccessories, 'rsaFormData', openAccordian)} key="RSA">
-                        {!formActionType?.viewMode ? <RSAForm data={serviceData?.rsaFormData} /> : <ViewDetail name={'RSA'} data={serviceData?.rsaFormData} />}
-                    </Panel>
-                </Collapse>
+                    <Collapse onChange={() => handleCollapse('RSA')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                        <Panel header={headerPropsFn('RSA', onAddAccessories, 'rsaFormData', openAccordian)} key="RSA">
+                            {!formActionType?.viewMode ? <RSAForm data={serviceData?.rsaFormData} /> : <ViewDetail name={'RSA'} data={serviceData?.rsaFormData} />}
+                        </Panel>
+                    </Collapse>
 
-                <Collapse onChange={() => handleCollapse('AMC')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                    <Panel header={headerPropsFn('AMC', onAddAccessories, 'amcFormData', openAccordian)} key="AMC">
-                        {!formActionType?.viewMode ? <AMCForm data={serviceData?.amcFormData} /> : <ViewDetail name={'AMC'} data={serviceData?.amcFormData} />}
-                    </Panel>
-                </Collapse>
+                    <Collapse onChange={() => handleCollapse('AMC')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                        <Panel header={headerPropsFn('AMC', onAddAccessories, 'amcFormData', openAccordian)} key="AMC">
+                            {!formActionType?.viewMode ? <AMCForm data={serviceData?.amcFormData} /> : <ViewDetail name={'AMC'} data={serviceData?.amcFormData} />}
+                        </Panel>
+                    </Collapse>
 
-                <Collapse onChange={() => handleCollapse('FMS')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                    <Panel header={headerPropsFn('FMS', onAddAccessories, 'fmsFormData', openAccordian)} key="FMS">
-                        {!formActionType?.viewMode ? <FMSForm data={serviceData?.fmsFormData} /> : <ViewDetail name={'AMC'} data={serviceData?.fmsFormData} />}
-                    </Panel>
-                </Collapse>
-            </Space>
-        </div>
+                    <Collapse onChange={() => handleCollapse('FMS')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                        <Panel header={headerPropsFn('FMS', onAddAccessories, 'fmsFormData', openAccordian)} key="FMS">
+                            {!formActionType?.viewMode ? <FMSForm data={serviceData?.fmsFormData} /> : <ViewDetail name={'AMC'} data={serviceData?.fmsFormData} />}
+                        </Panel>
+                    </Collapse>
+                </Space>
+            </Col>
+        </Row>
     );
 };
 

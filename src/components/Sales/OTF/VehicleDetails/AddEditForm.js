@@ -207,8 +207,6 @@ const AddEditFormMain = (props) => {
                             }
                             key="2"
                         >
-                            <Divider />
-
                             <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
                         </Panel>
                     </Collapse>

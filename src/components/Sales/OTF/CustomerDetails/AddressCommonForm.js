@@ -79,7 +79,6 @@ export const AddressCommonForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    dd
                     <Form.Item name={[formType, 'panNo']} label="PAN" initialValue={formData?.panNo} rules={[validateRequiredInputField('PAN'), validatePanField('PAN')]}>
                         <Input placeholder={preparePlaceholderText('PAN')} maxLength={10} />
                     </Form.Item>
