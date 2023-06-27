@@ -1,7 +1,12 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import { Result } from 'antd';
 
-const SuccessPage = () => {
-    return <Result status="success" title="Order Tracking Form edited successfully" subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait." />;
+const SuccessPage = ({status, title, subTitle}) => {
+    return <Result status={status || "success"} title={ title} subTitle={ subTitle } />;
 };
 
 export default SuccessPage;

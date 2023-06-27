@@ -2674,6 +2674,11 @@
     color: #ff3e5b;
 }
 
+.drawerBodyRight :global .ant-result-success .ant-result-icon>.anticon-check-circle {
+    border: 47px solid #EEFCD2;
+    border-radius: 100px;
+  }
+
 .nameSpacing {
     margin: 0 0 0 0.25rem;
 }
