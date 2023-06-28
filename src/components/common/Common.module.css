@@ -25,6 +25,10 @@
     padding-top: 5px;
 }
 
+.invertIcon {
+    transform: scaleX(-1);
+}
+
 .lineHeight33 {
     line-height: 33px;
     padding-right: 0 !important;
@@ -1595,7 +1599,7 @@
     margin-bottom: 0;
     color: #0b0b0c;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 27px;
 }
 
@@ -1839,6 +1843,11 @@
     display: inline;
     line-height: 0px;
     text-align: end;
+}
+
+.drawerBodyRight :global .ant-steps.ant-steps-label-vertical {
+    display: inherit;
+    padding-right: 6px;
 }
 
 .drawerBodyRight :global .ant-steps.ant-steps-label-vertical .ant-steps-item-tail {
@@ -2309,7 +2318,7 @@
 .drawerBodyRight :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
     background: #f2f2f2;
     border-radius: 0 0 8px 8px;
-    padding: 0 20px 0px;
+    padding: 0 20px 20px;
 }
 
 .drawerBodyRight .sectionborder {
