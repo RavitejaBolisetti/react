@@ -7,6 +7,8 @@ import React, { useState, useEffect } from 'react';
 import { Col, Form, Row, Select, Button, DatePicker } from 'antd';
 import { withModal } from 'components/withModal';
 import styles from 'components/common/Common.module.css';
+import { validateRequiredInputField } from 'utils/validation';
+
 
 const { Option } = Select;
 
@@ -43,12 +45,12 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={form} onFinish={onFinishAdvanceFilter} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="From Date" name="fromDate">
+                    <Form.Item label="From Date" name="fromDate" rules={[validateRequiredInputField('fromDate')]}>
                         <DatePicker style={{ width: '100%' }} selected={startDate} onChange={(date) => setStartDate(date)} selectsStart maxDate={endDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="To Date" name="toDate">
+                    <Form.Item label="To Date" name="toDate" rules={[validateRequiredInputField('fromDate')]}>
                         <DatePicker style={{ width: '100%' }} selected={endDate} onChange={(date) => setEndDate(date)} selectsEnd startDate={startDate} minDate={startDate} />
                     </Form.Item>
                 </Col>
