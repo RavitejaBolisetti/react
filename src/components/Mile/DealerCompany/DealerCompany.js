@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const DealerCompanyBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isPinCodeLoading, pinCodeShowLoading } = props;
-    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail, fetchLovList, isDealerLovDataLoaded, listLovShowLoading } = props;
+    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -112,10 +112,7 @@ export const DealerCompanyBase = (props) => {
         if (userId && !isDealerParentDataLoaded) {
             fetchDealerParentList({ setIsLoading: listDealerParentShowLoading, userId });
         }
-        if (userId && !isDealerLovDataLoaded) {
-            fetchLovList({ setIsLoading: listLovShowLoading, userId });
-        }
-
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded, isDealerParentDataLoaded]);
 
