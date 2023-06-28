@@ -338,7 +338,6 @@ export const ListRoleMasterBase = (props) => {
         isDivisionLoading,
         isDepartmentDataLoaded,
         isDepartmentLoading,
-        filteredDepartmentData,
         filterString,
         setFilterString,
         advanceFilterForm,

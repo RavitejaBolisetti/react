@@ -6,7 +6,7 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, AutoComplete } from 'antd';
 
-import { validateRequiredInputField, searchValidatorPincode, validatePincodeField, validateMobileNoField, validatePanField, validateGSTIN, validationNumber, valueBetween0to100, validateOnlyPositiveNumber } from 'utils/validation';
+import { validateRequiredInputField, searchValidatorPincode, validateMobileNoField, validatePanField, validateGSTIN, validationNumber, valueBetween0to100, validateOnlyPositiveNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -112,32 +112,15 @@ const AddEditFormMain = (props) => {
     };
 
     const handleOnClear = (e) => {
-        const flag = false;
-        // if (e.target.value.length === 5) {
-        //     const prev = e.target.value;
-
-        // }
-        // if (e.target.value.length === 6) {
-        //     flag = true;
-        //     if (flag) {
-                // if (e.target.value.length > 5) {
-                //     console.log('caleed', e.target.value);
-                //     form.validateFields(['pinCode']);
-                // }
-                setOptions();
-                form.setFieldsValue({
-                    // pinCode: undefined,
-                    state: undefined,
-                    city: undefined,
-                    tehsil: undefined,
-                    district: undefined,
-                    locality: undefined,
-                });
-        //     }
-        // } else {
-        //     flag = false;
-        // }
-    };
+        setOptions();
+        form.setFieldsValue({
+            state: undefined,
+            city: undefined,
+            tehsil: undefined,
+            district: undefined,
+            locality: undefined,
+        });
+      };
 
     const viewProps = {
         isVisible: viewMode,
