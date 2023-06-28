@@ -6,9 +6,10 @@
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Col, Input, Form, Row, Select, Card, DatePicker, Space } from 'antd';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
+import { convertDateToCalender } from 'utils/formatDateTime';
+import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
 
@@ -37,7 +38,6 @@ const AddEditFormMain = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
-
 
     return (
         <>
@@ -100,7 +100,7 @@ const AddEditFormMain = (props) => {
                                     )}
                                     {doReceived === 'yes' && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={formData?.doDate ? dayjs(formData?.doDate) : null} label="D.O. Date" name="doDate">
+                                            <Form.Item initialValue={convertDateToCalender(formData?.doDate)} label="D.O. Date" name="doDate">
                                                 <DatePicker disabledDate={(date) => date > dayjs()} placeholder={preparePlaceholderSelect('date')} style={datePickerStyle} />
                                             </Form.Item>
                                         </Col>

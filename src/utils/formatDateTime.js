@@ -18,4 +18,4 @@ export const convertDateTime = (dateToConvert = '', defaultFormat = 'YYYY-MM-DD 
 
 export const convertDateMonthYear = (dateToConvert = moment(), defaultFormat = 'DD MMM YYYY') => moment(dateToConvert).format(defaultFormat);
 
-export const convertDateToCalender = (dateToConvert) => dateToConvert ? dayjs(dateToConvert) : null;
+export const convertDateToCalender = (dateToConvert) => (dateToConvert ? dayjs(dateToConvert) : null);
