@@ -82,7 +82,7 @@ const OTFMainConatinerMain = (props) => {
                 <LeftSidebar {...myProps} />
             </Col>
             <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18} className={styles.drawerRightMainContainer}>
-                <div className={styles.marginBottom60}>{renderElement()}</div>
+                <div>{renderElement()}</div>
             </Col>
         </Row>
     );

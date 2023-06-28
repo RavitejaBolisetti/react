@@ -13,7 +13,7 @@ const LeftSidebar = (props) => {
     return (
         <>
             {!addMode && <ProfileDetailCard {...props} />}
-            <div className={styles.marT30}>
+            <div>
                 <MenuNav {...props} />
             </div>
         </>

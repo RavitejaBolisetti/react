@@ -52,7 +52,7 @@ const MenuNav = (props) => {
     const items = Object.values(profileOptions)?.map((i) => ({
         dot: i.id === currentSection ? <BsRecordCircleFill className={`${styles.activeForm} ${i}`} /> : addMode && !i.enableOnAdd ? <BsRecordCircleFill className={className(i)} color={'grey'} /> : <FaCheckCircle className={className(i)} />,
         children: (
-            <div style={{ margin: '10px 0px' }} className={className(i)} onClick={() => onHandle(i)}>
+            <div className={className(i)} onClick={() => onHandle(i)}>
                 {i.title}
             </div>
         ),
