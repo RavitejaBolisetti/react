@@ -24,6 +24,10 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 corporateName: null,
             });
+        }else if(value === 'LIS') {
+            form.setFieldsValue({
+                corporateCode: null,
+            });
         }
             
 
