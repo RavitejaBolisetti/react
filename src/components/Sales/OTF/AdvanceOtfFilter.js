@@ -13,8 +13,8 @@ const { Search } = Input;
 const { Option } = Select;
 
 export default function AdvanceOtfFilter(props) {
-    const { advanceFilter = false, otfFilter = false, title, filterString, handleOTFChange, typeData, ChangeSearchHandler, onSearchHandle, setAdvanceSearchVisible, searchForm, otfSearchRules, reff } = props;
-   
+    const { advanceFilter = false, otfFilter = false, title, filterString, handleSearchTypeChange, handleSearchParamChange, handleSearchParamSearch, typeData, setAdvanceSearchVisible, searchForm, otfSearchRules, reff } = props;
+
     return (
         <>
             <div className={styles.contentHeaderBackground}>
@@ -26,13 +26,15 @@ export default function AdvanceOtfFilter(props) {
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
                                     <div className={styles.selectSearchBg}>
                                         <Form form={searchForm} layout="vertical" autoComplete="off">
-                                            <Select className={styles.headerSelectField} onChange={ handleOTFChange }placeholder="Select Parameter" allowClear>
+                                            <Select className={styles.headerSelectField} name="searchType" onChange={handleSearchTypeChange} placeholder="Select Parameter" allowClear>
                                                 {typeData[PARAM_MASTER.OTF_SER.id]?.map((item) => (
-                                                    <Option value={item.key}>{item.value}</Option>
+                                                    <Option value={item.key} selected>
+                                                        {item.value}
+                                                    </Option>
                                                 ))}
                                             </Select>
-                                            <Form.Item {...otfSearchRules}  name="keyword"  validateTrigger={['onChange', 'onSearch']}>
-                                                <Search placeholder="Search" value={filterString?.searchParam} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} className={styles.headerSearchField} />
+                                            <Form.Item {...otfSearchRules} name="searchParam" validateTrigger={['onChange', 'onSearch']}>
+                                                <Search placeholder="Search" value={filterString?.searchParam} onChange={handleSearchParamChange} allowClear onSearch={handleSearchParamSearch} className={styles.headerSearchField} />
                                             </Form.Item>
                                         </Form>
                                     </div>
