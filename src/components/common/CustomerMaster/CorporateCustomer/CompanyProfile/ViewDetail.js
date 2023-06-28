@@ -207,10 +207,14 @@ const ViewDetailMain = (props) => {
                         }
                         key="5"
                     >
-                        <a>
-                            <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>
-                        </a>
-                        {/* {viewDocument && <img width="500" height="200" src={`data:image/png;base64,${viewDocument?.base64}`} />} */}
+                        {viewDocument?.fileName && (
+                            <>
+                                <a>
+                                    <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>
+                                </a>
+                                {/* {viewDocument && <img width="500" height="200" src={`data:image/png;base64,${viewDocument?.base64}`} />} */}
+                            </>
+                        )}
                     </Panel>
                 </Collapse>
             </Space>

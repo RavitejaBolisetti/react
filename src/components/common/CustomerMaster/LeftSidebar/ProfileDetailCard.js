@@ -15,7 +15,7 @@ const ProfileDetailCard = (props) => {
     const fullName = selectedCustomer?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
-        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon}>
+        <Collapse collapsible={'icon'} bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon}>
             <Panel
                 header={
                     <>

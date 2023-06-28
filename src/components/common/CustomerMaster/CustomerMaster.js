@@ -343,10 +343,10 @@ const CustomerMasterMain = (props) => {
         e.key === 'Enter' && e.preventDefault();
     };
 
-    const handleCustomerTypeChange =(id)=>{
+    const handleCustomerTypeChange = (id) => {
         setCustomerType(id);
         searchForm.resetFields();
-    }
+    };
 
     return (
         <>

@@ -308,9 +308,11 @@ export const ListRoleMasterBase = (props) => {
     };
 
     const onAdvanceSearchCloseAction = () => {
+        console.log('hello');
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
         setFilteredDepartmentData([]);
+        advanceFilterForm.setFieldsValue({ departmentCode: undefined });
     };
 
     const handleResetFilter = () => {
@@ -336,11 +338,12 @@ export const ListRoleMasterBase = (props) => {
         isDivisionLoading,
         isDepartmentDataLoaded,
         isDepartmentLoading,
-        filteredDepartmentData,
         filterString,
         setFilterString,
         advanceFilterForm,
         setAdvanceSearchVisible,
+        filteredDepartmentData,
+        setFilteredDepartmentData,
     };
 
     const removeFilter = (key) => {

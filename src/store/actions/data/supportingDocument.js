@@ -6,7 +6,7 @@
 import { dataActions } from 'store/actions/crud/dataAction';
 import { withAuthToken } from 'utils/withAuthToken';
 import { axiosAPICall } from 'utils/axiosAPICall';
-// import useFileDownload from 'utils/useFileDownload';
+
 import { BASE_URL_SUPPORTING_DOCUMENT as baseURL, BASE_URL_DOCUMENT_UPLOAD as baseUploadURL, BASE_URL_DOCUMENT_DOWNLOAD as baseDownloadUrl } from 'constants/routingApi';
 
 const PREFIX = 'UPLOAD_';
@@ -57,13 +57,8 @@ supportingDocumentDataActions.uploadFile = withAuthToken((params) => ({ token, a
 });
 
 supportingDocumentDataActions.downloadFile = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, userId, onSuccess, method = 'get', extraParams = [], selectedDocument = undefined } = params;
+    const { setIsLoading, userId, extraParams = [], selectedDocument = undefined } = params;
     setIsLoading(true);
-    // console.log('selectedDocument', selectedDocument);
-    // return false;
-    const onSuccessAction = (res) => {
-        onSuccess(res.data);
-    };
 
     let sExtraParamsString = '?';
     extraParams?.forEach((item, index) => {
