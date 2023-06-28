@@ -129,7 +129,7 @@ const UploadUtilsMain = (props) => {
     return (
         <>
             <div className={styles.uploadDragger}>
-                {!uploadedFile && !formData?.docId ? (
+                {!uploadImgDocId && !formData?.docId ? (
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className={styles.uploadDragger}>

@@ -1,7 +1,15 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 .menuIcon {
     font-size: 22px !important;
     vertical-align: middle;
-    padding-right: 4px;
+}
+
+.menuTitle {
+    padding-left: 4px;
 }
 
 .homeIcon {
@@ -45,7 +53,7 @@
 }
 
 .leftMenuBox li.subMenuParent {
-    min-height: 40px;
+    min-height: 36px;
 }
 
 .leftMenuBox li.subMenuParent:hover {
@@ -53,8 +61,8 @@
 }
 
 .leftMenuBox li.subMenuItem {
-    /* min-height: 32px; */
-    min-height: 40px;
+    min-height: 36px;
+    margin-bottom: 0 !important;
 }
 
 .leftMenuBox li.subMenuItem:hover {
@@ -148,22 +156,26 @@
     color: #ff3e5b !important;
 }
 
-:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-track {
+:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-track,
+:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-track {
     background-color: #ffffff;
 }
 
-:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar {
+:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar,
+:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar {
     width: 8px;
     background-color: #ffffff;
 }
 
-:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb {
+:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb,
+:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-thumb {
     background-color: #C1C1C1;
     border-radius: 10px;
     border: 2px solid #ffffff;
 }
 
-:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb:hover {
+:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb:hover,
+:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-thumb:hover {
     border: 2px solid #C1C1C1;
 }
 
@@ -175,8 +187,12 @@
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical {
     border-inline-end: none;
     overflow-y: overlay;
-    max-height: 71vh;
+    max-height: calc(100vh - 180px);
     padding: 0px 14px;
+}
+
+:global .ant-menu-light.ant-menu-root.ant-menu-vertical {
+    max-height: calc(100vh - 164px);
 }
 
 /* font-family & size for left-menu text */
@@ -216,8 +232,7 @@
 }
 
 :global .ant-menu-inline .ant-menu-sub.ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title {
-    /* height: 32px !important; */
-    height: 40px !important;
+    height: 36px !important;
 }
 
 :global .ant-input-affix-wrapper {
@@ -233,8 +248,22 @@
 }
 
 /* border color on input search in left-menu */
-.searchContainer :global .ant-input-affix-wrapper {
+.leftMenuBox .searchContainer :global .ant-input-affix-wrapper {
     border-width: 0px;
+}
+
+.leftMenuBox .searchContainer :global .ant-form-vertical:hover {
+    color: #ff3e5b;
+}
+
+.leftMenuBox .searchContainer {
+    text-align: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.leftMenuBox .searchContainer :global .ant-form .ant-form-item {
+    margin-bottom: 0;
 }
 
 /* :global .ant-input-affix-wrapper>input.ant-input {
@@ -334,7 +363,7 @@
 
 .logoContainer {
     padding: 0px 14px;
-    margin-bottom: 2px;
+    /* margin-bottom: 2px; */
 }
 
 .logoContainerCollapsed {
@@ -344,7 +373,7 @@
 
 .brandLink {
     display: block;
-    padding: 19px 0 11px;
+    padding: 20px 0 20px;
     transition: width 0.3s ease-in-out;
     white-space: nowrap;
 }
@@ -441,7 +470,6 @@
     background: transparent !important;
 }
 
-
 .searchMenuContainer {
     display: inline-flex;
     padding-left: 8px !important;
@@ -461,11 +489,6 @@
 .leftMenuBox .searchField {
     border: #000000;
     width: 100%;
-}
-
-.leftMenuBox .searchContainer {
-    text-align: center;
-    margin: 5px auto 10px auto;
 }
 
 @media (min-width: 576px) and (max-width: 768px) {

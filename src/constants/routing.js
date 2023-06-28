@@ -83,6 +83,6 @@ export const ROUTING_ADMIN = '/admin/';
 export const ROUTING_ADMIN_USER_MANAGEMENT = ROUTING_ADMIN.concat('user-management/');
 export const ROUTING_USER_MANAGEMENT_DEALER = ROUTING_ADMIN_USER_MANAGEMENT.concat('dealer');
 export const ROUTING_USER_MANAGEMENT_MANUFACTURER = ROUTING_ADMIN_USER_MANAGEMENT.concat('manufacturer');
-export const ROUTING_OTF = ROUTING_SALES.concat('otf');
+export const ROUTING_OTF = ROUTING_SALES.concat('order-tracking-form');
 
 export const ROUTING_REPORT_OTF_REPORTS = ROUTING_REPORT.concat('otf-reports');

@@ -8,13 +8,11 @@ import { Col, Input, Form, Row, DatePicker } from 'antd';
 import dayjs from 'dayjs';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField, validateRequiredSelectField, validateEmailField, validatePincodeField, validateMobileNoField,validatePanField, validateAadhar, validateDrivingLicenseNoWithSpace, validateGSTIN } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateEmailField, validatePincodeField, validateMobileNoField, validatePanField, validateAadhar, validateDrivingLicenseNoWithSpace, validateGSTIN } from 'utils/validation';
 import { disableFutureDate } from 'utils/disableDate';
 
 export const AddressCommonForm = (props) => {
     const { formActionType, formType, formData } = props;
-    const innitValue = dayjs(formData?.birthDate, 'YYYY/MM/DD');
-
     return (
         <>
             <Row gutter={20}>
@@ -46,7 +44,7 @@ export const AddressCommonForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'address']} label="Address" initialValue={formData?.address} >
+                    <Form.Item name={[formType, 'address']} label="Address" initialValue={formData?.address}>
                         <Input placeholder={preparePlaceholderText('Address')} maxLength={50} disabled={true} />
                     </Form.Item>
                 </Col>
@@ -63,7 +61,7 @@ export const AddressCommonForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'pincode']} label="PIN Code" initialValue={formData?.pincode}  rules={[validateRequiredInputField('PIN Code'),validatePincodeField('PIN Code')]}>
+                    <Form.Item name={[formType, 'pincode']} label="PIN Code" initialValue={formData?.pincode} rules={[validateRequiredInputField('PIN Code'), validatePincodeField('PIN Code')]}>
                         <Input placeholder={preparePlaceholderText('PIN Code"')} maxLength={8} disabled={true} />
                     </Form.Item>
                 </Col>
@@ -105,14 +103,14 @@ export const AddressCommonForm = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'tradeLicense']} label="Trade Licence" initialValue={formData?.tradeLicense} >
+                    <Form.Item name={[formType, 'tradeLicense']} label="Trade Licence" initialValue={formData?.tradeLicense}>
                         <Input maxLength={15} placeholder={preparePlaceholderText('Trade Licence')} disabled={formActionType?.editMode ? false : true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'birthDate']} initialValue={innitValue} label="Birth Date">
+                    {/* <Form.Item name={[formType, 'birthDate']} initalValue={formData?.birthDate && dayjs(formData?.birthDate, 'YYYY/MM/DD')} label="Birth Date">
                         <DatePicker disabledDate={disableFutureDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
-                    </Form.Item>
+                    </Form.Item> */}
                 </Col>
             </Row>
         </>

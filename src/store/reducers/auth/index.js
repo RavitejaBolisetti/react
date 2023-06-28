@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import { AUTH_LOGIN_SUCCESS, AUTH_LOGIN_PRE_SUCCESS, AUTH_LOGIN_ERROR_CLOSE, AUTH_LOGIN_ERROR, AUTH_LOGOUT, USER_UNAUTHENTICATED, AUTH_LOGIN_USER_UNAUTHENTICATED_CLOSE } from '../../actions/auth';
 
 const initialState = {

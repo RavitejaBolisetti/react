@@ -8,8 +8,10 @@ import { FaAddressBook, FaCreativeCommonsShare } from 'react-icons/fa';
 import { HiCurrencyRupee } from 'react-icons/hi';
 import { MdStars } from 'react-icons/md';
 import { TbReport } from 'react-icons/tb';
-import { HomeIcon, AdminIcon, CrmIcon, HrIcon, ServiceIcon, SparesIcon } from 'Icons';
+import { IoPeopleCircle } from 'react-icons/io5';
+import { HomeIcon, AdminIcon, CrmIcon, ServiceIcon, SparesIcon } from 'Icons';
 
+import styles from 'components/common/Common.module.css';
 import { getMenyKey } from 'utils/menuKey';
 
 import * as routing from './routing';
@@ -41,6 +43,20 @@ export const MenuConstant = {
         link: routing.ROUTING_COMMON_PRODUCT_HIERARCHY,
         icon: undefined,
         parentMenuId: 'FAV',
+    },
+
+    [getMenyKey('SACT-06.01')]: {
+        key: 'SACT-06.01',
+        link: routing.ROUTING_OTF,
+        icon: undefined,
+        parentMenuId: 'OTD',
+    },
+
+    [getMenyKey('COMN-10.01')]: {
+        key: 'COMN-10.01',
+        link: routing.ROUTING_COMMON_CUSTOMER_MASTER,
+        icon: undefined,
+        parentMenuId: 'COMN-10',
     },
 
     [getMenyKey('COMN-05.01')]: {
@@ -271,7 +287,7 @@ export const MenuConstant = {
 
     [getMenyKey('HR')]: {
         link: undefined,
-        icon: <HrIcon fontSize={22} />,
+        icon: <IoPeopleCircle className={styles.invertIcon} fontSize={22} />,
         parentMenuId: 'WEB',
     },
 

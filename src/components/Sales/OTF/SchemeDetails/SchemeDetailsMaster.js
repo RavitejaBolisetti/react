@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Form, Row, Col } from 'antd';
@@ -52,15 +52,33 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SchemeDetailsMasterBase = (props) => {
-    const { schemeData, onCloseAction, fetchList, formActionType, userId, listShowLoading, showGlobalNotification } = props;
+    const { schemeData, resetData, onCloseAction, fetchList, formActionType, userId, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
 
+    const [formData, setFormData] = useState();
+
+    useEffect(() => {
+        if (schemeData) {
+            form.setFieldsValue({ ...schemeData });
+            setFormData(schemeData);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [schemeData]);
+
+    useEffect(() => {
+        return () => {
+            setFormData();
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const onErrorAction = (message) => {
-        showGlobalNotification(message);
+        // showGlobalNotification(message);
     };
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     useEffect(() => {
@@ -81,9 +99,14 @@ const SchemeDetailsMasterBase = (props) => {
     const viewProps = {
         styles,
         onCloseAction,
-        schemeData,
+        formData,
         isLoading,
         ...props,
+    };
+    const myProps = {
+        ...props,
+        formData,
+        buttonData: { ...props.buttonData, nextBtn: true, saveBtn: false },
     };
 
     const onFinish = (values) => {
@@ -99,15 +122,15 @@ const SchemeDetailsMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={1} />
+                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...props} />}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...myProps} />}
                 </Col>
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...props} />
+                    <OTFFormButton {...myProps} />
                 </Col>
             </Row>
         </Form>

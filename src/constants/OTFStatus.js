@@ -12,8 +12,8 @@ export const OTF_STATUS = {
     },
     ALLOTED: {
         id: 2,
-        title: 'Alloted',
-        desc: 'Alloted',
+        title: 'Allotted',
+        desc: 'Allotted',
         displayOnView: true,
     },
     CANCELLED: {

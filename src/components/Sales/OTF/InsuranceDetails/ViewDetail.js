@@ -6,6 +6,7 @@
 import React from 'react';
 import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import styles from 'components/common/Common.module.css';
 
 const ViewDetailMain = (props) => {
     const { insuranceData, isLoading } = props;
@@ -17,7 +18,7 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <Card>
+        <Card className={styles.drawerCardView}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Insurance Company">{checkAndSetDefaultValue(insuranceData?.insuranceCompany, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Insurance Cover Note">{checkAndSetDefaultValue(insuranceData?.insuranceCoverNote, isLoading)}</Descriptions.Item>

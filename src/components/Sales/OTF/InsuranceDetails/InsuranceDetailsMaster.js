@@ -78,11 +78,11 @@ const InsuranceDetailsMasterBase = (props) => {
     }, [userId, selectedOrderId]);
 
     const onErrorAction = (message) => {
-        showGlobalNotification(message);
+        // showGlobalNotification(message);
     };
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const viewProps = {
@@ -121,7 +121,7 @@ const InsuranceDetailsMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={1} />
+                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
                     </Row>
 

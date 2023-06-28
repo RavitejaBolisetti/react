@@ -10,9 +10,12 @@ import UploadUtils from './../UploadUtils';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 
+import { CUSTOMER_TYPE } from 'constants/CustomerType';
+
 const ViewDetailBase = (props) => {
     const { formData, styles } = props;
-    const { setShowAddEditForm, setContactData, onFinish, form, isEditing, isLoading, typeData} = props;
+    const { setShowAddEditForm, setContactData, onFinish, form, isEditing, isLoading, typeData } = props;
+    const { customerType } = props;
 
     const viewProps = {
         bordered: false,
@@ -35,12 +38,13 @@ const ViewDetailBase = (props) => {
                 <>
                     <UploadUtils {...formProps} />
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Purpose of Contact">{checkAndSetDefaultValue(getCodeValue(typeData?.PURPOSE,formData?.purposeOfContact), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Purpose of Contact">{checkAndSetDefaultValue(getCodeValue(typeData?.PURPOSE, formData?.purposeOfContact), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Alternate Mobile Numbe">{checkAndSetDefaultValue(formData?.alternativeMobileNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Relation">{checkAndSetDefaultValue(getCodeValue(typeData?.FAMLY_RELTN,formData?.relationCode), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(typeData?.GENDER_CD,formData?.gender), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE,formData?.title), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Alternate Mobile Numbe">{checkAndSetDefaultValue(formData?.alternateMobileNumber, isLoading)}</Descriptions.Item>
+                        {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? <Descriptions.Item label="Relation">{checkAndSetDefaultValue(getCodeValue(typeData?.FAMLY_RELTN, formData?.relationCode), isLoading)}</Descriptions.Item> : <Descriptions.Item label="Designation">{checkAndSetDefaultValue(formData?.designation, isLoading)}</Descriptions.Item>}
+
+                        <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(typeData?.GENDER_CD, formData?.gender), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.title), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="First Name">{checkAndSetDefaultValue(formData?.firstName, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Middle Name">{checkAndSetDefaultValue(formData?.middleName, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Last/Surname">{checkAndSetDefaultValue(formData?.lastName, isLoading)}</Descriptions.Item>
