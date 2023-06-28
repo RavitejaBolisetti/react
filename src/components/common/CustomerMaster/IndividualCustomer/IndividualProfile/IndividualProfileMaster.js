@@ -89,7 +89,7 @@ const IndividualProfileBase = (props) => {
     };
 
     useEffect(() => {
-        if (!formActionType?.addMode && userId && selectedCustomerId) {
+        if ( userId && selectedCustomerId) {
             const extraParams = [
                 {
                     key: 'customerId',
