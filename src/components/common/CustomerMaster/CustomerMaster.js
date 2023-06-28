@@ -10,7 +10,7 @@ import { Button, Col, Row, Input, Form, Empty, ConfigProvider, Select } from 'an
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { showGlobalNotification } from 'store/actions/notification';
-import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
+import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength, validateRequiredSelectField } from 'utils/validation';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { tableColumn } from './tableColumn';
@@ -257,6 +257,9 @@ const CustomerMasterMain = (props) => {
         if (event.target.value === undefined) {
             return false;
         }
+        if (!filterString?.searchType) {
+            setCustomerSearchRules({ rules: [validateRequiredSelectField('Parameter')] });
+        }
         if (filterString?.searchType === 'mobileNumber') {
             setCustomerSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
         }
@@ -358,15 +361,15 @@ const CustomerMasterMain = (props) => {
                                 </div>
                                 <div className={styles.selectSearchBg}>
                                     <Form onKeyPress={onKeyPressHandler} form={searchForm} layout="vertical" autoComplete="off">
-                                        {/* <Form.Item name="parameter" rules={[validateRequiredSelectField('parameter')]} validateTrigger={['onSearch']}> */}
-                                        <Select {...selectProps} value={filterString?.searchType} className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter">
-                                            {typeData?.map((item) => (
-                                                <Option key={'pnc' + item?.key} value={item?.key}>
-                                                    {item?.value}
-                                                </Option>
-                                            ))}
-                                        </Select>
-                                        {/* </Form.Item> */}
+                                        <Form.Item name="parameter" rules={[validateRequiredSelectField('parameter')]}>
+                                            <Select {...selectProps} value={filterString?.searchType} className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter">
+                                                {typeData?.map((item) => (
+                                                    <Option key={'pnc' + item?.key} value={item?.key}>
+                                                        {item?.value}
+                                                    </Option>
+                                                ))}
+                                            </Select>
+                                        </Form.Item>
                                         <Form.Item {...customerSearchRules} name="keyword" validateTrigger={['onChange', 'onSearch']}>
                                             <Search placeholder="Search" value={filterString?.searchParam} onChange={onChangeHandle} onSearch={onSearchHandle} allowClear className={styles.headerSearchField} htmlType="submit" />
                                         </Form.Item>
