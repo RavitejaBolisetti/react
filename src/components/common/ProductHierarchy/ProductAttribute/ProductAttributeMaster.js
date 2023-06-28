@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -18,6 +18,7 @@ const ProductAttributeMaster = (props) => {
     const [disableSaveButton, setDisableSaveButton] = useState(false);
 
     const onAttributeFormFinish = (val) => {
+        console.log(val, 'On Save');
         finalFormdata.push(val);
         attributeForm.resetFields();
         forceUpdate();
@@ -68,10 +69,7 @@ const ProductAttributeMaster = (props) => {
 
     return (
         <>
-            <div>
-                <FormProductAttribute {...formProductAttributeProps} />
-            </div>
-
+            <FormProductAttribute {...formProductAttributeProps} />
             {finalFormdata?.length > 0 &&
                 finalFormdata?.map((action) => {
                     return <CardProductAttribute {...cardAttributeProps} attributeName={action?.attributeName?.label} attributeValue={action?.attributeValue} fromApi={action?.fromApi === true ? true : false} adPhProductAttributeMstId={action?.adPhProductAttributeMstId} id={action?.id} key={action?.id} />;

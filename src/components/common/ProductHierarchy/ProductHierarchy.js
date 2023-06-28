@@ -293,11 +293,15 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         const onError = (message) => {
             showGlobalNotification({ message });
         };
+        const errorAction = (message) => {
+            showGlobalNotification({ message });
+        };
         const requestData = {
             data: data,
             setIsLoading: listShowLoading,
             userId,
             onError,
+            errorAction,
             onSuccess,
         };
 
