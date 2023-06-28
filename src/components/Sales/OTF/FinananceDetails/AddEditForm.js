@@ -4,12 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
 import { Col, Input, Form, Row, Select, Card, DatePicker, Space } from 'antd';
 
 import { convertDateToCalender } from 'utils/formatDateTime';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+
+import { disableFutureDate } from 'utils/disbaleDate';
 
 import styles from 'components/common/Common.module.css';
 
@@ -90,22 +91,21 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <Row gutter={20}>
-                                    {doReceived === 'yes' && (
+                                {doReceived === 'yes' && (
+                                    <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item initialValue={formData?.doNumber} label="D.O. Number" name="doNumber">
                                                 <Input placeholder={preparePlaceholderText('d.o. number')}></Input>
                                             </Form.Item>
                                         </Col>
-                                    )}
-                                    {doReceived === 'yes' && (
+
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item initialValue={convertDateToCalender(formData?.doDate)} label="D.O. Date" name="doDate">
-                                                <DatePicker disabledDate={(date) => date > dayjs()} placeholder={preparePlaceholderSelect('date')} style={datePickerStyle} />
+                                                <DatePicker disabledDate={disableFutureDate} placeholder={preparePlaceholderSelect('date')} style={datePickerStyle} />
                                             </Form.Item>
                                         </Col>
-                                    )}
-                                </Row>
+                                    </Row>
+                                )}
                             </Card>
                         </Space>
                     </Col>

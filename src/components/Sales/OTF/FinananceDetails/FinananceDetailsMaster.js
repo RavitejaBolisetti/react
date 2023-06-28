@@ -83,8 +83,8 @@ export const FinananceDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (financeData) {
-            form.setFieldsValue({ ...financeData, doDate: convertDateToCalender(financeData?.doDate)});
-            setFormData({...financeData, doDate: convertDateToCalender(financeData?.doDate)});
+            form.setFieldsValue({ ...financeData, doDate: convertDateToCalender(financeData?.doDate) });
+            setFormData({ ...financeData, doDate: convertDateToCalender(financeData?.doDate) });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [financeData]);
