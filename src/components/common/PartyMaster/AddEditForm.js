@@ -98,7 +98,7 @@ const AddEditFormMain = (props) => {
             return;
         }
         setOptions();
-        if (value.length < 6) {
+        if (value.length <= 6) {
             form.validateFields(['pinCode']);
         } else if (value.length > 5) {
             const extraParams = [
@@ -112,19 +112,31 @@ const AddEditFormMain = (props) => {
     };
 
     const handleOnClear = (e) => {
-        if (e.target.value.length > 5) {
-            console.log('caleed', e.target.value);
-            form.validateFields(['pinCode']);
-        }
-        setOptions();
-        form.setFieldsValue({
-            pinCode: undefined,
-            state: undefined,
-            city: undefined,
-            tehsil: undefined,
-            district: undefined,
-            locality: undefined,
-        });
+        const flag = false;
+        // if (e.target.value.length === 5) {
+        //     const prev = e.target.value;
+
+        // }
+        // if (e.target.value.length === 6) {
+        //     flag = true;
+        //     if (flag) {
+                // if (e.target.value.length > 5) {
+                //     console.log('caleed', e.target.value);
+                //     form.validateFields(['pinCode']);
+                // }
+                setOptions();
+                form.setFieldsValue({
+                    // pinCode: undefined,
+                    state: undefined,
+                    city: undefined,
+                    tehsil: undefined,
+                    district: undefined,
+                    locality: undefined,
+                });
+        //     }
+        // } else {
+        //     flag = false;
+        // }
     };
 
     const viewProps = {
