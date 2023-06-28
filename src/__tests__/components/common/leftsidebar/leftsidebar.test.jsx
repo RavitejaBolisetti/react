@@ -1,4 +1,3 @@
-import { render, screen } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
 import { LeftSideBar } from "@components/common/LeftSideBar/LeftSideBar";

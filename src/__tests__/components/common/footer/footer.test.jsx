@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
-//import { Footer } from "../../../../components/common/Footer/Footer";
 import { Footer } from "@components/common/Footer/Footer";
 import Copyright from "@components/common/Footer/Copyright";
 
