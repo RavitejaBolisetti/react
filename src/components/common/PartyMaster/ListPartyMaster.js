@@ -109,6 +109,13 @@ export const ListPartyMasterBase = (props) => {
     };
 
     useEffect(() => {
+        if (userId && !isDataLoaded) {
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isDataLoaded]);
+
+    useEffect(() => {
         if (userId && refershData) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }

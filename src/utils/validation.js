@@ -114,10 +114,9 @@ export const validatFacebookProfileUrl = (fieldName) => ({
 
 export const validatYoutubeProfileUrl = (fieldName) => ({
     // pattern: /(?:http:\/\/)?(?:www\.)?(?:youtube\.com\/)([a-zA-Z0-9_-]{11})$/,
-    pattern: /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$/,
+    pattern: /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|live\/|v\/)?)([\w-]+)(\S+)?$/,
     message: 'Please enter valid url ' + fieldName,
 });
-
 
 export const validattwitterProfileUrl = (fieldName) => ({
     pattern: /^https?:\/\/(www\.)?twitter\.com\/(#!\/)?([^/]+)(\/\w+)*$/,
@@ -173,11 +172,12 @@ export const searchValidator = (_, value) => {
 };
 
 export const searchValidatorPincode = (_, value) => {
-    const pattern = /^\d{6}(?:\s*,\s*\d{6})*$/;
-    if (!value || pattern.test(value)) {
+    const pattern = /^\d{6}$/;
+    if (pattern.test(value)) {
         return Promise.resolve();
+    } else {
+        return Promise.reject(new Error('Please enter 6 digit numeric value to search'));
     }
-    return Promise.reject(new Error('Please enter 6 digit numeric value to search'));
 };
 
 export const validateTan = (fieldName) => ({
