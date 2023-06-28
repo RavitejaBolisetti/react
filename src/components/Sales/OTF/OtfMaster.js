@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -17,6 +17,7 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { OTF_SECTION } from 'constants/OTFSection';
+import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
@@ -71,7 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, isSearchDataLoaded } = props;
+    const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, isSearchDataLoaded, otfData } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString } = props;
     const [otfSearchvalue, setOtfSearchvalue] = useState();
@@ -91,16 +92,54 @@ export const OtfMasterBase = (props) => {
     const [isLastSection, setLastSection] = useState(false);
 
     const [form] = Form.useForm();
+    const [searchForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const defaultBtnVisiblity = {
+        editBtn: false,
+        saveBtn: false,
+        saveAndNewBtn: false,
+        saveAndNewBtnClicked: false,
+        closeBtn: false,
+        cancelBtn: false,
+        formBtnActive: false,
+        transferBtn: false,
+        allotBtn: false,
+        unAllotBtn: false,
+        invoiceBtn: false,
+        deliveryNote: false,
+        cancelOtfBtn: false,
+    };
+
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
+    const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('Value')] });
+    const reff = useRef(null);
+
+    // useEffect(() => {
+    //     if (selectedOrder) {
+    //         setDefaultBtnVisiblity({ ...defaultBtnVisiblity });
+    //         switch (selectedOrder?.orderStatus) {
+    //             case OTF_STATUS?.BOOKED?.title:
+    //                 setDefaultBtnVisiblity({ ...defaultBtnVisiblity, transferBtn: true, allotBtn: true, cancelOtfBtn: true });
+    //                 break;
+    //             case OTF_STATUS?.ALLOTED?.title:
+    //                 setDefaultBtnVisiblity({ ...defaultBtnVisiblity, transferBtn: true, unAllotBtn: true, invoiceBtn: true });
+    //                 break;
+    //             case OTF_STATUS?.CANCELLED?.title:
+    //                 setDefaultBtnVisiblity({ ...defaultBtnVisiblity, editMode: false });
+    //                 break;
+    //             default:
+    //                 break;
+    //         }
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [selectedOrder]);
 
     const extraParams = [
         {
@@ -130,13 +169,13 @@ export const OtfMasterBase = (props) => {
     ];
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setShowDataLoading(false);
         setRefershData(false);
     };
 
     const onErrorAction = (message) => {
-        showGlobalNotification({ message });
+        // showGlobalNotification({ message });
         setShowDataLoading(false);
         setRefershData(false);
     };
@@ -202,14 +241,22 @@ export const OtfMasterBase = (props) => {
                 editMode: buttonAction === EDIT_ACTION,
                 viewMode: buttonAction === VIEW_ACTION,
             });
-            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
         }
         setIsFormVisible(true);
     };
 
     const onSearchHandle = (value) => {
-        setShowDataLoading(true);
-        fetchOTFSearchedList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
+        searchForm
+            .validateFields()
+            .then((values) => {
+                setShowDataLoading(true);
+                fetchOTFSearchedList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
+            })
+            .catch((err) => {
+                console.log(err);
+                return;
+            });
     };
 
     const handleResetFilter = (e) => {
@@ -262,7 +309,6 @@ export const OtfMasterBase = (props) => {
     };
 
     const onFinishAdvanceFilter = (values) => {
-        //let extraParams = [...extraParams, ...searchedParams];
         extraParams.push(
             { key: 'fromDate', title: 'Type', value: values?.fromDate ? dayjs(values?.fromDate).format('YYYY-MM-DD') : undefined, canRemove: true },
             {
@@ -294,6 +340,7 @@ export const OtfMasterBase = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
+        setSelectedOrder();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
@@ -301,16 +348,27 @@ export const OtfMasterBase = (props) => {
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
+        showAddButton: false,
     };
 
     const handleOTFChange = (selectedvalue) => {
         setFilterString({ searchType: selectedvalue });
-        setOtfSearchvalue(''); // Cleared search value
+        setOtfSearchRules({ rules: [validateRequiredInputField('Value')] });
+        //console.log(reff);
     };
 
     const ChangeSearchHandler = (event) => {
         if (event.target.value === undefined) {
             return false;
+        }
+        if (filterString?.searchType === 'mobileNumber') {
+            setOtfSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
+        }
+        if (filterString?.searchType === 'customerName') {
+            setOtfSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
+        }
+        if (filterString?.searchType === 'otfNumber') {
+            setOtfSearchRules({ rules: [validateRequiredInputField('OTF Number')] });
         }
         setFilterString({ ...filterString, searchParam: event.target.value });
     };
@@ -347,6 +405,10 @@ export const OtfMasterBase = (props) => {
         otfSearchvalue,
         setAdvanceSearchVisible,
         typeData,
+        otfSearchRules,
+        setOtfSearchRules,
+        searchForm,
+        reff,
     };
 
     const advanceFilterProps = {
@@ -411,6 +473,7 @@ export const OtfMasterBase = (props) => {
         otfSearchSelected,
         isLastSection,
         typeData,
+        otfData,
         saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
     };
 
@@ -419,7 +482,7 @@ export const OtfMasterBase = (props) => {
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} />
+                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

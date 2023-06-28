@@ -12,7 +12,7 @@ import styles from './DrawerFormButton.module.css';
 export const DrawerFormButton = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave }) => {
     return (
         <Row gutter={20} className={styles.formFooter}>
-            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+            <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.footerBtnLeft}>
                 {buttonData?.closeBtn && (
                     <Button danger onClick={onCloseAction}>
                         Close
@@ -26,7 +26,7 @@ export const DrawerFormButton = ({ formData, onCloseAction, buttonData, setButto
                 )}
             </Col>
 
-            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+            <Col xs={24} sm={18} md={18} lg={18} xl={18} className={styles.footerBtnRight}>
                 {buttonData?.saveBtn && (
                     <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                         {saveButtonName}

@@ -3,13 +3,13 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Input, Form, Select, Card } from 'antd';
 
 import styles from 'components/common/Common.module.css';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
 const { Search } = Input;
 
@@ -17,6 +17,15 @@ const AddEditFormMain = (props) => {
     const { formData, form, isCustomerLoading, onSearch } = props;
     const { financeLovData, schemeLovData, typeData, makeData, modelData, variantData } = props;
     const { isConfigLoading, isSchemeLovLoading, isFinanceLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
+
+    useEffect(() => {
+        if (formData) {
+            form.setFieldsValue({
+                ...formData,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const handleRelationshipChange = (value) => {
         form.setFieldsValue({
@@ -55,10 +64,16 @@ const AddEditFormMain = (props) => {
         });
     };
 
+    const currentYear = new Date().getFullYear();
+    const yearsList = [];
+    for (let i = currentYear; i >= currentYear - 15; i--) {
+        yearsList.push({ key: i, value: i });
+    }
+
     return (
         <Card className={styles.ExchangeCard}>
             <Row gutter={20}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                     <Form.Item name="customerId" label="Customer ID" initialValue={formData?.customerId} rules={[validateRequiredInputField('customer id')]}>
                         <Search loading={isCustomerLoading} placeholder={preparePlaceholderText('customer id')} style={{ width: '100%' }} maxLength={35} allowClear type="text" onSearch={onSearch} />
                     </Form.Item>
@@ -141,7 +156,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="yearOfRegistration" label="Year of Registration" initialValue={formData?.yearOfRegistration} rules={[validateRequiredInputField('year of reg')]}>
-                        <Select onChange={handleYearOfRegChange} placeholder="Select" loading={isConfigLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['YEAR_LIST']}></Select>
+                        <Select onChange={handleYearOfRegChange} placeholder="Select" allowClear fieldNames={{ label: 'value', value: 'key' }} options={yearsList}></Select>
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -166,24 +181,24 @@ const AddEditFormMain = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="schemeAmount" label="Scheme Amount" initialValue={formData?.schemeAmount} rules={[validateRequiredInputField('Scheme Amount')]}>
+                    <Form.Item name="schemeAmount" label="Scheme Amount" initialValue={formData?.schemeAmount} rules={[validateRequiredInputField('Scheme Amount'), validateNumberWithTwoDecimalPlaces('Scheme Amount')]}>
                         <Input maxLength={50} placeholder={preparePlaceholderText('Scheme Amount')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="kilometer" label="KM" initialValue={formData?.kilometer} rules={[validateRequiredInputField('kilometer')]}>
+                    <Form.Item name="kilometer" label="KM" initialValue={formData?.kilometer} rules={[validateRequiredInputField('kilometer'), validateNumberWithTwoDecimalPlaces('kilometer')]}>
                         <Input placeholder={preparePlaceholderText('kilometer')} maxLength={50} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="customerExpectedPrice" label="Customer Expected Price" initialValue={formData?.customerExpectedPrice} rules={[validateRequiredInputField('Customer Expected Price')]}>
+                    <Form.Item name="customerExpectedPrice" label="Customer Expected Price" initialValue={formData?.customerExpectedPrice} rules={[validateRequiredInputField('Customer Expected Price'), validateNumberWithTwoDecimalPlaces('Customer Expected Price')]}>
                         <Input placeholder={preparePlaceholderText('Customer Expected Price')} maxLength={50} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="procurementPrice" label="Procurement Price" initialValue={formData?.procurementPrice} rules={[validateRequiredInputField('Procurement Price')]}>
+                    <Form.Item name="procurementPrice" label="Procurement Price" initialValue={formData?.procurementPrice} rules={[validateRequiredInputField('Procurement Price'), validateNumberWithTwoDecimalPlaces('Procurement Price')]}>
                         <Input maxLength={50} placeholder={preparePlaceholderText('Procurement Price')} />
                     </Form.Item>
                 </Col>

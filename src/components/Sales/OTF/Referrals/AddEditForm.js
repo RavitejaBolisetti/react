@@ -12,20 +12,25 @@ import { validateRequiredInputField, validateMobileNoField } from 'utils/validat
 import { disableFutureDate } from 'utils/disableDate';
 import { convertCalenderDate } from 'utils/formatDateTime';
 
+import dayjs from 'dayjs';
+import styles from 'components/common/Common.module.css';
+
 const { Search } = Input;
 
 const AddEditFormMain = (props) => {
     const { formData, form, onSearch, isCustomerLoading, typeData } = props;
+
+
     useEffect(() => {
         if (formData?.hasOwnProperty('mobileNumber')) {
             form.setFieldsValue({
                 ...formData,
                 registrationNumber: formData?.registrationNumber ?? 'NA',
-                dob: convertCalenderDate(formData?.dob, 'YYYY-MM-DD'),
+                dob: dayjs(formData?.dob, 'YYYY/MM/DD'),
             });
         } else {
             form.resetFields();
-            form.setFieldsValue({ customerId: undefined, customerType: undefined, emailId: undefined, customerName: undefined, registrationNumber: undefined, chasisNumber: undefined, dob: undefined });
+            form.setFieldsValue({ customerId: undefined, customerType: undefined, emailId: undefined, customerName: undefined, registrationNumber: undefined, chasisNumber: undefined });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
@@ -33,7 +38,7 @@ const AddEditFormMain = (props) => {
     return (
         <Card style={{ backgroundColor: '#F2F2F2' }}>
             <Row gutter={20}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                     <Form.Item name="mobileNumber" label="Mobile Number" initialValue={formData?.mobileNumber} rules={[validateRequiredInputField('Mobile Number'), validateMobileNoField('Mobile Number'), { min: 10, message: 'Phone number must be minimum 10 digits Long.' }]}>
                         <Search loading={isCustomerLoading} placeholder={preparePlaceholderText('Mobile Number')} style={{ width: '100%' }} maxLength={10} allowClear type="text" onSearch={onSearch} />
                     </Form.Item>
@@ -74,8 +79,8 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="dob" label="D.O.B">
-                        <DatePicker format="YYYY/MM/DD" disabledDate={disableFutureDate} placeholder={preparePlaceholderSelect('Date of Birth')} style={{ width: '250px' }} />
+                    <Form.Item initialValue={formData?.dob && dayjs(formData?.dob,'YYYY/MM/DD')} name="dob" label="D.O.B">
+                        <DatePicker format="YYYY-MM-DD" disabledDate={disableFutureDate} placeholder={preparePlaceholderSelect('Date of Birth')} style={{ width: '250px' }} />
                     </Form.Item>
                 </Col>
             </Row>

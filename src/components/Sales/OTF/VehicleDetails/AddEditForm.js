@@ -67,6 +67,7 @@ const AddEditFormMain = (props) => {
         setIsReadOnly(false);
     };
     const OptionServicesFormProps = {
+        typeData,
         handleCancel,
         optionForm,
         optionsServicesMapping,
@@ -206,8 +207,6 @@ const AddEditFormMain = (props) => {
                             }
                             key="2"
                         >
-                            <Divider />
-
                             <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
                         </Panel>
                     </Collapse>
@@ -217,7 +216,7 @@ const AddEditFormMain = (props) => {
                                 <div className={styles.alignUser}>
                                     <Col xs={24} sm={24} md={5} lg={5} xl={5}>
                                         <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Optional Services
+                                            Charges
                                         </Text>
                                     </Col>
                                     <Col xs={24} sm={24} md={19} lg={19} xl={19}>

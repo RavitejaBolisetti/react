@@ -11,6 +11,12 @@ export const validateRequiredInputField = (fieldName, lowercase = true) => ({
     message: 'Please enter ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
+export const validateRequiredInputFieldMinLength = (fieldName, lowercase = true) => ({
+    required: true,
+    min:3,
+    message: 'Please enter ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
+});
+
 export const validateRequiredSelectField = (fieldName, lowercase = true) => ({
     required: true,
     message: 'Please select ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
@@ -111,6 +117,7 @@ export const validatYoutubeProfileUrl = (fieldName) => ({
     pattern: /^https?:\/\/(www\.)?youtube\.com\/(#!\/)?([^/]+)(\/\w+)*$/,
     message: 'Please enter valid url ' + fieldName,
 });
+
 
 export const validattwitterProfileUrl = (fieldName) => ({
     pattern: /^https?:\/\/(www\.)?twitter\.com\/(#!\/)?([^/]+)(\/\w+)*$/,

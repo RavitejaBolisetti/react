@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 // This file has been made based on the redux docs for configuring store https://redux.js.org/recipes/configuring-your-store
 // Additionally support for dev tools has been added using the npm package. Read here: https://github.com/zalmoxisus/redux-devtools-extension
 import { createStore, applyMiddleware, compose } from "redux";

@@ -54,7 +54,7 @@ const AddEditFormMain = (props) => {
 
     const handleOnChange = (e) => {
         const values = e;
-        if (values == 'S') {
+        if (values === 'S') {
             setIsRead(true);
             form.setFieldsValue({
                 weddingAnniversary: null,

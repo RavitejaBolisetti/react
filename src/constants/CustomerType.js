@@ -7,9 +7,11 @@ export const CUSTOMER_TYPE = {
     INDIVIDUAL: {
         id: 'IND',
         title: 'Individual',
+        key: 'Individual',
     },
     CORPORATE: {
         id: 'CRP',
         title: 'Corporate',
+        key: 'Corporate',
     },
 };

@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
 import { OTFStatusTag } from './utils/OTFStatusTag';
 import { convertDateMonthYear } from 'utils/formatDateTime';
@@ -43,7 +48,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             render: (_, record) => OTFStatusTag(record.orderStatus),
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%', fixed: 'right', EditIcon: false }),
+        tblActionColumn({ handleButtonClick, styles, width: '8%', EditIcon: false }),
     ];
 
     return tableColumn;

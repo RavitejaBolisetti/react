@@ -1,8 +1,9 @@
 /*
- *   Copyright (c) 2023
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+
 import React, { useState, useEffect } from 'react';
 
 import { Row, Col, Checkbox, Button, Form, Input, Select, Space, AutoComplete } from 'antd';
@@ -16,14 +17,15 @@ const { Option } = Select;
 
 const AddEditForm = (props) => {
     const { onSubmit, addressForm, setAddressData, isEditing, addressData, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType } = props;
-    const { forceUpdate, handleFormValueChange, setIsAdding } = props;
+    const { forceUpdate, handleFormValueChange, setIsAdding, showGlobalNotification } = props;
     const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail } = props;
     const disabledProps = { disabled: formActionType?.editMode && formData?.partyCategory === 'Principal' ? true : false };
 
     const [options, setOptions] = useState(false);
     const [pinSearchData, setPinSearchData] = useState({});
 
-    const onErrorAction = (res) => {
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
     };
 
     const onSuccessAction = () => {};
@@ -35,7 +37,7 @@ const AddEditForm = (props) => {
             key: item?.id,
         }));
         setOptions(pinOption);
-        return () => setEditingData({});
+        // return () => setEditingData({});
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pincodeData]);
 
@@ -93,13 +95,12 @@ const AddEditForm = (props) => {
         setIsEditing(false);
         setIsAdding(false);
         setShowAddEditForm(false);
+        setEditingData({})
     };
 
     const handleSave = () => {
         addressForm.validateFields()
             .then((value) => {
-                // const value = form.getFieldsValue();
-
                 if (editingData?.addressType) {
                     setAddressData((prev) => {
                         let formData = [...prev];
@@ -116,9 +117,7 @@ const AddEditForm = (props) => {
                     });
                 } else {
                     setAddressData((prev) => {
-                        console.log('prev',prev)
                         let formData = prev?.length ? [...prev] : [];
-                        console.log('formData',formData)
 
                         if (value?.defaultaddress && formData?.length >= 1) {
                             formData?.forEach((address) => {
@@ -146,7 +145,7 @@ const AddEditForm = (props) => {
 
     return (
         <>
-            <Form form={addressForm} id="myAdd" onFinish={onSubmit} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical">
+            <Form form={addressForm} id="myAdd" onFinish={handleSave} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type'), { validator: (rule, value) => duplicateValidator(value, 'addressType', addressData, editingData?.addressType) }]}>

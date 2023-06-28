@@ -3,7 +3,8 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 import { Col, Input, Form, Row, Select, Card, DatePicker, Space } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
@@ -15,8 +16,14 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, FinanceLovData } = props;
-    const [doReceived, setDoReceived] = useState(formData?.doReceived || 'No');
+    const { form, formData, FinanceLovData } = props;
+    const [doReceived, setDoReceived] = useState();
+
+    useEffect(() => {
+        setDoReceived(formData?.doReceived || 'No');
+        form.setFieldsValue('doDate', formData?.doDate && dayjs(moment(formData?.doDate).utc().format()));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const datePickerStyle = {
         width: '100%',
@@ -32,6 +39,7 @@ const AddEditFormMain = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
+
     return (
         <>
             <div className={styles.drawerCustomerMaster}>
@@ -93,7 +101,7 @@ const AddEditFormMain = (props) => {
                                     )}
                                     {doReceived === 'yes' && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={formData?.doDate ? dayjs(formData?.doDate) : null} label="D.O. Date" name="doDate">
+                                            <Form.Item initialValue={formData?.doDate ? dayjs(moment(formData?.doDate).utc().format()) : null} label="D.O. Date" name="doDate">
                                                 <DatePicker disabledDate={(date) => date > dayjs()} placeholder={preparePlaceholderSelect('date')} style={datePickerStyle} />
                                             </Form.Item>
                                         </Col>
