@@ -3,19 +3,16 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Button, DatePicker } from 'antd';
 import { withModal } from 'components/withModal';
-import { convertCalenderDate } from 'utils/formatDateTime';
+import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
 import styles from 'components/common/Common.module.css';
-import { validateRequiredInputField } from 'utils/validation';
 
-import dayjs from 'dayjs';
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { handleFilterChange } = props;
-    const { setAdvanceSearchVisible, otfStatusList, onFinishAdvanceFilter } = props;
+    const { setAdvanceSearchVisible, otfStatusList } = props;
     const { filterString, setFilterString, advanceFilterForm, handleResetFilter } = props;
 
     useEffect(() => {
@@ -26,12 +23,11 @@ export const AdvancedSearchFrom = (props) => {
     const onFinish = (values) => {
         setFilterString({
             ...filterString,
+            fromDate: formatDate(values?.fromDate),
+            toDate: formatDate(values?.toDate),
             otfStatus: values?.otfStatus,
-            toDate: values?.toDate ? dayjs(values?.toDate).format('YYYY-MM-DD') : undefined,
-            fromDate: values?.fromDate ? dayjs(values?.fromDate).format('YYYY-MM-DD') : undefined,
             advanceFilter: true,
         });
-        // handleFilterChange(false);
         setAdvanceSearchVisible(false);
     };
 
@@ -49,13 +45,13 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={filterString?.startDate} label="From Date" name="fromDate">
-                        <DatePicker style={{ width: '100%' }} selectsStart maxDate={filterString?.endDate} />
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" className={styles?.datePicker}>
+                        <DatePicker format={dateFormat} className={styles.fullWidth} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={filterString?.endDate} label="To Date" name="toDate">
-                        <DatePicker style={{ width: '100%' }} selectsEnd startDate={filterString?.startDate} minDate={filterString?.startDate} />
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="To Date" name="toDate" className={styles?.datePicker}>
+                        <DatePicker format={dateFormat} className={styles.fullWidth} />
                     </Form.Item>
                 </Col>
             </Row>

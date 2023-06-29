@@ -2854,6 +2854,10 @@
     padding: 20px 30px !important;
 }
 
+.datePicker .fullWidth {
+    width: 100%;
+}
+
 @media (max-width: 768px) {
 
     /* For mobile phones: */

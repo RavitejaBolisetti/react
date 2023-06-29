@@ -16,8 +16,6 @@ const { Option } = Select;
 
 export default function AdvanceOtfFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, handleSearchTypeChange, handleSearchParamChange, handleSearchParamSearch, typeData, setAdvanceSearchVisible, searchForm, otfSearchRules, reff } = props;
-    console.log("🚀 ~ file: AdvanceOtfFilter.js:19 ~ AdvanceOtfFilter ~ filterString:", filterString)
-
     return (
         <>
             <div className={styles.contentHeaderBackground}>

@@ -11,6 +11,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
+
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
@@ -36,7 +37,9 @@ const OTFDetailCard = (props) => {
                         <Space>
                             <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
-                                <Title level={5}>{selectedOrder?.customerName}</Title>
+                                <Title level={5} style={{ textTransform: 'capitalize' }}>
+                                    {selectedOrder?.customerName?.toLowerCase()}
+                                </Title>
                                 <Text>
                                     OTF No.: <span>{selectedOrder?.otfNumber}</span>
                                 </Text>
