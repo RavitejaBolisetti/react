@@ -15,24 +15,24 @@ const MenuNav = (props) => {
     const { currentSection, setCurrentSection, otfData, selectedOrder: { orderStatus = false } = {} } = props;
     const otfSectionList = Object.values(OTF_SECTION);
 
-    useEffect(() => {
-        if (currentSection) {
-            const TimeLineClass = document.getElementsByClassName('ant-timeline-item');
-            for (let i = 0; i < TimeLineClass.length; i++) {
-                const activeForm = TimeLineClass[i]['children']['1']['children']['0']['classList']['0'];
-                if (activeForm !== undefined && activeForm.match('Common_activeForm')) {
-                    TimeLineClass[i].firstChild.style.backgroundColor = '#ff3e5b';
-                    TimeLineClass[i].lastChild.firstChild.style.color = '#ff3e5b';
-                } else {
-                    TimeLineClass[i].firstChild.style.backgroundColor = '#ff3e5b';
-                    TimeLineClass[i].lastChild.firstChild.style.color = '#0b0b0c';
-                }
-            }
-            console.log('TimeLineClass', TimeLineClass);
-            TimeLineClass[TimeLineClass?.length - 1].firstChild.style.display = 'none';
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentSection]);
+    // useEffect(() => {
+    //     if (currentSection) {
+    //         const TimeLineClass = document.getElementsByClassName('ant-timeline-item');
+    //         for (let i = 0; i < TimeLineClass.length; i++) {
+    //             const activeForm = TimeLineClass[i]['children']['1']['children']['0']['classList']['0'];
+    //             if (activeForm !== undefined && activeForm.match('Common_activeForm')) {
+    //                 TimeLineClass[i].firstChild.style.backgroundColor = '#ff3e5b';
+    //                 TimeLineClass[i].lastChild.firstChild.style.color = '#ff3e5b';
+    //             } else {
+    //                 TimeLineClass[i].firstChild.style.backgroundColor = '#ff3e5b';
+    //                 TimeLineClass[i].lastChild.firstChild.style.color = '#0b0b0c';
+    //             }
+    //         }
+    //         console.log('TimeLineClass', TimeLineClass);
+    //         TimeLineClass[TimeLineClass?.length - 1].firstChild.style.display = 'none';
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [currentSection]);
 
     const onHandle = (key) => {
         setCurrentSection(key);
@@ -66,7 +66,11 @@ const MenuNav = (props) => {
             }
     );
 
-    return <Timeline items={items} />;
+    console.log('items', items);
+
+    const finalItem = items?.filter((i) => i);
+
+    return finalItem && <Timeline items={finalItem} />;
 };
 
 export default MenuNav;

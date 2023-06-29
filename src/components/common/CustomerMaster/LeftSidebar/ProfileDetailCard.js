@@ -4,28 +4,38 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Collapse, Space, Avatar } from 'antd';
+import { Collapse, Space, Avatar, Typography } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 
 const { Panel } = Collapse;
-const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={13} /> : <SlArrowDown size={13} />);
+const { Text, Title } = Typography;
+const expandIcon = ({ isActive }) =>
+    isActive ? (
+        <>
+            <span>See less</span>
+            <SlArrowUp size={13} />
+        </>
+    ) : (
+        <>
+            <span>See more</span>
+            <SlArrowDown size={13} />
+        </>
+    );
 
 const ProfileDetailCard = (props) => {
     const { selectedCustomer } = props;
     const fullName = selectedCustomer?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
-        <Collapse collapsible={'icon'} bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon}>
+        <Collapse bordered={true} defaultActiveKey={[1]} accordion={true} expandIcon={expandIcon} collapsible="icon">
             <Panel
                 header={
                     <>
-                        <Space direction="vertical">
-                            <Avatar size={60}>{userAvatar?.toUpperCase()}</Avatar>
+                        <Space>
+                            <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
-                                <p>
-                                    <span>{selectedCustomer?.customerName}</span>
-                                </p>
-                                <p>{selectedCustomer?.customerId}</p>
+                                <Title level={5}>{selectedCustomer?.customerName}</Title>
+                                <Text>{selectedCustomer?.customerId}</Text>
                             </div>
                         </Space>
                     </>

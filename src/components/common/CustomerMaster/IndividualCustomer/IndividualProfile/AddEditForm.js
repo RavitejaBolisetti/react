@@ -122,14 +122,7 @@ const AddEditFormMain = (props) => {
                             onChange={() => onChange(1)}
                             expandIconPosition="end"
                         >
-                            <Panel
-                                header={
-                                    <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                        Individual Information
-                                    </Text>
-                                }
-                                key="1"
-                            >
+                            <Panel header={<Text strong>Individual Information</Text>} key="1">
                                 <div className={styles.headerBox}>
                                     {formData?.image ? (
                                         <div className={styles.uploadDragger}>
@@ -359,14 +352,7 @@ const AddEditFormMain = (props) => {
                         </Collapse>
 
                         <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel
-                                header={
-                                    <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                        Social Profile
-                                    </Text>
-                                }
-                                key="2"
-                            >
+                            <Panel header={<Text strong>Social Profile</Text>} key="2">
                                 <div className={styles.headerBox}>
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -410,14 +396,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
                         <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel
-                                header={
-                                    <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                        Key Account details
-                                    </Text>
-                                }
-                                key="3"
-                            >
+                            <Panel header={<Text strong>Key Account details</Text>} key="3">
                                 <div className={styles.headerBox}>
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -455,14 +434,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
                         <Collapse defaultActiveKey={['4']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel
-                                header={
-                                    <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                        Authority Details (Who Knowns Whom)
-                                    </Text>
-                                }
-                                key="4"
-                            >
+                            <Panel header={<Text strong>Authority Details (Who Knowns Whom)</Text>} key="4">
                                 <div className={styles.headerBox}>
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -486,7 +458,7 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                             <Form.Item label="Remarks" initialValue={formData?.authorityDetails?.remarks} name="remarks">
-                                                <TextArea maxLength={50} placeholder={preparePlaceholderText('Remarks')} />
+                                                <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('Remarks')} />
                                             </Form.Item>
                                         </Col>
                                     </Row>
@@ -495,14 +467,7 @@ const AddEditFormMain = (props) => {
                         </Collapse>
 
                         <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel
-                                header={
-                                    <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                        Upload Customer Form
-                                    </Text>
-                                }
-                                key="5"
-                            >
+                            <Panel header={<Text strong>Upload Customer Form</Text>} key="5">
                                 <>
                                     <div className={styles.marB20}>
                                         <Row gutter={20}>
