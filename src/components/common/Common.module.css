@@ -218,9 +218,9 @@
     margin-bottom: 0;
 }
 
-/* .contentHeaderBackground .selectSearchBg :global .ant-form-vertical .ant-form-item:last-child {
+.contentHeaderBackground .selectSearchBg :global .ant-form-vertical .ant-form-item:last-child {
     margin-top: -26px;
-} */
+}
 
 .contentHeaderBackground .subheading .selectSearchBg {
     width: 100%;
@@ -1508,7 +1508,7 @@
     width: 140px;
     position: absolute;
     z-index: 99;
-    /* top: 0; */
+    top: 0;
 }
 
 .contentHeaderBackground .subheading .selectSearchBg .headerSearchField,
