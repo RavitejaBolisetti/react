@@ -14,7 +14,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { setActiveKey, activeKey, styles, formData, viewDocument, handleOnClick, isLoading, appCategoryData } = props;
+    const { setActiveKey, activeKey, styles, formData, viewDocument, handleOnClickCustomerForm, isLoading, appCategoryData } = props;
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -212,12 +212,12 @@ const ViewDetailMain = (props) => {
                             <div className={styles.alignUser}>
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     Upload Customer Form
-                                </Text>
+                                </Text> 
                             </div>
                         }
                         key="4"
                     >
-                        <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>
+                        <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClickCustomerForm}></Card>
                     </Panel>
                 </Collapse>
             </Space>

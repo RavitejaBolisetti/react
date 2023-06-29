@@ -11,22 +11,38 @@ import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
-const expandIcon = ({ isActive }) => (isActive ? <SlArrowUp size={13} /> : <SlArrowDown size={13} />);
+
+const expandIcon = ({ isActive }) =>
+    isActive ? (
+        <>
+            <span>See less</span>
+            <SlArrowUp size={13} />
+        </>
+    ) : (
+        <>
+            <span>See more</span>
+            <SlArrowDown size={13} />
+        </>
+    );
 
 const OTFDetailCard = (props) => {
     const { selectedOrder, typeData } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
-        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon}>
+        <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
                 header={
                     <>
                         <Space>
-                            <Avatar size={60}>{userAvatar?.toUpperCase()}</Avatar>
+                            <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
-                                <Title level={5}>{selectedOrder?.customerName}</Title>
-                                <Text>OTF N0.:&nbsp;{selectedOrder?.otfNumber}</Text>
+                                <Title level={5} style={{ textTransform: 'capitalize' }}>
+                                    {selectedOrder?.customerName?.toLowerCase()}
+                                </Title>
+                                <Text>
+                                    OTF No.: <span>{selectedOrder?.otfNumber}</span>
+                                </Text>
                             </div>
                         </Space>
                     </>

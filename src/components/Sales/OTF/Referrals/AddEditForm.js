@@ -10,9 +10,8 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 
 import { validateRequiredInputField, validateMobileNoField } from 'utils/validation';
 import { disableFutureDate } from 'utils/disableDate';
-import { convertCalenderDate } from 'utils/formatDateTime';
+import { convertDateToCalender } from 'utils/formatDateTime';
 
-import dayjs from 'dayjs';
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
@@ -26,7 +25,7 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 ...formData,
                 registrationNumber: formData?.registrationNumber ?? 'NA',
-                dob: dayjs(formData?.dob, 'YYYY/MM/DD'),
+                dob: convertDateToCalender(formData?.dob),
             });
         } else {
             form.resetFields();
@@ -79,7 +78,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.dob && dayjs(formData?.dob,'YYYY/MM/DD')} name="dob" label="D.O.B">
+                    <Form.Item  initialValue={convertDateToCalender(formData?.dob)} name="dob" label="D.O.B">
                         <DatePicker format="YYYY-MM-DD" disabledDate={disableFutureDate} placeholder={preparePlaceholderSelect('Date of Birth')} style={{ width: '250px' }} />
                     </Form.Item>
                 </Col>

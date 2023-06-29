@@ -147,7 +147,7 @@ const FormBase = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item label="Remark" name="remarks">
-                        <TextArea rows={2} maxLength={250} placeholder={preparePlaceholderText('Remark')} disabled={customer} />
+                        <TextArea rows={2} maxLength={300} placeholder={preparePlaceholderText('Remark')} disabled={customer} />
                     </Form.Item>
                 </Col>
             </Row>

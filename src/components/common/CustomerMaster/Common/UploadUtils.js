@@ -90,7 +90,7 @@ const UploadUtilsMain = (props) => {
             showProgress: true,
         },
         progress: { strokeWidth: 3, showInfo: true },
-        accept:"image/png, image/jpeg",
+        accept: 'image/png, image/jpeg',
         onDrop,
         onChange: (info, event) => {
             const { status } = info.file;
@@ -159,7 +159,7 @@ const UploadUtilsMain = (props) => {
                         <Card className={styles.dashedBorder}>
                             <Space direction="vertical">
                                 <Space>
-                                    <Avatar icon={<HiCheck />} />
+                                    <Avatar size={40} icon={<HiCheck />} />
                                     <div>
                                         <Title level={5}>{uploadImgTitle || 'Profile Picture'}</Title>
                                         <Text>File type should be .png and .jpg and max file size to be 5Mb</Text>

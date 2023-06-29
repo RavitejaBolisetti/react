@@ -4,28 +4,36 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Input, Form } from 'antd';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { Row, Col, Input, Form, Select } from 'antd';
+import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-const ShieldForm = ({ formData, shieldForm }) => {
+const ShieldForm = ({ formData, shieldForm, setformDataSetter, formDataSetter, handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
     useEffect(() => {
-        setisReadOnly(true);
-        shieldForm.setFieldsValue({
-            shieldType: formData?.shield?.shieldType ? formData?.shield?.shieldType : 'NA',
-            shieldRate: formData?.shield?.shieldRate ? formData?.shield?.shieldRate : 'NA',
-        });
+        if (formData === undefined) {
+            setisReadOnly(false);
+        } else {
+            setisReadOnly(true);
+            shieldForm.setFieldsValue({
+                shieldType: formData?.shield?.shieldType ? formData?.shield?.shieldType : null,
+                shieldRate: formData?.shield?.shieldRate ? formData?.shield?.shieldRate : null,
+            });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
-    const onFieldsChange = () => {};
+
     const onFinishFailed = () => {};
+    const onValuesChange = (values) => {
+        const Myvalues = shieldForm.getFieldsValue();
+        setformDataSetter({ ...formDataSetter, shield: { ...Myvalues } });
+    };
 
     return (
-        <Form form={shieldForm} onFieldsChange={onFieldsChange} autoComplete="off"  layout="vertical" onFinishFailed={onFinishFailed}>
+        <Form form={shieldForm} onValuesChange={onValuesChange} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical" onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Shield" name="shieldType">
-                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('Shield')} />
+                        <Input disabled={isReadOnly} placeholder={preparePlaceholderText('Shield Type')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

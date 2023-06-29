@@ -64,9 +64,9 @@ export const OTF_SECTION = {
         title: 'Add On details',
         displayOnList: true,
     },
-    // THANK_YOU_PAGE: {
-    //     id: 12,
-    //     title: 'Thank You',
-    //     displayOnList: false,
-    // },
+    THANK_YOU_PAGE: {
+        id: 12,
+        title: 'Thank You',
+        displayOnList: false,
+    },
 };

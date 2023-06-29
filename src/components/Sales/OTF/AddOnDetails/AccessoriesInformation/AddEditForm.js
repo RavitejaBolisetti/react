@@ -29,10 +29,13 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
         accessoryForm
             .validateFields()
             .then((values) => {
+                console.log('I am heree', values);
+
                 if (isPresent(values?.partNumber)) {
                     return;
                 }
-                const myvalues = { ...values, otfNumber: selectedOrderId, isDeleting: true };
+
+                const myvalues = { ...values, otfNumber: selectedOrderId, isDeleting: true, id: '' };
                 if (!values?.type) {
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Part Number to continue' });
                     return;
@@ -54,6 +57,9 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
     const handleOnSearch = (value) => {
         onSearchPart(value);
     };
+    const handlePartSearch = () => {
+        accessoryForm.resetFields(['type', 'sellingPrice', 'mrp', 'partDescription']);
+    };
 
     return (
         <>
@@ -61,7 +67,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                         <Form.Item label="Part Number" name="partNumber" rules={[validateRequiredInputField('part number')]}>
-                            <Search placeholder={preparePlaceholderText('customer id')} style={{ width: '100%' }} maxLength={35} allowClear type="text" onSearch={handleOnSearch} onChange={() => accessoryForm.resetFields(['type', 'sellingPrice', 'mrp', 'partDescription'])} />
+                            <Search placeholder={preparePlaceholderText('Part Number')} maxLength={55} allowClear type="text" onSearch={handleOnSearch} onChange={handlePartSearch} />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -98,7 +104,6 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                                     minRows: 1,
                                     maxRows: 2,
                                 }}
-                                showCount
                                 maxLength={300}
                             />
                         </Form.Item>
@@ -113,10 +118,10 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                 {addButtonDisabled?.partDetailsResponses ? (
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Space size="large" style={{ marginBottom: '20px' }}>
-                            <Button style={{ marginRight: '12px', height: '36px' }} disabled={isBtnDisabled} onClick={() => handleAccesoriesForm()} type="primary" danger>
+                            <Button style={{ marginRight: '12px', height: '36px' }} disabled={isBtnDisabled} onClick={handleAccesoriesForm} type="primary" danger>
                                 Add
                             </Button>
-                            <Button danger onClick={() => onCancel()}>
+                            <Button danger onClick={onCancel}>
                                 Cancel
                             </Button>
                         </Space>

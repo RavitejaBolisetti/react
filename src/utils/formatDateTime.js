@@ -6,10 +6,9 @@
 
 import moment from 'moment';
 import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-dayjs.extend(customParseFormat);
 
-export const convertUTCToLocalDate = (dateToConvert, defaultFormat = 'YYYY-MM-DD HH:mm:ss') => moment(moment(dateToConvert, defaultFormat).toDate()).local();
+export const dateFormat = 'YYYY-MM-DD';
+
 export const convertCalenderDate = (dateToConvert = moment(), defaultFormat = 'DD-MM-YYYY') => {
     return dateToConvert ? dayjs(moment(dateToConvert).format('YYYY/MM/DD'), defaultFormat) : null;
 };
@@ -17,3 +16,12 @@ export const convertDate = (dateToConvert = moment(), defaultFormat = 'YYYY-MM-D
 export const convertDateTime = (dateToConvert = '', defaultFormat = 'YYYY-MM-DD HH:mm:ss') => (dateToConvert ? moment(dateToConvert).format(defaultFormat) : 'NA');
 
 export const convertDateMonthYear = (dateToConvert = moment(), defaultFormat = 'DD MMM YYYY') => moment(dateToConvert).format(defaultFormat);
+
+export const convertDateToCalender = (dateToConvert) => (dateToConvert ? dayjs(dateToConvert, dateFormat) : null);
+
+export const covertCalenderDateToDate = (dateToConvert = moment(), defaultFormat = 'DD-MM-YYYY') => {
+    return dateToConvert ? dayjs(dateToConvert, defaultFormat) : null;
+};
+
+export const formatDate = (dateToFormat, converToFormat = 'YYYY-MM-DD') => (dateToFormat ? dateToFormat?.format(converToFormat) : null);
+export const formatDateToCalenderDate = (dateToFormat, converToFormat = 'YYYY-MM-DD') => (dateToFormat ? dayjs(dateToFormat, converToFormat) : null);

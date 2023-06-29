@@ -15,10 +15,11 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { btnVisiblity } from 'utils/btnVisiblity';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import styles from 'components/common/Common.module.css';
+
+import { convertDateToCalender } from 'utils/formatDateTime';
 
 const mapStateToProps = (state) => {
     const {
@@ -65,7 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { saveData, resetData, fetchList, userId, listShowLoading, financeData, showGlobalNotification, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
+    const { saveData, resetData, fetchList, userId, listShowLoading, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
 
     const { form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
 
@@ -82,8 +83,8 @@ export const FinananceDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (financeData) {
-            form.setFieldsValue({ ...financeData });
-            setFormData(financeData);
+            form.setFieldsValue({ ...financeData, doDate: convertDateToCalender(financeData?.doDate) });
+            setFormData({ ...financeData, doDate: convertDateToCalender(financeData?.doDate) });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [financeData]);

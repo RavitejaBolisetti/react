@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Descriptions } from 'antd';
 import dayjs from 'dayjs';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
@@ -21,7 +21,7 @@ const ViewDetailBase = (props) => {
     };
 
     return (
-        <div className={styles.sectionborder}>
+        <div className={styles.viewDrawerContainer}>
             <Descriptions {...viewProps} className={styles.descriptionBox}>
                 <Descriptions.Item label="M&M Customer">{checkAndSetDefaultValue(props?.mnmCustomer, isLoading)}</Descriptions.Item>
                 {props?.mnmCustomer === 'Yes' ? <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(props?.relationCustomerId, isLoading)}</Descriptions.Item> : null}
