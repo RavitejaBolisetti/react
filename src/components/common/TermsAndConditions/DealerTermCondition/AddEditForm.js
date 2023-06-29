@@ -5,7 +5,7 @@
  */
 import React, { useState } from 'react';
 import { Input, Form, Col, Row, Select, DatePicker } from 'antd';
-import { validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ViewTermConditionList } from './ViewTermConditionList';
 import { withDrawer } from 'components/withDrawer';
@@ -67,7 +67,7 @@ const AddEditFormMain = (props) => {
                         </Col>
 
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={formData?.productCode} label="Product Hierarchy" name="productCode">
+                            <Form.Item initialValue={formData?.productCode} label="Product Hierarchy" name="productCode" rules={[validateRequiredSelectField('Product Hierarchy')]}>
                                 <Select disabled={formActionType?.viewMode} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {productHierarchyList?.map((item) => (
                                         <Option key={'pc' + item.prodctCode} value={item.prodctCode}>
@@ -80,7 +80,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={formData?.documentTypeCode} label="Document Type" name="documentTypeCode">
+                            <Form.Item initialValue={formData?.documentTypeCode} label="Document Type" name="documentTypeCode" rules={[validateRequiredSelectField('Document Type')]}>
                                 <Select disabled={formActionType?.viewMode} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {documentTypeList?.map((item) => (
                                         <Option key={'dt' + item.documentCode} value={item.documentCode}>
@@ -92,7 +92,7 @@ const AddEditFormMain = (props) => {
                         </Col>
 
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={formData?.languageCode} label="Language" name="languageCode">
+                            <Form.Item initialValue={formData?.languageCode} label="Language" name="languageCode" rules={[validateRequiredSelectField('Language')]}>
                                 <Select disabled={formActionType?.viewMode} className={styles.headerSelectField} placeholder="Select Parameter" allowClear>
                                     {languageList?.map((item) => (
                                         <Option key={'lc' + item.key} value={item.key}>
@@ -128,7 +128,7 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item disabled={formActionType?.viewMode} initialValue={formData?.termConditionDescription} label="Terms & Conditions" name="termConditionDescription">
+                            <Form.Item disabled={formActionType?.viewMode} initialValue={formData?.termConditionDescription} label="Terms & Conditions" name="termConditionDescription" rules={[validateRequiredInputField('Terms & Conditions')]}>
                                 <CustomEditor onReady={formData?.termConditionDescription} data={formData?.termConditionDescription} />
                                 {/* onChange={(event, editor) => { const data = editor.getData(), setContent(data)}} */}
                             </Form.Item>

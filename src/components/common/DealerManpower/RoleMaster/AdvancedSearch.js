@@ -1,12 +1,12 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
 
-import { validateRequiredSelectField,searchValidator } from 'utils/validation';
+import { validateRequiredSelectField, searchValidator } from 'utils/validation';
 import { withModal } from 'components/withModal';
 
 import styles from 'components/common/Common.module.css';
@@ -15,7 +15,7 @@ const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
     const { handleFilterChange } = props;
-    const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible } = props;
+    const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible, filteredDepartmentData, setFilteredDepartmentData } = props;
 
     useEffect(() => {
         advanceFilterForm.resetFields();
@@ -32,7 +32,6 @@ export const AdvancedSearchFrom = (props) => {
     const { isDivisionDataLoaded, divisionData } = props;
     const { isDepartmentDataLoaded, departmentData } = props;
 
-    const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
     const handleDivisionChange = (division) => {
         handleFilterChange('divisionCode');
         setFilteredDepartmentData(departmentData?.filter((i) => i?.parentKey === division));
