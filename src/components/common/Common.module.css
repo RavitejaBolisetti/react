@@ -789,9 +789,17 @@
     width: 46px !important;
 }
 
-.viewCardSize :global .ant-card-body .ant-space .ant-btn-link:first-child {
+.viewCardSize :global .ant-card-body .ant-space .ant-btn-link {
     padding: 0 !important;
     margin-top: 0;
+}
+
+.viewCardSize :global .ant-card-body .ant-space .ant-btn-icon-only {
+    margin-left: 20px;
+}
+
+.viewCardSize :global .ant-card-body .ant-space .ant-typography {
+    margin-right: 4px;
 }
 
 .viewCardSize :global .ant-card-body .ant-space .ant-space-item .ant-btn-link span {
@@ -2162,6 +2170,7 @@
     padding: 16px 20px;
     background: #f2f2f2;
     border-radius: 8px;
+    align-items: center;
     /* border: 1px solid #f2f2f2; */
 }
 
