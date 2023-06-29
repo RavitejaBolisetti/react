@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
-import AdvanceOtfFilter from './AdvanceOtfFilter';
+import AdvanceOTFFilter from './AdvanceOTFFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { OTFMainConatiner } from './OTFMainConatiner';
@@ -394,7 +394,7 @@ export const OtfMasterBase = (props) => {
         isVisible: isAdvanceSearchVisible,
 
         icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters 2',
+        titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -457,7 +457,7 @@ export const OtfMasterBase = (props) => {
 
     return (
         <>
-            <AdvanceOtfFilter {...advanceFilterResultProps} />
+            <AdvanceOTFFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />

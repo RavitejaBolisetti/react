@@ -15,8 +15,8 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 const { Search } = Input;
 const { Option } = Select;
 
-export default function AdvanceOtfFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, handleSearchTypeChange, handleSearchParamChange, handleSearchParamSearch, typeData, setAdvanceSearchVisible, searchForm, otfSearchRules, reff } = props;
+export default function AdvanceOTFFilter(props) {
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, handleSearchTypeChange, handleSearchParamSearch, typeData, setAdvanceSearchVisible, searchForm, otfSearchRules, reff } = props;
 
     useEffect(() => {
         searchForm.setFieldsValue({ searchParam: filterString?.searchParam, searchType: filterString?.searchType });
@@ -66,7 +66,7 @@ export default function AdvanceOtfFilter(props) {
                         </Row>
                     </Col>
                 </Row>
-                {advanceFilter && filterString?.advanceFilter && (
+                {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                             <Row gutter={20}>
