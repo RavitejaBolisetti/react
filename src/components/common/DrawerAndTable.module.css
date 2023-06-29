@@ -299,7 +299,7 @@
 }
 
 :global .ant-drawer .ant-drawer-body {
-    padding: 20px;
+    padding: 20px 20px 60px;
 }
 
 /* :global .ant-drawer .ant-drawer-body .ant-input {

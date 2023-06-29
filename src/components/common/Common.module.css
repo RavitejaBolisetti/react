@@ -5,6 +5,12 @@
  */
 @import url('./global.css');
 
+.fullyCentered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .marT30 {
     margin-top: 30px;
 }
@@ -618,7 +624,7 @@
     padding: 12px 0px;
     background: #ffffff;
     left: 10px;
-    bottom: 40px;
+    bottom: 0;
     box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
     z-index: 1;
 }
@@ -1185,7 +1191,7 @@
 
 .tableIcons {
     border: none !important;
-    padding: 0px;
+    padding: 0px !important;
     box-shadow: none;
     width: 20px !important;
     margin-right: 8px;
@@ -1576,13 +1582,13 @@
 }
 
 .drawerBodyLeft :global .ant-collapse {
-    background: #e6e6e6;
-    border: 1px solid #b5b5b6;
+    background: #f2f2f2;
+    border: 0.5px solid #b5b5b6;
     margin: 30px 30px 33px 30px;
 }
 
 .drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
-    padding: 16px 20px;
+    padding: 12px 16px 16px;
     align-items: center;
 }
 
@@ -1592,14 +1598,15 @@
 
 .drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-space {
     gap: 10px !important;
+    margin-bottom: 16px;
 }
 
 .drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-space .ant-space-item h5 {
     margin-top: 0;
     margin-bottom: 0;
-    color: #0b0b0c;
+    color: #ff3e5b;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 27px;
 }
 
@@ -1614,10 +1621,9 @@
 }
 
 .drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
-    background: #e6e6e6;
-    border-radius: 0 0 8px 8px;
-    padding: 20px;
-    padding-top: 0 !important;
+    background: #f2f2f2;
+    border-radius: 0 0 4px 4px;
+    padding: 0 16px 12px;
 }
 
 .drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box p {
@@ -1643,9 +1649,16 @@
 
 .drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
     position: absolute;
-    right: 0;
-    padding-inline-end: 20px;
+    bottom: 4px;
     color: #ff3e5b;
+}
+
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon span {
+    padding-right: 4px !important;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 20px;
+    text-transform: capitalize;
 }
 
 .drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space-vertical {
@@ -1905,6 +1918,10 @@
     border-radius: 8px;
 }
 
+/* .drawerBodyRight .viewDrawerContainer :global .ant-card .ant-card-body {
+    padding-bottom: 20px;
+} */
+
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-label>label,
 .drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-item .ant-form-item-label>label {
     color: #545454;
@@ -2101,6 +2118,18 @@
     border: 2px solid #c1c1c1;
 }
 
+.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-vertical .ant-space-horizontal .ant-btn-primary {
+    margin-right: 16px;
+    margin-top: 10px;
+}
+
+.drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-vertical .ant-space-horizontal .ant-btn-background-ghost:hover {
+    color: #ffffff;
+    background-color: #ff3e5b;
+    border-color: #ff3e5b;
+
+}
+
 /* .drawerBodyRight :global .ant-btn-dangerous {
     margin-left: 10px;
 } */
@@ -2156,6 +2185,7 @@
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-typography {
     margin-left: 0 !important;
     margin-top: 0 !important;
+    margin-right: 30px;
 }
 
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-typography strong {
@@ -2173,7 +2203,7 @@
 
 .drawerBodyRight :global .ant-space {
     gap: 0 !important;
-    align-items: normal;
+    /* align-items: normal; */
 }
 
 /* .drawerBodyRight :global .ant-input {
@@ -2206,10 +2236,8 @@
 }
 
 .drawerBodyRight .uploadDragger :global .ant-space-horizontal .ant-avatar.ant-avatar-icon {
-    width: 40px;
-    height: 40px;
-    line-height: 44px;
-    font-size: 30px;
+    line-height: 44px !important;
+    font-size: 30px !important;
     background-color: #70c922;
 }
 
@@ -2320,6 +2348,10 @@
     border-radius: 0 0 8px 8px;
     padding: 0 20px 20px;
 }
+
+/* .drawerBodyRight .viewDrawerContainer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+    padding: 0 20px;
+} */
 
 .drawerBodyRight .sectionborder {
     border-top: 1px solid #e6e6e6;
@@ -2455,9 +2487,9 @@
     border-color: #e6e6e6;
 }
 
-.viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions:first-child {
+/* .viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions:first-child {
     border-bottom: 1px solid #e6e6e6;
-}
+} */
 
 .viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions:not(:first-child) {
     border-top: 1px solid #e6e6e6;
@@ -2493,11 +2525,13 @@
     line-height: 24px;
 }
 
-.viewDrawerContainer .cardInsideBox :global .ant-btn {
+.drawerBodyRight .cardInsideBox :global .ant-btn-link,
+.viewDrawerContainer .cardInsideBox :global .ant-btn-link {
     padding: 0;
 }
 
-.viewDrawerContainer .cardInsideBox :global .ant-btn span:last-child {
+.drawerBodyRight .cardInsideBox :global .ant-btn-link span:last-child,
+.viewDrawerContainer .cardInsideBox :global .ant-btn-link span:last-child {
     font-weight: 700;
     font-size: 16px;
     line-height: 23px;
@@ -2759,8 +2793,39 @@
     color: #ff3e5b;
 }
 
+.drawerBodyRight .fullyCentered :global .ant-avatar.ant-avatar-icon {
+    line-height: 106px !important;
+    font-size: 74px !important;
+    background-color: #70c922;
+}
+
+.drawerBodyRight .fullyCentered :global .ant-avatar.ant-avatar-circle {
+    border: 47px solid #EEFCD2;
+    border-radius: 100px;
+}
+
+.drawerBodyRight .fullyCentered :global .ant-space {
+    align-items: center;
+}
+
+.drawerBodyRight .fullyCentered :global .ant-space-item h5 {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    color: #0b0b0c !important;
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    line-height: 48px !important;
+}
+
+.drawerBodyRight .fullyCentered :global .ant-space-item .ant-typography {
+    color: #858585;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 23px;
+}
+
 .drawerBodyRight :global .ant-result-success .ant-result-icon>.anticon-check-circle {
-    border: 47px solid #eefcd2;
+    border: 47px solid #EEFCD2;
     border-radius: 100px;
 }
 
