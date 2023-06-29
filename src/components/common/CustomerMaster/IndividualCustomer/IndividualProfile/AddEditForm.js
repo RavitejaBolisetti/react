@@ -342,41 +342,43 @@ const AddEditFormMain = (props) => {
                                             </Form.Item>
                                         </Col>
                                     </Row>
-                                    <Row gutter={20}>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Usage/Application Categorization" initialValue={formData?.applicationCategorization} name="applicationCategorization">
-                                                <Select placeholder={preparePlaceholderSelect('usage/application category')} {...disabledProps}>
-                                                    {appCategoryData?.APP_CAT?.map((item) => (
-                                                        <Option key={'ct' + item.key} value={item.key}>
-                                                            {item.value}
-                                                        </Option>
-                                                    ))}
-                                                </Select>
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Usage/Application Sub-Category" initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
-                                                <Select placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
-                                                    {appCategoryData?.APP_SUB_CAT?.map((item) => (
-                                                        <Option key={'ct' + item.key} value={item.key}>
-                                                            {item.value}
-                                                        </Option>
-                                                    ))}
-                                                </Select>
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Customer Category" initialValue={formData?.customerCategory} name="customerCategory">
-                                                <Select placeholder={preparePlaceholderSelect('annual income')} {...disabledProps} onChange={onCustomerCategoryChange}>
-                                                    {appCategoryData?.CUS_CAT?.map((item) => (
-                                                        <Option key={'ct' + item.key} value={item.key}>
-                                                            {item.value}
-                                                        </Option>
-                                                    ))}
-                                                </Select>
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
+                                    <div className={styles.sectionborder}>
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Usage/Application Categorization" initialValue={formData?.applicationCategorization} name="applicationCategorization">
+                                                    <Select placeholder={preparePlaceholderSelect('usage/application category')} {...disabledProps}>
+                                                        {appCategoryData?.APP_CAT?.map((item) => (
+                                                            <Option key={'ct' + item.key} value={item.key}>
+                                                                {item.value}
+                                                            </Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Usage/Application Sub-Category" initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
+                                                    <Select placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
+                                                        {appCategoryData?.APP_SUB_CAT?.map((item) => (
+                                                            <Option key={'ct' + item.key} value={item.key}>
+                                                                {item.value}
+                                                            </Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Customer Category" initialValue={formData?.customerCategory} name="customerCategory">
+                                                    <Select placeholder={preparePlaceholderSelect('annual income')} {...disabledProps} onChange={onCustomerCategoryChange}>
+                                                        {appCategoryData?.CUS_CAT?.map((item) => (
+                                                            <Option key={'ct' + item.key} value={item.key}>
+                                                                {item.value}
+                                                            </Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                    </div>
 
                                     {customer === 'CUS_CAT_2' && (
                                         <>

@@ -58,7 +58,7 @@ const AddEditFormMain = (props) => {
             editedId: values?.editedId,
             relationship: values?.relationship,
             relationCode: values?.relationCode,
-            relationCustomerId: values?.mnmCustomer === "Yes" ? values?.relationCustomerId : "",
+            relationCustomerId: values?.mnmCustomer === 'Yes' ? values?.relationCustomerId : '',
             dateOfBirth: typeof values?.dateOfBirth === 'object' ? values?.dateOfBirth : dayjs(values?.dateOfBirth),
             relationAge: values?.relationAge,
             remarks: values?.remarks,
@@ -71,7 +71,6 @@ const AddEditFormMain = (props) => {
             setCustomerType('No');
         }
         form.setFieldsValue(Val);
-
     };
 
     const onCancel = (values) => {
@@ -134,7 +133,7 @@ const AddEditFormMain = (props) => {
                     <Row type="flex" align="middle" style={{ margin: showForm || familyDetailList?.length > 0 ? '0 0 20px 0' : '0' }}>
                         <Typography>Family Details</Typography>
                         {!VIEW_ACTION && (
-                            <Button type="primary" icon={<PlusOutlined />} onClick={addFunction} disabled={showForm || editedMode} style={{ margin: '0 0 0 12px' }}>
+                            <Button type="primary" icon={<PlusOutlined />} onClick={addFunction} disabled={showForm || editedMode}>
                                 Add
                             </Button>
                         )}
@@ -146,9 +145,9 @@ const AddEditFormMain = (props) => {
                                 <Collapse
                                     expandIcon={() => {
                                         if (activeKey === item?.editedId) {
-                                            return <MinusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px', margin: '8px 0 0 0' }} />;
+                                            return <MinusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
                                         } else {
-                                            return <PlusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px', margin: '8px 0 0 0' }} />;
+                                            return <PlusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
                                         }
                                     }}
                                     activeKey={activeKey}
@@ -157,7 +156,7 @@ const AddEditFormMain = (props) => {
                                 >
                                     <Panel
                                         header={
-                                            <Row type="flex" justify="space-between" align="middle" size="large" style={{ margin: '0 13px' }}>
+                                            <Row type="flex" justify="space-between" align="middle" size="large">
                                                 <Row type="flex" justify="space-around" align="middle">
                                                     <Typography>
                                                         {item?.customerName} | {item?.relationship}
@@ -192,7 +191,7 @@ const AddEditFormMain = (props) => {
                                         key={index}
                                         style={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
                                     >
-                                        {editedMode && !showForm ? <FormContainer {...formProps} item /> : <ViewDetail {...viewProps} mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} relationCustomerId={item?.relationCustomerId}/>}
+                                        {editedMode && !showForm ? <FormContainer {...formProps} item /> : <ViewDetail {...viewProps} mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} relationCustomerId={item?.relationCustomerId} />}
                                     </Panel>
                                 </Collapse>
                             ))}

@@ -1585,6 +1585,7 @@
     background: #f2f2f2;
     border: 0.5px solid #b5b5b6;
     margin: 30px 30px 33px 30px;
+    border-radius: 4px;
 }
 
 .drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
@@ -1913,7 +1914,7 @@
 
 .drawerBodyRight :global .ant-card .ant-card-body {
     padding: 20px 30px;
-    padding-bottom: 0;
+    /* padding-bottom: 0; */
     background-color: #f2f2f2;
     border-radius: 8px;
 }
@@ -1954,8 +1955,17 @@
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input,
+.drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-textarea-affix-wrapper .ant-input,
 .drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input {
     height: 36px;
+}
+
+.drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-textarea-affix-wrapper {
+    height: 36px !important;
+}
+
+.drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-textarea-affix-wrapper {
+    height: 36px !important;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input-disabled,
@@ -2182,6 +2192,7 @@
     padding: 16px 20px;
 }
 
+.drawerBodyRight :global .ant-card-bordered .ant-card-body .ant-typography,
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-typography {
     margin-left: 0 !important;
     margin-top: 0 !important;
@@ -2516,6 +2527,7 @@
 
 .viewDrawerContainer :global .ant-space .ant-collapse {
     margin-bottom: 0 !important;
+    border: none;
 }
 
 .viewDrawerContainer .cardInsideBox :global .ant-typography {
