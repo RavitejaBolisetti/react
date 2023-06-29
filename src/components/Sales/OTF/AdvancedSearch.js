@@ -5,8 +5,11 @@
  */
 import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Button, DatePicker } from 'antd';
+
 import { withModal } from 'components/withModal';
+import { validateRequiredSelectField } from 'utils/validation';
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
+
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
@@ -46,12 +49,12 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Data')]} className={styles?.datePicker}>
                         <DatePicker format={dateFormat} className={styles.fullWidth} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="To Date" name="toDate" className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="To Date" name="toDate" rules={[validateRequiredSelectField('To Date')]} className={styles?.datePicker}>
                         <DatePicker format={dateFormat} className={styles.fullWidth} />
                     </Form.Item>
                 </Col>
