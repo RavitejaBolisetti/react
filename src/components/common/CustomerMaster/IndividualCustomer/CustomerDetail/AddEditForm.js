@@ -41,6 +41,10 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 corporateName: null,
             });
+        }else if(value === 'LIS') {
+            form.setFieldsValue({
+                corporateCode: null,
+            });
         }
     };
 
@@ -249,7 +253,7 @@ const AddEditFormMain = (props) => {
 
                         {(corporateType === 'LIS' || corporateType === '') && (
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item initialValue={corporateType === 'LIS' ? formData?.corporateCode : ''} label="Corporate Code" name="corporateCode" data-testid="corporate code" rules={[validateRequiredInputField('corporate name')]}>
+                                <Form.Item initialValue={corporateType === 'LIS' ? formData?.corporateCode : ''} label="Corporate Code" name="corporateCode" data-testid="corporate code" rules={[validateRequiredInputField('corporate code')]}>
                                     <Input placeholder={preparePlaceholderText('parent company name')} disabled />
                                 </Form.Item>
                             </Col>

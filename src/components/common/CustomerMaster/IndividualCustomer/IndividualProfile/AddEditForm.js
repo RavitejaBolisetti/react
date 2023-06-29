@@ -3,13 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Empty } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Empty, Card } from 'antd';
 import Svg from 'assets/images/Filter.svg';
 
-import { validateAadhar, validateDrivingLicenseNoWithSpace, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, validatInstagramProfileUrl } from 'utils/validation';
+import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, validatInstagramProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { FiDownload } from 'react-icons/fi';
 
 import styles from 'components/common/Common.module.css';
 import ViewImageUtils from '../../Common/ViewImageUtils';
@@ -22,12 +23,30 @@ const { Dragger } = Upload;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, listDocumentShowLoading, isViewDocumentLoading } = props;
+    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, formActionType, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading } = props;
     const { isReadOnly = false } = props;
     const [isRead, setIsRead] = useState(false);
     const [customer, setCustomer] = useState(false);
-
+    const [showImage, setShowImage] = useState(false);
     const [activeKey, setActiveKey] = useState([1]);
+
+    useEffect(() => {
+        form.setFieldsValue({
+            ...formData,
+        });
+        form.setFieldsValue({
+            companyName: formData?.authorityDetails?.companyName,
+            postion: formData?.authorityDetails?.postion,
+            personName: formData?.authorityDetails?.personName,
+            remarks: formData?.authorityDetails?.remarks,
+        });
+        if (formData?.martialStatus == 'S') {
+            setIsRead(true);
+        } else {
+            setIsRead(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const onCustomerCategoryChange = (values) => {
         setCustomer(values);
@@ -45,6 +64,9 @@ const AddEditFormMain = (props) => {
         }
     };
 
+    const onHandleCancel = () => {
+        setShowImage(false);
+    };
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
@@ -104,6 +126,11 @@ const AddEditFormMain = (props) => {
         uploadDocumentFile(requestData);
     };
 
+    const ImageProps = {
+        showImage,
+        setShowImage,
+    };
+
     const disabledProps = { disabled: isReadOnly };
     return (
         <>
@@ -122,19 +149,45 @@ const AddEditFormMain = (props) => {
                             onChange={() => onChange(1)}
                             expandIconPosition="end"
                         >
-                            <Panel
-                                header={
-                                    <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                        Individual Information
-                                    </Text>
-                                }
-                                key="1"
-                            >
+                            <Panel header={<Text strong>Individual Information</Text>} key="1">
                                 <div className={styles.headerBox}>
-                                    {formData?.image ? (
+                                    {formData?.image && !showImage ? (
                                         <div className={styles.uploadDragger}>
-                                            <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} viewDocument={viewDocument} />
+                                            <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} viewDocument={viewDocument} {...ImageProps} />
                                         </div>
+                                    ) : showImage ? (
+                                        <Row gutter={16}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <div className={styles.uploadDragger}>
+                                                    <Dragger customRequest={handleUpload} {...uploadProps}>
+                                                        <Empty
+                                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                            imageStyle={{
+                                                                height: 100,
+                                                            }}
+                                                            description={
+                                                                <>
+                                                                    <span>
+                                                                        Click or drop your file here to upload the signed and <br />
+                                                                        scanned customer form.
+                                                                    </span>
+                                                                    <span>
+                                                                        <br />
+                                                                        File type should be png, jpg or pdf and max file size to be 5Mb
+                                                                    </span>
+                                                                </>
+                                                            }
+                                                        />
+                                                        <Button type="primary">Upload File</Button>
+                                                    </Dragger>
+                                                    <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
+                                                        <Button onClick={onHandleCancel} type="link">
+                                                            Cancel Upload
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            </Col>
+                                        </Row>
                                     ) : (
                                         <Row gutter={16}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -225,7 +278,7 @@ const AddEditFormMain = (props) => {
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Driving License No" name="drivingLicenseNumber" initialValue={formData?.drivingLicenseNumber} rules={[validateDrivingLicenseNoWithSpace('driving license no ')]}>
+                                            <Form.Item label="Driving License No" name="drivingLicenseNumber" initialValue={formData?.drivingLicenseNumber} rules={[validateDrivingLicenseNo('driving license no ')]}>
                                                 <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('driving license no')} {...disabledProps} />
                                             </Form.Item>
                                         </Col>
@@ -359,14 +412,7 @@ const AddEditFormMain = (props) => {
                         </Collapse>
 
                         <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel
-                                header={
-                                    <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                        Social Profile
-                                    </Text>
-                                }
-                                key="2"
-                            >
+                            <Panel header={<Text strong>Social Profile</Text>} key="2">
                                 <div className={styles.headerBox}>
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -410,14 +456,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
                         <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel
-                                header={
-                                    <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                        Key Account details
-                                    </Text>
-                                }
-                                key="3"
-                            >
+                            <Panel header={<Text strong>Key Account details</Text>} key="3">
                                 <div className={styles.headerBox}>
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -455,14 +494,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
                         <Collapse defaultActiveKey={['4']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel
-                                header={
-                                    <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                        Authority Details (Who Knowns Whom)
-                                    </Text>
-                                }
-                                key="4"
-                            >
+                            <Panel header={<Text strong>Authority Details (Who Knowns Whom)</Text>} key="4">
                                 <div className={styles.headerBox}>
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -486,7 +518,7 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                             <Form.Item label="Remarks" initialValue={formData?.authorityDetails?.remarks} name="remarks">
-                                                <TextArea maxLength={50} placeholder={preparePlaceholderText('Remarks')} />
+                                                <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('Remarks')} />
                                             </Form.Item>
                                         </Col>
                                     </Row>
@@ -495,14 +527,7 @@ const AddEditFormMain = (props) => {
                         </Collapse>
 
                         <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel
-                                header={
-                                    <Text style={{ marginTop: '4px', marginLeft: '8px' }} strong>
-                                        Upload Customer Form
-                                    </Text>
-                                }
-                                key="5"
-                            >
+                            <Panel header={<Text strong>Upload Customer Form</Text>} key="5">
                                 <>
                                     <div className={styles.marB20}>
                                         <Row gutter={20}>
@@ -522,13 +547,20 @@ const AddEditFormMain = (props) => {
                                                         Click or drop your file here to upload the signed and <br /> scanned customer form.
                                                     </div>
                                                     <div>File type should be png, jpg or pdf and max file size to be 5Mb</div>
-                                                    <Button {...disabledProps} type="primary" style={{ marginLeft: '30px', marginTop: '16px' }}>
+                                                    <Button {...disabledProps} type="primary" htmlType="submit" style={{ marginLeft: '30px', marginTop: '16px' }}>
                                                         Upload File
                                                     </Button>
                                                 </Dragger>
                                             </Col>
                                         </Row>
                                     </div>
+                                    {formData?.customerConsentForm && (
+                                        <Row gutter={16}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClickCustomerForm}></Card>
+                                            </Col>
+                                        </Row>
+                                    )}
                                 </>
                             </Panel>
                         </Collapse>

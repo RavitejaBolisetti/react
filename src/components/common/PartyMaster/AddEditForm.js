@@ -6,7 +6,7 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, AutoComplete } from 'antd';
 
-import { validateRequiredInputField, validatePincodeField, validateMobileNoField, validatePanField, validateGSTIN, validationNumber, valueBetween0to100 } from 'utils/validation';
+import { validateRequiredInputField, searchValidatorPincode, validateMobileNoField, validatePanField, validateGSTIN, validationNumber, valueBetween0to100, validateOnlyPositiveNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -98,7 +98,7 @@ const AddEditFormMain = (props) => {
             return;
         }
         setOptions();
-        if (value.length <= 5) {
+        if (value.length <= 6) {
             form.validateFields(['pinCode']);
         } else if (value.length > 5) {
             const extraParams = [
@@ -111,17 +111,16 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const handleOnClear = () => {
+    const handleOnClear = (e) => {
         setOptions();
         form.setFieldsValue({
-            pinCode: undefined,
             state: undefined,
             city: undefined,
             tehsil: undefined,
             district: undefined,
             locality: undefined,
         });
-    };
+      };
 
     const viewProps = {
         isVisible: viewMode,
@@ -201,13 +200,23 @@ const AddEditFormMain = (props) => {
                         <Row gutter={16}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={formData?.address} label="Address" name="address" rules={[validateRequiredInputField('address')]}>
-                                    <TextArea rows={2} {...disabledProps} placeholder={preparePlaceholderText('Address')} showCount maxLength={100} />
+                                    <TextArea rows={2} {...disabledProps} placeholder={preparePlaceholderText('Address')} maxLength={300} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={16}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
+                                <Form.Item
+                                    initialValue={formData?.pinCode}
+                                    label="Pin Code"
+                                    name="pinCode"
+                                    rules={[
+                                        // validateRequiredInputField('Pin Code'),
+                                        {
+                                            validator: searchValidatorPincode,
+                                        },
+                                    ]}
+                                >
                                     <AutoComplete {...disabledProps} maxLength={6} className={styles.searchField} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                         <Input.Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} type="text" allowClear />
                                     </AutoComplete>
@@ -275,7 +284,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item label="Credit Limit" initialValue={formData?.creditLimit} rules={[validateRequiredInputField('credit limit')]} name="creditLimit">
+                                <Form.Item label="Credit Limit" initialValue={formData?.creditLimit} rules={[validateRequiredInputField('credit limit'), validateOnlyPositiveNumber('credit limit')]} name="creditLimit">
                                     <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('credit limit')} maxLength={15} />
                                 </Form.Item>
                             </Col>

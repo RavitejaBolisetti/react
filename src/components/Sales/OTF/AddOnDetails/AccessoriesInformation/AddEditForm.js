@@ -98,7 +98,6 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                                     minRows: 1,
                                     maxRows: 2,
                                 }}
-                                showCount
                                 maxLength={300}
                             />
                         </Form.Item>

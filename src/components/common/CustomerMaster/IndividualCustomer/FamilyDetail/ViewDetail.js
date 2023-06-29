@@ -21,17 +21,19 @@ const ViewDetailBase = (props) => {
     };
 
     return (
-        <div className={styles.sectionborder}>
-            <Descriptions {...viewProps} className={styles.descriptionBox}>
-                <Descriptions.Item label="M&M Customer">{checkAndSetDefaultValue(props?.mnmCustomer, isLoading)}</Descriptions.Item>
-                {props?.mnmCustomer === 'Yes' ? <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(props?.relationCustomerId, isLoading)}</Descriptions.Item> : null}
-                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(props?.customerName, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Relationship">{checkAndSetDefaultValue(props?.relationship, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(typeof props?.dateOfBirth === 'object' ? dayjs(props?.dateOfBirth).format('YYYY-MM-DD') : props?.dateOfBirth, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Age">{props?.relationAge}</Descriptions.Item>
-                {props?.mnmCustomer === 'No' ? <Descriptions.Item label="" /> : null}
-                <Descriptions.Item label="Remark">{checkAndSetDefaultValue(props?.remarks, isLoading)}</Descriptions.Item>
-            </Descriptions>
+        <div className={styles.viewDrawerContainer}>
+            <div className={styles.sectionborder}>
+                <Descriptions {...viewProps} className={styles.descriptionBox}>
+                    <Descriptions.Item label="M&M Customer">{checkAndSetDefaultValue(props?.mnmCustomer, isLoading)}</Descriptions.Item>
+                    {props?.mnmCustomer === 'Yes' ? <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(props?.relationCustomerId, isLoading)}</Descriptions.Item> : null}
+                    <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(props?.customerName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Relationship">{checkAndSetDefaultValue(props?.relationship, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(typeof props?.dateOfBirth === 'object' ? dayjs(props?.dateOfBirth).format('YYYY-MM-DD') : props?.dateOfBirth, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Age">{props?.relationAge}</Descriptions.Item>
+                    {props?.mnmCustomer === 'No' ? <Descriptions.Item label="" /> : null}
+                    <Descriptions.Item label="Remark">{checkAndSetDefaultValue(props?.remarks, isLoading)}</Descriptions.Item>
+                </Descriptions>
+            </div>
         </div>
     );
 };

@@ -5,15 +5,15 @@
  */
 import React from 'react';
 import { Col, Input, Form, Row, DatePicker, Space, Card } from 'antd';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
-import { convertCalenderDate } from 'utils/formatDateTime';
+import { convertDateToCalender } from 'utils/formatDateTime';
 
 const AddEditFormMain = (props) => {
     const { form, onFinishFailed, insuranceData, onFinish } = props;
     const { buttonData, setButtonData } = props;
 
-    const toDateInitialValue = { initialValue: convertCalenderDate(insuranceData?.insuranceDate, 'YYYY/MM/DD') };
+    const toDateInitialValue = { initialValue: convertDateToCalender(insuranceData?.insuranceDate) };
     const [customerForm] = Form.useForm();
 
     const handleFormValueChange = () => {
@@ -51,11 +51,11 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item {...toDateInitialValue} label="Date" name="insuranceDate">
-                                            <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Date')} style={{ width: '100%' }} disabled={true} />
+                                            <DatePicker className={styles.inputBox} placeholder={preparePlaceholderSelect('Date')} style={{ width: '100%' }} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={insuranceData?.registrationNumber} label="Registration Number" name="registrationNumber">
+                                        <Form.Item initialValue={convertDateToCalender(insuranceData?.registrationNumber)} label="Registration Number" name="registrationNumber">
                                             <Input className={styles.inputBox} placeholder={preparePlaceholderText('Registration Number')} disabled={true} />
                                         </Form.Item>
                                     </Col>
