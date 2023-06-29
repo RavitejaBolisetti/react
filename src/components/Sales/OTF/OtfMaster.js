@@ -10,13 +10,14 @@ import { bindActionCreators } from 'redux';
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import AdvanceOtfFilter from './AdvanceOtfFilter';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { OTFMainConatiner } from './OTFMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { OTF_SECTION } from 'constants/OTFSection';
+import { CancellationMaster } from './OTF Cancellation/CancellationMaster';
 import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -95,6 +96,7 @@ export const OtfMasterBase = (props) => {
     const [searchForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [isCancelVisible, setIsCancelVisible] = useState(false);
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -109,7 +111,7 @@ export const OtfMasterBase = (props) => {
         unAllotBtn: false,
         invoiceBtn: false,
         deliveryNote: false,
-        cancelOtfBtn: false,
+        cancelOtfBtn: true,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -230,7 +232,12 @@ export const OtfMasterBase = (props) => {
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
+            case CANCEL_ACTION:
+                //  setFormActionType(CANCEL_OTF)
+                setIsCancelVisible(true);
+                setIsFormVisible(false);
 
+                break;
             default:
                 break;
         }
@@ -454,6 +461,7 @@ export const OtfMasterBase = (props) => {
         EDIT_ACTION,
         VIEW_ACTION,
         NEXT_ACTION,
+        CANCEL_ACTION,
         buttonData,
 
         setButtonData,
@@ -477,6 +485,16 @@ export const OtfMasterBase = (props) => {
         saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
     };
 
+    const onCancelCloseAction = () => {
+        setIsCancelVisible(false);
+    };
+    const cancelProps = {
+        ...props,
+        CANCEL_ACTION,
+        isVisible: isCancelVisible,
+        onCloseAction: onCancelCloseAction,
+    };
+
     return (
         <>
             <AdvanceOtfFilter {...advanceFilterResultProps} />
@@ -487,6 +505,7 @@ export const OtfMasterBase = (props) => {
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
             <OTFMainConatiner {...containerProps} />
+            <CancellationMaster {...cancelProps} />
         </>
     );
 };

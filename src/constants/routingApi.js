@@ -131,6 +131,9 @@ export const BASE_URL_OTF = BASE_URL + 'otf/';
 
 export const BASE_URL_REFERRALS = BASE_URL_OTF + 'referrals';
 
+export const BASE_URL_OTF_REQUEST = BASE_URL_OTF + 'request/';
+export const BASE_URL_OTF_CANCELLATION = BASE_URL_OTF_REQUEST + 'cancel';
+export const BASE_URL_OTF_REJECT = BASE_URL_OTF_REQUEST + 'reject';
 export const BASE_URL_OTF_SEARCH_LIST = BASE_URL_OTF + 'search';
 export const BASE_URL_OTF_REPORTS = BASE_URL + 'customreports/otf/names';
 export const BASE_URL_OTF_DOWNLAOD_REPORT = BASE_URL + 'customreports/otf/register';
