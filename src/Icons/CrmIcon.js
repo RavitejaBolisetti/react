@@ -1,13 +1,16 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import * as React from 'react';
 export const SVGComponent = (props) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 20 20" fill="currentColor">
-        <path fillRule="evenodd" clipRule="evenodd" d="M2.98816 17.0118C3.30072 17.3244 3.72464 17.5 4.16667 17.5H15.8333C16.275 17.4987 16.6981 17.3227 17.0104 17.0104C17.3227 16.6981 17.4987 16.275 17.5 15.8333V4.16667C17.5 3.72464 17.3244 3.30072 17.0118 2.98816C16.6993 2.67559 16.2754 2.5 15.8333 2.5H4.16667C3.72464 2.5 3.30072 2.67559 2.98816 2.98816C2.67559 3.30072 2.5 3.72464 2.5 4.16667V15.8333C2.5 16.2754 2.67559 16.6993 2.98816 17.0118ZM4.16797 15.834H15.8346V5.83398H4.16797V15.834Z" ></path>
-        <path d="M14.1654 9.99967H5.83203V8.33301H14.1654V9.99967Z" ></path>
-        <path d="M10.832 13.3337H5.83203V11.667H10.832V13.3337Z" ></path>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <g id="icon">
+            <g id="Group 9544">
+                <path id="Subtract" fill-rule="evenodd" clip-rule="evenodd" d="M5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C20.9984 19.5299 20.7872 20.0377 20.4125 20.4125C20.0377 20.7872 19.5299 20.9984 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3ZM5.00001 18H19V5.99998H5.00001V18Z" />
+                <path id="Path" d="M16.5 12.9001H7.5V11.1001H16.5V12.9001Z" />
+            </g>
+        </g>
     </svg>
 );
