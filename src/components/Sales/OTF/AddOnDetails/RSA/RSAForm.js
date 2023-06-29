@@ -7,23 +7,30 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-const RSAForm = ({ formData, rsaForm }) => {
+const RSAForm = ({ formData, rsaForm, setformDataSetter, formDataSetter,handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
 
     useEffect(() => {
-        setisReadOnly(true);
-        rsaForm.setFieldsValue({
-            rsa: formData?.rsa ? formData?.rsa?.rsa : 'NA',
-            rsaRate: formData?.rsa?.rsaRate ? formData?.rsa?.rsaRate : 'NA',
-        });
+        if (formData === undefined) {
+            setisReadOnly(false);
+        } else {
+            setisReadOnly(true);
+            rsaForm.setFieldsValue({
+                rsa: formData?.rsa ? formData?.rsa?.rsa : null,
+                rsaRate: formData?.rsa?.rsaRate ? formData?.rsa?.rsaRate : null,
+            });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const onFieldsChange = () => {};
     const onFinishFailed = () => {};
+    const onValuesChange = (values) => {
+        const Myvalues = rsaForm.getFieldsValue();
+        setformDataSetter({ ...formDataSetter, rsa: { ...Myvalues } });
+    };
 
     return (
-        <Form form={rsaForm} onFieldsChange={onFieldsChange} autoComplete="off" id="rsaForm" layout="vertical" onFinishFailed={onFinishFailed}>
+        <Form form={rsaForm} onValuesChange={onValuesChange} onFieldsChange={handleFormValueChange} autoComplete="off" id="rsaForm" layout="vertical" onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="RSA" name="rsa">

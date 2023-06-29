@@ -14,32 +14,24 @@ import { Form } from 'antd';
 import CardMapping from './CardMapping';
 import AddEditForm from './AddEditForm';
 
-const AccessoriesAddonMain = ({ setIsBtnDisabled, isEditing, setisEditing, selectedOrderId, handleFormValueChange, showGlobalNotification, setsearchData, searchData, setaddButtonDisabled, onSearchPart, AddonPartsData, addButtonDisabled, accessoryForm, isBtnDisabled, setFormBtnDisable, setAddOnItemInfo, addOnItemInfo, formData }) => {
+const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, setOpenAccordian, isEditing, setisEditing, selectedOrderId, handleFormValueChange, showGlobalNotification, setsearchData, searchData, setaddButtonDisabled, onSearchPart, AddonPartsData, addButtonDisabled, accessoryForm, isBtnDisabled, setFormBtnDisable, setAddOnItemInfo, addOnItemInfo, formData }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [EditingForm] = Form.useForm();
     const [identification, setidentification] = useState();
-    const addOnformOnFinish = (val) => {
-        setAddOnItemInfo((prev) => [...prev, val]);
-        accessoryForm.resetFields();
-        forceUpdate();
-    };
-    const isPresent = (values) => {
-        const found = addOnItemInfo.filter((element, index) => {
-            if (element?.partNumber === values) return element;
-        });
-        console.log('found', found);
-        if (found?.length === 2) {
+    const isPresent = (values, i = -1) => {
+        const found = addOnItemInfo.filter((element, index) => element?.partNumber === values && index != i);
+
+        if (found?.length === 2 || (found?.length === 1 && values === found['0']['partNumber'])) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Duplicate Part Number' });
             return true;
         }
-
         return false;
     };
     const onUpdate = (index, seteditCardForm) => {
         accessoryForm
             .validateFields()
             .then((values) => {
-                if (isPresent(values?.partNumber)) {
+                if (isPresent(values?.partNumber, index)) {
                     return;
                 }
                 if (!values['type'] || !values['sellingPrice']) {
@@ -48,7 +40,8 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, isEditing, setisEditing, selec
                 }
                 addOnItemInfo?.map((element, i) => {
                     if (i === index) {
-                        addOnItemInfo[i] = { ...values };
+                        const isDeletable = element?.isDeleting;
+                        addOnItemInfo[i] = { ...values, isDeleting: isDeletable, id: element?.id };
                         return;
                     }
                 });
@@ -65,6 +58,9 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, isEditing, setisEditing, selec
     const onCancel = () => {
         accessoryForm.resetFields();
         setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
+        if (!formData?.partDetailsResponses) {
+            setOpenAccordian([]);
+        }
     };
 
     const onFieldsChange = () => {

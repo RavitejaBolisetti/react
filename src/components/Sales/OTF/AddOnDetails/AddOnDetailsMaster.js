@@ -96,14 +96,13 @@ export const AddOnDetailsMasterMain = (props) => {
             detailsRequest.push({ id, otfNumber, partNumber, requiredQuantity });
         });
         const data = { id: formData?.id ?? '', otfNumber: selectedOrderId, partDetailsRequests: detailsRequest, shield: formDataSetter?.shield, rsa: formDataSetter?.rsa, amc: formDataSetter?.amc, fms: formDataSetter?.fms };
-
         const onSuccess = (res) => {
             setformDataSetter({});
             setformData({});
-            form.resetFields();
+            accessoryForm.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            // handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
         const onError = (message) => {
@@ -112,13 +111,13 @@ export const AddOnDetailsMasterMain = (props) => {
 
         const requestData = {
             data: data,
-            method: 'put',
+            method: formData?.partDetailsResponses?.length < detailsRequest?.length ? 'post' : 'put',
             setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
         };
-
+        console.log('requestData', requestData);
         saveData(requestData);
     };
     const onSearchPart = (searchvalue) => {
@@ -146,12 +145,14 @@ export const AddOnDetailsMasterMain = (props) => {
                     name: 'OTF Number',
                 },
             ];
+            accessoryForm.resetFields();
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
     useEffect(() => {
         if (isDataLoaded && AddonDetailsData) {
+            accessoryForm.resetFields();
             setformData(AddonDetailsData);
             setformDataSetter(AddonDetailsData);
             setAddOnItemInfo(
@@ -200,6 +201,8 @@ export const AddOnDetailsMasterMain = (props) => {
         amcForm,
         fmsForm,
         accessoryForm,
+        openAccordian,
+        setopenAccordian,
     };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>

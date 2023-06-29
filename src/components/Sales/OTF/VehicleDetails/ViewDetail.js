@@ -62,7 +62,7 @@ const ViewDetailMain = (props) => {
                                         ) : (
                                             <div className={styles.tooltipAlign}>
                                                 {formData?.model}
-                                                {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                                                {!formData?.model ? 'NA' : addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                                             </div>
                                         )}
                                     </Descriptions.Item>
