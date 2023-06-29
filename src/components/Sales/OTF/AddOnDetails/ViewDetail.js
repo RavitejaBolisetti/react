@@ -72,6 +72,7 @@ const ViewDetailMain = (props) => {
                                                         <Col xs={14} sm={14} md={14} lg={14} xl={14}>
                                                             <Space>
                                                                 <Text strong> {`${element?.partDescription ? element?.partDescription : 'NA'} `}</Text>
+                                                                <Text strong> {`|`}</Text>
                                                                 <Text strong> {`${element?.partNumber ? element?.partNumber : 'NA'} `}</Text>
                                                             </Space>
                                                             <Row>

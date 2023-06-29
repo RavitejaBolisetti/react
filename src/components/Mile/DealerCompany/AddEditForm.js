@@ -206,9 +206,9 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
+                            <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Correct Pin Code'), validatePincodeField('Pin Code')]}>
                                 <AutoComplete className={styles.searchField} options={options} onSelect={handleOnSelect} onFocus={handleOnfocus}>
-                                    <Input.Search onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} type="text" allowClear />
+                                    <Input.Search type="number" onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} allowClear />
                                 </AutoComplete>
                             </Form.Item>
                         </Col>
