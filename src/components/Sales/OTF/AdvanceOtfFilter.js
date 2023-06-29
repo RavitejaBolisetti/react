@@ -3,6 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+import React, { useEffect } from 'react';
 import { Form, Button, Row, Col, Input, Select } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
@@ -16,6 +17,11 @@ const { Option } = Select;
 
 export default function AdvanceOtfFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, handleSearchTypeChange, handleSearchParamChange, handleSearchParamSearch, typeData, setAdvanceSearchVisible, searchForm, otfSearchRules, reff } = props;
+
+    useEffect(() => {
+        searchForm.setFieldsValue({ searchParam: filterString?.searchParam, searchType: filterString?.searchType });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
     return (
         <>
             <div className={styles.contentHeaderBackground}>
@@ -27,8 +33,8 @@ export default function AdvanceOtfFilter(props) {
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
                                     <div className={styles.selectSearchBg}>
                                         <Form form={searchForm} layout="vertical" autoComplete="off">
-                                            <Form.Item name="parameter" rules={[validateRequiredSelectField('parameter')]}>
-                                                <Select className={styles.headerSelectField} name="searchType" onChange={handleSearchTypeChange} placeholder="Select Parameter" allowClear>
+                                            <Form.Item name="searchType" initialValue={filterString?.searchType} rules={[validateRequiredSelectField('parameter')]}>
+                                                <Select className={styles.headerSelectField} onChange={handleSearchTypeChange} placeholder="Select Parameter" allowClear>
                                                     {typeData[PARAM_MASTER.OTF_SER.id]?.map((item) => (
                                                         <Option value={item.key} selected>
                                                             {item.value}
@@ -36,8 +42,8 @@ export default function AdvanceOtfFilter(props) {
                                                     ))}
                                                 </Select>
                                             </Form.Item>
-                                            <Form.Item {...otfSearchRules} name="searchParam" validateTrigger={['onChange', 'onSearch']}>
-                                                <Search placeholder="Search" value={filterString?.searchParam} onChange={handleSearchParamChange} allowClear onSearch={handleSearchParamSearch} className={styles.headerSearchField} />
+                                            <Form.Item {...otfSearchRules} name="searchParam" initialValue={filterString?.searchParam} validateTrigger={['onChange', 'onSearch']}>
+                                                <Search placeholder="Search" value={filterString?.searchParam} allowClear onSearch={handleSearchParamSearch} className={styles.headerSearchField} />
                                             </Form.Item>
                                         </Form>
                                     </div>

@@ -23,6 +23,7 @@ export const AdvancedSearchFrom = (props) => {
     const onFinish = (values) => {
         setFilterString({
             ...filterString,
+            ...values,
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
             otfStatus: values?.otfStatus,
