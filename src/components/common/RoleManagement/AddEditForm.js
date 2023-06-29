@@ -307,7 +307,7 @@ const AddEditFormMain = (props) => {
                                             minRows: 2,
                                             maxRows: 5,
                                         }}
-                                        maxLength={250}
+                                        maxLength={300}
                                         disabled={isReadOnly}
                                     />
                                 </Form.Item>

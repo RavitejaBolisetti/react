@@ -106,7 +106,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item name="manufactureAdminLongName" label="Long Description" initialValue={formData?.manufactureAdminLongName} rules={[validateRequiredInputField('long description')]}>
-                                <TextArea showCount rows={1} placeholder={preparePlaceholderText('long description')} {...disabledProps} />
+                                <TextArea rows={1} placeholder={preparePlaceholderText('long description')} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
