@@ -18,7 +18,7 @@ import { SVGComponent as ServiceIcon } from '@Icons/ServiceIcon';
 import { SVGComponent as SettingsIcon } from '@Icons/SettingsIcon';
 import { SVGComponent as SparesIcon } from '@Icons/SparesIcon';
 import { SVGComponent as ViewEyeIcon } from '@Icons/ViewEyeIcon';
-import { SVGComponent as RupeeIcon } from '@Icons/ViewEyeIcon';
+import { SVGComponent as RupeeIcon } from '@Icons/RupeeIcon';
 describe('Icons Components', () => {
     it('should render AdminIcon components', () => {
         render(<AdminIcon />);
