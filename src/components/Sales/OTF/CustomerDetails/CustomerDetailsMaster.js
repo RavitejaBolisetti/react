@@ -85,7 +85,7 @@ export const CustomerDetailsMain = (props) => {
     const [billCstmForm] = Form.useForm();
     const [formData, setFormData] = useState('');
     const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
-    const [activeKey, setactiveKey] = useState([1]);
+    const [activeKey, setActiveKey] = useState([1]);
 
     useEffect(() => {
         if (userId && customerFormData) {
@@ -123,11 +123,15 @@ export const CustomerDetailsMain = (props) => {
     }, [userId, selectedOrderId]);
 
     const onFinish = (values) => {
+        if (!values?.bookingCustomer?.pan || !values?.billingCustomer?.pan) {
+            setActiveKey([...activeKey, !values?.bookingCustomer?.pan ? 1 : '']);
+            setActiveKey([...activeKey, !values?.billingCustomer?.pan ? 2 : '']);
+            return false;
+        }
         form.getFieldsValue();
         const data = { bookingCustomer: { ...values?.bookingCustomer, birthDate: dayjs(values?.bookingCustomer?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, birthDate: dayjs(values?.billingCustomer?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
-
         const onSuccess = (res) => {
-            // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
@@ -166,6 +170,8 @@ export const CustomerDetailsMain = (props) => {
         setSameAsBookingCustomer,
         isDataLoaded,
         isLoading,
+        activeKey,
+        setActiveKey,
     };
 
     const viewProps = {
@@ -173,7 +179,7 @@ export const CustomerDetailsMain = (props) => {
         styles,
         isLoading,
         activeKey,
-        setactiveKey,
+        setActiveKey,
     };
 
     return (
