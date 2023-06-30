@@ -1,6 +1,6 @@
 module.exports = { 
     rootDir: 'src',
-    testEnvironment:'jsdom',
+    testEnvironment: 'jest-environment-jsdom',
     moduleFileExtensions: ['js','jsx'],
     moduleNameMapper: {
         "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
@@ -20,6 +20,14 @@ module.exports = {
         "@testing-library/jest-dom",
         "<rootDir>/jest.setup.js",
     ],
-    coveragePathIgnorePatterns: ["<rootDir>/state/","<rootDir>/language/","<rootDir>/utils/"],
+    coveragePathIgnorePatterns: ["<rootDir>/language/","<rootDir>/assets/","<rootDir>/utils/"],
     transformIgnorePatterns: ["<rootDir>/node_modules/(?![a-z])", "<rootDir>/assets/(?![a-z])"],
+    coverageThreshold: {
+        global: {
+          branches: 80,
+          functions: 80,
+          lines: 80,
+          statements: -10,
+        },
+      },
  };

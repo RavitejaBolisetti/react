@@ -1,3 +1,8 @@
+const { randomFillSync } = require('crypto')
+
+Object.defineProperty(globalThis, 'crypto', {
+  value: { getRandomValues: randomFillSync },
+})
 beforeAll(() => {
     Object.defineProperty(window, "matchMedia", {
         writable: true,
@@ -10,6 +15,6 @@ beforeAll(() => {
             addEventListener: jest.fn(),
             removeEventListener: jest.fn(),
             dispatchEvent: jest.fn(),
-        }))
+        })),
     });
 });
