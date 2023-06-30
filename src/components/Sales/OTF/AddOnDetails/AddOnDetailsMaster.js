@@ -19,7 +19,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'components/common/Common.module.css';
 const mapStateToProps = (state) => {
-    console.log(state);
     const {
         auth: { userId },
         data: {
@@ -55,6 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: otfAddOnDetailsDataActions.saveData,
             listShowLoading: otfAddOnDetailsDataActions.listShowLoading,
             resetData: otfAddOnDetailsDataActions.reset,
+            resetPartData: otfAddOnPartsDataActions.reset,
             showGlobalNotification,
         },
         dispatch
@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AddOnDetailsMasterMain = (props) => {
-    const { fetchList, partListLoading, showGlobalNotification, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, isDataLoaded, userId, listShowLoading, saveData, onFinishFailed } = props;
+    const { fetchList, resetPartData, partListLoading, showGlobalNotification, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, isDataLoaded, userId, listShowLoading, saveData, onFinishFailed } = props;
     const { form, section, selectedOrderId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
 
     const [formData, setformData] = useState();
@@ -73,7 +73,7 @@ export const AddOnDetailsMasterMain = (props) => {
         fms: {},
         partDetailsResponses: [],
     });
-    const [searchData, setsearchData] = useState();
+    const [searchData, setsearchData] = useState({});
     const [addOnItemInfo, setAddOnItemInfo] = useState([]);
     const [openAccordian, setopenAccordian] = useState(['ci']);
     const [accessoryForm] = Form.useForm();
@@ -92,8 +92,9 @@ export const AddOnDetailsMasterMain = (props) => {
     const onFinish = (values) => {
         let detailsRequest = [];
         formDataSetter?.partDetailsResponses?.map((element, index) => {
-            const { id, otfNumber, partNumber, requiredQuantity } = element;
-            detailsRequest.push({ id, otfNumber, partNumber, requiredQuantity });
+            const { id, otfNumber, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp } = element;
+
+            detailsRequest.push({ id, otfNumber, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp });
         });
         const data = { id: formData?.id ?? '', otfNumber: selectedOrderId, partDetailsRequests: detailsRequest, shield: formDataSetter?.shield, rsa: formDataSetter?.rsa, amc: formDataSetter?.amc, fms: formDataSetter?.fms };
         const onSuccess = (res) => {
@@ -102,7 +103,7 @@ export const AddOnDetailsMasterMain = (props) => {
             accessoryForm.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction });
-            // handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
         const onError = (message) => {
@@ -111,16 +112,16 @@ export const AddOnDetailsMasterMain = (props) => {
 
         const requestData = {
             data: data,
-            method: formData?.partDetailsResponses?.length < detailsRequest?.length ? 'post' : 'put',
+            method: formData?.id ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
         };
-        console.log('requestData', requestData);
         saveData(requestData);
     };
     const onSearchPart = (searchvalue) => {
+        if (!searchvalue) return;
         const extraParams = [
             {
                 key: 'partNumber',
@@ -132,7 +133,6 @@ export const AddOnDetailsMasterMain = (props) => {
         fetchSearchPartList({ setIsLoading: partListLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
     const handleCollapse = (values) => {
-        console.log('values', values);
         openAccordian?.includes(values) ? setopenAccordian('') : setopenAccordian([values]);
     };
     useEffect(() => {
@@ -161,8 +161,18 @@ export const AddOnDetailsMasterMain = (props) => {
                 })
             );
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, AddonDetailsData]);
+    }, [isDataLoaded]);
+    useEffect(() => {
+        return () => {
+            setsearchData();
+            resetPartData();
+            resetData();
+            accessoryForm.resetFields();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     useEffect(() => {
         if (isAddonPartsDataLoaded && AddonPartsData) {
             setsearchData(AddonPartsData);
@@ -181,6 +191,7 @@ export const AddOnDetailsMasterMain = (props) => {
         amcForm,
         fmsForm,
         accessoryForm,
+        formActionType,
     };
     const formProps = {
         formData,

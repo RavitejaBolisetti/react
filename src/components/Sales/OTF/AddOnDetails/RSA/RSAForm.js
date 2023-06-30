@@ -7,17 +7,17 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-const RSAForm = ({ formData, rsaForm, setformDataSetter, formDataSetter,handleFormValueChange }) => {
+const RSAForm = ({ formData, rsaForm, setformDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
 
     useEffect(() => {
-        if (formData === undefined) {
+        if (formData === undefined && !formActionType?.viewMode) {
             setisReadOnly(false);
         } else {
             setisReadOnly(true);
             rsaForm.setFieldsValue({
-                rsa: formData?.rsa ? formData?.rsa?.rsa : null,
-                rsaRate: formData?.rsa?.rsaRate ? formData?.rsa?.rsaRate : null,
+                rsa: formData?.rsa ? formData?.rsa?.rsa : 'NA',
+                rsaRate: formData?.rsa?.rsaRate ? formData?.rsa?.rsaRate : 'NA',
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

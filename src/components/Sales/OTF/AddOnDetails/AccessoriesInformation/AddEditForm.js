@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Input, Form, Col, Row, Button, Divider, Space } from 'antd';
+import { Input, Form, Col, Row, Button, Divider } from 'antd';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -22,7 +22,6 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                 ...searchData,
             });
         }
-        console.log('searchData', searchData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchData]);
     const handleAccesoriesForm = () => {
@@ -47,7 +46,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                 setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
                 handleFormValueChange();
             })
-            .catch(() => {});
+            .catch((err) => {});
     };
 
     const onFinishFailed = (err) => {
@@ -114,30 +113,28 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                     </Form.Item>
                 </Row>
             </Form>
-            <Row gutter={20}>
-                {addButtonDisabled?.partDetailsResponses ? (
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Space size="large" style={{ marginBottom: '20px' }}>
-                            <Button style={{ marginRight: '12px', height: '36px' }} disabled={isBtnDisabled} onClick={handleAccesoriesForm} type="primary" danger>
+            <Row gutter={20} justify="start">
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.addOnButtons}>
+                    {addButtonDisabled?.partDetailsResponses ? (
+                        <>
+                            <Button disabled={isBtnDisabled} onClick={handleAccesoriesForm} type="primary" danger>
                                 Add
                             </Button>
                             <Button danger onClick={onCancel}>
                                 Cancel
                             </Button>
-                        </Space>
-                    </Col>
-                ) : (
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Space className={styles.accessoryFormButton} size="large" style={{ marginBottom: '20px' }}>
-                            <Button style={{ marginRight: '12px', height: '36px' }} type="primary" onClick={() => onUpdate(index, seteditCardForm, editCardForm)}>
+                        </>
+                    ) : (
+                        <>
+                            <Button type="primary" onClick={() => onUpdate(index, seteditCardForm, editCardForm)}>
                                 Save
                             </Button>
-                            <Button danger onClick={() => onCancel()}>
+                            <Button danger onClick={onCancel}>
                                 Cancel
                             </Button>
-                        </Space>
-                    </Col>
-                )}
+                        </>
+                    )}
+                </Col>
             </Row>
         </>
     );
