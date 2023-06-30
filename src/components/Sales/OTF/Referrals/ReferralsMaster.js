@@ -9,19 +9,20 @@ import { Row, Col, Form } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
-import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
 import { showGlobalNotification } from 'store/actions/notification';
+import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
+import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { validateRequiredInputField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
+
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'components/common/Common.module.css';
 
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-import dayjs from 'dayjs';
+
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
-import { convertCalenderDate } from 'utils/formatDateTime';
 
 const mapStateToProps = (state) => {
     const {
@@ -265,6 +266,10 @@ const ReferralsMasterBase = (props) => {
         handleSearchParamSearch,
         resetField,
         referralSearchRules,
+        filterString,
+        optionType: typeData[PARAM_MASTER.OTF_SER.id],
+
+        searchParamRule: referralSearchRules,
     };
 
     const viewProps = {

@@ -8,18 +8,15 @@ import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, DatePicker, Card, Select } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField, validateRequiredSelectField, validateMobileNoField } from 'utils/validation';
-// import { disableFutureDate } from 'utils/disableDate';
+import { validateRequiredInputField, validateMobileNoField } from 'utils/validation';
 import { convertDateToCalender } from 'utils/formatDateTime';
-import { PARAM_MASTER } from 'constants/paramMaster';
+
+import { SearchBox } from 'components/utils/SearchBox';
 
 import styles from 'components/common/Common.module.css';
 
-const { Search } = Input;
-const { Option } = Select;
-
 const AddEditFormMain = (props) => {
-    const { formData, form, searchForm, filterString, handleSearchTypeChange, handleSearchParamSearch, onSearch, isCustomerLoading, typeData, referralSearchRules } = props;
+    const { formData, form, typeData } = props;
 
     useEffect(() => {
         if (formData?.hasOwnProperty('mobileNumber')) {
@@ -39,23 +36,8 @@ const AddEditFormMain = (props) => {
         <Card style={{ backgroundColor: '#F2F2F2' }}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground1}>
-                        <div className={styles.selectSearchBg}>
-                            <Form form={searchForm} layout="vertical" autoComplete="off">
-                                <Form.Item name="searchType" initialValue={filterString?.searchType} rules={[validateRequiredSelectField('parameter')]}>
-                                    <Select className={styles.headerSelectField} onChange={handleSearchTypeChange} placeholder="Select Parameter" allowClear>
-                                        {typeData[PARAM_MASTER.OTF_SER.id]?.map((item) => (
-                                            <Option value={item.key} selected>
-                                                {item.value}
-                                            </Option>
-                                        ))}
-                                    </Select>
-                                </Form.Item>
-                                <Form.Item {...referralSearchRules} name="searchParam" initialValue={filterString?.searchParam} validateTrigger={['onChange', 'onSearch']}>
-                                    <Search placeholder="Search" value={filterString?.searchParam} allowClear onSearch={handleSearchParamSearch} className={styles.headerSearchField} />
-                                </Form.Item>
-                            </Form>
-                        </div>
+                    <div className={styles.contentHeaderBackground}>
+                        <SearchBox {...props} />
                     </div>
                 </Col>
             </Row>
