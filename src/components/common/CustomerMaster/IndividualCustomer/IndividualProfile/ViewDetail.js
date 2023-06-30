@@ -67,7 +67,7 @@ const ViewDetailMain = (props) => {
                     >
                         <Descriptions {...viewProps}>
                             <div>
-                                <img width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
+                                <img alt='uploaded suppoting document' width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
                             </div>
                             <br />
                             <br />
