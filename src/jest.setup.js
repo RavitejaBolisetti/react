@@ -1,6 +1,6 @@
-const { randomFillSync } = require('crypto')
+import { randomFillSync } from "crypto";
 
-Object.defineProperty(globalThis, 'crypto', {
+Object.defineProperty(globalThis, "crypto", {
   value: { getRandomValues: randomFillSync },
 })
 beforeAll(() => {
