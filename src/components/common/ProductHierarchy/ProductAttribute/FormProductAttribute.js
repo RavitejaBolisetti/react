@@ -20,7 +20,8 @@ function FormProductAttribute(props) {
 
     const fieldNames = { label: 'attributeCode', value: 'id' };
 
-    const getValues = () => {
+    const onChange = (val) => {
+        console.log(val,'CONSOLE')
         let newFormData = formDecider ? editForm?.getFieldsValue() : attributeForm?.getFieldsValue();
         setChangeValue(newFormData);
     };
@@ -40,8 +41,9 @@ function FormProductAttribute(props) {
                             fieldNames={fieldNames}
                             allowClear
                             labelInValue
-                            onChange={getValues}
+                            onChange={onChange}
                             key={productHierarchyAttributeData.id}
+
                         />
                     </Form.Item>
                 </Col>

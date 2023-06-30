@@ -7,22 +7,30 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-const FMSForm = ({ formData, fmsForm }) => {
+const FMSForm = ({ formData, fmsForm, setformDataSetter, formDataSetter, handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
 
     const onFieldsChange = () => {};
     const onFinishFailed = () => {};
     useEffect(() => {
-        setisReadOnly(true);
-        fmsForm.setFieldsValue({
-            fms: formData?.fms?.fms ? formData?.fms?.fms : 'NA',
-            fmsRate: formData?.fms?.fmsRate ? formData?.fms?.fmsRate : 'NA',
-        });
+        if (formData === undefined) {
+            setisReadOnly(false);
+        } else {
+            setisReadOnly(true);
+            fmsForm.setFieldsValue({
+                fms: formData?.fms?.fms ? formData?.fms?.fms : null,
+                fmsRate: formData?.fms?.fmsRate ? formData?.fms?.fmsRate : null,
+            });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
+    const onValuesChange = (values) => {
+        const Myvalues = fmsForm.getFieldsValue();
+        setformDataSetter({ ...formDataSetter, fms: { ...Myvalues } });
+    };
 
     return (
-        <Form form={fmsForm} onFieldsChange={onFieldsChange} autoComplete="off" id="shieldForm" layout="vertical" onFinishFailed={onFinishFailed}>
+        <Form form={fmsForm} onValuesChange={onValuesChange} onFieldsChange={handleFormValueChange} autoComplete="off" id="shieldForm" layout="vertical" onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="FMS" name="fms">

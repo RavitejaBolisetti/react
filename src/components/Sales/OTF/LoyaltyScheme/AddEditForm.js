@@ -136,7 +136,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item name="remarks" label="Remarks" initialValue={formData?.remarks}>
-                            <TextArea disabled={true} placeholder={preparePlaceholderText('remarks')} maxLength={200} />
+                            <TextArea disabled={true} placeholder={preparePlaceholderText('remarks')} maxLength={300} />
                         </Form.Item>
                     </Col>
                 </Row>

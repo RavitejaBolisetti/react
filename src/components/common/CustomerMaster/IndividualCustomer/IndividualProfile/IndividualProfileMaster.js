@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             CustomerMaster: {
-                IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading, data: indiviualData = [] },
+                IndiviualProfile: { isLoaded: isIndiviualProfileLoaded = false, isLoading, data: indiviualData },
                 ViewDocument: { isLoaded: isViewDataLoaded = false, isLoading: isViewDocumentLoading, data: viewDocument },
             },
             ConfigurableParameterEditing: { filteredListData: appCategoryData = [] },
@@ -57,6 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: indiviualProfileDataActions.fetchList,
             listIndiviualShowLoading: indiviualProfileDataActions.listShowLoading,
             saveData: indiviualProfileDataActions.saveData,
+            resetData: indiviualProfileDataActions.reset,
 
             saveDocumentData: supportingDocumentDataActions.saveData,
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
@@ -73,13 +74,12 @@ const mapDispatchToProps = (dispatch) => ({
 const IndividualProfileBase = (props) => {
     const { userId, isIndiviualProfileLoaded, fecthViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification, handleButtonClick } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, downloadFile } = props;
-    const { saveDocumentData, uploadDocumentFile, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, NEXT_ACTION } = props;
+    const { saveDocumentData, uploadDocumentFile, setRefreshList, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, NEXT_ACTION } = props;
     const [form] = Form.useForm();
 
     const [formData, setFormData] = useState([]);
     const [activeKey, setActiveKey] = useState([1]);
     const [uploadedFile, setUploadedFile] = useState();
-    const [isBorder, setIsBorder] = useState(false);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -89,8 +89,7 @@ const IndividualProfileBase = (props) => {
     };
 
     useEffect(() => {
-        if (!formActionType?.addMode && userId && selectedCustomerId) {
-            {
+        if ( userId && selectedCustomerId) {
             const extraParams = [
                 {
                     key: 'customerId',
@@ -101,7 +100,6 @@ const IndividualProfileBase = (props) => {
             ];
             fetchList({ setIsLoading: listIndiviualShowLoading, userId, extraParams, onErrorAction });
         }
-    }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
@@ -144,6 +142,7 @@ const IndividualProfileBase = (props) => {
     }, [indiviualData]);
 
     const onFinish = (values) => {
+        setRefreshList(false);
         const recordId = formData?.id || '';
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
 
@@ -164,6 +163,7 @@ const IndividualProfileBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                setRefreshList(true);
             }
             setButtonData({ ...buttonData, formBtnActive: false });
         };
@@ -189,7 +189,18 @@ const IndividualProfileBase = (props) => {
             {
                 key: 'docId',
                 title: 'docId',
-                value: indiviualData?.image,
+                value: indiviualData?.customerConsentForm,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: listIndiviualShowLoading, userId, extraParams });
+    };
+    const handleOnClickCustomerForm = () => {
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: indiviualData?.customerConsentForm,
                 name: 'docId',
             },
         ];
@@ -203,7 +214,6 @@ const IndividualProfileBase = (props) => {
     };
 
     const formProps = {
-        isBorder,
         form,
         formData: indiviualData,
         formActionType,
@@ -226,6 +236,7 @@ const IndividualProfileBase = (props) => {
         showDataLoading,
         viewDocument,
         isViewDocumentLoading,
+        handleOnClickCustomerForm,
         NEXT_ACTION,
     };
 

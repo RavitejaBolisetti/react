@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -84,7 +84,9 @@ const AddEditFormMain = (props) => {
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
                             <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} disabled={formData?.id || isReadOnly} showSearch allowClear>
                                 {attributeData?.map((item) => (
-                                    <Option key={item?.id} value={item?.id}>{item?.hierarchyAttribueName}</Option>
+                                    <Option key={item?.id} value={item?.id}>
+                                        {item?.hierarchyAttribueName}
+                                    </Option>
                                 ))}
                             </Select>
                         </Form.Item>
@@ -114,7 +116,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item name="manufactureOrgLongName" label="Long Description" placeholder={preparePlaceholderSelect('Long Description')} initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('Long Description')]}>
-                            <TextArea rows={1} placeholder={preparePlaceholderText('Long Description')} showCount maxLength={100} disabled={formData?.id || isReadOnly} />
+                            <TextArea rows={1} placeholder={preparePlaceholderText('Long Description')} maxLength={300} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>

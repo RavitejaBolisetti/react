@@ -15,6 +15,10 @@
     overflow: hidden;
 }
 
+.bigDrawerStyle :global .ant-collapse>.ant-collapse-item {
+    border-bottom: none;
+}
+
 .myDrawerStyle :global .ant-drawer-body::-webkit-scrollbar-track {
     background-color: #ffffff;
 }

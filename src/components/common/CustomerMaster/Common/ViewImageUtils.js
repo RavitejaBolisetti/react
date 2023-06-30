@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ViewImageUtilsMain = (props) => {
-    const { uploadImgTitle, viewDocument, formData } = props;
+    const { uploadImgTitle, viewDocument, formData, showImage, setShowImage } = props;
     const { listShowLoading, userId, uploadFile, fecthViewDocument, listShowLoadingOnLoad, setUploadImgDocId } = props;
     const [uploadedFile, setUploadedFile] = useState();
     const [visible, setVisible] = useState(false);
@@ -79,6 +79,9 @@ const ViewImageUtilsMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uploadedFile, formData?.docId]);
 
+    const onHandleImage = () => {
+        setShowImage(true);
+    };
     return (
         <>
             <>
@@ -106,7 +109,9 @@ const ViewImageUtilsMain = (props) => {
                                 placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={200} />}
                                 src={`data:image/png;base64,${viewDocument?.base64}`}
                             />
-                            <Button type="link">Replace Image</Button>
+                            <Button onClick={onHandleImage} type="link">
+                                Replace Image
+                            </Button>
                         </Space>
                     </Space>
                 </Card>
