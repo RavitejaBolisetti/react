@@ -18,6 +18,7 @@ import { SVGComponent as ServiceIcon } from '@Icons/ServiceIcon';
 import { SVGComponent as SettingsIcon } from '@Icons/SettingsIcon';
 import { SVGComponent as SparesIcon } from '@Icons/SparesIcon';
 import { SVGComponent as ViewEyeIcon } from '@Icons/ViewEyeIcon';
+import { SVGComponent as RupeeIcon } from '@Icons/ViewEyeIcon';
 describe('Icons Components', () => {
     it('should render AdminIcon components', () => {
         render(<AdminIcon />);
@@ -49,28 +50,31 @@ describe('Icons Components', () => {
     it('should render LogoutIcon components', () => {
         render(<LogoutIcon />);
     });
-    it('should render HomeIcon components', () => {
+    it('should render MenuArrow components', () => {
         render(<MenuArrow />);
     });
-    it('should render HomeIcon components', () => {
+    it('should render MinusBorderedIcon components', () => {
         render(<MinusBorderedIcon />);
     });
-    it('should render HomeIcon components', () => {
+    it('should render PlusBorderedIcon components', () => {
         render(<PlusBorderedIcon />);
     });
-    it('should render HomeIcon components', () => {
+    it('should render ProfileIcon components', () => {
         render(<ProfileIcon />);
     });
-    it('should render HomeIcon components', () => {
+    it('should render ServiceIcon components', () => {
         render(<ServiceIcon />);
     });
-    it('should render HomeIcon components', () => {
+    it('should render SettingsIcon components', () => {
         render(<SettingsIcon />);
     });
-    it('should render HomeIcon components', () => {
+    it('should render SparesIcon components', () => {
         render(<SparesIcon />);
     });
-    it('should render HomeIcon components', () => {
+    it('should render ViewEyeIcon components', () => {
         render(<ViewEyeIcon />);
     });
+    it('should render RupeeIcon components', () => {
+        render(<RupeeIcon />);
+    }); 
 });
