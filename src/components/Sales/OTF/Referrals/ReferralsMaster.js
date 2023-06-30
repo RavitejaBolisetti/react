@@ -12,6 +12,7 @@ import { bindActionCreators } from 'redux';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
 import { showGlobalNotification } from 'store/actions/notification';
+import { validateRequiredInputField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
@@ -66,9 +67,12 @@ const mapDispatchToProps = (dispatch) => ({
 const ReferralsMasterBase = (props) => {
     const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading, resetData } = props;
     const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, listCustomerShowLoading, typeData, handleButtonClick, NEXT_ACTION } = props;
+    const [searchForm] = Form.useForm();
 
     const [formData, setFormData] = useState();
     const [resetField, setResetField] = useState(false);
+    const [referralSearchRules, setReferralSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
+    const { filterString, setFilterString } = useState();
 
     useEffect(() => {
         setFormData(referralData);
@@ -180,16 +184,87 @@ const ReferralsMasterBase = (props) => {
             onErrorAction,
         });
     };
+    const handleSearchTypeChange = (searchType) => {
+        if (searchType === 'customerName') {
+            setReferralSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
+        } else {
+            // searchForm.setFieldsValue({ searchParam: undefined, searchType: undefined });
+            // setFilterString({ ...filterString, searchParam: undefined, searchType: undefined });
+        }
+    };
+
+    const handleSearchParamSearch = (values) => {
+        searchForm
+            .validateFields()
+            .then((values) => {
+                // setFilterString({ ...values, advanceFilter: true });
+
+                setResetField(false);
+                if (!values) {
+                    setFormData();
+                    return false;
+                }
+                const defaultExtraParam = [
+                    {
+                        key: 'customerType',
+                        title: 'Customer Type',
+                        value: 'ALL',
+                        canRemove: true,
+                    },
+                    {
+                        key: 'pageSize',
+                        title: 'Value',
+                        value: 1000,
+                        canRemove: true,
+                    },
+                    {
+                        key: 'pageNumber',
+                        title: 'Value',
+                        value: 1,
+                        canRemove: true,
+                    },
+
+                    {
+                        key: 'searchType',
+                        title: 'Type',
+                        value: values?.searchType,
+                        canRemove: true,
+                    },
+                    {
+                        key: 'searchParam',
+                        title: 'Value',
+                        value: values?.searchParam,
+                        canRemove: true,
+                    },
+                ];
+
+                fetchCustomerList({
+                    setIsLoading: listCustomerShowLoading,
+                    extraParams: defaultExtraParam,
+                    userId,
+                    onSuccessAction: (res) => {
+                        res?.data?.customerMasterDetails.length === 1 ? setFormData(res?.data?.customerMasterDetails[0]) : console.log('Please add registrtion option');
+                    },
+                    onErrorAction,
+                });
+            })
+            .catch((err) => {
+                return;
+            });
+    };
 
     const formProps = {
         ...props,
+        searchForm,
         form,
         formData,
         onFinish,
         onFinishFailed,
         onSearch,
-
+        handleSearchTypeChange,
+        handleSearchParamSearch,
         resetField,
+        referralSearchRules,
     };
 
     const viewProps = {
