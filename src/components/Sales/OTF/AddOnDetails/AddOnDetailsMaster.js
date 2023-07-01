@@ -91,37 +91,7 @@ export const AddOnDetailsMasterMain = (props) => {
         resetData();
         showGlobalNotification({ message });
     };
-    const onFinish = (values) => {
-        let detailsRequest = [];
-        formDataSetter?.partDetailsResponses?.map((element, index) => {
-            const { id, otfNumber, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp } = element;
 
-            detailsRequest.push({ id, otfNumber, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp });
-        });
-        const data = { id: formData?.id ?? '', otfNumber: selectedOrderId, partDetailsRequests: detailsRequest, shield: formDataSetter?.shield, rsa: formDataSetter?.rsa, amc: formDataSetter?.amc, fms: formDataSetter?.fms };
-        const onSuccess = (res) => {
-            setformDataSetter({});
-            setformData({});
-            accessoryForm.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onErrorAction, onSuccessAction });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        const requestData = {
-            data: data,
-            method: formData?.id ? 'put' : 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-        saveData(requestData);
-    };
     const onSearchPart = (searchvalue) => {
         if (!searchvalue) return;
         const extraParams = [
@@ -134,21 +104,24 @@ export const AddOnDetailsMasterMain = (props) => {
         ];
         fetchSearchPartList({ setIsLoading: partListLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
+
     const handleCollapse = (values) => {
         openAccordian?.includes(values) ? setopenAccordian('') : setopenAccordian([values]);
     };
+
+    const extraParams = [
+        {
+            key: 'otfNumber',
+            title: 'otfNumber',
+            value: selectedOrderId,
+            name: 'OTF Number',
+        },
+    ];
+
     useEffect(() => {
         if (userId && selectedOrderId) {
-            const extraParams = [
-                {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOrderId,
-                    name: 'OTF Number',
-                },
-            ];
             accessoryForm.resetFields();
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -181,6 +154,38 @@ export const AddOnDetailsMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAddonPartsDataLoaded, AddonPartsData]);
+
+    const onFinish = (values) => {
+        let detailsRequest = [];
+        formDataSetter?.partDetailsResponses?.map((element, index) => {
+            const { id, otfNumber, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp } = element;
+
+            detailsRequest.push({ id, otfNumber, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp });
+        });
+        const data = { id: formData?.id ?? '', otfNumber: selectedOrderId, partDetailsRequests: detailsRequest, shield: formDataSetter?.shield, rsa: formDataSetter?.rsa, amc: formDataSetter?.amc, fms: formDataSetter?.fms };
+
+        const onSuccess = (res) => {
+            setformDataSetter({});
+            setformData({});
+            accessoryForm.resetFields();
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+
+        const requestData = {
+            data: data,
+            method: formData?.id ? 'put' : 'post',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+        saveData(requestData);
+    };
 
     const viewProps = {
         formData,
