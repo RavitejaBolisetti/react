@@ -26,7 +26,11 @@ export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn 
             case OTF_STATUS?.BOOKED?.title:
                 return { ...btnVisibility, transferBtn: true, allotBtn: true, cancelOtfBtn: true };
             case OTF_STATUS?.ALLOTED?.title:
-                return { ...btnVisibility, transferBtn: true, unAllotBtn: true, invoiceBtn: true };
+                return { ...btnVisibility, unAllotBtn: true, invoiceBtn: true };
+            case OTF_STATUS?.INVOICED?.title:
+                return { ...btnVisibility, deliveryNoteBtn: true };
+            case OTF_STATUS?.TRANSFERRED?.title:
+                return { ...btnVisibility, allotBtn: true, cancelOtfBtn: true };
             case OTF_STATUS?.CANCELLED?.title:
             case OTF_STATUS?.DELIVERED?.title:
                 return { ...btnVisibility, editBtn: false };
