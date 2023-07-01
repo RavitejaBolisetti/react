@@ -353,7 +353,6 @@ export const ListTehsilBase = (props) => {
 
     const handleResetFilter = () => {
         setFilterString();
-        resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
         setFilteredDistrictData(undefined);

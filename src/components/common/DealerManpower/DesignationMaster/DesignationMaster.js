@@ -324,7 +324,6 @@ export const DesignationMasterBase = (props) => {
     };
 
     const handleResetFilter = () => {
-        resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
         setFilterString();

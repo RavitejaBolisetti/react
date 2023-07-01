@@ -317,7 +317,6 @@ export const ListRoleMasterBase = (props) => {
 
     const handleResetFilter = () => {
         setFilterString();
-        resetData();
         listFilterForm.resetFields();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);

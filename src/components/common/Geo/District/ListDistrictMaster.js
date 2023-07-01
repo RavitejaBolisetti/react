@@ -327,7 +327,6 @@ export const ListDistrictBase = (props) => {
 
     const handleResetFilter = () => {
         setFilterString();
-        resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
     };
