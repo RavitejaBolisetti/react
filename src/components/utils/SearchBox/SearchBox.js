@@ -8,8 +8,8 @@ import { Form, Select, Input } from 'antd';
 
 import { validateRequiredSelectField } from 'utils/validation';
 
-import styles from 'components/common/Common.module.css';
-// import styles from './SearchBox.module.css';
+// import styles from 'components/common/Common.module.css';
+import styles from './SearchBox.module.css';
 
 const { Option } = Select;
 const { Search } = Input;
