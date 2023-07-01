@@ -15,8 +15,7 @@ const { Panel } = Collapse;
 
 const AddEditFormBase = (props) => {
     const { form, billCstmForm, formData, customerFormData, setSameAsBookingCustomer } = props;
-    const { typeData } = props;
-    const [activeKey, setactiveKey] = useState([1]);
+    const { typeData, activeKey, setActiveKey } = props;
 
     useEffect(() => {
         if (formData) {
@@ -38,9 +37,9 @@ const AddEditFormBase = (props) => {
                     newActivekeys.push(item);
                 }
             });
-            setactiveKey(newActivekeys);
+            setActiveKey(newActivekeys);
         } else {
-            setactiveKey([...activeKey, values]);
+            setActiveKey([...activeKey, values]);
         }
     };
 

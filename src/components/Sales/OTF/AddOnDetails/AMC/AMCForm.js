@@ -7,17 +7,17 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form, Button } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-const AMCForm = ({ formData, amcForm, setformDataSetter, formDataSetter, handleFormValueChange }) => {
+const AMCForm = ({ formData, amcForm, setformDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
 
     useEffect(() => {
-        if (formData === undefined) {
+        if (formData === undefined && !formActionType?.viewMode) {
             setisReadOnly(false);
         } else {
             setisReadOnly(true);
             amcForm.setFieldsValue({
-                amc: formData?.amc?.amc ? formData?.amc?.amc : null,
-                amcRate: formData?.amc?.amcRate ? formData?.amc?.amcRate : null,
+                amc: formData?.amc?.amc ? formData?.amc?.amc : 'NA',
+                amcRate: formData?.amc?.amcRate ? formData?.amc?.amcRate : 'NA',
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

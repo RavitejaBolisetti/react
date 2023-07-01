@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        typeData,
+        typeData: typeData[PARAM_MASTER.OTF_SER.id],
         isDataLoaded,
         data: data?.otfDetails,
         otfStatusList: Object.values(OTF_STATUS),
@@ -137,7 +137,7 @@ export const OtfMasterBase = (props) => {
                 key: 'searchType',
                 title: 'Type',
                 value: filterString?.searchType,
-                name: typeData[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value,
+                name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
                 canRemove: false,
                 filter: true,
             },
@@ -259,11 +259,11 @@ export const OtfMasterBase = (props) => {
 
     const onFinishSearch = (values) => {};
 
-    const handleResetFilter = (e) => {
-        setFilterString();
-        setShowDataLoading(true);
-        advanceFilterForm.resetFields();
-    };
+    // const handleResetFilter = (e) => {
+    //     setFilterString();
+    //     setShowDataLoading(true);
+    //     advanceFilterForm.resetFields();
+    // };
 
     const onFinish = (values) => {
         const recordId = formData?.parentId || form.getFieldValue('parentId');
@@ -371,7 +371,7 @@ export const OtfMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        handleResetFilter,
+        // handleResetFilter,
 
         title,
         data,
@@ -392,7 +392,7 @@ export const OtfMasterBase = (props) => {
         titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,
-        handleResetFilter,
+        // handleResetFilter,
         filterString,
         setFilterString,
         advanceFilterForm,
