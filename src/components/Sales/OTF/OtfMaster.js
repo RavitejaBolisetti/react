@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        typeData,
+        typeData: typeData[PARAM_MASTER.OTF_SER.id],
         isDataLoaded,
         data: data?.otfDetails,
         otfStatusList: Object.values(OTF_STATUS),
@@ -72,12 +72,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
+    const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
-    const [refreshData, setRefreshData] = useState(true);
     const [listFilterForm] = Form.useForm();
 
     const [selectedOrder, setSelectedOrder] = useState();
@@ -127,7 +126,7 @@ export const OtfMasterBase = (props) => {
                 key: 'searchType',
                 title: 'Type',
                 value: filterString?.searchType,
-                name: typeData[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value,
+                name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
                 canRemove: false,
                 filter: true,
             },
@@ -212,13 +211,11 @@ export const OtfMasterBase = (props) => {
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setShowDataLoading(false);
-        setRefreshData(false);
     };
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
-        setRefreshData(false);
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -366,7 +363,6 @@ export const OtfMasterBase = (props) => {
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
-        setRefreshData,
         otfStatusList,
         advanceFilter: true,
         otfFilter: true,
@@ -403,7 +399,6 @@ export const OtfMasterBase = (props) => {
         advanceFilterForm,
         setAdvanceSearchVisible,
         otfStatusList,
-        setRefreshData,
         typeData,
         onFinishSearch,
     };

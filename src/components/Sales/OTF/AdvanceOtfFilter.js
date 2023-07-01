@@ -4,16 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Form, Button, Row, Col, Input, Select } from 'antd';
+import { Button, Row, Col } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import styles from 'components/common/Common.module.css';
-import { validateRequiredSelectField } from 'utils/validation';
-
-import { PARAM_MASTER } from 'constants/paramMaster';
-
-const { Search } = Input;
-const { Option } = Select;
+import { SearchBox } from 'components/utils/SearchBox';
 
 export default function AdvanceOTFFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, handleSearchTypeChange, handleSearchParamSearch, typeData, setAdvanceSearchVisible, searchForm, otfSearchRules, reff } = props;
@@ -22,6 +17,15 @@ export default function AdvanceOTFFilter(props) {
         searchForm.setFieldsValue({ searchParam: filterString?.searchParam, searchType: filterString?.searchType });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
+
+    const serachBoxProps = {
+        searchForm,
+        filterString,
+        optionType: typeData,
+        handleSearchTypeChange,
+        handleSearchParamSearch,
+        searchParamRule: otfSearchRules,
+    };
     return (
         <>
             <div className={styles.contentHeaderBackground}>
@@ -31,7 +35,9 @@ export default function AdvanceOTFFilter(props) {
                         <Row gutter={20}>
                             {otfFilter && (
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                                    <div className={styles.selectSearchBg}>
+                                    <SearchBox {...serachBoxProps} />
+
+                                    {/* <div className={styles.selectSearchBg}>
                                         <Form form={searchForm} layout="vertical" autoComplete="off">
                                             <Form.Item name="searchType" initialValue={filterString?.searchType} rules={[validateRequiredSelectField('parameter')]}>
                                                 <Select className={styles.headerSelectField} onChange={handleSearchTypeChange} placeholder="Select Parameter" allowClear>
@@ -46,7 +52,7 @@ export default function AdvanceOTFFilter(props) {
                                                 <Search placeholder="Search" value={filterString?.searchParam} allowClear onSearch={handleSearchParamSearch} className={styles.headerSearchField} />
                                             </Form.Item>
                                         </Form>
-                                    </div>
+                                    </div> */}
                                 </Col>
                             )}
                             {advanceFilter && (

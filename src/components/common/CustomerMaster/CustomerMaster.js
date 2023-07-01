@@ -6,11 +6,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Row, Input, Form, Empty, ConfigProvider, Select } from 'antd';
+import { Button, Col, Row, Form, Empty, ConfigProvider } from 'antd';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { showGlobalNotification } from 'store/actions/notification';
-import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { tableColumn } from './tableColumn';
@@ -19,6 +19,7 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
+import { SearchBox } from 'components/utils/SearchBox';
 import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection';
 import { CUSTOMER_CORPORATE_SECTION } from 'constants/CustomerCorporateSection';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
@@ -26,9 +27,6 @@ import { CUSTOMER_TYPE } from 'constants/CustomerType';
 import DataTable from 'utils/dataTable/DataTable';
 import { CustomerMainConatiner } from './CustomerMainConatiner';
 import styles from 'components/common/Common.module.css';
-
-const { Search } = Input;
-const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
@@ -85,7 +83,7 @@ const CustomerMasterMain = (props) => {
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
-    const [customerSearchRules, setCustomerSearchRules] = useState({ rules: [validateRequiredInputField('Keyword')] });
+    const [customerSearchRules, setCustomerSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -231,44 +229,18 @@ const CustomerMasterMain = (props) => {
         form.resetFields();
     };
 
-    const onSearchHandle = (value) => {
-        searchForm
-            .validateFields()
-            .then((values) => {
-                setShowDataLoading(true);
-                fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
-            })
-            .catch((err) => {
-                console.log(err);
-                return;
-            });
-    };
-
-    const handleChange = (selectedvalue) => {
-        setFilterString({ searchType: selectedvalue, searchParam: '' });
-        setCustomerSearchRules({ rules: [validateRequiredInputField('Keyword')] });
-
-        //setSearchvalue(''); // Cleared search value
-        // setFilterString({ ...filterString, searchParam: '' });
-        console.log('filterString', filterString);
-    };
-
-    const onChangeHandle = (event) => {
-        if (event.target.value === undefined) {
-            return false;
-        }
-        if (!filterString?.searchType) {
-            setCustomerSearchRules({ rules: [validateRequiredSelectField('Parameter')] });
-        }
-        if (filterString?.searchType === 'mobileNumber') {
-            setCustomerSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
-        }
-        if (filterString?.searchType === 'customerName') {
-            setCustomerSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
-        }
-
-        setFilterString({ ...filterString, searchParam: event.target.value });
-    };
+    // const onSearchHandle = (value) => {
+    //     searchForm
+    //         .validateFields()
+    //         .then((values) => {
+    //             setShowDataLoading(true);
+    //             fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //             return;
+    //         });
+    // };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -333,21 +305,43 @@ const CustomerMasterMain = (props) => {
         saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
     };
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        allowClear: true,
-        className: styles.headerSelectField,
-    };
-
-    const onKeyPressHandler = (e) => {
-        e.key === 'Enter' && e.preventDefault();
-    };
-
     const handleCustomerTypeChange = (id) => {
         setCustomerType(id);
         searchForm.resetFields();
     };
 
+    const handleSearchTypeChange = (searchType) => {
+        if (searchType === 'mobileNumber') {
+            setCustomerSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
+        } else if (searchType === 'customerName') {
+            setCustomerSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
+        } else if (searchType === 'otfNumber') {
+            setCustomerSearchRules({ rules: [validateRequiredInputField('OTF Number')] });
+        } else {
+            // searchForm.setFieldsValue({ searchParam: undefined, searchType: undefined });
+            // setFilterString({ ...filterString, searchParam: undefined, searchType: undefined });
+        }
+    };
+
+    const handleSearchParamSearch = (values) => {
+        searchForm
+            .validateFields()
+            .then((values) => {
+                setFilterString({ ...values, advanceFilter: true });
+            })
+            .catch((err) => {
+                return;
+            });
+    };
+
+    const serachBoxProps = {
+        searchForm,
+        filterString,
+        optionType: typeData,
+        handleSearchTypeChange,
+        handleSearchParamSearch,
+        searchParamRule: customerSearchRules,
+    };
     return (
         <>
             <Row gutter={20}>
@@ -364,7 +358,8 @@ const CustomerMasterMain = (props) => {
                                         );
                                     })}
                                 </div>
-                                <div className={styles.selectSearchBg}>
+                                <SearchBox {...serachBoxProps} />
+                                {/* <div className={styles.selectSearchBg}>
                                     <Form onKeyPress={onKeyPressHandler} form={searchForm} layout="vertical" autoComplete="off">
                                         <Form.Item name="parameter" rules={[validateRequiredSelectField('parameter')]}>
                                             <Select {...selectProps} value={filterString?.searchType} className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter">
@@ -379,7 +374,7 @@ const CustomerMasterMain = (props) => {
                                             <Search placeholder="Search" value={filterString?.searchParam} onChange={onChangeHandle} onSearch={onSearchHandle} allowClear className={styles.headerSearchField} htmlType="submit" />
                                         </Form.Item>
                                     </Form>
-                                </div>
+                                </div> */}
                             </Col>
                             <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
                                 <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>

@@ -9,17 +9,27 @@ import { Form, Select, Input } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
+// import styles from './SearchBox.module.css';
 
 const { Option } = Select;
 const { Search } = Input;
 
 export const SearchBox = (props) => {
     const { searchForm, filterString, optionType, handleSearchTypeChange, handleSearchParamSearch, searchParamRule } = props;
+    const onKeyPressHandler = (e) => {
+        e.key === 'Enter' && e.preventDefault();
+    };
+
+    const selectProps = {
+        optionFilterProp: 'children',
+        allowClear: true,
+        className: styles.headerSelectField,
+    };
     return (
         <div className={styles.selectSearchBg}>
-            <Form form={searchForm} layout="vertical" autoComplete="off">
+            <Form onKeyPress={onKeyPressHandler} form={searchForm} layout="vertical" autoComplete="off">
                 <Form.Item name="searchType" initialValue={filterString?.searchType} rules={[validateRequiredSelectField('parameter')]}>
-                    <Select className={styles.headerSelectField} onChange={handleSearchTypeChange} placeholder="Select Parameter" allowClear>
+                    <Select onChange={handleSearchTypeChange} placeholder="Select Parameter" {...selectProps}>
                         {optionType?.map((item) => (
                             <Option value={item.key} selected>
                                 {item.value}
