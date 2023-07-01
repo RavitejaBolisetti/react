@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -72,7 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData } = props;
+    const { fetchList, saveData, isLoading, listShowLoading, userId, fetchOTFSearchedList, data, otfData } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -118,7 +118,18 @@ export const OtfMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
     const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
-    const reff = useRef(null);
+
+    const onSuccessAction = (res) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
+        searchForm.resetFields();
+        setShowDataLoading(false);
+    };
+
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+        setShowDataLoading(false);
+    };
 
     const extraParams = useMemo(() => {
         return [
@@ -208,16 +219,6 @@ export const OtfMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        setShowDataLoading(false);
-    };
-
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-        setShowDataLoading(false);
-    };
-
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
@@ -258,12 +259,11 @@ export const OtfMasterBase = (props) => {
 
     const onFinishSearch = (values) => {};
 
-    const handleResetFilter = (e) => {
-        // resetData();
-        setFilterString();
-        setShowDataLoading(true);
-        advanceFilterForm.resetFields();
-    };
+    // const handleResetFilter = (e) => {
+    //     setFilterString();
+    //     setShowDataLoading(true);
+    //     advanceFilterForm.resetFields();
+    // };
 
     const onFinish = (values) => {
         const recordId = formData?.parentId || form.getFieldValue('parentId');
@@ -371,7 +371,7 @@ export const OtfMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        handleResetFilter,
+        // handleResetFilter,
 
         title,
         data,
@@ -380,7 +380,6 @@ export const OtfMasterBase = (props) => {
         otfSearchRules,
         setOtfSearchRules,
         searchForm,
-        reff,
         onFinishSearch,
         handleSearchTypeChange,
         handleSearchParamSearch,
@@ -393,7 +392,7 @@ export const OtfMasterBase = (props) => {
         titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,
-        handleResetFilter,
+        // handleResetFilter,
         filterString,
         setFilterString,
         advanceFilterForm,
@@ -455,7 +454,7 @@ export const OtfMasterBase = (props) => {
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
+                    <ListDataTable handleAdd={handleButtonClick} isLoading={isLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

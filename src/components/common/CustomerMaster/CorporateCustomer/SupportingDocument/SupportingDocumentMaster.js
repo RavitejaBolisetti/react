@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupportingDocumentBase = (props) => {
-    const { uploadDocumentFile, accessToken, token, onFinishFailed, form } = props;
+    const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form } = props;
 
     const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, supportingData, fetchViewDocument } = props;
     const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
@@ -75,7 +75,8 @@ const SupportingDocumentBase = (props) => {
     const [emptyList, setEmptyList] = useState(true);
 
     const [supportingDataView, setSupportingDataView] = useState();
-    //const [uploadedFileList, setUploadedFileList] = useState();
+    const [fileList, setFileList] = useState([]);
+    const [uploadedFileName, setUploadedFileName] = useState('');
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -90,20 +91,77 @@ const SupportingDocumentBase = (props) => {
 
     useEffect(() => {
         if (!formActionType?.addMode && selectedCustomerId) {
-            {
-                fetchList({ setIsLoading: listShowLoading, userId, extraParams });
-            }
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
-    const onFinish = (values) => {
-        
+    useEffect(() => {
+        if (viewDocument && isViewDataLoaded) {
+            let a = document.createElement('a');
+            a.href = `data:image/png;base64,${viewDocument?.base64}`;
+            a.download = viewDocument?.fileName;
+            a.click();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isViewDataLoaded, viewDocument]);
 
+    const downloadFileFromButton = (uploadData) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: uploadData?.docId,
+                name: 'docId',
+            },
+        ];
+        const supportingDocument = uploadData?.documentName;
+        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
+    };
+
+    const deleteFile = (uploadData) => {
+        const data = { customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName };
+        const onSuccess = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveData(requestData);
+    };
+
+    const downloadFileFromList = () => {
+        console.log(uploadedFile, 'uploadedFile');
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: uploadedFile,
+                name: 'docId',
+            },
+        ];
+        const supportingDocument = uploadedFileName;
+        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
+    };
+
+    const onFinish = (values) => {
         const data = { ...values, customerId: selectedCustomerId, status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId'), id: '' };
 
         const onSuccess = (res) => {
-            //setUploadedFileList();
+            setFileList([]);
             setEmptyList(false);
             setUploadedFile();
             form.resetFields();
@@ -141,9 +199,12 @@ const SupportingDocumentBase = (props) => {
     };
 
     const viewProps = {
+        downloadFileFromButton,
+        isViewDataLoaded,
         supportingData,
         supportingDataView,
         setSupportingDataView,
+        deleteFile,
 
         handlePreview,
         viewDocument,
@@ -152,6 +213,8 @@ const SupportingDocumentBase = (props) => {
         listShowLoading,
         saveData,
         userId,
+        fetchViewDocument,
+        viewListShowLoading,
     };
 
     const formProps = {
@@ -162,11 +225,14 @@ const SupportingDocumentBase = (props) => {
         token,
         saveData,
         onFinish,
+        setUploadedFileName,
 
         listShowLoading,
         showGlobalNotification,
         viewDocument,
         downloadFile,
+        downloadFileFromButton,
+        downloadFileFromList,
         viewListShowLoading,
         handlePreview,
 
@@ -181,7 +247,8 @@ const SupportingDocumentBase = (props) => {
         uploadDocumentFile,
         emptyList,
         setEmptyList,
-        //setUploadedFileList,
+        fileList,
+        setFileList,
     };
 
     return (

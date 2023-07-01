@@ -16,20 +16,17 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { openAccordian, shieldForm, rsaForm, amcForm, fmsForm, handleCollapse, styles, formData } = props;
+    const { openAccordian, shieldForm, formActionType, rsaForm, amcForm, fmsForm, handleCollapse, styles, formData } = props;
     const [myActiveKey, setmyActiveKey] = useState([0]);
     const handleCollapses = (values) => {
         myActiveKey?.includes(values) ? setmyActiveKey('') : setmyActiveKey([values]);
     };
-    console.log('formData?.partDetailsResponses', formData?.partDetailsResponses, formData);
-
-    const addonAccessoriesAccessories = [{ accessoriesName: 'Shield' }, { accessoriesName: 'RSA' }, { accessoriesName: 'AMC' }, { accessoriesName: 'FMS' }];
 
     return (
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Space style={{ display: 'flex' }} direction="vertical" size="large">
+                    <Space className={styles.ViewCardCollapse} style={{ display: 'flex' }} direction="vertical" size="large">
                         <Collapse
                             expandIcon={() => {
                                 if (openAccordian[0] === 'ci') {
@@ -45,9 +42,7 @@ const ViewDetailMain = (props) => {
                             <Panel
                                 header={
                                     <div className={styles?.alignUser}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Accessories Information
-                                        </Text>
+                                        <Text strong>Accessories Information</Text>
                                     </div>
                                 }
                                 key={'ci'}
@@ -65,6 +60,7 @@ const ViewDetailMain = (props) => {
                                             activeKey={myActiveKey}
                                             onChange={() => handleCollapses(i)}
                                             expandIconPosition="end"
+                                            className={styles.innerCollapseBorder}
                                         >
                                             <Panel
                                                 header={
@@ -105,14 +101,12 @@ const ViewDetailMain = (props) => {
                             <Panel
                                 header={
                                     <div className={styles?.alignUser}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Shield
-                                        </Text>
+                                        <Text strong>Shield</Text>
                                     </div>
                                 }
                                 key="shield"
                             >
-                                <ShieldForm formData={formData} shieldForm={shieldForm} />
+                                <ShieldForm formActionType={formActionType} formData={formData} shieldForm={shieldForm} />
                             </Panel>
                         </Collapse>
                         <Collapse
@@ -130,14 +124,12 @@ const ViewDetailMain = (props) => {
                             <Panel
                                 header={
                                     <div className={styles?.alignUser}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Amc
-                                        </Text>
+                                        <Text strong>Amc</Text>
                                     </div>
                                 }
                                 key={'Amc'}
                             >
-                                <AMCForm formData={formData} amcForm={amcForm} />
+                                <AMCForm formActionType={formActionType} formData={formData} amcForm={amcForm} />
                             </Panel>
                         </Collapse>
                         <Collapse
@@ -155,14 +147,12 @@ const ViewDetailMain = (props) => {
                             <Panel
                                 header={
                                     <div className={styles?.alignUser}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            RSA
-                                        </Text>
+                                        <Text strong>RSA</Text>
                                     </div>
                                 }
                                 key={'Rsa'}
                             >
-                                <RSAForm formData={formData} rsaForm={rsaForm} />
+                                <RSAForm formActionType={formActionType} formData={formData} rsaForm={rsaForm} />
                             </Panel>
                         </Collapse>
                         <Collapse
@@ -180,14 +170,12 @@ const ViewDetailMain = (props) => {
                             <Panel
                                 header={
                                     <div className={styles?.alignUser}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            FMS
-                                        </Text>
+                                        <Text strong>FMS</Text>
                                     </div>
                                 }
                                 key={'fMS'}
                             >
-                                <FMSForm formData={formData} fmsForm={fmsForm} />
+                                <FMSForm formActionType={formActionType} formData={formData} fmsForm={fmsForm} />
                             </Panel>
                         </Collapse>
                     </Space>
