@@ -17,41 +17,35 @@ const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview, emptyList, setEmptyList } = props;
+    const { setUploadedFileName, downloadFileFromList, fileList, setFileList, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
 
     const [showStatus, setShowStatus] = useState('');
 
     const onDrop = (e) => {};
 
-    const onDownload = (file) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
-
-        handlePreview(file?.response);
-        let a = document.createElement('a');
-
-        a.href = `data:image/png;base64,${viewDocument?.base64}`;
-        a.download = viewDocument?.fileName;
-        a.click();
-    };
-
     const uploadProps = {
         multiple: false,
         accept: 'image/png, image/jpeg, application/pdf',
+
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
             removeIcon: <FiTrash />,
-            downloadIcon: <FiEye onClick={(e) => onDownload(e)} style={{ color: '#ff3e5b' }} />,
+            downloadIcon: <FiEye onClick={() => downloadFileFromList()} style={{ color: '#ff3e5b' }} />,
             showProgress: true,
         },
         progress: { strokeWidth: 3, showInfo: true },
         onDrop,
         onChange: (info) => {
+            let fileList = [...info.fileList];
+            fileList = fileList.slice(-1);
+            setFileList(fileList);
             handleFormValueChange();
             const { status } = info.file;
             setShowStatus(info.file);
             if (status === 'done') {
                 setUploadedFile(info?.file?.response?.docId);
+                setUploadedFileName(info?.file?.response?.documentName);
             }
         },
     };
@@ -68,7 +62,6 @@ const AddEditForm = (props) => {
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
         setEmptyList(true);
-
 
         const data = new FormData();
         data.append('applicationId', 'app');
@@ -116,7 +109,7 @@ const AddEditForm = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                        <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
+                        <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps}>
                             <div>
                                 <img src={Svg} alt="" />
                             </div>

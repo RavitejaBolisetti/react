@@ -7,18 +7,18 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form, Select } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-const ShieldForm = ({ formData, shieldForm, setformDataSetter, formDataSetter, handleFormValueChange }) => {
+const ShieldForm = ({ formData, shieldForm, setformDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
     useEffect(() => {
-        if (formData === undefined) {
+        if (formData === undefined && !formActionType?.viewMode) {
             setisReadOnly(false);
         } else {
             setisReadOnly(true);
-            shieldForm.setFieldsValue({
-                shieldType: formData?.shield?.shieldType ? formData?.shield?.shieldType : null,
-                shieldRate: formData?.shield?.shieldRate ? formData?.shield?.shieldRate : null,
-            });
         }
+        shieldForm.setFieldsValue({
+            shieldType: formData?.shield?.shieldType ? formData?.shield?.shieldType : 'NA',
+            shieldRate: formData?.shield?.shieldRate ? formData?.shield?.shieldRate : 'NA',
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 

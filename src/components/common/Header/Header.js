@@ -35,7 +35,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { token, isLoggedIn, userId, passwordStatus },
         data: {
-            ConfigurableParameterEditing: { isFilteredListLoaded: isTypeDataLoaded = false, isLoading: isTypeDataLoading },
+            ConfigurableParameterEditing: { isFilteredListLoaded: isTypeDataLoaded = false, isLoading: isTypeDataLoading, data: configData = [], },
         },
         common: {
             Header: { data: loginUserData = [], isLoading, isLoaded: isDataLoaded = false },
@@ -66,6 +66,10 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: headerDataActions.listShowLoading,
             fetchConfigList: configParamEditActions.fetchFilteredList,
             listConfigShowLoading: configParamEditActions.listShowLoading,
+
+            fetchEditConfigDataList: configParamEditActions.fetchDataList,
+
+
             showGlobalNotification,
         },
         dispatch
@@ -74,13 +78,15 @@ const mapDispatchToProps = (dispatch) => ({
 
 const HeaderMain = (props) => {
     const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId } = props;
-    const { fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading } = props;
+    const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading } = props;
+    
     const navigate = useNavigate();
     const location = useLocation();
     const pagePath = location.pathname;
 
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
     const [confirms, setConfirm] = useState(false);
+
     const { firstName = '', lastName = '', dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
@@ -103,6 +109,7 @@ const HeaderMain = (props) => {
     useEffect(() => {
         if (!isTypeDataLoaded && !isTypeDataLoading && userId) {
             fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: 'ALL' });
+            fetchEditConfigDataList({ setIsLoading: listConfigShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isTypeDataLoaded, userId]);
