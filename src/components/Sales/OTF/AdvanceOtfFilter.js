@@ -11,7 +11,7 @@ import styles from 'components/common/Common.module.css';
 import { SearchBox } from 'components/utils/SearchBox';
 
 export default function AdvanceOTFFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, handleSearchTypeChange, handleSearchParamSearch, typeData, setAdvanceSearchVisible, searchForm, otfSearchRules, reff } = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, handleSearchTypeChange, handleSearchParamSearch, typeData, setAdvanceSearchVisible, searchForm, otfSearchRules } = props;
 
     useEffect(() => {
         searchForm.setFieldsValue({ searchParam: filterString?.searchParam, searchType: filterString?.searchType });
