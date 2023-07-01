@@ -211,7 +211,7 @@ export const OtfMasterBase = (props) => {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
             setSection(section);
 
-            const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+            const nextSection = Object.values(sectionName)?.find((i) => i?.displayOnList && i.id > currentSection);
             setLastSection(!nextSection?.id);
         }
         form.resetFields();

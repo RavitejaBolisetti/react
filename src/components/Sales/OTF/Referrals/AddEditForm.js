@@ -36,9 +36,7 @@ const AddEditFormMain = (props) => {
         <Card style={{ backgroundColor: '#F2F2F2' }}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <SearchBox {...props} />
-                    </div>
+                    <SearchBox {...props} />
                 </Col>
             </Row>
             <Row gutter={20}>

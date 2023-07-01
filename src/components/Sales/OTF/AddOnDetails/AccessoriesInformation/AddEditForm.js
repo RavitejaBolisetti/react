@@ -98,6 +98,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                     <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                         <Form.Item label="Part Description" name="partDescription">
                             <TextArea
+                                placeholder={preparePlaceholderText('Part Description')}
                                 {...disableProp}
                                 autoSize={{
                                     minRows: 1,

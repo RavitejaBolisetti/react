@@ -58,13 +58,16 @@ const MenuNav = (props) => {
         }
     };
 
-    const items = otfSectionList?.map(
-        (item) =>
-            validateMenu(item) && {
-                dot: item?.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
-                children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
-            }
-    );
+    const items = otfSectionList
+        ?.filter((i) => i?.displayOnList)
+        ?.map(
+            (item) =>
+                validateMenu(item) && {
+                    dot: item?.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
+                    children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
+                    className: item?.id === currentSection ? 'active' : 'noactive',
+                }
+        );
 
     console.log('items', items);
 

@@ -14,7 +14,7 @@ import styles from './SearchBox.module.css';
 const { Option } = Select;
 const { Search } = Input;
 
-export const SearchBox = (props) => {
+const SearchBox = (props) => {
     const { searchForm, filterString, optionType, handleSearchTypeChange, handleSearchParamSearch, searchParamRule } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
@@ -44,3 +44,5 @@ export const SearchBox = (props) => {
         </div>
     );
 };
+
+export default SearchBox;

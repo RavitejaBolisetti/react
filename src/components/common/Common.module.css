@@ -2794,7 +2794,10 @@
     margin-bottom: 20px !important;
 }
 
-
+li.ant-timeline-item.active .ant-timeline-item-content p {
+    background-color: rgb(255, 62, 91) !important;
+    font-size: 30px !important
+}
 
 @media (max-width: 768px) {
 

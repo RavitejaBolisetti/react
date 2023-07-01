@@ -76,7 +76,7 @@ export const OTFFormButton = ({ record, onCloseAction, buttonData, setButtonData
                 )}
 
                 {buttonData?.saveBtn && (
-                    <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                    <Button loading={isLoadingOnSave} disabled={buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                         {saveButtonName}
                     </Button>
                 )}
