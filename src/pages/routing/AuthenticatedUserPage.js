@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -19,6 +19,7 @@ import {
     CriticalityGroupPage,
     RoleManagementPage,
     StatePage,
+    StateCrudPage,
     DistrictPage,
     CityPage,
     TehsilPage,
@@ -64,6 +65,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER} element={<HierarchyAttributeMasterPage />} exact />
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY} element={<ManufacturerAdministrativeHierarchyPage />} />
 
+            <Route path={routing.ROUTING_COMMON_GEO_STATE_CRUD} element={<StateCrudPage />} />
             <Route path={routing.ROUTING_COMMON_GEO_STATE} element={<StatePage />} />
             <Route path={routing.ROUTING_COMMON_GEO_CITY} element={<CityPage />} />
             <Route path={routing.ROUTING_COMMON_GEO_DISTRICT} element={<DistrictPage />} />
@@ -111,7 +113,6 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_CONTACT} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_OTF} element={<OTFMasterPage />} exact />
             <Route path={routing.ROUTING_REPORT_OTF_REPORTS} element={<OtfReportsPage />} />
-
 
             {/* <Route path="*" element={<LoginPage />} exact /> */}
         </Routes>

@@ -26,12 +26,12 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { searchValidatorPincode } from 'utils/validation';
 import { FilterIcon } from 'Icons';
 
-import { geoCountryDataActions } from 'store/actions/data/geo/country';
-import { geoStateDataActions } from 'store/actions/data/geo/state';
-import { geoDistrictDataActions } from 'store/actions/data/geo/district';
-import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
-import { geoCityDataActions } from 'store/actions/data/geo/city';
-import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { geoCountryDataActions } from 'store/actions/data/geo/countries';
+import { geoStateDataActions } from 'store/actions/data/geo/states';
+import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
+import { tehsilDataActions } from 'store/actions/data/geo/tehsils';
+import { geoCityDataActions } from 'store/actions/data/geo/cities';
+import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'components/common/Common.module.css';
@@ -97,15 +97,15 @@ const mapDispatchToProps = (dispatch) => ({
             listStateShowLoading: geoStateDataActions.listShowLoading,
             fetchDistrictLovList: geoDistrictDataActions.fetchFilteredList,
             listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
-            fetchTehsilLovList: geoTehsilDataActions.fetchFilteredList,
-            listTehsilShowLoading: geoTehsilDataActions.listShowLoading,
+            fetchTehsilLovList: tehsilDataActions.fetchFilteredList,
+            listTehsilShowLoading: tehsilDataActions.listShowLoading,
             fetchCityLovList: geoCityDataActions.fetchFilteredList,
             listCityShowLoading: geoCityDataActions.listShowLoading,
-            fetchList: geoPincodeDataActions.fetchList,
-            listShowLoading: geoPincodeDataActions.listShowLoading,
-            exportToExcel: geoPincodeDataActions.exportToExcel,
-            saveData: geoPincodeDataActions.saveData,
-            resetData: geoPincodeDataActions.reset,
+            fetchList: geoPinCodeDataActions.fetchList,
+            listShowLoading: geoPinCodeDataActions.listShowLoading,
+            exportToExcel: geoPinCodeDataActions.exportToExcel,
+            saveData: geoPinCodeDataActions.saveData,
+            resetData: geoPinCodeDataActions.reset,
             showGlobalNotification,
         },
         dispatch

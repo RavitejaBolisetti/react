@@ -19,9 +19,9 @@ import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { geoStateDataActions } from 'store/actions/data/geo/state';
-import { geoDistrictDataActions } from 'store/actions/data/geo/district';
-import { geoCountryDataActions } from 'store/actions/data/geo/country';
+import { geoStateDataActions } from 'store/actions/data/geo/states';
+import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
+import { geoCountryDataActions } from 'store/actions/data/geo/countries';
 
 import { AddEditForm } from './AddEditForm';
 import { FilterIcon } from 'Icons';

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -17,7 +17,7 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
 import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
-import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 
 const mapStateToProps = (state) => {
     const {
@@ -62,8 +62,8 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: dealerCompanyDataActions.saveData,
             listShowLoading: dealerCompanyDataActions.listShowLoading,
 
-            fetchPincodeDetail: geoPincodeDataActions.fetchList,
-            pinCodeShowLoading: geoPincodeDataActions.listShowLoading,
+            fetchPincodeDetail: geoPinCodeDataActions.fetchList,
+            pinCodeShowLoading: geoPinCodeDataActions.listShowLoading,
 
             showGlobalNotification,
         },
@@ -112,7 +112,7 @@ export const DealerCompanyBase = (props) => {
         if (userId && !isDealerParentDataLoaded) {
             fetchDealerParentList({ setIsLoading: listDealerParentShowLoading, userId });
         }
-        
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded, isDealerParentDataLoaded]);
 

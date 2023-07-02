@@ -8,8 +8,8 @@ import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 
-import { geoCountryDataActions } from 'store/actions/data/geo/country';
-import { geoStateDataActions } from 'store/actions/data/geo/state';
+import { geoCountryDataActions } from 'store/actions/data/geo/countries';
+import { geoStateDataActions } from 'store/actions/data/geo/states';
 
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';

@@ -1,9 +1,9 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
@@ -19,6 +19,12 @@ const AddEditFormMain = (props) => {
     const { typeData, configData, parameterType, setParameterType, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, isLoadingOnSave } = props;
+
+    useEffect(() => {
+        setParameterType(formData?.configurableParameterType);
+        form.setFieldValue('parameterType', formData?.configurableParameterType);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -85,8 +91,8 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Configurable Parameter Type" rules={[validateRequiredSelectField('ConfigParamType')]}>
-                                <Select defaultValue={parameterType} placeholder="Select Parameter Type" onChange={changeSelectOptionHandler} disabled={isReadOnly}>
+                            <Form.Item label="Configurable Parameter Type" intialValue={parameterType} name="parameterType" rules={[validateRequiredSelectField('ConfigParamType')]}>
+                                <Select placeholder="Select Parameter Type" onChange={changeSelectOptionHandler} disabled={isReadOnly}>
                                     {typeData &&
                                         typeData[PARAM_MASTER.CFG_PARAM_TYPE.id] &&
                                         typeData[PARAM_MASTER.CFG_PARAM_TYPE.id]?.map((item) => (
@@ -109,13 +115,13 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item label="From Number" className={styles.numberRange} initialValue={formData?.fromNumber} name="fromNumber" rules={[validateRequiredInputField('Number')]}>
-                                            <InputNumber min={0} max={100} placeholder="From Number" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                            <InputNumber min={0} placeholder="From Number" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item label="To Number" className={styles.numberRange} initialValue={formData?.toNumber} name="toNumber" rules={[validateRequiredInputField('Number')]}>
-                                            <InputNumber min={0} max={100} placeholder="To Number" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                            <InputNumber min={0} placeholder="To Number" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

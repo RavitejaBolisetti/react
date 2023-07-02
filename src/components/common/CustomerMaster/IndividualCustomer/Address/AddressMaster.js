@@ -11,7 +11,7 @@ import { Row, Col, Button, Divider, Form, Collapse, Typography, Space } from 'an
 import { PlusOutlined } from '@ant-design/icons';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
-import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -66,8 +66,8 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: addressIndividualDataActions.reset,
             listShowLoading: addressIndividualDataActions.listShowLoading,
 
-            listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
-            fetchPincodeDetail: geoPincodeDataActions.fetchList,
+            listPinCodeShowLoading: geoPinCodeDataActions.listShowLoading,
+            fetchPincodeDetail: geoPinCodeDataActions.fetchList,
 
             showGlobalNotification,
         },

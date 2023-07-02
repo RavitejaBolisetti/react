@@ -10,7 +10,7 @@ import { Row, Col, Form } from 'antd';
 
 import { bindActionCreators } from 'redux';
 import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails';
-import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
@@ -70,8 +70,8 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: otfCustomerDetailsAction.reset,
             showGlobalNotification,
 
-            listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
-            fetchPincodeDetail: geoPincodeDataActions.fetchList,
+            listPinCodeShowLoading: geoPinCodeDataActions.listShowLoading,
+            fetchPincodeDetail: geoPinCodeDataActions.fetchList,
         },
         dispatch
     ),

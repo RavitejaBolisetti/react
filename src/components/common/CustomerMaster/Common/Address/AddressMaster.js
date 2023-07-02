@@ -10,7 +10,7 @@ import { Collapse, Divider, Form, Space, Row, Col, Typography, Button, Empty } f
 import { PlusOutlined } from '@ant-design/icons';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
-import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
@@ -74,8 +74,8 @@ const mapDispatchToProps = (dispatch) => ({
             resetDataCorporate: addressCorporateDataActions.reset,
             listShowLoadingCorporate: addressCorporateDataActions.listShowLoading,
 
-            listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
-            fetchPincodeDetail: geoPincodeDataActions.fetchList,
+            listPinCodeShowLoading: geoPinCodeDataActions.listShowLoading,
+            fetchPincodeDetail: geoPinCodeDataActions.fetchList,
 
             showGlobalNotification,
         },
@@ -112,7 +112,7 @@ const AddressMasterBase = (props) => {
         if (userId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id && addressIndData?.customerAddress) {
                 setAddressData(addressIndData?.customerAddress);
-            } else if(addressCompanyData?.customerAddress) {
+            } else if (addressCompanyData?.customerAddress) {
                 setAddressData(addressCompanyData?.customerAddress);
             }
         }
@@ -120,11 +120,10 @@ const AddressMasterBase = (props) => {
     }, [addressIndData?.customerAddress, addressCompanyData?.customerAddress]);
 
     useEffect(() => {
-        
         if (!formActionType?.addMode && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
-            } else if(customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
+            } else if (customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
                 fetchListCorporate({ setIsLoading: listShowLoading, userId, extraParams });
             }
         }
@@ -199,7 +198,6 @@ const AddressMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        
         return;
     };
 
