@@ -35,7 +35,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { token, isLoggedIn, userId, passwordStatus },
         data: {
-            ConfigurableParameterEditing: { isFilteredListLoaded: isTypeDataLoaded = false, isLoading: isTypeDataLoading, data: configData = [], },
+            ConfigurableParameterEditing: { isFilteredListLoaded: isTypeDataLoaded = false, isLoading: isTypeDataLoading },
         },
         common: {
             Header: { data: loginUserData = [], isLoading, isLoaded: isDataLoaded = false },
@@ -69,7 +69,6 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchEditConfigDataList: configParamEditActions.fetchDataList,
 
-
             showGlobalNotification,
         },
         dispatch
@@ -79,7 +78,7 @@ const mapDispatchToProps = (dispatch) => ({
 const HeaderMain = (props) => {
     const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId } = props;
     const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading } = props;
-    
+
     const navigate = useNavigate();
     const location = useLocation();
     const pagePath = location.pathname;

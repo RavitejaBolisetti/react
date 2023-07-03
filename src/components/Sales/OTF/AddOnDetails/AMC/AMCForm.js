@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Input, Form, Button } from 'antd';
+import { Row, Col, Input, Form } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const AMCForm = ({ formData, amcForm, setformDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
@@ -22,8 +22,6 @@ const AMCForm = ({ formData, amcForm, setformDataSetter, formDataSetter, formAct
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
-
-    const onFieldsChange = () => {};
 
     const onFinishFailed = () => {};
     const onValuesChange = (values) => {

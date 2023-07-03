@@ -1756,7 +1756,7 @@
 .drawerBodyRight :global .ant-steps {
     display: inline;
     line-height: 0px;
-    text-align: end;
+    text-align: flex-end;
 }
 
 .drawerBodyRight :global .ant-steps.ant-steps-label-vertical {
@@ -2782,7 +2782,7 @@
 
 .editIcon {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .datePicker .fullWidth {
