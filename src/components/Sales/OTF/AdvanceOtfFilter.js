@@ -14,7 +14,7 @@ export default function AdvanceOTFFilter(props) {
     const {
         extraParams,
         removeFilter,
-        // handleResetFilter,
+        handleResetFilter,
         advanceFilter = false,
         otfFilter = false,
         title,
@@ -42,9 +42,6 @@ export default function AdvanceOTFFilter(props) {
         searchParamRule: otfSearchRules,
     };
 
-    const handleResetFilter = (e) => {
-        setFieldsValue({ searchParam: undefined, searchType: undefined });
-    };
 
     return (
         <div className={styles.contentHeaderBackground}>

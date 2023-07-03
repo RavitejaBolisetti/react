@@ -7,10 +7,11 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Form, Empty, ConfigProvider } from 'antd';
+import { RxCross2 } from 'react-icons/rx';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { showGlobalNotification } from 'store/actions/notification';
-import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
+import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength, validateRequiredSelectField } from 'utils/validation';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { tableColumn } from './tableColumn';
@@ -123,13 +124,17 @@ const CustomerMasterMain = (props) => {
             key: 'searchType',
             title: 'Type',
             value: filterString?.searchType,
-            canRemove: true,
+            name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
+            canRemove: false,
+            filter: true,
         },
         {
             key: 'searchParam',
             title: 'Value',
             value: filterString?.searchParam,
+            name: filterString?.searchParam,
             canRemove: true,
+            filter: true,
         },
     ];
 
@@ -311,16 +316,19 @@ const CustomerMasterMain = (props) => {
     };
 
     const handleSearchTypeChange = (searchType) => {
-        if (searchType === 'mobileNumber') {
-            setCustomerSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
-        } else if (searchType === 'customerName') {
-            setCustomerSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
-        } else if (searchType === 'otfNumber') {
-            setCustomerSearchRules({ rules: [validateRequiredInputField('OTF Number')] });
-        } else {
-            // searchForm.setFieldsValue({ searchParam: undefined, searchType: undefined });
-            // setFilterString({ ...filterString, searchParam: undefined, searchType: undefined });
-        }
+        setFilterString({ searchType: searchType, searchParam: '' });
+        setCustomerSearchRules({ rules: [validateRequiredInputField('Keyword')] });
+
+        // if (searchType === 'mobileNumber') {
+        //     setCustomerSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
+        // } else if (searchType === 'customerName') {
+        //     setCustomerSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
+        // } else if (searchType === 'otfNumber') {
+        //     setCustomerSearchRules({ rules: [validateRequiredInputField('OTF Number')] });
+        // } else {
+        //     // searchForm.setFieldsValue({ searchParam: undefined, searchType: undefined });
+        //     // setFilterString({ ...filterString, searchParam: undefined, searchType: undefined });
+        // }
     };
 
     const handleSearchParamSearch = (values) => {
@@ -328,19 +336,58 @@ const CustomerMasterMain = (props) => {
             .validateFields()
             .then((values) => {
                 setFilterString({ ...values, advanceFilter: true });
+                fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
             })
             .catch((err) => {
                 return;
             });
     };
 
-    const serachBoxProps = {
+    const handleSearchParamChange = (event) => {
+        if (event.target.value === undefined) {
+            return false;
+        }
+        if (!filterString?.searchType) {
+            setCustomerSearchRules({ rules: [validateRequiredSelectField('Parameter')] });
+        }
+        if (filterString?.searchType === 'mobileNumber') {
+            setCustomerSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
+        }
+        if (filterString?.searchType === 'customerName') {
+            setCustomerSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
+        }
+
+        setFilterString({ ...filterString, searchParam: event.target.value });
+    };
+
+    const removeFilter = (key) => {
+        if (key === 'searchParam') {
+            const { searchType, searchParam, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else {
+            const { [key]: names, ...rest } = filterString;
+            setFilterString({ ...rest });
+        }
+    };
+
+    // const handleResetFilter = (e) => {
+    //     searchForm.setFieldsValue({ searchParam: undefined, searchType: undefined });
+    // };
+
+    const handleResetFilter = (e) => {
+        setFilterString();
+        setShowDataLoading(true);
+        searchForm.resetFields();
+    };
+
+    const searchBoxProps = {
         searchForm,
         filterString,
         optionType: typeData,
         handleSearchTypeChange,
         handleSearchParamSearch,
         searchParamRule: customerSearchRules,
+        handleSearchParamChange,
     };
     return (
         <>
@@ -358,23 +405,7 @@ const CustomerMasterMain = (props) => {
                                         );
                                     })}
                                 </div>
-                                <SearchBox {...serachBoxProps} />
-                                {/* <div className={styles.selectSearchBg}>
-                                    <Form onKeyPress={onKeyPressHandler} form={searchForm} layout="vertical" autoComplete="off">
-                                        <Form.Item name="parameter" rules={[validateRequiredSelectField('parameter')]}>
-                                            <Select {...selectProps} value={filterString?.searchType} className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter">
-                                                {typeData?.map((item) => (
-                                                    <Option key={'pnc' + item?.key} value={item?.key}>
-                                                        {item?.value}
-                                                    </Option>
-                                                ))}
-                                            </Select>
-                                        </Form.Item>
-                                        <Form.Item {...customerSearchRules} name="keyword" validateTrigger={['onChange', 'onSearch']}>
-                                            <Search placeholder="Search" value={filterString?.searchParam} onChange={onChangeHandle} onSearch={onSearchHandle} allowClear className={styles.headerSearchField} htmlType="submit" />
-                                        </Form.Item>
-                                    </Form>
-                                </div> */}
+                                <SearchBox {...searchBoxProps} />
                             </Col>
                             <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
                                 <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
@@ -382,6 +413,37 @@ const CustomerMasterMain = (props) => {
                                 </Button>
                             </Col>
                         </Row>
+                        {filterString && extraParams.find((i) => i.name) && (
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
+                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                            {extraParams?.map((filter) => {
+                                                return (
+                                                    filter?.value &&
+                                                    filter?.filter && (
+                                                        <div className={styles.advanceFilterItem} key={filter?.key}>
+                                                            {filter?.name}
+                                                            {filter?.canRemove && (
+                                                                <span>
+                                                                    <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    )
+                                                );
+                                            })}
+                                        </Col>
+                                        <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
+                                            <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                                                Clear
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        )}
                     </div>
                 </Col>
             </Row>

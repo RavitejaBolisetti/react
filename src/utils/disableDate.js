@@ -8,5 +8,6 @@ export const disableFutureDate = (value) => {
 };
 
 export const disablePastDate = (value) => {
+    console.log(value, ' value ',  value < new Date(),  ' date ', new Date());
     return value < new Date();
 };

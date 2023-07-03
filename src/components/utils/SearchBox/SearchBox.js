@@ -15,7 +15,7 @@ const { Option } = Select;
 const { Search } = Input;
 
 const SearchBox = (props) => {
-    const { searchForm, filterString, optionType, handleSearchTypeChange, handleSearchParamSearch, searchParamRule } = props;
+    const { searchForm, filterString, optionType, handleSearchTypeChange, handleSearchParamSearch, searchParamRule, handleSearchParamChange } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -38,7 +38,7 @@ const SearchBox = (props) => {
                     </Select>
                 </Form.Item>
                 <Form.Item {...searchParamRule} name="searchParam" initialValue={filterString?.searchParam} validateTrigger={['onChange', 'onSearch']}>
-                    <Search placeholder="Search" value={filterString?.searchParam} allowClear onSearch={handleSearchParamSearch} className={styles.headerSearchField} />
+                    <Search placeholder="Search" value={filterString?.searchParam} allowClear onSearch={handleSearchParamSearch} onChange={handleSearchParamChange} className={styles.headerSearchField} />
                 </Form.Item>
             </Form>
         </div>

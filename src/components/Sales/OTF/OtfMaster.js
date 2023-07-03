@@ -259,11 +259,11 @@ export const OtfMasterBase = (props) => {
 
     const onFinishSearch = (values) => {};
 
-    // const handleResetFilter = (e) => {
-    //     setFilterString();
-    //     setShowDataLoading(true);
-    //     advanceFilterForm.resetFields();
-    // };
+    const handleResetFilter = (e) => {
+        setFilterString();
+        setShowDataLoading(true);
+        advanceFilterForm.resetFields();
+    };
 
     const onFinish = (values) => {
         const recordId = formData?.parentId || form.getFieldValue('parentId');
@@ -371,7 +371,8 @@ export const OtfMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        // handleResetFilter,
+        handleResetFilter,
+        advanceFilterForm,
 
         title,
         data,
@@ -392,7 +393,7 @@ export const OtfMasterBase = (props) => {
         titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,
-        // handleResetFilter,
+        handleResetFilter,
         filterString,
         setFilterString,
         advanceFilterForm,
