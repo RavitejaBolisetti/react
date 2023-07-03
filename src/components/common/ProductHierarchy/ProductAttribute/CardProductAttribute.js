@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -12,91 +12,63 @@ import FormProductAttribute from './FormProductAttribute';
 const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
-    const [productAttributeEdit, setProductAttributeEdit] = useState(false);
-    const { isVisible, finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive, showGlobalNotification } = props;
-    const [editedAttributeValue, setEditedAttributeValue] = useState(null);
-    const [ flag , setFlag] = useState(false);
+    const { isVisible, finalFormdata, attributeForm, forceUpdate, skuAttributes, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive, showGlobalNotification,setDisabledEdit} = props;
     const [editForm] = Form.useForm();
+    const [formEdit, setFormEdit] = useState(false);
 
     const onAttributeEdit = (props) => {
-        setEditedAttributeValue({ attributeName: props?.attributeName, attributeValue: props?.attributeValue, fromApi: props?.fromApi, adPhProductAttributeMstId: props?.adPhProductAttributeMstId, id: props?.id });
-        setFormDecider(true);
+        editForm.setFieldsValue({
+            attributeName: props?.code,
+            value: props?.value,
+            id: props?.id,
+            attributeId: props?.attributeId,
+        });
+        setFormEdit(true);
         setFormBtnActive(true);
     };
 
-    let formatData = [];
-
-    const onAttributeSave = (val) => {
-        setFormDecider(false);
-        const newFormData = editForm?.getFieldsValue();
-
+    const onAttributeSave = () => {
+        let newFormData = editForm?.getFieldsValue();
         let status = editForm?.getFieldError('attributeName')?.length > 0 ? true : false;
         if (status) {
             return showGlobalNotification({ notificationType: 'error', title: 'Duplicate', message: 'Can not Save having same Attribute Name', placement: 'bottomRight' });
         }
 
-        setFinalFormdata((prev) => {
-            const updatedValue = prev;
-            const indx = prev.findIndex((el) => el.attributeName?.key === val?.attributeId && el.attributeValue === val?.attributeValue);
-            const formatData = {
-                attributeName: { label: typeof newFormData?.attributeName === 'object' ? newFormData?.attributeName?.label : newFormData?.attributeName },
-                attributeValue: newFormData?.attributeValue,
-                fromApi: newFormData?.fromApi,
-                id: props?.id,
-                adPhProductAttributeMstId: props?.adPhProductAttributeMstId,
-            };
-            updatedValue?.splice(indx, 1, { ...formatData });
-            return updatedValue;
+        const upd_obj = skuAttributes?.map((obj) => {
+            if ((obj?.attributeId && obj?.attributeId === newFormData?.attributeId) || (obj?.id && obj?.id === newFormData?.id)) {
+                let isObj = false;
+                if (typeof newFormData?.attributeName === 'object') {
+                    isObj = true;
+                }
+                obj.id = newFormData?.id;
+                obj.code = isObj ? newFormData?.attributeName?.label : newFormData?.attributeName;
+                obj.attributeId = isObj ? newFormData?.attributeName?.key : newFormData?.attributeId;
+                obj.value = newFormData?.value;
+            }
+            return obj;
         });
 
-        setSKUAttributes(formatData);
-        setFlag(!flag);
-        setProductAttributeEdit(false);
+        setSKUAttributes([...upd_obj]);
+        setFormEdit(false);
         forceUpdate();
     };
 
     const onAttributeDelete = (val) => {
-        setFinalFormdata((prev) => {
-            const indx = prev.findIndex((el) => el.attributeName?.label === val?.attributeName && el.attributeValue === val?.attributeValue);
+        setSKUAttributes((prev) => {
+            const indx = prev.findIndex((el) => el.attributeId === val?.attributeId);
             let updatedValue = prev;
             updatedValue?.splice(indx, 1);
             return updatedValue;
         });
 
-        //setSKUAttributes(formatData);
-        setFlag(!flag);
-         attributeForm.resetFields();
-        setProductAttributeEdit(false);
+        setFormEdit(false);
+        attributeForm.resetFields();
         forceUpdate();
     };
 
     const onAttributeCancel = () => {
-        setFormDecider(false);
-        setProductAttributeEdit(false);
+        setFormEdit(false);
     };
-
-    useEffect(() => {
-        return () => {
-            setProductAttributeEdit(false);
-            !view && setFormDecider(true);
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [setFormDecider, view]);
-
-    formatData = [];
-    useEffect( () => {
-        finalFormdata?.map((item) => formatData?.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key, fromApi: item?.fromApi === true ? true : false, id: props?.id, }));
-        //setSKUAttributes(formatData);
-
-        if(!view){
-            setSKUAttributes(formatData);
-        } 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[flag] )
-
-    // useEffect( () => {
-
-    // },[productAttributeEdit] )
 
     const colLeft = !isVisible ? 24 : 18;
     const colRight = !isVisible ? 24 : 6;
@@ -104,9 +76,19 @@ const CardProductAttribute = (props) => {
     const FormProductAttributeProp = {
         productHierarchyAttributeData,
         editForm,
-        formDecider,
         finalFormdata,
+        formEdit,
+        skuAttributes,
     };
+
+    useEffect( () => {
+        if(formEdit){
+            setDisabledEdit(true);
+        } else {
+            setDisabledEdit(false);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[formEdit] )
 
     return (
         <Card
@@ -118,16 +100,16 @@ const CardProductAttribute = (props) => {
             <Row align="middle">
                 <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
                     <div>
-                        <Text strong>{props.attributeName}</Text>
+                        <Text strong>{props?.code}</Text>
                     </div>
                     <div>
-                        <Text type="secondary">{props.attributeValue}</Text>
+                        <Text type="secondary">{props?.value}</Text>
                     </div>
                 </Col>
 
                 {isVisible && (
                     <Col xs={colRight} sm={colRight} md={colRight} lg={colRight} xl={colRight} xxl={colRight}>
-                        {!productAttributeEdit ? (
+                        {!formEdit ? (
                             <div className={styles.cardItemBtn}>
                                 <>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} style={{ margin: '0 8px 0 0' }}>
@@ -136,12 +118,12 @@ const CardProductAttribute = (props) => {
                                             icon={<FiEdit />}
                                             onClick={() => {
                                                 onAttributeEdit(props);
-                                                setProductAttributeEdit(true);
                                             }}
+                                            disabled={props?.disabledEdit}
                                         />
                                     </Col>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} disabled={props.fromApi} />
+                                        <Button onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} disabled={props?.disabledEdit || (props?.id ? true : false)} />
                                     </Col>
                                 </>
                             </div>
@@ -159,10 +141,10 @@ const CardProductAttribute = (props) => {
                 )}
             </Row>
 
-            {productAttributeEdit && (
+            {formEdit &&  (
                 <>
                     <Divider />
-                    <FormProductAttribute {...editedAttributeValue} {...FormProductAttributeProp} />
+                    <FormProductAttribute {...FormProductAttributeProp} />
                 </>
             )}
         </Card>

@@ -148,19 +148,17 @@ export const NumberValidation = (fieldName) => ({
     message: 'Please enter valid ' + fieldName,
 });
 
-export const duplicateProductValidator = (value, dataList, props) => {
+export const duplicateProductValidator = (value, dataList) => {
     if (dataList?.length > 0) {
-        if (props?.attributeName === value?.attributeName?.label) {
-            return Promise.resolve('');
-        } else {
-            for (let i = 0; i < dataList?.length; i++) {
-                if (dataList[i]?.attributeName?.label === value?.attributeName?.label) {
-                    return Promise.reject('Duplicate found');
-                }
+        for (let i = 0; i < dataList?.length; i++) {
+            if (dataList[i]?.code === value?.attributeName?.label) {
+                return Promise.reject('Duplicate found');
             }
         }
+        return Promise.resolve('');
+    } else {
+        return Promise.resolve('');
     }
-    return Promise.resolve('');
 };
 
 export const searchValidator = (_, value) => {
