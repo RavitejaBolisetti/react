@@ -27,7 +27,7 @@ const mapStateToPropsParams = (state) => {
             Geo: {
                 State: {
                     AddState: { isAdded },
-                    ListState: { isError, filterString, isLoading, selectedData, message = '', isDeleteLoading, isStatusLoading },
+                    ListState: { isError, filterString, isLoading, message = '', isDeleteLoading, isStatusLoading },
                 },
             },
         },
@@ -58,7 +58,6 @@ const mapStateToPropsParams = (state) => {
         stateData,
         isLoading,
         data: stateData,
-        selectedData,
         isError,
         filterString,
         message,
@@ -88,9 +87,15 @@ const tableColumnList = [
     }),
 
     tblPrepareColumns({
+        title: 'GST State Code',
+        dataIndex: 'gstStateCode',
+        width: '15%',
+    }),
+
+    tblPrepareColumns({
         title: 'Country',
         dataIndex: 'countryName',
-        width: '20%',
+        width: '15%',
     }),
 ];
 
@@ -98,10 +103,10 @@ export const ListState = crudListingPage({
     mapStateToProps: mapStateToPropsParams,
     dataActions: geoStateDataActions,
     dataListActions: listStateActions,
-    moduleName,
     tableColumnList: tableColumnList,
     filterFunction: (filterString) => (item) => filterFunction(filterString)(item?.name),
     dependentDataLoaders: [dependentDataLoader('isCountryLoaded')(geoCountryDataActions.fetchList)],
     advanceFilter: true,
     canEditMaster: true,
+    moduleName,
 });

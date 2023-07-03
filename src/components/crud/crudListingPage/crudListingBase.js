@@ -17,10 +17,11 @@ import { injectParams } from 'utils/inject';
 import { filteredData } from 'utils/listFilter';
 import { DisableItemComponent } from 'utils/disableItemComponent';
 import { sortObjectOfArray } from 'utils/sortObjectOfArray';
+import { PAGINATION } from 'constants/constants';
 
 import CurdSearchBox from './curdSearchBox';
 import { DataTable } from 'utils/dataTable';
-import { PAGINATION } from 'constants/constants';
+import { ListDataTable } from 'utils/ListDataTable';
 
 import styles from './crudListing.module.css';
 
@@ -80,9 +81,9 @@ export const crudListingBase = ({
 }) => {
     const ListPage = (props) => {
         const [listFilterForm] = Form.useForm();
-        const { dispatch, fetchlist, listShowLoading, listFetchError, showAdvanceFilter, moduleType, userId, applyFilterList, showGlobalNotification } = props;
+        const { dispatch, fetchlist, listShowLoading, listFetchError, filterString, listSetFilterString, moduleType, userId, applyFilterList, showGlobalNotification } = props;
 
-        const { data, filterString, setFilterString, isError, message, canEditMaster, additionalFilterValues, canAddMaster, closeActionError, sortingString = undefined, sortingStringOrder = 'asc', paginatedProps } = props;
+        const { data, isError, message, canEditMaster, additionalFilterValues, canAddMaster, closeActionError, sortingString = undefined, sortingStringOrder = 'asc', paginatedProps } = props;
 
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -144,7 +145,6 @@ export const crudListingBase = ({
         // };
 
         const handleSearch = (value) => {
-            const { filterString, listSetFilterString } = props;
             listSetFilterString(filterString);
             if (value?.trim()?.length >= 3) {
                 listSetFilterString({ ...filterString, advanceFilter: true, keyword: value });
@@ -154,7 +154,7 @@ export const crudListingBase = ({
 
         const removeFilter = (key) => {
             const { [key]: names, ...rest } = filterString;
-            setFilterString({ ...rest, advanceFilter: false });
+            listSetFilterString({ ...rest, advanceFilter: false });
         };
 
         data &&
@@ -184,7 +184,6 @@ export const crudListingBase = ({
 
         const handleDynamicSearch = (e) => {
             const { filterString: keyword } = props;
-
             const customProps = { ...fetchListProps, keyword, postSucessCallback: () => successAction && successAction(props) };
             data && fetchlist(customProps);
         };
@@ -207,26 +206,18 @@ export const crudListingBase = ({
 
         const paginationTableProps = (dynamicPagination && { current: paginatedProps?.currentPage, total: paginatedProps?.totalRecords || PAGINATION.DEFAULT_PAGE_SIZE }) || {};
 
-        const tableProps = {
-            // tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
-            tableColumn: columns,
-            tableData: dataList,
-            onChange: dynamicPagination ? sortFn : undefined,
-            paginationTableProps,
-        };
-
         const addButtonOption =
             !isAddButtonHide &&
             (canAddMaster || canEditMaster ? (
                 addButtonRoute ? (
                     <Link to={addButtonRoute}>
                         <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger>
-                            {addButtonTitle ? addButtonTitle : 'Add ' + moduleName}
+                            {addButtonTitle ? addButtonTitle : 'Add '}
                         </Button>
                     </Link>
                 ) : (
                     <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd(props.onAddAction)}>
-                        {addButtonTitle ? addButtonTitle : 'Add ' + moduleName}
+                        {addButtonTitle ? addButtonTitle : 'Add '}
                     </Button>
                 )
             ) : (
@@ -238,7 +229,7 @@ export const crudListingBase = ({
 
         const onSearchHandle = (value) => {
             if (value?.trim()?.length >= 3) {
-                setFilterString({ ...filterString, advanceFilter: true, keyword: value });
+                listSetFilterString({ ...filterString, advanceFilter: true, keyword: value });
                 listFilterForm.setFieldsValue({ code: undefined });
             }
         };
@@ -253,11 +244,11 @@ export const crudListingBase = ({
         const advanceFilterResultProps = {
             advanceFilter: true,
             filterString,
-            from: listFilterForm,
+            form: listFilterForm,
             onFinish,
             onFinishFailed,
             extraParams: applyFilterList,
-            setFilterString,
+            listSetFilterString,
             removeFilter,
             handleResetFilter,
             onSearchHandle,
@@ -270,58 +261,29 @@ export const crudListingBase = ({
             addButtonOption,
         };
 
+        const tableProps = {
+            tableColumn: columns,
+            tableData: dataList,
+            onChange: dynamicPagination ? sortFn : undefined,
+            paginationTableProps,
+            addButtonOption,
+        };
+
         return (
             <div className={styles.dataTable} key={'crudlistingParent'}>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        {isError ? <Alert type="error" message={message} closable={true} onClose={closeActionError} /> : ''}
-                    </Col>
-                </Row>
-
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <CurdSearchBox {...advanceFilterResultProps} />
                     </Col>
                 </Row>
-
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        {isError ? <Alert type="error" message={message} closable={true} onClose={closeActionError} /> : ''}
+                    </Col>
+                </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <ConfigProvider
-                            renderEmpty={() =>
-                                props.isLoaded && (
-                                    <Empty
-                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                        imageStyle={{
-                                            height: 60,
-                                        }}
-                                        description={
-                                            !dataList?.length ? (
-                                                <span>
-                                                    No records found. Please add new parameter <br />
-                                                    using below button
-                                                </span>
-                                            ) : (
-                                                <span> No records found.</span>
-                                            )
-                                        }
-                                    >
-                                        {!dataList?.length ? (
-                                            <Row>
-                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                    {addButtonOption}
-                                                </Col>
-                                            </Row>
-                                        ) : (
-                                            ''
-                                        )}
-                                    </Empty>
-                                )
-                            }
-                        >
-                            <div className={styles.dataTable}>
-                                <DataTable isLoading={props.isLoading} {...tableProps} />
-                            </div>
-                        </ConfigProvider>
+                        <ListDataTable isLoading={props.isLoading} {...tableProps} addTitle={title} />
                     </Col>
                 </Row>
             </div>

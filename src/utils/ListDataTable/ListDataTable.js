@@ -5,8 +5,9 @@
  */
 import { DataTable } from 'utils/dataTable';
 import { Button, Empty, ConfigProvider } from 'antd';
-import styles from 'components/common/Common.module.css';
 import { PlusOutlined } from '@ant-design/icons';
+
+import styles from 'components/common/Common.module.css';
 
 export default function ListDataTable({
     isLoading,
@@ -23,6 +24,7 @@ export default function ListDataTable({
             select the same to update customer details.
         </>
     ),
+    addButtonOption,
 }) {
     return (
         <>
@@ -36,6 +38,8 @@ export default function ListDataTable({
                         description={!tableData?.length ? <span>{noDataMessage}</span> : <span> No records found.</span>}
                     >
                         {!tableData?.length
+                            ? addButtonOption
+                            : addButtonOption
                             ? showAddButton && (
                                   <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                       {`Add`}

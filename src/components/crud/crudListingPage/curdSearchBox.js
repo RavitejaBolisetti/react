@@ -11,19 +11,16 @@ import styles from 'components/common/Common.module.css';
 
 import { TfiReload } from 'react-icons/tfi';
 import { BsDownload } from 'react-icons/bs';
-import { PlusOutlined } from '@ant-design/icons';
-
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Search } = Input;
 const CurdSearchBox = (props) => {
-    const { showAddButton = true, advanceFilter = false, title, filterString, setFilterString, form, onFinish, onFinishFailed, extraParams, removeFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
+    const { addButtonOption, showAddButton = true, advanceFilter = false, title, filterString, listSetFilterString, form, onFinish, onFinishFailed, extraParams, removeFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
 
     const handleResetFilter = () => {
-        setFilterString();
+        listSetFilterString();
         form.resetFields();
         // setShowDataLoading(false);
     };
@@ -82,9 +79,7 @@ const CurdSearchBox = (props) => {
                                 </Button>
                             )}
                             <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                Add
-                            </Button>
+                            {addButtonOption}
                         </Col>
                     )}
                 </Row>
