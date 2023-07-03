@@ -79,8 +79,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const CustomerDetailsMain = (props) => {
     const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, handleFormValueChange, section } = props;
-    const { typeData, selectedOrderId } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section } = props;
+    const { setButtonData, buttonData, typeData, selectedOrderId } = props;
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
     const [formData, setFormData] = useState('');
@@ -180,6 +180,16 @@ export const CustomerDetailsMain = (props) => {
         isLoading,
         activeKey,
         setActiveKey,
+    };
+
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+        if (sameAsBookingCustomer) {
+            let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
+            let billingCustomer = form.getFieldsValue()?.billingCustomer;
+            billingCustomer = { ...bookingCustomer };
+            form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
+        }
     };
 
     return (
