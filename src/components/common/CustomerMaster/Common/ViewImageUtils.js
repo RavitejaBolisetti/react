@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Button, Typography, Image, Card, Space, Avatar } from 'antd';
+import { Button, Typography, Image, Card, Space, Avatar, Row, Col, Upload, Empty } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
@@ -14,6 +14,7 @@ import { HiCheck } from 'react-icons/hi';
 import styles from 'components/common/Common.module.css';
 
 const { Text, Title } = Typography;
+const { Dragger } = Upload;
 
 const mapStateToProps = (state) => {
     const {
@@ -53,68 +54,114 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ViewImageUtilsMain = (props) => {
-    const { uploadImgTitle, viewDocument, formData, showImage, setShowImage } = props;
-    const { listShowLoading, userId, uploadFile, fecthViewDocument, listShowLoadingOnLoad, setUploadImgDocId } = props;
-    const [uploadedFile, setUploadedFile] = useState();
+    const { uploadImgTitle, viewDocument, formData } = props;
+    const { handleUpload, userId, uploadProps, fecthViewDocument, listShowLoadingOnLoad, setUploadImgDocId } = props;
     const [visible, setVisible] = useState(false);
-
-    const onDrop = (e) => {
-        // console.log('Dropped files', e.dataTransfer.files);
-    };
-
-    useEffect(() => {
-        if (uploadedFile || formData?.docId) {
-            setUploadImgDocId(uploadedFile);
-            const extraParams = [
-                {
-                    key: 'docId',
-                    title: 'docId',
-                    value: uploadedFile || formData?.docId,
-                    name: 'docId',
-                },
-            ];
-            fecthViewDocument({ setIsLoading: listShowLoadingOnLoad, userId, extraParams });
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [uploadedFile, formData?.docId]);
+    const [showImage, setShowImage] = useState(false);
 
     const onHandleImage = () => {
         setShowImage(true);
     };
+
+    const onHandleCancel = () => {
+        setShowImage(false);
+    };
     return (
         <>
             <>
-                <Card className={styles.dashedBorder}>
-                    <Space direction="vertical">
-                        <Space>
-                            <Avatar icon={<HiCheck />} />
-                            <div>
-                                <Title level={5}>{uploadImgTitle || 'Profile Picture'}</Title>
-                                <Text>File type should be .png and .jpg and max file size to be 5Mb</Text>
+                {formData?.image && !showImage ? (
+                    <Card className={styles.dashedBorder}>
+                        <Space direction="vertical">
+                            <Space>
+                                <Avatar icon={<HiCheck />} />
+                                <div>
+                                    <Title level={5}>{uploadImgTitle || 'Profile Picture'}</Title>
+                                    <Text>File type should be .png and .jpg and max file size to be 5Mb</Text>
+                                </div>
+                            </Space>
+                            <Space>
+                                <Image
+                                    style={{ borderRadius: '6px' }}
+                                    width={150}
+                                    preview={{
+                                        visible,
+                                        scaleStep: 0.5,
+                                        src: `data:image/png;base64,${viewDocument?.base64}`,
+                                        onVisibleChange: (value) => {
+                                            setVisible(value);
+                                        },
+                                    }}
+                                    placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={200} />}
+                                    src={`data:image/png;base64,${viewDocument?.base64}`}
+                                />
+                                <Button onClick={onHandleImage} type="link">
+                                    Replace Image
+                                </Button>
+                            </Space>
+                        </Space>
+                    </Card>
+                ) : showImage ? (
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className={styles.uploadDragger}>
+                                <Dragger customRequest={handleUpload} {...uploadProps}>
+                                    <Empty
+                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                        imageStyle={{
+                                            height: 100,
+                                        }}
+                                        description={
+                                            <>
+                                                <span>
+                                                    Click or drop your file here to upload the signed and <br />
+                                                    scanned customer form.
+                                                </span>
+                                                <span>
+                                                    <br />
+                                                    File type should be png, jpg or pdf and max file size to be 5Mb
+                                                </span>
+                                            </>
+                                        }
+                                    />
+                                    <Button type="primary">Upload File</Button>
+                                </Dragger>
+                                <div>
+                                    <Button onClick={onHandleCancel} type="link">
+                                        Cancel Upload
+                                    </Button>
+                                </div>
                             </div>
-                        </Space>
-                        <Space>
-                            <Image
-                                style={{ borderRadius: '6px' }}
-                                width={150}
-                                preview={{
-                                    visible,
-                                    scaleStep: 0.5,
-                                    src: `data:image/png;base64,${viewDocument?.base64}`,
-                                    onVisibleChange: (value) => {
-                                        setVisible(value);
-                                    },
-                                }}
-                                placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={200} />}
-                                src={`data:image/png;base64,${viewDocument?.base64}`}
-                            />
-                            <Button onClick={onHandleImage} type="link">
-                                Replace Image
-                            </Button>
-                        </Space>
-                    </Space>
-                </Card>
+                        </Col>
+                    </Row>
+                ) : (
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className={styles.uploadDragger}>
+                                <Dragger customRequest={handleUpload} {...uploadProps}>
+                                    <Empty
+                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                        imageStyle={{
+                                            height: 100,
+                                        }}
+                                        description={
+                                            <>
+                                                <span>
+                                                    Click or drop your file here to upload the signed and <br />
+                                                    scanned customer form.
+                                                </span>
+                                                <span>
+                                                    <br />
+                                                    File type should be png, jpg or pdf and max file size to be 5Mb
+                                                </span>
+                                            </>
+                                        }
+                                    />
+                                    <Button type="primary">Upload File</Button>
+                                </Dragger>
+                            </div>
+                        </Col>
+                    </Row>
+                )}
             </>
         </>
     );
