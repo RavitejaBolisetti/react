@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -174,6 +174,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         form.resetFields();
         setFormData([]);
         setSelectedTreeData([]);
+        setSelectedTreeKey([]);
 
         setFormActionType(FROM_ACTION_TYPE.VIEW);
 
@@ -185,9 +186,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             cardBtnDisableAction(true);
 
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
+            setSelectedTreeKey(keys);
         }
-
-        setSelectedTreeKey(keys);
     };
 
     const handleSelectTreeClick = (value) => {
@@ -400,7 +400,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                 </Col>
 
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
-                    {selectedTreeData && selectedTreeData?.id ? (
+                    {selectedTreeKey && selectedTreeKey?.length ? (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <HierarchyView {...viewProps} />
                             <div className={styles.hyrbuttonContainer}>
