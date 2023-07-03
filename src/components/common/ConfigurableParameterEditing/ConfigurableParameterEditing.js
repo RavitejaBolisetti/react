@@ -28,14 +28,13 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: configData = [], paramdata: typeData = [], isLoadingOnSave },
+            ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: configData = [], filteredListData: typeData = [], isLoadingOnSave },
         },
     } = state;
 
     const moduleTitle = 'Configurable Parameter Editing';
 
     let configDataFinal = [];
-
     if (typeData) {
         configDataFinal = configData?.map((config) => {
             return { ...config, controlName: typeData && typeData?.CFG_PARAM?.find((item) => item?.key === config?.controlId)?.value };
