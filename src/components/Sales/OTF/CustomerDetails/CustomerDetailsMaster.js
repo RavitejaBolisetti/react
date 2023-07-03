@@ -79,8 +79,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const CustomerDetailsMain = (props) => {
     const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, handleFormValueChange, section } = props;
-    const { typeData, selectedOrderId } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section } = props;
+    const { setButtonData, buttonData, typeData, selectedOrderId } = props;
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
     const [formData, setFormData] = useState('');
@@ -129,7 +129,7 @@ export const CustomerDetailsMain = (props) => {
             return false;
         }
         form.getFieldsValue();
-        const data = { bookingCustomer: { ...values?.bookingCustomer, birthDate: dayjs(values?.bookingCustomer?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, birthDate: dayjs(values?.billingCustomer?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+        const data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
@@ -180,6 +180,14 @@ export const CustomerDetailsMain = (props) => {
         isLoading,
         activeKey,
         setActiveKey,
+    };
+
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+        if (sameAsBookingCustomer) {
+            let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
+            form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
+        }
     };
 
     return (

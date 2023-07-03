@@ -129,7 +129,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, id: financeData?.id, otfNumber: selectedOrderId };
+        const data = { ...values, id: financeData?.id, otfNumber: selectedOrderId, doDate: values?.doDate?.format('YYYY-MM-DD') };
 
         const onSuccess = (res) => {
             form.resetFields();

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -68,19 +68,21 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: productHierarchyDataActions.fetchList,
-            fetchOrgList: manufacturerOrgHierarchyDataActions.fetchList,
             saveData: productHierarchyDataActions.saveData,
             listShowLoading: productHierarchyDataActions.listShowLoading,
             changeHistoryModelOpen: productHierarchyDataActions.changeHistoryModelOpen,
             setSelectedOrganizationId: productHierarchyDataActions.setSelectedOrganizationId,
             resetData: productHierarchyDataActions.resetData,
             cardBtnDisableAction: productHierarchyDataActions.cardBtnDisableAction,
+            fetchListHierarchyAttributeName: productHierarchyDataActions.fetchAttributeNameList,
+            listAttibuteShowLoading: productHierarchyDataActions.listShowLoading,
+
+            fetchOrgList: manufacturerOrgHierarchyDataActions.fetchList,
+
             hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
-            showGlobalNotification,
-            fetchListHierarchyAttributeName: productHierarchyDataActions.fetchAttributeNameList,
-            listAttibuteShowLoading: productHierarchyDataActions.listShowLoading,
+            showGlobalNotification,  
         },
         dispatch
     ),
@@ -104,7 +106,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const [showProductAttribute, setShowProductAttribute] = useState(false);
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
+    const [disabledEdit, setDisabledEdit] = useState(false);
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
@@ -359,6 +361,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         selectedTreeData,
         setShowProductAttribute,
         showGlobalNotification,
+        disabledEdit,
+        setDisabledEdit,
     };
 
     const viewProps = {
@@ -368,6 +372,10 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         handleButtonClick,
         styles,
         viewTitle,
+        skuAttributes,
+        setSKUAttributes,
+        disabledEdit,
+        setDisabledEdit,
     };
     const leftCol = organizationId && productHierarchyData.length > 0 ? 16 : 24;
     const rightCol = organizationId && productHierarchyData.length > 0 ? 8 : 24;
@@ -429,11 +437,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                                             <span className={styles.descriptionText}> No records found.</span>
                                         )
                                     }
-                                    // description={
-                                    //     <span>
-                                    //         {noDataTitle} <br /> {noDataMessage}
-                                    //     </span>
-                                    // }
                                 >
                                     {organizationId && (
                                         <div>
