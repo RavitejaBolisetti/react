@@ -121,16 +121,16 @@ const ReferralsMasterBase = (props) => {
     }, []);
 
     const onErrorAction = (message) => {
-        // showGlobalNotification(message);
+        showGlobalNotification(message);
     };
 
     const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     useEffect(() => {
         if (userId && selectedOrderId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);

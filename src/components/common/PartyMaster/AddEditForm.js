@@ -99,7 +99,15 @@ const AddEditFormMain = (props) => {
         }
         setOptions();
         if (value.length <= 6) {
-            form.validateFields(['pinCode']);
+            form.validateFields(['pinCode']).then(() => {
+                const extraParams = [
+                    {
+                        key: 'pincode',
+                        value: value,
+                    },
+                ];
+                fetchPincodeDetail({ setIsLoading: listPinCodeShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            });
         } else if (value.length > 5) {
             const extraParams = [
                 {
@@ -120,7 +128,7 @@ const AddEditFormMain = (props) => {
             district: undefined,
             locality: undefined,
         });
-      };
+    };
 
     const viewProps = {
         isVisible: viewMode,
