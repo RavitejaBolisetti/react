@@ -86,19 +86,11 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [parameterType, setParameterType] = useState(defaultParametarType);
 
-    const loadDependendData = () => {
-        fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM_TYPE.id });
-        fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM.id });
-        fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CTRL_GRP.id });
-    };
-
     useEffect(() => {
         if (userId) {
             const onSuccessAction = (res) => {
                 refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
-            loadDependendData();
-
             fetchDataList({ setIsLoading: listShowLoading, onSuccessAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -110,7 +102,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
                 const filterDataItem = configData?.filter((item) => filterFunction(filterString)(item?.controlName) || filterFunction(filterString)(item?.controlDescription));
                 setSearchdata(filterDataItem);
             } else {
-                setSearchdata(configData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(configData);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -135,7 +127,6 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         const data = configData.find((i) => i.id === record.id);
         if (data) {
             data && setFormData(data);
-
             setParameterType(data?.configurableParameterType.toString() || defaultParametarType);
             setIsFormVisible(true);
         }
@@ -274,7 +265,6 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchDataList({ setIsLoading: listShowLoading, userId });
-            loadDependendData();
 
             if (showSaveAndAddNewBtn === true || recordId) {
                 setIsFormVisible(false);
