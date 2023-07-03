@@ -24,16 +24,11 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { tooltTipText, handleFormValueChange, onHandleSelect, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, onFinish, onFinishFailed, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
+    const { tooltTipText, isVehicleLovDataLoading, handleFormValueChange, onHandleSelect, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, onFinish, onFinishFailed, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
     const [optionForm] = Form.useForm();
     const findUsageType = (usage) => {
-        let foundVal;
-        typeData[PARAM_MASTER.VEHCL_TYPE.id]?.map((element, index) => {
-            if (element?.value === usage) {
-                foundVal = element?.key;
-            }
-        });
-        return foundVal;
+        const foundVal = typeData[PARAM_MASTER.VEHCL_TYPE.id]?.find((element, index) => element?.value === usage);
+        return foundVal?.key;
     };
 
     const disabledProp = { disabled: true };
@@ -111,7 +106,7 @@ const AddEditFormMain = (props) => {
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.modelTooltip}>
                                     {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                                     <Form.Item label="Model" name="model" data-testid="model" rules={[validateRequiredSelectField('Model')]}>
-                                        <Select onSelect={onHandleSelect} placeholder="Select" allowClear options={ProductHierarchyData} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                                        <Select loading={isVehicleLovDataLoading} onSelect={onHandleSelect} placeholder="Select" allowClear options={ProductHierarchyData} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -210,18 +205,16 @@ const AddEditFormMain = (props) => {
                     <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
                         <Panel
                             header={
-                                <div className={styles.alignUser}>
-                                    <Col xs={24} sm={24} md={5} lg={5} xl={5}>
+                                <Row>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                         <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                             Charges
                                         </Text>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={19} lg={19} xl={19}>
                                         <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
                                             Add
                                         </Button>
                                     </Col>
-                                </div>
+                                </Row>
                             }
                             key="3"
                         >

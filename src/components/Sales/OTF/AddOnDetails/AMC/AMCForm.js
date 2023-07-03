@@ -6,18 +6,19 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
 const AMCForm = ({ formData, amcForm, setformDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
 
     useEffect(() => {
-        if (formData === undefined && !formActionType?.viewMode) {
+        if ((formData === undefined || formData?.id === null || formData?.id === '') && !formActionType?.viewMode) {
             setisReadOnly(false);
         } else {
             setisReadOnly(true);
             amcForm.setFieldsValue({
-                amc: formData?.amc?.amc ? formData?.amc?.amc : 'NA',
-                amcRate: formData?.amc?.amcRate ? formData?.amc?.amcRate : 'NA',
+                amc: formData?.amc?.amc ? formData?.amc?.amc : !formActionType?.viewMode ? null : 'NA',
+                amcRate: formData?.amc?.amcRate ? formData?.amc?.amcRate : !formActionType?.viewMode ? null : 'NA',
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -26,7 +27,7 @@ const AMCForm = ({ formData, amcForm, setformDataSetter, formDataSetter, formAct
     const onFinishFailed = () => {};
     const onValuesChange = (values) => {
         const Myvalues = amcForm.getFieldsValue();
-        setformDataSetter({ ...formDataSetter, amc: { ...Myvalues } });
+        setformDataSetter({ ...formDataSetter, shield: { ...Myvalues } });
     };
 
     return (
@@ -38,7 +39,7 @@ const AMCForm = ({ formData, amcForm, setformDataSetter, formDataSetter, formAct
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="AMC Rate" name="amcRate">
+                    <Form.Item label="AMC Rate" name="amcRate" rules={[validateNumberWithTwoDecimalPlaces('AMC Rate')]}>
                         <Input disabled={isReadOnly} placeholder={preparePlaceholderText('amc rate')} />
                     </Form.Item>
                 </Col>

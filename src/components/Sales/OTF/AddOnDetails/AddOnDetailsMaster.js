@@ -73,7 +73,6 @@ export const AddOnDetailsMasterMain = (props) => {
         fms: {},
         partDetailsResponses: [],
     });
-
     const [searchData, setsearchData] = useState({});
     const [addOnItemInfo, setAddOnItemInfo] = useState([]);
     const [openAccordian, setopenAccordian] = useState(['ci']);
@@ -91,7 +90,6 @@ export const AddOnDetailsMasterMain = (props) => {
         resetData();
         showGlobalNotification({ message });
     };
-
     const onSearchPart = (searchvalue) => {
         if (!searchvalue) return;
         const extraParams = [
