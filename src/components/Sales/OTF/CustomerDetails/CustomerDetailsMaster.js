@@ -129,7 +129,7 @@ export const CustomerDetailsMain = (props) => {
             return false;
         }
         form.getFieldsValue();
-        const data = { bookingCustomer: { ...values?.bookingCustomer, birthDate: dayjs(values?.bookingCustomer?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, birthDate: dayjs(values?.billingCustomer?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+        const data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
@@ -186,8 +186,6 @@ export const CustomerDetailsMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
         if (sameAsBookingCustomer) {
             let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
-            let billingCustomer = form.getFieldsValue()?.billingCustomer;
-            billingCustomer = { ...bookingCustomer };
             form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
         }
     };
