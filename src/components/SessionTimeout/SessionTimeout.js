@@ -51,14 +51,16 @@ const SessionTimeoutMain = ({ doLogout, doRefreshToken, showGlobalNotification, 
     const [remaining, setRemaining] = useState(timeOutSetting?.timeout);
 
     useEffect(() => {
-        if (isLoaded) {
-            setTimeOutSetting({
-                timeout: timeOutConfig?.toNumber * 1000,
-                promptBeforeIdle: timeOutConfig?.fromNumber * 1000,
-            });
+        if (timeOutConfig) {
+            if (timeOutConfig?.toNumber > timeOutConfig?.fromNumber) {
+                setTimeOutSetting({
+                    timeout: timeOutConfig?.toNumber * 1000,
+                    promptBeforeIdle: timeOutConfig?.fromNumber * 1000,
+                });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isLoaded]);
+    }, [timeOutConfig]);
 
     const onIdle = () => {
         setIsModalOpen(false);
