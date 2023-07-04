@@ -57,5 +57,5 @@ export const data = combineReducers({
     OTF,
     CustomerMaster,
     SupportingDocument,
-    Vehicle
+    Vehicle,
 });

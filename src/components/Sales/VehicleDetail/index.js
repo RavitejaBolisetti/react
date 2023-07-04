@@ -3,7 +3,5 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import OTFMasterPage from './OTF';
-import VehicleDetailMasterPage from './VehicleDetail';
-
-export { OTFMasterPage, VehicleDetailMasterPage };
+import { VehicleDetailMaster } from './VehicleDetailMaster';
+export { VehicleDetailMaster };
