@@ -261,7 +261,7 @@ const ExchangeVehiclesBase = (props) => {
             extraParams: defaultExtraParam,
             userId,
             onSuccessAction: (res) => {
-                setFormData(res?.data?.customerMasterDetails[0]);
+                res?.data && res?.data?.customerMasterDetails && res?.data?.customerMasterDetails[0] && setFormData(res?.data?.customerMasterDetails[0] ?? []);
             },
             onErrorAction,
         });
