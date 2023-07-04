@@ -60,7 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CancellationMasterBase = (props) => {
-    const { accessToken, token, onFinishFailed, form } = props;
+    const { accessToken, token, onFinishFailed, form, otfData } = props;
     const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, supportingData, fetchViewDocument } = props;
     const { formActionType, handleFormValueChange } = props;
     const { selectedCustomerId, moduleTitle } = props;
@@ -85,6 +85,7 @@ const CancellationMasterBase = (props) => {
     const formProps = {
         ...props,
         titleOverride: moduleTitle,
+        otfData,
         buttonData,
         setButtonData,
         handleButtonClick,

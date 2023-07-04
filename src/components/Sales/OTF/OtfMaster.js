@@ -213,6 +213,7 @@ export const OtfMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
+        setIsFormVisible(true);
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -250,7 +251,6 @@ export const OtfMasterBase = (props) => {
             });
             setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
         }
-        setIsFormVisible(true);
     };
 
     const onSearchHandle = (value) => {
@@ -490,6 +490,7 @@ export const OtfMasterBase = (props) => {
     };
     const cancelProps = {
         ...props,
+        otfData,
         CANCEL_ACTION,
         isVisible: isCancelVisible,
         onCloseAction: onCancelCloseAction,

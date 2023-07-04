@@ -15,6 +15,7 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { convertDateMonthYear } from 'utils/formatDateTime';
 
 import { FiEye, FiTrash } from 'react-icons/fi';
 
@@ -22,7 +23,7 @@ const { Search } = Input;
 const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { formData, form, isLoading } = props;
+    const { formData, form, isLoading, otfData } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview, emptyList, setEmptyList } = props;
 
     const [showStatus, setShowStatus] = useState('');
@@ -118,8 +119,8 @@ const AddEditFormMain = (props) => {
         <>
             <Card className={styles.ExchangeCard}>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="OTF No.">{checkAndSetDefaultValue(formData?.customerId, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="OTF No.">{checkAndSetDefaultValue(otfData?.otfNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(convertDateMonthYear(otfData?.otfDate, isLoading))}</Descriptions.Item>
                     <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.make, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(formData?.modelGroup, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Model">{checkAndSetDefaultValue(formData?.variant, isLoading)}</Descriptions.Item>
