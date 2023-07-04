@@ -12,7 +12,6 @@ import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
-import { validateRequiredInputField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -72,8 +71,7 @@ const ReferralsMasterBase = (props) => {
 
     const [formData, setFormData] = useState();
     const [resetField, setResetField] = useState(false);
-    const [referralSearchRules, setReferralSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
-    const { filterString, setFilterString } = useState();
+    const { filterString, setFilterString } = props;
 
     useEffect(() => {
         setFormData(referralData);
@@ -121,16 +119,16 @@ const ReferralsMasterBase = (props) => {
     }, []);
 
     const onErrorAction = (message) => {
-        // showGlobalNotification(message);
+        showGlobalNotification(message);
     };
 
     const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     useEffect(() => {
         if (userId && selectedOrderId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -185,21 +183,11 @@ const ReferralsMasterBase = (props) => {
             onErrorAction,
         });
     };
-    const handleSearchTypeChange = (searchType) => {
-        if (searchType === 'customerName') {
-            setReferralSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
-        } else {
-            // searchForm.setFieldsValue({ searchParam: undefined, searchType: undefined });
-            // setFilterString({ ...filterString, searchParam: undefined, searchType: undefined });
-        }
-    };
 
     const handleSearchParamSearch = (values) => {
         searchForm
             .validateFields()
             .then((values) => {
-                // setFilterString({ ...values, advanceFilter: true });
-
                 setResetField(false);
                 if (!values) {
                     setFormData();
@@ -262,14 +250,11 @@ const ReferralsMasterBase = (props) => {
         onFinish,
         onFinishFailed,
         onSearch,
-        handleSearchTypeChange,
         handleSearchParamSearch,
         resetField,
-        referralSearchRules,
-        filterString,
         optionType: typeData[PARAM_MASTER.OTF_SER.id],
-
-        searchParamRule: referralSearchRules,
+        filterString,
+        setFilterString,
     };
 
     const viewProps = {

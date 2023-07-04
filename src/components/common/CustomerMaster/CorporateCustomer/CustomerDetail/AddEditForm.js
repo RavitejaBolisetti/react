@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Space, Divider, Card, Button } from 'antd';
 
 import { validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -18,6 +18,13 @@ const AddEditFormMain = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
+
+    useEffect(() => {
+        setCorporateType(formData?.corporateType);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData?.corporateType]);
+    
     const handleCorporateChange = (value) => {
         setCorporateType(value);
         if (value === 'NON-LIS') {

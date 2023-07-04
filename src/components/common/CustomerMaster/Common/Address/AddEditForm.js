@@ -16,7 +16,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { onSubmit, addressForm, setAddressData, isEditing, addressData, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType } = props;
+    const { addressForm, setAddressData, addressData, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, formActionType } = props;
     const { forceUpdate, handleFormValueChange, setIsAdding, showGlobalNotification } = props;
     const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail } = props;
     const disabledProps = { disabled: formActionType?.editMode && formData?.partyCategory === 'Principal' ? true : false };
