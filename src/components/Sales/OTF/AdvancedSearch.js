@@ -11,6 +11,7 @@ import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { disableFutureDate } from 'utils/disableDate';
 
 import styles from 'components/common/Common.module.css';
 
@@ -20,7 +21,7 @@ export const AdvancedSearchFrom = (props) => {
         filterString,
         setFilterString,
         advanceFilterForm,
-        advanceFilterForm: { getFieldValue, resetFields },
+        advanceFilterForm: { resetFields },
         handleResetFilter,
     } = props;
 
@@ -45,22 +46,6 @@ export const AdvancedSearchFrom = (props) => {
         return;
     };
 
-    const disabledFromDate = (startValue) => {
-        const endValue = getFieldValue('toDate');
-        if (!startValue || !endValue) {
-            return false;
-        }
-        return startValue.valueOf() > endValue.valueOf() || startValue > new Date();
-    };
-
-    const disabledToDate = (endValue) => {
-        const startValue = getFieldValue('fromDate');
-        if (!endValue || !startValue) {
-            return false;
-        }
-        return endValue.valueOf() <= startValue.valueOf() || endValue >= new Date();
-    };
-
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: true,
@@ -72,12 +57,12 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
-                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disabledFromDate} />
+                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="To Date" name="toDate" rules={[validateRequiredSelectField('To Date')]} className={styles?.datePicker}>
-                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disabledToDate} />
+                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
             </Row>

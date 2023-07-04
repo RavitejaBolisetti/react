@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CustomerDetailMasterBase = (props) => {
     const { typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
-    const { setRefreshList, userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
 
@@ -111,7 +111,6 @@ const CustomerDetailMasterBase = (props) => {
     }, [userId, selectedCustomerId]);
 
     const onFinish = (values) => {
-        setRefreshList(false);
         const data = { ...values, customerId: selectedCustomer?.customerId };
 
         const onSuccess = (res) => {
@@ -119,7 +118,6 @@ const CustomerDetailMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
             setButtonData({ ...buttonData, formBtnActive: false });
-            setRefreshList(true);
 
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });

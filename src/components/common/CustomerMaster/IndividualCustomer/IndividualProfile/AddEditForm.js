@@ -23,7 +23,7 @@ const { Dragger } = Upload;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading } = props;
+    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadConsentDocumentFile } = props;
     const { isReadOnly = false } = props;
     const [isRead, setIsRead] = useState(false);
     const [customer, setCustomer] = useState(false);
@@ -43,6 +43,7 @@ const AddEditFormMain = (props) => {
             postion: formData?.authorityDetails?.postion,
             personName: formData?.authorityDetails?.personName,
             remarks: formData?.authorityDetails?.remarks,
+            vehicleDeploymentDetails: formData?.vehicleDeploymentDetails,
         });
         if (formData?.martialStatus === 'S') {
             setIsRead(true);
@@ -108,6 +109,25 @@ const AddEditFormMain = (props) => {
         },
     };
 
+    const uploadConsentProps = {
+        name: 'file',
+        multiple: false,
+        action: '',
+        progress: { strokeWidth: 10 },
+        success: { percent: 100 },
+        onDrop,
+        onChange: (info, event) => {
+            const { status } = info.file;
+            if (status === 'uploading') {
+            } else if (status === 'done') {
+                setUploadedFiles(info?.file?.response?.docId);
+                message.success(`${info.file.name} file uploaded successfully.`);
+            } else if (status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
+    };
+
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
 
@@ -125,6 +145,25 @@ const AddEditFormMain = (props) => {
         };
 
         uploadDocumentFile(requestData);
+    };
+
+    const handleUploads = (options) => {
+        const { file, onSuccess, onError } = options;
+
+        const data = new FormData();
+        data.append('applicationId', 'app');
+        data.append('file', file);
+
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listDocumentShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        uploadConsentDocumentFile(requestData);
     };
 
     const ImageProps = {
@@ -335,7 +374,7 @@ const AddEditFormMain = (props) => {
                                                     </Form.Item>
                                                 </Col>
                                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                    <Form.Item label="Key Role Details" initialValue={formData?.keyRoleDetails} name="keyRoleDetails">
+                                                    <Form.Item label="Key Role Details" initialValue={formData?.keyRolesDetails} name="keyRolesDetails">
                                                         <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('key role details')} {...disabledProps} />
                                                     </Form.Item>
                                                 </Col>
@@ -481,7 +520,7 @@ const AddEditFormMain = (props) => {
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Dragger {...uploadProps} customRequest={handleUpload} className={styles.uploadContainer}>
+                                                <Dragger {...uploadConsentProps} customRequest={handleUploads} className={styles.uploadContainer}>
                                                     <div>
                                                         <img src={Svg} alt="" />
                                                     </div>

@@ -61,6 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             saveDocumentData: supportingDocumentDataActions.saveData,
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
+            uploadConsentDocumentFile: supportingDocumentDataActions.uploadFile,
             listDocumentShowLoading: supportingDocumentDataActions.listShowLoading,
 
             fecthViewDocument: documentViewDataActions.fetchList,
@@ -74,11 +75,13 @@ const mapDispatchToProps = (dispatch) => ({
 const IndividualProfileBase = (props) => {
     const { userId, isIndiviualProfileLoaded, fecthViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification, handleButtonClick } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, downloadFile } = props;
-    const { saveDocumentData, uploadDocumentFile, setRefreshList, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, NEXT_ACTION } = props;
+    const { saveDocumentData, uploadDocumentFile, uploadConsentDocumentFile, setRefreshList, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, NEXT_ACTION } = props;
     const [form] = Form.useForm();
 
     const [activeKey, setActiveKey] = useState([1]);
     const [uploadedFile, setUploadedFile] = useState();
+    const [uploadedFiles, setUploadedFiles] = useState();
+
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -154,7 +157,7 @@ const IndividualProfileBase = (props) => {
             authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
             id: recordId,
             profileFileDocId: uploadedFile ? uploadedFile : '',
-            customerFormDocId: uploadedFile ? uploadedFile : '',
+            customerFormDocId: uploadedFiles ? uploadedFiles : '',
         };
 
         const onSuccess = (res) => {
@@ -228,8 +231,11 @@ const IndividualProfileBase = (props) => {
         appCategoryData,
         listDocumentShowLoading,
         uploadDocumentFile,
+        uploadConsentDocumentFile,
         setUploadedFile,
         uploadedFile,
+        setUploadedFiles,
+        uploadedFiles,
 
         saveDocumentData,
         userId,
