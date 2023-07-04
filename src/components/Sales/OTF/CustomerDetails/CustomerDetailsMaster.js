@@ -19,7 +19,6 @@ import { OTFFormButton } from '../OTFFormButton';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 
-import dayjs from 'dayjs';
 import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
@@ -103,7 +102,7 @@ export const CustomerDetailsMain = (props) => {
     }, []);
 
     const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const extraParams = [
@@ -117,7 +116,7 @@ export const CustomerDetailsMain = (props) => {
 
     useEffect(() => {
         if (userId && selectedOrderId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -137,7 +136,7 @@ export const CustomerDetailsMain = (props) => {
         };
 
         const onError = (message) => {
-            // showGlobalNotification({ message });
+            showGlobalNotification({ message });
         };
 
         const requestData = {

@@ -77,7 +77,6 @@ const IndividualProfileBase = (props) => {
     const { saveDocumentData, uploadDocumentFile, setRefreshList, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, NEXT_ACTION } = props;
     const [form] = Form.useForm();
 
-    const [formData, setFormData] = useState([]);
     const [activeKey, setActiveKey] = useState([1]);
     const [uploadedFile, setUploadedFile] = useState();
 
@@ -89,7 +88,7 @@ const IndividualProfileBase = (props) => {
     };
 
     useEffect(() => {
-        if ( userId && selectedCustomerId) {
+        if (userId && selectedCustomerId) {
             const extraParams = [
                 {
                     key: 'customerId',
@@ -143,12 +142,14 @@ const IndividualProfileBase = (props) => {
 
     const onFinish = (values) => {
         setRefreshList(false);
-        const recordId = formData?.id || '';
+        const recordId = '';
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
 
         const data = {
             ...rest,
             customerId: selectedCustomerId,
+            dateOfBirth: values?.dateOfBirth?.format('YYYY-MM-DD'),
+            weddingAnniversary: values?.weddingAnniversary?.format('YYYY-MM-DD'),
             keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode || '', accountName: values?.accountName || '', accountSegment: values?.accountSegment || '', accountClientName: values?.accountClientName || '', accountMappingDate: values?.accountMappingDate || '' },
             authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
             id: recordId,
@@ -189,7 +190,7 @@ const IndividualProfileBase = (props) => {
             {
                 key: 'docId',
                 title: 'docId',
-                value: indiviualData?.customerConsentForm,
+                value: indiviualData?.image,
                 name: 'docId',
             },
         ];
@@ -210,7 +211,6 @@ const IndividualProfileBase = (props) => {
         form.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
-        viewDocument = [];
     };
 
     const formProps = {

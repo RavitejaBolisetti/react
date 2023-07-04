@@ -12,7 +12,7 @@ import FormProductAttribute from './FormProductAttribute';
 const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
-    const { isVisible, finalFormdata, attributeForm, forceUpdate, skuAttributes, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive, showGlobalNotification,setDisabledEdit} = props;
+    const { isVisible, finalFormdata, attributeForm, forceUpdate, skuAttributes, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive, showGlobalNotification, setDisabledEdit } = props;
     const [editForm] = Form.useForm();
     const [formEdit, setFormEdit] = useState(false);
 
@@ -81,14 +81,14 @@ const CardProductAttribute = (props) => {
         skuAttributes,
     };
 
-    useEffect( () => {
-        if(formEdit){
+    useEffect(() => {
+        if (formEdit) {
             setDisabledEdit(true);
         } else {
             setDisabledEdit(false);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[formEdit] )
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formEdit]);
 
     return (
         <Card
@@ -112,19 +112,15 @@ const CardProductAttribute = (props) => {
                         {!formEdit ? (
                             <div className={styles.cardItemBtn}>
                                 <>
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} style={{ margin: '0 8px 0 0' }}>
-                                        <Button
-                                            type="link"
-                                            icon={<FiEdit />}
-                                            onClick={() => {
-                                                onAttributeEdit(props);
-                                            }}
-                                            disabled={props?.disabledEdit}
-                                        />
-                                    </Col>
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} disabled={props?.disabledEdit || (props?.id ? true : false)} />
-                                    </Col>
+                                    <Button
+                                        type="link"
+                                        icon={<FiEdit />}
+                                        onClick={() => {
+                                            onAttributeEdit(props);
+                                        }}
+                                        disabled={props?.disabledEdit}
+                                    />
+                                    <Button onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} disabled={props?.disabledEdit || (props?.id ? true : false)} />
                                 </>
                             </div>
                         ) : (
@@ -141,7 +137,7 @@ const CardProductAttribute = (props) => {
                 )}
             </Row>
 
-            {formEdit &&  (
+            {formEdit && (
                 <>
                     <Divider />
                     <FormProductAttribute {...FormProductAttributeProp} />
