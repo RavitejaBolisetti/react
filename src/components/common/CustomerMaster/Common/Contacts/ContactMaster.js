@@ -103,6 +103,7 @@ const ContactMain = (props) => {
 
     useEffect(() => {
         return () => {
+            setUploadImgDocId("");
             resetData();
             resetIndividualData();
         };
@@ -160,7 +161,7 @@ const ContactMain = (props) => {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
-                        formData.splice(index, 1, { relationCode: '', ...value });
+                        formData.splice(index, 1, { relationCode: '', ...value, docId: uploadImgDocId });
                         return [...formData];
                     });
                 } else {
@@ -172,9 +173,9 @@ const ContactMain = (props) => {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         if (value?.defaultaddress && formData?.length >= 1) {
-                            return [...formData, { relationCode: '', ...value }];
+                            return [...formData, { relationCode: '', ...value, docId: uploadImgDocId }];
                         } else {
-                            const updVal = prev?.length ? [...prev, { relationCode: '', ...value }] : [{ relationCode: '', ...value }];
+                            const updVal = prev?.length ? [...prev, { relationCode: '', ...value, docId: uploadImgDocId }] : [{ relationCode: '', ...value }];
                             return updVal;
                         }
                     });
