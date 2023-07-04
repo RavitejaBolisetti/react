@@ -1,9 +1,14 @@
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen, fireEvent, getByTestId } from '@testing-library/react';
+import { render, form, Form, screen, fireEvent, getByTestId } from '@testing-library/react';
 import customRender from '@utils/test-utils';
+// import { find } from 'enzyme';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
 
 import { AddEditForm } from '@components/common/CriticalityGroup/AddEditForm';
+
+const onFinishFailed = (errorInfo) => {
+    form.validateFields().then((values) => {});
+};
 
 describe('AddEditForm Components', () => {
     it('should render AddEditForm components', () => {
@@ -26,17 +31,22 @@ describe('should toggle switch', () => {
         render(<AddEditForm isVisible={true} formActionType={{ addMode: true, editMode: false, viewMode: false }} />);
         expect(screen.getByTestId('toggle')).toBeInTheDocument();
         expect(screen.getByTestId('default-toggle')).toBeInTheDocument();
-
-        // const handleChange = jest.fn();
-        // props.isChecked = false;
-        // props.onChange = handleChange;
-
-        // const { container } = render(<AddEditForm {...props} />);
-        // const checkbox = container.querySelectorAll("input[type='checkbox']")[0];
-
-        // fireEvent.click(checkbox);
-        // expect(handleChange).toHaveBeenCalledTimes(1);
-
-        // expect(checkbox.checked).toBe(true);
+        const value = screen.getByText(/allowed timings/i);
+        expect(value).toBeInTheDocument();
     });
+
+    //.......Working Test if Enzyme Loads...........//
+
+    // test('should render finish function', () => {
+    //     const wrapper = render(<AddEditForm />);
+    //     const form = wrapper.find(Form);
+    //     form.setFields({
+    //         criticalityGroupCode: {
+    //             errors: ['This is a required field'],
+    //         },
+    //     });
+    //     expect(onFinishFailed).toBeCalledWith({
+    //         name: 'This is a required field',
+    //     });
+    // });
 });
