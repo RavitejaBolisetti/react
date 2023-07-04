@@ -102,15 +102,19 @@ const AddEditForm = (props) => {
         addressForm
             .validateFields()
             .then((value) => {
-                if (editingData?.addressType) {
+                const defaultAdddress = addressData?.find((i) => (editingData?.addressType ? i.addressType === editingData?.addressType : true) && i.deafultAddressIndicator);
+                if (defaultAdddress) {
+                    return showGlobalNotification({ message: 'Only one address can be default' });
+                }
 
-                    let dataList = [...addressData];
-                    const index = dataList?.findIndex((el) => el?.addressType === editingData?.addressType);
-                    dataList.splice(index, 1);
-                    const checkedIndex = dataList?.findIndex((el) => el?.deafultAddressIndicator);
-                    if (value?.deafultAddressIndicator && checkedIndex !== -1) {
-                        return showGlobalNotification({ message: 'Only one address can be default' });
-                    }
+                if (editingData?.addressType) {
+                    // let dataList = [...addressData];
+                    // const index = dataList?.findIndex((el) => el?.addressType === editingData?.addressType);
+                    // dataList.splice(index, 1);
+                    // const checkedIndex = dataList?.findIndex((el) => el?.deafultAddressIndicator);
+                    // if (value?.deafultAddressIndicator && checkedIndex !== -1) {
+                    //     return showGlobalNotification({ message: 'Only one address can be default' });
+                    // }
 
                     setAddressData((prev) => {
                         let formData = [...prev];
@@ -120,15 +124,13 @@ const AddEditForm = (props) => {
                         return [...formData];
                     });
                 } else {
-                    let dataList = [...addressData];
-                    const checkedIndex = dataList?.findIndex((el) => el?.deafultAddressIndicator);
-                    if (checkedIndex !== -1) {
-                        return showGlobalNotification({ message: 'Only one address can be default' });
-                    }
-
+                    // let dataList = [...addressData];
+                    // const checkedIndex = dataList?.findIndex((el) => el?.deafultAddressIndicator);
+                    // if (checkedIndex !== -1) {
+                    //     return showGlobalNotification({ message: 'Only one address can be default' });
+                    // }
                     setAddressData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
-
                         if (value?.defaultaddress && formData?.length >= 1) {
                             return [...formData, { ...value, ...pinSearchData }];
                         } else {
