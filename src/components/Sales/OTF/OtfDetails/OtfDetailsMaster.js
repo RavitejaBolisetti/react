@@ -72,7 +72,7 @@ const OtfDetailsMasterBase = (props) => {
     const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
 
     const onErrorAction = (message) => {
-        // showGlobalNotification({ message });
+        showGlobalNotification({ message });
     };
 
     const extraParams = [

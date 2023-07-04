@@ -35,6 +35,7 @@ const AddEditFormMain = (props) => {
 
     useEffect(() => {
         setformDataSetter({ ...formDataSetter, partDetailsResponses: addOnItemInfo });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [addOnItemInfo]);
 
     const handleCollapse = (key) => {

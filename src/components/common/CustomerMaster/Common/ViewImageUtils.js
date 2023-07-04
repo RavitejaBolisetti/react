@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, Typography, Image, Card, Space, Avatar, Row, Col, Upload, Empty } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ViewImageUtilsMain = (props) => {
     const { uploadImgTitle, viewDocument, formData } = props;
-    const { handleUpload, userId, uploadProps, fecthViewDocument, listShowLoadingOnLoad, setUploadImgDocId } = props;
+    const { handleUpload, uploadProps } = props;
     const [visible, setVisible] = useState(false);
     const [showImage, setShowImage] = useState(false);
 
