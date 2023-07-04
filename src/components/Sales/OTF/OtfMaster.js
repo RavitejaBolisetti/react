@@ -267,7 +267,6 @@ export const OtfMasterBase = (props) => {
 
     const handleResetFilter = (e) => {
         setFilterString();
-        setShowDataLoading(true);
         advanceFilterForm.resetFields();
     };
 
