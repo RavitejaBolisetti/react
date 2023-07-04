@@ -170,7 +170,7 @@ export const searchValidator = (_, value) => {
 
 export const searchValidatorPincode = (_, value) => {
     const pattern = /^\d{6}$/;
-    if (pattern.test(value)) {
+    if (!value || pattern.test(value)) {
         return Promise.resolve();
     } else {
         return Promise.reject(new Error('Please enter 6 digit numeric value to search'));

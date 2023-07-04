@@ -23,12 +23,16 @@ const { Dragger } = Upload;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, formActionType, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading } = props;
+    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading } = props;
     const { isReadOnly = false } = props;
     const [isRead, setIsRead] = useState(false);
     const [customer, setCustomer] = useState(false);
-    const [showImage, setShowImage] = useState(false);
     const [activeKey, setActiveKey] = useState([1]);
+
+    useEffect(() => {
+        setCustomer(formData?.customerCategory);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData?.customerCategory]);
 
     useEffect(() => {
         form.setFieldsValue({
@@ -40,7 +44,7 @@ const AddEditFormMain = (props) => {
             personName: formData?.authorityDetails?.personName,
             remarks: formData?.authorityDetails?.remarks,
         });
-        if (formData?.martialStatus == 'S') {
+        if (formData?.martialStatus === 'S') {
             setIsRead(true);
         } else {
             setIsRead(false);
@@ -64,9 +68,6 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const onHandleCancel = () => {
-        setShowImage(false);
-    };
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
@@ -127,8 +128,10 @@ const AddEditFormMain = (props) => {
     };
 
     const ImageProps = {
-        showImage,
-        setShowImage,
+        viewDocument,
+        handleUpload,
+        uploadProps,
+        formData,
     };
 
     const disabledProps = { disabled: isReadOnly };
@@ -151,72 +154,9 @@ const AddEditFormMain = (props) => {
                         >
                             <Panel header={<Text strong>Individual Information</Text>} key="1">
                                 <div className={styles.headerBox}>
-                                    {formData?.image && !showImage ? (
-                                        <div className={styles.uploadDragger}>
-                                            <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} viewDocument={viewDocument} {...ImageProps} />
-                                        </div>
-                                    ) : showImage ? (
-                                        <Row gutter={16}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <div className={styles.uploadDragger}>
-                                                    <Dragger customRequest={handleUpload} {...uploadProps}>
-                                                        <Empty
-                                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                                            imageStyle={{
-                                                                height: 100,
-                                                            }}
-                                                            description={
-                                                                <>
-                                                                    <span>
-                                                                        Click or drop your file here to upload the signed and <br />
-                                                                        scanned customer form.
-                                                                    </span>
-                                                                    <span>
-                                                                        <br />
-                                                                        File type should be png, jpg or pdf and max file size to be 5Mb
-                                                                    </span>
-                                                                </>
-                                                            }
-                                                        />
-                                                        <Button type="primary">Upload File</Button>
-                                                    </Dragger>
-                                                    <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
-                                                        <Button onClick={onHandleCancel} type="link">
-                                                            Cancel Upload
-                                                        </Button>
-                                                    </div>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    ) : (
-                                        <Row gutter={16}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <div className={styles.uploadDragger}>
-                                                    <Dragger customRequest={handleUpload} {...uploadProps}>
-                                                        <Empty
-                                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                                            imageStyle={{
-                                                                height: 100,
-                                                            }}
-                                                            description={
-                                                                <>
-                                                                    <span>
-                                                                        Click or drop your file here to upload the signed and <br />
-                                                                        scanned customer form.
-                                                                    </span>
-                                                                    <span>
-                                                                        <br />
-                                                                        File type should be png, jpg or pdf and max file size to be 5Mb
-                                                                    </span>
-                                                                </>
-                                                            }
-                                                        />
-                                                        <Button type="primary">Upload File</Button>
-                                                    </Dragger>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    )}
+                                    <div className={styles.uploadDragger}>
+                                        <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} {...ImageProps} />
+                                    </div>
 
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

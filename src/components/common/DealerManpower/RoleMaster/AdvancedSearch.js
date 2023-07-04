@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
 
 import { validateRequiredSelectField, searchValidator } from 'utils/validation';
@@ -32,10 +32,11 @@ export const AdvancedSearchFrom = (props) => {
     const { isDivisionDataLoaded, divisionData } = props;
     const { isDepartmentDataLoaded, departmentData } = props;
 
-    const handleDivisionChange = (division) => {
-        handleFilterChange('divisionCode');
-        setFilteredDepartmentData(departmentData?.filter((i) => i?.parentKey === division));
-    };
+    // const handleDivisionChange = (division) => {
+    //     console.log("omh")
+    //     handleFilterChange('divisionCode');
+    //     setFilteredDepartmentData(departmentData?.filter((i) => i?.parentKey === division));
+    // };
 
     const onFinishFailed = () => {
         return;
@@ -52,7 +53,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.divisionCode} label="Division Name" name="divisionCode" rules={[validateRequiredSelectField('Division')]}>
-                        <Select className={styles.headerSelectField} showSearch loading={!isDivisionDataLoaded} placeholder="Select" allowClear onChange={handleDivisionChange}>
+                        <Select className={styles.headerSelectField} showSearch loading={!isDivisionDataLoaded} placeholder="Select" allowClear onChange={handleFilterChange('code')}>
                             {divisionData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}

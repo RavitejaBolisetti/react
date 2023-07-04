@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -30,19 +30,17 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
-
     const handleCountryChange = (countryCode) => {
         form.setFieldValue('stateCode', undefined);
         form.setFieldValue('districtCode', undefined);
         form.setFieldValue('cityCode', undefined);
         form.setFieldValue('tehsilCode', undefined);
 
-        setFilteredStateData(stateData?.filter((i) => i?.countryCode === countryCode));
+        setFilteredStateData(stateData?.filter((i) => i?.parentKey === countryCode));
         setFilteredDistrictData([]);
         setFilteredCityData([]);
         setFilteredTehsilData([]);
     };
-
     const handleStateChange = (state) => {
         form.setFieldValue('districtCode', undefined);
         form.setFieldValue('cityCode', undefined);

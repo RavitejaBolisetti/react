@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -20,15 +20,15 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId, refreshToken },
         data: {
-            ConfigurableParameterEditing: { isLoaded, isLoading, data: configData = [], },
-        }
+            ConfigurableParameterEditing: { isLoaded, data: configData = [] },
+        },
     } = state;
 
     return {
         userId,
         refreshToken,
         isLoaded,
-        timeOutConfig: configData?.find(i => i.controlId === 'STOUT')
+        timeOutConfig: configData?.find((i) => i.controlId === 'STOUT'),
     };
 };
 
@@ -53,11 +53,12 @@ const SessionTimeoutMain = ({ doLogout, doRefreshToken, showGlobalNotification, 
     useEffect(() => {
         if (isLoaded) {
             setTimeOutSetting({
-                timeout: timeOutConfig?.toNumber * 1000, promptBeforeIdle: timeOutConfig?.fromNumber * 1000
-            })
+                timeout: timeOutConfig?.toNumber * 1000,
+                promptBeforeIdle: timeOutConfig?.fromNumber * 1000,
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isLoaded,]);
+    }, [isLoaded]);
 
     const onIdle = () => {
         setIsModalOpen(false);
@@ -128,7 +129,6 @@ const SessionTimeoutMain = ({ doLogout, doRefreshToken, showGlobalNotification, 
         closable: false,
         handleLogoutAction: onIdle,
         handleSessionContinueAction,
-
     };
     return <SessionTimeoutModal {...modalProps} />;
 };
