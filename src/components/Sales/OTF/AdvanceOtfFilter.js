@@ -3,45 +3,23 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Row, Col } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
-import styles from 'components/common/Common.module.css';
 import { SearchBox } from 'components/utils/SearchBox';
 
-export default function AdvanceOTFFilter(props) {
-    const {
-        extraParams,
-        removeFilter,
-        handleResetFilter,
-        advanceFilter = false,
-        otfFilter = false,
-        title,
-        filterString,
-        handleSearchTypeChange,
-        handleSearchParamSearch,
-        typeData,
-        setAdvanceSearchVisible,
-        searchForm,
-        searchForm: { setFieldsValue },
-        otfSearchRules,
-    } = props;
+import styles from 'components/common/Common.module.css';
 
-    useEffect(() => {
-        setFieldsValue({ searchParam: filterString?.searchParam, searchType: filterString?.searchType });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+export default function AdvanceOTFFilter(props) {
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;
 
     const serachBoxProps = {
         searchForm,
         filterString,
         optionType: typeData,
-        handleSearchTypeChange,
-        handleSearchParamSearch,
-        searchParamRule: otfSearchRules,
+        setFilterString,
     };
-
 
     return (
         <div className={styles.contentHeaderBackground}>

@@ -11,7 +11,6 @@ import { RxCross2 } from 'react-icons/rx';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { showGlobalNotification } from 'store/actions/notification';
-import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength, validateRequiredSelectField } from 'utils/validation';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { tableColumn } from './tableColumn';
@@ -36,7 +35,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
         customer: {
-            customerDetail: { isLoaded: isDataLoaded = false, isLoading, data, filter: filterString = {} },
+            customerDetail: { isLoaded: isDataLoaded = false, isLoading, data, filter: filterString },
         },
     } = state;
 
@@ -70,21 +69,19 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerMasterMain = (props) => {
-    const { data, fetchList, userId, isLoading, listShowLoading, showGlobalNotification, resetData, moduleTitle, typeData } = props;
+    const { data, fetchList, userId, isLoading, listShowLoading, showGlobalNotification, moduleTitle, typeData, resetData } = props;
     const { filterString, setFilterString } = props;
 
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
     const [selectedCustomer, setSelectedCustomer] = useState();
     const [selectedCustomerId, setSelectedCustomerId] = useState();
     const [shouldResetForm, setShouldResetForm] = useState(false);
-    const [refreshList, setRefreshList] = useState(false);
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
-    const [customerSearchRules, setCustomerSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -97,46 +94,57 @@ const CustomerMasterMain = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    const defaultExtraParam = [
-        {
-            key: 'customerType',
-            title: 'Customer Type',
-            value: customerType,
-            canRemove: true,
-        },
-        {
-            key: 'pageSize',
-            title: 'Value',
-            value: 1000,
-            canRemove: true,
-        },
-        {
-            key: 'pageNumber',
-            title: 'Value',
-            value: 1,
-            canRemove: true,
-        },
-    ];
+    const defaultExtraParam = useMemo(() => {
+        return [
+            {
+                key: 'customerType',
+                title: 'Customer Type',
+                value: customerType,
+                canRemove: true,
+            },
+            {
+                key: 'pageSize',
+                title: 'Value',
+                value: 1000,
+                canRemove: true,
+            },
+            {
+                key: 'pageNumber',
+                title: 'Value',
+                value: 1,
+                canRemove: true,
+            },
+        ];
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [customerType]);
 
-    const extraParams = [
-        ...defaultExtraParam,
-        {
-            key: 'searchType',
-            title: 'Type',
-            value: filterString?.searchType,
-            name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
-            canRemove: false,
-            filter: true,
-        },
-        {
-            key: 'searchParam',
-            title: 'Value',
-            value: filterString?.searchParam,
-            name: filterString?.searchParam,
-            canRemove: true,
-            filter: true,
-        },
-    ];
+    const extraParams = useMemo(() => {
+        if (filterString) {
+            return [
+                ...defaultExtraParam,
+                {
+                    key: 'searchType',
+                    title: 'Type',
+                    value: filterString?.searchType,
+                    name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
+                    canRemove: false,
+                    filter: true,
+                },
+                {
+                    key: 'searchParam',
+                    title: 'Value',
+                    value: filterString?.searchParam,
+                    name: filterString?.searchParam,
+                    canRemove: true,
+                    filter: true,
+                },
+            ];
+        } else {
+            return defaultExtraParam;
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [defaultExtraParam, filterString]);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -149,10 +157,23 @@ const CustomerMasterMain = (props) => {
     };
 
     useEffect(() => {
-        const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
-        setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
-        setDefaultSection(defaultSection);
-        setSection(defaultSection);
+        return () => {
+            resetData();
+            setFilterString();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (customerType) {
+            const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
+            setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
+            setDefaultSection(defaultSection);
+            setSection(defaultSection);
+            setFilterString();
+            setShowDataLoading(true);
+            resetData();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType]);
 
@@ -167,16 +188,12 @@ const CustomerMasterMain = (props) => {
     }, [currentSection, sectionName]);
 
     useEffect(() => {
-        if (userId && customerType) {
-            resetData();
-            fetchList({ setIsLoading: listShowLoading, extraParams: defaultExtraParam, userId, onSuccessAction, onErrorAction });
+        if (userId && customerType && extraParams) {
+            setShowDataLoading(true);
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams || defaultExtraParam, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerType, userId, refreshList]);
-
-    // useEffect(() => {
-    //     setFilterString(() => '');
-    // }, [filterString]);
+    }, [userId, customerType, extraParams]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
@@ -230,21 +247,8 @@ const CustomerMasterMain = (props) => {
         tableColumn: tableColumn(handleButtonClick),
     };
 
-    const onChange = (sorter, filters) => {
-        form.resetFields();
-    };
-
-    // const onSearchHandle = (value) => {
-    //     searchForm
-    //         .validateFields()
-    //         .then((values) => {
-    //             setShowDataLoading(true);
-    //             fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //             return;
-    //         });
+    // const onChange = (sorter, filters) => {
+    //     form.resetFields();
     // };
 
     const handleFormValueChange = () => {
@@ -305,7 +309,6 @@ const CustomerMasterMain = (props) => {
         setCurrentSection,
         shouldResetForm,
         handleFormValueChange,
-        setRefreshList,
         isLastSection,
         saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
     };
@@ -315,64 +318,19 @@ const CustomerMasterMain = (props) => {
         searchForm.resetFields();
     };
 
-    const handleSearchTypeChange = (searchType) => {
-        setFilterString({ searchType: searchType, searchParam: '' });
-        setCustomerSearchRules({ rules: [validateRequiredInputField('Keyword')] });
-
-        // if (searchType === 'mobileNumber') {
-        //     setCustomerSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
-        // } else if (searchType === 'customerName') {
-        //     setCustomerSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
-        // } else if (searchType === 'otfNumber') {
-        //     setCustomerSearchRules({ rules: [validateRequiredInputField('OTF Number')] });
-        // } else {
-        //     // searchForm.setFieldsValue({ searchParam: undefined, searchType: undefined });
-        //     // setFilterString({ ...filterString, searchParam: undefined, searchType: undefined });
-        // }
-    };
-
-    const handleSearchParamSearch = (values) => {
-        searchForm
-            .validateFields()
-            .then((values) => {
-                setFilterString({ ...values, advanceFilter: true });
-                fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
-            })
-            .catch((err) => {
-                return;
-            });
-    };
-
-    const handleSearchParamChange = (event) => {
-        if (event.target.value === undefined) {
-            return false;
-        }
-        if (!filterString?.searchType) {
-            setCustomerSearchRules({ rules: [validateRequiredSelectField('Parameter')] });
-        }
-        if (filterString?.searchType === 'mobileNumber') {
-            setCustomerSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
-        }
-        if (filterString?.searchType === 'customerName') {
-            setCustomerSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
-        }
-
-        setFilterString({ ...filterString, searchParam: event.target.value });
-    };
-
     const removeFilter = (key) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
+
+            searchForm.resetFields();
         } else {
             const { [key]: names, ...rest } = filterString;
             setFilterString({ ...rest });
+
+            searchForm.resetFields();
         }
     };
-
-    // const handleResetFilter = (e) => {
-    //     searchForm.setFieldsValue({ searchParam: undefined, searchType: undefined });
-    // };
 
     const handleResetFilter = (e) => {
         setFilterString();
@@ -383,12 +341,10 @@ const CustomerMasterMain = (props) => {
     const searchBoxProps = {
         searchForm,
         filterString,
+        setFilterString,
         optionType: typeData,
-        handleSearchTypeChange,
-        handleSearchParamSearch,
-        searchParamRule: customerSearchRules,
-        handleSearchParamChange,
     };
+
     return (
         <>
             <Row gutter={20}>
@@ -461,7 +417,7 @@ const CustomerMasterMain = (props) => {
                             ></Empty>
                         )}
                     >
-                        <DataTable isLoading={showDataLoading} {...tableProps} onChange={onChange} />
+                        <DataTable isLoading={showDataLoading} {...tableProps} />
                     </ConfigProvider>
                 </Col>
             </Row>

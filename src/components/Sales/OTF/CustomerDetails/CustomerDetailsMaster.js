@@ -19,7 +19,6 @@ import { OTFFormButton } from '../OTFFormButton';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 
-import dayjs from 'dayjs';
 import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {

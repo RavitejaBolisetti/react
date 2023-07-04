@@ -15,7 +15,7 @@ const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
     const { handleFilterChange } = props;
-    const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible, filteredDepartmentData, setFilteredDepartmentData } = props;
+    const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible, filteredDepartmentData } = props;
 
     useEffect(() => {
         advanceFilterForm.resetFields();
@@ -30,7 +30,7 @@ export const AdvancedSearchFrom = (props) => {
         advanceFilterForm.resetFields();
     };
     const { isDivisionDataLoaded, divisionData } = props;
-    const { isDepartmentDataLoaded, departmentData } = props;
+    const { isDepartmentDataLoaded } = props;
 
     // const handleDivisionChange = (division) => {
     //     console.log("omh")

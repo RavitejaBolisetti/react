@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
         data: {
             OTF: {
                 AddonDetails: { isLoaded: isDataLoaded = false, isLoading, data: AddonDetailsData = [] },
-                AddonParts: { isLoaded: isAddonPartsDataLoaded = false, isAddonPartsLoading, data: AddonPartsData = [] },
+                AddonParts: { isLoaded: isAddonPartsDataLoaded = false, data: AddonPartsData = [] },
             },
         },
     } = state;
@@ -157,9 +157,10 @@ export const AddOnDetailsMasterMain = (props) => {
         let detailsRequest = [];
         formDataSetter?.partDetailsResponses?.map((element, index) => {
             const { id, otfNumber, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp } = element;
-
             detailsRequest.push({ id, otfNumber, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp });
+            return undefined;
         });
+
         const data = { id: formData?.id ?? '', otfNumber: selectedOrderId, partDetailsRequests: detailsRequest, shield: formDataSetter?.shield, rsa: formDataSetter?.rsa, amc: formDataSetter?.amc, fms: formDataSetter?.fms };
 
         const onSuccess = (res) => {
