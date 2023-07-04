@@ -61,7 +61,7 @@ const ViewAddressList = (props) => {
             {addressData?.length > 0 &&
                 addressData?.map((data, i) => {
                     return (
-                        <Collapse className={styles.innerCollapse} key={data?.addressType + data?.addressType} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
+                        <Collapse collapsible='icon' className={styles.innerCollapse} key={data?.addressType + data?.addressType} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
                             <Panel
                                 key={i}
                                 header={
