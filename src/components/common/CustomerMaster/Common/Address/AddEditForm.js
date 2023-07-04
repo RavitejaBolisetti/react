@@ -102,30 +102,36 @@ const AddEditForm = (props) => {
         addressForm
             .validateFields()
             .then((value) => {
+                const defaultAdddress = addressData?.find((i) => (editingData?.addressType ? i.addressType === editingData?.addressType : true) && i.deafultAddressIndicator);
+                if (defaultAdddress) {
+                    return showGlobalNotification({ message: 'Only one address can be default' });
+                }
+
                 if (editingData?.addressType) {
+                    // let dataList = [...addressData];
+                    // const index = dataList?.findIndex((el) => el?.addressType === editingData?.addressType);
+                    // dataList.splice(index, 1);
+                    // const checkedIndex = dataList?.findIndex((el) => el?.deafultAddressIndicator);
+                    // if (value?.deafultAddressIndicator && checkedIndex !== -1) {
+                    //     return showGlobalNotification({ message: 'Only one address can be default' });
+                    // }
+
                     setAddressData((prev) => {
                         let formData = [...prev];
-                        formData?.forEach((address) => {
-                            if (address?.deafultAddressIndicator === true) {
-                                address.deafultAddressIndicator = false;
-                            }
-                        });
                         const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType);
-                        //  && el?.address === editingData?.address && el?.pincode === editingData?.pincode
                         formData.splice(index, 1, { ...value, ...pinSearchData });
 
                         return [...formData];
                     });
                 } else {
+                    // let dataList = [...addressData];
+                    // const checkedIndex = dataList?.findIndex((el) => el?.deafultAddressIndicator);
+                    // if (checkedIndex !== -1) {
+                    //     return showGlobalNotification({ message: 'Only one address can be default' });
+                    // }
                     setAddressData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
-
                         if (value?.defaultaddress && formData?.length >= 1) {
-                            formData?.forEach((address) => {
-                                if (address?.defaultaddress === true) {
-                                    address.defaultaddress = false;
-                                }
-                            });
                             return [...formData, { ...value, ...pinSearchData }];
                         } else {
                             return prev?.length ? [...prev, { ...value, ...pinSearchData }] : [{ ...value, ...pinSearchData }];
