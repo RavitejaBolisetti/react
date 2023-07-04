@@ -14,14 +14,14 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, setOpenAccordia
     const [EditingForm] = Form.useForm();
 
     const isPresent = (values, i = -1) => {
-        const found = addOnItemInfo.filter((element, index) => element?.partNumber === values && index != i);
-
+        const found = addOnItemInfo.filter((element, index) => element?.partNumber === values && index !== i);
         if (found?.length === 2 || (found?.length === 1 && values === found['0']['partNumber'])) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Duplicate Part Number' });
             return true;
         }
         return false;
     };
+
     const onUpdate = (index, seteditCardForm) => {
         accessoryForm
             .validateFields()
@@ -37,8 +37,9 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, setOpenAccordia
                     if (i === index) {
                         const isDeletable = element?.isDeleting;
                         addOnItemInfo[i] = { ...values, isDeleting: isDeletable, id: element?.id, otfNumber: element?.otfNumber };
-                        return;
+                        return undefined;
                     }
+                    return undefined;
                 });
                 seteditCardForm(false);
                 setisEditing(false);

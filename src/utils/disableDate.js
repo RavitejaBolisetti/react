@@ -3,10 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+import moment from 'moment';
+
 export const disableFutureDate = (value) => {
     return value > new Date();
 };
 
 export const disablePastDate = (value) => {
-    return value < new Date();
+    return value.isBefore(moment().subtract(1, 'day'));
 };
