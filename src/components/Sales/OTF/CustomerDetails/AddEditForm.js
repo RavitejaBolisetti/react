@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { Col, Row, Checkbox, Space, Collapse, Typography, AutoComplete } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 import { AddressCommonForm } from './AddressCommonForm';
+import { convertDateToCalender } from 'utils/formatDateTime';
 
 import styles from 'components/common/Common.module.css';
 
@@ -21,7 +22,9 @@ const AddEditFormBase = (props) => {
         if (formData) {
             form.setFieldsValue({
                 ...formData,
-            });
+                bookingCustomer: { ...formData?.bookingCustomer, birthDate: convertDateToCalender(formData?.bookingCustomer?.birthDate) },
+                billingCustomer: { ...formData?.billingCustomer, birthDate: convertDateToCalender(formData?.billingCustomer?.birthDate) },
+            });          
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);

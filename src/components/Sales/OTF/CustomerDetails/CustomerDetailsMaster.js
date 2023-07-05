@@ -122,9 +122,9 @@ export const CustomerDetailsMain = (props) => {
     }, [userId, selectedOrderId]);
 
     const onFinish = (values) => {
-        if (!values?.bookingCustomer?.pan || !values?.billingCustomer?.pan) {
-            setActiveKey([...activeKey, !values?.bookingCustomer?.pan ? 1 : '']);
-            setActiveKey([...activeKey, !values?.billingCustomer?.pan ? 2 : '']);
+        if (!values?.bookingCustomer?.panNo || !values?.billingCustomer?.panNo) {
+            setActiveKey([...activeKey, !values?.bookingCustomer?.panNo ? 1 : '']);
+            setActiveKey([...activeKey, !values?.billingCustomer?.panNo ? 2 : '']);
             return false;
         }
         form.getFieldsValue();

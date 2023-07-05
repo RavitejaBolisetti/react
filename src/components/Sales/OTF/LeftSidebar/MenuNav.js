@@ -7,9 +7,11 @@ import React from 'react';
 import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
-import styles from 'components/common/Common.module.css';
+
 import { OTF_SECTION } from 'constants/OTFSection';
 import { OTF_STATUS } from 'constants/OTFStatus';
+
+import styles from 'components/common/Common.module.css';
 
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, otfData, selectedOrder: { orderStatus = false } = {} } = props;
@@ -68,12 +70,15 @@ const MenuNav = (props) => {
                     className: item?.id === currentSection ? 'active' : 'noactive',
                 }
         );
-
-    console.log('items', items);
-
     const finalItem = items?.filter((i) => i);
 
-    return finalItem && <Timeline items={finalItem} />;
+    return (
+        finalItem && (
+            <div className={styles.marT20}>
+                <Timeline items={finalItem} />
+            </div>
+        )
+    );
 };
 
 export default MenuNav;

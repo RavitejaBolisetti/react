@@ -20,6 +20,7 @@ export const AdvancedSearchFrom = (props) => {
     useEffect(() => {
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue({ code: filterString?.code });
+        advanceFilterForm.setFieldsValue({ departmentCode: filterString?.departmentCode });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
