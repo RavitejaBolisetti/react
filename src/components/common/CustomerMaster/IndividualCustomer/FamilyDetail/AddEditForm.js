@@ -133,7 +133,7 @@ const AddEditFormMain = (props) => {
         <>
             {!isViewModeVisible ? (
                 <Card className="">
-                    <Row type="flex" align="middle" style={{ margin: showForm || familyDetailList?.length > 0 ? '0 0 20px 0' : '0' }}>
+                    <Row type="flex" align="middle">
                         <Typography>Family Details</Typography>
                         {!VIEW_ACTION && (
                             <Button type="primary" icon={<PlusOutlined />} onClick={addFunction} disabled={showForm || editedMode}>
@@ -142,78 +142,79 @@ const AddEditFormMain = (props) => {
                         )}
                     </Row>
                     <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
-                        {showForm && !editedMode && <FormContainer {...formProps} />}
-                        {familyDetailList?.length > 0 ? (
-                            familyDetailList?.map((item, index) => (
-                                <Collapse
-                                    expandIcon={() => {
-                                        if (activeKey === item?.editedId) {
-                                            return <MinusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
-                                        } else {
-                                            return <PlusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
-                                        }
-                                    }}
-                                    activeKey={activeKey}
-                                    onChange={() => onCollapseChange(index)}
-                                    expandIconPosition="end"
-                                >
-                                    <Panel
-                                        header={
-                                            <Row type="flex" justify="space-between" align="middle" size="large">
-                                                <Row type="flex" justify="space-around" align="middle">
-                                                    <Typography>
-                                                        {item?.customerName} | {item?.relationship}
-                                                    </Typography>
-
-                                                    {!VIEW_ACTION && !showForm && (
-                                                        <Button
-                                                            type="secondary"
-                                                            icon={<FiEdit />}
-                                                            onClick={() => {
-                                                                onEdit(item, index);
-                                                            }}
-                                                            disabled={disabled}
-                                                            style={{ color: disabled ? 'grey' : 'red' }}
-                                                        >
-                                                            Edit
-                                                        </Button>
-                                                    )}
-                                                </Row>
-                                                {item?.mnmCustomer === 'Yes' ? (
-                                                    <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
-                                                        {' '}
-                                                        M&M user{' '}
-                                                    </Text>
-                                                ) : item?.mnmCustomer === 'No' ? (
-                                                    <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
-                                                        Non-M&M user
-                                                    </Text>
-                                                ) : null}
-                                            </Row>
-                                        }
-                                        key={index}
-                                        style={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
+                        <div className={styles.headerBox}>
+                            {showForm && !editedMode && <FormContainer {...formProps} />}
+                            {familyDetailList?.length > 0 ? (
+                                familyDetailList?.map((item, index) => (
+                                    <Collapse
+                                        expandIcon={() => {
+                                            if (activeKey === item?.editedId) {
+                                                return <MinusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
+                                            } else {
+                                                return <PlusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
+                                            }
+                                        }}
+                                        activeKey={activeKey}
+                                        onChange={() => onCollapseChange(index)}
+                                        expandIconPosition="end"
                                     >
-                                        {editedMode && !showForm ? <FormContainer {...formProps} item /> : <ViewDetail {...viewProps} mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} relationCustomerId={item?.relationCustomerId} />}
-                                    </Panel>
-                                </Collapse>
-                            ))
-                        ) : !showForm && !editedMode ? (
-                            <>
-                                <Divider />
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        <span>
-                                            {noDataTitle} <br />
-                                        </span>
-                                    }
-                                ></Empty>
-                            </>
-                        ) : null}
+                                        <Panel
+                                            header={
+                                                <Row type="flex" justify="space-between" align="middle" size="large">
+                                                    <Row type="flex" justify="space-around" align="middle">
+                                                        <Typography>
+                                                            {item?.customerName} | {item?.relationship}
+                                                        </Typography>
+
+                                                        {!VIEW_ACTION && !showForm && (
+                                                            <Button
+                                                                type="secondary"
+                                                                icon={<FiEdit />}
+                                                                onClick={() => {
+                                                                    onEdit(item, index);
+                                                                }}
+                                                                disabled={disabled}
+                                                                style={{ color: disabled ? 'grey' : 'red' }}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                        )}
+                                                    </Row>
+                                                    {item?.mnmCustomer === 'Yes' ? (
+                                                        <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
+                                                            {' '}
+                                                            M&M user{' '}
+                                                        </Text>
+                                                    ) : item?.mnmCustomer === 'No' ? (
+                                                        <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
+                                                            Non-M&M user
+                                                        </Text>
+                                                    ) : null}
+                                                </Row>
+                                            }
+                                            key={index}
+                                            style={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
+                                        >
+                                            {editedMode && !showForm ? <FormContainer {...formProps} item /> : <ViewDetail {...viewProps} mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} relationCustomerId={item?.relationCustomerId} />}
+                                        </Panel>
+                                    </Collapse>
+                                ))
+                            ) : !showForm && !editedMode ? (
+                                <>
+                                    <Empty
+                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                        imageStyle={{
+                                            height: 60,
+                                        }}
+                                        description={
+                                            <span>
+                                                {noDataTitle} <br />
+                                            </span>
+                                        }
+                                    ></Empty>
+                                </>
+                            ) : null}
+                        </div>
                     </Space>
                 </Card>
             ) : (

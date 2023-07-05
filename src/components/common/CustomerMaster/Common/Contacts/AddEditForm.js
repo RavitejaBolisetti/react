@@ -21,7 +21,7 @@ import style from '../../../Common.module.css';
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { formData, isReadOnly = false, onFinish, onSaveFormData, form, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
+    const { contactData,showGlobalNotification, formData, isReadOnly = false, onFinish, onSaveFormData, form, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
@@ -80,6 +80,7 @@ const AddEditForm = (props) => {
                         // {...uploadProps}
                         isViewModeVisible={isViewModeVisible}
                         setUploadImgDocId={setUploadImgDocId}
+                        formActionType={formActionType}
                     />
                     <Divider className={style.contactDivider} />
                     <Row gutter={[20, 0]}>

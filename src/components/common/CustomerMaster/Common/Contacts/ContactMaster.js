@@ -103,6 +103,7 @@ const ContactMain = (props) => {
 
     useEffect(() => {
         return () => {
+            setUploadImgDocId('');
             resetData();
             resetIndividualData();
         };
@@ -113,7 +114,7 @@ const ContactMain = (props) => {
         if (userId && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
-            } else if(customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
+            } else if (customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
                 fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
             }
         }
@@ -122,10 +123,10 @@ const ContactMain = (props) => {
     }, [userId, selectedCustomer?.customerId]);
 
     useEffect(() => {
-        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id && selectedCustomer?.customerId && customerIndData?.customerContact ) {
+        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id && selectedCustomer?.customerId && customerIndData?.customerContact) {
             setContactData(customerIndData?.customerContact || []);
             setUploadImgDocId(customerIndData?.customerContact[0].docId);
-        } else if(customerData?.customerContact && selectedCustomer?.customerId) {
+        } else if (customerData?.customerContact && selectedCustomer?.customerId) {
             setContactData(customerData?.customerContact || []);
             setUploadImgDocId(customerData?.customerContact[0]['docId']);
         }
@@ -149,29 +150,32 @@ const ContactMain = (props) => {
             .validateFields()
             .then((value) => {
                 if (isEditing) {
+                    // let dataList = [...contactData];
+                    // const index = dataList?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
+                    // dataList.splice(index, 1);
+                    // const checkedIndex = dataList?.findIndex((el) => el?.defaultContactIndicator);
+                    // if (value?.defaultContactIndicator && checkedIndex !== -1) {
+                    //     return showGlobalNotification({ message: 'Only one contact can be default' });
+                    // }
+
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
-                        formData?.forEach((contact) => {
-                            if (contact?.defaultContactIndicator === true) {
-                                contact.defaultContactIndicator = false;
-                            }
-                        });
                         const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
-                        formData.splice(index, 1, {relationCode: "", ...value });
+                        formData.splice(index, 1, { relationCode: '', ...value, docId: uploadImgDocId });
                         return [...formData];
                     });
                 } else {
+                    // let dataList = [...contactData];
+                    // const checkedIndex = dataList?.findIndex((el) => el?.defaultContactIndicator);
+                    // if (checkedIndex !== -1) {
+                    //     return showGlobalNotification({ message: 'Only one contact can be default' });
+                    // }
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         if (value?.defaultaddress && formData?.length >= 1) {
-                            formData?.forEach((contact) => {
-                                if (contact?.defaultaddress === true) {
-                                    contact.defaultaddress = false;
-                                }
-                            });
-                            return [...formData, {relationCode: "", ...value}];
+                            return [...formData, { relationCode: '', ...value, docId: uploadImgDocId }];
                         } else {
-                            const updVal = prev?.length ? [...prev, { relationCode: "", ...value }] : [{relationCode: "", ...value }];
+                            const updVal = prev?.length ? [...prev, { relationCode: '', ...value, docId: uploadImgDocId }] : [{ relationCode: '', ...value }];
                             return updVal;
                         }
                     });
@@ -189,7 +193,7 @@ const ContactMain = (props) => {
         e.stopPropagation();
         setContactData((prev) => {
             let updetedData = prev?.map((contact) => ({ ...contact, status: true, defaultContactIndicator: false, continueWith: continueWithOldMobNo }));
-            const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.firstName === value?.firstName && el?.mobileNumber === value?.mobileNumber );
+            const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.firstName === value?.firstName && el?.mobileNumber === value?.mobileNumber);
             updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked });
             return [...updetedData];
         });

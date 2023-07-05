@@ -4,13 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Empty, Card } from 'antd';
+import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Card } from 'antd';
 import Svg from 'assets/images/Filter.svg';
 
 import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, validatInstagramProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FiDownload } from 'react-icons/fi';
+import { disableFutureDate } from 'utils/disableDate';
 
 import styles from 'components/common/Common.module.css';
 import ViewImageUtils from '../../Common/ViewImageUtils';
@@ -23,12 +24,16 @@ const { Dragger } = Upload;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, formActionType, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading } = props;
+    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadConsentDocumentFile } = props;
     const { isReadOnly = false } = props;
     const [isRead, setIsRead] = useState(false);
     const [customer, setCustomer] = useState(false);
-    const [showImage, setShowImage] = useState(false);
     const [activeKey, setActiveKey] = useState([1]);
+
+    useEffect(() => {
+        setCustomer(formData?.customerCategory);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData?.customerCategory]);
 
     useEffect(() => {
         form.setFieldsValue({
@@ -39,8 +44,9 @@ const AddEditFormMain = (props) => {
             postion: formData?.authorityDetails?.postion,
             personName: formData?.authorityDetails?.personName,
             remarks: formData?.authorityDetails?.remarks,
+            vehicleDeploymentDetails: formData?.vehicleDeploymentDetails,
         });
-        if (formData?.martialStatus == 'S') {
+        if (formData?.martialStatus === 'S') {
             setIsRead(true);
         } else {
             setIsRead(false);
@@ -64,9 +70,6 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const onHandleCancel = () => {
-        setShowImage(false);
-    };
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
@@ -107,6 +110,25 @@ const AddEditFormMain = (props) => {
         },
     };
 
+    const uploadConsentProps = {
+        name: 'file',
+        multiple: false,
+        action: '',
+        progress: { strokeWidth: 10 },
+        success: { percent: 100 },
+        onDrop,
+        onChange: (info, event) => {
+            const { status } = info.file;
+            if (status === 'uploading') {
+            } else if (status === 'done') {
+                setUploadedFiles(info?.file?.response?.docId);
+                message.success(`${info.file.name} file uploaded successfully.`);
+            } else if (status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
+    };
+
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
 
@@ -126,9 +148,30 @@ const AddEditFormMain = (props) => {
         uploadDocumentFile(requestData);
     };
 
+    const handleUploads = (options) => {
+        const { file, onSuccess, onError } = options;
+
+        const data = new FormData();
+        data.append('applicationId', 'app');
+        data.append('file', file);
+
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listDocumentShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        uploadConsentDocumentFile(requestData);
+    };
+
     const ImageProps = {
-        showImage,
-        setShowImage,
+        viewDocument,
+        handleUpload,
+        uploadProps,
+        formData,
     };
 
     const disabledProps = { disabled: isReadOnly };
@@ -151,77 +194,14 @@ const AddEditFormMain = (props) => {
                         >
                             <Panel header={<Text strong>Individual Information</Text>} key="1">
                                 <div className={styles.headerBox}>
-                                    {formData?.image && !showImage ? (
-                                        <div className={styles.uploadDragger}>
-                                            <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} viewDocument={viewDocument} {...ImageProps} />
-                                        </div>
-                                    ) : showImage ? (
-                                        <Row gutter={16}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <div className={styles.uploadDragger}>
-                                                    <Dragger customRequest={handleUpload} {...uploadProps}>
-                                                        <Empty
-                                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                                            imageStyle={{
-                                                                height: 100,
-                                                            }}
-                                                            description={
-                                                                <>
-                                                                    <span>
-                                                                        Click or drop your file here to upload the signed and <br />
-                                                                        scanned customer form.
-                                                                    </span>
-                                                                    <span>
-                                                                        <br />
-                                                                        File type should be png, jpg or pdf and max file size to be 5Mb
-                                                                    </span>
-                                                                </>
-                                                            }
-                                                        />
-                                                        <Button type="primary">Upload File</Button>
-                                                    </Dragger>
-                                                    <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
-                                                        <Button onClick={onHandleCancel} type="link">
-                                                            Cancel Upload
-                                                        </Button>
-                                                    </div>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    ) : (
-                                        <Row gutter={16}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <div className={styles.uploadDragger}>
-                                                    <Dragger customRequest={handleUpload} {...uploadProps}>
-                                                        <Empty
-                                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                                            imageStyle={{
-                                                                height: 100,
-                                                            }}
-                                                            description={
-                                                                <>
-                                                                    <span>
-                                                                        Click or drop your file here to upload the signed and <br />
-                                                                        scanned customer form.
-                                                                    </span>
-                                                                    <span>
-                                                                        <br />
-                                                                        File type should be png, jpg or pdf and max file size to be 5Mb
-                                                                    </span>
-                                                                </>
-                                                            }
-                                                        />
-                                                        <Button type="primary">Upload File</Button>
-                                                    </Dragger>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    )}
+                                    <div className={styles.uploadDragger}>
+                                        <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} {...ImageProps} />
+                                    </div>
 
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label="Date of Birth" name="dateOfBirth">
-                                                <DatePicker format="YYYY-MM-DD" disabled={isReadOnly} className={styles.datepicker} />
+                                                <DatePicker format="YYYY-MM-DD" disabledDate={disableFutureDate} disabled={isReadOnly} className={styles.datepicker} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -250,7 +230,7 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label=" Wedding Anniversary Date" name="weddingAnniversary">
-                                                <DatePicker format="YYYY-MM-DD" className={styles.datepicker} disabled={isRead} />
+                                                <DatePicker format="YYYY-MM-DD" disabledDate={disableFutureDate} className={styles.datepicker} disabled={isRead} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -288,7 +268,7 @@ const AddEditFormMain = (props) => {
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Voter ID" name="voterId" initialValue={formData?.voterId} rules={[validateVoterId('voter id')]}>
+                                            <Form.Item label="Voter ID" name="voterid" initialValue={formData?.voterid} rules={[validateVoterId('voter id')]}>
                                                 <Input maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('voter id')} {...disabledProps} />
                                             </Form.Item>
                                         </Col>
@@ -395,7 +375,7 @@ const AddEditFormMain = (props) => {
                                                     </Form.Item>
                                                 </Col>
                                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                    <Form.Item label="Key Role Details" initialValue={formData?.keyRoleDetails} name="keyRoleDetails">
+                                                    <Form.Item label="Key Role Details" initialValue={formData?.keyRolesDetails} name="keyRolesDetails">
                                                         <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('key role details')} {...disabledProps} />
                                                     </Form.Item>
                                                 </Col>
@@ -541,7 +521,7 @@ const AddEditFormMain = (props) => {
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Dragger {...uploadProps} customRequest={handleUpload} className={styles.uploadContainer}>
+                                                <Dragger {...uploadConsentProps} customRequest={handleUploads} className={styles.uploadContainer}>
                                                     <div>
                                                         <img src={Svg} alt="" />
                                                     </div>

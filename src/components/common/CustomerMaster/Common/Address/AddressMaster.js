@@ -8,10 +8,8 @@ import { connect } from 'react-redux';
 import { Collapse, Divider, Form, Space, Row, Col, Typography, Button, Empty } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { expandIcon } from 'utils/accordianExpandIcon';
 
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
@@ -23,7 +21,6 @@ import { addressCorporateDataActions } from 'store/actions/data/customerMaster/c
 
 import AddEditForm from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
-import { InputSkeleton } from 'components/common/Skeleton';
 import ViewAddressList from './ViewAddressList';
 import { LANGUAGE_EN } from 'language/en';
 
@@ -37,7 +34,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: addData = [] },
             CustomerMaster: {
                 AddressIndividual: { isLoaded: isAddressLoaded = false, isLoading: isAddressLoading, data: addressIndData = [] },
-                CorporateAddress: { isLoaded: isCompanyAddressLoaded = false, isLoading: isCompanyAddressLoading, data: addressCompanyData = [] },
+                CorporateAddress: { isLoaded: isCompanyAddressLoaded = false, data: addressCompanyData = [] },
             },
             Geo: {
                 Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
@@ -112,7 +109,7 @@ const AddressMasterBase = (props) => {
         if (userId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id && addressIndData?.customerAddress) {
                 setAddressData(addressIndData?.customerAddress);
-            } else if(addressCompanyData?.customerAddress) {
+            } else if (addressCompanyData?.customerAddress) {
                 setAddressData(addressCompanyData?.customerAddress);
             }
         }
@@ -120,11 +117,10 @@ const AddressMasterBase = (props) => {
     }, [addressIndData?.customerAddress, addressCompanyData?.customerAddress]);
 
     useEffect(() => {
-        
         if (!formActionType?.addMode && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
-            } else if(customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
+            } else if (customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
                 fetchListCorporate({ setIsLoading: listShowLoading, userId, extraParams });
             }
         }
@@ -199,7 +195,6 @@ const AddressMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        
         return;
     };
 

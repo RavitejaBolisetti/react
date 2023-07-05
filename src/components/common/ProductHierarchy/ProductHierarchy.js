@@ -82,7 +82,7 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
-            showGlobalNotification,  
+            showGlobalNotification,
         },
         dispatch
     ),
@@ -116,6 +116,11 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const onErrorAction = (message) => {
+        resetData();
+        showGlobalNotification({ message });
+    };
+
     useEffect(() => {
         return () => {
             resetData();
@@ -125,21 +130,21 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     useEffect(() => {
         if (userId) {
-            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Product Hierarchy' });
+            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Product Hierarchy', onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
     useEffect(() => {
         if (!isDataOrgLoaded && userId) {
-            fetchOrgList({ setIsLoading: listShowLoading, userId, onCloseAction });
+            fetchOrgList({ setIsLoading: listShowLoading, userId, onCloseAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataOrgLoaded, userId]);
 
     useEffect(() => {
         if (organizationId && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: organizationId });
+            fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: organizationId, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, organizationId]);
@@ -151,7 +156,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     useEffect(() => {
         if (userId) {
-            fetchListHierarchyAttributeName({ userId, setIsLoading: listShowLoading });
+            fetchListHierarchyAttributeName({ userId, setIsLoading: listShowLoading, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -277,7 +282,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             } else if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 if (organizationId && userId) {
-                    fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: organizationId });
+                    fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: organizationId, onErrorAction });
 
                     const formData = res;
 
@@ -295,15 +300,12 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         const onError = (message) => {
             showGlobalNotification({ message });
         };
-        const errorAction = (message) => {
-            showGlobalNotification({ message });
-        };
+
         const requestData = {
             data: data,
             setIsLoading: listShowLoading,
             userId,
             onError,
-            errorAction,
             onSuccess,
         };
 

@@ -91,12 +91,12 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Usage/Application Sub-Category">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_SUB_CAT, formData?.applicationSubCategory), isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Customer Category">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.CUS_CAT, formData?.customerCategory), isLoading)}</Descriptions.Item>
                         </Descriptions>
-                        {formData?.customerCategory === 'Fleet' ? (
+                        {formData?.customerCategory === 'CUS_CAT_2' ? (
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Business Details">{checkAndSetDefaultValue(formData?.buisnessDetails, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Vehicle Deployment Detail">{checkAndSetDefaultValue(formData?.vehicleDetails, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Key Role Details">{checkAndSetDefaultValue(formData?.keyRole, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Major Route Details">{checkAndSetDefaultValue(formData?.routeDetails, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Business Details">{checkAndSetDefaultValue(formData?.businessDetails, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Vehicle Deployment Detail">{checkAndSetDefaultValue(formData?.vechileDeploymentDetails, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Key Role Details">{checkAndSetDefaultValue(formData?.keyRolesDetails, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Major Route Details">{checkAndSetDefaultValue(formData?.majorRouteDetails, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         ) : null}
                     </Panel>
@@ -212,7 +212,7 @@ const ViewDetailMain = (props) => {
                             <div className={styles.alignUser}>
                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                     Upload Customer Form
-                                </Text> 
+                                </Text>
                             </div>
                         }
                         key="4"

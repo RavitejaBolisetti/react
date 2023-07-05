@@ -61,6 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             saveDocumentData: supportingDocumentDataActions.saveData,
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
+            uploadConsentDocumentFile: supportingDocumentDataActions.uploadFile,
             listDocumentShowLoading: supportingDocumentDataActions.listShowLoading,
 
             fecthViewDocument: documentViewDataActions.fetchList,
@@ -74,12 +75,12 @@ const mapDispatchToProps = (dispatch) => ({
 const IndividualProfileBase = (props) => {
     const { userId, isIndiviualProfileLoaded, fecthViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification, handleButtonClick } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, downloadFile } = props;
-    const { saveDocumentData, uploadDocumentFile, setRefreshList, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, NEXT_ACTION } = props;
+    const { saveDocumentData, uploadDocumentFile, uploadConsentDocumentFile, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, NEXT_ACTION } = props;
     const [form] = Form.useForm();
 
-    const [formData, setFormData] = useState([]);
     const [activeKey, setActiveKey] = useState([1]);
     const [uploadedFile, setUploadedFile] = useState();
+    const [uploadedFiles, setUploadedFiles] = useState();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -89,7 +90,7 @@ const IndividualProfileBase = (props) => {
     };
 
     useEffect(() => {
-        if ( userId && selectedCustomerId) {
+        if (userId && selectedCustomerId) {
             const extraParams = [
                 {
                     key: 'customerId',
@@ -142,18 +143,19 @@ const IndividualProfileBase = (props) => {
     }, [indiviualData]);
 
     const onFinish = (values) => {
-        setRefreshList(false);
-        const recordId = formData?.id || '';
+        const recordId = '';
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
 
         const data = {
             ...rest,
             customerId: selectedCustomerId,
+            dateOfBirth: values?.dateOfBirth?.format('YYYY-MM-DD'),
+            weddingAnniversary: values?.weddingAnniversary?.format('YYYY-MM-DD'),
             keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode || '', accountName: values?.accountName || '', accountSegment: values?.accountSegment || '', accountClientName: values?.accountClientName || '', accountMappingDate: values?.accountMappingDate || '' },
             authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
             id: recordId,
             profileFileDocId: uploadedFile ? uploadedFile : '',
-            customerFormDocId: uploadedFile ? uploadedFile : '',
+            customerFormDocId: uploadedFiles ? uploadedFiles : '',
         };
 
         const onSuccess = (res) => {
@@ -163,7 +165,6 @@ const IndividualProfileBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                setRefreshList(true);
             }
             setButtonData({ ...buttonData, formBtnActive: false });
         };
@@ -189,7 +190,7 @@ const IndividualProfileBase = (props) => {
             {
                 key: 'docId',
                 title: 'docId',
-                value: indiviualData?.customerConsentForm,
+                value: indiviualData?.image,
                 name: 'docId',
             },
         ];
@@ -210,7 +211,6 @@ const IndividualProfileBase = (props) => {
         form.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
-        viewDocument = [];
     };
 
     const formProps = {
@@ -228,8 +228,11 @@ const IndividualProfileBase = (props) => {
         appCategoryData,
         listDocumentShowLoading,
         uploadDocumentFile,
+        uploadConsentDocumentFile,
         setUploadedFile,
         uploadedFile,
+        setUploadedFiles,
+        uploadedFiles,
 
         saveDocumentData,
         userId,

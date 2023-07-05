@@ -27,6 +27,7 @@ const AddEditFormMain = (props) => {
     const [secondToggle, setSecondToggle] = useState(false);
     const [disableWhatsapp, setDisableWhatsapp] = useState(true);
 
+
     const firstToggleFun = () => {
         setFirstToggle(!firstToggle);
     };
@@ -62,16 +63,21 @@ const AddEditFormMain = (props) => {
         isVisible: isHistoryVisible,
         onCloseAction: changeHistoryClose,
     };
+    useEffect(() => {
+        setCorporateType(formData?.corporateType);
 
-    console.log(formData,"formData")
+         // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[formData?.corporateType])
 
     useEffect( () => {
         setFirstToggle(formData?.whatsappCommunicationIndicator);
-    },[formData] )
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[formData])
 
     useEffect( () => {
         setSecondToggle(formData?.mobileNumberAsWhatsappNumber);
-    },[formData] )
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[formData])
 
     useEffect( () => {
         
@@ -86,7 +92,7 @@ const AddEditFormMain = (props) => {
             setSecondToggle(false);
         }
          // eslint-disable-next-line react-hooks/exhaustive-deps
-    } ,[firstToggle, ] );
+    } ,[firstToggle] );
 
     useEffect( () => {
         if(secondToggle && firstToggle){
@@ -104,7 +110,7 @@ const AddEditFormMain = (props) => {
         }
          // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [secondToggle] )
-
+console.log("corporateType",corporateType)
     return (
         <>
             <Space direction="vertical" size="small" style={{ display: 'flex' }}>

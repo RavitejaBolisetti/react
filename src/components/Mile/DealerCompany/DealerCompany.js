@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -24,8 +24,8 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             DealerHierarchy: {
+                DealerParent: { isFilteredListLoaded: isDealerParentDataLoaded = false, isLoading: isDealerParentDataLoading, filteredListData: dealerParentData },
                 DealerCompany: { isLoaded: isDataLoaded = false, isLoading, data = [] },
-                DealerParent: { isLoaded: isDealerParentDataLoaded = false, isLoading: isDealerParentDataLoading = false, data: dealerParentData = [] },
             },
             Geo: {
                 Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
@@ -33,6 +33,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+    console.log('dealerParentData', dealerParentData);
     const moduleTitle = 'Dealer Parent Company';
     let returnValue = {
         userId,
@@ -55,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchDealerParentList: dealerParentDataActions.fetchList,
+            fetchDealerParentLovList: dealerParentDataActions.fetchFilteredList,
             listDealerParentShowLoading: dealerParentDataActions.listShowLoading,
 
             fetchList: dealerCompanyDataActions.fetchList,
@@ -73,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const DealerCompanyBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isPinCodeLoading, pinCodeShowLoading } = props;
-    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail } = props;
+    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentLovList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -110,9 +111,9 @@ export const DealerCompanyBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
         }
         if (userId && !isDealerParentDataLoaded) {
-            fetchDealerParentList({ setIsLoading: listDealerParentShowLoading, userId });
+            fetchDealerParentLovList({ setIsLoading: listDealerParentShowLoading, userId });
         }
-        
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded, isDealerParentDataLoaded]);
 

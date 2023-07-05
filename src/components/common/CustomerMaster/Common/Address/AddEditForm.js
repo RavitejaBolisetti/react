@@ -16,7 +16,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditForm = (props) => {
-    const { onSubmit, addressForm, setAddressData, isEditing, addressData, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, onCloseAction, formActionType } = props;
+    const { addressForm, setAddressData, addressData, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, formActionType } = props;
     const { forceUpdate, handleFormValueChange, setIsAdding, showGlobalNotification } = props;
     const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail } = props;
     const disabledProps = { disabled: formActionType?.editMode && formData?.partyCategory === 'Principal' ? true : false };
@@ -102,16 +102,15 @@ const AddEditForm = (props) => {
         addressForm
             .validateFields()
             .then((value) => {
+                // const defaultAdddress = addressData?.find((i) => (editingData?.addressType ? i.addressType === editingData?.addressType : true) && i.deafultAddressIndicator && value?.deafultAddressIndicator);
+                // if (defaultAdddress) {
+                //     return showGlobalNotification({ message: 'Only one address can be default' });
+                // }
+
                 if (editingData?.addressType) {
                     setAddressData((prev) => {
                         let formData = [...prev];
-                        formData?.forEach((address) => {
-                            if (address?.deafultAddressIndicator === true) {
-                                address.deafultAddressIndicator = false;
-                            }
-                        });
                         const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType);
-                        //  && el?.address === editingData?.address && el?.pincode === editingData?.pincode
                         formData.splice(index, 1, { ...value, ...pinSearchData });
 
                         return [...formData];
@@ -119,13 +118,7 @@ const AddEditForm = (props) => {
                 } else {
                     setAddressData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
-
                         if (value?.defaultaddress && formData?.length >= 1) {
-                            formData?.forEach((address) => {
-                                if (address?.defaultaddress === true) {
-                                    address.defaultaddress = false;
-                                }
-                            });
                             return [...formData, { ...value, ...pinSearchData }];
                         } else {
                             return prev?.length ? [...prev, { ...value, ...pinSearchData }] : [{ ...value, ...pinSearchData }];

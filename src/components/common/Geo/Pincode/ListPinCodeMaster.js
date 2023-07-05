@@ -333,6 +333,47 @@ const ListPinCodeMasterBase = (props) => {
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
+            console.log('name', name, 'value', value);
+
+            if (!value) {
+                switch (name) {
+                    case 'countryCode': {
+                        setFilteredStateData();
+                        setFilteredDistrictData();
+                        setFilteredCityData();
+                        setFilteredTehsilData();
+                        advanceFilterForm.setFieldsValue({ stateCode: undefined });
+                        advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                        advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                        advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+
+                        break;
+                    }
+                    case 'stateCode': {
+                        setFilteredDistrictData();
+                        setFilteredCityData();
+                        setFilteredTehsilData();
+                        advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                        advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                        advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+                        break;
+                    }
+                    case 'districtCode': {
+                        setFilteredCityData();
+                        setFilteredTehsilData();
+                        advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                        advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+                        break;
+                    }
+                    case 'cityCode': {
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+                return;
+            }
             const filterValue = type === 'text' ? value.target.value : value;
 
             if (name === 'countryCode') {
