@@ -41,16 +41,7 @@ const AddEditFormMain = (props) => {
                     {schemeData ? (
                         schemeData?.schemes?.map((schemeForm, index) => (
                             <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(schemeForm?.id)} expandIconPosition="end">
-                                <Panel
-                                    header={
-                                        <div className={styles.alignUser}>
-                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                {schemeForm?.schemeName}
-                                            </Text>
-                                        </div>
-                                    }
-                                    key={schemeForm?.id}
-                                >
+                                <Panel header={schemeForm?.schemeName} key={schemeForm?.id}>
                                     <div className={styles.sectionborder}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>

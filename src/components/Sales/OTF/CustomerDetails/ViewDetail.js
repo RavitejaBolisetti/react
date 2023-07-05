@@ -51,16 +51,7 @@ const ViewDetailMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space style={{ display: 'flex' }} size="middle" direction="vertical">
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
-                            <Panel
-                                header={
-                                    <div className={styles.alignUser}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Booking Customer
-                                        </Text>
-                                    </div>
-                                }
-                                key="1"
-                            >
+                            <Panel header="Booking Customer" key="1">
                                 <Descriptions {...viewProps}>
                                     <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData.bookingCustomer?.customerId, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(formData.bookingCustomer?.customerType, isLoading)}</Descriptions.Item>
@@ -84,16 +75,7 @@ const ViewDetailMain = (props) => {
                             </Panel>
                         </Collapse>
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
-                            <Panel
-                                header={
-                                    <div className={styles.alignUser}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Billing Customer
-                                        </Text>
-                                    </div>
-                                }
-                                key="2"
-                            >
+                            <Panel header="Billing Customer" key="2">
                                 {/* <Checkbox>Same as Booking Customer</Checkbox> */}
                                 <Descriptions {...viewProps}>
                                     <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData.billingCustomer?.customerId, isLoading)}</Descriptions.Item>

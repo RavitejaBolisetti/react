@@ -116,20 +116,7 @@ const AddEditFormMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space style={{ display: 'flex' }} direction="vertical" size="middle" className={styles.accordianContainer}>
                         <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                            <Panel
-                                header={
-                                    <>
-                                        <div className={styles.alignUser}>
-                                            <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>
-                                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                    Company Information
-                                                </Text>
-                                            </div>
-                                        </div>{' '}
-                                    </>
-                                }
-                                key="1"
-                            >
+                            <Panel header="Company Information" key="1">
                                 <Divider />
 
                                 <Row gutter={20}>
@@ -218,20 +205,7 @@ const AddEditFormMain = (props) => {
                         </Collapse>
 
                         <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel
-                                key="2"
-                                header={
-                                    <>
-                                        <div className={styles.alignUser}>
-                                            <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>
-                                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                    Social Profiles
-                                                </Text>
-                                            </div>
-                                        </div>
-                                    </>
-                                }
-                            >
+                            <Panel key="2" header="Social Profiles">
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -257,20 +231,7 @@ const AddEditFormMain = (props) => {
                         </Collapse>
 
                         <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel
-                                key="3"
-                                header={
-                                    <>
-                                        <div className={styles.alignUser}>
-                                            <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>
-                                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                    Key Account Details
-                                                </Text>
-                                            </div>
-                                        </div>{' '}
-                                    </>
-                                }
-                            >
+                            <Panel key="3" header="Key Account Details">
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -308,21 +269,7 @@ const AddEditFormMain = (props) => {
                         </Collapse>
 
                         <Collapse defaultActiveKey={['4']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel
-                                key="4"
-                                header={
-                                    <>
-                                        <div className={styles.alignUser}>
-                                            <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>
-                                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                    {' '}
-                                                    Authority Details(Who Knows Whom)
-                                                </Text>
-                                            </div>
-                                        </div>
-                                    </>
-                                }
-                            >
+                            <Panel key="4" header="Authority Details(Who Knows Whom)">
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -355,20 +302,7 @@ const AddEditFormMain = (props) => {
                         </Collapse>
 
                         <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end">
-                            <Panel
-                                key="5"
-                                header={
-                                    <>
-                                        <div className={styles.alignUser}>
-                                            <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>
-                                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                    Upload Customer Form
-                                                </Text>
-                                            </div>
-                                        </div>
-                                    </>
-                                }
-                            >
+                            <Panel key="5" header="Upload Customer Form">
                                 <Divider />
                                 <div className={styles.uploadContainer}>
                                     <Row gutter={20}>

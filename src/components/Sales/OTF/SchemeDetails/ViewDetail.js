@@ -29,16 +29,7 @@ const ViewDetailMain = (props) => {
                         {schemeData && schemeData?.schemes?.length > 0 ? (
                             schemeData?.schemes?.map((schemeForm, index) => (
                                 <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" className={styles.collapseContainer}>
-                                    <Panel
-                                        header={
-                                            <div className={styles.alignUser}>
-                                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                    {`Scheme ${index + 1}`}
-                                                </Text>
-                                            </div>
-                                        }
-                                        key={schemeForm?.id}
-                                    >
+                                    <Panel header={`Scheme ${index + 1}`} key={schemeForm?.id}>
                                         <Descriptions {...viewProps}>
                                             <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(schemeForm?.schemeType, isLoading)}</Descriptions.Item>
                                             <Descriptions.Item label="Scheme Category">{checkAndSetDefaultValue(schemeForm?.schemeCategory, isLoading)}</Descriptions.Item>

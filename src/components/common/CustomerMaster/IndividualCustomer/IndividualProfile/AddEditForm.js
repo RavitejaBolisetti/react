@@ -180,7 +180,7 @@ const AddEditFormMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space direction="vertical" size="small" className={styles.accordianContainer}>
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                            <Panel header={<Text strong>Individual Information</Text>} key="1">
+                            <Panel header="Individual Information" key="1">
                                 <Divider />
                                 <div className={styles.uploadDragger}>
                                     <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} {...ImageProps} />
@@ -381,7 +381,7 @@ const AddEditFormMain = (props) => {
                         </Collapse>
 
                         <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel header={<Text strong>Social Profile</Text>} key="2">
+                            <Panel header="Social Profile" key="2">
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -424,7 +424,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
                         <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel header={<Text strong>Key Account details</Text>} key="3">
+                            <Panel header="Key Account details" key="3">
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -461,7 +461,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
                         <Collapse defaultActiveKey={['4']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel header={<Text strong>Authority Details (Who Knowns Whom)</Text>} key="4">
+                            <Panel header="Authority Details (Who Knowns Whom)" key="4">
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -493,7 +493,7 @@ const AddEditFormMain = (props) => {
                         </Collapse>
 
                         <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel header={<Text strong>Upload Customer Form</Text>} key="5">
+                            <Panel header="Upload Customer Form" key="5">
                                 <>
                                     <div className={styles.marB20}>
                                         <Row gutter={20}>
