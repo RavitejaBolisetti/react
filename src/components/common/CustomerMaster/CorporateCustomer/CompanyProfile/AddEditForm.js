@@ -5,7 +5,6 @@
  */
 import { React, useEffect, useState } from 'react';
 import { Col, Input, Collapse, Row, Button, Space, Form, Select, Upload, message, Checkbox, Divider, Typography, Card } from 'antd';
-
 import { validateRequiredInputField, validateLettersWithWhitespaces, validatePanField, validateGSTIN, validatFacebookProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 
 import Svg from 'assets/images/Filter.svg';
