@@ -6,16 +6,13 @@
 import React from 'react';
 import MenuNav from './MenuNav';
 import ProfileDetailCard from './ProfileDetailCard';
-import styles from 'components/common/Common.module.css';
 const LeftSidebar = (props) => {
     const { formActionType: { addMode } = undefined } = props;
 
     return (
         <>
             {!addMode && <ProfileDetailCard {...props} />}
-            <div className={styles.marT20}>
-                <MenuNav {...props} />
-            </div>
+            <MenuNav {...props} />
         </>
     );
 };

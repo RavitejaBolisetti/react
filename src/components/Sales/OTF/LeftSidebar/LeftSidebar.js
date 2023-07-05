@@ -6,15 +6,12 @@
 import React from 'react';
 import MenuNav from './MenuNav';
 import OTFDetailCard from './OTFDetailCard';
-import styles from 'components/common/Common.module.css';
 const LeftSidebar = (props) => {
     return (
         <>
-        
             <OTFDetailCard {...props} />
-            <div className={styles.marT20}>
+
             <MenuNav {...props} />
-            </div>
         </>
     );
 };

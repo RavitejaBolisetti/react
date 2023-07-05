@@ -19,11 +19,6 @@ const { Option } = Select;
 const AddEditFormMain = (props) => {
     const { formData, formActionType, typeData, salesConsultantLov, exchangeValue, loyaltyValue } = props;
 
-    // useEffect(() => {
-    //     // form.setFieldsValue({ ...formData, initialPromiseDeliveryDate: dayjs(formData?.initialPromiseDeliveryDate, 'YYYY/MM/DD'), custExpectedDeliveryDate: dayjs(formData?.custExpectedDeliveryDate, 'YYYY/MM/DD') });
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [formData]);
-
     return (
         <Card className={styles.drawerCardView}>
             <Row gutter={20}>

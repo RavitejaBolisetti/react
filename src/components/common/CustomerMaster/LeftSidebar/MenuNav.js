@@ -58,7 +58,11 @@ const MenuNav = (props) => {
         ),
     }));
 
-    return <Timeline items={items} />;
+    return (
+        <div className={styles.marT20}>
+            <Timeline items={items} />
+        </div>
+    );
 };
 
 export default MenuNav;
