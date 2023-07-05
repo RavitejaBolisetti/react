@@ -103,62 +103,58 @@ const ViewImageUtilsMain = (props) => {
                 ) : showImage ? (
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <div className={styles.uploadDragger}>
-                                <Dragger customRequest={handleUpload} {...uploadProps}>
-                                    <Empty
-                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                        imageStyle={{
-                                            height: 100,
-                                        }}
-                                        description={
-                                            <>
-                                                <span>
-                                                    Click or drop your file here to upload the signed and <br />
-                                                    scanned customer form.
-                                                </span>
-                                                <span>
-                                                    <br />
-                                                    File type should be png, jpg or pdf and max file size to be 5Mb
-                                                </span>
-                                            </>
-                                        }
-                                    />
-                                    <Button type="primary">Upload File</Button>
-                                </Dragger>
-                                <div>
-                                    <Button onClick={onHandleCancel} type="link">
-                                        Cancel Upload
-                                    </Button>
-                                </div>
+                            <Dragger customRequest={handleUpload} {...uploadProps}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 100,
+                                    }}
+                                    description={
+                                        <>
+                                            <span>
+                                                Click or drop your file here to upload the signed and <br />
+                                                scanned customer form.
+                                            </span>
+                                            <span>
+                                                <br />
+                                                File type should be png, jpg or pdf and max file size to be 5Mb
+                                            </span>
+                                        </>
+                                    }
+                                />
+                                <Button type="primary">Upload File</Button>
+                            </Dragger>
+                            <div>
+                                <Button onClick={onHandleCancel} type="link">
+                                    Cancel Upload
+                                </Button>
                             </div>
                         </Col>
                     </Row>
                 ) : (
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <div className={styles.uploadDragger}>
-                                <Dragger customRequest={handleUpload} {...uploadProps}>
-                                    <Empty
-                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                        imageStyle={{
-                                            height: 100,
-                                        }}
-                                        description={
-                                            <>
-                                                <span>
-                                                    Click or drop your file here to upload the signed and <br />
-                                                    scanned customer form.
-                                                </span>
-                                                <span>
-                                                    <br />
-                                                    File type should be png, jpg or pdf and max file size to be 5Mb
-                                                </span>
-                                            </>
-                                        }
-                                    />
-                                    <Button type="primary">Upload File</Button>
-                                </Dragger>
-                            </div>
+                            <Dragger customRequest={handleUpload} {...uploadProps}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 100,
+                                    }}
+                                    description={
+                                        <>
+                                            <span>
+                                                Click or drop your file here to upload the signed and <br />
+                                                scanned customer form.
+                                            </span>
+                                            <span>
+                                                <br />
+                                                File type should be png, jpg or pdf and max file size to be 5Mb
+                                            </span>
+                                        </>
+                                    }
+                                />
+                                <Button type="primary">Upload File</Button>
+                            </Dragger>
                         </Col>
                     </Row>
                 )}

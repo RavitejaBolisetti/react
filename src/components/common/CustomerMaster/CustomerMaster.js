@@ -190,7 +190,7 @@ const CustomerMasterMain = (props) => {
     useEffect(() => {
         if (userId && customerType && extraParams) {
             setShowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams || defaultExtraParam, onSuccessAction, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams || defaultExtraParam });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, customerType, extraParams]);

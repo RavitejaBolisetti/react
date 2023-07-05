@@ -74,9 +74,9 @@ const MenuNav = (props) => {
 
     return (
         finalItem && (
-            <div className={styles.marT20}>
-                <Timeline items={finalItem} />
-            </div>
+            // <div className={styles.marT20}>
+            <Timeline items={finalItem} />
+            // </div>
         )
     );
 };

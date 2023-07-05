@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';

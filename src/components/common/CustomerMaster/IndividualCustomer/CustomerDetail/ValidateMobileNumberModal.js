@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Button, Space } from 'antd';
+import { Row, Col, Button } from 'antd';
 import { withModal } from '../../../../withModal/withModal';
 import OTPInput from 'otp-input-react';
 

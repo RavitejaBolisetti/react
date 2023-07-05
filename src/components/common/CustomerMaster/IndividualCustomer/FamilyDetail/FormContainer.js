@@ -177,7 +177,7 @@ const FormBase = (props) => {
                     Save
                 </Button>
 
-                <Button onClick={onCancel} danger>
+                <Button onClick={onCancel} className={styles.marB20} danger>
                     Cancel
                 </Button>
             </Row>

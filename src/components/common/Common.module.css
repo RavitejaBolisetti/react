@@ -10,9 +10,11 @@
     align-items: center;
     justify-content: center;
 }
+
 .marT20 {
     margin-top: 20px;
 }
+
 .marT30 {
     margin-top: 30px;
 }
@@ -436,14 +438,23 @@
 
 .uploadDragger :global .ant-upload-wrapper .ant-upload-drag {
     border: 1px dashed #b5b5b5;
-    margin-bottom: 12px;
+    /* margin-bottom: 20px; */
+    height: auto;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list {
+    margin-top: 20px;
 }
 
 .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
     height: 40px;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     background-color: #e6e6e6;
     border-radius: 6px;
+    padding: 6px 20px;
+    border: #b5b5b6 1px solid;
+    display: flex;
+    align-items: center;
 }
 
 .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
@@ -649,24 +660,9 @@
     padding: 18px 12px;
 }
 
-/* applicatiom master css */
-/* .accordianContainer {
-    padding: 6px;
-} */
-
-/* .accordianHeader {
-    font-weight: 600;
-    font-size: 16px;
-    color: #ff3e5b;
-} */
 .accordianContainer {
     display: flex;
     flex-direction: column;
-}
-
-.accordianContainer .headerBox {
-    border-top: 1px solid #e6e6e6;
-    padding-top: 20px;
 }
 
 .accordianContainer :global .ant-collapse-header-text {
@@ -1500,7 +1496,7 @@
 .drawerBodyLeft :global .ant-collapse {
     background: #f2f2f2;
     border: 0.5px solid #b5b5b6;
-    margin: 30px 30px 13px 30px;
+    margin: 30px 30px 0px 30px;
     border-radius: 4px;
 }
 
@@ -1627,7 +1623,7 @@
 }
 
 .drawerBodyLeft :global .ant-timeline {
-    padding: 10px 30px 20px 36px;
+    padding: 43px 30px 20px 36px;
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item {
@@ -1769,15 +1765,17 @@
     color: #0b0b0c;
 }
 
-.drawerBodyRight :global .ant-steps {
+/* .drawerBodyRight :global .ant-steps {
     display: inline;
     line-height: 0px;
     text-align: flex-end;
-}
+} */
 
 .drawerBodyRight :global .ant-steps.ant-steps-label-vertical {
     display: inherit;
     padding-right: 6px;
+    line-height: 0;
+    text-align: end;
 }
 
 .drawerBodyRight :global .ant-steps.ant-steps-label-vertical .ant-steps-item-tail {
@@ -1839,6 +1837,11 @@
     padding-bottom: 20px;
 } */
 
+.drawerBodyRight :global .ant-collapse>.ant-collapse-item,
+.viewDrawerContainer :global .ant-collapse>.ant-collapse-item {
+    border-bottom: 1px solid #d9d9d9 !important;
+}
+
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-label>label,
 .drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-item .ant-form-item-label>label {
     color: #545454;
@@ -1876,12 +1879,28 @@
     height: 36px;
 }
 
-.drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-textarea-affix-wrapper {
-    height: 36px !important;
+.drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-textarea-affix-wrapper,
+.drawerBodyRight :global .ant-card .ant-form-item .ant-form-item-control-input .ant-input-textarea-affix-wrapper {
+    height: auto !important;
+    border: 1px solid #b5b5b6;
 }
 
-.drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-textarea-affix-wrapper {
-    height: 36px !important;
+.drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-textarea-affix-wrapper:hover,
+.drawerBodyRight :global .ant-card .ant-form-item .ant-form-item-control-input .ant-input-textarea-affix-wrapper:hover {
+    border: 1px solid #0b0b0c;
+}
+
+.drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-textarea-show-count>.ant-input,
+.drawerBodyRight :global .ant-card .ant-form-item .ant-form-item-control-input .ant-input-textarea-show-count>.ant-input {
+    height: 34px;
+}
+
+.drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-affix-wrapper:focus,
+.drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-affix-wrapper-focused,
+.drawerBodyRight :global .ant-card .ant-form-item .ant-form-item-control-input .ant-input-affix-wrapper:focus,
+.drawerBodyRight :global .ant-card .ant-form-item .ant-form-item-control-input .ant-input-affix-wrapper-focused {
+    border: 1px solid #0b0b0c;
+    box-shadow: none;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input-disabled,
@@ -2078,6 +2097,9 @@
     background: #f2f2f2;
     border-radius: 8px;
     align-items: center;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
     /* border: 1px solid #f2f2f2; */
 }
 
@@ -2093,8 +2115,10 @@
     border-top: 1px solid #b5b5b6;
 }
 
-.drawerBodyRight .sectionborder .buttonEdit {
-    margin-bottom: 0 !important;
+.drawerBodyRight .accordianContainer .buttonEdit {
+    /* margin-bottom: 0 !important; */
+    padding: 0;
+    height: 20px;
 }
 
 .drawerBodyRight .sectionborder :global .ant-checkbox {
@@ -2146,9 +2170,9 @@
     border-color: #e6e6e6 !important;
 }
 
-.drawerBodyRight :global .ant-upload-wrapper .ant-upload-drag {
+/* .drawerBodyRight :global .ant-upload-wrapper .ant-upload-drag {
     border: 1px dashed #b5b5b5;
-}
+} */
 
 .drawerBodyRight .uploadDragger :global .ant-card .ant-card-body {
     padding: 20px;
@@ -2198,28 +2222,45 @@
     /* border-top: 1px solid #E6E6E6; */
 }
 
-.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-drag {
+/* .drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-drag {
     border: 1px dashed #b5b5b5;
     margin-bottom: 20px;
-}
+} */
 
-.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
-    /* height: 40px; */
+/* .drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
+    height: 40px;
     margin-top: 20px;
     background-color: #e6e6e6;
     border-radius: 6px;
     padding: 6px 20px;
     border: #b5b5b6 1px solid;
-}
+} */
 
 .drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item {
     margin-top: 0px;
+    width: 100%;
 }
 
-.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action.ant-btn-sm,
+.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action {
+    opacity: 1;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action:hover {
+    background-color: transparent;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item:hover {
+    background-color: transparent;
+}
+
+.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .anticon {
+    color: #ff3e5b;
+}
+
+/* .drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action.ant-btn-sm, */
 .drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
-    height: 40px;
-    margin-top: 20px;
+    /* height: 40px;
+    margin-top: 20px; */
     background-color: #e6e6e6;
     border-radius: 6px;
     color: #0b0b0c;
@@ -2818,6 +2859,10 @@
 li.ant-timeline-item.active .ant-timeline-item-content p {
     background-color: rgb(255, 62, 91) !important;
     font-size: 30px !important
+}
+
+.accordianIconWithText {
+    font-size: 16px !important;
 }
 
 @media (max-width: 768px) {
