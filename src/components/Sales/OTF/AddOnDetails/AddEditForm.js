@@ -14,6 +14,7 @@ import AMCForm from './AMC/AMCForm';
 import FMSForm from './FMS/FMSForm';
 import RSAForm from './RSA/RSAForm';
 import { dynamicExpandIcon } from 'utils/accordianExpandIcon';
+import { expandIcon } from 'utils/accordianExpandIcon';
 import { OTF_ADDON_SECTION } from 'constants/OTFAddonSection';
 
 const { Panel } = Collapse;
@@ -112,31 +113,31 @@ const AddEditFormMain = (props) => {
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Space direction="vertical" size="small" className={styles.accordianContainer}>
-                    <Collapse onChange={() => handleCollapse('Accessories Information')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                    <Collapse onChange={() => handleCollapse('Accessories Information')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
                         <Panel header={headerPropsFn(OTF_ADDON_SECTION?.ACCESSORIES_INFORMATION?.headerText, OTF_ADDON_SECTION?.ACCESSORIES_INFORMATION?.dataKey, OTF_ADDON_SECTION?.ACCESSORIES_INFORMATION?.openKey, OTF_ADDON_SECTION?.ACCESSORIES_INFORMATION?.types)} key="Accessories Information">
                             <AccessoriesAddonMain {...AccerssoriesInformationProps} />
                         </Panel>
                     </Collapse>
 
-                    <Collapse onChange={() => handleCollapse('Shield')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                    <Collapse onChange={() => handleCollapse('Shield')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
                         <Panel header={headerPropsFn(OTF_ADDON_SECTION?.SHIELD?.headerText, OTF_ADDON_SECTION?.SHIELD?.dataKey, OTF_ADDON_SECTION?.SHIELD?.openKey, OTF_ADDON_SECTION?.SHIELD?.types)} key="Shield">
                             <ShieldForm {...commonProps} />
                         </Panel>
                     </Collapse>
 
-                    <Collapse onChange={() => handleCollapse('RSA')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                    <Collapse onChange={() => handleCollapse('RSA')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
                         <Panel header={headerPropsFn(OTF_ADDON_SECTION?.RSA?.headerText, OTF_ADDON_SECTION?.RSA?.dataKey, OTF_ADDON_SECTION?.RSA?.openKey, OTF_ADDON_SECTION?.RSA?.types)} key="RSA">
                             <RSAForm {...commonProps} />
                         </Panel>
                     </Collapse>
 
-                    <Collapse onChange={() => handleCollapse('AMC')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                    <Collapse onChange={() => handleCollapse('AMC')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
                         <Panel header={headerPropsFn(OTF_ADDON_SECTION?.AMC?.headerText, OTF_ADDON_SECTION?.AMC?.dataKey, OTF_ADDON_SECTION?.AMC?.openKey, OTF_ADDON_SECTION?.AMC?.types)} key="AMC">
                             <AMCForm {...commonProps} />
                         </Panel>
                     </Collapse>
 
-                    <Collapse onChange={() => handleCollapse('FMS')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
+                    <Collapse onChange={() => handleCollapse('FMS')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
                         <Panel header={headerPropsFn(OTF_ADDON_SECTION?.FMS?.headerText, OTF_ADDON_SECTION?.FMS?.dataKey, OTF_ADDON_SECTION?.FMS?.openKey, OTF_ADDON_SECTION?.FMS?.types)} key="FMS">
                             <FMSForm {...commonProps} />
                         </Panel>
