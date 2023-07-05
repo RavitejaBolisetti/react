@@ -217,14 +217,16 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Row>
                     {!formActionType?.viewMode && (
-                        <Space>
-                            <Button onClick={onSaveFormData} type="primary">
-                                Save
-                            </Button>
-                            <Button onClick={handleCancelFormEdit} danger>
-                                Cancel
-                            </Button>
-                        </Space>
+                        <Row gutter={20}>
+                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                <Button className={style.marR20} onClick={onSaveFormData} type="primary">
+                                    Save
+                                </Button>
+                                <Button className={style.marB20} onClick={handleCancelFormEdit} danger>
+                                    Cancel
+                                </Button>
+                            </Col>
+                        </Row>
                     )}
                 </Space>
             </Form>

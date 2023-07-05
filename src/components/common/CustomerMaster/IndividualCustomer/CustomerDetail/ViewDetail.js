@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Typography, Descriptions, Card, Divider, Col, Row, Space, Button } from 'antd';
+import { Typography, Descriptions, Card, Popover, Col, Row, Space, Button } from 'antd';
 import { BiTimeFive } from 'react-icons/bi';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
@@ -26,6 +26,7 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
 
+    const content = <div>Coming Soon</div>;
     return (
         <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
@@ -37,20 +38,28 @@ const ViewDetailMain = (props) => {
                     <div className={styles.cardInsideBox}>
                         <Row>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <Text>Customer Name</Text>
-                            </Col>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                                <Button type="link" icon={<BiTimeFive />}>
-                                    View History
-                                </Button>
-                            </Col>
-                            <Divider />
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.customerName}>
                                 <Text>
                                     {getCodeValue(typeData?.TITLE, formData?.titleCode)}&nbsp;
                                     {(formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
                                 </Text>
                             </Col>
+                            {/* <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                <Text>Customer Name</Text>
+                            </Col> */}
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
+                                <Popover content={content} trigger="hover">
+                                    <Button type="link" icon={<BiTimeFive />}>
+                                        View History
+                                    </Button>
+                                </Popover>
+                            </Col>
+                            {/* <Divider />
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.customerName}>
+                                <Text>
+                                    {getCodeValue(typeData?.TITLE, formData?.titleCode)}
+                                    {(formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
+                                </Text>
+                            </Col> */}
                         </Row>
                     </div>
                     <Descriptions {...viewProps}>

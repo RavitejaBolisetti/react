@@ -5,29 +5,94 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button } from 'antd';
+import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Empty } from 'antd';
 
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { BiTimeFive } from 'react-icons/bi';
-import UploadUtils from '../../Common/UploadUtils';
+import { FiEye, FiTrash } from 'react-icons/fi';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { NameChangeHistory } from './NameChangeHistory';
 
 import styles from 'components/common/Common.module.css';
+import Svg from 'assets/images/Filter.svg';
+import Dragger from 'antd/es/upload/Dragger';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
     const { form, typeData, formData, corporateLovData, setUploadImgDocId, isViewModeVisible, formActionType: { editMode } = undefined, customerType } = props;
+    const { setUploadedFileName, downloadFileFromList, fileList, setFileList, handleFormValueChange, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
+
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [corporateType, setCorporateType] = useState('');
 
     const [firstToggle, setFirstToggle] = useState(false);
     const [secondToggle, setSecondToggle] = useState(false);
     const [disableWhatsapp, setDisableWhatsapp] = useState(true);
+    const [showStatus, setShowStatus] = useState('');
+
+    const onDrop = (e) => {};
+
+    const uploadProps = {
+        multiple: false,
+        accept: 'image/png, image/jpeg, application/pdf',
+
+        showUploadList: {
+            showRemoveIcon: true,
+            showDownloadIcon: true,
+            removeIcon: <FiTrash />,
+            downloadIcon: <FiEye onClick={() => downloadFileFromList()} style={{ color: '#ff3e5b' }} />,
+            showProgress: true,
+        },
+        progress: { strokeWidth: 3, showInfo: true },
+        onDrop,
+        onChange: (info) => {
+            let fileList = [...info.fileList];
+            fileList = fileList.slice(-1);
+            setFileList(fileList);
+            handleFormValueChange();
+            const { status } = info.file;
+            setShowStatus(info.file);
+            if (status === 'done') {
+                setUploadedFile(info?.file?.response?.docId);
+                setUploadedFileName(info?.file?.response?.documentName);
+            }
+        },
+    };
+
+    useEffect(() => {
+        if (showStatus.status === 'done') {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
+        } else if (showStatus.status === 'error') {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showStatus]);
+
+    const handleUpload = (options) => {
+        const { file, onSuccess, onError } = options;
+        setEmptyList(true);
+
+        const data = new FormData();
+        data.append('applicationId', 'app');
+        data.append('file', file);
+
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        uploadDocumentFile(requestData);
+    };
+
 
     const firstToggleFun = () => {
         setFirstToggle(!firstToggle);
@@ -162,16 +227,7 @@ const AddEditFormMain = (props) => {
                                     Customer Name
                                 </Text>
                             </Col>
-
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                                {editMode && (
-                                    <Button type="link" icon={<BiTimeFive />}>
-                                        View History
-                                    </Button>
-                                )}
-                            </Col>
                         </Row>
-
                         <Divider />
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={4} lg={4} xl={4}>
@@ -198,7 +254,26 @@ const AddEditFormMain = (props) => {
                             {editMode && (
                                 <>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <UploadUtils {...props} isViewModeVisible={isViewModeVisible} setUploadImgDocId={setUploadImgDocId} />
+                                        <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                                            <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps}>
+                                                <div>
+                                                    <img src={Svg} alt="" />
+                                                </div>
+                                                <Empty
+                                                    description={
+                                                        <>
+                                                            <span>Upload supporting documents</span>
+                                                            <span>
+                                                                <br />
+                                                                File type should be .png and .jpg and max file size to be 5MB
+                                                            </span>
+                                                        </>
+                                                    }
+                                                />
+
+                                                <Button type="primary">Upload File</Button>
+                                            </Dragger>
+                                        </div>
                                     </Col>
                                 </>
                             )}
@@ -284,3 +359,4 @@ const AddEditFormMain = (props) => {
 };
 
 export const AddEditForm = AddEditFormMain;
+

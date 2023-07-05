@@ -12,9 +12,9 @@ export const accordianExpandIcon = ({ isActive }) => (isActive ? <MinusBorderedI
 
 export const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined className={styles.iconsColor} /> : <PlusOutlined className={styles.iconsColor} />);
 
-export const ActiveText = (isActive, ExpandIcon, InactiveIcon, activeText = 'Edit', inactiveText = 'Edit') => {
+export const expandIconWithText = (isActive, ExpandIcon, InactiveIcon, activeText = 'Edit', inactiveText = 'Edit') => {
     return (
-        <div>
+        <div className={styles.accordianIconWithText}>
             {dynamicExpandIcon(isActive, ExpandIcon, InactiveIcon, activeText, inactiveText)}
             {isActive ? <div className={styles.activeTextColor}>{activeText}</div> : inactiveText}
         </div>

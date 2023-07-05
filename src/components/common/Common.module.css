@@ -2115,8 +2115,10 @@
     border-top: 1px solid #b5b5b6;
 }
 
-.drawerBodyRight .sectionborder .buttonEdit {
-    margin-bottom: 0 !important;
+.drawerBodyRight .accordianContainer .buttonEdit {
+    /* margin-bottom: 0 !important; */
+    padding: 0;
+    height: 20px;
 }
 
 .drawerBodyRight .sectionborder :global .ant-checkbox {
@@ -2857,6 +2859,10 @@
 li.ant-timeline-item.active .ant-timeline-item-content p {
     background-color: rgb(255, 62, 91) !important;
     font-size: 30px !important
+}
+
+.accordianIconWithText {
+    font-size: 16px !important;
 }
 
 @media (max-width: 768px) {

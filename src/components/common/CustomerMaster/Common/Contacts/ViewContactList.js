@@ -61,9 +61,7 @@ const ViewContactList = (props) => {
                                 header={
                                     <Row justify="space-between">
                                         <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                            <Space>
-                                                <Text strong> {`${data?.firstName ? data?.firstName : ''} ${data?.middleName ? data?.middleName : ''} ${data?.lastName ? data?.lastName : ''}`}</Text>{' '}
-                                            </Space>
+                                            <Text strong> {`${data?.firstName ? data?.firstName : ''} ${data?.middleName ? data?.middleName : ''} ${data?.lastName ? data?.lastName : ''}`}</Text>{' '}
                                             {!formActionType?.viewMode && (
                                                 <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding}>
                                                     Edit{' '}
