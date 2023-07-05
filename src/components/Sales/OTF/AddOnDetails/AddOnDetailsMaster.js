@@ -90,8 +90,10 @@ export const AddOnDetailsMasterMain = (props) => {
         resetData();
         showGlobalNotification({ message });
     };
+
     const onSearchPart = (searchvalue) => {
-        if (!searchvalue) return;
+        if (!searchvalue) return false;
+
         const extraParams = [
             {
                 key: 'partNumber',
@@ -119,10 +121,11 @@ export const AddOnDetailsMasterMain = (props) => {
     useEffect(() => {
         if (userId && selectedOrderId) {
             accessoryForm.resetFields();
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
+
     useEffect(() => {
         if (isDataLoaded && AddonDetailsData) {
             accessoryForm.resetFields();
