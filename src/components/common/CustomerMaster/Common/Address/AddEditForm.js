@@ -102,13 +102,12 @@ const AddEditForm = (props) => {
         addressForm
             .validateFields()
             .then((value) => {
-                const defaultAdddress = addressData?.find((i) => (editingData?.addressType ? i.addressType === editingData?.addressType : true) && i.deafultAddressIndicator && value?.deafultAddressIndicator );
-                if (defaultAdddress) {
-                    return showGlobalNotification({ message: 'Only one address can be default' });
-                }
+                // const defaultAdddress = addressData?.find((i) => (editingData?.addressType ? i.addressType === editingData?.addressType : true) && i.deafultAddressIndicator && value?.deafultAddressIndicator);
+                // if (defaultAdddress) {
+                //     return showGlobalNotification({ message: 'Only one address can be default' });
+                // }
 
                 if (editingData?.addressType) {
-
                     setAddressData((prev) => {
                         let formData = [...prev];
                         const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType);

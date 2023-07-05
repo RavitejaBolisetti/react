@@ -11,6 +11,7 @@ import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequir
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FiDownload } from 'react-icons/fi';
+import { disableFutureDate } from 'utils/disableDate';
 
 import styles from 'components/common/Common.module.css';
 import ViewImageUtils from '../../Common/ViewImageUtils';
@@ -200,7 +201,7 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label="Date of Birth" name="dateOfBirth">
-                                                <DatePicker format="YYYY-MM-DD" disabled={isReadOnly} className={styles.datepicker} />
+                                                <DatePicker format="YYYY-MM-DD" disabledDate={disableFutureDate} disabled={isReadOnly} className={styles.datepicker} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -229,7 +230,7 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label=" Wedding Anniversary Date" name="weddingAnniversary">
-                                                <DatePicker format="YYYY-MM-DD" className={styles.datepicker} disabled={isRead} />
+                                                <DatePicker format="YYYY-MM-DD" disabledDate={disableFutureDate} className={styles.datepicker} disabled={isRead} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

@@ -311,6 +311,7 @@ const CustomerMasterMain = (props) => {
         handleFormValueChange,
         isLastSection,
         saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        setIsFormVisible,
     };
 
     const handleCustomerTypeChange = (id) => {
