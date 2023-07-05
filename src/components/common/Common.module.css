@@ -651,25 +651,9 @@
     padding: 18px 12px;
 }
 
-/* applicatiom master css */
-/* .accordianContainer {
-    padding: 6px;
-} */
-
-/* .accordianHeader {
-    font-weight: 600;
-    font-size: 16px;
-    color: #ff3e5b;
-} */
 .accordianContainer {
     display: flex;
     flex-direction: column;
-}
-
-.accordianContainer .headerBox {
-    border-top: 1px solid #e6e6e6;
-    padding-top: 20px;
-    margin-top: 20px;
 }
 
 .accordianContainer :global .ant-collapse-header-text {
