@@ -4,13 +4,18 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Collapse, Space, Card, Typography, Button, Row, Divider, Empty } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { ViewDetail } from './ViewDetail';
+import { Collapse, Space, Card, Typography, Button, Row, Empty } from 'antd';
+
+import { PlusOutlined } from '@ant-design/icons';
 import { FiEdit } from 'react-icons/fi';
+
+import { ViewDetail } from './ViewDetail';
 import { FormContainer } from './FormContainer';
+
 import dayjs from 'dayjs';
 import { LANGUAGE_EN } from 'language/en';
+
+import { expandIcon } from 'utils/accordianExpandIcon';
 
 import styles from 'components/common/Common.module.css';
 
@@ -146,18 +151,7 @@ const AddEditFormMain = (props) => {
                             {showForm && !editedMode && <FormContainer {...formProps} />}
                             {familyDetailList?.length > 0 ? (
                                 familyDetailList?.map((item, index) => (
-                                    <Collapse
-                                        expandIcon={() => {
-                                            if (activeKey === item?.editedId) {
-                                                return <MinusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
-                                            } else {
-                                                return <PlusOutlined style={{ color: '#FF3E5B', width: '19.2px', height: '19.2px' }} />;
-                                            }
-                                        }}
-                                        activeKey={activeKey}
-                                        onChange={() => onCollapseChange(index)}
-                                        expandIconPosition="end"
-                                    >
+                                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onCollapseChange(index)} expandIconPosition="end">
                                         <Panel
                                             header={
                                                 <Row type="flex" justify="space-between" align="middle" size="large">
@@ -180,16 +174,11 @@ const AddEditFormMain = (props) => {
                                                             </Button>
                                                         )}
                                                     </Row>
-                                                    {item?.mnmCustomer === 'Yes' ? (
+                                                    {
                                                         <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
-                                                            {' '}
-                                                            M&M user{' '}
+                                                            {item?.mnmCustomer === 'Yes' ? 'M&M user' : item?.mnmCustomer === 'No' ? 'Non-M&M user' : ''}
                                                         </Text>
-                                                    ) : item?.mnmCustomer === 'No' ? (
-                                                        <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
-                                                            Non-M&M user
-                                                        </Text>
-                                                    ) : null}
+                                                    }
                                                 </Row>
                                             }
                                             key={index}
@@ -206,11 +195,7 @@ const AddEditFormMain = (props) => {
                                         imageStyle={{
                                             height: 60,
                                         }}
-                                        description={
-                                            <span>
-                                                {noDataTitle} <br />
-                                            </span>
-                                        }
+                                        description={<span>{noDataTitle}</span>}
                                     ></Empty>
                                 </>
                             ) : null}

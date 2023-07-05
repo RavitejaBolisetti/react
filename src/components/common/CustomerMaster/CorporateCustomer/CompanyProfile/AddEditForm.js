@@ -4,28 +4,25 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { React, useEffect, useState } from 'react';
-
 import { Col, Input, Collapse, Row, Button, Space, Form, Select, Upload, message, Checkbox, Divider, Typography, Card } from 'antd';
 
 import { validateRequiredInputField, validateLettersWithWhitespaces, validatePanField, validateGSTIN, validatFacebookProfileUrl, validattwitterProfileUrl } from 'utils/validation';
-import style from 'components/common/Common.module.css';
-import styles from 'components/Auth/Auth.module.css';
 
 import Svg from 'assets/images/Filter.svg';
 import { FiDownload, FiTrash } from 'react-icons/fi';
-
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { expandIcon } from 'utils/accordianExpandIcon';
+
+import style from 'components/common/Common.module.css';
+import styles from 'components/Auth/Auth.module.css';
 
 const { Panel } = Collapse;
 const { Option } = Select;
 const { Dragger } = Upload;
 const { TextArea } = Input;
-
 const { Text } = Typography;
-
-const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 
 const AddEditFormMain = (props) => {
     const { appCategoryData, userId, formData, form, handleOnClick } = props;
@@ -121,19 +118,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space style={{ display: 'flex' }} direction="vertical" size="middle" className={style.accordianContainer}>
-                        <Collapse
-                            defaultActiveKey={['1']}
-                            expandIcon={() => {
-                                if (activeKey.includes(1)) {
-                                    return <MinusOutlined className={style.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={style.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(1)}
-                            expandIconPosition="end"
-                        >
+                        <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                             <Panel
                                 header={
                                     <>

@@ -6,12 +6,13 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Card } from 'antd';
 import Svg from 'assets/images/Filter.svg';
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { FiDownload } from 'react-icons/fi';
 
 import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, validatInstagramProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { FiDownload } from 'react-icons/fi';
 import { disableFutureDate } from 'utils/disableDate';
+import { expandIcon } from 'utils/accordianExpandIcon';
 
 import styles from 'components/common/Common.module.css';
 import ViewImageUtils from '../../Common/ViewImageUtils';
@@ -22,7 +23,6 @@ const { TextArea } = Input;
 const { Text } = Typography;
 const { Dragger } = Upload;
 
-const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />);
 const AddEditFormMain = (props) => {
     const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadConsentDocumentFile } = props;
     const { isReadOnly = false } = props;
@@ -180,18 +180,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space direction="vertical" size="small" className={styles.accordianContainer}>
-                        <Collapse
-                            expandIcon={() => {
-                                if (activeKey.includes(1)) {
-                                    return <MinusOutlined className={styles.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(1)}
-                            expandIconPosition="end"
-                        >
+                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                             <Panel header={<Text strong>Individual Information</Text>} key="1">
                                 <div className={styles.headerBox}>
                                     <div className={styles.uploadDragger}>

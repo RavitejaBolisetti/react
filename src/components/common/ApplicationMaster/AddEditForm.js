@@ -5,7 +5,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Col, Collapse, Row, Button, Space, Spin } from 'antd';
-import style from './../../common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 
 import ApplicationDetails from './ApplicationDetails';
 import ApplicationActions from './actions/ApplicationActions';
@@ -13,7 +13,7 @@ import DocumentTypes from './documentTypes/DocumentTypes';
 import { AccessibleDealerLocations } from './dealerLocations/AccessibleDealerLocations';
 import { withDrawer } from 'components/withDrawer';
 
-import { accordianExpandIcon } from './../../../utils/accordianExpandIcon';
+import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 
 const { Panel } = Collapse;
 
@@ -84,7 +84,7 @@ const AddEditFormMain = ({
     return (
         <>
             <Spin spinning={isApplicatinoOnSaveLoading}>
-                <Space direction="vertical" size="small" className={style.accordianContainer}>
+                <Space direction="vertical" size="small" className={styles.accordianContainer}>
                     <ApplicationDetails
                         showGlobalNotification={showGlobalNotification}
                         isFieldDisable={isFieldDisable}
@@ -105,20 +105,20 @@ const AddEditFormMain = ({
                         setCanFormSave={setCanFormSave}
                     />
 
-                    <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
+                    <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
                         <Panel header={'Application Actions'} key="1">
                             <ApplicationActions actions={actions} setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setCanFormSave={setCanFormSave} />
                         </Panel>
                     </Collapse>
                     {isDocumentToGenerate && (
-                        <Collapse onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
+                        <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
                             <Panel header={'Document Type'} key="2">
                                 <DocumentTypes setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setCanFormSave={setCanFormSave} />
                             </Panel>
                         </Collapse>
                     )}
                     {isRestrictedLocation && (
-                        <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
+                        <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
                             <Panel header={'Accessible Dealer Location'} key="3">
                                 <AccessibleDealerLocations setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setCanFormSave={setCanFormSave} />
                             </Panel>
@@ -126,13 +126,13 @@ const AddEditFormMain = ({
                     )}
                 </Space>
             </Spin>
-            <Row gutter={20} className={style.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnLeft}>
+            <Row gutter={20} className={styles.formFooter}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
                     <Button danger onClick={onCloseAction}>
                         Cancel
                     </Button>
                 </Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnRight}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
                     <Button disabled={isApplicatinoOnSaveLoading || !canFormSave} loading={isApplicatinoOnSaveLoading} htmlType="submit" danger form="myForm" key="saveBtm" type="primary">
                         Save
                     </Button>

@@ -5,11 +5,13 @@
  */
 import React, { useState } from 'react';
 import { Space, Collapse, Typography, Descriptions, Card } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import styles from 'components/common/Common.module.css';
 import { FiDownload } from 'react-icons/fi';
+
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { expandIcon } from 'utils/accordianExpandIcon';
 import { getCodeValue } from 'utils/getCodeValue';
+
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -17,6 +19,7 @@ const { Text } = Typography;
 const ViewDetailMain = (props) => {
     const { formData, handleOnClick, isLoading, appCategoryData, viewDocument } = props;
     const [activeKey, setactiveKey] = useState([1]);
+
     const viewProps = {
         bordered: false,
         colon: false,
@@ -44,18 +47,7 @@ const ViewDetailMain = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(1)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(1)}
-                    expandIconPosition="end"
-                >
+                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                     <Panel
                         header={
                             <div className={styles.alignUser}>
@@ -89,18 +81,7 @@ const ViewDetailMain = (props) => {
                     </Panel>
                 </Collapse>
 
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(2)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(2)}
-                    expandIconPosition="end"
-                >
+                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                     <Panel
                         header={
                             <div className={styles.alignUser}>
@@ -119,18 +100,7 @@ const ViewDetailMain = (props) => {
                     </Panel>
                 </Collapse>
 
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(3)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(3)}
-                    expandIconPosition="end"
-                >
+                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
                     <Panel
                         header={
                             <div className={styles.alignUser}>
@@ -153,18 +123,7 @@ const ViewDetailMain = (props) => {
                     </Panel>
                 </Collapse>
 
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(4)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(4)}
-                    expandIconPosition="end"
-                >
+                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end">
                     <Panel
                         header={
                             <div className={styles.alignUser}>
@@ -185,18 +144,7 @@ const ViewDetailMain = (props) => {
                         )}
                     </Panel>
                 </Collapse>
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(5)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(5)}
-                    expandIconPosition="end"
-                >
+                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end">
                     <Panel
                         header={
                             <div className={styles.alignUser}>
@@ -207,14 +155,7 @@ const ViewDetailMain = (props) => {
                         }
                         key="5"
                     >
-                        {viewDocument?.fileName && (
-                            <>
-                                <a>
-                                    <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>
-                                </a>
-                                {/* {viewDocument && <img width="500" height="200" src={`data:image/png;base64,${viewDocument?.base64}`} />} */}
-                            </>
-                        )}
+                        {viewDocument?.fileName && <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>}
                     </Panel>
                 </Collapse>
             </Space>

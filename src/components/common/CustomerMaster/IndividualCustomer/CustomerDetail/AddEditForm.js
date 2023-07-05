@@ -13,7 +13,9 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { BiTimeFive } from 'react-icons/bi';
 import UploadUtils from '../../Common/UploadUtils';
 
+import { PARAM_MASTER } from 'constants/paramMaster';
 import { NameChangeHistory } from './NameChangeHistory';
+
 import styles from 'components/common/Common.module.css';
 
 const { Text } = Typography;
@@ -27,14 +29,13 @@ const AddEditFormMain = (props) => {
     const [secondToggle, setSecondToggle] = useState(false);
     const [disableWhatsapp, setDisableWhatsapp] = useState(true);
 
-
     const firstToggleFun = () => {
         setFirstToggle(!firstToggle);
     };
 
     const secondToggleFun = () => {
         setSecondToggle(!secondToggle);
-    }
+    };
 
     const handleCorporateChange = (value) => {
         setCorporateType(value);
@@ -42,7 +43,7 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 corporateName: null,
             });
-        }else if(value === 'LIS') {
+        } else if (value === 'LIS') {
             form.setFieldsValue({
                 corporateCode: null,
             });
@@ -66,51 +67,50 @@ const AddEditFormMain = (props) => {
     useEffect(() => {
         setCorporateType(formData?.corporateType);
 
-         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[formData?.corporateType])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData?.corporateType]);
 
-    useEffect( () => {
+    useEffect(() => {
         setFirstToggle(formData?.whatsappCommunicationIndicator);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[formData])
+    }, [formData]);
 
-    useEffect( () => {
+    useEffect(() => {
         setSecondToggle(formData?.mobileNumberAsWhatsappNumber);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[formData])
+    }, [formData]);
 
-    useEffect( () => {
-        
-        if(firstToggle && !secondToggle){
-            setDisableWhatsapp(false)
-        } else if(!firstToggle && !secondToggle){
+    useEffect(() => {
+        if (firstToggle && !secondToggle) {
+            setDisableWhatsapp(false);
+        } else if (!firstToggle && !secondToggle) {
             setDisableWhatsapp(true);
             form.setFieldsValue({
                 whatsAppNumber: null,
             });
-        } else if(!firstToggle && secondToggle){
+        } else if (!firstToggle && secondToggle) {
             setSecondToggle(false);
         }
-         // eslint-disable-next-line react-hooks/exhaustive-deps
-    } ,[firstToggle] );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [firstToggle]);
 
-    useEffect( () => {
-        if(secondToggle && firstToggle){
+    useEffect(() => {
+        if (secondToggle && firstToggle) {
             setDisableWhatsapp(true);
             let number = form.getFieldsValue();
             form.setFieldsValue({
                 whatsAppNumber: number?.mobileNumber,
             });
-        }else if(firstToggle && !secondToggle){
+        } else if (firstToggle && !secondToggle) {
             setDisableWhatsapp(false);
-        } else{
+        } else {
             form.setFieldsValue({
                 whatsAppNumber: null,
             });
         }
-         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [secondToggle] )
-console.log("corporateType",corporateType)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [secondToggle]);
+    console.log('corporateType', corporateType);
     return (
         <>
             <Space direction="vertical" size="small" style={{ display: 'flex' }}>
@@ -149,7 +149,7 @@ console.log("corporateType",corporateType)
 
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                                    <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['CUST_TYPE']} allowClear></Select>
+                                    <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.[PARAM_MASTER?.CUST_TYPE?.id]} allowClear></Select>
                                 </Form.Item>
                             </Col>
                         </Row>

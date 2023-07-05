@@ -24,7 +24,7 @@ const AddEditFormBase = (props) => {
                 ...formData,
                 bookingCustomer: { ...formData?.bookingCustomer, birthDate: convertDateToCalender(formData?.bookingCustomer?.birthDate) },
                 billingCustomer: { ...formData?.billingCustomer, birthDate: convertDateToCalender(formData?.billingCustomer?.birthDate) },
-            });          
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
@@ -77,6 +77,7 @@ const AddEditFormBase = (props) => {
         billCstmForm.setFieldsValue(customerFormData.billingCustomer);
     };
 
+    console.log('activeKey', activeKey);
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
