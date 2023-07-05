@@ -5,7 +5,8 @@
  */
 import React from 'react';
 import { Row, Col, Space, Card, Collapse, Typography, Descriptions } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+
+import { expandIcon } from 'utils/accordianExpandIcon';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 const { Panel } = Collapse;
@@ -27,18 +28,7 @@ const ViewDetailMain = (props) => {
                     <Space direction="vertical" size="middle" className={styles.accordianContainer}>
                         {schemeData && schemeData?.schemes?.length > 0 ? (
                             schemeData?.schemes?.map((schemeForm, index) => (
-                                <Collapse
-                                    expandIcon={() => {
-                                        if (activeKey?.includes(schemeForm?.id)) {
-                                            return <MinusOutlined className={styles.iconsColor} />;
-                                        } else {
-                                            return <PlusOutlined className={styles.iconsColor} />;
-                                        }
-                                    }}
-                                    activeKey={activeKey}
-                                    expandIconPosition="end"
-                                    className={styles.collapseContainer}
-                                >
+                                <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" className={styles.collapseContainer}>
                                     <Panel
                                         header={
                                             <div className={styles.alignUser}>
