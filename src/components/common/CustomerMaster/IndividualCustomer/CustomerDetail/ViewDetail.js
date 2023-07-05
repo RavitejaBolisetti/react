@@ -11,7 +11,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, typeData, corporateLovData, corporateType } = props;
+    const { styles, formData, isLoading, typeData, corporateLovData } = props;
     const viewProps = {
         bordered: false,
         colon: false,

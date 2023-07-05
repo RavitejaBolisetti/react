@@ -12,8 +12,6 @@ import { customerDetailsIndividualDataActions } from 'store/actions/data/custome
 import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';

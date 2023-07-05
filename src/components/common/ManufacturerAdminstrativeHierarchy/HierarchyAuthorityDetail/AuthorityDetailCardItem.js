@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import { Col, Card, Row, Button, Divider, Typography, Form } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import dayjs from 'dayjs';
-import moment from 'moment';
 import { bindActionCreators } from 'redux';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import styles from 'components/common/Common.module.css';
@@ -22,7 +21,7 @@ const { Text } = Typography;
 const mapStateToProps = (state) => {
     const {
         data: {
-            ManufacturerAdminHierarchy: { authorityVisible, tokenNumber = [], errorMessage,isUpdating },
+            ManufacturerAdminHierarchy: { authorityVisible, tokenNumber = [], errorMessage, isUpdating },
         },
     } = state;
 
@@ -47,7 +46,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AuthorityCardItemMain = (props) => {
-    const {isUpdating,  viewMode, onFinish, setDocumentTypesList, documentTypesList, forceUpdate, setIsBtnDisabled, isBtnDisabled, record, handleFormValueChange } = props;
+    const { isUpdating, viewMode, onFinish, setDocumentTypesList, documentTypesList, setIsBtnDisabled, isBtnDisabled, record, handleFormValueChange } = props;
     const { employeeName, setEmployeeName, tokenValidate, setTokenValidate, errorTokenValidate, tokenNumber, errorMessage, showGlobalNotification } = props;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
@@ -72,7 +71,7 @@ const AuthorityCardItemMain = (props) => {
     const onEdit = ({ employeeName, authorityTypeCode, authorityEmployeeTokenNo, effectiveTo, effectiveFrom, id }) => {
         setTokenValidate({ ['tokenVisible' + recordId]: true });
         if (!isUpdating || tokenNumber?.employeeName || errorMessage) {
-            errorTokenValidate({errorMessage: '', isUpdating: true});
+            errorTokenValidate({ errorMessage: '', isUpdating: true });
         }
         form.setFieldsValue({ ...record, effectiveTo: dayjs(record?.effectiveTo), effectiveFrom: dayjs(record?.effectiveFrom) });
         // form.resetFields();
@@ -92,7 +91,7 @@ const AuthorityCardItemMain = (props) => {
                 setDocumentTypesList((prev) => {
                     const updatedData = [...prev];
                     const index = updatedData?.findIndex((el) => el?.authorityEmployeeTokenNo === record?.authorityEmployeeTokenNo);
-                    updatedData?.splice(index, 1, { ...data, employeeName: tokenNumber?.employeeName|| tokenValidationData?.employeeName });
+                    updatedData?.splice(index, 1, { ...data, employeeName: tokenNumber?.employeeName || tokenValidationData?.employeeName });
                     return updatedData;
                 });
             })
@@ -131,7 +130,6 @@ const AuthorityCardItemMain = (props) => {
             <Card className={styles.viewCardSize}>
                 <Row align="middle">
                     <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
-                   
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                             <Text type="secondary">Authority : {record?.authorityTypeCode}</Text>
                         </Col>
@@ -145,7 +143,6 @@ const AuthorityCardItemMain = (props) => {
                             <Divider type="vertical" />
                             <Text type="secondary">To - {dayjs(record?.effectiveTo)?.format('DD-MM-YYYY')}</Text>
                         </Col>
-
                     </Col>
                     {!viewMode && (
                         <Col xs={colRight} sm={colRight} md={colRight} lg={colRight} xl={colRight} xxl={colRight}>
@@ -153,11 +150,11 @@ const AuthorityCardItemMain = (props) => {
                                 {!isEditing ? (
                                     <div>
                                         {/* <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}> */}
-                                            <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(record)} />
+                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(record)} />
                                         {/* </Col> */}
                                         {!record?.id && (
                                             // <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                                <Button disabled={isBtnDisabled} onClick={() => handleDelete(record)} type="link" icon={<FiTrash />}></Button>
+                                            <Button disabled={isBtnDisabled} onClick={() => handleDelete(record)} type="link" icon={<FiTrash />}></Button>
                                             // </Col>
                                         )}
 
