@@ -6,7 +6,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Card } from 'antd';
 import Svg from 'assets/images/Filter.svg';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FiDownload } from 'react-icons/fi';
 
 import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, validatInstagramProfileUrl } from 'utils/validation';
