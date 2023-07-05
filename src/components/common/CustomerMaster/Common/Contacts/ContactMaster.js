@@ -103,7 +103,7 @@ const ContactMain = (props) => {
 
     useEffect(() => {
         return () => {
-            setUploadImgDocId("");
+            setUploadImgDocId('');
             resetData();
             resetIndividualData();
         };
@@ -150,13 +150,13 @@ const ContactMain = (props) => {
             .validateFields()
             .then((value) => {
                 if (isEditing) {
-                    let dataList = [...contactData];
-                    const index = dataList?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
-                    dataList.splice(index, 1);
-                    const checkedIndex = dataList?.findIndex((el) => el?.defaultContactIndicator);
-                    if (value?.defaultContactIndicator && checkedIndex !== -1) {
-                        return showGlobalNotification({ message: 'Only one contact can be default' });
-                    }
+                    // let dataList = [...contactData];
+                    // const index = dataList?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
+                    // dataList.splice(index, 1);
+                    // const checkedIndex = dataList?.findIndex((el) => el?.defaultContactIndicator);
+                    // if (value?.defaultContactIndicator && checkedIndex !== -1) {
+                    //     return showGlobalNotification({ message: 'Only one contact can be default' });
+                    // }
 
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
@@ -165,11 +165,11 @@ const ContactMain = (props) => {
                         return [...formData];
                     });
                 } else {
-                    let dataList = [...contactData];
-                    const checkedIndex = dataList?.findIndex((el) => el?.defaultContactIndicator);
-                    if (checkedIndex !== -1) {
-                        return showGlobalNotification({ message: 'Only one contact can be default' });
-                    }
+                    // let dataList = [...contactData];
+                    // const checkedIndex = dataList?.findIndex((el) => el?.defaultContactIndicator);
+                    // if (checkedIndex !== -1) {
+                    //     return showGlobalNotification({ message: 'Only one contact can be default' });
+                    // }
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         if (value?.defaultaddress && formData?.length >= 1) {
