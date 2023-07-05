@@ -12,6 +12,13 @@ import { getCodeValue } from 'utils/getCodeValue';
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
     const { styles, formData, isLoading, typeData, corporateLovData } = props;
+    const findListedNonListed = () => {
+        if (checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading) === 'Non-Listed') {
+            return formData?.corporateName;
+        } else {
+            return checkAndSetDefaultValue(getCodeValue(corporateLovData, formData?.corporateName), isLoading);
+        }
+    };
     const viewProps = {
         bordered: false,
         colon: false,
@@ -41,12 +48,7 @@ const ViewDetailMain = (props) => {
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.customerName}>
                                 <Text>
                                     {getCodeValue(typeData?.TITLE, formData?.titleCode)}
-                                    <span>&nbsp;</span>
-                                    {formData?.firstName}
-                                    <span>&nbsp;</span>
-                                    {formData?.middleName}
-                                    <span>&nbsp;</span>
-                                    {formData?.lastName}
+                                    {(formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
                                 </Text>
                             </Col>
                         </Row>
@@ -64,7 +66,7 @@ const ViewDetailMain = (props) => {
                     </Descriptions>
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Corporate Name">{checkAndSetDefaultValue(getCodeValue(corporateLovData, formData?.corporateName), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Name">{findListedNonListed()}</Descriptions.Item>
                         <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_CATE, formData?.corporateCategory), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(getCodeValue(typeData?.MEM_TYPE, formData?.membershipType), isLoading)}</Descriptions.Item>
                     </Descriptions>
