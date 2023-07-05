@@ -47,7 +47,7 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.customerName}>
                                 <Text>
-                                    {getCodeValue(typeData?.TITLE, formData?.titleCode)}
+                                    {getCodeValue(typeData?.TITLE, formData?.titleCode)}&nbsp;
                                     {(formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
                                 </Text>
                             </Col>

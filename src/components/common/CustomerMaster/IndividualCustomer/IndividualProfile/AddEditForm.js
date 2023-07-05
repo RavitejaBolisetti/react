@@ -185,7 +185,7 @@ const AddEditFormMain = (props) => {
                                 <div className={styles.uploadDragger}>
                                     <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} {...ImageProps} />
                                 </div>
-
+                                <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Date of Birth" name="dateOfBirth">
