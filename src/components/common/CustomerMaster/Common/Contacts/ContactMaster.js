@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useReducer, useEffect } from 'react';
-import { Row, Col, Collapse, Form, Space, Typography, Button, Empty, Card } from 'antd';
+import { Row, Col, Form, Space, Typography, Button, Empty, Card } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { bindActionCreators } from 'redux';
@@ -138,9 +138,6 @@ const ContactMain = (props) => {
         showGlobalNotification({ message });
     };
 
-    const handleCollapse = (key) => {
-        setOpenAccordian(key);
-    };
 
     const onSaveFormData = () => {
         contactform
@@ -206,7 +203,6 @@ const ContactMain = (props) => {
         setIsAdding(true);
         contactform.resetFields();
         setShowAddEditForm(true);
-        setOpenAccordian('1');
     };
 
     const formProps = {

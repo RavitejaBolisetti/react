@@ -2105,8 +2105,10 @@
     border-top: 1px solid #b5b5b6;
 }
 
-.drawerBodyRight .sectionborder .buttonEdit {
-    margin-bottom: 0 !important;
+.drawerBodyRight .accordianContainer .buttonEdit {
+    /* margin-bottom: 0 !important; */
+    padding: 0;
+    height: 20px;
 }
 
 .drawerBodyRight .sectionborder :global .ant-checkbox {

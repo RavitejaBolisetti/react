@@ -6,7 +6,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { Row, Col, Checkbox, Button, Form, Input, Select, Space, AutoComplete } from 'antd';
+import { Row, Col, Checkbox, Button, Form, Input, Select, AutoComplete } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace, validatePincodeField, validateMobileNoField, validateLettersWithWhitespaces, duplicateValidator } from 'utils/validation';
 import { addressType } from 'constants/modules/CustomerMaster/individualProfile';
