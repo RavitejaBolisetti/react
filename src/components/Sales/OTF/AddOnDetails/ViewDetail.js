@@ -31,14 +31,7 @@ const ViewDetailMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space className={styles.ViewCardCollapse} style={{ display: 'flex' }} direction="vertical" size="large">
                         <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('ci')} expandIconPosition="end">
-                            <Panel
-                                header={
-                                    <div className={styles?.alignUser}>
-                                        <Text strong>Accessories Information</Text>
-                                    </div>
-                                }
-                                key={'ci'}
-                            >
+                            <Panel header="Accessories Information" key={'ci'}>
                                 {formData?.partDetailsResponses?.map((element, i) => {
                                     return (
                                         <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end" className={styles.innerCollapseBorder}>
@@ -67,50 +60,22 @@ const ViewDetailMain = (props) => {
                             </Panel>
                         </Collapse>
                         <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('shield')} expandIconPosition="end">
-                            <Panel
-                                header={
-                                    <div className={styles?.alignUser}>
-                                        <Text strong>Shield</Text>
-                                    </div>
-                                }
-                                key="shield"
-                            >
+                            <Panel header="Shield" key="shield">
                                 <ShieldForm formActionType={formActionType} formData={formData} shieldForm={shieldForm} />
                             </Panel>
                         </Collapse>
                         <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Amc')} expandIconPosition="end">
-                            <Panel
-                                header={
-                                    <div className={styles?.alignUser}>
-                                        <Text strong>Amc</Text>
-                                    </div>
-                                }
-                                key={'Amc'}
-                            >
+                            <Panel header="Amc" key={'Amc'}>
                                 <AMCForm formActionType={formActionType} formData={formData} amcForm={amcForm} />
                             </Panel>
                         </Collapse>
                         <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Rsa')} expandIconPosition="end">
-                            <Panel
-                                header={
-                                    <div className={styles?.alignUser}>
-                                        <Text strong>RSA</Text>
-                                    </div>
-                                }
-                                key={'Rsa'}
-                            >
+                            <Panel header="RSA" key={'Rsa'}>
                                 <RSAForm formActionType={formActionType} formData={formData} rsaForm={rsaForm} />
                             </Panel>
                         </Collapse>
                         <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('fMS')} expandIconPosition="end">
-                            <Panel
-                                header={
-                                    <div className={styles?.alignUser}>
-                                        <Text strong>FMS</Text>
-                                    </div>
-                                }
-                                key={'fMS'}
-                            >
+                            <Panel header="FMS" key={'fMS'}>
                                 <FMSForm formActionType={formActionType} formData={formData} fmsForm={fmsForm} />
                             </Panel>
                         </Collapse>

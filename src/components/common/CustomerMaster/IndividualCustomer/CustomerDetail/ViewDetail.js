@@ -22,15 +22,7 @@ const ViewDetailMain = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Card
-                    header={
-                        <div className={styles.alignUser}>
-                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                Customer Information
-                            </Text>
-                        </div>
-                    }
-                >
+                <Card header="Customer Information">
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CUST_TYPE, formData?.customerType), isLoading)}</Descriptions.Item>

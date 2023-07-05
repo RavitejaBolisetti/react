@@ -208,7 +208,7 @@ const AddEditFormMain = (props) => {
             </Form>
             {showProductAttribute && (
                 <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon}>
-                    <Panel header={<span className={openAccordian === 1 ? styles.accordianHeader : ''}>Product Atrribute Details</span>} key="1">
+                    <Panel header="Product Atrribute Details" key="1">
                         <ProductAttributeMaster {...attributeFormProps} />
                     </Panel>
                 </Collapse>

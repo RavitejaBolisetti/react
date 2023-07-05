@@ -34,16 +34,7 @@ const ViewDetailMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space direction="vertical" size="middle" className={styles.accordianContainer}>
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
-                            <Panel
-                                header={
-                                    <div className={styles.alignUser}>
-                                        <Text strong level={5} style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Vehicle Information
-                                        </Text>
-                                    </div>
-                                }
-                                key="1"
-                            >
+                            <Panel header="Vehicle Information" key="1">
                                 <Descriptions {...viewProps}>
                                     <Descriptions.Item label="Vehicle Usage Type ">{checkAndSetDefaultValue(formData?.vehicleUsageType, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Model">
@@ -74,31 +65,13 @@ const ViewDetailMain = (props) => {
                         </Collapse>
 
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
-                            <Panel
-                                header={
-                                    <div className={styles.alignUser}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Tax Details
-                                        </Text>
-                                    </div>
-                                }
-                                key="2"
-                            >
+                            <Panel header="Tax Details" key="2">
                                 <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
                             </Panel>
                         </Collapse>
 
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" className={styles.collapseContainer}>
-                            <Panel
-                                header={
-                                    <div className={styles.alignUser}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Charges
-                                        </Text>
-                                    </div>
-                                }
-                                key="3"
-                            >
+                            <Panel header="Charges" key="3">
                                 <DataTable tableColumn={optionalServicesColumns} tableData={formData['optionalServices']} removePagination={true} />
                             </Panel>
                         </Collapse>

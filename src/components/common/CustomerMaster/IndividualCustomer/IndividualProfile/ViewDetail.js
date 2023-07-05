@@ -43,7 +43,7 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                    <Panel header={'Individual Information'} key="1">
+                    <Panel header="Individual Information" key="1">
                         <Descriptions {...viewProps}>
                             <div>
                                 <img alt="uploaded suppoting document" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
@@ -81,7 +81,7 @@ const ViewDetailMain = (props) => {
                     </Panel>
                 </Collapse>
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end">
-                    <Panel header={'Social Profile'} key="5">
+                    <Panel header="Social Profile" key="5">
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="M1-MMFSL">{checkAndSetDefaultValue(formData?.mmfsl, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookLink, isLoading)}</Descriptions.Item>
@@ -93,7 +93,7 @@ const ViewDetailMain = (props) => {
                     </Panel>
                 </Collapse>
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                    <Panel header={'Key Account Details'} key="2">
+                    <Panel header="Key Account Details" key="2">
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Account Code">{checkAndSetDefaultValue(formData?.accountCode, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Account Name">{checkAndSetDefaultValue(formData?.accountName, isLoading)}</Descriptions.Item>
@@ -104,7 +104,7 @@ const ViewDetailMain = (props) => {
                     </Panel>
                 </Collapse>
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
-                    <Panel header={'Authority Details (Who Knows Whom)'} key="3">
+                    <Panel header="Authority Details (Who Knows Whom)" key="3">
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Name Of Person">{checkAndSetDefaultValue(formData?.authorityDetails?.personName, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Position">{checkAndSetDefaultValue(formData?.authorityDetails?.postion, isLoading)}</Descriptions.Item>
@@ -114,7 +114,7 @@ const ViewDetailMain = (props) => {
                     </Panel>
                 </Collapse>
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end">
-                    <Panel header={'Upload Customer Form'} key="4">
+                    <Panel header="Upload Customer Form" key="4">
                         <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClickCustomerForm}></Card>
                     </Panel>
                 </Collapse>
