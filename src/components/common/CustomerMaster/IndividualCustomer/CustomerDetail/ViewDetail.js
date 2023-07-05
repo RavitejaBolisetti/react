@@ -12,6 +12,13 @@ import { getCodeValue } from 'utils/getCodeValue';
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
     const { styles, formData, isLoading, typeData, corporateLovData, corporateType } = props;
+    const findListedNonListed = () => {
+        if (checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading) === 'Non-Listed') {
+            return formData?.corporateName;
+        } else {
+            return checkAndSetDefaultValue(getCodeValue(corporateLovData, formData?.corporateName), isLoading);
+        }
+    };
     const viewProps = {
         bordered: false,
         colon: false,
@@ -72,7 +79,7 @@ const ViewDetailMain = (props) => {
                     </Descriptions>
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Corporate Name">{checkAndSetDefaultValue(getCodeValue(corporateLovData, formData?.corporateName), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Name">{findListedNonListed()}</Descriptions.Item>
                         <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_CATE, formData?.corporateCategory), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(getCodeValue(typeData?.MEM_TYPE, formData?.membershipType), isLoading)}</Descriptions.Item>
                     </Descriptions>
