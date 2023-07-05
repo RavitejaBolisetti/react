@@ -40,11 +40,11 @@ const ViewDetailMain = (props) => {
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                 <Text>Customer Name</Text>
                             </Col>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
+                            {/* <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
                                 <Button type="link" icon={<BiTimeFive />}>
                                     View History
                                 </Button>
-                            </Col>
+                            </Col> */}
                             <Divider />
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.customerName}>
                                 <Text>
