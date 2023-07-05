@@ -94,7 +94,7 @@ const ViewDetailMain = (props) => {
                         {formData?.customerCategory === 'CUS_CAT_2' ? (
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Business Details">{checkAndSetDefaultValue(formData?.businessDetails, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Vehicle Deployment Detail">{checkAndSetDefaultValue(formData?.vechileDeploymentDetails, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Vehicle Deployment Detail">{checkAndSetDefaultValue(formData?.vehicleDeploymentDetails, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Key Role Details">{checkAndSetDefaultValue(formData?.keyRolesDetails, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Major Route Details">{checkAndSetDefaultValue(formData?.majorRouteDetails, isLoading)}</Descriptions.Item>
                             </Descriptions>
@@ -226,3 +226,4 @@ const ViewDetailMain = (props) => {
 };
 
 export const ViewDetail = ViewDetailMain;
+

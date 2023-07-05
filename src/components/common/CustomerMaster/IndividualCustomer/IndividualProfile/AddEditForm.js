@@ -4,6 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Card } from 'antd';
 import Svg from 'assets/images/Filter.svg';
 
@@ -45,6 +46,7 @@ const AddEditFormMain = (props) => {
             personName: formData?.authorityDetails?.personName,
             remarks: formData?.authorityDetails?.remarks,
             vehicleDeploymentDetails: formData?.vehicleDeploymentDetails,
+            dateOfBirth: formData?.dateOfBirth ? dayjs(formData?.dateOfBirth) : null,
         });
         if (formData?.martialStatus === 'S') {
             setIsRead(true);
@@ -268,7 +270,7 @@ const AddEditFormMain = (props) => {
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Voter ID" name="voterid" initialValue={formData?.voterid} rules={[validateVoterId('voter id')]}>
+                                            <Form.Item label="Voter ID" name="voterId" initialValue={formData?.voterId} rules={[validateVoterId('voter id')]}>
                                                 <Input maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('voter id')} {...disabledProps} />
                                             </Form.Item>
                                         </Col>
@@ -370,7 +372,7 @@ const AddEditFormMain = (props) => {
                                                     </Form.Item>
                                                 </Col>
                                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                    <Form.Item label="Vehicle Deployment Details" initialValue={formData?.vehicleDeploymentDetails} name="vechileDeploymentDetails">
+                                                    <Form.Item label="Vehicle Deployment Details" initialValue={formData?.vehicleDeploymentDetails} name="vehicleDeploymentDetails">
                                                         <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('vehicle deployment details')} {...disabledProps} />
                                                     </Form.Item>
                                                 </Col>
@@ -554,3 +556,4 @@ const AddEditFormMain = (props) => {
 };
 
 export const AddEditForm = AddEditFormMain;
+
