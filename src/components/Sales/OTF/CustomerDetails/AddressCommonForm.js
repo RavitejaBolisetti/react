@@ -7,7 +7,7 @@ import React from 'react';
 import { Col, Input, Form, Row, DatePicker } from 'antd';
 
 import { disableFutureDate } from 'utils/disableDate';
-import { formatDateToCalenderDate } from 'utils/formatDateTime';
+import { convertCalenderDate } from 'utils/formatDateTime';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateEmailField, validatePincodeField, validateMobileNoField, validatePanField, validateAadhar, validateDrivingLicenseNoWithSpace, validateGSTIN } from 'utils/validation';
@@ -109,7 +109,7 @@ export const AddressCommonForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'birthDate']} initalValue={formatDateToCalenderDate(formData?.birthDate)} label="Birth Date">
+                    <Form.Item name={[formType, 'birthDate']} label="Birth Date">
                         <DatePicker disabledDate={disableFutureDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
