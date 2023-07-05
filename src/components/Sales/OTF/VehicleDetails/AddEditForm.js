@@ -85,16 +85,7 @@ const AddEditFormMain = (props) => {
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Space size="middle" direction="vertical" className={styles.accordianContainer}>
                     <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => ActiveText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={openAccordian}>
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        Vehicle Information
-                                    </Text>
-                                </div>
-                            }
-                            key="1"
-                        >
+                        <Panel header="Vehicle Information" key="1">
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label="Vehicle Usage Type" name="vehicleUsageType" data-testid="usageType" rules={[validateRequiredSelectField('vehicle usage Type')]}>
@@ -185,18 +176,7 @@ const AddEditFormMain = (props) => {
                         </Panel>
                     </Collapse>
                     <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Tax Details
-                                        </Text>
-                                    </Col>
-                                </div>
-                            }
-                            key="2"
-                        >
+                        <Panel header="Tax Details" key="2">
                             <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
                         </Panel>
                     </Collapse>

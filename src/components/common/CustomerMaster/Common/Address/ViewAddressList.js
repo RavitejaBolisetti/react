@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -16,10 +16,10 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewAddressList = (props) => {
-    const { form,addressForm, setShowAddEditForm, showAddEditForm, onCheckdefaultAddClick, formActionType, setAddressData, onFinish, setIsEditing, isEditing, styles, addressData, onCheckClick, setEditingData, isAdding, setIsAdding } = props;
+    const { form, addressForm, setShowAddEditForm, showAddEditForm, onCheckdefaultAddClick, formActionType, setAddressData, onFinish, setIsEditing, isEditing, styles, addressData, setEditingData, isAdding, setIsAdding } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
-    const disableProp = {disabled: formActionType?.viewMode };
+    const disableProp = { disabled: formActionType?.viewMode };
 
     const handleCollapse = (key) => {
         if (isEditing) return;
@@ -31,7 +31,7 @@ const ViewAddressList = (props) => {
         setOpenAccordian(i);
         setIsEditing(true);
         setEditingData(data);
-        setIsAdding(true)
+        setIsAdding(true);
         addressForm.setFieldsValue(data);
     };
 
@@ -61,7 +61,7 @@ const ViewAddressList = (props) => {
             {addressData?.length > 0 &&
                 addressData?.map((data, i) => {
                     return (
-                        <Collapse className={styles.innerCollapse} key={data?.addressType + data?.addressType} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian} collapsible='icon'>
+                        <Collapse className={styles.innerCollapse} key={data?.addressType + data?.addressType} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                             <Panel
                                 key={i}
                                 header={
@@ -77,13 +77,15 @@ const ViewAddressList = (props) => {
                                             </Space>
                                         </Col>
                                         <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                                          {!(isEditing || isAdding) &&  <div style={{ float: 'right' }}>
-                                                <Checkbox valuePropName="checked" checked={data?.deafultAddressIndicator} defaultChecked={data?.deafultAddressIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)}  {...disableProp} >
-                                                    Mark As Default
-                                                </Checkbox>
-                                                <Divider type="vertical" />
-                                                <Text type="secondary">{data?.addressType}</Text>
-                                            </div>}
+                                            {!(isEditing || isAdding) && (
+                                                <div style={{ float: 'right' }}>
+                                                    <Checkbox valuePropName="checked" checked={data?.deafultAddressIndicator} defaultChecked={data?.deafultAddressIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)} {...disableProp}>
+                                                        Mark As Default
+                                                    </Checkbox>
+                                                    <Divider type="vertical" />
+                                                    <Text type="secondary">{data?.addressType}</Text>
+                                                </div>
+                                            )}
                                         </Col>
                                     </Row>
                                 }

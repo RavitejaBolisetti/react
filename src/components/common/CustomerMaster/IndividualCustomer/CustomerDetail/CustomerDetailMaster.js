@@ -27,11 +27,9 @@ const mapStateToProps = (state) => {
                 CustomerDetailsIndividual: { isLoaded: isDataLoaded = false, isLoading, data },
                 Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
-
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isSupportingDocumentDataLoaded = false, isSupportingDocumentLoading, data: supportingData },
-
         },
     } = state;
 
@@ -49,7 +47,6 @@ const mapStateToProps = (state) => {
         isCorporateLovDataLoaded,
         isCorporateLovLoading,
         corporateLovData,
-      
     };
     return returnValue;
 };
@@ -84,7 +81,7 @@ const CustomerDetailMasterBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
-    const { fetchViewDocument, viewListShowLoading, uploadDocumentFile, downloadFile, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
+    const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
 
     const [showForm, setShowForm] = useState(false);
     const [emptyList, setEmptyList] = useState(true);
@@ -94,7 +91,6 @@ const CustomerDetailMasterBase = (props) => {
     const [formData, setFormData] = useState();
     const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [supportingDataView, setSupportingDataView] = useState();
-
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -189,12 +185,11 @@ const CustomerDetailMasterBase = (props) => {
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
     };
 
-
     const onFinish = (values) => {
         setFileList([]);
         setEmptyList(false);
         setUploadedFile();
-        const data = { ...values, customerId: selectedCustomer?.customerId ,status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId')};
+        const data = { ...values, customerId: selectedCustomer?.customerId, status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId') };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -224,6 +219,7 @@ const CustomerDetailMasterBase = (props) => {
 
         saveData(requestData);
     };
+
     const handlePreview = (selectedDocument) => {
         const extraParams = [
             {
@@ -298,4 +294,3 @@ const CustomerDetailMasterBase = (props) => {
     );
 };
 export const CustomerDetailMaster = connect(mapStateToProps, mapDispatchToProps)(CustomerDetailMasterBase);
-

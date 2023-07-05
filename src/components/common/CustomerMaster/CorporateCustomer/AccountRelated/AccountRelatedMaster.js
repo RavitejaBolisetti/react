@@ -11,8 +11,6 @@ import { Row, Col, Form } from 'antd';
 import { corporateAccountsRelatedDataActions } from 'store/actions/data/customerMaster/corporateAccountRelated';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
