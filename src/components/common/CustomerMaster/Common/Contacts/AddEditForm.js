@@ -1,27 +1,23 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { useState } from 'react';
 import { Button, Form, Row, Col, Space, Select, Input, Divider, Checkbox } from 'antd';
 import { BiLockAlt } from 'react-icons/bi';
-import { CheckOutlined } from '@ant-design/icons';
 
 import { validateLettersWithWhitespaces, validateEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import UploadUtils from './../UploadUtils';
 
-// import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import style from '../../../Common.module.css';
 
-const { Option } = Select;
-
 const AddEditForm = (props) => {
-    const { contactData,showGlobalNotification, formData, isReadOnly = false, onFinish, onSaveFormData, form, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
+    const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
@@ -45,9 +41,6 @@ const AddEditForm = (props) => {
         } else {
             setmobileLoader(false);
         }
-    };
-    const showModal = () => {
-        setIsModalOpen(true);
     };
 
     const onCloseActionOnContinue = () => {
@@ -123,10 +116,10 @@ const AddEditForm = (props) => {
                             {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? (
                                 <>
                                     <Form.Item label="Relation" name="relationCode">
-                                        <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={[ ...typeData['FAMLY_RELTN']]} allowClear></Select>
+                                        <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={[...typeData['FAMLY_RELTN']]} allowClear></Select>
                                         {/* <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['FAMLY_RELTN']} allowClear></Select> */}
                                     </Form.Item>
-                                    <Form.Item initialValue={''} hidden name="designation" >
+                                    <Form.Item initialValue={''} hidden name="designation">
                                         <Input />
                                     </Form.Item>
                                 </>
@@ -147,7 +140,7 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Title" name="title" rules={[validateRequiredSelectField('title')]} >
+                            <Form.Item label="Title" name="title" rules={[validateRequiredSelectField('title')]}>
                                 <Select {...disabledProps} placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['TITLE']} allowClear></Select>
                             </Form.Item>
                         </Col>
@@ -226,7 +219,7 @@ const AddEditForm = (props) => {
                     {!formActionType?.viewMode && (
                         <Space>
                             <Button onClick={onSaveFormData} type="primary">
-                                    Save
+                                Save
                             </Button>
                             <Button onClick={handleCancelFormEdit} danger>
                                 Cancel
