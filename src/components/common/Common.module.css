@@ -11,6 +11,10 @@
     justify-content: center;
 }
 
+.marT20 {
+    margin-top: 20px;
+}
+
 .marT30 {
     margin-top: 30px;
 }
@@ -1646,10 +1650,10 @@
     cursor: pointer;
 }
 
-.drawerBodyLeft :global .ant-timeline .ant-timeline-item-last .ant-timeline-item-content p,
+/* .drawerBodyLeft :global .ant-timeline .ant-timeline-item-last .ant-timeline-item-content p,
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item-last .ant-timeline-item-content p:hover {
     color: #70c922 !important;
-}
+} */
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item:not(:last-child) .ant-timeline-item-content p:hover {
     color: #ff3e5b !important;
