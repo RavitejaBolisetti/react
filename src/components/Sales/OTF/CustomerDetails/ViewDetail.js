@@ -5,9 +5,9 @@
  */
 import React, { useState } from 'react';
 import { Col, Row, Space, Collapse, Typography, Descriptions } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-// import { convertCalenderDate } from 'utils/formatDateTime';
+import { expandIcon } from 'utils/accordianExpandIcon';
 
 import styles from 'components/common/Common.module.css';
 
@@ -50,19 +50,7 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                        <Collapse
-                            expandIcon={() => {
-                                if (activeKey.includes(1)) {
-                                    return <MinusOutlined className={styles.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(1)}
-                            expandIconPosition="end"
-                            className={styles.collapseContainer}
-                        >
+                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
                             <Panel
                                 header={
                                     <div className={styles.alignUser}>
@@ -95,19 +83,7 @@ const ViewDetailMain = (props) => {
                                 </Descriptions>
                             </Panel>
                         </Collapse>
-                        <Collapse
-                            expandIcon={() => {
-                                if (activeKey.includes(2)) {
-                                    return <MinusOutlined className={styles.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(2)}
-                            expandIconPosition="end"
-                            className={styles.collapseContainer}
-                        >
+                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
                             <Panel
                                 header={
                                     <div className={styles.alignUser}>

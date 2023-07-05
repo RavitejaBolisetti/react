@@ -9,6 +9,7 @@ import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 
 export const accordianExpandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
+
 export const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined className={styles.iconsColor} /> : <PlusOutlined className={styles.iconsColor} />);
 
 export const ActiveText = (isActive, ExpandIcon, InactiveIcon, activeText = 'Edit', inactiveText = 'Edit') => {

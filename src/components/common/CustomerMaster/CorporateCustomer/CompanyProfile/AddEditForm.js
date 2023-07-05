@@ -10,13 +10,11 @@ import { validateRequiredInputField, validateLettersWithWhitespaces, validatePan
 
 import Svg from 'assets/images/Filter.svg';
 import { FiDownload, FiTrash } from 'react-icons/fi';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
-import style from 'components/common/Common.module.css';
-import styles from 'components/Auth/Auth.module.css';
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -117,12 +115,12 @@ const AddEditFormMain = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Space style={{ display: 'flex' }} direction="vertical" size="middle" className={style.accordianContainer}>
+                    <Space style={{ display: 'flex' }} direction="vertical" size="middle" className={styles.accordianContainer}>
                         <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                             <Panel
                                 header={
                                     <>
-                                        <div className={style.alignUser}>
+                                        <div className={styles.alignUser}>
                                             <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>
                                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                                     Company Information
@@ -225,7 +223,7 @@ const AddEditFormMain = (props) => {
                                 key="2"
                                 header={
                                     <>
-                                        <div className={style.alignUser}>
+                                        <div className={styles.alignUser}>
                                             <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>
                                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                                     Social Profiles
@@ -264,7 +262,7 @@ const AddEditFormMain = (props) => {
                                 key="3"
                                 header={
                                     <>
-                                        <div className={style.alignUser}>
+                                        <div className={styles.alignUser}>
                                             <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>
                                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                                     Key Account Details
@@ -315,7 +313,7 @@ const AddEditFormMain = (props) => {
                                 key="4"
                                 header={
                                     <>
-                                        <div className={style.alignUser}>
+                                        <div className={styles.alignUser}>
                                             <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>
                                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                                     {' '}
@@ -357,24 +355,12 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
 
-                        <Collapse
-                            defaultActiveKey={['5']}
-                            expandIcon={() => {
-                                if (activeKey.includes(5)) {
-                                    return <MinusOutlined className={style.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={style.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(5)}
-                            expandIconPosition="end"
-                        >
+                        <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end">
                             <Panel
                                 key="5"
                                 header={
                                     <>
-                                        <div className={style.alignUser}>
+                                        <div className={styles.alignUser}>
                                             <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>
                                                 <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                                     Upload Customer Form
@@ -385,7 +371,7 @@ const AddEditFormMain = (props) => {
                                 }
                             >
                                 <Divider />
-                                <div className={style.uploadContainer}>
+                                <div className={styles.uploadContainer}>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Form.Item initialValue={formData?.customerConsent} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="customerConsent">
@@ -410,16 +396,14 @@ const AddEditFormMain = (props) => {
                                                 </p>
                                                 <Button danger>Upload File</Button>
                                             </Dragger>
-                                            <a>
-                                                {formData?.customerFormDocId && (
-                                                    <>
-                                                        <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>
-                                                        <Form.Item hidden="true" label="Document" initialValue={formData?.customerFormDocId} name="customerFormDocId">
-                                                            <Input maxLength={50} placeholder={preparePlaceholderText('Document')} />
-                                                        </Form.Item>
-                                                    </>
-                                                )}
-                                            </a>
+                                            {formData?.customerFormDocId && (
+                                                <>
+                                                    <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>
+                                                    <Form.Item hidden="true" label="Document" initialValue={formData?.customerFormDocId} name="customerFormDocId">
+                                                        <Input maxLength={50} placeholder={preparePlaceholderText('Document')} />
+                                                    </Form.Item>
+                                                </>
+                                            )}
                                         </Col>
                                     </Row>
                                 </div>

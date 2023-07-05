@@ -5,7 +5,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Col, Collapse, Row, Button, Space, Spin } from 'antd';
-import styles from 'components/common/Common.module.css';
+import style from './../../common/Common.module.css';
 
 import ApplicationDetails from './ApplicationDetails';
 import ApplicationActions from './actions/ApplicationActions';
@@ -84,7 +84,7 @@ const AddEditFormMain = ({
     return (
         <>
             <Spin spinning={isApplicatinoOnSaveLoading}>
-                <Space direction="vertical" size="small" className={styles.accordianContainer}>
+                <Space direction="vertical" size="small" className={style.accordianContainer}>
                     <ApplicationDetails
                         showGlobalNotification={showGlobalNotification}
                         isFieldDisable={isFieldDisable}
@@ -126,13 +126,13 @@ const AddEditFormMain = ({
                     )}
                 </Space>
             </Spin>
-            <Row gutter={20} className={styles.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+            <Row gutter={20} className={style.formFooter}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnLeft}>
                     <Button danger onClick={onCloseAction}>
                         Cancel
                     </Button>
                 </Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnRight}>
                     <Button disabled={isApplicatinoOnSaveLoading || !canFormSave} loading={isApplicatinoOnSaveLoading} htmlType="submit" danger form="myForm" key="saveBtm" type="primary">
                         Save
                     </Button>

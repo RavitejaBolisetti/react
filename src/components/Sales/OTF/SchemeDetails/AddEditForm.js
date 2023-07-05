@@ -6,9 +6,10 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, DatePicker, Space, Collapse, Card, Typography } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import styles from 'components/common/Common.module.css';
 import { convertCalenderDate } from 'utils/formatDateTime';
+
+import { expandIcon } from 'utils/accordianExpandIcon';
+import styles from 'components/common/Common.module.css';
 
 const { Text } = Typography;
 const { TextArea } = Input;
@@ -39,18 +40,7 @@ const AddEditFormMain = (props) => {
                 <Space style={{ display: 'flex' }} size="middle" direction="vertical" className={styles.accordianContainer}>
                     {schemeData ? (
                         schemeData?.schemes?.map((schemeForm, index) => (
-                            <Collapse
-                                expandIcon={() => {
-                                    if (activeKey.includes(schemeForm?.id)) {
-                                        return <MinusOutlined className={styles.iconsColor} />;
-                                    } else {
-                                        return <PlusOutlined className={styles.iconsColor} />;
-                                    }
-                                }}
-                                activeKey={activeKey}
-                                onChange={() => onChange(schemeForm?.id)}
-                                expandIconPosition="end"
-                            >
+                            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(schemeForm?.id)} expandIconPosition="end">
                                 <Panel
                                     header={
                                         <div className={styles.alignUser}>
