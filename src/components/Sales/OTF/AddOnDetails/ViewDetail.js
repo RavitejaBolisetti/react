@@ -15,8 +15,6 @@ import AMCForm from './AMC/AMCForm';
 import RSAForm from './RSA/RSAForm';
 import FMSForm from './FMS/FMSForm';
 
-import { expandIcon } from 'utils/accordianExpandIcon';
-
 const { Panel } = Collapse;
 const { Text } = Typography;
 
