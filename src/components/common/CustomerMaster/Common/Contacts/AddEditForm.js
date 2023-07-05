@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -123,10 +123,10 @@ const AddEditForm = (props) => {
                             {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? (
                                 <>
                                     <Form.Item label="Relation" name="relationCode">
-                                        <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={[ ...typeData['FAMLY_RELTN']]} allowClear></Select>
+                                        <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={[...typeData['FAMLY_RELTN']]} allowClear></Select>
                                         {/* <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['FAMLY_RELTN']} allowClear></Select> */}
                                     </Form.Item>
-                                    <Form.Item initialValue={''} hidden name="designation" >
+                                    <Form.Item initialValue={''} hidden name="designation">
                                         <Input />
                                     </Form.Item>
                                 </>
@@ -147,7 +147,7 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Title" name="title" rules={[validateRequiredSelectField('title')]} >
+                            <Form.Item label="Title" name="title" rules={[validateRequiredSelectField('title')]}>
                                 <Select {...disabledProps} placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['TITLE']} allowClear></Select>
                             </Form.Item>
                         </Col>
@@ -224,14 +224,16 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Row>
                     {!formActionType?.viewMode && (
-                        <Space>
-                            <Button onClick={onSaveFormData} type="primary">
+                        <Row gutter={20}>
+                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                <Button className={style.marR20} onClick={onSaveFormData} type="primary">
                                     Save
-                            </Button>
-                            <Button onClick={handleCancelFormEdit} danger>
-                                Cancel
-                            </Button>
-                        </Space>
+                                </Button>
+                                <Button className={style.marB20} onClick={handleCancelFormEdit} danger>
+                                    Cancel
+                                </Button>
+                            </Col>
+                        </Row>
                     )}
                 </Space>
             </Form>
