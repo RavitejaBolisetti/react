@@ -17,7 +17,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, formActionType, typeData, salesConsultantLov } = props;
+    const { formData, formActionType, typeData, salesConsultantLov, exchangeValue, loyaltyValue } = props;
 
     // useEffect(() => {
     //     // form.setFieldsValue({ ...formData, initialPromiseDeliveryDate: dayjs(formData?.initialPromiseDeliveryDate, 'YYYY/MM/DD'), custExpectedDeliveryDate: dayjs(formData?.custExpectedDeliveryDate, 'YYYY/MM/DD') });
@@ -50,7 +50,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.bookingAmount} label="Booking Amount" name="bookingAmount" >
+                    <Form.Item initialValue={formData?.bookingAmount} label="Booking Amount" name="bookingAmount">
                         <Input maxLength={10} placeholder={preparePlaceholderText('Booking Amount')} disabled={formActionType?.editMode ? true : false} />
                     </Form.Item>
                 </Col>
@@ -66,12 +66,12 @@ const AddEditFormMain = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.specialRequest} label="Special Request" name="specialRequest" >
+                    <Form.Item initialValue={formData?.specialRequest} label="Special Request" name="specialRequest">
                         <Input maxLength={50} placeholder={preparePlaceholderText('Special Request')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.placeOfRegistration} label="Place Of Registration" name="placeOfRegistration" >
+                    <Form.Item initialValue={formData?.placeOfRegistration} label="Place Of Registration" name="placeOfRegistration">
                         <Input maxLength={50} placeholder={preparePlaceholderText('Place Of Registration')} />
                     </Form.Item>
                 </Col>
@@ -83,43 +83,43 @@ const AddEditFormMain = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.referral} label="Referral" name="referral" >
+                    <Form.Item initialValue={formData?.referral} label="Referral" name="referral">
                         <Select placeholder="Select" showSearch allowClear options={typeData['RFRL']} fieldNames={{ label: 'value', value: 'key' }} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.mitraType} name="mitraType" label="Influencer/Mitra Type" >
+                    <Form.Item initialValue={formData?.mitraType} name="mitraType" label="Influencer/Mitra Type">
                         <Input maxLength={50} placeholder={preparePlaceholderText('Influencer/Mitra Type')} disabled={formActionType?.editMode ? true : false} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.mitraName} name="mitraName" label="Influencer/Mitra Name" >
+                    <Form.Item initialValue={formData?.mitraName} name="mitraName" label="Influencer/Mitra Name">
                         <Input maxLength={50} placeholder={preparePlaceholderText('Influencer/Mitra Name')} disabled={formActionType?.editMode ? true : false} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.modeOfPAyment} label="Mode Of Payment" name="modeOfPAyment" >
+                    <Form.Item initialValue={formData?.modeOfPAyment} label="Mode Of Payment" name="modeOfPAyment">
                         <Input maxLength={50} placeholder={preparePlaceholderText('Mode Of Payment')} disabled={formActionType?.editMode ? true : false} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.financeArrangedBy} name="financeArrangedBy" label="Finance Arranged By" >
+                    <Form.Item initialValue={formData?.financeArrangedBy} name="financeArrangedBy" label="Finance Arranged By">
                         <Select placeholder="Select" showSearch allowClear options={typeData['FNC_ARNGD']} fieldNames={{ label: 'value', value: 'key' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formActionType?.editMode ? (formData?.exchange === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="exchange" label="Exchange" valuePropName="checked">
-                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
+                        <Switch disabled={exchangeValue} checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formActionType?.editMode ? (formData?.loyaltyScheme === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="loyaltyScheme" label="Loyality Scheme" valuePropName="checked">
-                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
+                        <Switch disabled={loyaltyValue} checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                     </Form.Item>
                 </Col>
             </Row>
