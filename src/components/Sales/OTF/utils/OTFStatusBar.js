@@ -15,7 +15,7 @@ export const OTFStatusBar = (props) => {
     const { status } = props;
 
     const otfStatusList = Object.values(OTF_STATUS);
-    const currentStatusId = otfStatusList?.find((i) => i.title === status)?.id;
+    const currentStatusId = otfStatusList?.find((i) => i.key === status)?.id;
 
     let displayItem = '';
     if (status === OTF_STATUS.CANCELLED.title) {

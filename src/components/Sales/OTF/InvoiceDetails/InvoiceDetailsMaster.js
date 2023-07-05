@@ -127,16 +127,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                     <Space size="middle" direction="vertical" className={styles.accordianContainer}>
                         {displaySection?.invoiceInformation && (
                             <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
-                                <Panel
-                                    header={
-                                        <div className={styles.alignUser}>
-                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                Invoice Information
-                                            </Text>
-                                        </div>
-                                    }
-                                    key={1}
-                                >
+                                <Panel header="Invoice Information" key={1}>
                                     <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnInvoice()} tableData={invoiceData?.invoiceDetails} />
                                 </Panel>
                             </Collapse>
@@ -144,16 +135,7 @@ export const InvoiceDetailsMasterBase = (props) => {
 
                         {displaySection?.deliveryInformation && (
                             <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
-                                <Panel
-                                    header={
-                                        <div className={styles.alignUser}>
-                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                Delivery Information
-                                            </Text>
-                                        </div>
-                                    }
-                                    key={2}
-                                >
+                                <Panel header="Delivery Information" key={2}>
                                     <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />
                                 </Panel>
                             </Collapse>

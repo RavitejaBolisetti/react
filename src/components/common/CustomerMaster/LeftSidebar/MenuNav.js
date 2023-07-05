@@ -59,9 +59,9 @@ const MenuNav = (props) => {
     }));
 
     return (
-        <div className={styles.marT20}>
-            <Timeline items={items} />
-        </div>
+        // <div className={styles.marT20}>
+        <Timeline items={items} />
+        // </div>
     );
 };
 

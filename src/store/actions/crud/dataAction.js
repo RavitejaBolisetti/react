@@ -60,7 +60,8 @@ export const dataActions = (params) => {
                     onSuccessAction && onSuccessAction(res);
                     dispatch(recieveData(type ? res?.data?.hierarchyAttribute : res?.data));
                 } else {
-                    onError(LANGUAGE_EN.INTERNAL_SERVER_ERROR);
+                    dispatch(recieveData([]));
+                    // onErrorAction(res?.responseMessage || LANGUAGE_EN.INTERNAL_SERVER_ERROR);
                 }
             };
 
