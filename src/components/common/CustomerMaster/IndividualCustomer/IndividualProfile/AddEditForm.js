@@ -267,7 +267,7 @@ const AddEditFormMain = (props) => {
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Voter ID" name="voterId" initialValue={formData?.voterId} rules={[validateVoterId('voter id')]}>
+                                            <Form.Item label="Voter ID" name="voterid" initialValue={formData?.voterid} rules={[validateVoterId('voter id')]}>
                                                 <Input maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('voter id')} {...disabledProps} />
                                             </Form.Item>
                                         </Col>
