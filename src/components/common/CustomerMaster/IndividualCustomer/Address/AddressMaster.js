@@ -6,25 +6,25 @@
 import React, { useEffect, useState, useReducer } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import { Row, Col, Button, Divider, Form, Collapse, Typography, Space } from 'antd';
+
 import { PlusOutlined } from '@ant-design/icons';
+
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { PARAM_MASTER } from 'constants/paramMaster';
-
-import styles from 'components/common/Common.module.css';
-import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
 import { addressIndividualDataActions } from 'store/actions/data/customerMaster/individual/address/individualAddress';
+
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import AddEditForm from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 import { InputSkeleton } from 'components/common/Skeleton';
 import ViewAddressList from './ViewAddressList';
 
+import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 const { Text } = Typography;
 
@@ -45,8 +45,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         addressIndData,
-        isAddDataLoaded,
-        isAddLoading,
         isAddressLoaded,
         isAddressLoading,
         addData: addData && addData[PARAM_MASTER.ADD_TYPE.id],
@@ -226,7 +224,7 @@ const AddressMasterBase = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>
 
-                        <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
+                        <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian}>
                             <Panel
                                 header={
                                     <>

@@ -24,7 +24,7 @@ const AddEditFormBase = (props) => {
                 ...formData,
                 bookingCustomer: { ...formData?.bookingCustomer, birthDate: convertDateToCalender(formData?.bookingCustomer?.birthDate) },
                 billingCustomer: { ...formData?.billingCustomer, birthDate: convertDateToCalender(formData?.billingCustomer?.birthDate) },
-            });          
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
@@ -77,6 +77,7 @@ const AddEditFormBase = (props) => {
         billCstmForm.setFieldsValue(customerFormData.billingCustomer);
     };
 
+    console.log('activeKey', activeKey);
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -103,16 +104,7 @@ const AddEditFormBase = (props) => {
                         onChange={() => onChange(1)}
                         expandIconPosition="end"
                     >
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        Booking Customer
-                                    </Text>
-                                </div>
-                            }
-                            key="1"
-                        >
+                        <Panel header="Booking Customer" key="1">
                             <AddressCommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} />
                         </Panel>
                     </Collapse>
@@ -138,16 +130,7 @@ const AddEditFormBase = (props) => {
                         onChange={() => onChange(2)}
                         expandIconPosition="end"
                     >
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        Billing Customer
-                                    </Text>
-                                </div>
-                            }
-                            key="2"
-                        >
+                        <Panel header="Billing Customer" key="2">
                             <Row>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                     <Checkbox valuePropName="checked" style={{ margin: '5px 0px 15px 0px' }} onClick={handleOnChange} name="sameAsBookingCustomer">

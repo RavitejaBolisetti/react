@@ -651,29 +651,9 @@
     padding: 18px 12px;
 }
 
-/* applicatiom master css */
-/* .accordianContainer {
-    padding: 6px;
-} */
-
-/* .accordianHeader {
-    font-weight: 600;
-    font-size: 16px;
-    color: #ff3e5b;
-} */
 .accordianContainer {
     display: flex;
     flex-direction: column;
-}
-
-.accordianContainer .headerBox {
-    border-top: 1px solid #e6e6e6;
-    padding-top: 20px;
-    margin-top: 20px;
-}
-
-.accordianContainer :global .ant-space-item .ant-divider-horizontal {
-    margin-top: 20px !important;
 }
 
 .accordianContainer :global .ant-collapse-header-text {
@@ -2090,6 +2070,9 @@
     background: #f2f2f2;
     border-radius: 8px;
     align-items: center;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
     /* border: 1px solid #f2f2f2; */
 }
 

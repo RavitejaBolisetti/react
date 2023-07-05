@@ -13,7 +13,7 @@ import DocumentTypes from './documentTypes/DocumentTypes';
 import { AccessibleDealerLocations } from './dealerLocations/AccessibleDealerLocations';
 import { withDrawer } from 'components/withDrawer';
 
-import { accordianExpandIcon } from './../../../utils/accordianExpandIcon';
+import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 
 const { Panel } = Collapse;
 
@@ -105,21 +105,21 @@ const AddEditFormMain = ({
                         setCanFormSave={setCanFormSave}
                     />
 
-                    <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
-                        <Panel header={'Application Actions'} key="1">
+                    <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
+                        <Panel header="Application Actions" key="1">
                             <ApplicationActions actions={actions} setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setCanFormSave={setCanFormSave} />
                         </Panel>
                     </Collapse>
                     {isDocumentToGenerate && (
-                        <Collapse onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
-                            <Panel header={'Document Type'} key="2">
+                        <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
+                            <Panel header="Document Type" key="2">
                                 <DocumentTypes setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setCanFormSave={setCanFormSave} />
                             </Panel>
                         </Collapse>
                     )}
                     {isRestrictedLocation && (
-                        <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
-                            <Panel header={'Accessible Dealer Location'} key="3">
+                        <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
+                            <Panel header="Accessible Dealer Location" key="3">
                                 <AccessibleDealerLocations setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setCanFormSave={setCanFormSave} />
                             </Panel>
                         </Collapse>

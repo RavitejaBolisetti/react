@@ -6,22 +6,18 @@
 import { useState } from 'react';
 import { Button, Form, Row, Col, Space, Select, Input, Divider, Checkbox } from 'antd';
 import { BiLockAlt } from 'react-icons/bi';
-import { CheckOutlined } from '@ant-design/icons';
 
 import { validateLettersWithWhitespaces, validateEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import UploadUtils from './../UploadUtils';
 
-// import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import style from '../../../Common.module.css';
 
-const { Option } = Select;
-
 const AddEditForm = (props) => {
-    const { contactData,showGlobalNotification, formData, isReadOnly = false, onFinish, onSaveFormData, form, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
+    const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
@@ -45,9 +41,6 @@ const AddEditForm = (props) => {
         } else {
             setmobileLoader(false);
         }
-    };
-    const showModal = () => {
-        setIsModalOpen(true);
     };
 
     const onCloseActionOnContinue = () => {

@@ -11,7 +11,14 @@ import { getCodeValue } from 'utils/getCodeValue';
 
 const { Text } = Typography;
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, typeData, corporateLovData, corporateType } = props;
+    const { styles, formData, isLoading, typeData, corporateLovData } = props;
+    const findListedNonListed = () => {
+        if (checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading) === 'Non-Listed') {
+            return formData?.corporateName;
+        } else {
+            return checkAndSetDefaultValue(getCodeValue(corporateLovData, formData?.corporateName), isLoading);
+        }
+    };
     const viewProps = {
         bordered: false,
         colon: false,
@@ -22,15 +29,7 @@ const ViewDetailMain = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Card
-                    header={
-                        <div className={styles.alignUser}>
-                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                Customer Information
-                            </Text>
-                        </div>
-                    }
-                >
+                <Card header="Customer Information">
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CUST_TYPE, formData?.customerType), isLoading)}</Descriptions.Item>
@@ -40,21 +39,16 @@ const ViewDetailMain = (props) => {
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                 <Text>Customer Name</Text>
                             </Col>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
+                            {/* <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
                                 <Button type="link" icon={<BiTimeFive />}>
                                     View History
                                 </Button>
-                            </Col>
+                            </Col> */}
                             <Divider />
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.customerName}>
                                 <Text>
                                     {getCodeValue(typeData?.TITLE, formData?.titleCode)}
-                                    <span>&nbsp;</span>
-                                    {formData?.firstName}
-                                    <span>&nbsp;</span>
-                                    {formData?.middleName}
-                                    <span>&nbsp;</span>
-                                    {formData?.lastName}
+                                    {(formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
                                 </Text>
                             </Col>
                         </Row>
@@ -72,7 +66,7 @@ const ViewDetailMain = (props) => {
                     </Descriptions>
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Corporate Name">{checkAndSetDefaultValue(getCodeValue(corporateLovData, formData?.corporateName), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Name">{findListedNonListed()}</Descriptions.Item>
                         <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_CATE, formData?.corporateCategory), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(getCodeValue(typeData?.MEM_TYPE, formData?.membershipType), isLoading)}</Descriptions.Item>
                     </Descriptions>
