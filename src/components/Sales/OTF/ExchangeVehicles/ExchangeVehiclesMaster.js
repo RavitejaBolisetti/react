@@ -220,7 +220,7 @@ const ExchangeVehiclesBase = (props) => {
 
     const onSearch = (value) => {
         if (!value) {
-            return;
+            return false;
         }
         const defaultExtraParam = [
             {
