@@ -39,7 +39,7 @@ const ViewDetailMain = (props) => {
                         <Row>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                 <Text>
-                                    {getCodeValue(typeData?.TITLE, formData?.titleCode)}
+                                    {getCodeValue(typeData?.TITLE, formData?.titleCode)}&nbsp;
                                     {(formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
                                 </Text>
                             </Col>
