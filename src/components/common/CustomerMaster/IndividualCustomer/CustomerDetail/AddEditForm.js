@@ -110,6 +110,7 @@ const AddEditFormMain = (props) => {
         } else if (value === 'LIS') {
             form.setFieldsValue({
                 corporateCode: null,
+                corporateName: null
             });
         }
     };

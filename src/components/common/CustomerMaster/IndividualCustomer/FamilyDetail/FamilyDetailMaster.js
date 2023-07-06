@@ -95,7 +95,6 @@ const FamilyDetailMasterBase = (props) => {
     }, [userId, selectedCustomerId]);
 
     const onChange = (value) => {
-        console.log(value, 'CHANGE');
         setCustomerType(value);
     };
 
