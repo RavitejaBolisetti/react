@@ -66,7 +66,7 @@ export const tblStatusColumn = ({ styles, width = '15%', fixed = '' }) => {
     };
 };
 
-export const tblActionColumn = ({ styles, handleButtonClick, width = '8%', fixed = '', EditIcon = true, EyeIcon = true }) => {
+export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixed = '', EditIcon = true, EyeIcon = true }) => {
     return {
         title: 'Action',
         dataIndex: '',
