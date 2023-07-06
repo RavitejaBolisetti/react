@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Typography, Descriptions, Card, Popover, Col, Row, Space, Button } from 'antd';
+import { Typography, Descriptions, Divider, Card, Popover, Col, Row, Space, Button } from 'antd';
 import { BiTimeFive } from 'react-icons/bi';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
@@ -35,6 +35,7 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CUST_TYPE, formData?.customerType), isLoading)}</Descriptions.Item>
                     </Descriptions>
+                    <Divider />
                     <div className={styles.cardInsideBox}>
                         <Row>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>

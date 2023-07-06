@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Space, Collapse, Typography, Descriptions, Card } from 'antd';
+import { Space, Collapse, Typography, Descriptions, Card, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { FiDownload } from 'react-icons/fi';
 import { getCodeValue } from 'utils/getCodeValue';
@@ -115,6 +115,7 @@ const ViewDetailMain = (props) => {
                 </Collapse>
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end">
                     <Panel header="Upload Customer Form" key="4">
+                        <Divider />
                         <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClickCustomerForm}></Card>
                     </Panel>
                 </Collapse>
@@ -124,4 +125,3 @@ const ViewDetailMain = (props) => {
 };
 
 export const ViewDetail = ViewDetailMain;
-

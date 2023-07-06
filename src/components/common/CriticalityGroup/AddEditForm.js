@@ -98,12 +98,12 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item name="criticalityGroupCode" label="Criticality Group Id" initialValue={formData?.criticalityGroupCode} rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
-                                    <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={formActionType?.editMode ? true : false} />
+                                    <Input className={style.marT5} maxLength={6} placeholder={preparePlaceholderText('id')} disabled={formActionType?.editMode ? true : false} />
                                 </Form.Item>
                             </Col>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item name="criticalityGroupName" label="Criticality Group Name" initialValue={formData?.criticalityGroupName} rules={[validateRequiredInputField('name'), validateAlphanumericWithSpace('name')]}>
-                                    <Input placeholder={preparePlaceholderText('name')} maxLength={50} />
+                                    <Input className={style.marT5} placeholder={preparePlaceholderText('name')} maxLength={50} />
                                 </Form.Item>
                             </Col>
                         </Row>
