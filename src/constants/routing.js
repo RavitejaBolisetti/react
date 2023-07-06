@@ -16,7 +16,7 @@ export const ROUTING_DASHBOARD = '/dashboard';
 export const ROUTING_COMMON = '/common/';
 export const ROUTING_MILE = '/mile/';
 export const ROUTING_SALES = '/sales/';
-export const ROUTING_FINANCIAL_ACCOUNTING = '/FinancialAccounting/';
+export const ROUTING_FINANCIAL_ACCOUNTING = '/financial-accounting/';
 export const ROUTING_TERM_CONDITION = ROUTING_COMMON.concat('term-condition');
 
 export const ROUTING_COMMON_GEO = ROUTING_COMMON.concat('geo/');
