@@ -33,6 +33,7 @@ export default function ListDataTable({
                         imageStyle={{
                             height: '20%',
                         }}
+                        
                         description={!tableData?.length ? <span>{noDataMessage}</span> : <span> No records found.</span>}
                     >
                         {!tableData?.length
@@ -45,7 +46,7 @@ export default function ListDataTable({
                     </Empty>
                 )}
             >
-                <div className={styles.tableProduct}>
+                <div className={`${styles.tableProduct} ${styles.datasearh}`}  >
                     <DataTable isLoading={isLoading} tableData={tableData} srl={srl} tableColumn={tableColumn} showAddButton={showAddButton} scroll={scroll} />
                 </div>
             </ConfigProvider>

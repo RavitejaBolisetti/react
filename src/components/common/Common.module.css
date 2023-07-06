@@ -232,9 +232,17 @@
     border-color: transparent;
 }
 
+/* .datasearh :global .ant-table-wrapper .ant-table-expanded-row-fixed{
+    width:100%;
+} */
+
 .tableProduct {
     margin-bottom: 20px;
     padding: 0;
+}
+
+.datasearh :global .ant-table-wrapper .ant-table-expanded-row-fixed {
+    width: 100% !important;
 }
 
 .tableProduct .success {
@@ -298,8 +306,8 @@
 }
 
 /* .tableProduct :global .ant-table-thead tr th {
-     text-align: center;
- } */
+    text-align: center;
+} */
 
 .tableProduct :global .ant-pagination .ant-pagination-item {
     height: 34px !important;
@@ -1837,13 +1845,9 @@
      padding-bottom: 20px;
  } */
 
-/* .drawerBodyRight :global .ant-collapse>.ant-collapse-item,
+.drawerBodyRight :global .ant-collapse>.ant-collapse-item,
 .viewDrawerContainer :global .ant-collapse>.ant-collapse-item {
     border-bottom: 1px solid #d9d9d9 !important;
-} */
-
-.viewDrawerContainer :global .ant-space-vertical .ant-collapse>.ant-collapse-item {
-    border-bottom: none !important;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-label>label,
@@ -2638,7 +2642,7 @@
 }
 
 .viewDocumentStrip {
-    /* margin-bottom: 20px !important; */
+    margin-bottom: 20px !important;
     background: #e6e6e6;
     border-radius: 6px;
     border: 1px solid #b5b5b6 !important;
@@ -2849,10 +2853,6 @@
 .datePicker .fullWidth {
     width: 100%;
 }
-
-/* .innerCollapse {
-    border: 1px solid red !important;
-} */
 
 .viewDrawerContainer .innerCollapseBorder {
     border: 1px solid #b5b5b6 !important;
