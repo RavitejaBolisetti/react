@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
 import TreeSelectField from 'components/common/TreeSelectField';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -17,12 +17,13 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, unFilteredAttributeData, setSelectedTreeSelectKey, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, manufacturerOrgHierarchyData } = props;
+    const { onCloseAction, unFilteredAttributeData, setSelectedTreeSelectKey, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, manufacturerOrgHierarchyData, attributeType, setAttributeType } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed } = props;
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
     const [form] = Form.useForm();
+    const [calType, setCalType] = useState(true);
 
     let attributeHierarchyFieldValidation = {
         rules: [validateRequiredSelectField('attribute level')],
@@ -75,16 +76,43 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setFormBtnActive(true);
     };
+
+    const handleAttributeChange = (props) => {
+        setAttributeType(props);
+    };
+
+    const calTypeFun = (val) => {
+        setCalType(val);
+    };
+
+    const taxChargeDropDown = [
+        {
+            id: 1,
+            key: 'Tax_Type',
+            value: 'Tax Type',
+        },
+        {
+            id: 2,
+            key: 'Tax_Calculation',
+            value: 'Tax Calculation',
+        },
+        {
+            id: 3,
+            key: 'Tax_Document',
+            value: 'Tax Document',
+        },
+    ];
+
     return (
         <>
             <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
+                        <Form.Item initialValue={null} name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
                             <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} disabled={formData?.id || isReadOnly} showSearch allowClear>
-                                {attributeData?.map((item) => (
-                                    <Option key={item?.id} value={item?.id}>
-                                        {item?.hierarchyAttribueName}
+                                {taxChargeDropDown?.map((item) => (
+                                    <Option key={item?.id} value={item?.key}>
+                                        {item?.value}
                                     </Option>
                                 ))}
                             </Select>
@@ -100,24 +128,44 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={formData?.manufactureOrgCode} label="Hierarchy Code" name="manufactureOrgCode" rules={[validateRequiredInputField('Code')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Attribute Code')} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                        <Form.Item initialValue={null} label="Tax/Charge Type Code" name="Tax/Charge_Type_Code" rules={[validateRequiredInputField('Tax/Charge Type Code')]}>
+                            <Input maxLength={6} placeholder={preparePlaceholderText('Tax/Charge Type Code')} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="manufactureOrgShrtName" label="Short Description" initialValue={formData?.manufactureOrgShrtName} rules={[validateRequiredInputField('Short Description')]}>
-                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('Short Description')} disabled={formData?.id || isReadOnly} />
+                        <Form.Item initialValue={null} label="Tax/Charge Type Descrption" name="Tax/Charge_Type_Descrption" rules={[validateRequiredInputField('Tax/Charge Type Descrption')]}>
+                            <TextArea className={styles.inputBox} placeholder={preparePlaceholderText('Tax/Charge Type Descrption')} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
                 </Row>
 
+                {attributeType === 'Tax_Calculation' ? (
+                    <Row gutter={20}>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                            <Form.Item initialValue={null} label="Calculation Type" name="Calculation_Type" rules={[validateRequiredInputField('Calculation_Type')]}>
+                                <Switch onChange={calTypeFun} checkedChildren="Percentage" unCheckedChildren="Rate" defaultChecked={true} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        {calType ? (
+                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                <Form.Item initialValue={null} label="Percentage" name="Percentage" rules={[validateRequiredInputField('Percentage')]}>
+                                    <Input placeholder={preparePlaceholderText('Percentage')} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                                </Form.Item>
+                            </Col>
+                        ) : (
+                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                <Form.Item initialValue={null} label="Rate" name="Rate" rules={[validateRequiredInputField('Rate')]}>
+                                    <Input placeholder={preparePlaceholderText('Rate')} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                                </Form.Item>
+                            </Col>
+                        )}
+                    </Row>
+                ) : attributeType === 'Tax_Document' ? (
+                    <></>
+                ) : null}
+
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="manufactureOrgLongName" label="Long Description" placeholder={preparePlaceholderSelect('Long Description')} initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('Long Description')]}>
-                            <TextArea rows={1} placeholder={preparePlaceholderText('Long Description')} maxLength={300} disabled={formData?.id || isReadOnly} />
-                        </Form.Item>
-                    </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                         <Form.Item initialValue={formData?.active === null || false ? false : true} label="Status" name="active">
                             <Switch value={formData?.active === null || false ? false : true} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />

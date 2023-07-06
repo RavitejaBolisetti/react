@@ -9,7 +9,7 @@ import { PageHeader } from 'pages/common/PageHeader';
 import { TaxCharges } from 'components/FinancialAccounting'
 
 const TaxChargesBase = (props) => {
-    const pageTitle = 'Tax & Charge';
+    const pageTitle = 'Tax & Charges';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

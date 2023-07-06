@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -9,7 +9,6 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Input, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-import { FaHistory } from 'react-icons/fa';
 import { HierarchyFormButton } from 'components/common/Button';
 
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
@@ -37,8 +36,8 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
-    const moduleTitle = 'Manufacturer Organisation Detail';
-    const viewTitle = 'Hierarchy Details';
+    const moduleTitle = 'Tax & Charges Detail';
+    const viewTitle = 'Tax & Charges Details';
 
     let returnValue = {
         collapsed,
@@ -86,6 +85,7 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchChang
 
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
+    const [attributeType, setAttributeType] = useState('Tax_Type');
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -269,6 +269,8 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchChang
         setSelectedTreeSelectKey,
         isFormBtnActive,
         setFormBtnActive,
+        attributeType,
+        setAttributeType,
     };
 
     const viewProps = {
@@ -286,7 +288,7 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchChang
 
     const leftCol = manufacturerOrgHierarchyData?.length > 0 ? 16 : 24;
     const rightCol = manufacturerOrgHierarchyData?.length > 0 ? 8 : 24;
-    const title = 'Hierarchy';
+    const title = 'Tax & Charges';
     return (
         <>
             <Row gutter={20} span={24}>
@@ -295,11 +297,7 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchChang
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                                 <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                    <Form.Item
-                                        label={`${title}`}
-                                        name="code"
-                                        validateTrigger={['onSearch']}
-                                    >
+                                    <Form.Item label={`${title}`} name="code" validateTrigger={['onSearch']}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                                 <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
@@ -308,14 +306,6 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchChang
                                     </Form.Item>
                                 </Form>
                             </Col>
-                            {manufacturerOrgHierarchyData?.length > 0 && (
-                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
-                                    <Button type="primary" onClick={changeHistoryModelOpen}>
-                                        <FaHistory className={styles.buttonIcon} />
-                                        Change History
-                                    </Button>
-                                </Col>
-                            )}
                         </Row>
                     </div>
                     <div className={styles.content}>
@@ -360,8 +350,8 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchChang
                                 }}
                                 description={
                                     <span>
-                                        Please select product from left <br />
-                                        side hierarchy to view “Hierarchy Details”
+                                        Please select Tax and Charges from left <br />
+                                        side hierarchy to view “Details”
                                     </span>
                                 }
                             ></Empty>
