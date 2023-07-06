@@ -28,9 +28,8 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
         accessoryForm
             .validateFields()
             .then((values) => {
-                console.log('I am heree', values);
-
-                if (isPresent(values?.partNumber)) {
+                if (!values?.partNumber) {
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide part number' });
                     return;
                 }
 
@@ -40,7 +39,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                     return;
                 }
 
-                setAddOnItemInfo((prev) => [myvalues, ...prev]);
+                setAddOnItemInfo((prev) => (prev ? [myvalues, ...prev] : [myvalues]));
                 accessoryForm.resetFields();
                 setsearchData();
                 setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
@@ -88,7 +87,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity'), validationNumber('credit limit days')]}>
+                        <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity'), validationNumber('required quantity')]}>
                             <Input placeholder={preparePlaceholderText('required quantity')} />
                         </Form.Item>
                     </Col>

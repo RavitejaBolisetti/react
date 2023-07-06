@@ -109,8 +109,8 @@ export const InvoiceDetailsMasterBase = (props) => {
     const onFinishFailed = () => {};
 
     const displaySection = {
-        invoiceInformation: orderStatus === OTF_STATUS?.INVOICED.title || orderStatus === OTF_STATUS?.DELIVERED.title,
-        deliveryInformation: orderStatus === OTF_STATUS?.DELIVERED.title,
+        invoiceInformation: orderStatus === OTF_STATUS?.INVOICED.key || orderStatus === OTF_STATUS?.DELIVERED.key,
+        deliveryInformation: orderStatus === OTF_STATUS?.DELIVERED.key,
     };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>

@@ -25,7 +25,6 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
                 OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
                 salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
@@ -37,7 +36,6 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        typeData,
         isDataLoaded,
 
         otfData,

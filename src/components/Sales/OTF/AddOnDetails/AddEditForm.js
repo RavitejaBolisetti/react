@@ -23,7 +23,7 @@ const { Text } = Typography;
 const AddEditFormMain = (props) => {
     const { formData, accessoryForm, shieldForm, rsaForm, amcForm, fmsForm, addOnItemInfo, setAddOnItemInfo, formActionType, selectedOrderId, formDataSetter, setformDataSetter, handleFormValueChange, showGlobalNotification, onSearchPart, AddonPartsData, setsearchData, searchData } = props;
 
-    const [openAccordian, setOpenAccordian] = useState(['ci']);
+    const [openAccordian, setOpenAccordian] = useState(formData?.partDetailsResponses?.length ? ['ci'] : []);
 
     const [addButtonDisabled, setaddButtonDisabled] = useState({
         shield: false,

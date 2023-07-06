@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -18,7 +18,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Group Name',
             dataIndex: 'name',
-            width: '12%',
+            width: '10%',
         }),
         tblPrepareColumns({
             title: 'Title',
@@ -38,12 +38,12 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Email ID',
             dataIndex: 'emailId',
-            width: '12%',
+            width: '11%',
         }),
 
         tblStatusColumn({ styles, width: '6%' }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '5%', fixed: 'right' })
+        tblActionColumn({ handleButtonClick, styles, width: '8%', fixed: 'right' })
     );
 
     return tableColumn;
