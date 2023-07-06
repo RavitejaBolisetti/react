@@ -406,7 +406,7 @@ const CustomerMasterMain = (props) => {
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.datasearh}>
                     <ConfigProvider
                         renderEmpty={() => (
                             <Empty
@@ -418,7 +418,7 @@ const CustomerMasterMain = (props) => {
                             ></Empty>
                         )}
                     >
-                        <DataTable isLoading={showDataLoading} {...tableProps} />
+                        <DataTable isLoading={showDataLoading}  {...tableProps} />
                     </ConfigProvider>
                 </Col>
             </Row>
