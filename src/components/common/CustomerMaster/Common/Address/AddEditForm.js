@@ -154,7 +154,7 @@ const AddEditForm = (props) => {
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Address Line 1" name="addressLine1" rules={[validateRequiredInputField('address Line 1'), validateAlphanumericWithSpace('application name')]}>
+                        <Form.Item label="Address Line 1" name="addressLine1" rules={[validateRequiredInputField('address Line 1')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('address Line 1')} />
                         </Form.Item>
                     </Col>
