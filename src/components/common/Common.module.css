@@ -10,7 +10,9 @@
     align-items: center;
     justify-content: center;
 }
-
+.marT5 {
+    margin-top: 5px;
+}
 .marT20 {
     margin-top: 20px;
 }
@@ -1424,10 +1426,10 @@
 
 .timingCardItem {
     margin: 10px 0px;
-    background-color: #e6e6e6;
-    border: 1px solid #b5b5b6;
-    border-radius: 10px;
-    padding: 4px 12px;
+    background-color: #F2F2F2;
+    border: 1px solid #E6E6E6;
+    border-radius: 4px;
+    padding: 12px 16px;
 }
 
 .timingCardItem .timeSlot {
