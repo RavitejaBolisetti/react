@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useReducer, useEffect } from 'react';
-import { Row, Col, Form, Space, Typography, Button, Empty, Card } from 'antd';
+import { Row, Col, Form, Space, Typography, Button, Empty, Card, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { bindActionCreators } from 'redux';
@@ -110,9 +110,9 @@ const ContactMain = (props) => {
     useEffect(() => {
         if (userId && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
             } else if (customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
-                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
             }
         }
 
@@ -137,7 +137,6 @@ const ContactMain = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-
 
     const onSaveFormData = () => {
         contactform
@@ -303,6 +302,7 @@ const ContactMain = (props) => {
                                             </Button>
                                         )}
                                     </Row>
+                                    <Divider className={styles.marT20} />
                                     <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
                                         <div className={styles.headerBox}>
                                             {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
