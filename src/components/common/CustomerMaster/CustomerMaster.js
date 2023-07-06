@@ -346,6 +346,8 @@ const CustomerMasterMain = (props) => {
         optionType: typeData,
     };
 
+    const showAddButton = true;
+
     return (
         <>
             <Row gutter={20}>
@@ -365,9 +367,9 @@ const CustomerMasterMain = (props) => {
                                 <SearchBox {...searchBoxProps} />
                             </Col>
                             <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
-                                <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                {/* <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                     Add
-                                </Button>
+                                </Button> */}
                             </Col>
                         </Row>
                         {filterString && extraParams.find((i) => i.name) && (
@@ -415,7 +417,15 @@ const CustomerMasterMain = (props) => {
                                     height: 60,
                                 }}
                                 description={<span> No record found.</span>}
-                            ></Empty>
+                            >
+                                {showAddButton
+                                    ? !data?.length && (
+                                          <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                              {`Add`}
+                                          </Button>
+                                      )
+                                    : ''}
+                            </Empty>
                         )}
                     >
                         <DataTable isLoading={showDataLoading} {...tableProps} />
