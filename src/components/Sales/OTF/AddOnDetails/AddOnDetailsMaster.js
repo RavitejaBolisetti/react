@@ -75,7 +75,7 @@ export const AddOnDetailsMasterMain = (props) => {
     });
     const [searchData, setsearchData] = useState({});
     const [addOnItemInfo, setAddOnItemInfo] = useState([]);
-    const [openAccordian, setopenAccordian] = useState(['ci']);
+    const [openAccordian, setopenAccordian] = useState();
     const [accessoryForm] = Form.useForm();
     const [shieldForm] = Form.useForm();
     const [rsaForm] = Form.useForm();
@@ -130,12 +130,15 @@ export const AddOnDetailsMasterMain = (props) => {
         if (isDataLoaded && AddonDetailsData) {
             accessoryForm.resetFields();
             setformData(AddonDetailsData);
+            AddonDetailsData?.partDetailsResponses?.length ? setopenAccordian(['ci']) : setopenAccordian([]);
             setformDataSetter(AddonDetailsData);
             setAddOnItemInfo(
                 AddonDetailsData['partDetailsResponses']?.map((element, index) => {
                     return { ...element, isDeleting: false };
                 })
             );
+        } else {
+            setopenAccordian([]);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -20,7 +20,7 @@ const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
     const { openAccordian, shieldForm, formActionType, rsaForm, amcForm, fmsForm, handleCollapse, styles, formData } = props;
-    const [myActiveKey, setmyActiveKey] = useState([0]);
+    const [myActiveKey, setmyActiveKey] = useState([]);
     const handleCollapses = (values) => {
         myActiveKey?.includes(values) ? setmyActiveKey('') : setmyActiveKey([values]);
     };
