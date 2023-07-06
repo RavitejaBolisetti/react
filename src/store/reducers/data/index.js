@@ -30,6 +30,7 @@ import { OTF } from './otf';
 import { Vehicle } from './vehicle';
 import { CustomerMaster } from './customerMaster';
 import { SupportingDocument } from './supportingDocument';
+import { FinancialAccounting } from './financialAccounting'
 
 export const data = combineReducers({
     Menu,
@@ -57,5 +58,6 @@ export const data = combineReducers({
     OTF,
     CustomerMaster,
     SupportingDocument,
-    Vehicle
+    Vehicle,
+    FinancialAccounting
 });
