@@ -28,7 +28,6 @@ describe('AddEdit Fields', () => {
 
     it('should render the toggle switch', () => {
         customRender(<AddEditForm fetchList={fetchList} saveData={saveData} />);
-        // expect(screen.getByTestId('view-toggle')).toBeInTheDocument();
         const field3 = screen.findByTestId('view-toggle');
         expect(field3).toBeTruthy();
     });
