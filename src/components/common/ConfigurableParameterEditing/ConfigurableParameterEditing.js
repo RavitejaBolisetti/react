@@ -196,7 +196,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
 
         tblPrepareColumns({
             title: 'Configurable Parameter Values',
-            width: '20%',
+            width: '18%',
             render: (text, record, value) => renderConfigurableParemetarValue(record),
             sorter: false,
         }),
@@ -210,7 +210,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         {
             title: 'Action',
             dataIndex: '',
-            width: '8%',
+            width: '10%',
             render: (record) => [
                 <Space wrap>
                     {
