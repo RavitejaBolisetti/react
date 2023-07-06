@@ -569,10 +569,16 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const handleClearInSearch = (e) => {
-        if (e.target.value.length > 5) {
+        if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
         }
+        else if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
     };
+
 
     const removeFilter = (key) => {
         if (key === 'countryCode') {

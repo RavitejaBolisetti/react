@@ -26,6 +26,7 @@ const ViewDetailMain = (props) => {
                     <Divider />
                     <Descriptions.Item label="Company Name">{checkAndSetDefaultValue(formData?.companyName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Parent Company Code">{checkAndSetDefaultValue(formData?.parentCompanyCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Parent Company Name">{checkAndSetDefaultValue(formData?.parentCompanyName, isLoading)}</Descriptions.Item>
                     <Divider />
                     <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Corporate Name">{checkAndSetDefaultValue(getCodeValue(corporateLovData, formData?.corporateName), isLoading)}</Descriptions.Item>
