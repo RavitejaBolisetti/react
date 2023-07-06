@@ -110,9 +110,9 @@ const ContactMain = (props) => {
     useEffect(() => {
         if (userId && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
             } else if (customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
-                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
             }
         }
 
@@ -137,7 +137,6 @@ const ContactMain = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-
 
     const onSaveFormData = () => {
         contactform

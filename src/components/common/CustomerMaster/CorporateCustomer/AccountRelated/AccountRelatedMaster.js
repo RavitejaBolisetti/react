@@ -91,7 +91,7 @@ export const AccountRelatedMasterBase = (props) => {
 
     useEffect(() => {
         if (!formActionType?.addMode && userId && selectedCustomerId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
