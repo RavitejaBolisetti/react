@@ -172,7 +172,6 @@ const ReferralsMasterBase = (props) => {
             extraParams: defaultExtraParam,
             userId,
             onSuccessAction: (res) => {
-                console.log('🚀 ~ file: ReferralsMaster.js:178 ~ onSearch ~ res:', res?.data?.customerMasterDetails[0]);
                 setFormData(res?.data?.customerMasterDetails[0]);
             },
             onErrorAction,

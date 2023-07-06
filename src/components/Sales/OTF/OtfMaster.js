@@ -22,6 +22,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
 
+import { validateOTFMenu } from './utils/validateOTFMenu';
+
 import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
@@ -241,7 +243,7 @@ export const OtfMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
-                const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+                const nextSection = Object.values(sectionName)?.find((i) => validateOTFMenu({ item: i, status: selectedOrder?.orderStatus, otfData }) && i.id > currentSection);
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
