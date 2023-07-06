@@ -6,6 +6,7 @@
 import React from 'react';
 import { Collapse, Space, Avatar, Typography } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -23,8 +24,9 @@ const expandIcon = ({ isActive }) =>
     );
 
 const ProfileDetailCard = (props) => {
-    const { selectedCustomer } = props;
-    const fullName = selectedCustomer?.customerName?.split(' ');
+    const { profileCardLoading, selectedCustomer } = props;
+
+    const fullName = selectedCustomer?.customerName?.split(' ') || '';
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} accordion={true} expandIcon={expandIcon} collapsible="icon">
@@ -32,10 +34,10 @@ const ProfileDetailCard = (props) => {
                 header={
                     <>
                         <Space>
-                            <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
+                            <Avatar size={50}>{checkAndSetDefaultValue(userAvatar?.toUpperCase(), profileCardLoading)}</Avatar>
                             <div>
-                                <Title level={5}>{selectedCustomer?.customerName}</Title>
-                                <Text>{selectedCustomer?.customerId}</Text>
+                                <Title level={5}>{checkAndSetDefaultValue(selectedCustomer?.customerName, profileCardLoading)}</Title>
+                                <Text>{checkAndSetDefaultValue(selectedCustomer?.customerId, profileCardLoading)}</Text>
                             </div>
                         </Space>
                     </>

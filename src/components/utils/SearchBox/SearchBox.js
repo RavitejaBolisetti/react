@@ -54,7 +54,7 @@ const SearchBox = (props) => {
                 <Form.Item name="searchType" rules={[validateRequiredSelectField('parameter')]}>
                     <Select placeholder="Select Parameter" {...selectProps}>
                         {optionType?.map((item) => (
-                            <Option value={item.key} selected>
+                            <Option key={'st' + item.key} value={item.key} selected>
                                 {item.value}
                             </Option>
                         ))}
