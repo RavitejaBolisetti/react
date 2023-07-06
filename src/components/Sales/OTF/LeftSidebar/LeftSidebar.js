@@ -10,7 +10,6 @@ const LeftSidebar = (props) => {
     return (
         <>
             <OTFDetailCard {...props} />
-
             <MenuNav {...props} />
         </>
     );

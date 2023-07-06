@@ -21,7 +21,6 @@ import { OTF_SECTION } from 'constants/OTFSection';
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
-import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { FilterIcon } from 'Icons';
 
@@ -37,10 +36,9 @@ const mapStateToProps = (state) => {
         },
     } = state;
     const moduleTitle = 'Order Tracking Form';
-
     let returnValue = {
         userId,
-        typeData: typeData[PARAM_MASTER.OTF_SER.id],
+        typeData,
         isDataLoaded,
         data: data?.otfDetails,
         otfStatusList: Object.values(OTF_STATUS),

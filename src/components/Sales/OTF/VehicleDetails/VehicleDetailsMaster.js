@@ -26,7 +26,6 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
                 VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: VehicleDetailsData = [] },
                 VehicleDetailsLov: { isFilteredListLoaded: isVehicleLovDataLoaded = false, isLoading: isVehicleLovDataLoading, filteredListData: VehicleLovData },
@@ -49,7 +48,6 @@ const mapStateToProps = (state) => {
         isVehicleLovDataLoaded,
         VehicleLovData,
         isVehicleLovDataLoading,
-        typeData,
     };
     return returnValue;
 };
