@@ -1770,12 +1770,12 @@
 .drawerBodyRight :global .ant-steps {
     display: inline;
     line-height: 0px;
-    text-align: flex-end;
+    text-align: right;
 }
 
 .drawerBodyRight :global .ant-steps.ant-steps-label-vertical {
     display: inherit;
-    padding-right: 6px;
+    padding-right: 15px;
 }
 
 .drawerBodyRight :global .ant-steps.ant-steps-label-vertical .ant-steps-item-tail {
@@ -1804,6 +1804,9 @@
     margin-right: 3px;
 }
 
+.drawerBodyRight :global .ant-steps.ant-steps-label-vertical.ant-steps-small:not(.ant-steps-dot) .ant-steps-item-icon {
+    margin-inline-start: 55px;
+}
 .drawerBodyRight :global .ant-steps.ant-steps-label-vertical .ant-steps-item-content {
     margin-top: 0px;
     margin-bottom: 20px;
