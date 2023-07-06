@@ -97,6 +97,7 @@ const AddEditFormMain = (props) => {
 
     const secondToggleFun = () => {
         setSecondToggle(!secondToggle);
+        form.validateFields(['whatsAppNumber'])
     };
 
     const handleCorporateChange = (value) => {
