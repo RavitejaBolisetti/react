@@ -21,6 +21,7 @@ import { OTF_SECTION } from 'constants/OTFSection';
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { validateOTFMenu } from './utils/validateOTFMenu';
 
@@ -135,7 +136,7 @@ export const OtfMasterBase = (props) => {
                 key: 'searchType',
                 title: 'Type',
                 value: filterString?.searchType,
-                name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
+                name: typeData?.[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value,
                 canRemove: false,
                 filter: true,
             },
@@ -167,7 +168,7 @@ export const OtfMasterBase = (props) => {
                 key: 'otfStatus',
                 title: 'OTF Status',
                 value: filterString?.otfStatus,
-                name: otfStatusList?.find((i) => i?.title === filterString?.otfStatus)?.desc,
+                name: otfStatusList?.find((i) => i?.key === filterString?.otfStatus)?.desc,
                 canRemove: true,
                 filter: true,
             },
@@ -266,6 +267,7 @@ export const OtfMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
+        setShowDataLoading(true);
         setFilterString();
         advanceFilterForm.resetFields();
     };
