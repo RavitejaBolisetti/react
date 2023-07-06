@@ -69,6 +69,8 @@ const CancellationMasterBase = (props) => {
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOtfBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [formData, setFormData] = useState([]);
+    const [emptyList, setEmptyList] = useState(true);
+
 
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
@@ -84,7 +86,8 @@ const CancellationMasterBase = (props) => {
         setButtonData,
         handleButtonClick,
         uploadDocumentFile,
-
+        setEmptyList,
+        setUploadedFile
     };
 
     return (

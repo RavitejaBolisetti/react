@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Input, Form, Select, Card, Descriptions, Upload, Button, Empty } from 'antd';
+import { Row, Col, Input, Form, Select, Card, Descriptions, Upload, Button, Empty, message } from 'antd';
 
 import styles from 'components/common/Common.module.css';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -17,7 +17,7 @@ import { DrawerFormButton } from 'components/common/Button';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { convertDateTime } from 'utils/formatDateTime';
 
-import { FiEye, FiTrash } from 'react-icons/fi';
+import { FiEye, FiTrash, FiDownload } from 'react-icons/fi';
 
 const { Search } = Input;
 const { Dragger } = Upload;
@@ -30,11 +30,10 @@ const AddEditFormMain = (props) => {
     const [cancelForm] = Form.useForm();
 
     const onDrop = (e) => {};
-
     const onDownload = (file) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
 
-        handlePreview(file?.response);
+        // handlePreview(file?.response);
         let a = document.createElement('a');
 
         a.href = `data:image/png;base64,${viewDocument?.base64}`;
@@ -55,6 +54,7 @@ const AddEditFormMain = (props) => {
         progress: { strokeWidth: 3, showInfo: true },
         onDrop,
         onChange: (info) => {
+            // handleFormValueChange();
             const { status } = info.file;
             setShowStatus(info.file);
             if (status === 'done') {
@@ -74,7 +74,8 @@ const AddEditFormMain = (props) => {
 
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
-        //setEmptyList(true);
+        setEmptyList(true);
+
 
         const data = new FormData();
         data.append('applicationId', 'app');
@@ -203,24 +204,27 @@ const AddEditFormMain = (props) => {
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                            <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
-                                <div>
-                                    <img src={Svg} alt="" />
-                                </div>
-                                <Empty
-                                    description={
-                                        <>
-                                            <span>Upload Cancellation Letter</span>
-                                            <span>
-                                                <br />
-                                                File type should be png, jpg or pdf and max file size to be 5Mb
-                                            </span>
-                                        </>
-                                    }
-                                />
+                        <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
+                            <div>
+                                <img src={Svg} alt="" />
+                            </div>
+                            <Empty
+                                description={
+                                    <>
+                                        <span>
+                                            Click or drop your file here to upload the signed and <br />
+                                            scanned customer form.
+                                        </span>
+                                        <span>
+                                            <br />
+                                            File type should be png, jpg or pdf and max file size to be 5Mb
+                                        </span>
+                                    </>
+                                }
+                            />
 
-                                <Button type="primary">Upload File</Button>
-                            </Dragger>
+                            <Button type="primary">Upload File</Button>
+                        </Dragger>
                         </div>
                     </Col>
                 </Row>
