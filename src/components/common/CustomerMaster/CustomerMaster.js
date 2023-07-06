@@ -190,7 +190,7 @@ const CustomerMasterMain = (props) => {
     useEffect(() => {
         if (userId && customerType && extraParams) {
             setShowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams || defaultExtraParam, onSuccessAction, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams || defaultExtraParam });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, customerType, extraParams]);
@@ -311,6 +311,7 @@ const CustomerMasterMain = (props) => {
         handleFormValueChange,
         isLastSection,
         saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        setIsFormVisible,
     };
 
     const handleCustomerTypeChange = (id) => {

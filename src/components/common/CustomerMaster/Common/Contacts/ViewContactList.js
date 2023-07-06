@@ -55,15 +55,13 @@ const ViewContactList = (props) => {
             {contactData?.length > 0 &&
                 contactData?.map((data, i) => {
                     return (
-                        <Collapse key={data?.purposeOfContact + data?.contactNameFirstName} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
+                        <Collapse key={data?.purposeOfContact + data?.contactNameFirstName} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                             <Panel
                                 key={i}
                                 header={
                                     <Row justify="space-between">
-                                        <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                            <Space>
-                                                <Text strong> {`${data?.firstName ? data?.firstName : ''} ${data?.middleName ? data?.middleName : ''} ${data?.lastName ? data?.lastName : ''}`}</Text>{' '}
-                                            </Space>
+                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                            <Text strong> {`${data?.firstName ? data?.firstName : ''} ${data?.middleName ? data?.middleName : ''} ${data?.lastName ? data?.lastName : ''}`}</Text>{' '}
                                             {!formActionType?.viewMode && (
                                                 <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding}>
                                                     Edit{' '}
@@ -71,12 +69,14 @@ const ViewContactList = (props) => {
                                             )}
                                         </Col>
                                         {!(isEditing || isAdding) && (
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                <Checkbox valuePropName="checked" checked={data?.defaultContactIndicator} defaultChecked={data?.defaultContactIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)} {...disableProp}>
-                                                    Mark As Default
-                                                </Checkbox>
-                                                <Divider type="vertical" />
-                                                <Text type="secondary">{getNameFromKey(typeData['PURPOSE'], data?.purposeOfContact)}</Text>
+                                            <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                                <div className={styles.floatRight}>
+                                                    <Checkbox valuePropName="checked" checked={data?.defaultContactIndicator} defaultChecked={data?.defaultContactIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)} {...disableProp}>
+                                                        Mark As Default
+                                                    </Checkbox>
+                                                    <Divider type="vertical" />
+                                                    <Text type="secondary">{getNameFromKey(typeData['PURPOSE'], data?.purposeOfContact)}</Text>
+                                                </div>
                                             </Col>
                                         )}
                                     </Row>

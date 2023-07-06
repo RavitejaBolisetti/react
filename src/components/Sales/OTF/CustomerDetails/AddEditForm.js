@@ -3,24 +3,26 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
-import { Col, Row, Checkbox, Space, Collapse, Typography, AutoComplete } from 'antd';
+import React, { useEffect } from 'react';
+import { Col, Row, Checkbox, Space, Collapse, AutoComplete } from 'antd';
+
 import { FiEdit } from 'react-icons/fi';
 import { AddressCommonForm } from './AddressCommonForm';
+import { convertDateToCalender } from 'utils/formatDateTime';
 
-import styles from 'components/common/Common.module.css';
-
-const { Text } = Typography;
+import { expandIconWithText } from 'utils/accordianExpandIcon';
 const { Panel } = Collapse;
 
 const AddEditFormBase = (props) => {
-    const { form, billCstmForm, formData, customerFormData, setSameAsBookingCustomer } = props;
+    const { form, formData, setSameAsBookingCustomer } = props;
     const { typeData, activeKey, setActiveKey } = props;
 
     useEffect(() => {
         if (formData) {
             form.setFieldsValue({
                 ...formData,
+                bookingCustomer: { ...formData?.bookingCustomer, birthDate: convertDateToCalender(formData?.bookingCustomer?.birthDate) },
+                billingCustomer: { ...formData?.billingCustomer, birthDate: convertDateToCalender(formData?.billingCustomer?.birthDate) },
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,88 +65,23 @@ const AddEditFormBase = (props) => {
         if (vall.target.checked) {
             setSameAsBookingCustomer(true);
             let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
-            let billingCustomer = form.getFieldsValue()?.billingCustomer;
-            billingCustomer = { ...bookingCustomer };
             form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
-        } else setSameAsBookingCustomer(false);
-    };
-
-    const handleDataSet = () => {
-        form.setFieldsValue(customerFormData.bookingCustomer);
-        billCstmForm.setFieldsValue(customerFormData.billingCustomer);
+        } else {
+            setSameAsBookingCustomer(false);
+        }
     };
 
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                    <Collapse
-                        expandIcon={() => {
-                            if (activeKey.includes(1)) {
-                                return (
-                                    <>
-                                        <FiEdit onClick={handleDataSet} />
-                                        <span>Edit</span>
-                                    </>
-                                );
-                            } else {
-                                return (
-                                    <>
-                                        <FiEdit />
-                                        <span>Edit</span>
-                                    </>
-                                );
-                            }
-                        }}
-                        activeKey={activeKey}
-                        onChange={() => onChange(1)}
-                        expandIconPosition="end"
-                    >
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        Booking Customer
-                                    </Text>
-                                </div>
-                            }
-                            key="1"
-                        >
+                    <Collapse expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                        <Panel header="Booking Customer" key="1">
                             <AddressCommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} />
                         </Panel>
                     </Collapse>
-                    <Collapse
-                        expandIcon={() => {
-                            if (activeKey.includes(2)) {
-                                return (
-                                    <>
-                                        <FiEdit />
-                                        <span>Edit</span>
-                                    </>
-                                );
-                            } else {
-                                return (
-                                    <>
-                                        <FiEdit />
-                                        <span>Edit</span>
-                                    </>
-                                );
-                            }
-                        }}
-                        activeKey={activeKey}
-                        onChange={() => onChange(2)}
-                        expandIconPosition="end"
-                    >
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        Billing Customer
-                                    </Text>
-                                </div>
-                            }
-                            key="2"
-                        >
+                    <Collapse expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                        <Panel header="Billing Customer" key="2">
                             <Row>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                     <Checkbox valuePropName="checked" style={{ margin: '5px 0px 15px 0px' }} onClick={handleOnChange} name="sameAsBookingCustomer">

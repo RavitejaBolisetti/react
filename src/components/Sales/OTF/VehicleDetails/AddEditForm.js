@@ -16,7 +16,7 @@ import dayjs from 'dayjs';
 
 import { DataTable } from 'utils/dataTable';
 import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
-import { ActiveText, dynamicExpandIcon } from 'utils/accordianExpandIcon';
+import { expandIconWithText, dynamicExpandIcon } from 'utils/accordianExpandIcon';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
@@ -84,17 +84,8 @@ const AddEditFormMain = (props) => {
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Space size="middle" direction="vertical" className={styles.accordianContainer}>
-                    <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => ActiveText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={openAccordian}>
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        Vehicle Information
-                                    </Text>
-                                </div>
-                            }
-                            key="1"
-                        >
+                    <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={openAccordian}>
+                        <Panel header="Vehicle Information" key="1">
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label="Vehicle Usage Type" name="vehicleUsageType" data-testid="usageType" rules={[validateRequiredSelectField('vehicle usage Type')]}>
@@ -185,18 +176,7 @@ const AddEditFormMain = (props) => {
                         </Panel>
                     </Collapse>
                     <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Tax Details
-                                        </Text>
-                                    </Col>
-                                </div>
-                            }
-                            key="2"
-                        >
+                        <Panel header="Tax Details" key="2">
                             <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
                         </Panel>
                     </Collapse>

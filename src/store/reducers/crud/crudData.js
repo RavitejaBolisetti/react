@@ -28,11 +28,10 @@ const recieveDataCF = (state, action) => ({
     updatedAt: moment().toDate(),
 });
 
-const setFilterDataCF = (state, action) =>
-    console.log(state, action) || {
-        ...state,
-        filter: action.filter,
-    };
+const setFilterDataCF = (state, action) => ({
+    ...state,
+    filter: action.filter,
+});
 
 const filteredListRecieveDataCF = (state, action) => ({
     ...state,

@@ -52,7 +52,7 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.controlId} label="Control ID" name="controlId" rules={[validateRequiredInputField('ControlID')]}>
+                            <Form.Item initialValue={formData?.controlId} label="Control ID" name="controlId" rules={[validateRequiredInputField('Control ID')]}>
                                 <Select showSearch allowClear placeholder={preparePlaceholderSelect('Select')} onChange={handleControlChange} disabled={isReadOnly} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.CFG_PARAM.id]}></Select>
                             </Form.Item>
                         </Col>
@@ -65,7 +65,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Control Group" initialValue={formData?.controlGroup} name="controlGroup" rules={[validateRequiredSelectField('controlGroup')]}>
-                                <Select showSearch allowClear placeholder={preparePlaceholderSelect('Select')} disabled={isReadOnly} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.CTRL_GRP.id]}></Select>
+                                <Select showSearch allowClear placeholder={preparePlaceholderSelect('control group')} disabled={isReadOnly} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.CTRL_GRP.id]}></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
@@ -85,13 +85,13 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item label="From Number" className={styles.numberRange} initialValue={formData?.fromNumber} name="fromNumber" rules={[validateRequiredInputField('Number')]}>
-                                            <InputNumber min={0} max={100} placeholder="From Number" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                            <InputNumber min={0} placeholder="From Number" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item label="To Number" className={styles.numberRange} initialValue={formData?.toNumber} name="toNumber" rules={[validateRequiredInputField('Number')]}>
-                                            <InputNumber min={0} max={100} placeholder="To Number" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                            <InputNumber min={0} placeholder="To Number" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

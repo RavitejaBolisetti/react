@@ -8,6 +8,7 @@ import { Collapse, Space, Avatar, Typography } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { convertDateTime } from 'utils/formatDateTime';
 import { getCodeValue } from 'utils/getCodeValue';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -50,7 +51,7 @@ const OTFDetailCard = (props) => {
                 key={1}
             >
                 <p>
-                    Customer Type: <span>{selectedOrder && getCodeValue(typeData['CUST_TYPE'], selectedOrder?.customerType)}</span>
+                    Customer Type: <span>{selectedOrder && getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], selectedOrder?.customerType)}</span>
                 </p>
                 <p>
                     Mobile No.: <span>{selectedOrder?.mobileNumber || 'NA'}</span>

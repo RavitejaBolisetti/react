@@ -8,17 +8,19 @@ import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 
-export const accordianExpandIcon = (isActive) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
+export const accordianExpandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
 
-export const expandIcon = (isActive) => (isActive ? <MinusOutlined className={styles.iconsColor} /> : <PlusOutlined className={styles.iconsColor} />);
-export const ActiveText = (isActive, ExpandIcon, InactiveIcon, activeText = 'Edit', inactiveText = 'Edit') => {
+export const expandIcon = ({ isActive }) => (isActive ? <MinusOutlined className={styles.iconsColor} /> : <PlusOutlined className={styles.iconsColor} />);
+
+export const expandIconWithText = (isActive, ExpandIcon, InactiveIcon, activeText = 'Edit', inactiveText = 'Edit') => {
     return (
-        <div>
+        <div className={styles.accordianIconWithText}>
             {dynamicExpandIcon(isActive, ExpandIcon, InactiveIcon, activeText, inactiveText)}
             {isActive ? <div className={styles.activeTextColor}>{activeText}</div> : inactiveText}
         </div>
     );
 };
+
 export const dynamicExpandIcon = (isActive, ExpandIcon = <AiOutlinePlus className={styles.iconsColor} />, InactiveIcon = <AiOutlineMinus className={styles.iconsColor} />, activeText = '', inactiveText = '') => {
     if (isActive) {
         return InactiveIcon;
