@@ -25,7 +25,6 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'components/common/Common.module.css';
 
 import { validateOTFMenu } from './utils/validateOTFMenu';
-
 import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
@@ -434,8 +433,8 @@ export const OtfMasterBase = (props) => {
         <>
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} >
-                    <ListDataTable  handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
