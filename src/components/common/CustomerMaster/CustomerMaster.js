@@ -346,6 +346,8 @@ const CustomerMasterMain = (props) => {
         optionType: typeData,
     };
 
+    const showAddButton = true;
+
     return (
         <>
             <Row gutter={20}>
@@ -365,9 +367,9 @@ const CustomerMasterMain = (props) => {
                                 <SearchBox {...searchBoxProps} />
                             </Col>
                             <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
-                                <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                {/* <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                     Add
-                                </Button>
+                                </Button> */}
                             </Col>
                         </Row>
                         {filterString && extraParams.find((i) => i.name) && (
@@ -406,19 +408,30 @@ const CustomerMasterMain = (props) => {
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.datasearh}>
                     <ConfigProvider
                         renderEmpty={() => (
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                                 imageStyle={{
-                                    height: 60,
+                                    height: '20%',
                                 }}
-                                description={<span> No record found.</span>}
-                            ></Empty>
+                                description={
+                                    <>
+                                        No Record Found <br /> Please <b>"Add New Customer"</b> using below <br />
+                                        button
+                                    </>
+                                }
+                            >
+                                {showAddButton && !data?.length && (
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                        {`Add`}
+                                    </Button>
+                                )}
+                            </Empty>
                         )}
                     >
-                        <DataTable isLoading={showDataLoading} {...tableProps} />
+                        <DataTable isLoading={showDataLoading}  {...tableProps} />
                     </ConfigProvider>
                 </Col>
             </Row>

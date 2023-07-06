@@ -6,7 +6,7 @@
 import React, { useEffect } from 'react';
 import { Input, Form, Col, Row, Button, Divider } from 'antd';
 
-import { validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField, validationNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 
@@ -62,7 +62,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
 
     return (
         <>
-            <Form form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
+            <Form autoComplete="off" form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                         <Form.Item label="Part Number" name="partNumber" rules={[validateRequiredInputField('part number')]}>
@@ -88,13 +88,10 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity')]}>
+                        <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity'), validationNumber('credit limit days')]}>
                             <Input placeholder={preparePlaceholderText('required quantity')} />
                         </Form.Item>
                     </Col>
-                    {/* </Row>
-            <Row gutter={20}> */}
-
                     <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                         <Form.Item label="Part Description" name="partDescription">
                             <TextArea
@@ -108,7 +105,6 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                             />
                         </Form.Item>
                     </Col>
-
                     <Form.Item hidden name="id">
                         <Input />
                     </Form.Item>

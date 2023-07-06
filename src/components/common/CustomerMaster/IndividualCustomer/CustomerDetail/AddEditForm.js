@@ -93,7 +93,6 @@ const AddEditFormMain = (props) => {
         uploadDocumentFile(requestData);
     };
 
-
     const firstToggleFun = () => {
         setFirstToggle(!firstToggle);
     };
@@ -175,7 +174,6 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [secondToggle]);
-    console.log('corporateType', corporateType);
     return (
         <>
             <Space direction="vertical" size="small" style={{ display: 'flex' }}>
@@ -359,4 +357,3 @@ const AddEditFormMain = (props) => {
 };
 
 export const AddEditForm = AddEditFormMain;
-

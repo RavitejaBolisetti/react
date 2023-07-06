@@ -70,7 +70,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={filterString?.otfStatus} label="OTF Status" name="otfStatus">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'title' }} options={otfStatusList} {...selectProps} className={styles.headerSelectField}></Select>
+                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} options={otfStatusList} {...selectProps} className={styles.headerSelectField}></Select>
                     </Form.Item>
                 </Col>
             </Row>
