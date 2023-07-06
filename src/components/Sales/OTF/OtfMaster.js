@@ -111,7 +111,7 @@ export const OtfMasterBase = (props) => {
         unAllotBtn: false,
         invoiceBtn: false,
         deliveryNote: false,
-        cancelOtfBtn: true,
+        cancelOtfBtn: true, // for now/ for testing, it will change to false.
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -491,6 +491,7 @@ export const OtfMasterBase = (props) => {
     const cancelProps = {
         ...props,
         otfData,
+        selectedOrder,
         CANCEL_ACTION,
         isVisible: isCancelVisible,
         onCloseAction: onCancelCloseAction,

@@ -15,7 +15,7 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { convertDateMonthYear } from 'utils/formatDateTime';
+import { convertDateTime } from 'utils/formatDateTime';
 
 import { FiEye, FiTrash } from 'react-icons/fi';
 
@@ -23,7 +23,7 @@ const { Search } = Input;
 const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { formData, form, isLoading, otfData } = props;
+    const { formData, form, isLoading, otfData, selectedOrder } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview, emptyList, setEmptyList } = props;
 
     const [showStatus, setShowStatus] = useState('');
@@ -55,7 +55,6 @@ const AddEditFormMain = (props) => {
         progress: { strokeWidth: 3, showInfo: true },
         onDrop,
         onChange: (info) => {
-            handleFormValueChange();
             const { status } = info.file;
             setShowStatus(info.file);
             if (status === 'done') {
@@ -75,7 +74,7 @@ const AddEditFormMain = (props) => {
 
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
-        setEmptyList(true);
+        //setEmptyList(true);
 
         const data = new FormData();
         data.append('applicationId', 'app');
@@ -120,11 +119,11 @@ const AddEditFormMain = (props) => {
             <Card className={styles.ExchangeCard}>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="OTF No.">{checkAndSetDefaultValue(otfData?.otfNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(convertDateMonthYear(otfData?.otfDate, isLoading))}</Descriptions.Item>
-                    <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.make, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(formData?.modelGroup, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Model">{checkAndSetDefaultValue(formData?.variant, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Order Status">{checkAndSetDefaultValue(formData?.oldRegistrationNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY'), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Model">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Order Status">{checkAndSetDefaultValue(selectedOrder?.orderStatus, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </Card>
             <Form form={cancelForm} layout="vertical" autocomplete="off" colon="false">

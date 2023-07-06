@@ -60,35 +60,31 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CancellationMasterBase = (props) => {
-    const { accessToken, token, onFinishFailed, form, otfData } = props;
-    const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, supportingData, fetchViewDocument } = props;
+    const { accessToken, token, onFinishFailed, form, otfData, selectedOrder } = props;
+    const { userId, showGlobalNotification, section, listShowLoading, uploadDocumentFile, typeData, saveData, fetchList, supportingData, fetchViewDocument } = props;
     const { formActionType, handleFormValueChange } = props;
     const { selectedCustomerId, moduleTitle } = props;
 
     const [uploadedFile, setUploadedFile] = useState();
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOtfBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [formData, setFormData] = useState([]);
 
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormData([]);
-
-        // setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-
-        record && setFormData(record);
-        // setIsFormVisible(true);
+        
     };
-
+    
     const formProps = {
         ...props,
         titleOverride: moduleTitle,
         otfData,
+        selectedOrder,
         buttonData,
         setButtonData,
         handleButtonClick,
+        uploadDocumentFile,
+
     };
 
     return (

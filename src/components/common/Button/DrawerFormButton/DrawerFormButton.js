@@ -44,6 +44,12 @@ export const DrawerFormButton = ({ formData, onCloseAction, buttonData, setButto
                         Edit
                     </Button>
                 )}
+
+                {buttonData?.cancelOtfBtn && (
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF })} type="primary">
+                        Cancel OTF
+                    </Button>
+                )}
             </Col>
         </Row>
     );
