@@ -12,7 +12,7 @@
 }
 
 .marT20 {
-    margin-top: 20px;
+    margin-top: 20px !important;
 }
 
 .marT30 {
@@ -1759,9 +1759,18 @@
     border-end-end-radius: 4px;
 }
 
+.drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-affix-wrapper-focused+.ant-input-group-addon {
+    border: 1px solid #0b0b0c;
+    border-left: none;
+}
+
 .drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-group-addon .ant-input-search-button {
     background: #ffffff;
     border: none;
+}
+
+.drawerBodyRight .uniqueSearchInput .searchField :global .ant-select-selector {
+    padding: 0 !important;
 }
 
 .drawerBodyRight h2 {
@@ -1908,6 +1917,7 @@
 .drawerBodyRight :global .ant-card .ant-form-item .ant-form-item-control-input .ant-input-affix-wrapper:focus,
 .drawerBodyRight :global .ant-card .ant-form-item .ant-form-item-control-input .ant-input-affix-wrapper-focused {
     border: 1px solid #0b0b0c;
+    border-right: none;
     box-shadow: none;
 }
 
@@ -2109,6 +2119,16 @@
     font-size: 16px;
     line-height: 24px;
     /* border: 1px solid #f2f2f2; */
+}
+
+.drawerBodyRight .accordianContainer :global .ant-collapse>.ant-collapse-item {
+    border-bottom: none !important;
+}
+
+.drawerBodyRight .accordianContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-btn-secondary,
+.drawerBodyRight .accordianContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-btn-link {
+    padding: 0;
+    height: 22px;
 }
 
 .drawerBodyRight .sectionborder :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
