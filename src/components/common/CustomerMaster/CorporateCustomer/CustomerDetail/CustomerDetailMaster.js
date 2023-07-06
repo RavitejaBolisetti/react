@@ -141,7 +141,7 @@ const CompanyCustomerDetailsMasterBase = (props) => {
 
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
+                setSelectedCustomer({ ...res.data, customerName: res?.data?.companyName });
                 setSelectedCustomerId(res?.data?.customerId);
             }
         };

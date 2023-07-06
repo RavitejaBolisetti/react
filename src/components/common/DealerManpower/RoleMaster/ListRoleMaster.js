@@ -210,8 +210,6 @@ export const ListRoleMasterBase = (props) => {
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
-            console.log('hello');
-
             const filterValue = type === 'text' ? value.target.value : value;
 
             if (name === 'code') {

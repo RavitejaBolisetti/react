@@ -333,8 +333,6 @@ const ListPinCodeMasterBase = (props) => {
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
-            console.log('name', name, 'value', value);
-
             if (!value) {
                 switch (name) {
                     case 'countryCode': {
