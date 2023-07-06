@@ -414,17 +414,20 @@ const CustomerMasterMain = (props) => {
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                                 imageStyle={{
-                                    height: 60,
+                                    height: '20%',
                                 }}
-                                description={<span> No record found.</span>}
+                                description={
+                                    <>
+                                        No Record Found <br /> Please <b>"Add New Customer"</b> using below <br />
+                                        button
+                                    </>
+                                }
                             >
-                                {showAddButton
-                                    ? !data?.length && (
-                                          <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                              {`Add`}
-                                          </Button>
-                                      )
-                                    : ''}
+                                {showAddButton && !data?.length && (
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                        {`Add`}
+                                    </Button>
+                                )}
                             </Empty>
                         )}
                     >
