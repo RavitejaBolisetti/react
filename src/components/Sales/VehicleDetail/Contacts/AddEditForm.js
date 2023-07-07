@@ -85,26 +85,19 @@ const AddEditForm = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
-                                <Input
-                                    
-                                    maxLength={10}
-                                    onChange={handleNumberValidation}
-                                    placeholder={preparePlaceholderText('mobile number')}
-                                    allowClear
-                                    size="small"
-                                />
+                                <Input maxLength={10} onChange={handleNumberValidation} placeholder={preparePlaceholderText('mobile number')} allowClear size="small" />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Name" name="name" rules={[validateRequiredInputField('Name'), validateLettersWithWhitespaces('Name')]}>
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('name')}  />
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('name')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="E-mail" initialValue={''} name="emailId" rules={[validateEmailField('E-mail')]}>
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('email id')}  />
+                                <Input className={style.inputBox} placeholder={preparePlaceholderText('email id')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -113,7 +106,9 @@ const AddEditForm = (props) => {
                                     <Form.Item name={'preferredContactTimeFrom'} rules={[validateRequiredInputField('start time')]}>
                                         <TimePicker placeholder={'Start time*'} use12Hours size="small" format="h:mm A" />
                                     </Form.Item>
-                                    <Button className={style.marB20} type='link' style={{color: '#0b0b0c', pointerEvents: 'none'}}>-</Button>
+                                    <Button className={style.marB20} type="link" style={{ color: '#0b0b0c', pointerEvents: 'none' }}>
+                                        -
+                                    </Button>
                                     <Form.Item name={'preferredContactTimeTo'} rules={[validateRequiredInputField('end time')]}>
                                         <TimePicker placeholder={'End time*'} use12Hours size="small" format="h:mm A" />
                                     </Form.Item>
@@ -127,7 +122,7 @@ const AddEditForm = (props) => {
                                 <Button className={style.marR20} onClick={onSaveFormData} type="primary">
                                     Save
                                 </Button>
-                                <Button className={style.marB20} onClick={handleCancelFormEdit} danger>
+                                <Button className={style.marB20} onClick={handleCancelFormEdit} ghost type="primary">
                                     Cancel
                                 </Button>
                             </Col>
