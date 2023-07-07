@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Vehicle: {
-                VechileDetail: { isLoaded: isDataLoaded = false, isLoading, isDetailLoaded, detailData: vehicleDetailData = [], data, filter: filterString },
+                VehicleDetail: { isLoaded: isDataLoaded = false, isLoading, isDetailLoaded, detailData: vehicleDetailData = [], data, filter: filterString },
             },
         },
     } = state;
@@ -452,7 +452,7 @@ export const VehicleDetailMasterBase = (props) => {
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={isLoading} {...tableProps} showAddButton={false} />
+                    <ListDataTable handleAdd={handleButtonClick} isLoading={isLoading} {...tableProps} showAddButton={true} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
