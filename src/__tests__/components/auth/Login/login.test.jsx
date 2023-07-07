@@ -1,5 +1,6 @@
 import { screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
+import { act } from 'react-dom/test-utils'
 import customRender from "@utils/test-utils";
 import { Logins } from "@components/Auth/Login/Login";
 
@@ -27,9 +28,11 @@ describe('Login Form Component', () => {
         expect(inputBox.value.includes("sushil"));
         fireEvent.change(inputBox, { target: { value: "Test@1234" } });
         expect(inputBox.value.includes("Test@1234"));
-        const Login = screen.getByRole('button', {
-            name: /Login/i
-          });
-        fireEvent.click(Login);      
+        await act(async () => {
+            const Login = screen.getByRole('button', {
+                name: /Login/i
+            });
+            fireEvent.click(Login);   
+        )};   
     });
 });

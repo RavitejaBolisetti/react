@@ -1,5 +1,6 @@
 import { screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
+import { act } from 'react-dom/test-utils'
 import customRender from "@utils/test-utils";
 import { ForgotPassword } from "@components/Auth/ForgotPassword/ForgotPassword";
 
@@ -15,10 +16,12 @@ describe('Forgot Password Component render', () => {
             const inputBox = screen.getByRole("textbox");
             fireEvent.change(inputBox, { target: { value: "sushil" } });
             expect(inputBox.value.includes("sushil"));
-            const verifyUserButton = screen.getByRole('button', {
-                name: /verify user/i
-              });
-            fireEvent.click(verifyUserButton);      
+            await act(async () => {
+                const verifyUserButton = screen.getByRole('button', {
+                    name: /verify user/i
+                });
+                fireEvent.click(verifyUserButton); 
+            )};     
         });
     it('should check back to login button event', async () => {
         customRender(<ForgotPassword />);

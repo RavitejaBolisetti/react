@@ -116,24 +116,24 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
     return (
         <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="off" onFinish={onFinish}>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
-                    <Form.Item name="oldPassword" class="textfieldWithPrefix__input" rules={[validateRequiredInputField('old password', false)]}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
+                    <Form.Item name="oldPassword" className="textfieldWithPrefix__input" rules={[validateRequiredInputField('old password', false)]}>
                         <Input type={showPassword?.oldPassword ? 'text' : 'password'} ref={oldPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('oldPassword')} suffix={passwordSuffix('oldPassword')} />
                     </Form.Item>
                     {!fieldData?.oldPassword && (
-                        <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(oldPasswordInput)}>
+                        <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(oldPasswordInput)}>
                             Old password
                         </label>
                     )}
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
-                    <Form.Item name="newPassword" class="textfieldWithPrefix__input" rules={[validateRequiredInputField('new password')]}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
+                    <Form.Item name="newPassword" className="textfieldWithPrefix__input" rules={[validateRequiredInputField('new password')]}>
                         <Input onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                     </Form.Item>
                     {!fieldData?.newPassword && (
-                        <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(newPasswordInput)}>
+                        <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(newPasswordInput)}>
                             New password
                         </label>
                     )}
@@ -141,11 +141,11 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
                     <Form.Item
                         name="confirmNewPassword"
                         dependencies={['newPassword']}
-                        class="textfieldWithPrefix__input"
+                        className="textfieldWithPrefix__input"
                         rules={[
                             validateRequiredInputField('confirm password', false),
                             ({ getFieldValue }) => ({
@@ -161,7 +161,7 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
                         <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
                     </Form.Item>
                     {!fieldData?.confirmNewPassword && (
-                        <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(confirmPasswordInput)}>
+                        <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(confirmPasswordInput)}>
                             Confirm password
                         </label>
                     )}

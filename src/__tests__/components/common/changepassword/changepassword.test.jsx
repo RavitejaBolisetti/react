@@ -3,12 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import customRender from "@utils/test-utils";
 import { ChangePassword } from '@components/common/ChangePassword/ChangePassword';
 
 describe('ChangePassword Components', () => {
     it('should render ChangePassword components', () => {
-        render(<ChangePassword />);
+        customRender(<ChangePassword  isOpen={true} />);
     });
 });
