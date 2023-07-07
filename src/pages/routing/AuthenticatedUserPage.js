@@ -37,8 +37,6 @@ import {
     TermConditionManufacturerMasterPage,
     OtfReportsPage,
 } from 'pages/common';
-
-import { OTFMasterPage } from 'pages/Sales';
 import { TaxChargesPage, TaxChargesCategoryPage } from 'pages/FinancialAccounting';
 import { OTFMasterPage, VehicleDetailMasterPage } from 'pages/Sales';
 import * as routing from 'constants/routing';
