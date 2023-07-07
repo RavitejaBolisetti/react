@@ -20,8 +20,6 @@ import { tableColumn } from './tableColumn';
 
 import styles from 'components/common/Common.module.css';
 
-// import { OTF_STATUS } from 'constants/OTFStatus';
-
 // const mapStateToProps = (state) => {
 //     const {
 //         auth: { userId },
