@@ -10,7 +10,6 @@ import { Button, Col, Row, Form, Empty, ConfigProvider } from 'antd';
 import { RxCross2 } from 'react-icons/rx';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
-import { showGlobalNotification } from 'store/actions/notification';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { tableColumn } from './tableColumn';
@@ -62,14 +61,13 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: customerDetailDataActions.setFilter,
             resetData: customerDetailDataActions.reset,
             listShowLoading: customerDetailDataActions.listShowLoading,
-            showGlobalNotification,
         },
         dispatch
     ),
 });
 
 const CustomerMasterMain = (props) => {
-    const { data, fetchList, userId, isLoading, listShowLoading, showGlobalNotification, moduleTitle, typeData, resetData } = props;
+    const { data, fetchList, userId, isLoading, listShowLoading, moduleTitle, typeData, resetData } = props;
     const { filterString, setFilterString } = props;
 
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
@@ -145,16 +143,6 @@ const CustomerMasterMain = (props) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [defaultExtraParam, filterString]);
-
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        setShowDataLoading(false);
-    };
-
-    const onErrorAction = (res) => {
-        showGlobalNotification({ message: res?.responseMessage });
-        setShowDataLoading(false);
-    };
 
     useEffect(() => {
         return () => {
@@ -431,7 +419,7 @@ const CustomerMasterMain = (props) => {
                             </Empty>
                         )}
                     >
-                        <DataTable isLoading={showDataLoading}  {...tableProps} />
+                        <DataTable isLoading={showDataLoading} {...tableProps} />
                     </ConfigProvider>
                 </Col>
             </Row>

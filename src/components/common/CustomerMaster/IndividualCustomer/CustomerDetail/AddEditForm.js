@@ -10,7 +10,6 @@ import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { BiTimeFive } from 'react-icons/bi';
 import { FiEye, FiTrash } from 'react-icons/fi';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -19,26 +18,40 @@ import { NameChangeHistory } from './NameChangeHistory';
 import styles from 'components/common/Common.module.css';
 import Svg from 'assets/images/Filter.svg';
 import Dragger from 'antd/es/upload/Dragger';
-import { getCodeValue } from 'utils/getCodeValue';
 
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { form, typeData, formData, corporateLovData, setUploadImgDocId, isViewModeVisible, formActionType: { editMode } = undefined, customerType } = props;
+    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
     const { setUploadedFileName, downloadFileFromList, fileList, setFileList, handleFormValueChange, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
-    const {firstToggle, setFirstToggle,secondToggle, setSecondToggle,disableWhatsapp, setDisableWhatsapp,disableToggle,setdisableToggle}=props
+
+    const { whatsAppConfiguration, setWhatsAppConfiguration } = props;
+    const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
+
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [corporateType, setCorporateType] = useState('');
 
-   
     const [showStatus, setShowStatus] = useState('');
+
+    useEffect(() => {
+        if (showStatus.status === 'done') {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name} file uploaded successfully` });
+        } else if (showStatus.status === 'error') {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showStatus]);
+
+    useEffect(() => {
+        setCorporateType(formData?.corporateType);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData?.corporateType]);
 
     const onDrop = (e) => {};
 
     const uploadProps = {
         multiple: false,
         accept: 'image/png, image/jpeg, application/pdf',
-
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
@@ -62,15 +75,6 @@ const AddEditFormMain = (props) => {
         },
     };
 
-    useEffect(() => {
-        if (showStatus.status === 'done') {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
-        } else if (showStatus.status === 'error') {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showStatus]);
-
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
         setEmptyList(true);
@@ -89,15 +93,6 @@ const AddEditFormMain = (props) => {
         };
 
         uploadDocumentFile(requestData);
-    };
-
-    const firstToggleFun = () => {
-        setFirstToggle(!firstToggle);
-    };
-
-    const secondToggleFun = () => {
-        setSecondToggle(!secondToggle);
-        form.validateFields(['whatsAppNumber'])
     };
 
     const handleCorporateChange = (value) => {
@@ -127,28 +122,16 @@ const AddEditFormMain = (props) => {
         isVisible: isHistoryVisible,
         onCloseAction: changeHistoryClose,
     };
-    useEffect(() => {
-        setCorporateType(formData?.corporateType);
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData?.corporateType]);
-
-     const validateSameNumber = (_,value) => {
-        const {mobileNumber}=form.getFieldsValue();
-        if(value===mobileNumber && firstToggle && !secondToggle)
-        {
+    const validateSameNumber = (_, value) => {
+        const { mobileNumber } = form.getFieldsValue();
+        if (value === mobileNumber && contactOverWhatsApp && !sameMobileNoAsWhatsApp) {
             return Promise.reject('whatsapp number same as mobile number');
-
-        }
-        else
-        {
+        } else {
             return Promise.resolve('');
-
         }
-    
     };
 
-    
     return (
         <>
             <Space direction="vertical" size="small" style={{ display: 'flex' }}>
@@ -192,7 +175,6 @@ const AddEditFormMain = (props) => {
                             </Col>
                         </Row>
                     </div>
-                    {/* <Divider /> */}
                     <div className={styles.cardInsideBox}>
                         <Row>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -261,24 +243,20 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                {/* value={formData?.whatsappCommunicationIndicator === null || false ? false : true}  */}
                                 <Form.Item label="Contact over WhatsApp?" initialValue={formData?.whatsappCommunicationIndicator} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
-                                    <Switch
-                                        onChange={firstToggleFun}
-                                        defaultChecked={formData?.whatsappCommunicationIndicator}
-                                        checked={firstToggle}
-                                        // defaultChecked={editMode ? true : formData?.whatsappCommunicationIndicator === true || null || undefined ? true : false}
-                                    />
+                                    <Switch onChange={(prev) => setWhatsAppConfiguration({ ...prev, contactOverWhatsApp: true })} defaultChecked={formData?.whatsappCommunicationIndicator} checked={contactOverWhatsApp} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Want to use mobile no as WhatsApp no?" initialValue={formData?.mobileNumberAsWhatsappNumber} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
                                     <Switch
-                                        onChange={secondToggleFun}
-                                        disabled={disableToggle}
-                                        checked={secondToggle}
+                                        onChange={() => {
+                                            setWhatsAppConfiguration({ ...whatsAppConfiguration, contactOverWhatsApp: false });
+                                            form.validateFields(['whatsAppNumber']);
+                                        }}
+                                        disabled={sameMobileNoAsWhatsAppActive}
+                                        checked={sameMobileNoAsWhatsApp}
                                         defaultChecked={formData?.whatsappCommunicationIndicator}
-                                        // defaultChecked={editMode ? true : formData?.mobileNumberAsWhatsappNumber === true || null || undefined ? true : false}
                                     />
                                 </Form.Item>
                             </Col>
@@ -286,7 +264,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Whatsapp Number" initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsAppNumber" rules={[validateMobileNoField('whatsapp number'), { validator: validateSameNumber }]}>
-                                    <Input placeholder={preparePlaceholderText('WhatsApp Number')} disabled={disableWhatsapp} maxLength={10} />
+                                    <Input placeholder={preparePlaceholderText('WhatsApp Number')} disabled={contactOverWhatsAppActive} maxLength={10} />
                                 </Form.Item>
                             </Col>
                         </Row>

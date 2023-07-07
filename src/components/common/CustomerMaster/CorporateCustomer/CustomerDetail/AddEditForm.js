@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Space, Divider, Card, Button } from 'antd';
+import { Col, Input, Form, Row, Select, Space, Divider, Card } from 'antd';
 
 import { validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -150,7 +150,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     )}
-                    {console.log('corporatecode',formData?.corporateCode)}
+                    {console.log('corporatecode', formData?.corporateCode)}
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.corporateCategory} label="Corporate Category" name="corporateCategory" data-testid="corporateCategory">
                             <Select placeholder={preparePlaceholderSelect('corporate category')} disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_CATE']}></Select>

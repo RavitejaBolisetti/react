@@ -91,11 +91,9 @@ const CustomerDetailMasterBase = (props) => {
     const [formData, setFormData] = useState();
     const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [supportingDataView, setSupportingDataView] = useState();
-    const [firstToggle, setFirstToggle] = useState();
-    const [secondToggle, setSecondToggle] = useState();
-    const [disableWhatsapp, setDisableWhatsapp] = useState();
-    const [disableToggle,setdisableToggle]=useState(true)
 
+    const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: false, contactOverWhatsAppActive: false, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsAppActive: true });
+    console.log('🚀 ~ file: CustomerDetailMaster.js:96 ~ CustomerDetailMasterBase ~ whatsAppConfiguration:', whatsAppConfiguration);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -105,10 +103,8 @@ const CustomerDetailMasterBase = (props) => {
         if (isDataLoaded) {
             form.setFieldsValue({ ...data });
             setFormData(data);
-            setFirstToggle(data?.whatsappCommunicationIndicator)
-            setSecondToggle(data?.mobileNumberAsWhatsappNumber)
-            HandleWhatsappToggle(data?.whatsappCommunicationIndicator, data?.mobileNumberAsWhatsappNumber,data?.whatsAppNumber);
-
+            // setWhatsAppConfiguration({ ...whatsAppConfiguration, contactOverWhatsApp: data?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: data?.mobileNumberAsWhatsappNumber });
+            handleFormFieldChange(data);
         }
         return () => {
             resetData();
@@ -276,11 +272,8 @@ const CustomerDetailMasterBase = (props) => {
         handlePreview,
         supportingDataView,
         setSupportingDataView,
-        firstToggle,
-        setFirstToggle,
-        secondToggle,
-        setSecondToggle,
-        disableWhatsapp, setDisableWhatsapp,disableToggle,setdisableToggle
+        whatsAppConfiguration,
+        setWhatsAppConfiguration,
     };
 
     const viewProps = {
@@ -290,40 +283,30 @@ const CustomerDetailMasterBase = (props) => {
         styles,
         isLoading,
     };
-    const HandleWhatsappToggle=(whatsappCommunicationIndicator, mobileNumberAsWhatsappNumber,whatsAppNumber=null)=>{
-        console.log(whatsappCommunicationIndicator, mobileNumberAsWhatsappNumber)
+
+    const handleFormFieldChange = (data = undefined) => {
+        const { whatsappCommunicationIndicator, mobileNumberAsWhatsappNumber, whatsAppNumber, mobileNumber } = data || form.getFieldsValue();
+
+        setWhatsAppConfiguration({ ...whatsAppConfiguration, contactOverWhatsApp: data?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: data?.mobileNumberAsWhatsappNumber });
+
         if (whatsappCommunicationIndicator) {
             if (whatsappCommunicationIndicator && mobileNumberAsWhatsappNumber) {
-                setDisableWhatsapp(true);
-                const {mobileNumber}=form.getFieldsValue();
                 form.setFieldsValue({ whatsAppNumber: mobileNumber });
-            }
-            else
-            {
-                setDisableWhatsapp(false);
+            } else {
                 form.setFieldsValue({ whatsAppNumber: whatsAppNumber });
-
             }
-            setdisableToggle(false);
+            setWhatsAppConfiguration({ ...whatsAppConfiguration, contactOverWhatsAppActive: false, sameMobileNoAsWhatsApp: !mobileNumberAsWhatsappNumber, sameMobileNoAsWhatsAppActive: whatsappCommunicationIndicator && mobileNumberAsWhatsappNumber });
         } else if (!whatsappCommunicationIndicator) {
             if (mobileNumberAsWhatsappNumber) {
                 form.setFieldsValue({ mobileNumberAsWhatsappNumber: false });
-                setSecondToggle(false)
-
             }
-            setDisableWhatsapp(true);
-            setdisableToggle(true);
-            form.setFieldsValue({whatsAppNumber:null});
-        } 
-    }
-    const handleToggleChange =()=>{
-        const { whatsappCommunicationIndicator, mobileNumberAsWhatsappNumber,whatsAppNumber } = form.getFieldsValue();
-        HandleWhatsappToggle(whatsappCommunicationIndicator, mobileNumberAsWhatsappNumber,whatsAppNumber)
-
-    }
+            setWhatsAppConfiguration({ ...whatsAppConfiguration, contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: !mobileNumberAsWhatsappNumber, sameMobileNoAsWhatsAppActive: true });
+            form.setFieldsValue({ whatsAppNumber: null });
+        }
+    };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleToggleChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title}</h2>
