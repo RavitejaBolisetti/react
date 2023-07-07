@@ -5,7 +5,7 @@
  */
 import React, { useState, useReducer, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Form, Space, Row, Col, Typography, Button, Empty, Card } from 'antd';
+import { Form, Space, Row, Col, Typography, Button, Empty, Card, Divider } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 

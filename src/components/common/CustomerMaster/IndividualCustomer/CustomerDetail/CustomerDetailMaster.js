@@ -247,7 +247,7 @@ const CustomerDetailMasterBase = (props) => {
         if (whatsappCommunicationIndicator) {
             if (whatsappCommunicationIndicator && mobileNumberAsWhatsappNumber) {
                 form.setFieldsValue({ whatsAppNumber: mobileNumber });
-                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsApp: true, contactOverWhatsApp: true });
+                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: true, contactOverWhatsApp: true });
             } else {
                 form.setFieldsValue({ whatsAppNumber: whatsAppNumber });
                 setWhatsAppConfiguration({ contactOverWhatsAppActive: false, sameMobileNoAsWhatsAppActive: false, contactOverWhatsApp: true });
