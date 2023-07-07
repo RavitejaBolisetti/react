@@ -146,7 +146,7 @@ const AddEditFormMain = (props) => {
                             </Button>
                         )}
                     </Row>
-                    <Divider />
+                    <Divider className={styles.marT20} />
                     <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
                         {showForm && !editedMode && <FormContainer {...formProps} />}
                         {familyDetailList?.length > 0 ? (
@@ -182,7 +182,6 @@ const AddEditFormMain = (props) => {
                                             </Row>
                                         }
                                         key={index}
-                                        style={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
                                     >
                                         {editedMode && !showForm ? <FormContainer {...formProps} item /> : <ViewDetail {...viewProps} mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} relationCustomerId={item?.relationCustomerId} />}
                                     </Panel>

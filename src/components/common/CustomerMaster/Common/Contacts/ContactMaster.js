@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useReducer, useEffect } from 'react';
-import { Row, Col, Form, Space, Typography, Button, Empty, Card } from 'antd';
+import { Row, Col, Form, Space, Typography, Button, Empty, Card, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { bindActionCreators } from 'redux';
@@ -16,6 +16,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import AddEditForm from './AddEditForm';
 import ViewContactList from './ViewContactList';
+
 import { CustomerFormButton } from '../../CustomerFormButton';
 import { CardSkeleton } from 'components/common/Skeleton';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
@@ -74,11 +75,10 @@ const mapDispatchToProps = (dispatch) => ({
 const ContactMain = (props) => {
     const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, saveData, showGlobalNotification, typeData } = props;
     const { isCustomerIndDataLoading, isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
-    const { buttonData, setButtonData, formActionType, handleButtonClick, setSelectedCustomer, setSelectedCustomerId, NEXT_ACTION } = props;
+    const { buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
-    const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
@@ -110,9 +110,9 @@ const ContactMain = (props) => {
     useEffect(() => {
         if (userId && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
             } else if (customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
-                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
             }
         }
 
@@ -137,7 +137,6 @@ const ContactMain = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-
 
     const onSaveFormData = () => {
         contactform
@@ -303,6 +302,7 @@ const ContactMain = (props) => {
                                             </Button>
                                         )}
                                     </Row>
+                                    <Divider className={styles.marT20} />
                                     <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
                                         <div className={styles.headerBox}>
                                             {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
