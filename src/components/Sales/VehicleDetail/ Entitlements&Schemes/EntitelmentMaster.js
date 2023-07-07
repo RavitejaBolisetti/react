@@ -27,7 +27,7 @@ import styles from 'components/common/Common.module.css';
 //         auth: { userId },
 //         data: {
 //             OTF: {
-//                 InvoiceDetail: { isLoaded: isDataLoaded = false, isLoading, data: invoiceData = [] },
+//                 EntitelmentDetail: { isLoaded: isDataLoaded = false, isLoading, data: invoiceData = [] },
 //             },
 //         },
 //     } = state;
