@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Row, Checkbox, Space, Collapse, AutoComplete } from 'antd';
 
 import { FiEdit } from 'react-icons/fi';
@@ -16,6 +16,8 @@ const { Panel } = Collapse;
 const AddEditFormBase = (props) => {
     const { form, formData, setSameAsBookingCustomer } = props;
     const { typeData, activeKey, setActiveKey } = props;
+
+    const [billingDisabled, setBillingDisabled] = useState(false);
 
     useEffect(() => {
         if (formData) {
@@ -51,6 +53,7 @@ const AddEditFormBase = (props) => {
         typeData,
         formData: formData?.billingCustomer,
         formType: 'billingCustomer',
+        billingDisabled,
     };
 
     const bookingCustomerProps = {
@@ -64,9 +67,11 @@ const AddEditFormBase = (props) => {
     const handleOnChange = (vall) => {
         if (vall.target.checked) {
             setSameAsBookingCustomer(true);
+            setBillingDisabled(true);
             let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
             form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
         } else {
+            setBillingDisabled(false);
             setSameAsBookingCustomer(false);
         }
     };
