@@ -10,8 +10,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { customerDetailDataActions } from 'store/actions/customer/customerContacts';
-import { contactDataActions } from 'store/actions/data/vehicle/contacts';
+import { vehicleContactDataActions } from 'store/actions/data/vehicle/contacts';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import AddEditForm from './AddEditForm';
@@ -29,11 +28,11 @@ const { Text } = Typography;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
-        vehicle: {
-            ContactVehicleDetails: { isLoaded: isContactDataLoaded = false, isLoading: isContactDataLoading, data: contactData = [] },
-        },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            Vehicle: {
+                Contacts: { isLoaded: isContactDataLoaded = false, isLoading: isContactDataLoading, data: contactData = [] },
+            },
         },
     } = state;
 
@@ -52,12 +51,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            listContactDetailsShowLoading: customerDetailDataActions.listShowLoading,
-
-            fetchContactIndividualDetailsList: contactDataActions.fetchList,
-            listContactIndividualDetailsShowLoading: contactDataActions.listShowLoading,
-            saveIndividualData: contactDataActions.saveData,
-            resetIndividualData: contactDataActions.reset,
+            fetchContactIndividualDetailsList: vehicleContactDataActions.fetchList,
+            listContactIndividualDetailsShowLoading: vehicleContactDataActions.listShowLoading,
+            saveIndividualData: vehicleContactDataActions.saveData,
+            resetIndividualData: vehicleContactDataActions.reset,
 
             showGlobalNotification,
         },
@@ -66,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ContactMasterMain = (props) => {
-    const { form, section, userId, customerType,customerData, customerIndData, listContactDetailsShowLoading, showGlobalNotification, typeData } = props;
+    const { form, section, userId, customerType, customerData, customerIndData, listContactDetailsShowLoading, showGlobalNotification, typeData } = props;
     const { isContactDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
     const { buttonData, setButtonData, formActionType, handleButtonClick, setSelectedCustomer, setSelectedCustomerId, NEXT_ACTION } = props;
 
@@ -97,7 +94,7 @@ const ContactMasterMain = (props) => {
         if (userId && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
-            } 
+            }
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -130,16 +127,16 @@ const ContactMasterMain = (props) => {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
-                        formData.splice(index, 1, { relationCode: '', ...value, docId: uploadImgDocId });
+                        formData.splice(index, 1, { ...value, docId: uploadImgDocId });
                         return [...formData];
                     });
-                } else {                 
+                } else {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         if (value?.defaultaddress && formData?.length >= 1) {
-                            return [...formData, { relationCode: '', ...value, docId: uploadImgDocId }];
+                            return [...formData, { ...value, docId: uploadImgDocId }];
                         } else {
-                            const updVal = prev?.length ? [...prev, { relationCode: '', ...value, docId: uploadImgDocId }] : [{ relationCode: '', ...value }];
+                            const updVal = prev?.length ? [...prev, { ...value, docId: uploadImgDocId }] : [{ ...value }];
                             return updVal;
                         }
                     });
@@ -203,6 +200,8 @@ const ContactMasterMain = (props) => {
     };
 
     const onFinish = () => {
+        console.log('contactData', contactData);
+        return;
         let data = { customerId: selectedCustomer?.customerId, customerContact: contactData?.map((el) => ({ ...el, docId: uploadImgDocId || el?.docId })) };
 
         const onSuccess = (res) => {
@@ -212,7 +211,7 @@ const ContactMasterMain = (props) => {
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
-            } 
+            }
         };
 
         const onError = (message) => {
@@ -230,7 +229,7 @@ const ContactMasterMain = (props) => {
 
         if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
             saveIndividualData(requestData);
-        } 
+        }
 
         setShowAddEditForm(false);
         setIsEditing(false);
@@ -238,6 +237,7 @@ const ContactMasterMain = (props) => {
         setEditingData({});
         contactform.resetFields();
     };
+    console.log('🚀 ~ file: ContactMaster.js:238 ~ onFinish ~ contactData:', contactData);
 
     const onFinishFailed = (err) => {
         console.error(err);
@@ -288,7 +288,6 @@ const ContactMasterMain = (props) => {
                                                     ></Empty>
                                                 </>
                                             ) : (
-                                            
                                                 <ViewList {...formProps} />
                                             )}
                                         </div>
