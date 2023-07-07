@@ -11,7 +11,7 @@
 import { dataActions } from 'store/actions/crud/dataAction';
 //import { BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER } from 'constants/routingApi';
 
-const PREFIX = 'TAX_CHARGES_';
+const PREFIX = 'TAX_CHARGES_CATEGORY_';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';
@@ -25,7 +25,7 @@ const baseURL = ""
 
 export const familyDetailsDataActions = dataActions({
     baseURL,
-    moduleName: 'Tax & Charges',
+    moduleName: 'Tax & Charges Category',
     RECEIVE_DATA_LOADING_ACTION_CONSTANT,
     RECEIVE_DATA_ACTION_CONSTANT,
     RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT,

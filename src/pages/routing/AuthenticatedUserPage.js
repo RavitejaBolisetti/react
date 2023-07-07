@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -39,7 +39,7 @@ import {
 } from 'pages/common';
 
 import { OTFMasterPage } from 'pages/Sales';
-import { TaxChargesPage } from 'pages/FinancialAccounting'
+import { TaxChargesPage, TaxChargesCategoryPage } from 'pages/FinancialAccounting';
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
 
@@ -114,6 +114,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_REPORT_OTF_REPORTS} element={<OtfReportsPage />} />
 
             <Route path={routing.ROUTING_TAX_CHARGES} element={<TaxChargesPage />} exact />
+            <Route path={routing.ROUTING_TAX_CHARGES_CATEGORY} element={<TaxChargesCategoryPage />} exact />
 
             {/* <Route path="*" element={<LoginPage />} exact /> */}
         </Routes>
