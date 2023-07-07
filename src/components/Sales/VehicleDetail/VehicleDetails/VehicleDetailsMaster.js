@@ -22,9 +22,9 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            Vechile: {
-                VechileDetail: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
-            },
+            // Vechile: {
+            //     // VehicleDetail: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
+            // },
         },
     } = state;
 
@@ -33,10 +33,10 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         typeData,
-        isDataLoaded,
+        isDataLoaded:true,
 
-        otfData,
-        isLoading,
+        otfData:[],
+        isLoading:false,
         moduleTitle,
     };
     return returnValue;
@@ -59,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 const VechileDetailsMasterBase = (props) => {
     const { typeData, listConsultantShowLoading } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
+    const { form, selectedOrderId, formActionType, handleFormValueChange,  salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -88,13 +88,6 @@ const VechileDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
-
-    useEffect(() => {
-        if (!isSalesConsultantDataLoaded && userId) {
-            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isSalesConsultantDataLoaded, userId]);
 
     const onFinish = (values) => {
         const recordId = otfData?.id || '';
