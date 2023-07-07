@@ -32,7 +32,6 @@ const AddEditFormMain = (props) => {
     const [corporateType, setCorporateType] = useState('');
 
     const [showStatus, setShowStatus] = useState('');
-
     useEffect(() => {
         if (showStatus.status === 'done') {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name} file uploaded successfully` });
@@ -46,6 +45,13 @@ const AddEditFormMain = (props) => {
         setCorporateType(formData?.corporateType);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData?.corporateType]);
+
+    useEffect(() => {
+
+        setWhatsAppConfiguration({ contactOverWhatsApp: formData?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: formData?.mobileNumberAsWhatsappNumber });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    },[formData])
 
     const onDrop = (e) => {};
 
@@ -244,19 +250,25 @@ const AddEditFormMain = (props) => {
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Contact over WhatsApp?" initialValue={formData?.whatsappCommunicationIndicator} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
-                                    <Switch onChange={(prev) => setWhatsAppConfiguration({ ...prev, contactOverWhatsApp: true })} defaultChecked={formData?.whatsappCommunicationIndicator} checked={contactOverWhatsApp} />
+                                    <Switch
+                                        onChange={(prev) => {
+                                            if (!prev) {
+                                                form.setFieldsValue({ whatsAppNumber: null });
+                                                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsAppActive: true });
+                                            }
+                                        }}
+                                        checked={contactOverWhatsApp}
+                                    />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Want to use mobile no as WhatsApp no?" initialValue={formData?.mobileNumberAsWhatsappNumber} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
                                     <Switch
+                                        disabled={sameMobileNoAsWhatsAppActive}
                                         onChange={() => {
-                                            setWhatsAppConfiguration({ ...whatsAppConfiguration, contactOverWhatsApp: false });
                                             form.validateFields(['whatsAppNumber']);
                                         }}
-                                        disabled={sameMobileNoAsWhatsAppActive}
                                         checked={sameMobileNoAsWhatsApp}
-                                        defaultChecked={formData?.whatsappCommunicationIndicator}
                                     />
                                 </Form.Item>
                             </Col>

@@ -92,25 +92,32 @@ const CustomerDetailMasterBase = (props) => {
     const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [supportingDataView, setSupportingDataView] = useState();
 
-    const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: false, contactOverWhatsAppActive: false, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsAppActive: true });
-    console.log('🚀 ~ file: CustomerDetailMaster.js:96 ~ CustomerDetailMasterBase ~ whatsAppConfiguration:', whatsAppConfiguration);
+    const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: null, contactOverWhatsAppActive: null, sameMobileNoAsWhatsApp: null, sameMobileNoAsWhatsAppActive: null });
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+    useEffect(() => {
+        const { contactOverWhatsApp, sameMobileNoAsWhatsApp } = whatsAppConfiguration;
+    }, [whatsAppConfiguration]);
 
     useEffect(() => {
         if (isDataLoaded) {
             form.setFieldsValue({ ...data });
             setFormData(data);
-            // setWhatsAppConfiguration({ ...whatsAppConfiguration, contactOverWhatsApp: data?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: data?.mobileNumberAsWhatsappNumber });
+            // setWhatsAppConfiguration({ contactOverWhatsApp: data?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: data?.mobileNumberAsWhatsappNumber });
             handleFormFieldChange(data);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded]);
+
+    useEffect(() => {
         return () => {
             resetData();
         };
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
+    }, []);
 
     useEffect(() => {
         if (userId && !isCorporateLovDataLoaded) {
@@ -285,23 +292,24 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const handleFormFieldChange = (data = undefined) => {
-        const { whatsappCommunicationIndicator, mobileNumberAsWhatsappNumber, whatsAppNumber, mobileNumber } = data || form.getFieldsValue();
-
-        setWhatsAppConfiguration({ ...whatsAppConfiguration, contactOverWhatsApp: data?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: data?.mobileNumberAsWhatsappNumber });
+        const { whatsappCommunicationIndicator, mobileNumberAsWhatsappNumber, whatsAppNumber, mobileNumber } = form.getFieldsValue();
 
         if (whatsappCommunicationIndicator) {
             if (whatsappCommunicationIndicator && mobileNumberAsWhatsappNumber) {
                 form.setFieldsValue({ whatsAppNumber: mobileNumber });
+                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsApp: true, contactOverWhatsApp: true });
             } else {
                 form.setFieldsValue({ whatsAppNumber: whatsAppNumber });
+                setWhatsAppConfiguration({ contactOverWhatsAppActive: false, sameMobileNoAsWhatsAppActive: false, contactOverWhatsApp: true });
             }
-            setWhatsAppConfiguration({ ...whatsAppConfiguration, contactOverWhatsAppActive: false, sameMobileNoAsWhatsApp: !mobileNumberAsWhatsappNumber, sameMobileNoAsWhatsAppActive: whatsappCommunicationIndicator && mobileNumberAsWhatsappNumber });
         } else if (!whatsappCommunicationIndicator) {
             if (mobileNumberAsWhatsappNumber) {
-                form.setFieldsValue({ mobileNumberAsWhatsappNumber: false });
+                form.setFieldsValue({ mobileNumberAsWhatsappNumber: null });
+                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false });
+            } else {
+                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsAppActive: true });
+                form.setFieldsValue({ whatsAppNumber: null });
             }
-            setWhatsAppConfiguration({ ...whatsAppConfiguration, contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: !mobileNumberAsWhatsappNumber, sameMobileNoAsWhatsAppActive: true });
-            form.setFieldsValue({ whatsAppNumber: null });
         }
     };
 
