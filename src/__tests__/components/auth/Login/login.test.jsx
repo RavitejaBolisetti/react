@@ -15,12 +15,12 @@ describe('Login Form Component', () => {
         customRender(<Logins />);
         const forgetLink = screen.getByRole('link', { name: /Forgot Password?/i });
         expect(forgetLink.getAttribute('href')).toBe('/forgot-password');
-    })
+    });
     it('should check application home event event', async () => {
         customRender(<Logins />);
         const loginLink = screen.getByRole('link', { name: /M&M User Login/i });
         expect(loginLink.getAttribute('href')).toBe('/');
-    })
+    });
     it("should render login form input field username and password", async () => {
         customRender(<Logins />);
         const inputBox = screen.getByRole("textbox");
@@ -33,6 +33,6 @@ describe('Login Form Component', () => {
                 name: /Login/i
             });
             fireEvent.click(Login);   
-        )};   
+        });   
     });
 });

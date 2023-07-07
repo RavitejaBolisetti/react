@@ -21,7 +21,7 @@ describe('Forgot Password Component render', () => {
                     name: /verify user/i
                 });
                 fireEvent.click(verifyUserButton); 
-            )};     
+            });     
         });
     it('should check back to login button event', async () => {
         customRender(<ForgotPassword />);
