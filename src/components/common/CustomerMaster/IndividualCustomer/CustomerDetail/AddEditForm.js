@@ -10,6 +10,8 @@ import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
+import UploadUtils from 'components/common/CustomerMaster/Common/UploadUtils';
+
 import { BiTimeFive } from 'react-icons/bi';
 import { FiEye, FiTrash } from 'react-icons/fi';
 
@@ -110,7 +112,7 @@ const AddEditFormMain = (props) => {
         } else if (value === 'LIS') {
             form.setFieldsValue({
                 corporateCode: null,
-                corporateName: null
+                corporateName: null,
             });
         }
     };
@@ -253,8 +255,9 @@ const AddEditFormMain = (props) => {
                             {editMode && (
                                 <>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                                            <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps}>
+                                        <UploadUtils {...props} {...uploadProps} setUploadImgDocId={setUploadImgDocId} />
+                                        {/* <div className={styles.uploadContainer} style={{ opacity: '100' }}> */}
+                                        {/* <Dragger setUploadImgDocId={setFileList} fileList={fileList} customRequest={handleUpload} {...uploadProps}>
                                                 <div>
                                                     <img src={Svg} alt="" />
                                                 </div>
@@ -268,11 +271,11 @@ const AddEditFormMain = (props) => {
                                                             </span>
                                                         </>
                                                     }
-                                                />
-
+                                                /> */}
+                                        {/* 
                                                 <Button type="primary">Upload File</Button>
                                             </Dragger>
-                                        </div>
+                                        </div> */}
                                     </Col>
                                 </>
                             )}
