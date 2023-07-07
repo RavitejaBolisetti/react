@@ -10,7 +10,6 @@ import { Button, Col, Row, Form, Empty, ConfigProvider } from 'antd';
 import { RxCross2 } from 'react-icons/rx';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
-import { showGlobalNotification } from 'store/actions/notification';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { tableColumn } from './tableColumn';
@@ -62,7 +61,6 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: customerDetailDataActions.setFilter,
             resetData: customerDetailDataActions.reset,
             listShowLoading: customerDetailDataActions.listShowLoading,
-            showGlobalNotification,
         },
         dispatch
     ),

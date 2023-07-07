@@ -16,6 +16,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import AddEditForm from './AddEditForm';
 import ViewContactList from './ViewContactList';
+
 import { CustomerFormButton } from '../../CustomerFormButton';
 import { CardSkeleton } from 'components/common/Skeleton';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';

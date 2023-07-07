@@ -12,7 +12,6 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
-
 const ViewDetailMain = (props) => {
     const { formData, isLoading } = props;
     const [activeKey, setactiveKey] = useState([1]);
