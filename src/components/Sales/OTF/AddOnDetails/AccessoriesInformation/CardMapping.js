@@ -13,7 +13,6 @@ const { Text } = Typography;
 const CardMapping = ({ index, AddEditFormProps, handleDelete, element, isEditing, setisEditing }) => {
     const [editCardForm, seteditCardForm] = useState(false);
     const { accessoryForm, setsearchData, setaddButtonDisabled, addButtonDisabled, showGlobalNotification } = AddEditFormProps;
-    console.log('element', element);
     const handleEdit = (index) => {
         seteditCardForm(true);
         setisEditing(true);
@@ -33,16 +32,18 @@ const CardMapping = ({ index, AddEditFormProps, handleDelete, element, isEditing
             <Card className={style.viewCardSize}>
                 <Row>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Space style={{ display: 'flex' }}>
+                        <Space>
                             <Text strong>{element?.partDescription}</Text>
                             <Text strong> {'|'}</Text>
                             <Text strong> {element?.partNumber}</Text>
                         </Space>
-                        <Space style={{ display: 'flex' }}>
-                            <Text type="secondary">{element?.requiredQuantity}</Text>
-                        </Space>
+                        <Row>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                <Text type="secondary">{element?.requiredQuantity}</Text>
+                            </Col>
+                        </Row>
                     </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} style={{ display: 'flex', justifyContent: 'end' }}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={style.editIcon}>
                         <Space size="large" className={isEditing || addButtonDisabled?.partDetailsResponses ? style.disabledClass : ''}>
                             <Button
                                 disabled={isEditing || addButtonDisabled?.partDetailsResponses}

@@ -3,15 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Divider } from 'antd';
+import React from 'react';
+import { Col, Input, Form, Row, Select, Button} from 'antd';
 import { preparePlaceholderText,preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import styles from 'components/common/Common.module.css';
 import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validateRequiredSelectField } from 'utils/validation';
 
 const OptionServicesFormMain = (props) => {
-    const { typeData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, addContactHandeler, showGlobalNotification, selectedOrderId, onErrorAction, formData, fetchList, userId, listShowLoading, saveData, onSuccessAction, optionForm, setOpenAccordian } = props;
+    const { typeData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, showGlobalNotification,  formData, optionForm } = props;
     const isServiceNamePresent = (serviceName) => {
         let found = false;
         optionsServiceModified?.find((element, index) => {

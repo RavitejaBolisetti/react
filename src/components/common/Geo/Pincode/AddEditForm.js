@@ -30,19 +30,17 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
-
     const handleCountryChange = (countryCode) => {
         form.setFieldValue('stateCode', undefined);
         form.setFieldValue('districtCode', undefined);
         form.setFieldValue('cityCode', undefined);
         form.setFieldValue('tehsilCode', undefined);
 
-        setFilteredStateData(stateData?.filter((i) => i?.countryCode === countryCode));
+        setFilteredStateData(stateData?.filter((i) => i?.parentKey === countryCode));
         setFilteredDistrictData([]);
         setFilteredCityData([]);
         setFilteredTehsilData([]);
     };
-
     const handleStateChange = (state) => {
         form.setFieldValue('districtCode', undefined);
         form.setFieldValue('cityCode', undefined);

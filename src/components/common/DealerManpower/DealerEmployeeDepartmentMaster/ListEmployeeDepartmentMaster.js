@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -224,10 +224,20 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
 
     const handleResetFilter = () => {
         setFilterString();
-        resetData();
         listFilterForm.resetFields();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
+    };
+
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
+        }
+        else if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
     };
 
     const drawerTitle = useMemo(() => {
@@ -290,11 +300,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         }
     };
 
-    const handleClearInSearch = (e) => {
-        if (e.target.value.length > 2) {
-            listFilterForm.validateFields(['code']);
-        }
-    };
+  
 
     const removeFilter = (key) => {
         const { [key]: names, ...rest } = filterString;

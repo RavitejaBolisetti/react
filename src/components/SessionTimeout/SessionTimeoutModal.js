@@ -10,7 +10,7 @@ import { withModal } from 'components/withModal';
 import styles from './SessionTimeoutModal.module.css';
 
 const SessionTimeoutModalMain = (props) => {
-    const { remaining, onCloseAction } = props;
+    const { remaining, handleLogoutAction, handleSessionContinueAction } = props;
     const seconds = remaining > 1 ? 'seconds' : 'second';
     return (
         <>
@@ -19,18 +19,23 @@ const SessionTimeoutModalMain = (props) => {
                     Your session is about to expire. You will be logged out <br />
                     in{' '}
                     <b>
-                        {' '}
                         {remaining} {seconds}
                     </b>
                     . Click "Continue" if you want to continue and stay logged in.
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Button onClick={onCloseAction} htmlType="submit" type="primary" className={styles.button}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Button onClick={handleLogoutAction} danger className={styles.button}>
+                        Logout
+                    </Button>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Button onClick={handleSessionContinueAction} htmlType="submit" type="primary" className={styles.button}>
                         Continue
                     </Button>
                 </Col>
+
             </Row>
         </>
     );

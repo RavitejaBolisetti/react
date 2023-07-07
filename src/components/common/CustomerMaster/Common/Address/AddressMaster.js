@@ -5,13 +5,11 @@
  */
 import React, { useState, useReducer, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Collapse, Divider, Form, Space, Row, Col, Typography, Button, Empty } from 'antd';
+import { Collapse, Divider, Form, Space, Row, Col, Typography, Button, Empty, Card } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { expandIcon } from 'utils/accordianExpandIcon';
 
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
@@ -23,8 +21,8 @@ import { addressCorporateDataActions } from 'store/actions/data/customerMaster/c
 
 import AddEditForm from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
-import { InputSkeleton } from 'components/common/Skeleton';
 import ViewAddressList from './ViewAddressList';
+import { CardSkeleton } from 'components/common/Skeleton';
 import { LANGUAGE_EN } from 'language/en';
 
 const { Panel } = Collapse;
@@ -37,7 +35,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: addData = [] },
             CustomerMaster: {
                 AddressIndividual: { isLoaded: isAddressLoaded = false, isLoading: isAddressLoading, data: addressIndData = [] },
-                CorporateAddress: { isLoaded: isCompanyAddressLoaded = false, isLoading: isCompanyAddressLoading, data: addressCompanyData = [] },
+                CorporateAddress: { isLoaded: isCompanyAddressLoaded = false, isLoading: isCorporateAddressLoading, data: addressCompanyData = [] },
             },
             Geo: {
                 Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
@@ -52,6 +50,7 @@ const mapStateToProps = (state) => {
         isAddressLoaded,
         isCompanyAddressLoaded,
         isAddressLoading,
+        isCorporateAddressLoading,
         addData: addData && addData[PARAM_MASTER.ADD_TYPE.id],
         isPinCodeDataLoaded,
         isPinCodeLoading,
@@ -86,7 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
 const AddressMasterBase = (props) => {
     const { form, isViewModeVisible, section, addressIndData, formActionType, addressCompanyData, selectedCustomer, saveData, addData } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, buttonData, setButtonData, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification, handleButtonClick } = props;
-    const { fetchListCorporate, saveDataCorporate, customerType, resetData, resetDataCorporate, NEXT_ACTION } = props;
+    const { isAddressLoading, isCorporateAddressLoading, fetchListCorporate, saveDataCorporate, customerType, resetData, resetDataCorporate, NEXT_ACTION } = props;
 
     const [addressForm] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
@@ -112,7 +111,7 @@ const AddressMasterBase = (props) => {
         if (userId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id && addressIndData?.customerAddress) {
                 setAddressData(addressIndData?.customerAddress);
-            } else if(addressCompanyData?.customerAddress) {
+            } else if (addressCompanyData?.customerAddress) {
                 setAddressData(addressCompanyData?.customerAddress);
             }
         }
@@ -120,11 +119,10 @@ const AddressMasterBase = (props) => {
     }, [addressIndData?.customerAddress, addressCompanyData?.customerAddress]);
 
     useEffect(() => {
-        
         if (!formActionType?.addMode && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
-            } else if(customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
+            } else if (customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
                 fetchListCorporate({ setIsLoading: listShowLoading, userId, extraParams });
             }
         }
@@ -134,10 +132,6 @@ const AddressMasterBase = (props) => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer?.customerId]);
-
-    const handleCollapse = (key) => {
-        setOpenAccordian(key);
-    };
 
     const onCheckdefaultAddClick = (e, value) => {
         e.stopPropagation();
@@ -199,7 +193,6 @@ const AddressMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        
         return;
     };
 
@@ -254,52 +247,59 @@ const AddressMasterBase = (props) => {
         ...props,
     };
 
+    const formSkeleton = (
+        <Row>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <CardSkeleton height={'100vh'} />
+            </Col>
+        </Row>
+    );
+
     return (
         <>
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>
-
-                        <Collapse onChange={() => handleCollapse(1)} activeKey={openAccordian}>
-                            <Panel
-                                header={
-                                    <>
-                                        <Space>
-                                            <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Address' : 'Company Address'}</Text>
-                                            {!isViewModeVisible && !formActionType?.viewMode && (
-                                                <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary" disabled={isAdding || isEditing}>
-                                                    Add
-                                                </Button>
+                        <Card className="">
+                            {isAddressLoading || isCorporateAddressLoading ? (
+                                formSkeleton
+                            ) : (
+                                <>
+                                    <Row type="flex" align="middle">
+                                        <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Address' : 'Company Address'}</Text>
+                                        {!isViewModeVisible && !formActionType?.viewMode && (
+                                            <Button onClick={addAddressHandeler} icon={<PlusOutlined />} type="primary" disabled={isAdding || isEditing}>
+                                                Add
+                                            </Button>
+                                        )}
+                                    </Row>
+                                    <Divider className={styles.marT20} />
+                                    <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
+                                        <div className={styles.headerBox}>
+                                            {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
+                                            {!addressData?.length && !isAdding ? (
+                                                <>
+                                                    <Empty
+                                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                        imageStyle={{
+                                                            height: 60,
+                                                        }}
+                                                        description={
+                                                            <span>
+                                                                {noDataTitle} <br />
+                                                            </span>
+                                                        }
+                                                    ></Empty>
+                                                </>
+                                            ) : (
+                                                <ViewAddressList {...formProps} />
                                             )}
-                                        </Space>
-                                        <Divider type="vertical" />
-                                    </>
-                                }
-                                key="1"
-                                showArrow={false}
-                            >
-                                {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                {!addressData?.length && !isAdding ? (
-                                    <>
-                                        <Divider />
-                                        <Empty
-                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                            imageStyle={{
-                                                height: 60,
-                                            }}
-                                            description={
-                                                <span>
-                                                    {noDataTitle} <br />
-                                                </span>
-                                            }
-                                        ></Empty>
-                                    </>
-                                ) : (
-                                    <ViewAddressList {...formProps} />
-                                )}
-                            </Panel>
-                        </Collapse>
+                                        </div>
+                                    </Space>
+                                </>
+                            )}
+                        </Card>
                     </Col>
                 </Row>
                 <Row>

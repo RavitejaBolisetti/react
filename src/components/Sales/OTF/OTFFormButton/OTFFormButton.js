@@ -4,12 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, Popover } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from './OTFFormButton.module.css';
 
 export const OTFFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+    const content = <div>Coming Soon</div>;
     return (
         <Row gutter={20} className={styles.formFooter}>
             <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>
@@ -34,39 +35,51 @@ export const OTFFormButton = ({ record, onCloseAction, buttonData, setButtonData
                 )}
 
                 {buttonData?.transferBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER, record })} type="primary">
-                        Transfer
-                    </Button>
+                    <Popover content={content} trigger="hover">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER, record })} type="primary">
+                            Transfer
+                        </Button>
+                    </Popover>
                 )}
 
                 {buttonData?.allotBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} type="primary">
-                        Allot
-                    </Button>
+                    <Popover content={content} trigger="hover">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} type="primary">
+                            Allot
+                        </Button>
+                    </Popover>
                 )}
 
                 {buttonData?.unAllot && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
-                        Un-Allot
-                    </Button>
+                    <Popover content={content} trigger="hover">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
+                            Un-Allot
+                        </Button>
+                    </Popover>
                 )}
 
                 {buttonData?.invoiceBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.INVOICE, record })} type="primary">
-                        Invoice
-                    </Button>
+                    <Popover content={content} trigger="hover">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.INVOICE, record })} type="primary">
+                            Invoice
+                        </Button>
+                    </Popover>
                 )}
 
                 {buttonData?.deliveryNoteBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.DELIVERY_NOTE, record })} type="primary">
-                        Delivery Note
-                    </Button>
+                    <Popover content={content} trigger="hover">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.DELIVERY_NOTE, record })} type="primary">
+                            Delivery Note
+                        </Button>
+                    </Popover>
                 )}
 
                 {buttonData?.cancelOtfBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                        Cancel OTF
-                    </Button>
+                    <Popover content={content} trigger="hover">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
+                            Cancel OTF
+                        </Button>
+                    </Popover>
                 )}
 
                 {buttonData?.transferOtfBtn && (

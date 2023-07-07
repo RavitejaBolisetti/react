@@ -5,5 +5,5 @@
  */
 
 export const getCodeValue = (type, key) => {
-    return Object.values(type).find((i) => i.key === key)?.value || 'NA';
+    return type && key ? Object.values(type).find((i) => i.key === key)?.value : 'NA';
 };

@@ -6,16 +6,12 @@
 import React from 'react';
 import MenuNav from './MenuNav';
 import ProfileDetailCard from './ProfileDetailCard';
-import styles from 'components/common/Common.module.css';
 const LeftSidebar = (props) => {
-    const { formActionType: { addMode } = undefined } = props;
-
+    const { selectedCustomerId } = props;
     return (
         <>
-            {!addMode && <ProfileDetailCard {...props} />}
-            <div>
-                <MenuNav {...props} />
-            </div>
+            {selectedCustomerId && <ProfileDetailCard {...props} />}
+            <MenuNav {...props} />
         </>
     );
 };

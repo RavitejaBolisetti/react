@@ -4,31 +4,30 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Input, Form, Button } from 'antd';
+import { Row, Col, Input, Form } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
-const AMCForm = ({ formData, amcForm, setformDataSetter, formDataSetter, handleFormValueChange }) => {
+const AMCForm = ({ formData, amcForm, setformDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
 
     useEffect(() => {
-        if (formData === undefined) {
+        if ((formData === undefined || formData?.id === null || formData?.id === '') && !formActionType?.viewMode) {
             setisReadOnly(false);
         } else {
             setisReadOnly(true);
             amcForm.setFieldsValue({
-                amc: formData?.amc?.amc ? formData?.amc?.amc : null,
-                amcRate: formData?.amc?.amcRate ? formData?.amc?.amcRate : null,
+                amc: formData?.amc?.amc ? formData?.amc?.amc : !formActionType?.viewMode ? null : 'NA',
+                amcRate: formData?.amc?.amcRate ? formData?.amc?.amcRate : !formActionType?.viewMode ? null : 'NA',
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const onFieldsChange = () => {};
-
     const onFinishFailed = () => {};
     const onValuesChange = (values) => {
         const Myvalues = amcForm.getFieldsValue();
-        setformDataSetter({ ...formDataSetter, amc: { ...Myvalues } });
+        setformDataSetter({ ...formDataSetter, shield: { ...Myvalues } });
     };
 
     return (
@@ -40,7 +39,7 @@ const AMCForm = ({ formData, amcForm, setformDataSetter, formDataSetter, handleF
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="AMC Rate" name="amcRate">
+                    <Form.Item label="AMC Rate" name="amcRate" rules={[validateNumberWithTwoDecimalPlaces('AMC Rate')]}>
                         <Input disabled={isReadOnly} placeholder={preparePlaceholderText('amc rate')} />
                     </Form.Item>
                 </Col>

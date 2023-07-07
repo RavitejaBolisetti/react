@@ -16,7 +16,7 @@
 }
 
 .bigDrawerStyle :global .ant-collapse>.ant-collapse-item {
-    border-bottom: none;
+    border-bottom: none !important;
 }
 
 .myDrawerStyle :global .ant-drawer-body::-webkit-scrollbar-track {

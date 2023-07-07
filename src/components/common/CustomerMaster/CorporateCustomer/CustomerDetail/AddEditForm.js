@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Space, Divider, Card, Button } from 'antd';
 
 import { validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -12,11 +12,19 @@ import { BiLockAlt } from 'react-icons/bi';
 import { CheckOutlined } from '@ant-design/icons';
 import { ValidateMobileNumberModal } from '../../IndividualCustomer/CustomerDetail/ValidateMobileNumberModal';
 
+import { PARAM_MASTER } from 'constants/paramMaster';
+
 const AddEditFormMain = (props) => {
     const { typeData, formData, form, corporateLovData, formActionType: { editMode } = undefined, validateParentCode, customerType, customerParentCompanyData } = props;
     const [corporateType, setCorporateType] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
+
+    useEffect(() => {
+        setCorporateType(formData?.corporateType);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData?.corporateType]);
 
     const handleCorporateChange = (value) => {
         setCorporateType(value);
@@ -24,13 +32,11 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 corporateName: null,
             });
-        }else if(value === 'LIS') {
+        } else if (value === 'LIS') {
             form.setFieldsValue({
                 corporateCode: null,
             });
         }
-            
-
     };
 
     const onHandleSelect = (value) => {
@@ -100,7 +106,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                            <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['CUST_TYPE']} allowClear></Select>
+                            <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.[PARAM_MASTER?.CUST_TYPE?.id]} allowClear></Select>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -139,7 +145,7 @@ const AddEditFormMain = (props) => {
 
                     {(corporateType === 'LIS' || corporateType === '') && (
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={corporateType === 'LIS' ?  formData?.corporateCode : ''} label="Corporate Code" name="corporateCode" data-testid="corporate code" rules={[validateRequiredInputField('corporate name')]}>
+                            <Form.Item initialValue={corporateType === 'LIS' ? formData?.corporateCode : ''} label="Corporate Code" name="corporateCode" data-testid="corporate code" rules={[validateRequiredInputField('corporate name')]}>
                                 <Input placeholder={preparePlaceholderText('parent company name')} disabled />
                             </Form.Item>
                         </Col>

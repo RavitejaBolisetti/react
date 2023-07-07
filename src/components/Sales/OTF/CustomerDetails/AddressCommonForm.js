@@ -5,11 +5,12 @@
  */
 import React from 'react';
 import { Col, Input, Form, Row, DatePicker } from 'antd';
-import dayjs from 'dayjs';
+
+import { disableFutureDate } from 'utils/disableDate';
+import { convertCalenderDate } from 'utils/formatDateTime';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateEmailField, validatePincodeField, validateMobileNoField, validatePanField, validateAadhar, validateDrivingLicenseNoWithSpace, validateGSTIN } from 'utils/validation';
-import { disableFutureDate } from 'utils/disableDate';
 
 export const AddressCommonForm = (props) => {
     const { formActionType, formType, formData } = props;
@@ -108,9 +109,9 @@ export const AddressCommonForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    {/* <Form.Item name={[formType, 'birthDate']} initalValue={formData?.birthDate && dayjs(formData?.birthDate, 'YYYY/MM/DD')} label="Birth Date">
+                    <Form.Item name={[formType, 'birthDate']} label="Birth Date">
                         <DatePicker disabledDate={disableFutureDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
-                    </Form.Item> */}
+                    </Form.Item>
                 </Col>
             </Row>
         </>

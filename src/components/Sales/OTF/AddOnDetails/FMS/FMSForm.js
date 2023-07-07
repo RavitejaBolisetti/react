@@ -6,20 +6,20 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
-const FMSForm = ({ formData, fmsForm, setformDataSetter, formDataSetter, handleFormValueChange }) => {
+const FMSForm = ({ formData, fmsForm, setformDataSetter, formDataSetter, formActionType, handleFormValueChange }) => {
     const [isReadOnly, setisReadOnly] = useState(false);
 
-    const onFieldsChange = () => {};
     const onFinishFailed = () => {};
     useEffect(() => {
-        if (formData === undefined) {
+        if ((formData === undefined || formData?.id === null || formData?.id === '') && !formActionType?.viewMode) {
             setisReadOnly(false);
         } else {
             setisReadOnly(true);
             fmsForm.setFieldsValue({
-                fms: formData?.fms?.fms ? formData?.fms?.fms : null,
-                fmsRate: formData?.fms?.fmsRate ? formData?.fms?.fmsRate : null,
+                fms: formData?.fms?.fms ? formData?.fms?.fms : !formActionType?.viewMode ? null : 'NA',
+                fmsRate: formData?.fms?.fmsRate ? formData?.fms?.fmsRate : !formActionType?.viewMode ? null : 'NA',
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,7 +38,7 @@ const FMSForm = ({ formData, fmsForm, setformDataSetter, formDataSetter, handleF
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item label="FMS Rate" name="fmsRate">
+                    <Form.Item label="FMS Rate" name="fmsRate" rules={[validateNumberWithTwoDecimalPlaces('FMS Rate')]}>
                         <Input disabled={isReadOnly} placeholder={preparePlaceholderText('fms rate')} />
                     </Form.Item>
                 </Col>

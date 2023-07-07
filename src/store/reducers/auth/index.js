@@ -22,7 +22,7 @@ export const auth = (state = initialState, action) => {
             return { ...state, isUnauthenticated: false };
 
         case AUTH_LOGIN_SUCCESS:
-            const { token, accessToken, userName, userId, passwordStatus, exp, clientId } = action;
+            const { token, accessToken, refreshToken, userName, userId, passwordStatus, exp, clientId } = action;
             return {
                 ...state,
                 isUnauthenticated: false,
@@ -32,6 +32,7 @@ export const auth = (state = initialState, action) => {
                 isLoggedIn: true,
                 token,
                 accessToken,
+                refreshToken,
                 userName,
                 userId,
                 passwordStatus,
