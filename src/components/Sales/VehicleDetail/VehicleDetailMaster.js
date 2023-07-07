@@ -12,18 +12,18 @@ import { tableColumn } from './tableColumn';
 import AdvanceOtfFilter from './AdvanceOtfFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
-import { OTFMainConatiner } from './OTFMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
-import { OTF_STATUS } from 'constants/OTFStatus';
-import { OTF_SECTION } from 'constants/OTFSection';
+import { VehicleDetailMainContainer } from './VehicleDetailMainContainer';
+
+import { VEHICLE_DETAIL_STATUS } from 'constants/VehicleDetailStatus';
+import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
+import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
-import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
+import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-import { validateOTFMenu } from './utils/validateOTFMenu';
 import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
@@ -31,25 +31,25 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            OTF: {
-                OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
-                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString },
-            },
+            // Vehicle: {
+            //     VehicleDetail: { isLoaded: isDataLoaded = false, isLoading, isDetailLoaded, detailData: vehicleDetailData = [], data, filter: filterString },
+            // },
         },
     } = state;
-    const moduleTitle = 'Order Tracking Form';
+
+    const moduleTitle = 'Vechile Details';
+
     let returnValue = {
         userId,
-        typeData,
-        isDataLoaded,
-        data: data?.otfDetails,
-        otfStatusList: Object.values(OTF_STATUS),
-        otfData,
-        isLoading,
+        typeData: typeData[PARAM_MASTER.CUST_MST.id],
+        isDataLoaded: true,
+        data: [],
+        otfStatusList: Object.values(VEHICLE_DETAIL_STATUS),
+        vehicleDetailData: [],
         moduleTitle,
-        isOTFSearchLoading,
-        isSearchDataLoaded,
-        filterString,
+        isLoading: false,
+        isDetailLoaded: true,
+        filterString: '',
     };
     return returnValue;
 };
@@ -58,20 +58,19 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchOTFSearchedList: otfSearchListAction.fetchList,
-            setFilterString: otfSearchListAction.setFilter,
-            resetData: otfSearchListAction.reset,
-            fetchList: otfDetailsDataActions.fetchList,
-            saveData: otfDetailsDataActions.saveData,
-            listShowLoading: otfDetailsDataActions.listShowLoading,
+            fetchList: vehicleDetailDataActions.fetchList,
+            fetchDetail: vehicleDetailDataActions.fetchDetail,
+            listShowLoading: vehicleDetailDataActions.listShowLoading,
+            setFilterString: vehicleDetailDataActions.setFilter,
+            resetData: vehicleDetailDataActions.reset,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const OtfMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
+export const VehicleDetailMasterBase = (props) => {
+    const { fetchList, saveData, isLoading, listShowLoading, userId, fetchDetail, data, vehicleDetailData } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -116,6 +115,7 @@ export const OtfMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
+    const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -135,7 +135,7 @@ export const OtfMasterBase = (props) => {
                 key: 'searchType',
                 title: 'Type',
                 value: filterString?.searchType,
-                name: typeData?.[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value,
+                name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
                 canRemove: false,
                 filter: true,
             },
@@ -167,7 +167,7 @@ export const OtfMasterBase = (props) => {
                 key: 'otfStatus',
                 title: 'OTF Status',
                 value: filterString?.otfStatus,
-                name: otfStatusList?.find((i) => i?.key === filterString?.otfStatus)?.desc,
+                name: otfStatusList?.find((i) => i?.title === filterString?.otfStatus)?.desc,
                 canRemove: true,
                 filter: true,
             },
@@ -190,24 +190,16 @@ export const OtfMasterBase = (props) => {
     }, [filterString]);
 
     useEffect(() => {
-        return () => {
-            resetData();
-            setFilterString();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
         if (userId) {
-            fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
 
     useEffect(() => {
-        const defaultSection = OTF_SECTION.OTF_DETAILS.id;
+        const defaultSection = VEHICLE_DETAIL_SECTION.VEHICLE_DETAILS.id;
         setDefaultSection(defaultSection);
-        setSetionName(OTF_SECTION);
+        setSetionName(VEHICLE_DETAIL_SECTION);
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -243,7 +235,7 @@ export const OtfMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
-                const nextSection = Object.values(sectionName)?.find((i) => validateOTFMenu({ item: i, status: selectedOrder?.orderStatus, otfData }) && i.id > currentSection);
+                const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
@@ -265,11 +257,11 @@ export const OtfMasterBase = (props) => {
 
     const onFinishSearch = (values) => {};
 
-    const handleResetFilter = (e) => {
-        setShowDataLoading(true);
-        setFilterString();
-        advanceFilterForm.resetFields();
-    };
+    // const handleResetFilter = (e) => {
+    //     setFilterString();
+    //     setShowDataLoading(true);
+    //     advanceFilterForm.resetFields();
+    // };
 
     const onFinish = (values) => {
         const recordId = formData?.parentId || form.getFieldValue('parentId');
@@ -325,6 +317,30 @@ export const OtfMasterBase = (props) => {
         showAddButton: false,
     };
 
+    const handleSearchTypeChange = (searchType) => {
+        if (searchType === 'mobileNumber') {
+            setOtfSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
+        } else if (searchType === 'customerName') {
+            setOtfSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
+        } else if (searchType === 'otfNumber') {
+            setOtfSearchRules({ rules: [validateRequiredInputField('OTF Number')] });
+        } else {
+            // searchForm.setFieldsValue({ searchParam: undefined, searchType: undefined });
+            // setFilterString({ ...filterString, searchParam: undefined, searchType: undefined });
+        }
+    };
+
+    const handleSearchParamSearch = (values) => {
+        searchForm
+            .validateFields()
+            .then((values) => {
+                setFilterString({ ...values, advanceFilter: true });
+            })
+            .catch((err) => {
+                return;
+            });
+    };
+
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         form.resetFields();
@@ -340,7 +356,7 @@ export const OtfMasterBase = (props) => {
         }
     };
 
-    const title = 'Search OTF';
+    const title = 'Search Model';
 
     const advanceFilterResultProps = {
         extraParams,
@@ -353,15 +369,18 @@ export const OtfMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        handleResetFilter,
-        advanceFilterForm,
+        // handleResetFilter,
 
         title,
         data,
         setAdvanceSearchVisible,
         typeData,
+        otfSearchRules,
+        setOtfSearchRules,
         searchForm,
         onFinishSearch,
+        handleSearchTypeChange,
+        handleSearchParamSearch,
     };
 
     const advanceFilterProps = {
@@ -371,7 +390,7 @@ export const OtfMasterBase = (props) => {
         titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,
-        handleResetFilter,
+        // handleResetFilter,
         filterString,
         setFilterString,
         advanceFilterForm,
@@ -424,7 +443,7 @@ export const OtfMasterBase = (props) => {
         handleFormValueChange,
         isLastSection,
         typeData,
-        otfData,
+        vehicleDetailData,
         saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
     };
 
@@ -433,13 +452,13 @@ export const OtfMasterBase = (props) => {
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
+                    <ListDataTable handleAdd={handleButtonClick} isLoading={isLoading} {...tableProps} showAddButton={true} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
-            <OTFMainConatiner {...containerProps} />
+            <VehicleDetailMainContainer {...containerProps} />
         </>
     );
 };
 
-export const OtfMaster = connect(mapStateToProps, mapDispatchToProps)(OtfMasterBase);
+export const VehicleDetailMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleDetailMasterBase);

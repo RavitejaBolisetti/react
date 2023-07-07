@@ -7,12 +7,13 @@ import React from 'react';
 import { Col, Input, Form, Row, DatePicker } from 'antd';
 
 import { disableFutureDate } from 'utils/disableDate';
+import { formatDateToCalenderDate } from 'utils/formatDateTime';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateEmailField, validatePincodeField, validateMobileNoField, validatePanField, validateAadhar, validateDrivingLicenseNoWithSpace, validateGSTIN } from 'utils/validation';
 
 export const AddressCommonForm = (props) => {
-    const { formType, formData, disabledProps } = props;
+    const { formActionType, formType, formData } = props;
     return (
         <>
             <Row gutter={20}>
@@ -70,46 +71,46 @@ export const AddressCommonForm = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'alternateNumber']} label="Alternate Number" initialValue={formData?.alternateNumber} rules={[validateMobileNoField('alternate Number')]}>
-                        <Input maxLength={10} placeholder={preparePlaceholderText('alternate Number')} {...disabledProps} />
+                        <Input maxLength={10} placeholder={preparePlaceholderText('alternate Number')} disabled={formActionType?.editMode ? false : true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'email']} label="Email" initialValue={formData?.email} rules={[validateEmailField('Email')]}>
-                        <Input placeholder={preparePlaceholderText('Email')} maxLength={50} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('Email')} maxLength={50} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'panNo']} label="PAN" initialValue={formData?.panNo} rules={[validateRequiredInputField('PAN'), validatePanField('PAN')]}>
-                        <Input placeholder={preparePlaceholderText('PAN')} maxLength={10} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('PAN')} maxLength={10} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'aadharNumber']} label="Aadhar" initialValue={formData?.aadharNumber} rules={[validateRequiredInputField('Aadhar'), validateAadhar('Aadhar')]}>
-                        <Input maxLength={12} placeholder={preparePlaceholderText('Aadhar')} {...disabledProps} />
+                        <Input maxLength={12} placeholder={preparePlaceholderText('Aadhar')} disabled={formActionType?.editMode ? false : true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'gstin']} label="GSTIN" initialValue={formData?.gstin} rules={[validateGSTIN('GSTIN')]}>
-                        <Input placeholder={preparePlaceholderText('GSTIN')} maxLength={15} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('GSTIN')} maxLength={15} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'drivingLicense']} label="Driving License" initialValue={formData?.drivingLicense} rules={[validateDrivingLicenseNoWithSpace('Driving License')]}>
-                        <Input placeholder={preparePlaceholderText('Driving License')} maxLength={16} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('Driving License')} maxLength={16} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'tradeLicense']} label="Trade Licence" initialValue={formData?.tradeLicense}>
-                        <Input maxLength={15} placeholder={preparePlaceholderText('Trade Licence')} {...disabledProps} />
+                        <Input maxLength={15} placeholder={preparePlaceholderText('Trade Licence')} disabled={formActionType?.editMode ? false : true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'birthDate']} label="Birth Date">
-                        <DatePicker disabledDate={disableFutureDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} {...disabledProps} />
+                    <Form.Item name={[formType, 'birthDate']} initalValue={formatDateToCalenderDate(formData?.birthDate)} label="Birth Date">
+                        <DatePicker disabledDate={disableFutureDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
             </Row>
