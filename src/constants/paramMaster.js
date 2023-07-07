@@ -156,4 +156,12 @@ export const PARAM_MASTER = {
         id: 'MONTH',
         title: 'Months of year',
     },
+    VH_CONTACT_TYPE: {
+        id: 'VH_CONTACT_TYPE',
+        title: 'Vehicle Contact Type',
+    },
+    VH_CONTACT_DAYS: {
+        id: 'VH_CONTACT_DAYS',
+        title: 'Vehicle Contact Days',
+    },
 };
