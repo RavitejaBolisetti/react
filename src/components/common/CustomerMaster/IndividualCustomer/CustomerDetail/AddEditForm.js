@@ -25,7 +25,7 @@ const AddEditFormMain = (props) => {
     const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
     const { setUploadedFileName, downloadFileFromList, fileList, setFileList, handleFormValueChange, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
 
-    const { whatsAppConfiguration, setWhatsAppConfiguration } = props;
+    const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
 
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
@@ -47,11 +47,10 @@ const AddEditFormMain = (props) => {
     }, [formData?.corporateType]);
 
     useEffect(() => {
-
         setWhatsAppConfiguration({ contactOverWhatsApp: formData?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: formData?.mobileNumberAsWhatsappNumber });
+        handleFormFieldChange();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-
-    },[formData])
+    }, [formData]);
 
     const onDrop = (e) => {};
 
@@ -110,6 +109,7 @@ const AddEditFormMain = (props) => {
         } else if (value === 'LIS') {
             form.setFieldsValue({
                 corporateCode: null,
+                corporateName: null,
             });
         }
     };

@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerDetailMasterBase = (props) => {
-    const { typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
+    const { setRefreshCustomerList, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
     const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
@@ -97,16 +97,12 @@ const CustomerDetailMasterBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-    useEffect(() => {
-        const { contactOverWhatsApp, sameMobileNoAsWhatsApp } = whatsAppConfiguration;
-    }, [whatsAppConfiguration]);
 
     useEffect(() => {
         if (isDataLoaded) {
             form.setFieldsValue({ ...data });
             setFormData(data);
             // setWhatsAppConfiguration({ contactOverWhatsApp: data?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: data?.mobileNumberAsWhatsappNumber });
-            handleFormFieldChange(data);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
@@ -208,6 +204,7 @@ const CustomerDetailMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
             setButtonData({ ...buttonData, formBtnActive: false });
+            setRefreshCustomerList(true);
 
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
@@ -243,6 +240,27 @@ const CustomerDetailMasterBase = (props) => {
         ];
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, selectedDocument });
         setSupportingDataView(supportingData);
+    };
+    const handleFormFieldChange = (data = undefined) => {
+        const { whatsappCommunicationIndicator, mobileNumberAsWhatsappNumber, whatsAppNumber, mobileNumber } = form.getFieldsValue();
+
+        if (whatsappCommunicationIndicator) {
+            if (whatsappCommunicationIndicator && mobileNumberAsWhatsappNumber) {
+                form.setFieldsValue({ whatsAppNumber: mobileNumber });
+                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsApp: true, contactOverWhatsApp: true });
+            } else {
+                form.setFieldsValue({ whatsAppNumber: whatsAppNumber });
+                setWhatsAppConfiguration({ contactOverWhatsAppActive: false, sameMobileNoAsWhatsAppActive: false, contactOverWhatsApp: true });
+            }
+        } else if (!whatsappCommunicationIndicator) {
+            if (mobileNumberAsWhatsappNumber) {
+                form.setFieldsValue({ mobileNumberAsWhatsappNumber: null });
+                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false });
+            } else {
+                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsAppActive: true });
+                form.setFieldsValue({ whatsAppNumber: null });
+            }
+        }
     };
 
     const formProps = {
@@ -281,6 +299,7 @@ const CustomerDetailMasterBase = (props) => {
         setSupportingDataView,
         whatsAppConfiguration,
         setWhatsAppConfiguration,
+        handleFormFieldChange,
     };
 
     const viewProps = {
@@ -289,28 +308,6 @@ const CustomerDetailMasterBase = (props) => {
         formData,
         styles,
         isLoading,
-    };
-
-    const handleFormFieldChange = (data = undefined) => {
-        const { whatsappCommunicationIndicator, mobileNumberAsWhatsappNumber, whatsAppNumber, mobileNumber } = form.getFieldsValue();
-
-        if (whatsappCommunicationIndicator) {
-            if (whatsappCommunicationIndicator && mobileNumberAsWhatsappNumber) {
-                form.setFieldsValue({ whatsAppNumber: mobileNumber });
-                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsApp: true, contactOverWhatsApp: true });
-            } else {
-                form.setFieldsValue({ whatsAppNumber: whatsAppNumber });
-                setWhatsAppConfiguration({ contactOverWhatsAppActive: false, sameMobileNoAsWhatsAppActive: false, contactOverWhatsApp: true });
-            }
-        } else if (!whatsappCommunicationIndicator) {
-            if (mobileNumberAsWhatsappNumber) {
-                form.setFieldsValue({ mobileNumberAsWhatsappNumber: null });
-                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false });
-            } else {
-                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsAppActive: true });
-                form.setFieldsValue({ whatsAppNumber: null });
-            }
-        }
     };
 
     return (

@@ -108,7 +108,7 @@ export const FinananceDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && selectedOrderId) {
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
+            fetchList({ setIsLoading: listShowLoading, extraParams, onErrorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -121,11 +121,11 @@ export const FinananceDetailsMasterBase = (props) => {
     }, [userId, isFinanceLovDataLoaded]);
 
     const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
-    const errorAction = (message) => {
-        // showGlobalNotification(message);
+    const onErrorAction = (message) => {
+        showGlobalNotification(message);
     };
 
     const onFinish = (values) => {
@@ -133,15 +133,9 @@ export const FinananceDetailsMasterBase = (props) => {
 
         const onSuccess = (res) => {
             form.resetFields();
-
-            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
-
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-        };
-
-        const onError = (message) => {
-            // showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -149,7 +143,7 @@ export const FinananceDetailsMasterBase = (props) => {
             method: financeData?.id ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
-            onError,
+            onError: onErrorAction,
             onSuccess,
         };
 

@@ -271,6 +271,7 @@ export const OtfMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
+    
     const onFinish = (values) => {
         const recordId = formData?.parentId || form.getFieldValue('parentId');
         let data = { ...values, parentId: recordId };
