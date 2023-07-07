@@ -74,7 +74,7 @@ const AddEditForm = (props) => {
                                 <Button className={style.marR20} onClick={onSaveFormData} type="primary">
                                     Save
                                 </Button>
-                                <Button className={style.marB20} onClick={handleCancelFormEdit} danger>
+                                <Button className={style.marB20} onClick={handleCancelFormEdit} ghost type="primary">
                                     Cancel
                                 </Button>
                             </Col>
