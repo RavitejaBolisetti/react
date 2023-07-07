@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerContacts';
-import { customerDetailIndividualDataActions } from 'store/actions/customer/customerContactsIndividual';
+import { contactDataActions } from 'store/actions/data/vehicle/contacts';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import AddEditForm from './AddEditForm';
@@ -29,9 +29,8 @@ const { Text } = Typography;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
-        customer: {
-            customerContacts: { isLoaded: isCustomerDataLoaded = false, isLoading: isCustomerDataLoading, data: customerData = [] },
-            customerContactsIndividual: { isLoaded: isCustomerIndDataLoaded = false, isLoading: isCustomerIndDataLoading, data: customerIndData = [] },
+        vehicle: {
+            ContactVehicleDetails: { isLoaded: isContactDataLoaded = false, isLoading: isContactDataLoading, data: contactData = [] },
         },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
@@ -40,14 +39,11 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isCustomerDataLoaded,
-        isCustomerDataLoading,
         typeData: typeData,
-        customerData,
 
-        isCustomerIndDataLoaded,
-        isCustomerIndDataLoading,
-        customerIndData,
+        isContactDataLoaded,
+        isContactDataLoading,
+        contactData,
     };
     return returnValue;
 };
@@ -56,15 +52,12 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchContactDetailsList: customerDetailDataActions.fetchList,
             listContactDetailsShowLoading: customerDetailDataActions.listShowLoading,
-            saveData: customerDetailDataActions.saveData,
-            resetData: customerDetailDataActions.reset,
 
-            fetchContactIndividualDetailsList: customerDetailIndividualDataActions.fetchList,
-            listContactIndividualDetailsShowLoading: customerDetailIndividualDataActions.listShowLoading,
-            saveIndividualData: customerDetailIndividualDataActions.saveData,
-            resetIndividualData: customerDetailIndividualDataActions.reset,
+            fetchContactIndividualDetailsList: contactDataActions.fetchList,
+            listContactIndividualDetailsShowLoading: contactDataActions.listShowLoading,
+            saveIndividualData: contactDataActions.saveData,
+            resetIndividualData: contactDataActions.reset,
 
             showGlobalNotification,
         },
@@ -73,8 +66,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ContactMasterMain = (props) => {
-    const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, saveData, showGlobalNotification, typeData } = props;
-    const { isCustomerIndDataLoading, isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
+    const { form, section, userId, customerType,customerData, customerIndData, listContactDetailsShowLoading, showGlobalNotification, typeData } = props;
+    const { isContactDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
     const { buttonData, setButtonData, formActionType, handleButtonClick, setSelectedCustomer, setSelectedCustomerId, NEXT_ACTION } = props;
 
     const [contactform] = Form.useForm();
@@ -104,9 +97,7 @@ const ContactMasterMain = (props) => {
         if (userId && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
-            } else if (customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
-                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
-            }
+            } 
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -221,9 +212,7 @@ const ContactMasterMain = (props) => {
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
                 fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
-            } else {
-                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
-            }
+            } 
         };
 
         const onError = (message) => {
@@ -241,9 +230,7 @@ const ContactMasterMain = (props) => {
 
         if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
             saveIndividualData(requestData);
-        } else {
-            saveData(requestData);
-        }
+        } 
 
         setShowAddEditForm(false);
         setIsEditing(false);
@@ -270,7 +257,7 @@ const ContactMasterMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>
                         <Card className="">
-                            {isCustomerIndDataLoading || isCustomerDataLoading ? (
+                            {isContactDataLoading ? (
                                 formSkeleton
                             ) : (
                                 <>
@@ -321,4 +308,4 @@ const ContactMasterMain = (props) => {
     );
 };
 
-export const ContactMaster = connect(null, null)(ContactMasterMain);
+export const ContactMaster = connect(mapStateToProps, mapDispatchToProps)(ContactMasterMain);
