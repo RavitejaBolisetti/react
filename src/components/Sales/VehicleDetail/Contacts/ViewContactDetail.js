@@ -3,16 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-/*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
- *   All rights reserved.
- *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
- */
-/*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
- *   All rights reserved.
- *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
- */
 import React from 'react';
 import { Descriptions } from 'antd';
 import AddEditForm from './AddEditForm';
@@ -25,7 +15,7 @@ import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 const ViewContactDetailBase = (props) => {
     const { formData, styles } = props;
-    const { setShowAddEditForm, setContactData, onFinish, form, preferredContactTimeFrom, isEditing, isLoading, typeData } = props;
+    const { setShowAddEditForm, setContactData, onFinish, form, preferredContactTimeFrom, preferredContactTimeTo, isEditing, isLoading, typeData } = props;
     const { customerType } = props;
 
     const viewProps = {
@@ -44,7 +34,7 @@ const ViewContactDetailBase = (props) => {
     };
 
     return (
-        <div className={styles.viewDrawerContainer}>
+        <div className={styles.viewDrawerContainer} >
             {!isEditing ? (
                 <>
                     <Descriptions {...viewProps}>
@@ -53,7 +43,7 @@ const ViewContactDetailBase = (props) => {
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Name">{checkAndSetDefaultValue( formData?.name, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="E-mail">{checkAndSetDefaultValue( formData?.emailId, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Preferred Contact Time">{moment(preferredContactTimeFrom , 'HH:mm').format('hh:mm A')}</Descriptions.Item>
+                        <Descriptions.Item label="Preferred Contact Time">{formData?.preferredContactTimeFrom.format('hh:mm A')}</Descriptions.Item>
                     </Descriptions>
                 </>
             ) : (
