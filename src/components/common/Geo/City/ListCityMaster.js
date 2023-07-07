@@ -224,9 +224,11 @@ export const ListCityMasterBase = (props) => {
     const removeFilter = (key) => {
         if (key === 'countryCode') {
             setFilterString(undefined);
+            setFilteredDistrictData([]);
         } else if (key === 'stateCode') {
             const { stateCode, districtCode, ...rest } = filterString;
             setFilterString({ ...rest });
+            setFilteredDistrictData([]);
         } else if (key === 'districtCode') {
             const { districtCode, ...rest } = filterString;
             setFilterString({ ...rest });
@@ -254,7 +256,13 @@ export const ListCityMasterBase = (props) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
         }
+        else if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
     };
+
 
     const handleFilterChange =
         (name, type = 'value') =>
@@ -263,17 +271,12 @@ export const ListCityMasterBase = (props) => {
 
             if (name === 'countryCode') {
                 setFilteredStateData(stateData?.filter((i) => i?.parentKey === filterValue));
-                advanceFilterForm.setFieldsValue({ stateCode: undefined });
-                advanceFilterForm.setFieldsValue({ districtCode: undefined });
-                advanceFilterForm.setFieldsValue({ cityCode: undefined });
-                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+                advanceFilterForm.setFieldsValue({ stateCode: undefined, districtCode: undefined, cityCode: undefined, tehsilCode: undefined });
             }
 
             if (name === 'stateCode') {
                 setFilteredDistrictData(districtData?.filter((i) => i?.parentKey === filterValue));
-                advanceFilterForm.setFieldsValue({ districtCode: undefined });
-                advanceFilterForm.setFieldsValue({ cityCode: undefined });
-                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+                advanceFilterForm.setFieldsValue({ districtCode: undefined, cityCode: undefined, tehsilCode: undefined });
             }
         };
 
@@ -365,7 +368,7 @@ export const ListCityMasterBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
-        setFilteredDistrictData([]);
+        // setFilteredDistrictData([]);
     };
 
     const handleResetFilter = () => {

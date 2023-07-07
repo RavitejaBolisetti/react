@@ -5,6 +5,8 @@
  */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { LANGUAGE_EN } from 'language/en';
+
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
 
@@ -67,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 const SupportingDocumentBase = (props) => {
     const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form } = props;
 
-    const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, supportingData, fetchViewDocument } = props;
+    const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, supportingData, fetchViewDocument, setIsFormVisible } = props;
     const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
     const { selectedCustomerId, viewDocument, viewListShowLoading, downloadFile } = props;
 
@@ -143,7 +145,6 @@ const SupportingDocumentBase = (props) => {
     };
 
     const downloadFileFromList = () => {
-        console.log(uploadedFile, 'uploadedFile');
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
         const extraParams = [
             {
@@ -160,29 +161,43 @@ const SupportingDocumentBase = (props) => {
     const onFinish = (values) => {
         const data = { ...values, customerId: selectedCustomerId, status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId'), id: '' };
 
-        const onSuccess = (res) => {
+        const title = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.TITLE;
+        const message = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.MESSAGE;
+
+        if (data?.docId && data?.documentName && data?.documentTypeId) {
+            const onSuccess = (res) => {
+                setFileList([]);
+                setEmptyList(false);
+                setUploadedFile();
+                form.resetFields();
+                showGlobalNotification({ notificationType: 'success', title, message });
+
+                fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+                setIsFormVisible(false);
+            };
+
+            const onError = (message) => {
+                showGlobalNotification({ message });
+            };
+
+            const requestData = {
+                data: data,
+                method: 'post',
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
+
+            saveData(requestData);
+        } else {
+            showGlobalNotification({ notificationType: 'success', title, message });
             setFileList([]);
             setEmptyList(false);
             setUploadedFile();
             form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
+            setIsFormVisible(false);
+        }
     };
 
     const handlePreview = (selectedDocument) => {
@@ -251,6 +266,10 @@ const SupportingDocumentBase = (props) => {
         setFileList,
     };
 
+    const myProps = {
+        ...props,
+        buttonData: { ...props.buttonData, formBtnActive: true },
+    };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
@@ -268,7 +287,7 @@ const SupportingDocumentBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CustomerFormButton {...props} />
+                    <CustomerFormButton {...myProps} />
                 </Col>
             </Row>
         </Form>

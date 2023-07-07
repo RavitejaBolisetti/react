@@ -8,6 +8,7 @@ import { Button, Row, Col } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'components/common/Common.module.css';
 
@@ -17,7 +18,7 @@ export default function AdvanceOTFFilter(props) {
     const serachBoxProps = {
         searchForm,
         filterString,
-        optionType: typeData,
+        optionType: typeData?.[PARAM_MASTER.OTF_SER.id],
         setFilterString,
     };
 

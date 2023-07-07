@@ -9,19 +9,18 @@ import { Row, Col, Form } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { showGlobalNotification } from 'store/actions/notification';
-import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
-
-import { PARAM_MASTER } from 'constants/paramMaster';
+import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'components/common/Common.module.css';
 
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-
+import dayjs from 'dayjs';
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
+import { convertCalenderDate } from 'utils/formatDateTime';
 
 const mapStateToProps = (state) => {
     const {
@@ -65,16 +64,16 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ReferralsMasterBase = (props) => {
-    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading, resetData } = props;
+    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading } = props;
     const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, listCustomerShowLoading, typeData, handleButtonClick, NEXT_ACTION } = props;
-    const [searchForm] = Form.useForm();
 
     const [formData, setFormData] = useState();
     const [resetField, setResetField] = useState(false);
-    const { filterString, setFilterString } = props;
 
     useEffect(() => {
-        setFormData(referralData);
+        if (referralData?.mobileNumber) {
+            setFormData(referralData);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [referralData]);
 
@@ -88,17 +87,17 @@ const ReferralsMasterBase = (props) => {
     ];
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId, dob: values?.dob?.format('YYYY-MM-DD'), id: referralData?.id };
+        const data = { ...values, otfNumber: selectedOrderId, dob: convertCalenderDate(values?.dob, 'YYYY-MM-DD'), id: referralData?.id };
 
         const onSuccess = (res) => {
             form.resetFields();
-            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
         const onError = (message) => {
-            // showGlobalNotification({ message });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -113,11 +112,6 @@ const ReferralsMasterBase = (props) => {
         saveData(requestData);
     };
 
-    useEffect(() => {
-        resetData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     const onErrorAction = (message) => {
         showGlobalNotification(message);
     };
@@ -128,7 +122,7 @@ const ReferralsMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && selectedOrderId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -184,77 +178,15 @@ const ReferralsMasterBase = (props) => {
         });
     };
 
-    const handleSearchParamSearch = (values) => {
-        searchForm
-            .validateFields()
-            .then((values) => {
-                setResetField(false);
-                if (!values) {
-                    setFormData();
-                    return false;
-                }
-                const defaultExtraParam = [
-                    {
-                        key: 'customerType',
-                        title: 'Customer Type',
-                        value: 'ALL',
-                        canRemove: true,
-                    },
-                    {
-                        key: 'pageSize',
-                        title: 'Value',
-                        value: 1000,
-                        canRemove: true,
-                    },
-                    {
-                        key: 'pageNumber',
-                        title: 'Value',
-                        value: 1,
-                        canRemove: true,
-                    },
-
-                    {
-                        key: 'searchType',
-                        title: 'Type',
-                        value: values?.searchType,
-                        canRemove: true,
-                    },
-                    {
-                        key: 'searchParam',
-                        title: 'Value',
-                        value: values?.searchParam,
-                        canRemove: true,
-                    },
-                ];
-
-                fetchCustomerList({
-                    setIsLoading: listCustomerShowLoading,
-                    extraParams: defaultExtraParam,
-                    userId,
-                    onSuccessAction: (res) => {
-                        res?.data?.customerMasterDetails.length === 1 ? setFormData(res?.data?.customerMasterDetails[0]) : console.log('Please add registrtion option');
-                    },
-                    onErrorAction,
-                });
-            })
-            .catch((err) => {
-                return;
-            });
-    };
-
     const formProps = {
         ...props,
-        searchForm,
         form,
         formData,
         onFinish,
         onFinishFailed,
         onSearch,
-        handleSearchParamSearch,
+
         resetField,
-        optionType: typeData[PARAM_MASTER.OTF_SER.id],
-        filterString,
-        setFilterString,
     };
 
     const viewProps = {

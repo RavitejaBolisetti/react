@@ -33,7 +33,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('dealerParentData', dealerParentData);
     const moduleTitle = 'Dealer Parent Company';
     let returnValue = {
         userId,

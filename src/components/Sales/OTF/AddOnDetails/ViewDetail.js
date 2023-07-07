@@ -8,16 +8,19 @@ import { Space, Collapse, Typography, Row, Col } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import AccessoriesInformationCard from './ViewDetails/AccessoriesInformationCard';
+
+import { expandIcon } from 'utils/accordianExpandIcon';
 import ShieldForm from './Shield/ShieldForm';
 import AMCForm from './AMC/AMCForm';
 import RSAForm from './RSA/RSAForm';
 import FMSForm from './FMS/FMSForm';
+
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
     const { openAccordian, shieldForm, formActionType, rsaForm, amcForm, fmsForm, handleCollapse, styles, formData } = props;
-    const [myActiveKey, setmyActiveKey] = useState([0]);
+    const [myActiveKey, setmyActiveKey] = useState([]);
     const handleCollapses = (values) => {
         myActiveKey?.includes(values) ? setmyActiveKey('') : setmyActiveKey([values]);
     };
@@ -27,41 +30,11 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space className={styles.ViewCardCollapse} style={{ display: 'flex' }} direction="vertical" size="large">
-                        <Collapse
-                            expandIcon={() => {
-                                if (openAccordian[0] === 'ci') {
-                                    return <MinusOutlined className={styles?.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles?.iconsColor} />;
-                                }
-                            }}
-                            activeKey={openAccordian}
-                            onChange={() => handleCollapse('ci')}
-                            expandIconPosition="end"
-                        >
-                            <Panel
-                                header={
-                                    <div className={styles?.alignUser}>
-                                        <Text strong>Accessories Information</Text>
-                                    </div>
-                                }
-                                key={'ci'}
-                            >
+                        <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('ci')} expandIconPosition="end">
+                            <Panel header="Accessories Information" key={'ci'}>
                                 {formData?.partDetailsResponses?.map((element, i) => {
                                     return (
-                                        <Collapse
-                                            expandIcon={() => {
-                                                if (myActiveKey[0] === i) {
-                                                    return <MinusOutlined className={styles?.iconsColor} />;
-                                                } else {
-                                                    return <PlusOutlined className={styles?.iconsColor} />;
-                                                }
-                                            }}
-                                            activeKey={myActiveKey}
-                                            onChange={() => handleCollapses(i)}
-                                            expandIconPosition="end"
-                                            className={styles.innerCollapseBorder}
-                                        >
+                                        <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end" className={styles.innerCollapseBorder}>
                                             <Panel
                                                 header={
                                                     <Row justify="space-between">
@@ -86,95 +59,23 @@ const ViewDetailMain = (props) => {
                                 })}
                             </Panel>
                         </Collapse>
-                        <Collapse
-                            expandIcon={() => {
-                                if (openAccordian[0] === 'shield') {
-                                    return <MinusOutlined className={styles?.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles?.iconsColor} />;
-                                }
-                            }}
-                            activeKey={openAccordian}
-                            onChange={() => handleCollapse('shield')}
-                            expandIconPosition="end"
-                        >
-                            <Panel
-                                header={
-                                    <div className={styles?.alignUser}>
-                                        <Text strong>Shield</Text>
-                                    </div>
-                                }
-                                key="shield"
-                            >
+                        <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('shield')} expandIconPosition="end">
+                            <Panel header="Shield" key="shield">
                                 <ShieldForm formActionType={formActionType} formData={formData} shieldForm={shieldForm} />
                             </Panel>
                         </Collapse>
-                        <Collapse
-                            expandIcon={() => {
-                                if (openAccordian[0] === 'Amc') {
-                                    return <MinusOutlined className={styles?.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles?.iconsColor} />;
-                                }
-                            }}
-                            activeKey={openAccordian}
-                            onChange={() => handleCollapse('Amc')}
-                            expandIconPosition="end"
-                        >
-                            <Panel
-                                header={
-                                    <div className={styles?.alignUser}>
-                                        <Text strong>Amc</Text>
-                                    </div>
-                                }
-                                key={'Amc'}
-                            >
+                        <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Amc')} expandIconPosition="end">
+                            <Panel header="Amc" key={'Amc'}>
                                 <AMCForm formActionType={formActionType} formData={formData} amcForm={amcForm} />
                             </Panel>
                         </Collapse>
-                        <Collapse
-                            expandIcon={() => {
-                                if (openAccordian[0] === 'Rsa') {
-                                    return <MinusOutlined className={styles?.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles?.iconsColor} />;
-                                }
-                            }}
-                            activeKey={openAccordian}
-                            onChange={() => handleCollapse('Rsa')}
-                            expandIconPosition="end"
-                        >
-                            <Panel
-                                header={
-                                    <div className={styles?.alignUser}>
-                                        <Text strong>RSA</Text>
-                                    </div>
-                                }
-                                key={'Rsa'}
-                            >
+                        <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Rsa')} expandIconPosition="end">
+                            <Panel header="RSA" key={'Rsa'}>
                                 <RSAForm formActionType={formActionType} formData={formData} rsaForm={rsaForm} />
                             </Panel>
                         </Collapse>
-                        <Collapse
-                            expandIcon={() => {
-                                if (openAccordian[0] === 'fMS') {
-                                    return <MinusOutlined className={styles?.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles?.iconsColor} />;
-                                }
-                            }}
-                            activeKey={openAccordian}
-                            onChange={() => handleCollapse('fMS')}
-                            expandIconPosition="end"
-                        >
-                            <Panel
-                                header={
-                                    <div className={styles?.alignUser}>
-                                        <Text strong>FMS</Text>
-                                    </div>
-                                }
-                                key={'fMS'}
-                            >
+                        <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('fMS')} expandIconPosition="end">
+                            <Panel header="FMS" key={'fMS'}>
                                 <FMSForm formActionType={formActionType} formData={formData} fmsForm={fmsForm} />
                             </Panel>
                         </Collapse>

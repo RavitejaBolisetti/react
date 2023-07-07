@@ -22,7 +22,9 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import styles from 'components/common/Common.module.css';
 
+import { validateOTFMenu } from './utils/validateOTFMenu';
 import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
@@ -37,10 +39,9 @@ const mapStateToProps = (state) => {
         },
     } = state;
     const moduleTitle = 'Order Tracking Form';
-
     let returnValue = {
         userId,
-        typeData: typeData[PARAM_MASTER.OTF_SER.id],
+        typeData,
         isDataLoaded,
         data: data?.otfDetails,
         otfStatusList: Object.values(OTF_STATUS),
@@ -135,7 +136,7 @@ export const OtfMasterBase = (props) => {
                 key: 'searchType',
                 title: 'Type',
                 value: filterString?.searchType,
-                name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
+                name: typeData?.[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value,
                 canRemove: false,
                 filter: true,
             },
@@ -167,7 +168,7 @@ export const OtfMasterBase = (props) => {
                 key: 'otfStatus',
                 title: 'OTF Status',
                 value: filterString?.otfStatus,
-                name: otfStatusList?.find((i) => i?.title === filterString?.otfStatus)?.desc,
+                name: otfStatusList?.find((i) => i?.key === filterString?.otfStatus)?.desc,
                 canRemove: true,
                 filter: true,
             },
@@ -243,7 +244,7 @@ export const OtfMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
-                const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+                const nextSection = Object.values(sectionName)?.find((i) => validateOTFMenu({ item: i, status: selectedOrder?.orderStatus, otfData }) && i.id > currentSection);
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
@@ -266,11 +267,12 @@ export const OtfMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
-        setFilterString();
         setShowDataLoading(true);
+        setFilterString();
         advanceFilterForm.resetFields();
     };
 
+    
     const onFinish = (values) => {
         const recordId = formData?.parentId || form.getFieldValue('parentId');
         let data = { ...values, parentId: recordId };

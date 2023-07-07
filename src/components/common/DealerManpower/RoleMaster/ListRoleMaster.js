@@ -205,13 +205,17 @@ export const ListRoleMasterBase = (props) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
         }
+        else if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
     };
+
 
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
-            console.log('hello');
-
             const filterValue = type === 'text' ? value.target.value : value;
 
             if (name === 'code') {
@@ -312,8 +316,10 @@ export const ListRoleMasterBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
-        setFilteredDepartmentData([]);
-        advanceFilterForm.setFieldsValue({ departmentCode: undefined });
+        extraParams[0]?.value && setFilteredDepartmentData(departmentData?.filter((i) => i?.parentKey === extraParams[0]?.value));
+
+        // setFilteredDepartmentData([]);
+        // advanceFilterForm.setFieldsValue({ departmentCode: undefined });
     };
 
     const handleResetFilter = () => {
@@ -321,7 +327,7 @@ export const ListRoleMasterBase = (props) => {
         listFilterForm.resetFields();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
-        setFilteredDepartmentData([])
+        setFilteredDepartmentData([]);
     };
 
     const advanceFilterProps = {

@@ -6,7 +6,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { Row, Col, Checkbox, Button, Form, Input, Select, Space, AutoComplete } from 'antd';
+import { Row, Col, Checkbox, Button, Form, Input, Select, AutoComplete } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validateAlphanumericWithSpace, validatePincodeField, validateMobileNoField, validateLettersWithWhitespaces, duplicateValidator } from 'utils/validation';
 import { addressType } from 'constants/modules/CustomerMaster/individualProfile';
@@ -102,16 +102,15 @@ const AddEditForm = (props) => {
         addressForm
             .validateFields()
             .then((value) => {
+                // const defaultAdddress = addressData?.find((i) => (editingData?.addressType ? i.addressType === editingData?.addressType : true) && i.deafultAddressIndicator && value?.deafultAddressIndicator);
+                // if (defaultAdddress) {
+                //     return showGlobalNotification({ message: 'Only one address can be default' });
+                // }
+
                 if (editingData?.addressType) {
                     setAddressData((prev) => {
                         let formData = [...prev];
-                        formData?.forEach((address) => {
-                            if (address?.deafultAddressIndicator === true) {
-                                address.deafultAddressIndicator = false;
-                            }
-                        });
                         const index = formData?.findIndex((el) => el?.addressType === editingData?.addressType);
-                        //  && el?.address === editingData?.address && el?.pincode === editingData?.pincode
                         formData.splice(index, 1, { ...value, ...pinSearchData });
 
                         return [...formData];
@@ -119,13 +118,7 @@ const AddEditForm = (props) => {
                 } else {
                     setAddressData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
-
                         if (value?.defaultaddress && formData?.length >= 1) {
-                            formData?.forEach((address) => {
-                                if (address?.defaultaddress === true) {
-                                    address.defaultaddress = false;
-                                }
-                            });
                             return [...formData, { ...value, ...pinSearchData }];
                         } else {
                             return prev?.length ? [...prev, { ...value, ...pinSearchData }] : [{ ...value, ...pinSearchData }];
@@ -161,7 +154,7 @@ const AddEditForm = (props) => {
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Address Line 1" name="addressLine1" rules={[validateRequiredInputField('address Line 1'), validateAlphanumericWithSpace('application name')]}>
+                        <Form.Item label="Address Line 1" name="addressLine1" rules={[validateRequiredInputField('address Line 1')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('address Line 1')} />
                         </Form.Item>
                     </Col>
@@ -247,14 +240,12 @@ const AddEditForm = (props) => {
                 {!formActionType?.viewMode && (
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Space>
-                                <Button onClick={handleSave} type="primary">
-                                    Save
-                                </Button>
-                                <Button onClick={handleCancelFormEdit} ghost type="primary">
-                                    Cancel
-                                </Button>
-                            </Space>
+                            <Button className={styles.marR20} onClick={handleSave} type="primary">
+                                Save
+                            </Button>
+                            <Button className={styles.marB20} onClick={handleCancelFormEdit} ghost type="primary">
+                                Cancel
+                            </Button>
                         </Col>
                     </Row>
                 )}
