@@ -9,8 +9,9 @@ import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
+import { AiOutlineWarning } from 'react-icons/ai';
 import AdvanceOtfFilter from './AdvanceOtfFilter';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION,TRANSFER_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { OTFMainConatiner } from './OTFMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -18,6 +19,7 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { OTF_SECTION } from 'constants/OTFSection';
 import { CancellationMaster } from './OTF Cancellation/CancellationMaster';
+import { TransferMaster } from './OTFTransfer/TransferMaster';
 import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -97,6 +99,8 @@ export const OtfMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isCancelVisible, setIsCancelVisible] = useState(false);
+    const [isTransferVisible, setIsTransferVisible] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -111,7 +115,8 @@ export const OtfMasterBase = (props) => {
         unAllotBtn: false,
         invoiceBtn: false,
         deliveryNote: false,
-        cancelOtfBtn: true, // for now/ for testing, it will change to false.
+        cancelOtfBtn: true, // for now only // for testing, it will change to false.
+        transferOtfBtn: true, // for now only // for testing, it will change to false.
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -214,6 +219,8 @@ export const OtfMasterBase = (props) => {
         form.resetFields();
         form.setFieldsValue(undefined);
         setIsFormVisible(true);
+        setIsCancelVisible(false);
+        setIsTransferVisible(false);
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -237,6 +244,9 @@ export const OtfMasterBase = (props) => {
                 //  setFormActionType(CANCEL_OTF)
                 setIsCancelVisible(true);
                 setIsFormVisible(false);
+            case TRANSFER_ACTION:
+                setIsFormVisible(false);
+                setIsTransferVisible(true);
 
                 break;
             default:
@@ -487,6 +497,7 @@ export const OtfMasterBase = (props) => {
 
     const onCancelCloseAction = () => {
         setIsCancelVisible(false);
+        setIsTransferVisible(false);
     };
     const cancelProps = {
         ...props,
@@ -497,6 +508,21 @@ export const OtfMasterBase = (props) => {
         onCloseAction: onCancelCloseAction,
     };
 
+    const transferOTFProps = {
+        ...props,
+        selectedOrder,
+        TRANSFER_ACTION,
+        isVisible: isTransferVisible,
+        onCloseAction: onCancelCloseAction,
+    };
+
+    // const modalProps = {
+    //     isVisible: isModalOpen,
+    //     titleOverride: 'OTF T/C',
+    //     closable: false,
+    //     onCloseAction,
+    // };
+    
     return (
         <>
             <AdvanceOtfFilter {...advanceFilterResultProps} />
@@ -508,6 +534,8 @@ export const OtfMasterBase = (props) => {
             <AdvancedSearch {...advanceFilterProps} />
             <OTFMainConatiner {...containerProps} />
             <CancellationMaster {...cancelProps} />
+            <TransferMaster {...transferOTFProps} />
+            {/* <CommonModal {...modalProps} /> */}
         </>
     );
 };

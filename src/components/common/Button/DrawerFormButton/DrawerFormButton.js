@@ -50,6 +50,13 @@ export const DrawerFormButton = ({ formData, onCloseAction, buttonData, setButto
                         Cancel OTF
                     </Button>
                 )}
+
+                {buttonData?.transferOtfBtn && (
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF })} type="primary">
+                        Transfer OTF
+                    </Button>
+                )}
+
             </Col>
         </Row>
     );
