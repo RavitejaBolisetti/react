@@ -6,11 +6,10 @@
 
 import { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Empty } from 'antd';
-
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { BiTimeFive } from 'react-icons/bi';
 import { FiEye, FiTrash } from 'react-icons/fi';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -19,12 +18,11 @@ import { NameChangeHistory } from './NameChangeHistory';
 import styles from 'components/common/Common.module.css';
 import Svg from 'assets/images/Filter.svg';
 import Dragger from 'antd/es/upload/Dragger';
-import { getCodeValue } from 'utils/getCodeValue';
 
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { form, typeData, formData, corporateLovData, setUploadImgDocId, isViewModeVisible, formActionType: { editMode } = undefined, customerType } = props;
+    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
     const { setUploadedFileName, downloadFileFromList, fileList, setFileList, handleFormValueChange, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
 
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
@@ -110,7 +108,7 @@ const AddEditFormMain = (props) => {
         } else if (value === 'LIS') {
             form.setFieldsValue({
                 corporateCode: null,
-                corporateName: null
+                corporateName: null,
             });
         }
     };

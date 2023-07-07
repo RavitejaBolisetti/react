@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Row, Checkbox, Space, Collapse, AutoComplete } from 'antd';
 
 import { FiEdit } from 'react-icons/fi';
@@ -14,10 +14,8 @@ import { expandIconWithText } from 'utils/accordianExpandIcon';
 const { Panel } = Collapse;
 
 const AddEditFormBase = (props) => {
-    const { form, formData, setSameAsBookingCustomer } = props;
+    const { form, formData, sameAsBookingCustomer, setSameAsBookingCustomer } = props;
     const { typeData, activeKey, setActiveKey } = props;
-
-    const [billingDisabled, setBillingDisabled] = useState(false);
 
     useEffect(() => {
         if (formData) {
@@ -47,15 +45,6 @@ const AddEditFormBase = (props) => {
         }
     };
 
-    const bilingCustomerProps = {
-        ...props,
-        AutoComplete,
-        typeData,
-        formData: formData?.billingCustomer,
-        formType: 'billingCustomer',
-        billingDisabled,
-    };
-
     const bookingCustomerProps = {
         ...props,
         AutoComplete,
@@ -64,14 +53,21 @@ const AddEditFormBase = (props) => {
         formType: 'bookingCustomer',
     };
 
+    const bilingCustomerProps = {
+        ...props,
+        AutoComplete,
+        typeData,
+        formData: formData?.billingCustomer,
+        formType: 'billingCustomer',
+        disabledProps: { disabled: sameAsBookingCustomer },
+    };
+
     const handleOnChange = (vall) => {
         if (vall.target.checked) {
             setSameAsBookingCustomer(true);
-            setBillingDisabled(true);
             let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
             form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
         } else {
-            setBillingDisabled(false);
             setSameAsBookingCustomer(false);
         }
     };

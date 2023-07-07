@@ -22,7 +22,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import styles from 'components/common/Common.module.css';
 
 import { validateOTFMenu } from './utils/validateOTFMenu';
 import { FilterIcon } from 'Icons';
@@ -272,7 +271,6 @@ export const OtfMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
-    
     const onFinish = (values) => {
         const recordId = formData?.parentId || form.getFieldValue('parentId');
         let data = { ...values, parentId: recordId };
