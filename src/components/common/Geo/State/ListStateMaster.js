@@ -344,7 +344,6 @@ export const ListStateMasterBase = (props) => {
         setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,
-        advanceFilterProps,
         title,
     };
 
