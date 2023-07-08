@@ -269,6 +269,7 @@ export const OtfMasterBase = (props) => {
         setShowDataLoading(true);
         setFilterString();
         advanceFilterForm.resetFields();
+        setAdvanceSearchVisible(false);
     };
 
     const onFinish = (values) => {
@@ -314,6 +315,11 @@ export const OtfMasterBase = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
+
+        advanceFilterForm.resetFields();
+        advanceFilterForm.setFieldsValue();
+        setAdvanceSearchVisible(false);
+
         setSelectedOrder();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
@@ -326,8 +332,10 @@ export const OtfMasterBase = (props) => {
     };
 
     const onAdvanceSearchCloseAction = () => {
-        setAdvanceSearchVisible(false);
         form.resetFields();
+        advanceFilterForm.resetFields();
+        advanceFilterForm.setFieldsValue();
+        setAdvanceSearchVisible(false);
     };
 
     const removeFilter = (key) => {
