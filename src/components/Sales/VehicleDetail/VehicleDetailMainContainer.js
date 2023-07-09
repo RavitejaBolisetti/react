@@ -10,6 +10,7 @@ import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 
 import { VehicleDetailsMaster } from './VehicleDetails';
 import { CustomerDetailsMaster } from './CustomerDetails';
+import { ProductDetailMaster } from './ProductDetails';
 import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'components/common/Common.module.css';
@@ -28,6 +29,9 @@ const VehicleDetailMainContainerMain = (props) => {
             }
             case VEHICLE_DETAIL_SECTION.CUSTOMER_DETAILS.id: {
                 return <CustomerDetailsMaster {...myProps} />;
+            }
+            case VEHICLE_DETAIL_SECTION.PRODUCT_DETAILS.id: {
+                return <ProductDetailMaster {...myProps} />;
             }
             default: {
                 return <>Coming Soon</>;
