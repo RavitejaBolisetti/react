@@ -25,6 +25,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { validateOTFMenu } from './utils/validateOTFMenu';
 import { FilterIcon } from 'Icons';
+import { ChangeHistory } from './ChangeHistory';
 
 const mapStateToProps = (state) => {
     const {
@@ -38,6 +39,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
     const moduleTitle = 'Order Tracking Form';
+    const ChangeHistoryTitle = 'OTF Change History ';
+
     let returnValue = {
         userId,
         typeData,
@@ -50,6 +53,7 @@ const mapStateToProps = (state) => {
         isOTFSearchLoading,
         isSearchDataLoaded,
         filterString,
+        ChangeHistoryTitle,
     };
     return returnValue;
 };
@@ -71,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
+    const { fetchList, ChangeHistoryTitle, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -108,6 +112,7 @@ export const OtfMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         cancelOtfBtn: false,
+        changeHistory: true,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -116,6 +121,7 @@ export const OtfMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
+    const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -307,6 +313,9 @@ export const OtfMasterBase = (props) => {
     const onFinishFailed = (errorInfo) => {
         return;
     };
+    const handleChangeHistory = () => {
+        setChangeHistoryVisible(true);
+    };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -398,6 +407,18 @@ export const OtfMasterBase = (props) => {
             return 'Add New ';
         }
     }, [formActionType]);
+    const ChangeHistoryProps = {
+        isVisible: ChangeHistoryVisible,
+        onCloseAction: () => {
+            setChangeHistoryVisible(false);
+        },
+        titleOverride: ChangeHistoryTitle,
+        formData,
+        setIsFormVisible,
+        buttonData,
+        ChangeHistoryTitle,
+        selectedOrderId,
+    };
 
     const containerProps = {
         record: selectedOrder,
@@ -434,6 +455,8 @@ export const OtfMasterBase = (props) => {
         typeData,
         otfData,
         saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        ChangeHistoryProps,
+        handleChangeHistory,
     };
 
     return (
@@ -446,6 +469,7 @@ export const OtfMasterBase = (props) => {
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
             <OTFMainConatiner {...containerProps} />
+            <ChangeHistory {...ChangeHistoryProps} />
         </>
     );
 };
