@@ -27,7 +27,7 @@ const AddEditForm = (props) => {
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Contact Type" name="contactType" rules={[validateRequiredSelectField('contact type')]}>
-                                <Select placeholder={preparePlaceholderSelect('contact type')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData?.[PARAM_MASTER?.VH_CONTACT_TYPE?.id]}></Select>
+                                <Select placeholder={preparePlaceholderSelect('contact type')} fieldNames={{ label: 'value', value: 'value' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData?.[PARAM_MASTER?.VH_CONTACT_TYPE?.id]}></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>

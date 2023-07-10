@@ -17,7 +17,7 @@ import AddEditForm from './AddEditForm';
 
 import { CustomerFormButton } from '../../../common/CustomerMaster/CustomerFormButton/CustomerFormButton';
 import { CardSkeleton } from 'components/common/Skeleton';
-import { CUSTOMER_TYPE } from 'constants/CustomerType';
+import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 import { LANGUAGE_EN } from 'language/en';
 
 import styles from 'components/common/Common.module.css';
@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Vehicle: {
-                Contacts: { isLoaded: isContactDataLoaded = false, isLoading: isContactDataLoading, data: contactData = [] },
+                Contacts: { isLoaded: isContactDataLoaded = false, isLoading: isContactDataLoading, data: vehicleContactData = [] },
             },
         },
     } = state;
@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
 
         isContactDataLoaded,
         isContactDataLoading,
-        contactData,
+        vehicleContactData,
     };
     return returnValue;
 };
@@ -51,10 +51,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchContactIndividualDetailsList: vehicleContactDataActions.fetchList,
-            listContactIndividualDetailsShowLoading: vehicleContactDataActions.listShowLoading,
-            saveIndividualData: vehicleContactDataActions.saveData,
-            resetIndividualData: vehicleContactDataActions.reset,
+            fetchList: vehicleContactDataActions.fetchList,
+            listShowLoading: vehicleContactDataActions.listShowLoading,
+            saveData: vehicleContactDataActions.saveData,
+            resetData: vehicleContactDataActions.reset,
 
             showGlobalNotification,
         },
@@ -63,8 +63,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ContactMasterMain = (props) => {
-    const { form, section, userId, customerType, customerData, customerIndData, listContactDetailsShowLoading, showGlobalNotification, typeData } = props;
-    const { isContactDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
+    const { form, section, userId, searchType, customerData, vehicleContactData, listShowLoading, showGlobalNotification, typeData } = props;
+    const { isContactDataLoading, selectedCustomer, fetchList, saveData, resetData } = props;
     const { buttonData, setButtonData, formActionType, handleButtonClick, setSelectedCustomer, setSelectedCustomerId, NEXT_ACTION } = props;
 
     const [contactform] = Form.useForm();
@@ -73,7 +73,6 @@ const ContactMasterMain = (props) => {
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
-    const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [continueWithOldMobNo, setContinueWithOldMobNo] = useState(false);
     const [isAdding, setIsAdding] = useState(false);
     const [timeData, setTimeData] = useState([]);
@@ -83,33 +82,28 @@ const ContactMasterMain = (props) => {
 
     const extraParams = [
         {
-            key: 'customerId',
-            title: 'customerId',
-            value: selectedCustomer?.customerId,
-            name: 'customerId',
+            key: 'vin',
+            title: 'vin',
+            value: selectedCustomer,
+            name: 'vin',
         },
     ];
 
     useEffect(() => {
-        if (userId && selectedCustomer?.customerId) {
-            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
+        if (selectedCustomer && userId) {
+            if (searchType === searchType?.VEHICLE_DETAIL_SECTION) {
+                fetchList({ setIsLoading: listShowLoading, extraParams });
             }
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCustomer?.customerId]);
+    }, [userId, selectedCustomer]);
 
     useEffect(() => {
-        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id && selectedCustomer?.customerId && customerIndData?.customerContact) {
-            setContactData(customerIndData?.customerContact || []);
-            setUploadImgDocId(customerIndData?.customerContact[0].docId);
-        } else if (customerData?.customerContact && selectedCustomer?.customerId) {
-            setContactData(customerData?.customerContact || []);
-            setUploadImgDocId(customerData?.customerContact[0]['docId']);
+        if (searchType === searchType?.VEHICLE_DETAIL_SECTION && selectedCustomer && vehicleContactData?.contact) {
+            setContactData(vehicleContactData?.contact || []);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerData, customerIndData]);
+    }, [vehicleContactData]);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -127,16 +121,16 @@ const ContactMasterMain = (props) => {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
-                        formData.splice(index, 1, { ...value, docId: uploadImgDocId });
+                        formData.splice(index, 1, { ...value });
                         return [...formData];
                     });
                 } else {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         if (value?.defaultaddress && formData?.length >= 1) {
-                            return [...formData, { ...value, docId: uploadImgDocId }];
+                            return [...formData, { ...value }];
                         } else {
-                            const updVal = prev?.length ? [...prev, { ...value, docId: uploadImgDocId }] : [{ ...value }];
+                            const updVal = prev?.length ? [...prev, { ...value }] : [{ ...value }];
                             return updVal;
                         }
                     });
@@ -148,17 +142,6 @@ const ContactMasterMain = (props) => {
                 contactform.resetFields();
             })
             .catch((err) => console.error(err));
-    };
-
-    const onCheckdefaultAddClick = (e, value) => {
-        e.stopPropagation();
-        setContactData((prev) => {
-            let updetedData = prev?.map((contact) => ({ ...contact, status: true, defaultContactIndicator: false, continueWith: continueWithOldMobNo }));
-            const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.firstName === value?.firstName && el?.mobileNumber === value?.mobileNumber);
-            updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked });
-            return [...updetedData];
-        });
-        forceUpdate();
     };
 
     const handleFormValueChange = () => {
@@ -186,31 +169,26 @@ const ContactMasterMain = (props) => {
         formActionType,
         setEditingData,
         typeData,
-        onCheckdefaultAddClick,
         setButtonData,
-        setUploadImgDocId,
-        uploadImgDocId,
         handleFormValueChange,
         setContinueWithOldMobNo,
 
-        customerType,
+        searchType,
         isAdding,
         setIsAdding,
         buttonData,
     };
 
     const onFinish = () => {
-        console.log('contactData', contactData);
-        return;
-        let data = { customerId: selectedCustomer?.customerId, customerContact: contactData?.map((el) => ({ ...el, docId: uploadImgDocId || el?.docId })) };
+        let data = { vehicleIdentificationNumber: selectedCustomer, contact: contactData?.map((el) => ({ ...el, contactType: 'User', preferredDayForContact: ['WED'], preferredContactTimeFrom: '02:30', preferredContactTimeTo: '03:30' })) };
 
         const onSuccess = (res) => {
             contactform.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setButtonData({ ...buttonData, formBtnActive: false });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+            if (searchType === VEHICLE_DETAIL_SECTION) {
+                fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction });
             }
         };
 
@@ -221,14 +199,14 @@ const ContactMasterMain = (props) => {
         const requestData = {
             data: data,
             method: 'post',
-            setIsLoading: listContactDetailsShowLoading,
+            setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
         };
 
-        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-            saveIndividualData(requestData);
+        if (searchType === searchType?.VEHICLE_DETAIL_SECTION) {
+            saveData(requestData);
         }
 
         setShowAddEditForm(false);
@@ -237,7 +215,6 @@ const ContactMasterMain = (props) => {
         setEditingData({});
         contactform.resetFields();
     };
-    console.log('🚀 ~ file: ContactMaster.js:238 ~ onFinish ~ contactData:', contactData);
 
     const onFinishFailed = (err) => {
         console.error(err);

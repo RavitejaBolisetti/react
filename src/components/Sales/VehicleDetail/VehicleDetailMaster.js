@@ -92,6 +92,7 @@ export const VehicleDetailMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [selectedCustomer, setselectedCustomer] = useState('');
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -220,18 +221,19 @@ export const VehicleDetailMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
+        setselectedCustomer('MAKGF1F57A7192174');
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case EDIT_ACTION:
                 setSelectedOrder(record);
-                record && setSelectedOrderId(record?.otfNumber);
+                record && setSelectedOrderId(record?.vehicleIdentificationNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
-                record && setSelectedOrderId(record?.otfNumber);
+                record && setSelectedOrderId(record?.vehicleIdentificationNumber);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
@@ -322,7 +324,7 @@ export const VehicleDetailMasterBase = (props) => {
             setOtfSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
         } else if (searchType === 'customerName') {
             setOtfSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
-        } else if (searchType === 'otfNumber') {
+        } else if (searchType === 'vehicleIdentificationNumber') {
             setOtfSearchRules({ rules: [validateRequiredInputField('OTF Number')] });
         } else {
             // searchForm.setFieldsValue({ searchParam: undefined, searchType: undefined });
@@ -412,6 +414,7 @@ export const VehicleDetailMasterBase = (props) => {
 
     const containerProps = {
         record: selectedOrder,
+        selectedCustomer,
         form,
         formActionType,
         setFormActionType,
