@@ -37,7 +37,7 @@ const mapStateToProps = (state) => {
                 District: { isFilteredListLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, filteredListData: districtData },
                 Tehsil: { isLoaded: isDataLoaded = false, isLoading, data = [] },
             },
-            ConfigurableParameterEditing: { paramdata: tehsilCategoryData = [] },
+            ConfigurableParameterEditing: { filteredListData: tehsilCategoryData = [] },
         },
     } = state;
 
@@ -127,6 +127,7 @@ export const ListTehsilBase = (props) => {
         setRefershData(false);
         setShowDataLoading(false);
     };
+    console.log('tehsilCategoryData', tehsilCategoryData);
 
     useEffect(() => {
         if (userId) {
@@ -353,7 +354,6 @@ export const ListTehsilBase = (props) => {
 
     const handleResetFilter = () => {
         setFilterString();
-        resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
         setFilteredDistrictData(undefined);
@@ -394,7 +394,13 @@ export const ListTehsilBase = (props) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
         }
+        else if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
     };
+
 
     const removeFilter = (key) => {
         if (key === 'countryCode') {

@@ -8,18 +8,25 @@ import { Col, Form, Row, Select, Button, DatePicker } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { validateRequiredSelectField } from 'utils/validation';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { disableFutureDate } from 'utils/disableDate';
 
 import styles from 'components/common/Common.module.css';
 
-const { Option } = Select;
-
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, otfStatusList } = props;
-    const { filterString, setFilterString, advanceFilterForm, handleResetFilter } = props;
+    const {
+        filterString,
+        setFilterString,
+        advanceFilterForm,
+        advanceFilterForm: { resetFields },
+        handleResetFilter,
+    } = props;
 
     useEffect(() => {
-        advanceFilterForm.resetFields();
+        resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
@@ -49,13 +56,13 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Data')]} className={styles?.datePicker}>
-                        <DatePicker format={dateFormat} className={styles.fullWidth} />
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
+                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="To Date" name="toDate" rules={[validateRequiredSelectField('To Date')]} className={styles?.datePicker}>
-                        <DatePicker format={dateFormat} className={styles.fullWidth} />
+                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -63,13 +70,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={filterString?.otfStatus} label="OTF Status" name="otfStatus">
-                        <Select className={styles.headerSelectField} {...selectProps} placeholder="Select">
-                            {otfStatusList?.map((item) => (
-                                <Option key={item?.title} value={item?.title}>
-                                    {item?.desc}
-                                </Option>
-                            ))}
-                        </Select>
+                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} options={otfStatusList} {...selectProps} className={styles.headerSelectField}></Select>
                     </Form.Item>
                 </Col>
             </Row>

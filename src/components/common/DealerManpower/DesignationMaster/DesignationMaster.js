@@ -210,7 +210,13 @@ export const DesignationMasterBase = (props) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
         }
+        else if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
     };
+
 
     const handleFilterChange =
         (name, type = 'value') =>
@@ -324,7 +330,6 @@ export const DesignationMasterBase = (props) => {
     };
 
     const handleResetFilter = () => {
-        resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
         setFilterString();

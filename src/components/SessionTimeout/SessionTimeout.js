@@ -1,12 +1,12 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { doLogoutAPI } from 'store/actions/auth';
+import { doRefreshToken, doLogoutAPI } from 'store/actions/auth';
 import { useNavigate } from 'react-router-dom';
 import { useIdleTimer } from 'react-idle-timer';
 import { SessionTimeoutModal } from './SessionTimeoutModal';
@@ -18,11 +18,17 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 const mapStateToProps = (state) => {
     const {
-        auth: { userId },
+        auth: { userId, refreshToken },
+        data: {
+            ConfigurableParameterEditing: { isLoaded, data: configData = [] },
+        },
     } = state;
 
     return {
         userId,
+        refreshToken,
+        isLoaded,
+        timeOutConfig: configData?.find((i) => i.controlId === 'STOUT'),
     };
 };
 
@@ -31,20 +37,30 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             doLogout: doLogoutAPI,
+            doRefreshToken,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-const SessionTimeoutMain = ({ doLogout, showGlobalNotification, userId }) => {
+const SessionTimeoutMain = ({ doLogout, doRefreshToken, showGlobalNotification, refreshToken, userId, isLoaded, configData, timeOutConfig }) => {
     const navigate = useNavigate();
-
-    const timeout = 1200_000;
-    const promptBeforeIdle = 30_000;
-
+    const [timeOutSetting, setTimeOutSetting] = useState({ timeout: 180_000, promptBeforeIdle: 30_000 });
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [remaining, setRemaining] = useState(timeout);
+    const [remaining, setRemaining] = useState(timeOutSetting?.timeout);
+
+    useEffect(() => {
+        if (timeOutConfig) {
+            if (timeOutConfig?.toNumber > timeOutConfig?.fromNumber) {
+                setTimeOutSetting({
+                    timeout: timeOutConfig?.toNumber * 1000,
+                    promptBeforeIdle: timeOutConfig?.fromNumber * 1000,
+                });
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [timeOutConfig]);
 
     const onIdle = () => {
         setIsModalOpen(false);
@@ -69,8 +85,8 @@ const SessionTimeoutMain = ({ doLogout, showGlobalNotification, userId }) => {
         onIdle,
         onActive,
         onPrompt,
-        timeout,
-        promptBeforeIdle,
+        timeout: timeOutSetting?.timeout,
+        promptBeforeIdle: timeOutSetting?.promptBeforeIdle,
         throttle: 500,
     });
 
@@ -84,10 +100,16 @@ const SessionTimeoutMain = ({ doLogout, showGlobalNotification, userId }) => {
         };
     });
 
-    const handleStillHere = () => {
+    const handleSessionContinueAction = () => {
         activate();
-        Modal.destroyAll();
-        setIsModalOpen(false);
+        doRefreshToken({
+            onSuccess: (res) => {
+                Modal.destroyAll();
+                setIsModalOpen(false);
+            },
+            data: { userId, token: refreshToken },
+            onError,
+        });
     };
 
     const onSuccess = (res) => {
@@ -107,7 +129,8 @@ const SessionTimeoutMain = ({ doLogout, showGlobalNotification, userId }) => {
         titleOverride: 'Session Timeout',
         remaining,
         closable: false,
-        onCloseAction: handleStillHere,
+        handleLogoutAction: onIdle,
+        handleSessionContinueAction,
     };
     return <SessionTimeoutModal {...modalProps} />;
 };

@@ -19,7 +19,7 @@ import { ExchangeVehiclesMaster } from './ExchangeVehicles';
 import { AddOnDetailsMaster } from './AddOnDetails';
 import { OtfDetailsMaster } from './OtfDetails';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
-import ThankYouPage from './ThankYouPage';
+import { ThankYouMaster } from './ThankYou';
 
 import { LeftSidebar } from './LeftSidebar';
 
@@ -68,7 +68,7 @@ const OTFMainConatinerMain = (props) => {
                 return <AddOnDetailsMaster {...myProps} />;
             }
             case OTF_SECTION.THANK_YOU_PAGE.id: {
-                return <ThankYouPage {...myProps} />;
+                return <ThankYouMaster {...myProps} />;
             }
             default: {
                 return <CustomerDetailsMaster {...myProps} />;

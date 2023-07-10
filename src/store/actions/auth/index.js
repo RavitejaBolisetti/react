@@ -10,7 +10,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { withAuthToken } from 'utils//withAuthToken';
 import { axiosAPICall } from 'utils//axiosAPICall';
 
-import { BASE_URL_LOGIN, BASE_URL_LOGOUT } from 'constants/routingApi';
+import { BASE_URL_LOGIN, BASE_URL_REFRESH_TOKEN, BASE_URL_LOGOUT } from 'constants/routingApi';
 import { LANGUAGE_EN } from 'language/en';
 
 export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
@@ -27,13 +27,15 @@ export const CLEAR_ALL_DATA = 'CLEAR_ALL_DATA';
 
 export const LOCAL_STORAGE_KEY_AUTH_ID_TOKEN = 'idToken';
 export const LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN = 'accessToken';
+export const LOCAL_STORAGE_KEY_AUTH_REFERSH_TOKEN = 'refreshToken';
 export const LOCAL_STORAGE_KEY_AUTH_USER_ID = 'userId';
 export const LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS = 'passwordStatus';
 
-export const authLoginSucess = (idToken, accessToken, userName, userId, passwordStatus) => ({
+export const authLoginSucess = (idToken, accessToken, refreshToken, userName, userId, passwordStatus) => ({
     type: AUTH_LOGIN_SUCCESS,
     token: idToken,
     accessToken: accessToken,
+    refreshToken: refreshToken,
     userName,
     userId,
     passwordStatus,
@@ -71,6 +73,7 @@ const unAuthenticate = (message) => ({
 export const clearLocalStorageData = () => {
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN);
+    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_REFERSH_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS);
 };
@@ -97,24 +100,26 @@ export const doLogout = (res) => (dispatch) => {
 };
 
 const authPostLoginActions =
-    ({ idToken, accessToken, userId, passwordStatus, saveTokenAndRoleRights = true }) =>
-    (dispatch) => {
-        if (saveTokenAndRoleRights) {
-            localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN, idToken);
-            localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN, accessToken);
-            localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_USER_ID, userId);
-            localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS, JSON.stringify(passwordStatus));
-        }
+    ({ idToken, accessToken, refreshToken, userId, passwordStatus, saveTokenAndRoleRights = true }) =>
+        (dispatch) => {
+            if (saveTokenAndRoleRights) {
+                localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN, idToken);
+                localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN, accessToken);
+                localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_REFERSH_TOKEN, refreshToken);
+                localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_USER_ID, userId);
+                localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS, JSON.stringify(passwordStatus));
+            }
 
-        const { username: userName } = jwtDecode(idToken);
+            const { username: userName } = jwtDecode(idToken);
 
-        dispatch(authLoginSucess(idToken, accessToken, userName, userId, passwordStatus));
-    };
+            dispatch(authLoginSucess(idToken, accessToken, refreshToken, userName, userId, passwordStatus));
+        };
 
 export const readFromStorageAndValidateAuth = () => (dispatch) => {
     try {
         const idToken = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN);
         const accessToken = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN);
+        const refreshToken = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_REFERSH_TOKEN);
         const userId = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
         const passwordStatus = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS);
 
@@ -127,6 +132,7 @@ export const readFromStorageAndValidateAuth = () => (dispatch) => {
                     authPostLoginActions({
                         idToken,
                         accessToken,
+                        refreshToken,
                         userId,
                         passwordStatus: passwordStatus && JSON.parse(passwordStatus),
                     })
@@ -154,6 +160,7 @@ export const authPostLogin = (data) => (dispatch) => {
             userId: data?.userId,
             idToken: data?.idToken,
             accessToken: data?.accessToken,
+            refreshToken: data?.refreshToken,
             passwordStatus: data?.passwordStatus,
         })
     );
@@ -206,6 +213,32 @@ export const doLogin = (requestData, showFormLoading, onLogin, onError) => (disp
     axiosAPICall(apiCallParams);
 };
 
+
+export const doRefreshToken = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { onSuccess, onError, data } = params;
+    const url = BASE_URL_REFRESH_TOKEN;
+
+    const onSuccessAction = (res) => {
+        onSuccess && onSuccess(res);
+    };
+
+    const apiCallParams = {
+        method: 'put',
+        url,
+        token,
+        accessToken,
+        userId,
+        data,
+        onSuccess: onSuccessAction,
+        onError: onError,
+        onTimeout: () => dispatch(authUserLogout()),
+        postRequest: () => { },
+        onUnAuthenticated: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
+        onUnauthorized: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
+    };
+    axiosAPICall(apiCallParams);
+});
+
 export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { onSuccess, onError } = params;
     const url = BASE_URL_LOGOUT;
@@ -225,9 +258,11 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
         onSuccess: onSuccessAction,
         onError: onError,
         onTimeout: () => dispatch(authUserLogout()),
-        postRequest: () => {},
+        postRequest: () => { },
         onUnAuthenticated: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
         onUnauthorized: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
     };
     axiosAPICall(apiCallParams);
 });
+
+

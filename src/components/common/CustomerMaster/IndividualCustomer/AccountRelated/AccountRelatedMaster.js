@@ -11,7 +11,6 @@ import { Row, Col, Form } from 'antd';
 import { indivisualAccountsRelatedDataActions } from 'store/actions/data/customerMaster/indivisualAccountRelated';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
@@ -72,7 +71,7 @@ export const AccountRelatedMasterBase = (props) => {
 
     const onErrorAction = (message) => {
         resetData();
-        
+
         showGlobalNotification({ message });
     };
 
@@ -93,7 +92,7 @@ export const AccountRelatedMasterBase = (props) => {
 
     useEffect(() => {
         if (!formActionType?.addMode && userId && selectedCustomerId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);

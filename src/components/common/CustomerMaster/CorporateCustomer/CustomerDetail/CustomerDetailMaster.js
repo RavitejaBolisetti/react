@@ -77,8 +77,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CompanyCustomerDetailsMasterBase = (props) => {
     const { userId, isDataLoaded, isLoading, showGlobalNotification, customerDetailsData, section, fetchList, listShowLoading, typeData, saveData, fetchCorporateLovList, listCorporateLovShowLoading, isCorporateLovDataLoaded, fetchCustomerParentCompanyList, listCustomerParentCompanyShowLoading, customerParentCompanyData, corporateLovData } = props;
-    const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData } = props;
-    const { form, setRefreshList, handleFormValueChange, onFinishFailed, buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
+    const { setRefreshCustomerList, selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId, resetData } = props;
+    const { form, handleFormValueChange, onFinishFailed, buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
     const [customerDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -129,7 +129,6 @@ const CompanyCustomerDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        setRefreshList(false);
         const recordId = customerDetailsData?.id || '';
         const data = { ...values, customerId: selectedCustomer?.customerId, id: recordId };
 
@@ -138,11 +137,11 @@ const CompanyCustomerDetailsMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
             setButtonData({ ...buttonData, formBtnActive: false });
+            setRefreshCustomerList(true);
 
             if (res.data) {
-                setRefreshList(true);
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
+                setSelectedCustomer({ ...res.data, customerName: res?.data?.companyName });
                 setSelectedCustomerId(res?.data?.customerId);
             }
         };
