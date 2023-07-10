@@ -5,6 +5,9 @@ import customRender from "@utils/test-utils";
 import { Logins } from "@components/Auth/Login/Login";
 
 describe('Login Form Component', () => {
+
+    const handler = jest.fn(() => Promise.resolve());
+
     it('should render Login Form', async () => {
         customRender(<Logins />);
         expect(screen.getByRole('heading', {
@@ -21,18 +24,25 @@ describe('Login Form Component', () => {
         const loginLink = screen.getByRole('link', { name: /M&M User Login/i });
         expect(loginLink.getAttribute('href')).toBe('/');
     });
+
     it("should render login form input field username and password", async () => {
-        customRender(<Logins />);
-        const inputBox = screen.getByRole("textbox");
-        fireEvent.change(inputBox, { target: { value: "sushil" } });
-        expect(inputBox.value.includes("sushil"));
-        fireEvent.change(inputBox, { target: { value: "Test@1234" } });
-        expect(inputBox.value.includes("Test@1234"));
-        await act(async () => {
-            const Login = screen.getByRole('button', {
-                name: /Login/i
+        
+        const { getByTestId } = customRender(<Logins callback={handler} />);
+
+        const userName = getByTestId("userNameInput");
+        fireEvent.change(userName, {
+            target: { value: "Dmatest" }
+          });
+
+        expect(userName.value.includes("sushil"));
+        const userPassword = getByTestId("inputPassword");
+        fireEvent.change(userPassword, {
+          target: { value: "Dma@test1234" }
+        });
+
+        expect(userPassword.value.includes("Dma@test1234"));
+            await act(async () => {
+                fireEvent.click(getByTestId("Login"));
             });
-            fireEvent.click(Login);   
-        });   
-    });
+        });
 });
