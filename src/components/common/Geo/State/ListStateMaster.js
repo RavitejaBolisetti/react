@@ -201,13 +201,7 @@ export const ListStateMasterBase = (props) => {
             listFilterForm.resetFields();
             setShowDataLoading(false);
         }
-        else if (e?.target?.value === '') {
-            setFilterString();
-            listFilterForm.resetFields();
-            setShowDataLoading(false);
-        }
     };
-
 
     const onFinish = (values) => {
         let data = { ...values };
