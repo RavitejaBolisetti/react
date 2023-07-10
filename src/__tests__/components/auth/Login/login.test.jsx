@@ -7,7 +7,6 @@ import { Logins } from "@components/Auth/Login/Login";
 describe('Login Form Component', () => {
 
     const handler = jest.fn(() => Promise.resolve());
-
     it('should render Login Form', async () => {
         customRender(<Logins />);
         expect(screen.getByRole('heading', {
