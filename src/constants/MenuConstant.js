@@ -179,6 +179,13 @@ export const MenuConstant = {
         parentMenuId: 'COMN-10',
     },
 
+    [getMenyKey('COMN-10.04')]: {
+        key: 'COMN-10.04',
+        link: routing.ROUTING_COMMON_LESSOR_COMPANY_CREATION,
+        icon: undefined,
+        parentMenuId: 'COMN-10.a',
+    },
+    
     [getMenyKey('COMN-10.03')]: {
         key: 'COMN-10.03',
         link: routing.ROUTING_COMMON_LESSOR_COMPANY_MASTER,
