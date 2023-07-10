@@ -14,8 +14,8 @@ describe('Forgot Password Component render', () => {
     it("should render step 1 for forgetPassword components", async () => {
             customRender(<ForgotPassword currentStep={1} />);
             const inputBox = screen.getByRole("textbox");
-            fireEvent.change(inputBox, { target: { value: "sushil" } });
-            expect(inputBox.value.includes("sushil"));
+            fireEvent.change(inputBox, { target: { value: "Dmatest" } });
+            expect(inputBox.value.includes("Dmatest"));
             await act(async () => {
                 const verifyUserButton = screen.getByRole('button', {
                     name: /verify user/i

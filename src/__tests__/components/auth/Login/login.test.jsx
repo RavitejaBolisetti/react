@@ -33,7 +33,7 @@ describe('Login Form Component', () => {
             target: { value: "Dmatest" }
           });
 
-        expect(userName.value.includes("sushil"));
+        expect(userName.value.includes("Dmatest"));
         const userPassword = getByTestId("inputPassword");
         fireEvent.change(userPassword, {
           target: { value: "Dma@test1234" }
