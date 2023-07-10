@@ -10,7 +10,7 @@ export const tableColumn = () => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Entitlement/Scheme Type',
-            dataIndex: 'schemeType',
+            dataIndex: 'type',
             width: '20',
             sorter: true,
         }),
@@ -42,25 +42,25 @@ export const tableColumn = () => {
         }),
         tblPrepareColumns({
             title: 'Validity Start Date',
-            dataIndex: 'validityStartDate',
+            dataIndex: 'startDate',
             width: '15',
             sorter: true,
         }),
         tblPrepareColumns({
             title: 'Validity End Date',
-            dataIndex: 'validityEndDate',
+            dataIndex: 'endDate',
             width: '15',
             sorter: true,
         }),
         tblPrepareColumns({
             title: 'Validity Start KM',
-            dataIndex: 'validityStartKm',
+            dataIndex: 'startKm',
             width: '15',
             sorter: true,
         }),
         tblPrepareColumns({
             title: 'Validity End KM',
-            dataIndex: 'validityEndKm',
+            dataIndex: 'endKm',
             width: '15',
             sorter: true,
         }),
