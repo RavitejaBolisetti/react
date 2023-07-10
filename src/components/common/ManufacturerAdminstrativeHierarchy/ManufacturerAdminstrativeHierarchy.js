@@ -388,7 +388,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                         </span>
                                     }
                                 >
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={handleAdd}>
                                         Add
                                     </Button>
                                 </Empty>

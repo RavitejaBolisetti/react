@@ -134,7 +134,7 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button data-testid="isFormBtnActive" htmlType="submit" danger disabled={!isFormBtnActive}>
+                        <Button data-testid="isFormBtnActive" htmlType="submit" type="primary" disabled={!isFormBtnActive}>
                             Save
                         </Button>
                     </Col>

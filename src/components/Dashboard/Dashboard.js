@@ -72,7 +72,7 @@ const DashboardBase = ({ props }) => {
                             </div>
 
                             <div className={styles.buttonHolder}>
-                                <Button className=" mrl15" danger type="primary">
+                                <Button className=" mrl15" type="primary">
                                     View Dashboard
                                 </Button>
                             </div>
@@ -148,7 +148,7 @@ const DashboardBase = ({ props }) => {
                                 </div>
                             </div>
                             <div className={styles.buttonHolder}>
-                                <Button className=" mrl15" danger type="primary">
+                                <Button className=" mrl15" type="primary">
                                     View More
                                 </Button>
                             </div>
@@ -176,7 +176,7 @@ const DashboardBase = ({ props }) => {
                                 </div>
                             </div>
                             <div className={styles.buttonHolder}>
-                                <Button className=" mrl15" danger type="primary">
+                                <Button className=" mrl15" type="primary">
                                     View More
                                 </Button>
                             </div>
@@ -246,7 +246,7 @@ const DashboardBase = ({ props }) => {
                                 </div>
                             </div>
                             <div className={styles.buttonHolder}>
-                                <Button className=" mrl15" danger type="primary">
+                                <Button className=" mrl15" type="primary">
                                     View More
                                 </Button>
                             </div>

@@ -133,7 +133,7 @@ const AddEditFormMain = ({
                     </Button>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnRight}>
-                    <Button disabled={isApplicatinoOnSaveLoading || !canFormSave} loading={isApplicatinoOnSaveLoading} htmlType="submit" danger form="myForm" key="saveBtm" type="primary">
+                    <Button disabled={isApplicatinoOnSaveLoading || !canFormSave} loading={isApplicatinoOnSaveLoading} htmlType="submit" form="myForm" key="saveBtm" type="primary">
                         Save
                     </Button>
                 </Col>

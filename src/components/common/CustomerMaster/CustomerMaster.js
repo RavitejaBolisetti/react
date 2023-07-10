@@ -356,21 +356,19 @@ const CustomerMasterMain = (props) => {
     const handleChange = (e) => {
         if (e.target.value.length > 2) {
             searchForm.validateFields(['code']);
-        }
-        else if (e?.target?.value === '') {
+        } else if (e?.target?.value === '') {
             setFilterString();
             searchForm.resetFields();
             setShowDataLoading(false);
         }
     };
 
-
     const searchBoxProps = {
         searchForm,
         filterString,
         setFilterString,
         optionType: typeData,
-        handleChange
+        handleChange,
     };
 
     const showAddButton = true;
@@ -385,7 +383,7 @@ const CustomerMasterMain = (props) => {
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                     {Object.values(CUSTOMER_TYPE)?.map((item) => {
                                         return (
-                                            <Button type={customerType === item?.id ? 'primary' : 'link'} danger onClick={() => handleCustomerTypeChange(item?.id)}>
+                                            <Button type={customerType === item?.id ? 'primary' : 'link'} onClick={() => handleCustomerTypeChange(item?.id)}>
                                                 {item?.title}
                                             </Button>
                                         );
@@ -394,7 +392,7 @@ const CustomerMasterMain = (props) => {
                                 <SearchBox {...searchBoxProps} />
                             </Col>
                             <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
-                                {/* <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                {/* <Button type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                     Add
                                 </Button> */}
                             </Col>
@@ -451,7 +449,7 @@ const CustomerMasterMain = (props) => {
                                 }
                             >
                                 {showAddButton && !data?.length && (
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                         {`Add`}
                                     </Button>
                                 )}

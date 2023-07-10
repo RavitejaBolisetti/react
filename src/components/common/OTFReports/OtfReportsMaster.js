@@ -169,7 +169,7 @@ export const OtfReportsMasterBase = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                            <Button style={{ marginTop: '20px' }} htmlType="submit" type="primary" danger>
+                            <Button style={{ marginTop: '20px' }} htmlType="submit" type="primary">
                                 Download
                             </Button>
                         </Col>

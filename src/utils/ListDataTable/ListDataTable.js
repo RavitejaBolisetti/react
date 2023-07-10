@@ -33,12 +33,11 @@ export default function ListDataTable({
                         imageStyle={{
                             height: '20%',
                         }}
-                        
                         description={!tableData?.length ? <span>{noDataMessage}</span> : <span> No records found.</span>}
                     >
                         {!tableData?.length
                             ? showAddButton && (
-                                  <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                  <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={handleAdd}>
                                       {`Add`}
                                   </Button>
                               )
@@ -46,7 +45,7 @@ export default function ListDataTable({
                     </Empty>
                 )}
             >
-                <div className={`${styles.tableProduct} ${styles.datasearh}`}  >
+                <div className={`${styles.tableProduct} ${styles.datasearh}`}>
                     <DataTable isLoading={isLoading} tableData={tableData} srl={srl} tableColumn={tableColumn} showAddButton={showAddButton} scroll={scroll} />
                 </div>
             </ConfigProvider>

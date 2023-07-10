@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -12,7 +12,7 @@ import styles from '../../CustomertMaster.module.css';
 
 const ValidateMobileModalMain = (props) => {
     const { onCloseAction, onCloseActionOnContinue } = props;
-    
+
     return (
         <>
             <Row>
@@ -23,7 +23,7 @@ const ValidateMobileModalMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space>
-                        <Button ghost onClick={onCloseAction} htmlType="submit" type="primary" className={styles.modalButton}>
+                        <Button onClick={onCloseAction} htmlType="submit" danger className={styles.modalButton}>
                             No
                         </Button>
                         <Button onClick={onCloseActionOnContinue} htmlType="submit" type="primary" className={styles.modalButton}>

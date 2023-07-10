@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -93,7 +93,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-    
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -250,7 +249,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
-        
+
         noDataMessage:
             selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
                 <span className={styles.descriptionText}>
@@ -329,7 +328,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
                                     {detailData?.hierarchyAttribute?.length > 0 && (
                                         <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                             <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={handleAdd}>
                                                 Add
                                             </Button>
                                         </Col>

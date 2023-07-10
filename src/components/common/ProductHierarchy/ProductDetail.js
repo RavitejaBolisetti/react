@@ -73,7 +73,7 @@ const ProductDetail = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                    <Button htmlType="submit" danger form="myForm" disabled={!isFormBtnActive} type="primary">
+                    <Button htmlType="submit" form="myForm" disabled={!isFormBtnActive} type="primary">
                         Save
                     </Button>
                 </Col>

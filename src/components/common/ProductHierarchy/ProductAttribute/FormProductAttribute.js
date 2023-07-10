@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -12,7 +12,7 @@ import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
     const { attributeForm, isVisible, productHierarchyAttributeData, onAttributeFormFinish, formEdit, editForm, skuAttributes } = props;
-    const [ changeValue, setChangeValue ] = useState(null);
+    const [changeValue, setChangeValue] = useState(null);
 
     const onFinishFailed = (err) => {
         console.error(err);
@@ -29,7 +29,7 @@ function FormProductAttribute(props) {
         <Form form={formEdit ? editForm : attributeForm} id="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Attribute Name" name="attributeName" initialValue={props?.code} rules={[validateRequiredSelectField('Attribute Name'), { validator: () => duplicateProductValidator(changeValue, skuAttributes ) }]}>
+                    <Form.Item label="Attribute Name" name="attributeName" initialValue={props?.code} rules={[validateRequiredSelectField('Attribute Name'), { validator: () => duplicateProductValidator(changeValue, skuAttributes) }]}>
                         <Select
                             getPopupContainer={(triggerNode) => triggerNode.parentElement}
                             placeholder={preparePlaceholderSelect('attribute name')}
@@ -61,7 +61,7 @@ function FormProductAttribute(props) {
                 </Col>
 
                 {isVisible && (
-                    <Button icon={<PlusOutlined />} type="primary" danger htmlType="submit" style={{ margin: '0 0 0 12px' }}>
+                    <Button icon={<PlusOutlined />} type="primary" htmlType="submit" style={{ margin: '0 0 0 12px' }}>
                         Add
                     </Button>
                 )}
