@@ -10,7 +10,6 @@ export const aggregatesCoulmn = [
         key: 'serviceName',
         width: '25%',
     },
-
     {
         title: 'Make ',
         dataIndex: 'make',

@@ -16,7 +16,7 @@ const AggregatesFormMain = (props) => {
         let found = false;
         optionsServiceModified?.find((element, index) => {
             if (element?.serviceName?.trim()?.toLowerCase() === serviceName?.trim()?.toLowerCase()) {
-                showGlobalNotification({ notificationType: 'error', title: 'ERROR', message: 'Duplicate service Name' });
+                showGlobalNotification({ notificationType: 'error', title: 'ERROR', message: 'Duplicate item Name' });
                 found = true;
                 return;
             }
@@ -48,13 +48,45 @@ const AggregatesFormMain = (props) => {
                     <Form autoComplete="off" layout="vertical" form={optionForm} onFinish={onFinish}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item name="serviceName" label="Item" initialValue={formData?.serviceName} rules={[validateRequiredSelectField('Item')]}>
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('Item')} />
+                                <Form.Item name="serviceName" label="Item" rules={[validateRequiredSelectField('Item')]}>
+                                    <Select
+                                        options={[
+                                            {
+                                                value: '1',
+                                                label: 'Not Identified',
+                                            },
+                                            {
+                                                value: '2',
+                                                label: 'Closed',
+                                            },
+                                            {
+                                                value: '3',
+                                                label: 'Identified',
+                                            },
+                                        ]}
+                                    />
+                                    {/* placeholder="Select item" allowClear options={typeData['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }}  */}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Make" name="make" rules={[validateRequiredInputField('Make')]}>
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('Make')} />
+                                    <Select
+                                        options={[
+                                            {
+                                                value: '1',
+                                                label: 'Year',
+                                            },
+                                            {
+                                                value: '2',
+                                                label: 'Month',
+                                            },
+                                            {
+                                                value: '3',
+                                                label: 'WeekDays',
+                                            },
+                                        ]}
+                                    />
+                                    {/* placeholder="Select make" allowClear options={typeData['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }} */}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
