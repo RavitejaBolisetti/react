@@ -31,10 +31,6 @@
     color: #ff3e5b;
 }
 
-:global .ant-layout-sider-zero-width-trigger {
-    display: none !important;
-}
-
 .leftMenuBox {
     height: 100vh;
     position: -webkit-sticky !important;
@@ -77,176 +73,6 @@
     cursor: pointer;
 }
 
-:global .ant-menu-title-content a {
-    color: #000000;
-    display: block;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-:global .ant-menu-title-content a:hover {
-    color: #ff3e5b !important;
-}
-
-:global .ant-menu-light .ant-menu-submenu-title:hover:not(.ant-menu-item-selected):not(.ant-menu-submenu-selected) {
-    color: #ff3e5b !important;
-}
-
-:global .ant-menu-light:not(.ant-menu-horizontal) .ant-menu-submenu-title:hover {
-    background-color: transparent !important;
-}
-
-:global .ant-layout .ant-layout-sider-trigger {
-    position: absolute;
-    width: 0px !important;
-    top: 23px;
-    z-index: 1;
-    color: #ff3e5b;
-    font-size: 18px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-/* icon for collapse position when not collapsed */
-:global .ant-layout .ant-layout-sider-trigger .anticon-left {
-    position: absolute;
-    left: 208px;
-}
-
-/* icon for collapse position when collapsed */
-:global .ant-layout .ant-layout-sider-trigger .anticon-right {
-    position: absolute;
-    left: 32px;
-}
-
-/* background color of the menu list & sub-menu list */
-:global .ant-menu-light {
-    background-color: transparent;
-}
-
-/* font-family & size for sub-menu in left-menu text */
-:global .ant-menu .ant-menu-sub {
-    font-size: 14px;
-    background-color: #ffffff !important;
-}
-
-:global .ant-menu .ant-menu-sub li {
-    padding-left: 22px !important;
-}
-
-:global .ant-menu .ant-menu-item .ant-menu-item-icon+span,
-:global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon+span,
-:global .ant-menu .ant-menu-item .anticon+span,
-:global .ant-menu .ant-menu-submenu-title .anticon+span {
-    padding-left: 20px !important;
-}
-
-:global .ant-menu-item:not(.ant-menu-item-selected):hover {
-    background-color: white !important;
-    border-radius: 4px;
-}
-
-/* changes on menu list items on select/visited/focus */
-:global .ant-menu-light .ant-menu-item-selected,
-:global .ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
-:global .ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title span.ant-menu-title-content a {
-    background-color: white;
-    border-radius: 4px;
-    color: #ff3e5b !important;
-}
-
-:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-track,
-:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-track {
-    background-color: #ffffff;
-}
-
-:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar,
-:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar {
-    width: 8px;
-    background-color: #ffffff;
-}
-
-:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb,
-:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-thumb {
-    background-color: #C1C1C1;
-    border-radius: 10px;
-    border: 2px solid #ffffff;
-}
-
-:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb:hover,
-:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-thumb:hover {
-    border: 2px solid #C1C1C1;
-}
-
-/* :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar:hover {
-    width: 8px !important;
-} */
-
-:global .ant-menu-light.ant-menu-root.ant-menu-inline,
-:global .ant-menu-light.ant-menu-root.ant-menu-vertical {
-    border-inline-end: none;
-    overflow-y: overlay;
-    max-height: calc(100vh - 180px);
-    padding: 0px 14px;
-}
-
-:global .ant-menu-light.ant-menu-root.ant-menu-vertical {
-    max-height: calc(100vh - 164px);
-}
-
-/* font-family & size for left-menu text */
-:global .ant-menu {
-    font-size: 15px;
-    font-weight: 500 !important;
-}
-
-:global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon+span {
-    text-transform: uppercase;
-    padding-left: 0 !important;
-}
-
-:global .ant-menu-inline .ant-menu-submenu-title,
-:global .ant-menu-inline .ant-menu-item {
-    /* height: auto; */
-    height: 32px;
-    padding-inline: 0 !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin: 0;
-    margin-bottom: 4px;
-    width: 100%;
-}
-
-:global .ant-menu-vertical .ant-menu-item,
-:global .ant-menu-vertical .ant-menu-submenu-title {
-    margin-inline: 0;
-    margin-block: 0;
-    margin-bottom: 4px;
-    width: 100%;
-}
-
-:global .ant-menu .ant-menu-submenu-arrow {
-    position: initial;
-    width: 8px;
-}
-
-:global .ant-menu-inline .ant-menu-sub.ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title {
-    height: 36px !important;
-}
-
-:global .ant-input-affix-wrapper {
-    padding-right: 2px !important;
-}
-
-:global .ant-input-affix-wrapper,
-:global .ant-btn-default {
-    height: 34px !important;
-    border-radius: 4px;
-    border-color: transparent;
-    padding: 6px 12px;
-}
-
 /* border color on input search in left-menu */
 .leftMenuBox .searchContainer :global .ant-input-affix-wrapper {
     border-width: 0px;
@@ -272,28 +98,6 @@
 
 .logoContainer input::placeholder {
     color: #8e8585;
-}
-
-:global .ant-btn.ant-btn-icon-only {
-    width: 40px;
-}
-
-:global .ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub:not([class*='-active'])::-webkit-scrollbar-track {
-    background-color: #f4f4f4;
-}
-
-:global .ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub:not([class*='-active'])::-webkit-scrollbar {
-    background-color: #f4f4f4;
-    width: 5px;
-}
-
-:global .ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub:not([class*='-active']):hover::-webkit-scrollbar {
-    width: 5px !important;
-}
-
-:global .ant-menu-light .ant-menu-item a:hover {
-    text-decoration: none;
-    color: #ff3e5b;
 }
 
 /* menu Search  */
@@ -381,11 +185,6 @@
 .brandLink .brandImage {
     max-height: 26px;
     width: auto;
-}
-
-:global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content span:first-child,
-:global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content span:first-child {
-    padding-left: 4px;
 }
 
 .changeTheme {
