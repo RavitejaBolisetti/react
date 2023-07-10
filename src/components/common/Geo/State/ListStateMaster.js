@@ -196,8 +196,18 @@ export const ListStateMasterBase = (props) => {
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
+        } else if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
+        else if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
         }
     };
+
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -340,7 +350,6 @@ export const ListStateMasterBase = (props) => {
         setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,
-        advanceFilterProps,
         title,
     };
 

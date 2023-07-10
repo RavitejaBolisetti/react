@@ -145,7 +145,6 @@ const SupportingDocumentBase = (props) => {
     };
 
     const downloadFileFromList = () => {
-        console.log(uploadedFile, 'uploadedFile');
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
         const extraParams = [
             {

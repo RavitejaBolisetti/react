@@ -229,6 +229,17 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
+        }
+        else if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
+    };
+
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
             return 'View ';
@@ -289,11 +300,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         }
     };
 
-    const handleClearInSearch = (e) => {
-        if (e.target.value.length > 2) {
-            listFilterForm.validateFields(['code']);
-        }
-    };
+  
 
     const removeFilter = (key) => {
         const { [key]: names, ...rest } = filterString;

@@ -10,7 +10,6 @@ import { Button, Col, Row, Form, Empty, ConfigProvider } from 'antd';
 import { RxCross2 } from 'react-icons/rx';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
-import { showGlobalNotification } from 'store/actions/notification';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { tableColumn } from './tableColumn';
@@ -62,21 +61,20 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: customerDetailDataActions.setFilter,
             resetData: customerDetailDataActions.reset,
             listShowLoading: customerDetailDataActions.listShowLoading,
-            showGlobalNotification,
         },
         dispatch
     ),
 });
 
 const CustomerMasterMain = (props) => {
-    const { data, fetchList, userId, isLoading, listShowLoading, showGlobalNotification, moduleTitle, typeData, resetData } = props;
+    const { data, fetchList, userId, isLoading, listShowLoading, moduleTitle, typeData, resetData } = props;
     const { filterString, setFilterString } = props;
 
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
     const [selectedCustomer, setSelectedCustomer] = useState();
     const [selectedCustomerId, setSelectedCustomerId] = useState();
     const [shouldResetForm, setShouldResetForm] = useState(false);
-
+    const [refreshCustomerList, setRefreshCustomerList] = useState(false);
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
@@ -86,6 +84,7 @@ const CustomerMasterMain = (props) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
+    const [profileCardLoading, setProfileCardLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
@@ -147,14 +146,22 @@ const CustomerMasterMain = (props) => {
     }, [defaultExtraParam, filterString]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setShowDataLoading(false);
+        setRefreshCustomerList(false);
     };
 
     const onErrorAction = (res) => {
-        showGlobalNotification({ message: res?.responseMessage });
         setShowDataLoading(false);
+        setRefreshCustomerList(false);
     };
+
+    useEffect(() => {
+        if (data && selectedCustomerId) {
+            data && setSelectedCustomer(data?.find((i) => i.customerId === selectedCustomerId));
+            setProfileCardLoading(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data, selectedCustomerId]);
 
     useEffect(() => {
         return () => {
@@ -190,10 +197,10 @@ const CustomerMasterMain = (props) => {
     useEffect(() => {
         if (userId && customerType && extraParams) {
             setShowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams || defaultExtraParam });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams || defaultExtraParam, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, customerType, extraParams]);
+    }, [userId, customerType, extraParams, refreshCustomerList]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
@@ -222,6 +229,7 @@ const CustomerMasterMain = (props) => {
             default:
                 break;
         }
+        setProfileCardLoading(false);
 
         if (buttonAction !== NEXT_ACTION) {
             setFormActionType({
@@ -263,6 +271,7 @@ const CustomerMasterMain = (props) => {
         setFormActionType(defaultFormActionType);
         setButtonData(defaultBtnVisiblity);
         setSelectedCustomer();
+        setProfileCardLoading();
         setSelectedCustomerId();
         setShouldResetForm(true);
     };
@@ -312,6 +321,9 @@ const CustomerMasterMain = (props) => {
         isLastSection,
         saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
         setIsFormVisible,
+        setRefreshCustomerList,
+        profileCardLoading,
+        setProfileCardLoading,
     };
 
     const handleCustomerTypeChange = (id) => {
@@ -339,11 +351,24 @@ const CustomerMasterMain = (props) => {
         searchForm.resetFields();
     };
 
+    const handleChange = (e) => {
+        if (e.target.value.length > 2) {
+            searchForm.validateFields(['code']);
+        }
+        else if (e?.target?.value === '') {
+            setFilterString();
+            searchForm.resetFields();
+            setShowDataLoading(false);
+        }
+    };
+
+
     const searchBoxProps = {
         searchForm,
         filterString,
         setFilterString,
         optionType: typeData,
+        handleChange
     };
 
     const showAddButton = true;
@@ -431,7 +456,7 @@ const CustomerMasterMain = (props) => {
                             </Empty>
                         )}
                     >
-                        <DataTable isLoading={showDataLoading}  {...tableProps} />
+                        <DataTable isLoading={showDataLoading} {...tableProps} />
                     </ConfigProvider>
                 </Col>
             </Row>

@@ -44,7 +44,8 @@ const baseAPICall = (params) => {
     };
 
     const onUnAuthenticated = (message = '') => {
-        clearLocalStorageData();
+        // clearLocalStorageData();
+        onError && onError(message);
     };
 
     try {
@@ -74,7 +75,7 @@ const baseAPICall = (params) => {
                 }
             })
             .catch((error) => {
-                onUnAuthenticated();
+                // onUnAuthenticated();
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {

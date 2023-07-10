@@ -25,9 +25,9 @@ const ViewDetailMain = (props) => {
                 <Descriptions.Item label="EMI">{checkAndSetDefaultValue(formData?.emi, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="D.O. Recived">{checkAndSetDefaultValue(formData?.doReceived, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="D.O. Number">{checkAndSetDefaultValue(formData?.doNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="D.O. Date">{checkAndSetDefaultValue(formData?.doDate?.format('YYYY-MM-DD'), isLoading, 'date')}</Descriptions.Item>
+                <Descriptions.Item label="D.O. Date">{checkAndSetDefaultValue(formData?.doDate, isLoading, 'date')}</Descriptions.Item>
             </Descriptions>
-        </Card> 
+        </Card>
     );
 };
 

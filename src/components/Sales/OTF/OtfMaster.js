@@ -22,10 +22,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import styles from 'components/common/Common.module.css';
 
 import { validateOTFMenu } from './utils/validateOTFMenu';
-
 import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
@@ -271,6 +269,7 @@ export const OtfMasterBase = (props) => {
         setShowDataLoading(true);
         setFilterString();
         advanceFilterForm.resetFields();
+        setAdvanceSearchVisible(false);
     };
 
     const onFinish = (values) => {
@@ -316,6 +315,11 @@ export const OtfMasterBase = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
+
+        advanceFilterForm.resetFields();
+        advanceFilterForm.setFieldsValue();
+        setAdvanceSearchVisible(false);
+
         setSelectedOrder();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
@@ -328,8 +332,10 @@ export const OtfMasterBase = (props) => {
     };
 
     const onAdvanceSearchCloseAction = () => {
-        setAdvanceSearchVisible(false);
         form.resetFields();
+        advanceFilterForm.resetFields();
+        advanceFilterForm.setFieldsValue();
+        setAdvanceSearchVisible(false);
     };
 
     const removeFilter = (key) => {
@@ -434,8 +440,8 @@ export const OtfMasterBase = (props) => {
         <>
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} >
-                    <ListDataTable  handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

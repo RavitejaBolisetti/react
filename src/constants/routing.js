@@ -41,6 +41,7 @@ export const ROUTING_COMMON_BRANCH_DEALER_MAPPING = ROUTING_COMMON.concat('branc
 
 export const ROUTING_COMMON_PARTY_MASTER = ROUTING_COMMON.concat('party-master');
 export const ROUTING_COMMON_LESSOR_COMPANY_MASTER = ROUTING_COMMON.concat('lessor-company-master');
+export const ROUTING_COMMON_LESSOR_COMPANY_CREATION = ROUTING_COMMON.concat('lessor-company-creation');
 
 export const ROUTING_COMMON_QUALIFICATION_MASTER = ROUTING_COMMON.concat('qualification-master');
 
@@ -84,5 +85,6 @@ export const ROUTING_ADMIN_USER_MANAGEMENT = ROUTING_ADMIN.concat('user-manageme
 export const ROUTING_USER_MANAGEMENT_DEALER = ROUTING_ADMIN_USER_MANAGEMENT.concat('dealer');
 export const ROUTING_USER_MANAGEMENT_MANUFACTURER = ROUTING_ADMIN_USER_MANAGEMENT.concat('manufacturer');
 export const ROUTING_OTF = ROUTING_SALES.concat('order-tracking-form');
+export const ROUTING_VECHILE_DETAILS = ROUTING_SALES.concat('vechile-details');
 
 export const ROUTING_REPORT_OTF_REPORTS = ROUTING_REPORT.concat('otf-reports');

@@ -14,7 +14,7 @@ import { expandIconWithText } from 'utils/accordianExpandIcon';
 const { Panel } = Collapse;
 
 const AddEditFormBase = (props) => {
-    const { form, formData, setSameAsBookingCustomer } = props;
+    const { form, formData, sameAsBookingCustomer, setSameAsBookingCustomer } = props;
     const { typeData, activeKey, setActiveKey } = props;
 
     useEffect(() => {
@@ -45,20 +45,21 @@ const AddEditFormBase = (props) => {
         }
     };
 
-    const bilingCustomerProps = {
-        ...props,
-        AutoComplete,
-        typeData,
-        formData: formData?.billingCustomer,
-        formType: 'billingCustomer',
-    };
-
     const bookingCustomerProps = {
         ...props,
         AutoComplete,
         typeData,
         formData: formData?.bookingCustomer,
         formType: 'bookingCustomer',
+    };
+
+    const bilingCustomerProps = {
+        ...props,
+        AutoComplete,
+        typeData,
+        formData: formData?.billingCustomer,
+        formType: 'billingCustomer',
+        disabledProps: { disabled: sameAsBookingCustomer },
     };
 
     const handleOnChange = (vall) => {
