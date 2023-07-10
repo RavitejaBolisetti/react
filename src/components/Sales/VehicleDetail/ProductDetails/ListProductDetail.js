@@ -17,6 +17,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import styles from 'components/common/Common.module.css';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetails';
+import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 
 import dayjs from 'dayjs';
 
@@ -301,11 +302,11 @@ const ProductDetailMasterMain = (props) => {
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
-            {/* <Row>
+            <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...props} />
+                    <VehicleDetailFormButton {...props} />
                 </Col>
-            </Row> */}
+            </Row>
         </Form>
     );
 };
