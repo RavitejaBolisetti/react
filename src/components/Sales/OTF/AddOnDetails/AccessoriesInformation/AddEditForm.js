@@ -88,7 +88,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity'), validationNumber('required quantity')]}>
-                            <Input placeholder={preparePlaceholderText('required quantity')} />
+                            <Input type="number" placeholder={preparePlaceholderText('required quantity')} />
                         </Form.Item>
                     </Col>
                     <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
