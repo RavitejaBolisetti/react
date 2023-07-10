@@ -14,6 +14,8 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { disableFutureDate } from 'utils/disableDate';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
+import UploadUtils from 'components/common/CustomerMaster/Common/UploadUtils';
+
 import styles from 'components/common/Common.module.css';
 import ViewImageUtils from '../../Common/ViewImageUtils';
 
@@ -23,7 +25,7 @@ const { TextArea } = Input;
 const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadConsentDocumentFile } = props;
+    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadedFile, uploadConsentDocumentFile } = props;
     const { isReadOnly = false } = props;
     const [isRead, setIsRead] = useState(false);
     const [customer, setCustomer] = useState(false);
@@ -183,9 +185,10 @@ const AddEditFormMain = (props) => {
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                             <Panel header="Individual Information" key="1">
                                 <Divider />
-                                <div className={styles.uploadDragger}>
+                                <UploadUtils {...props} isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={uploadedFile} {...ImageProps} />
+                                {/* <div className={styles.uploadDragger}>
                                     <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} {...ImageProps} />
-                                </div>
+                                </div> */}
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -506,18 +509,20 @@ const AddEditFormMain = (props) => {
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Dragger {...uploadConsentProps} customRequest={handleUploads} className={styles.uploadContainer}>
-                                                    <div>
-                                                        <img src={Svg} alt="" />
-                                                    </div>
-                                                    <div className={styles.uploadtext}>
-                                                        Click or drop your file here to upload the signed and <br /> scanned customer form.
-                                                    </div>
-                                                    <div>File type should be png, jpg or pdf and max file size to be 5Mb</div>
-                                                    <Button {...disabledProps} type="primary" htmlType="submit" style={{ marginLeft: '30px', marginTop: '16px' }}>
-                                                        Upload File
-                                                    </Button>
-                                                </Dragger>
+                                                <div className={styles.uploadContainer}>
+                                                    <Dragger {...uploadConsentProps} customRequest={handleUploads}>
+                                                        <div>
+                                                            <img src={Svg} alt="" />
+                                                        </div>
+                                                        <div className={styles.uploadtext}>
+                                                            Click or drop your file here to upload the signed and <br /> scanned customer form.
+                                                        </div>
+                                                        <div>File type should be png, jpg or pdf and max file size to be 5Mb</div>
+                                                        <Button {...disabledProps} type="primary" htmlType="submit" style={{ marginLeft: '30px', marginTop: '16px' }}>
+                                                            Upload File
+                                                        </Button>
+                                                    </Dragger>
+                                                </div>
                                             </Col>
                                         </Row>
                                     </div>
