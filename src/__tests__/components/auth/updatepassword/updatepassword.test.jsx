@@ -2,7 +2,6 @@ import '@testing-library/jest-dom/extend-expect';
 import { act } from 'react-dom/test-utils'
 import customRender from "@utils/test-utils";
 import { UpdatePassword } from "@components/Auth/UpdatePassword/UpdatePassword";
-import userEvent from '@testing-library/user-event';
 import { screen, fireEvent, cleanup } from "@testing-library/react";
 
 afterEach(cleanup);
@@ -44,8 +43,11 @@ describe('UpdatePassword Form Component', () => {
         });
         expect(confirmNewPasswordInput.value.includes("Dma@test1234"));
 
-            await act(async () => {
-                fireEvent.click(getByTestId("updatePassword"));
-            });
+        await act(async () => {
+            fireEvent.click(getByTestId("updatePassword"));
         });
+
+      });
+
+      
 });
