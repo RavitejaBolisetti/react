@@ -88,7 +88,7 @@ const HeaderMain = (props) => {
 
     const { firstName = '', lastName = '', dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
     const fullName = firstName?.concat(lastName ? ' ' + lastName : '');
-    const userAvatar = firstName?.slice(0, 1) + (lastName ? lastName?.slice(0, 1) : '');
+    const userAvatar = firstName?.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
 
     useEffect(() => {
         if (confirms || isChangePasswordModalOpen) {

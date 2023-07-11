@@ -103,6 +103,14 @@ const UploadUtilsMain = (props) => {
             removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
             showProgress: true,
         },
+        beforeUpload: (file) => {
+            const isPNG = file.type === 'image/png';
+            const isJPG = file.type === 'image/jpeg';
+            if (!isPNG && !isJPG) {
+              message.error(`${file.name} is not a correct file format`);
+            }
+            return isPNG || isJPG || Upload.LIST_IGNORE;
+          },
         progress: { strokeWidth: 3, showInfo: true },
         accept: 'image/png, image/jpeg',
         onDrop,
@@ -144,7 +152,7 @@ const UploadUtilsMain = (props) => {
     return (
         <>
             <div className={styles.uploadDragger}>
-                {(!isReplacing && uploadImgDocId) || formActionType?.viewMode ? (
+                {(!isReplacing && uploadImgDocId) || formActionType?.viewMode  ? (
                     <>
                         <Card className={styles.dashedBorder}>
                             <Space direction="vertical">
@@ -190,10 +198,10 @@ const UploadUtilsMain = (props) => {
                                     }}
                                     description={
                                         <>
-                                            <span>{uploadTitle || 'Upload Your Profile Picture temp'}</span>
+                                            <span>{uploadTitle || 'Upload Your Profile Picture '}</span>
                                             <span>
                                                 <br />
-                                                {uploadDescription || 'File type should be .png and .jpg and max file size to be 5MB temp '}
+                                                {uploadDescription || 'File type should be .png and .jpg and max file size to be 5MB  '}
                                             </span>
                                         </>
                                     }

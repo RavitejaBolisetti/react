@@ -394,6 +394,15 @@
     padding: 7px 16px;
 }
 
+/* :global .ant-table-wrapper .ant-table-tbody>tr>td:last-child {
+    padding: 7px;
+    padding-left: 16px;
+} */
+
+:global .ant-table-wrapper .ant-table-tbody>tr>td:last-child .ant-space .ant-space-item:last-child button {
+    margin-right: 0;
+}
+
 :global .ant-table-wrapper .ant-table-tbody>tr:last-child>td {
     border-bottom: none;
 }

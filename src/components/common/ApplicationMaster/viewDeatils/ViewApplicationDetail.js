@@ -50,7 +50,7 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             {applicationAction.length > 0 && (
                                 <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
-                                    <Panel header="Application Actions" key="1">
+                                    <Panel header={<><span>Application Actions</span><span style={{color:'#ff3e5b'}}>*</span></>} key="1">
                                         <Divider />
                                         {applicationAction.map((el) => (
                                             <CardAction {...el} />
@@ -62,7 +62,7 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             {documentType.length > 0 && (
                                 <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
-                                    <Panel header="Document Types" key="2">
+                                    <Panel header={<><span>Document Type</span><span style={{color:'#ff3e5b'}}>*</span></>} key="2">
                                         <Divider />
                                         {documentType.map((el) => (
                                             <CardDocument {...el} />
@@ -74,7 +74,7 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             {accessibleLocation?.length > 0 && (
                                 <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
-                                    <Panel header="Accessible Dealer Location" key="3">
+                                    <Panel header={<><span>Accessible Dealer Location</span><span style={{color:'#ff3e5b'}}>*</span></>} key="3">
                                         <Divider />
                                         {accessibleLocation.map((el) => (
                                             <CardLocation {...el} />
