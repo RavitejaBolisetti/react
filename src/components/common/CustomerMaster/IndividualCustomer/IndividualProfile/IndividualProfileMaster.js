@@ -177,7 +177,7 @@ const IndividualProfileBase = (props) => {
         };
         const requestData = {
             data: data,
-            method: indiviualData.customerId ? 'put' : 'post',
+            method: indiviualData?.customerId ? 'put' : 'post',
             setIsLoading: listIndiviualShowLoading,
             userId,
             onError,
