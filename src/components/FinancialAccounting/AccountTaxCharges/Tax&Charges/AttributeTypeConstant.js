@@ -22,4 +22,19 @@ export const ATTRIBUTE_TYPE = [
    
 ];
 
+export const CALCULTION_TYPE = [
+    {
+        id: 1,
+        key: 'Amount',
+        value: 'Amount',
+    },
+    {
+        id: 2,
+        key: 'Percentage',
+        value: 'Percentage',
+    },
+   
+   
+];
+
 

@@ -161,4 +161,4 @@ export const BASE_URL_VEHICLE_MAKE = BASE_URL_VEHICLE + 'make';
 export const BASE_URL_VEHICLE_MODEL = BASE_URL_VEHICLE + 'model';
 
 export const BASE_URL_ACCOUNT_HEAD = BASE_URL + 'finance/financialaccountheads';
-export const BASE_URL_DOCUMENT_DESCRIPTION = BASE_URL + 'finance/accounts/document';
+export const BASE_URL_DOCUMENT_DESCRIPTION = BASE_URL + 'appmst/documenttypes';

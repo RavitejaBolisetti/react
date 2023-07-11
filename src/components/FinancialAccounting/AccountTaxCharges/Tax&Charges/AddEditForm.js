@@ -9,7 +9,7 @@ import TreeSelectField from 'components/common/TreeSelectField';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import styles from 'components/common/Common.module.css';
-import {ATTRIBUTE_TYPE} from './AttributeTypeConstant';
+import {ATTRIBUTE_TYPE, CALCULTION_TYPE} from './AttributeTypeConstant';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -24,7 +24,7 @@ const AddEditFormMain = (props) => {
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
     const [form] = Form.useForm();
-    const [calType, setCalType] = useState(true);
+    const [calType, setCalType] = useState('Amount');
 
     let attributeHierarchyFieldValidation = {
         rules: [validateRequiredSelectField('attribute level')],
@@ -126,35 +126,45 @@ const AddEditFormMain = (props) => {
                 </Row>
 
                 {attributeType === 'Tax_Calculation' ? (
+                    <>
                     <Row gutter={20}>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={null} label="Calculation Type" name="Calculation_Type" rules={[validateRequiredInputField('Calculation_Type')]}>
-                                <Switch onChange={calTypeFun} checkedChildren="Percentage" unCheckedChildren="Amount" defaultChecked={true} {...disabledProps} />
+                                <Select onChange={calTypeFun} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Calculation Type')}  showSearch allowClear>
+                                {CALCULTION_TYPE?.map((item) => (
+                                    <Option key={item?.key} value={item?.key}>
+                                        {item?.value}
+                                    </Option>
+                                ))}
+                            </Select>
                             </Form.Item>
                         </Col>
-                        {calType ? (
-                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                        </Row>
+                        <Row gutter={20}>
+                        {calType ==='Percentage' ? (
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={null} label="Percentage" name="Percentage" rules={[validateRequiredInputField('Percentage')]}>
                                     <Input placeholder={preparePlaceholderText('Percentage')} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                                 </Form.Item>
                             </Col>
                         ) : (
-                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={null} label="Rate" name="Rate" rules={[validateRequiredInputField('Rate')]}>
                                     <Input placeholder={preparePlaceholderText('Rate')} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                                 </Form.Item>
                             </Col>
                         )}
                     </Row>
+                    </>
                 ) : attributeType === 'Tax_Document' ? (
                     <>
                     <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item  name="documentDescription" label="Document Description" rules={[validateRequiredSelectField('Document Description')]}>
-                            <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Document Description')} disabled={formData?.id || isReadOnly} showSearch allowClear>
+                            <Select  loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Document Description')} disabled={formData?.id || isReadOnly} showSearch allowClear>
                                 {documentDescription?.map((item) => (
-                                    <Option key={item?.id} value={item?.key}>
-                                        {item?.value}
+                                    <Option key={item?.documentCode} value={item?.documentCode}>
+                                        {item?.documentDescription}
                                     </Option>
                                 ))}
                             </Select>
@@ -164,7 +174,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item  name="accountHead" label="Financial Account Head" rules={[validateRequiredSelectField('Financial Account Head')]}>
-                            <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Financial Account Head')} disabled={formData?.id || isReadOnly} showSearch allowClear>
+                            <Select  loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Financial Account Head')} disabled={formData?.id || isReadOnly} showSearch allowClear>
                                 {financialAccount?.map((item) => (
                                     <Option key={item?.id} value={item?.key}>
                                         {item?.value}

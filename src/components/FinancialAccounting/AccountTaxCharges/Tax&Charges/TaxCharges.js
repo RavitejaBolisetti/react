@@ -24,7 +24,7 @@ import { ViewTaxCharges } from './ViewTaxCharges';
 import LeftPanel from 'components/common/LeftPanel';
 
 import styles from 'components/common/Common.module.css';
-import { documentDescriptionDataActions } from 'store/actions/data/financialAccounting/doocumentDescription';
+import { documentDescriptionDataActions } from 'store/actions/data/financialAccounting/documentDescription';
 
 const { Search } = Input;
 const mapStateToProps = (state) => {

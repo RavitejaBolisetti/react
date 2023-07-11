@@ -11,7 +11,7 @@
 import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_DOCUMENT_DESCRIPTION as baseURL} from 'constants/routingApi';
 
-const PREFIX = 'TAX_CHARGES_CATEGORY_';
+const PREFIX = 'DOCUMENT_DECRIPTION_';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';
