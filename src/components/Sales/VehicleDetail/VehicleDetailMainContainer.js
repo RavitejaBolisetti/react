@@ -11,6 +11,7 @@ import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 import { VehicleDetailsMaster } from './VehicleDetails';
 import { CustomerDetailsMaster } from './CustomerDetails';
 import { ContactMaster } from './Contacts';
+import { EntitelmentMaster } from './ Entitlements&Schemes';
 import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'components/common/Common.module.css';
@@ -32,6 +33,9 @@ const VehicleDetailMainContainerMain = (props) => {
             }
             case VEHICLE_DETAIL_SECTION.CONTACTS.id: {
                 return <ContactMaster {...myProps} />;
+            }
+            case VEHICLE_DETAIL_SECTION.ENTITLEMENTS_SCHEMES.id: {
+                return <EntitelmentMaster {...myProps} />;
             }
             default: {
                 return <>Coming Soon</>;

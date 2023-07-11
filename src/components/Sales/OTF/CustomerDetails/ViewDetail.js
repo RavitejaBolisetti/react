@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Col, Row, Space, Collapse, Typography, Descriptions } from 'antd';
+import { Col, Row, Space, Collapse, Descriptions } from 'antd';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
@@ -12,8 +12,6 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
-const { Text } = Typography;
-
 const ViewDetailMain = (props) => {
     const { formData, isLoading } = props;
     const [activeKey, setactiveKey] = useState([1]);
@@ -65,10 +63,10 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label="Alternate Number">{checkAndSetDefaultValue(formData.bookingCustomer?.alternateNumber, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Email">{checkAndSetDefaultValue(formData.bookingCustomer?.email, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="PAN">{checkAndSetDefaultValue(formData.bookingCustomer?.panNo, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Aadhar">{checkAndSetDefaultValue('**** **** '.concat(formData.billingCustomer?.aadharNumber?.substring(8)), isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Aadhar">{checkAndSetDefaultValue(formData.billingCustomer?.aadharNumber, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData.bookingCustomer?.gstin, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Driving License">{checkAndSetDefaultValue(formData.bookingCustomer?.drivingLicense, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Trade Licence">{checkAndSetDefaultValue('********'.concat(formData.billingCustomer?.tradeLicense?.substring(8)), isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Trade Licence">{checkAndSetDefaultValue(formData.billingCustomer?.tradeLicense, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(bookingBirthDate, isLoading, 'date')} </Descriptions.Item>
                                     {/* <Descriptions.Item label="Do You Want to Add Corporate Details">{checkAndSetDefaultValue(formData.bookingCustomer?.sameAsBookingCustomer, isLoading)}</Descriptions.Item> */}
                                 </Descriptions>
@@ -90,10 +88,10 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label="Alternate Number">{checkAndSetDefaultValue(formData.billingCustomer?.alternateNumber, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Email">{checkAndSetDefaultValue(formData.billingCustomer?.email, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="PAN">{checkAndSetDefaultValue(formData.billingCustomer?.panNo, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Aadhar">{checkAndSetDefaultValue('**** **** '.concat(formData.billingCustomer?.aadharNumber?.substring(8)), isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Aadhar">{checkAndSetDefaultValue(formData.billingCustomer?.aadharNumber, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData.billingCustomer?.gstin, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Driving License">{checkAndSetDefaultValue(formData.billingCustomer?.drivingLicense, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Trade Licence">{checkAndSetDefaultValue('********'.concat(formData.billingCustomer?.tradeLicense?.substring(8)), isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Trade Licence">{checkAndSetDefaultValue(formData.billingCustomer?.tradeLicense, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(billingBirthDate, isLoading, 'date')}</Descriptions.Item>
                                     {/* <Descriptions.Item label="Do You Want to Add Corporate Details">{checkAndSetDefaultValue(formData.billingCustomer?.sameAsBookingCustomer, isLoading)}</Descriptions.Item> */}
                                 </Descriptions>

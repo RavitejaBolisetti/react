@@ -10,6 +10,7 @@ import { ModelVehicleDetails } from './modelDetails';
 import { VariantVehicleDetails } from './variantDetails';
 import { VehicleDetail } from './vehicleDetail';
 import { Contacts } from './contacts';
+import { EntitelmentDetail } from './entitelmentDetail';
 
 export const Vehicle = combineReducers({
     MakeVehicleDetails,
@@ -17,4 +18,5 @@ export const Vehicle = combineReducers({
     VariantVehicleDetails,
     VehicleDetail,
     Contacts,
+    EntitelmentDetail,
 });

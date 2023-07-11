@@ -231,21 +231,26 @@
     width: 8px;
 }
 
-/* :global .ant-menu-inline .ant-menu-sub.ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
+:global .ant-menu-inline .ant-menu-sub.ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
     height: 36px !important;
-} */
+}
 
-/* :global .ant-input-affix-wrapper {
-    padding-right: 2px !important;
-} */
+:global .ant-input-affix-wrapper {
+    padding-right: 2px;
+}
 
-/* :global .ant-input-affix-wrapper,
+:global .ant-input-affix-wrapper,
 :global .ant-btn-default {
-    height: 34px !important;
+    /* height: 34px !important;
     border-radius: 4px;
     border-color: transparent;
-    padding: 6px 12px;
-} */
+    padding: 6px 12px; */
+    font-size: 14px;
+    height: 32px;
+    padding: 4px 15px;
+    border-color: transparent;
+    border-radius: 5px;
+}
 
 /* border color on input search in left-menu */
 .leftMenuBox .searchContainer :global .ant-input-affix-wrapper {

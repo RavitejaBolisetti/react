@@ -5,7 +5,7 @@
  */
 import React, { useState, useReducer, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Collapse, Divider, Form, Space, Row, Col, Typography, Button, Empty, Card } from 'antd';
+import { Form, Space, Row, Col, Typography, Button, Empty, Card, Divider } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -25,9 +25,7 @@ import ViewAddressList from './ViewAddressList';
 import { CardSkeleton } from 'components/common/Skeleton';
 import { LANGUAGE_EN } from 'language/en';
 
-const { Panel } = Collapse;
 const { Text } = Typography;
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -89,7 +87,6 @@ const AddressMasterBase = (props) => {
 
     const [addressForm] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
-    const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [isAdding, setIsAdding] = useState(false);
@@ -207,7 +204,6 @@ const AddressMasterBase = (props) => {
         addressForm.resetFields();
         setIsAdding(true);
         setShowAddEditForm(true);
-        setOpenAccordian('1');
     };
 
     const formProps = {

@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col } from 'antd';
 
 import { IndivisualCustomerDetailMaster, IndividualProfileMaster, IndividualAddressMaster, IndividualContactMaster, IndividualFamilyDetailMaster, IndividualAccountRelatedMaster, IndividualSupportingDocument } from './IndividualCustomer';
@@ -18,7 +18,13 @@ import { withDrawer } from 'components/withDrawer';
 import styles from 'components/common/Common.module.css';
 
 const CustomerMainConatinerMain = (props) => {
-    const { customerType, currentSection } = props;
+    const { customerType, currentSection, resetViewData } = props;
+
+    useEffect(() => {
+        resetViewData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentSection, resetViewData]);
+    
     const myProps = {
         ...props,
     };
