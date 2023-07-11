@@ -139,7 +139,7 @@ const UploadUtilsMain = (props) => {
     return (
         <>
             <div className={styles.uploadDragger}>
-                {(!isReplacing && uploadImgDocId) || formActionType?.viewMode ? (
+                {(!isReplacing && uploadImgDocId) || formActionType?.viewMode  ? (
                     <>
                         <Card className={styles.dashedBorder}>
                             <Space direction="vertical">
@@ -183,10 +183,10 @@ const UploadUtilsMain = (props) => {
                                     }}
                                     description={
                                         <>
-                                            <span>{uploadTitle || 'Upload Your Profile Picture temp'}</span>
+                                            <span>{uploadTitle || 'Upload Your Profile Picture '}</span>
                                             <span>
                                                 <br />
-                                                {uploadDescription || 'File type should be .png and .jpg and max file size to be 5MB temp '}
+                                                {uploadDescription || 'File type should be .png and .jpg and max file size to be 5MB  '}
                                             </span>
                                         </>
                                     }
