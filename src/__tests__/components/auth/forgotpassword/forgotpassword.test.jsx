@@ -1,8 +1,10 @@
-import { screen, fireEvent } from "@testing-library/react";
+import { screen, fireEvent, cleanup } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import { act } from 'react-dom/test-utils'
 import customRender from "@utils/test-utils";
 import { ForgotPassword } from "@components/Auth/ForgotPassword/ForgotPassword";
+
+afterEach(cleanup);
 
 describe('Forgot Password Component render', () => {
     it('should render snapshots of ForgotPassword', async () => {
@@ -27,6 +29,17 @@ describe('Forgot Password Component render', () => {
         customRender(<ForgotPassword />);
         const loginLink = screen.getByRole('link', { name: /Back to Login/i });
         expect(loginLink.getAttribute('href')).toBe('/login');
+    })
+    it("should check blank field validation", async()=> {
+        customRender(<ForgotPassword />);
+        await act(async () => {
+            const verifyUserButton = screen.getByRole('button', {
+                name: /verify user/i
+            });
+            fireEvent.click(verifyUserButton); 
+        });
+        expect(await screen.findByText('Please enter user id', undefined, {
+            timeout: 5000})).toBeVisible();
     })
 });
   
