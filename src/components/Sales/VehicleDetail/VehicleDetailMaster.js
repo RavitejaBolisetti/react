@@ -31,9 +31,9 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            // Vehicle: {
-            //     VehicleDetail: { isLoaded: isDataLoaded = false, isLoading, isDetailLoaded, detailData: vehicleDetailData = [], data, filter: filterString },
-            // },
+            Vehicle: {
+                VehicleDetail: { isLoaded: isDataLoaded = false, isLoading, isDetailLoaded, detailData: vehicleDetailData = [], data, filter: filterString },
+            },
         },
     } = state;
 
@@ -43,7 +43,7 @@ const mapStateToProps = (state) => {
         userId,
         typeData: typeData[PARAM_MASTER.CUST_MST.id],
         isDataLoaded: true,
-        data: [],
+        data: data?.vehicleSearch,
         otfStatusList: Object.values(VEHICLE_DETAIL_STATUS),
         vehicleDetailData: [],
         moduleTitle,
