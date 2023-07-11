@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -333,6 +333,45 @@ const ListPinCodeMasterBase = (props) => {
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
+            if (!value) {
+                switch (name) {
+                    case 'countryCode': {
+                        setFilteredStateData();
+                        setFilteredDistrictData();
+                        setFilteredCityData();
+                        setFilteredTehsilData();
+                        advanceFilterForm.setFieldsValue({ stateCode: undefined });
+                        advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                        advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                        advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+
+                        break;
+                    }
+                    case 'stateCode': {
+                        setFilteredDistrictData();
+                        setFilteredCityData();
+                        setFilteredTehsilData();
+                        advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                        advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                        advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+                        break;
+                    }
+                    case 'districtCode': {
+                        setFilteredCityData();
+                        setFilteredTehsilData();
+                        advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                        advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+                        break;
+                    }
+                    case 'cityCode': {
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+                return;
+            }
             const filterValue = type === 'text' ? value.target.value : value;
 
             if (name === 'countryCode') {
@@ -477,7 +516,6 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const handleResetFilter = () => {
-        resetData();
         setFilterString();
         setTehsilCodeValue();
         setCityCodeValue();
@@ -531,10 +569,16 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const handleClearInSearch = (e) => {
-        if (e.target.value.length > 5) {
+        if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
         }
+        else if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
     };
+
 
     const removeFilter = (key) => {
         if (key === 'countryCode') {

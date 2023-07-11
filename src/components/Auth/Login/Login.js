@@ -213,24 +213,24 @@ const Login = (props) => {
                                                     <div className={styles.loginSubHeading}>Please enter your credentials to login</div>
                                                 </div>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
-                                                        <Form.Item name="userId" class="textfieldWithPrefix__input" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
-                                                            {<Input ref={userIdRef} prefix={<BiUser size={18} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
+                                                        <Form.Item name="userId" className="textfieldWithPrefix__input" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
+                                                            {<Input data-testid="userNameInput" ref={userIdRef} prefix={<BiUser size={18} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
                                                         </Form.Item>
                                                         {!fieldData?.userId && (
-                                                            <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(userIdRef)}>
+                                                            <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(userIdRef)}>
                                                                 User ID (MILE ID.Parent ID)
                                                             </label>
                                                         )}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
-                                                        <Form.Item name="password" class="textfieldWithPrefix__input" data-testid="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
-                                                            <Input ref={passwordInputRef} type={showPassword ? 'text' : 'password'} prefix={<FiLock size={18} />} suffix={passowrdSuffix} onChange={handleFormChange('password')} />
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
+                                                        <Form.Item name="password" className="textfieldWithPrefix__input" data-testid="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
+                                                            <Input data-testid="inputPassword" ref={passwordInputRef} type={showPassword ? 'text' : 'password'} prefix={<FiLock size={18} />} suffix={passowrdSuffix} onChange={handleFormChange('password')} />
                                                         </Form.Item>
                                                         {!fieldData?.password && (
-                                                            <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(passwordInputRef)}>
+                                                            <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(passwordInputRef)}>
                                                                 Password
                                                             </label>
                                                         )}

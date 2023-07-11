@@ -1,21 +1,45 @@
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, cleanup } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
-import customRender from '@utils/test-utils';
-import { ForgotPassword } from '@components/Auth/ForgotPassword/ForgotPassword';
+import { act } from 'react-dom/test-utils'
+import customRender from "@utils/test-utils";
+import { ForgotPassword } from "@components/Auth/ForgotPassword/ForgotPassword";
 
-const verifyUser = () => {};
-const sendOTP = () => {};
-const validateOTP = () => {};
-const updatePassword = () => {};
-describe('Forgot Password Component', () => {
-    it('should render forgot password page on click of Forgot Password Link', async () => {
-        customRender(<ForgotPassword verifyUser={verifyUser} sendOTP={sendOTP} validateOTP={validateOTP} updatePassword={updatePassword} />);
-        const userId = await screen.findByText('User ID (MILE ID.Parent ID)');
-        const verifyUserBtn = await screen.getByText('Verify User');
-        fireEvent.click(verifyUserBtn);
-        const validation = screen.findByText('Please enter user id');
-        expect(userId).toBeTruthy();
-        expect(verifyUserBtn).toBeInTheDocument();
-        expect(validation).toBeTruthy();
+afterEach(cleanup);
+
+describe('Forgot Password Component render', () => {
+    it('should render snapshots of ForgotPassword', async () => {
+        customRender(<ForgotPassword />);
+        expect(screen.getByRole('heading', {
+            name: /forgot your password/i
+        })).toBeInTheDocument();
     });
+    it("should render step 1 for forgetPassword components", async () => {
+            customRender(<ForgotPassword currentStep={1} />);
+            const inputBox = screen.getByRole("textbox");
+            fireEvent.change(inputBox, { target: { value: "Dmatest" } });
+            expect(inputBox.value.includes("Dmatest"));
+            await act(async () => {
+                const verifyUserButton = screen.getByRole('button', {
+                    name: /verify user/i
+                });
+                fireEvent.click(verifyUserButton); 
+            });     
+        });
+    it('should check back to login button event', async () => {
+        customRender(<ForgotPassword />);
+        const loginLink = screen.getByRole('link', { name: /Back to Login/i });
+        expect(loginLink.getAttribute('href')).toBe('/login');
+    })
+    it("should check blank field validation", async()=> {
+        customRender(<ForgotPassword />);
+        await act(async () => {
+            const verifyUserButton = screen.getByRole('button', {
+                name: /verify user/i
+            });
+            fireEvent.click(verifyUserButton); 
+        });
+        expect(await screen.findByText('Please enter user id', undefined, {
+            timeout: 5000})).toBeVisible();
+    })
 });
+  

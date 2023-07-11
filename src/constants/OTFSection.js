@@ -7,31 +7,26 @@ export const OTF_SECTION = {
     OTF_DETAILS: {
         id: 1,
         title: 'OTF Details',
-
         displayOnList: true,
     },
     CUSTOMER_DETAILS: {
         id: 2,
         title: 'Customer Details',
-
         displayOnList: true,
     },
     VEHICLE_DETAILS: {
         id: 3,
         title: 'Vehicle Details',
-
         displayOnList: true,
     },
     SCHEME_AND_OFFER_DETAILS: {
         id: 4,
         title: 'Scheme and Offer Details',
-
         displayOnList: true,
     },
     INSURANCE_DETAILS: {
         id: 5,
         title: 'Insurance Details',
-
         displayOnList: true,
     },
     FINANCE_DETAILS: {

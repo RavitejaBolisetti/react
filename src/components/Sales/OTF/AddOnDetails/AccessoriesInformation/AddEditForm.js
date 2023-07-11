@@ -4,9 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Input, Form, Col, Row, Button, Divider, Space } from 'antd';
+import { Input, Form, Col, Row, Button, Divider } from 'antd';
 
-import { validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField, validationNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 
@@ -22,16 +22,14 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                 ...searchData,
             });
         }
-        console.log('searchData', searchData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchData]);
     const handleAccesoriesForm = () => {
         accessoryForm
             .validateFields()
             .then((values) => {
-                console.log('I am heree', values);
-
-                if (isPresent(values?.partNumber)) {
+                if (!values?.partNumber) {
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide part number' });
                     return;
                 }
 
@@ -41,13 +39,13 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                     return;
                 }
 
-                setAddOnItemInfo((prev) => [myvalues, ...prev]);
+                setAddOnItemInfo((prev) => (prev ? [myvalues, ...prev] : [myvalues]));
                 accessoryForm.resetFields();
                 setsearchData();
                 setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
                 handleFormValueChange();
             })
-            .catch(() => {});
+            .catch((err) => {});
     };
 
     const onFinishFailed = (err) => {
@@ -63,7 +61,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
 
     return (
         <>
-            <Form form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
+            <Form autoComplete="off" form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                         <Form.Item label="Part Number" name="partNumber" rules={[validateRequiredInputField('part number')]}>
@@ -89,16 +87,14 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity')]}>
+                        <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity'), validationNumber('required quantity')]}>
                             <Input placeholder={preparePlaceholderText('required quantity')} />
                         </Form.Item>
                     </Col>
-                    {/* </Row>
-            <Row gutter={20}> */}
-
                     <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                         <Form.Item label="Part Description" name="partDescription">
                             <TextArea
+                                placeholder={preparePlaceholderText('Part Description')}
                                 {...disableProp}
                                 autoSize={{
                                     minRows: 1,
@@ -108,36 +104,33 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                             />
                         </Form.Item>
                     </Col>
-
                     <Form.Item hidden name="id">
                         <Input />
                     </Form.Item>
                 </Row>
             </Form>
-            <Row gutter={20}>
-                {addButtonDisabled?.partDetailsResponses ? (
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Space size="large" style={{ marginBottom: '20px' }}>
-                            <Button style={{ marginRight: '12px', height: '36px' }} disabled={isBtnDisabled} onClick={handleAccesoriesForm} type="primary" danger>
+            <Row gutter={20} justify="start">
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.addOnButtons}>
+                    {addButtonDisabled?.partDetailsResponses ? (
+                        <>
+                            <Button disabled={isBtnDisabled} onClick={handleAccesoriesForm} type="primary" danger>
                                 Add
                             </Button>
                             <Button danger onClick={onCancel}>
                                 Cancel
                             </Button>
-                        </Space>
-                    </Col>
-                ) : (
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Space className={styles.accessoryFormButton} size="large" style={{ marginBottom: '20px' }}>
-                            <Button style={{ marginRight: '12px', height: '36px' }} type="primary" onClick={() => onUpdate(index, seteditCardForm, editCardForm)}>
+                        </>
+                    ) : (
+                        <>
+                            <Button type="primary" onClick={() => onUpdate(index, seteditCardForm, editCardForm)}>
                                 Save
                             </Button>
-                            <Button danger onClick={() => onCancel()}>
+                            <Button danger onClick={onCancel}>
                                 Cancel
                             </Button>
-                        </Space>
-                    </Col>
-                )}
+                        </>
+                    )}
+                </Col>
             </Row>
         </>
     );

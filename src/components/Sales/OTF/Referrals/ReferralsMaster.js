@@ -64,14 +64,16 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ReferralsMasterBase = (props) => {
-    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading, resetData } = props;
+    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading } = props;
     const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, listCustomerShowLoading, typeData, handleButtonClick, NEXT_ACTION } = props;
 
     const [formData, setFormData] = useState();
     const [resetField, setResetField] = useState(false);
 
     useEffect(() => {
-        setFormData(referralData);
+        if (referralData?.mobileNumber) {
+            setFormData(referralData);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [referralData]);
 
@@ -85,17 +87,17 @@ const ReferralsMasterBase = (props) => {
     ];
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId, dob: values?.dob?.format('YYYY-MM-DD'), id: referralData?.id };
+        const data = { ...values, otfNumber: selectedOrderId, dob: convertCalenderDate(values?.dob, 'YYYY-MM-DD'), id: referralData?.id };
 
         const onSuccess = (res) => {
             form.resetFields();
-            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
         const onError = (message) => {
-            // showGlobalNotification({ message });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -110,17 +112,12 @@ const ReferralsMasterBase = (props) => {
         saveData(requestData);
     };
 
-    useEffect(() => {
-        resetData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     const onErrorAction = (message) => {
-        // showGlobalNotification(message);
+        showGlobalNotification(message);
     };
 
     const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     useEffect(() => {

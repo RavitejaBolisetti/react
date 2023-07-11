@@ -6,9 +6,7 @@
 
 import { Row, Col, Space, Avatar, Typography } from 'antd';
 
-import { OTFFormButton } from './OTFFormButton';
-import SuccessPage from 'components/common/SuccessPage';
-import { OTFStatusBar } from './utils/OTFStatusBar';
+import { OTFFormButton } from '../OTFFormButton';
 import { LANGUAGE_EN } from 'language/en';
 import { HiCheck } from 'react-icons/hi';
 
@@ -16,15 +14,19 @@ import styles from 'components/common/Common.module.css';
 
 const { Title, Text } = Typography;
 
-const ThankYouPage = (props) => {
+export const ThankYouMaster = (props) => {
     const title = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.TITLE;
-    const message = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.MESSAGE.replace('{NAME}', props?.selectedOrderId);
+    const message = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.MESSAGE.replace('{ORDER_ID}', props?.selectedOrderId);
+
+    const myProps = {
+        ...props,
+        buttonData: { ...props.buttonData, closeBtn: true, saveBtn: false, cancelBtn: false },
+    };
 
     return (
         <>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.fullyCentered}>
-                    {/* <SuccessPage title={title} subTitle={message} /> */}
                     <Space direction="vertical">
                         <Avatar size={180} icon={<HiCheck />} />
                         <Title level={5}>{title}</Title>
@@ -34,11 +36,9 @@ const ThankYouPage = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...props} />
+                    <OTFFormButton {...myProps} />
                 </Col>
             </Row>
         </>
     );
 };
-
-export default ThankYouPage;

@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useReducer, useEffect } from 'react';
-import { Row, Col, Collapse, Form, Space, Typography, Button, Empty, Divider } from 'antd';
+import { Row, Col, Form, Space, Typography, Button, Empty, Card, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { bindActionCreators } from 'redux';
@@ -16,16 +16,14 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import AddEditForm from './AddEditForm';
 import ViewContactList from './ViewContactList';
+
 import { CustomerFormButton } from '../../CustomerFormButton';
-import { InputSkeleton } from 'components/common/Skeleton';
+import { CardSkeleton } from 'components/common/Skeleton';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 import { LANGUAGE_EN } from 'language/en';
 
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
 import styles from 'components/common/Common.module.css';
 
-const { Panel } = Collapse;
 const { Text } = Typography;
 
 const mapStateToProps = (state) => {
@@ -76,12 +74,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ContactMain = (props) => {
     const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, saveData, showGlobalNotification, typeData } = props;
-    const { selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
-    const { buttonData, setButtonData, formActionType, handleButtonClick, setSelectedCustomer, setSelectedCustomerId, NEXT_ACTION } = props;
+    const { isCustomerIndDataLoading, isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
+    const { buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
-    const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
@@ -103,6 +100,7 @@ const ContactMain = (props) => {
 
     useEffect(() => {
         return () => {
+            setUploadImgDocId('');
             resetData();
             resetIndividualData();
         };
@@ -112,9 +110,9 @@ const ContactMain = (props) => {
     useEffect(() => {
         if (userId && selectedCustomer?.customerId) {
             if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id) {
-                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
-            } else if(customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
-                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams, onSuccessAction, onErrorAction });
+                fetchContactIndividualDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
+            } else if (customerType === CUSTOMER_TYPE?.CORPORATE?.id) {
+                fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
             }
         }
 
@@ -122,10 +120,10 @@ const ContactMain = (props) => {
     }, [userId, selectedCustomer?.customerId]);
 
     useEffect(() => {
-        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id && selectedCustomer?.customerId && customerIndData?.customerContact ) {
+        if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id && selectedCustomer?.customerId && customerIndData?.customerContact) {
             setContactData(customerIndData?.customerContact || []);
             setUploadImgDocId(customerIndData?.customerContact[0].docId);
-        } else if(customerData?.customerContact && selectedCustomer?.customerId) {
+        } else if (customerData?.customerContact && selectedCustomer?.customerId) {
             setContactData(customerData?.customerContact || []);
             setUploadImgDocId(customerData?.customerContact[0]['docId']);
         }
@@ -140,38 +138,37 @@ const ContactMain = (props) => {
         showGlobalNotification({ message });
     };
 
-    const handleCollapse = (key) => {
-        setOpenAccordian(key);
-    };
-
     const onSaveFormData = () => {
         contactform
             .validateFields()
             .then((value) => {
                 if (isEditing) {
+                    // let dataList = [...contactData];
+                    // const index = dataList?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
+                    // dataList.splice(index, 1);
+                    // const checkedIndex = dataList?.findIndex((el) => el?.defaultContactIndicator);
+                    // if (value?.defaultContactIndicator && checkedIndex !== -1) {
+                    //     return showGlobalNotification({ message: 'Only one contact can be default' });
+                    // }
+
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
-                        formData?.forEach((contact) => {
-                            if (contact?.defaultContactIndicator === true) {
-                                contact.defaultContactIndicator = false;
-                            }
-                        });
                         const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
-                        formData.splice(index, 1, {relationCode: "", ...value });
+                        formData.splice(index, 1, { relationCode: '', ...value, docId: uploadImgDocId });
                         return [...formData];
                     });
                 } else {
+                    // let dataList = [...contactData];
+                    // const checkedIndex = dataList?.findIndex((el) => el?.defaultContactIndicator);
+                    // if (checkedIndex !== -1) {
+                    //     return showGlobalNotification({ message: 'Only one contact can be default' });
+                    // }
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         if (value?.defaultaddress && formData?.length >= 1) {
-                            formData?.forEach((contact) => {
-                                if (contact?.defaultaddress === true) {
-                                    contact.defaultaddress = false;
-                                }
-                            });
-                            return [...formData, {relationCode: "", ...value}];
+                            return [...formData, { relationCode: '', ...value, docId: uploadImgDocId }];
                         } else {
-                            const updVal = prev?.length ? [...prev, { relationCode: "", ...value }] : [{relationCode: "", ...value }];
+                            const updVal = prev?.length ? [...prev, { relationCode: '', ...value, docId: uploadImgDocId }] : [{ relationCode: '', ...value }];
                             return updVal;
                         }
                     });
@@ -189,7 +186,7 @@ const ContactMain = (props) => {
         e.stopPropagation();
         setContactData((prev) => {
             let updetedData = prev?.map((contact) => ({ ...contact, status: true, defaultContactIndicator: false, continueWith: continueWithOldMobNo }));
-            const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.firstName === value?.firstName && el?.mobileNumber === value?.mobileNumber );
+            const index = updetedData?.findIndex((el) => el?.purposeOfContact === value?.purposeOfContact && el?.firstName === value?.firstName && el?.mobileNumber === value?.mobileNumber);
             updetedData.splice(index, 1, { ...value, defaultContactIndicator: e.target.checked });
             return [...updetedData];
         });
@@ -205,7 +202,6 @@ const ContactMain = (props) => {
         setIsAdding(true);
         contactform.resetFields();
         setShowAddEditForm(true);
-        setOpenAccordian('1');
     };
 
     const formProps = {
@@ -279,6 +275,13 @@ const ContactMain = (props) => {
     const onFinishFailed = (err) => {
         console.error(err);
     };
+    const formSkeleton = (
+        <Row>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <CardSkeleton height={'100vh'} />
+            </Col>
+        </Row>
+    );
 
     return (
         <>
@@ -286,42 +289,45 @@ const ContactMain = (props) => {
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>
-                        <Collapse onChange={() => handleCollapse(1)} activeKey={openAccordian}>
-                            <Panel
-                                header={
-                                    <Space>
+                        <Card className="">
+                            {isCustomerIndDataLoading || isCustomerDataLoading ? (
+                                formSkeleton
+                            ) : (
+                                <>
+                                    <Row type="flex" align="middle">
                                         <Text strong> {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? 'Individual Contact' : 'Company Contact'}</Text>
                                         {!formActionType?.viewMode && (
                                             <Button onClick={addBtnContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isEditing || isAdding}>
                                                 Add
                                             </Button>
                                         )}
+                                    </Row>
+                                    <Divider className={styles.marT20} />
+                                    <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
+                                        <div className={styles.headerBox}>
+                                            {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
+                                            {!contactData?.length && !isAdding ? (
+                                                <>
+                                                    <Empty
+                                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                        imageStyle={{
+                                                            height: 60,
+                                                        }}
+                                                        description={
+                                                            <span>
+                                                                {noDataTitle} <br />
+                                                            </span>
+                                                        }
+                                                    ></Empty>
+                                                </>
+                                            ) : (
+                                                <ViewContactList {...formProps} />
+                                            )}
+                                        </div>
                                     </Space>
-                                }
-                                showArrow={false}
-                                key="1"
-                            >
-                                {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                {!contactData?.length && !isAdding ? (
-                                    <>
-                                        <Divider />
-                                        <Empty
-                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                            imageStyle={{
-                                                height: 60,
-                                            }}
-                                            description={
-                                                <span>
-                                                    {noDataTitle} <br />
-                                                </span>
-                                            }
-                                        ></Empty>
-                                    </>
-                                ) : (
-                                    <ViewContactList {...formProps} />
-                                )}
-                            </Panel>
-                        </Collapse>{' '}
+                                </>
+                            )}
+                        </Card>
                     </Col>
                 </Row>
                 <Row>

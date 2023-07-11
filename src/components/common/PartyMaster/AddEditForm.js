@@ -18,6 +18,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const { TextArea } = Input;
+const { Search } = Input;
 
 const AddEditFormMain = (props) => {
     const { form, formData, recordData, detailData, listShowLoading, userId, fetchDetail, setFormData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
@@ -97,9 +98,17 @@ const AddEditFormMain = (props) => {
         if (!(typeof options === 'undefined')) {
             return;
         }
-        setOptions();
+
         if (value.length <= 6) {
-            form.validateFields(['pinCode']);
+            form.validateFields(['pinCode']).then(() => {
+                const extraParams = [
+                    {
+                        key: 'pincode',
+                        value: value,
+                    },
+                ];
+                fetchPincodeDetail({ setIsLoading: listPinCodeShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            });
         } else if (value.length > 5) {
             const extraParams = [
                 {
@@ -109,6 +118,7 @@ const AddEditFormMain = (props) => {
             ];
             fetchPincodeDetail({ setIsLoading: listPinCodeShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
+        setOptions();
     };
 
     const handleOnClear = (e) => {
@@ -120,7 +130,7 @@ const AddEditFormMain = (props) => {
             district: undefined,
             locality: undefined,
         });
-      };
+    };
 
     const viewProps = {
         isVisible: viewMode,
@@ -218,7 +228,7 @@ const AddEditFormMain = (props) => {
                                     ]}
                                 >
                                     <AutoComplete {...disabledProps} maxLength={6} className={styles.searchField} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                        <Input.Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} type="text" allowClear />
+                                        <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} type="text" allowClear />
                                     </AutoComplete>
                                 </Form.Item>
                             </Col>
@@ -279,7 +289,7 @@ const AddEditFormMain = (props) => {
                         </Row>
                         <Row gutter={16}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item initialValue={formData?.partsDiscount} label="Parts Discount(%)" name="partsDiscount" rules={[validateRequiredInputField('part discount'), validationNumber('part discount'), { validator: (value) => valueBetween0to100(value, 'part discount') }]}>
+                                <Form.Item initialValue={formData?.partsDiscount} label="Parts Discount(%)" name="partsDiscount" rules={[validateRequiredInputField('part discount'), validationNumber('part discount'), valueBetween0to100('part discount')]}>
                                     <Input {...disabledProps} className={styles.inputBox} placeholder={preparePlaceholderText('part discount')} maxLength={3} />
                                 </Form.Item>
                             </Col>

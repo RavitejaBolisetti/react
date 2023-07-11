@@ -56,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const UploadUtilsMain = (props) => {
     const { uploadTitle, uploadDescription, uploadBtnName, uploadImgTitle, viewDocument, formData, setButtonData, buttonData } = props;
-    const { listShowLoading, userId, uploadFile, fecthViewDocument, listShowLoadingOnLoad, setUploadImgDocId, uploadImgDocId } = props;
+    const { formActionType, listShowLoading, userId, uploadFile, fecthViewDocument, listShowLoadingOnLoad, setUploadImgDocId, uploadImgDocId } = props;
     const [uploadedFile, setUploadedFile] = useState();
     const [visible, setVisible] = useState(false);
 
@@ -129,32 +129,7 @@ const UploadUtilsMain = (props) => {
     return (
         <>
             <div className={styles.uploadDragger}>
-                {!uploadImgDocId && !formData?.docId ? (
-                    <Row gutter={16}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <div className={styles.uploadDragger}>
-                                <Dragger customRequest={handleUpload} {...uploadProps} multiple={false}>
-                                    <Empty
-                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                        imageStyle={{
-                                            height: 100,
-                                        }}
-                                        description={
-                                            <>
-                                                <span>{uploadTitle || 'Upload Your Profile Picture temp'}</span>
-                                                <span>
-                                                    <br />
-                                                    {uploadDescription || 'File type should be .png and .jpg and max file size to be 5MB temp '}
-                                                </span>
-                                            </>
-                                        }
-                                    />
-                                    <Button type="primary">{uploadBtnName || 'Upload File'}</Button>
-                                </Dragger>
-                            </div>
-                        </Col>
-                    </Row>
-                ) : (
+                {uploadImgDocId || formActionType?.viewMode ? (
                     <>
                         <Card className={styles.dashedBorder}>
                             <Space direction="vertical">
@@ -185,6 +160,29 @@ const UploadUtilsMain = (props) => {
                             </Space>
                         </Card>
                     </>
+                ) : (
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Dragger customRequest={handleUpload} {...uploadProps} multiple={false}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 100,
+                                    }}
+                                    description={
+                                        <>
+                                            <span>{uploadTitle || 'Upload Your Profile Picture temp'}</span>
+                                            <span>
+                                                <br />
+                                                {uploadDescription || 'File type should be .png and .jpg and max file size to be 5MB temp '}
+                                            </span>
+                                        </>
+                                    }
+                                />
+                                <Button type="primary">{uploadBtnName || 'Upload File'}</Button>
+                            </Dragger>
+                        </Col>
+                    </Row>
                 )}
             </div>
         </>

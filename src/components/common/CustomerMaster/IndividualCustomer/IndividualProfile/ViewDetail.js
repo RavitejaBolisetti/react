@@ -4,15 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Space, Collapse, Typography, Descriptions, Card } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { Space, Collapse, Descriptions, Card, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { FiDownload } from 'react-icons/fi';
 import { getCodeValue } from 'utils/getCodeValue';
+import { expandIcon } from 'utils/accordianExpandIcon';
 
 const { Panel } = Collapse;
-const { Text } = Typography;
-
 const ViewDetailMain = (props) => {
     const { setActiveKey, activeKey, styles, formData, viewDocument, handleOnClickCustomerForm, isLoading, appCategoryData } = props;
 
@@ -42,32 +40,11 @@ const ViewDetailMain = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(1)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(1)}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {' '}
-                                    Individual Information
-                                </Text>
-                            </div>
-                        }
-                        key="1"
-                    >
+                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                    <Panel header="Individual Information" key="1">
                         <Descriptions {...viewProps}>
                             <div>
-                                <img width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
+                                <img alt="uploaded suppoting document" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
                             </div>
                             <br />
                             <br />
@@ -91,39 +68,18 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Usage/Application Sub-Category">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.APP_SUB_CAT, formData?.applicationSubCategory), isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Customer Category">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.CUS_CAT, formData?.customerCategory), isLoading)}</Descriptions.Item>
                         </Descriptions>
-                        {formData?.customerCategory === 'Fleet' ? (
+                        {formData?.customerCategory === 'CUS_CAT_2' ? (
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Business Details">{checkAndSetDefaultValue(formData?.buisnessDetails, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Vehicle Deployment Detail">{checkAndSetDefaultValue(formData?.vehicleDetails, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Key Role Details">{checkAndSetDefaultValue(formData?.keyRole, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Major Route Details">{checkAndSetDefaultValue(formData?.routeDetails, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Business Details">{checkAndSetDefaultValue(formData?.businessDetails, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Vehicle Deployment Detail">{checkAndSetDefaultValue(formData?.vehicleDeploymentDetails, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Key Role Details">{checkAndSetDefaultValue(formData?.keyRolesDetails, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Major Route Details">{checkAndSetDefaultValue(formData?.majorRouteDetails, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         ) : null}
                     </Panel>
                 </Collapse>
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(5)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(5)}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    {' '}
-                                    Social Profile
-                                </Text>
-                            </div>
-                        }
-                        key="5"
-                    >
+                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end">
+                    <Panel header="Social Profile" key="5">
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="M1-MMFSL">{checkAndSetDefaultValue(formData?.mmfsl, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookLink, isLoading)}</Descriptions.Item>
@@ -134,28 +90,8 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </Panel>
                 </Collapse>
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(2)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(2)}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    Key Account Details
-                                </Text>
-                            </div>
-                        }
-                        key="2"
-                    >
+                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                    <Panel header="Key Account Details" key="2">
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Account Code">{checkAndSetDefaultValue(formData?.accountCode, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Account Name">{checkAndSetDefaultValue(formData?.accountName, isLoading)}</Descriptions.Item>
@@ -165,28 +101,8 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </Panel>
                 </Collapse>
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(3)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(3)}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    Authority Details (Who Knows Whom)
-                                </Text>
-                            </div>
-                        }
-                        key="3"
-                    >
+                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
+                    <Panel header="Authority Details (Who Knows Whom)" key="3">
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Name Of Person">{checkAndSetDefaultValue(formData?.authorityDetails?.personName, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Position">{checkAndSetDefaultValue(formData?.authorityDetails?.postion, isLoading)}</Descriptions.Item>
@@ -195,28 +111,9 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </Panel>
                 </Collapse>
-                <Collapse
-                    expandIcon={() => {
-                        if (activeKey.includes(4)) {
-                            return <MinusOutlined className={styles.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={styles.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(4)}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        header={
-                            <div className={styles.alignUser}>
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    Upload Customer Form
-                                </Text> 
-                            </div>
-                        }
-                        key="4"
-                    >
+                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end">
+                    <Panel header="Upload Customer Form" key="4">
+                        <Divider />
                         <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClickCustomerForm}></Card>
                     </Panel>
                 </Collapse>

@@ -5,57 +5,18 @@
  */
 import React from 'react';
 
-import { Row, Col, Card } from 'antd';
+import { Card } from 'antd';
 import { FiDownload, FiTrash } from 'react-icons/fi';
+
 import styles from 'components/common/Common.module.css';
 
 export const ViewDetail = (props) => {
     const {
+        downloadFileFromButton,
         formActionType: { viewMode },
-        setSupportingDataView,
-        supportingDataView,
         supportingData,
-        handlePreview,
-        viewDocument,
-        showGlobalNotification,
-        formActionType,
-        listShowLoading,
-        saveData,
-        userId,
+        deleteFile,
     } = props;
-
-    const downloadFile = (uploadData) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your donload will start soon' });
-
-        handlePreview(uploadData);
-        let a = document.createElement('a');
-        a.href = `data:image/png;base64,${viewDocument?.base64}`;
-        a.download = viewDocument?.fileName;
-        a.click();
-    };
-
-    const deleteFile = (uploadData) => {
-        console.log(uploadData, 'uploadData');
-        const data = { customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName };
-        const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });
-            handlePreview(uploadData);
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
-    };
 
     return (
         <div className={styles.viewDrawerContainer}>
@@ -69,7 +30,8 @@ export const ViewDetail = (props) => {
                                 title={uploadData?.documentName}
                                 extra={
                                     <>
-                                        <FiDownload onClick={() => downloadFile(uploadData)} />
+                                        <FiDownload onClick={() => downloadFileFromButton(uploadData)} />
+                                        {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} />}
                                     </>
                                 }
                             ></Card>

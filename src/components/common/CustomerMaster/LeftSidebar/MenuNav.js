@@ -32,7 +32,7 @@ const MenuNav = (props) => {
                     TimeLineClass[i].lastChild.firstChild.style.color = '#0b0b0c';
                 }
             }
-            console.log('TimeLineClass', TimeLineClass);
+            // console.log('TimeLineClass', TimeLineClass);
             TimeLineClass[TimeLineClass?.length - 1].firstChild.style.display = 'none';
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,7 +58,11 @@ const MenuNav = (props) => {
         ),
     }));
 
-    return <Timeline items={items} />;
+    return (
+        // <div className={styles.marT20}>
+        <Timeline items={items} />
+        // </div>
+    );
 };
 
 export default MenuNav;

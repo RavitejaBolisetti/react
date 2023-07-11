@@ -5,14 +5,11 @@
  */
 import { AiFillCar } from 'react-icons/ai';
 import { FaAddressBook, FaCreativeCommonsShare } from 'react-icons/fa';
-import { HiCurrencyRupee } from 'react-icons/hi';
 import { MdStars } from 'react-icons/md';
 import { TbReport } from 'react-icons/tb';
 import { HomeIcon, AdminIcon, HrIcon, RupeeIcon, CrmIcon, ServiceIcon, SparesIcon } from 'Icons';
 
-import styles from 'components/common/Common.module.css';
 import { getMenyKey } from 'utils/menuKey';
-
 import * as routing from './routing';
 
 export const MenuConstant = {
