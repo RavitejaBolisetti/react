@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -22,6 +22,7 @@ import { TermConditionDealerMasterPage } from './TermsAndConditions/DealerTermCo
 import { TermConditionManufacturerMasterPage } from './TermsAndConditions/ManufacturerTermCondition';
 import { DealerCompanyPage, DealerParentPage } from './Dealer';
 import { LessorCompanyMasterPage } from './LessorCompanyMaster';
+import { LessorCompanyCreationPage } from './LessorCompanyCreation';
 import { OtfReportsPage } from './OTFReports';
 
 export {
@@ -49,6 +50,7 @@ export {
     RoleMasterPage,
     PartyMasterPage,
     LessorCompanyMasterPage,
+    LessorCompanyCreationPage,
     DealerCompanyPage,
     DealerParentPage,
     CustomerMasterPage,
