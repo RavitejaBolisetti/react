@@ -882,11 +882,11 @@
     box-shadow: none !important;
 }
 
-.headerSearchField :global .anticon svg {
+/* .headerSearchField :global .anticon svg {
     width: 1.25em;
     height: 1.25em;
     margin-top: 4px;
-}
+} */
 
 .headerSelectField {
     vertical-align: middle;
@@ -1376,7 +1376,7 @@
     display: flex;
     align-items: center;
     flex-direction: row-reverse;
-    margin-bottom: -2px;
+    /* margin-bottom: -2px; */
 }
 
 .advanceFilterTop .advanceFilterTitle {
