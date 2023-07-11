@@ -8,9 +8,10 @@ import React, { useEffect } from 'react';
 import { Row, Col, Space, Form, Card } from 'antd';
 
 import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
+import { bindActionCreators } from 'redux';
 
-// import { otfInvoiceDetailDataActions } from 'store/actions/data/otf/invoiceDetail';
+// import { vehicleDetailDataActions } from 'store/actions/data/otf/invoiceDetail';
+import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 // import { showGlobalNotification } from 'store/actions/notification';
 import { DataTable } from 'utils/dataTable';
 
@@ -20,51 +21,52 @@ import { tableColumn } from './tableColumn';
 
 import styles from 'components/common/Common.module.css';
 
-// const mapStateToProps = (state) => {
-//     const {
-//         auth: { userId },
-//         data: {
-//             OTF: {
-//                 EntitelmentDetail: { isLoaded: isDataLoaded = false, isLoading, data: invoiceData = [] },
-//             },
-//         },
-//     } = state;
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            Vehicle: {
+                EntitelmentDetail: { isLoaded: isDataLoaded = false, isLoading, data: entitelmentData = [] },
+            },
+        },
+    } = state;
 
-//     const moduleTitle = 'Invoice Information';
+    const moduleTitle = 'Entitelment & Scheme Information';
 
-//     let returnValue = {
-//         userId,
-//         isDataLoaded,
-//         invoiceData,
-//         isLoading,
-//         moduleTitle,
-//     };
-//     return returnValue;
-// };
+    let returnValue = {
+        userId,
+        isDataLoaded,
+        entitelmentData,
+        isLoading,
+        moduleTitle,
+    };
+    return returnValue;
+};
 
-// const mapDispatchToProps = (dispatch) => ({
-//     dispatch,
-//     ...bindActionCreators(
-//         {
-//             fetchList: otfInvoiceDetailDataActions.fetchList,
-//             listShowLoading: otfInvoiceDetailDataActions.listShowLoading,
-//             resetData: otfInvoiceDetailDataActions.reset,
-//             showGlobalNotification,
-//         },
-//         dispatch
-//     ),
-// });
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchList: vehicleDetailDataActions.fetchList,
+            listShowLoading: vehicleDetailDataActions.listShowLoading,
+            resetData: vehicleDetailDataActions.reset,
+            // showGlobalNotification,
+        },
+        dispatch
+    ),
+});
 
 export const EntitelmentMasterBase = (props) => {
-    const { form, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, handleButtonClick, NEXT_ACTION } = props;
+    const { form, fetchList, userId, isDataLoaded, entitelmentData, listShowLoading, showGlobalNotification, handleButtonClick, NEXT_ACTION } = props;
     const { section, selectedOrderId, selectedOrder: { orderStatus = false } = {} } = props;
+    const selectedVinOrder = 'MAKGF1F57A7192174';
 
     const extraParams = [
         {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'OTF Number',
+            key: 'vinNumber',
+            title: 'vinNumber',
+            value: selectedVinOrder,
+            name: 'VIN Number',
         },
     ];
 
@@ -104,7 +106,7 @@ export const EntitelmentMasterBase = (props) => {
                     </Row>
                     <Space size="middle" direction="vertical" className={styles.accordianContainer}>
                         <Card>
-                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumn()} />
+                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumn()} tableData={entitelmentData} />
                         </Card>
                     </Space>
                 </Col>
@@ -118,5 +120,5 @@ export const EntitelmentMasterBase = (props) => {
     );
 };
 
-// export const EntitelmentMaster = connect(mapStateToProps, mapDispatchToProps)(EntitelmentMasterBase);
-export const EntitelmentMaster = connect(null, null)(EntitelmentMasterBase);
+export const EntitelmentMaster = connect(mapStateToProps, mapDispatchToProps)(EntitelmentMasterBase);
+// export const EntitelmentMaster = connect(null, null)(EntitelmentMasterBase);
