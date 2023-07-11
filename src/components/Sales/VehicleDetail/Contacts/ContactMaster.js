@@ -180,7 +180,7 @@ const ContactMasterMain = (props) => {
     };
 
     const onFinish = () => {
-        let data = { vehicleIdentificationNumber: selectedCustomer, contact: contactData?.map((el) => ({ ...el, contactType: 'User', preferredDayForContact: ['WED'], preferredContactTimeFrom: '02:30', preferredContactTimeTo: '03:30' })) };
+        let data = { vehicleIdentificationNumber: selectedCustomer, contact: contactData?.map((el) => ({ ...el, id: 'b887d945-a6cf-4eac-ad2f-5552d6aaeded', preferredContactTimeFrom: '02:30', preferredContactTimeTo: '03:30' })) };
 
         const onSuccess = (res) => {
             contactform.resetFields();
@@ -205,9 +205,7 @@ const ContactMasterMain = (props) => {
             onSuccess,
         };
 
-        if (searchType === searchType?.VEHICLE_DETAIL_SECTION) {
-            saveData(requestData);
-        }
+        saveData(requestData);
 
         setShowAddEditForm(false);
         setIsEditing(false);

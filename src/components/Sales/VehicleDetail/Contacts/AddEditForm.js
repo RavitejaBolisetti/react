@@ -5,7 +5,7 @@
  */
 
 import { Button, Form, Row, Col, Space, Select, Input, TimePicker } from 'antd';
-import { validateLettersWithWhitespaces, validateEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField } from 'utils/validation';
+import { validateLettersWithWhitespaces, validateRequiredEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -27,16 +27,16 @@ const AddEditForm = (props) => {
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Contact Type" name="contactType" rules={[validateRequiredSelectField('contact type')]}>
-                                <Select placeholder={preparePlaceholderSelect('contact type')} fieldNames={{ label: 'value', value: 'value' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData?.[PARAM_MASTER?.VH_CONTACT_TYPE?.id]}></Select>
+                                <Select placeholder={preparePlaceholderSelect('contact type')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData?.[PARAM_MASTER?.VH_CONTACT_TYPE?.id]}></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Preferred Days For Contact" name="preferredDayForContact" rules={[validateRequiredSelectField('preferred days for contact')]}>
-                                <Select mode="multiple" placeholder={preparePlaceholderSelect('preferred days for contact')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData?.[PARAM_MASTER?.VH_CONTACT_DAYS?.id]}></Select>
+                                <Select mode="multiple" placeholder={preparePlaceholderSelect('preferred days for contact')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData[PARAM_MASTER?.VH_CONTACT_DAYS?.id]}></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
+                            <Form.Item  label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
                                 <Input maxLength={10} placeholder={preparePlaceholderText('mobile number')} allowClear size="small" />
                             </Form.Item>
                         </Col>
@@ -48,12 +48,12 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="E-mail" initialValue={''} name="emailId" rules={[validateEmailField('E-mail')]}>
+                            <Form.Item label="E-mail" initialValue={''} name="emailId" rules={[validateRequiredEmailField('E-mail')]}>
                                 <Input className={style.inputBox} placeholder={preparePlaceholderText('email id')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Preferred Contact Time">
+                            {/* <Form.Item  label="Preferred Contact Time">
                                 <Space>
                                     <Form.Item name={'preferredContactTimeFrom'} rules={[validateRequiredInputField('start time')]}>
                                         <TimePicker placeholder={'Start time*'} use12Hours size="small" format="h:mm A" />
@@ -65,7 +65,7 @@ const AddEditForm = (props) => {
                                         <TimePicker placeholder={'End time*'} use12Hours size="small" format="h:mm A" />
                                     </Form.Item>
                                 </Space>
-                            </Form.Item>
+                            </Form.Item> */}
                         </Col>
                     </Row>
                     {!formActionType?.viewMode && (

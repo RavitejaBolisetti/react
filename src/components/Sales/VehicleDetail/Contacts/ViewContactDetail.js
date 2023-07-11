@@ -43,7 +43,7 @@ const ViewContactDetailBase = (props) => {
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Name">{checkAndSetDefaultValue( formData?.name, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="E-mail">{checkAndSetDefaultValue( formData?.emailId, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Preferred Contact Time">{formData?.preferredContactTimeFrom.format('hh:mm A')}</Descriptions.Item>
+                        {/* <Descriptions.Item label="Preferred Contact Time">{formData?.preferredContactTimeFrom.format('hh:mm A')}</Descriptions.Item> */}
                     </Descriptions>
                 </>
             ) : (
