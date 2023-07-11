@@ -98,6 +98,14 @@ const UploadUtilsMain = (props) => {
             removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
             showProgress: true,
         },
+        beforeUpload: (file) => {
+            const isPNG = file.type === 'image/png';
+            const isJPG = file.type === 'image/jpeg';
+            if (!isPNG && !isJPG) {
+              message.error(`${file.name} is not a correct file format`);
+            }
+            return isPNG || isJPG || Upload.LIST_IGNORE;
+          },
         progress: { strokeWidth: 3, showInfo: true },
         accept: 'image/png, image/jpeg',
         onDrop,

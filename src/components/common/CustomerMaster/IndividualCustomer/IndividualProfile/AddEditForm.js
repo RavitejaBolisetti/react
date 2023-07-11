@@ -100,6 +100,14 @@ const AddEditFormMain = (props) => {
         action: '',
         progress: { strokeWidth: 10 },
         success: { percent: 100 },
+        beforeUpload: (file) => {
+            const isPNG = file.type === 'image/png';
+            const isJPG = file.type === 'image/jpeg';
+            if (!isPNG && !isJPG) {
+              message.error(`${file.name} is not a correct file format`);
+            }
+            return isPNG || isJPG || Upload.LIST_IGNORE;
+          },
         onDrop,
         onChange: (info, event) => {
             const { status } = info.file;
@@ -121,6 +129,14 @@ const AddEditFormMain = (props) => {
         progress: { strokeWidth: 10 },
         success: { percent: 100 },
         onDrop,
+        beforeUpload: (file) => {
+            const isPNG = file.type === 'image/png';
+            const isJPG = file.type === 'image/jpeg';
+            if (!isPNG && !isJPG) {
+              message.error(`${file.name} is not a correct file format`);
+            }
+            return isPNG || isJPG || Upload.LIST_IGNORE;
+          },
         onChange: (info, event) => {
             const { status } = info.file;
             if (status === 'uploading') {
