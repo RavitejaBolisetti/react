@@ -10,8 +10,7 @@ import { Row, Col, Space, Form, Card } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-// import { vehicleDetailDataActions } from 'store/actions/data/otf/invoiceDetail';
-import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
+import { entitelmentDetailDataActions } from 'store/actions/data/vehicle/entitelmentDetail';
 // import { showGlobalNotification } from 'store/actions/notification';
 import { DataTable } from 'utils/dataTable';
 
@@ -30,7 +29,6 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-
     const moduleTitle = 'Entitelment & Scheme Information';
 
     let returnValue = {
@@ -40,6 +38,7 @@ const mapStateToProps = (state) => {
         isLoading,
         moduleTitle,
     };
+
     return returnValue;
 };
 
@@ -47,9 +46,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: vehicleDetailDataActions.fetchList,
-            listShowLoading: vehicleDetailDataActions.listShowLoading,
-            resetData: vehicleDetailDataActions.reset,
+            fetchList: entitelmentDetailDataActions.fetchList,
+            listShowLoading: entitelmentDetailDataActions.listShowLoading,
+            resetData: entitelmentDetailDataActions.reset,
             // showGlobalNotification,
         },
         dispatch
@@ -63,13 +62,12 @@ export const EntitelmentMasterBase = (props) => {
 
     const extraParams = [
         {
-            key: 'vinNumber',
-            title: 'vinNumber',
+            key: 'vin',
+            title: 'vin',
             value: selectedVinOrder,
-            name: 'VIN Number',
+            name: 'VIN ',
         },
     ];
-
     const errorAction = (message) => {
         // showGlobalNotification(message);
     };
@@ -106,7 +104,7 @@ export const EntitelmentMasterBase = (props) => {
                     </Row>
                     <Space size="middle" direction="vertical" className={styles.accordianContainer}>
                         <Card>
-                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumn()} tableData={entitelmentData} />
+                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumn()} tableData={entitelmentData?.entitlementsAndSchemeResponses} />
                         </Card>
                     </Space>
                 </Col>
@@ -121,4 +119,3 @@ export const EntitelmentMasterBase = (props) => {
 };
 
 export const EntitelmentMaster = connect(mapStateToProps, mapDispatchToProps)(EntitelmentMasterBase);
-// export const EntitelmentMaster = connect(null, null)(EntitelmentMasterBase);

@@ -11,7 +11,7 @@ export const tableColumn = () => {
         tblPrepareColumns({
             title: 'Entitlement/Scheme Type',
             dataIndex: 'schemeType',
-            width: '20',
+            width: '15',
             sorter: true,
         }),
 

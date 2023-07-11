@@ -17,7 +17,7 @@ export const RECIEVE_DATA_DETAIL_ACTION_CONSTANT = PREFIX + 'RECIEVE_DETAIL_DATA
 export const SAVE_DATA_ACTION_CONSTANT = PREFIX + 'SAVE_DATA';
 export const RESET_DATA_ACTION_CONSTANT = PREFIX + 'RESET_DATA';
 
-export const vehicleDetailDataActions = dataActions({
+export const entitelmentDetailDataActions = dataActions({
     baseURL,
     moduleName,
     RECEIVE_DATA_LOADING_ACTION_CONSTANT,
