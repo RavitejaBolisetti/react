@@ -49,18 +49,19 @@ const mapDispatchToProps = (dispatch) => ({
 
             fecthViewDocument: documentViewDataActions.fetchList,
             listShowLoadingOnLoad: documentViewDataActions.listShowLoading,
+            resetData: documentViewDataActions.reset,
         },
         dispatch
     ),
 });
 
 const UploadUtilsMain = (props) => {
-    const { uploadTitle, uploadDescription, uploadBtnName, uploadImgTitle, viewDocument, formData, setButtonData, buttonData } = props;
+    const { uploadTitle, uploadDescription, uploadBtnName, uploadImgTitle, viewDocument, formData, setButtonData, buttonData, resetData } = props;
     const { formActionType, listShowLoading, userId, uploadFile, fecthViewDocument, listShowLoadingOnLoad, setUploadImgDocId, uploadImgDocId } = props;
     const [uploadedFile, setUploadedFile] = useState();
     const [visible, setVisible] = useState(false);
     const [isReplacing, setIsReplacing] = useState(false);
-    console.log('isReplacing', isReplacing, 'formActionType?.viewMode', formActionType?.viewMode);
+
     const onDrop = (e) => {
         // console.log('Dropped files', e.dataTransfer.files);
     };
@@ -69,6 +70,7 @@ const UploadUtilsMain = (props) => {
         setIsReplacing(true);
     };
     const onCancelReplac = (e) => {
+        console.log('replacing');
         e.stopPropagation();
         setIsReplacing(false);
     };
@@ -87,6 +89,9 @@ const UploadUtilsMain = (props) => {
             fecthViewDocument({ setIsLoading: listShowLoadingOnLoad, userId, extraParams });
         }
 
+        return () => {
+            resetData();
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uploadedFile, formData?.docId]);
 
@@ -135,7 +140,7 @@ const UploadUtilsMain = (props) => {
 
         uploadFile(requestData);
     };
-
+    console.log('formActionType', formActionType, 'uploadImgDocId', uploadImgDocId, 'isReplacing', isReplacing);
     return (
         <>
             <div className={styles.uploadDragger}>
@@ -165,9 +170,11 @@ const UploadUtilsMain = (props) => {
                                         placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={200} />}
                                         src={`data:image/png;base64,${viewDocument?.base64}`}
                                     />
-                                    <Button onClick={onReplaceClick} type="link">
-                                        Replace Image
-                                    </Button>
+                                    {!formActionType?.viewMode && (
+                                        <Button onClick={onReplaceClick} type="link">
+                                            Replace Image
+                                        </Button>
+                                    )}
                                 </Space>
                             </Space>
                         </Card>
