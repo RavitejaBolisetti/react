@@ -354,21 +354,19 @@ const CustomerMasterMain = (props) => {
     const handleChange = (e) => {
         if (e.target.value.length > 2) {
             searchForm.validateFields(['code']);
-        }
-        else if (e?.target?.value === '') {
+        } else if (e?.target?.value === '') {
             setFilterString();
             searchForm.resetFields();
             setShowDataLoading(false);
         }
     };
 
-
     const searchBoxProps = {
         searchForm,
         filterString,
         setFilterString,
         optionType: typeData,
-        handleChange
+        handleChange,
     };
 
     const showAddButton = true;

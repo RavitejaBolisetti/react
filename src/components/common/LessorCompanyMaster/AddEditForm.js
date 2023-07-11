@@ -55,7 +55,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Company Name" initialValue={formData?.companyDescription} rules={[validateRequiredInputField('company name')]} name="companyDescription">
+                            <Form.Item label="Company Name" initialValue={formData?.companyName} rules={[validateRequiredInputField('company name')]} name="companyName">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('company name')} maxLength={250} disabled={editMode && !formData.status ? true : false} />
                             </Form.Item>
                         </Col>
