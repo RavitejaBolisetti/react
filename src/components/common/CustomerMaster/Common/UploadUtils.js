@@ -59,9 +59,18 @@ const UploadUtilsMain = (props) => {
     const { formActionType, listShowLoading, userId, uploadFile, fecthViewDocument, listShowLoadingOnLoad, setUploadImgDocId, uploadImgDocId } = props;
     const [uploadedFile, setUploadedFile] = useState();
     const [visible, setVisible] = useState(false);
-
+    const [isReplacing, setIsReplacing] = useState(false);
+    console.log('isReplacing', isReplacing, 'formActionType?.viewMode', formActionType?.viewMode);
     const onDrop = (e) => {
         // console.log('Dropped files', e.dataTransfer.files);
+    };
+
+    const onReplaceClick = () => {
+        setIsReplacing(true);
+    };
+    const onCancelReplac = (e) => {
+        e.stopPropagation();
+        setIsReplacing(false);
     };
 
     useEffect(() => {
@@ -89,6 +98,14 @@ const UploadUtilsMain = (props) => {
             removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
             showProgress: true,
         },
+        beforeUpload: (file) => {
+            const isPNG = file.type === 'image/png';
+            const isJPG = file.type === 'image/jpeg';
+            if (!isPNG && !isJPG) {
+              message.error(`${file.name} is not a correct file format`);
+            }
+            return isPNG || isJPG || Upload.LIST_IGNORE;
+          },
         progress: { strokeWidth: 3, showInfo: true },
         accept: 'image/png, image/jpeg',
         onDrop,
@@ -100,6 +117,7 @@ const UploadUtilsMain = (props) => {
                 setUploadedFile(info?.file?.response?.docId);
                 message.success(`${info.file.name} file uploaded successfully.`);
                 setButtonData({ ...buttonData, formBtnActive: true });
+                setIsReplacing(false);
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
                 setButtonData({ ...buttonData, formBtnActive: true });
@@ -129,7 +147,7 @@ const UploadUtilsMain = (props) => {
     return (
         <>
             <div className={styles.uploadDragger}>
-                {uploadImgDocId || formActionType?.viewMode ? (
+                {(!isReplacing && uploadImgDocId) || formActionType?.viewMode  ? (
                     <>
                         <Card className={styles.dashedBorder}>
                             <Space direction="vertical">
@@ -155,7 +173,9 @@ const UploadUtilsMain = (props) => {
                                         placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={200} />}
                                         src={`data:image/png;base64,${viewDocument?.base64}`}
                                     />
-                                    <Button type="link">Replace Image</Button>
+                                    <Button onClick={onReplaceClick} type="link">
+                                        Replace Image
+                                    </Button>
                                 </Space>
                             </Space>
                         </Card>
@@ -171,15 +191,22 @@ const UploadUtilsMain = (props) => {
                                     }}
                                     description={
                                         <>
-                                            <span>{uploadTitle || 'Upload Your Profile Picture temp'}</span>
+                                            <span>{uploadTitle || 'Upload Your Profile Picture '}</span>
                                             <span>
                                                 <br />
-                                                {uploadDescription || 'File type should be .png and .jpg and max file size to be 5MB temp '}
+                                                {uploadDescription || 'File type should be .png and .jpg and max file size to be 5MB  '}
                                             </span>
                                         </>
                                     }
                                 />
-                                <Button type="primary">{uploadBtnName || 'Upload File'}</Button>
+                                <Button className={styles.marR20} type="primary">
+                                    {uploadBtnName || 'Upload File'}
+                                </Button>
+                                {isReplacing && (
+                                    <Button onClick={onCancelReplac} danger>
+                                        Cancel
+                                    </Button>
+                                )}
                             </Dragger>
                         </Col>
                     </Row>
