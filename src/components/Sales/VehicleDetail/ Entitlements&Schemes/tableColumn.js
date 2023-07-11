@@ -4,7 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
+import { Tag } from 'antd';
+import styles from 'components/common/Common.module.css';
 
 export const tableColumn = () => {
     const tableColumn = [
@@ -64,12 +66,14 @@ export const tableColumn = () => {
             width: '15',
             sorter: true,
         }),
-        tblPrepareColumns({
-            title: 'Active Flag',
-            dataIndex: 'status',
-            width: '15',
-            sorter: true,
-        }),
+        // tblPrepareColumns({
+        //     title: 'Active Flag',
+        //     dataIndex: 'status',
+        //     render: (text) => <>{text? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
+        //     width: '15',
+        //     sorter: true,
+        // }),
+        tblStatusColumn({ styles, width: '15%' }),
     ];
 
     return tableColumn;
