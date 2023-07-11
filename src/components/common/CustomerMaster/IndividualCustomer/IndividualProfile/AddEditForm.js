@@ -10,7 +10,7 @@ import Svg from 'assets/images/Filter.svg';
 import { FiDownload } from 'react-icons/fi';
 
 import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, validatInstagramProfileUrl } from 'utils/validation';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText, prepareDatePickerText } from 'utils/preparePlaceholder';
 import { disableFutureDate } from 'utils/disableDate';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
@@ -96,9 +96,18 @@ const AddEditFormMain = (props) => {
     const uploadProps = {
         name: 'file',
         multiple: false,
+        accept: 'image/png, image/jpeg',
         action: '',
         progress: { strokeWidth: 10 },
         success: { percent: 100 },
+        beforeUpload: (file) => {
+            const isPNG = file.type === 'image/png';
+            const isJPG = file.type === 'image/jpeg';
+            if (!isPNG && !isJPG) {
+              message.error(`${file.name} is not a correct file format`);
+            }
+            return isPNG || isJPG || Upload.LIST_IGNORE;
+          },
         onDrop,
         onChange: (info, event) => {
             const { status } = info.file;
@@ -115,10 +124,19 @@ const AddEditFormMain = (props) => {
     const uploadConsentProps = {
         name: 'file',
         multiple: false,
+        accept: 'image/png, image/jpeg',
         action: '',
         progress: { strokeWidth: 10 },
         success: { percent: 100 },
         onDrop,
+        beforeUpload: (file) => {
+            const isPNG = file.type === 'image/png';
+            const isJPG = file.type === 'image/jpeg';
+            if (!isPNG && !isJPG) {
+              message.error(`${file.name} is not a correct file format`);
+            }
+            return isPNG || isJPG || Upload.LIST_IGNORE;
+          },
         onChange: (info, event) => {
             const { status } = info.file;
             if (status === 'uploading') {
@@ -185,7 +203,7 @@ const AddEditFormMain = (props) => {
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                             <Panel header="Individual Information" key="1">
                                 <Divider />
-                                <UploadUtils {...props} isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={uploadedFile} {...ImageProps} />
+                                <UploadUtils {...props} isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={formData?.image} {...ImageProps} />
                                 {/* <div className={styles.uploadDragger}>
                                     <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} {...ImageProps} />
                                 </div> */}
@@ -193,7 +211,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Date of Birth" name="dateOfBirth">
-                                            <DatePicker format="YYYY-MM-DD" disabledDate={disableFutureDate} disabled={isReadOnly} className={styles.datepicker} />
+                                            <DatePicker format="DD-MM-YYYY" disabledDate={disableFutureDate} disabled={isReadOnly} className={styles.datepicker} placeholder={prepareDatePickerText('DD-MM-YYYY')} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -222,7 +240,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label=" Wedding Anniversary Date" name="weddingAnniversary">
-                                            <DatePicker format="YYYY-MM-DD" disabledDate={disableFutureDate} className={styles.datepicker} disabled={isRead} />
+                                            <DatePicker format="DD-MM-YYYY" disabledDate={disableFutureDate} className={styles.datepicker} disabled={isRead} placeholder={prepareDatePickerText('DD-MM-YYYY')}/>
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -309,7 +327,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin'), validateRequiredInputField('gstin')]}>
+                                        <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin')]}>
                                             <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>

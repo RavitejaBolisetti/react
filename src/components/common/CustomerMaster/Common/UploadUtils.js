@@ -49,18 +49,19 @@ const mapDispatchToProps = (dispatch) => ({
 
             fecthViewDocument: documentViewDataActions.fetchList,
             listShowLoadingOnLoad: documentViewDataActions.listShowLoading,
+            resetData: documentViewDataActions.reset,
         },
         dispatch
     ),
 });
 
 const UploadUtilsMain = (props) => {
-    const { uploadTitle, uploadDescription, uploadBtnName, uploadImgTitle, viewDocument, formData, setButtonData, buttonData } = props;
+    const { uploadTitle, uploadDescription, uploadBtnName, uploadImgTitle, viewDocument, formData, setButtonData, buttonData, resetData } = props;
     const { formActionType, listShowLoading, userId, uploadFile, fecthViewDocument, listShowLoadingOnLoad, setUploadImgDocId, uploadImgDocId } = props;
     const [uploadedFile, setUploadedFile] = useState();
     const [visible, setVisible] = useState(false);
     const [isReplacing, setIsReplacing] = useState(false);
-    console.log('isReplacing', isReplacing, 'formActionType?.viewMode', formActionType?.viewMode);
+
     const onDrop = (e) => {
         // console.log('Dropped files', e.dataTransfer.files);
     };
@@ -87,6 +88,9 @@ const UploadUtilsMain = (props) => {
             fecthViewDocument({ setIsLoading: listShowLoadingOnLoad, userId, extraParams });
         }
 
+        return () => {
+            resetData();
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uploadedFile, formData?.docId]);
 
@@ -97,6 +101,14 @@ const UploadUtilsMain = (props) => {
             previewIcon: <FiEye onClick={(e) => console.log(e, 'custom removeIcon event')} />,
             removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
             showProgress: true,
+        },
+        beforeUpload: (file) => {
+            const isPNG = file.type === 'image/png';
+            const isJPG = file.type === 'image/jpeg';
+            if (!isPNG && !isJPG) {
+                message.error(`${file.name} is not a correct file format`);
+            }
+            return isPNG || isJPG || Upload.LIST_IGNORE;
         },
         progress: { strokeWidth: 3, showInfo: true },
         accept: 'image/png, image/jpeg',
@@ -165,9 +177,11 @@ const UploadUtilsMain = (props) => {
                                         placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={200} />}
                                         src={`data:image/png;base64,${viewDocument?.base64}`}
                                     />
-                                    <Button onClick={onReplaceClick} type="link">
-                                        Replace Image
-                                    </Button>
+                                    {!formActionType?.viewMode && (
+                                        <Button onClick={onReplaceClick} type="link">
+                                            Replace Image
+                                        </Button>
+                                    )}
                                 </Space>
                             </Space>
                         </Card>
@@ -183,10 +197,10 @@ const UploadUtilsMain = (props) => {
                                     }}
                                     description={
                                         <>
-                                            <span>{uploadTitle || 'Upload Your Profile Picture temp'}</span>
+                                            <span>{uploadTitle || 'Upload Your Profile Picture '}</span>
                                             <span>
                                                 <br />
-                                                {uploadDescription || 'File type should be .png and .jpg and max file size to be 5MB temp '}
+                                                {uploadDescription || 'File type should be .png and .jpg and max file size to be 5MB  '}
                                             </span>
                                         </>
                                     }

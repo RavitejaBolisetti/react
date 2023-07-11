@@ -230,6 +230,17 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setFilterString(value);
     };
 
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
+        }
+        else if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
+    };
+
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
@@ -301,12 +312,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     };
 
     const title = 'Term & Condition';
-    const handleClearInSearch = (e) => {
-        if (e?.target?.value === '') {
-            setFilterString();
-            listFilterForm.resetFields();
-        }
-    };
+ 
 
     const showChangeHistoryList = () => {
         setButtonData({ cancelBtn: true });
