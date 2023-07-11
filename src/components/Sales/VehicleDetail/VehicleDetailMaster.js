@@ -12,13 +12,13 @@ import { tableColumn } from './tableColumn';
 import AdvanceOtfFilter from './AdvanceOtfFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
-import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
+import { ListDataTable } from 'utils/ListDataTable';
 import { VehicleDetailMainContainer } from './VehicleDetailMainContainer';
 
 import { VEHICLE_DETAIL_STATUS } from 'constants/VehicleDetailStatus';
 import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
-import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
+import { validateRequiredInputField } from 'utils/validation';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
@@ -49,7 +49,7 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isLoading: false,
         isDetailLoaded: true,
-        filterString: '',
+        filterString,
     };
     return returnValue;
 };
@@ -186,6 +186,20 @@ export const VehicleDetailMasterBase = (props) => {
                 canRemove: true,
                 filter: false,
             },
+            // {
+            //     key: 'sortBy',
+            //     title: 'Sort by',
+            //     value: 'customerName',
+            //     canRemove: true,
+            //     filter: false,
+            // },
+            // {
+            //     key: 'sortIn',
+            //     title: 'Sort By',
+            //     value: 'ASC',
+            //     canRemove: true,
+            //     filter: false,
+            // },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
@@ -319,30 +333,6 @@ export const VehicleDetailMasterBase = (props) => {
         showAddButton: false,
     };
 
-    const handleSearchTypeChange = (searchType) => {
-        if (searchType === 'mobileNumber') {
-            setOtfSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
-        } else if (searchType === 'customerName') {
-            setOtfSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
-        } else if (searchType === 'vehicleIdentificationNumber') {
-            setOtfSearchRules({ rules: [validateRequiredInputField('OTF Number')] });
-        } else {
-            // searchForm.setFieldsValue({ searchParam: undefined, searchType: undefined });
-            // setFilterString({ ...filterString, searchParam: undefined, searchType: undefined });
-        }
-    };
-
-    const handleSearchParamSearch = (values) => {
-        searchForm
-            .validateFields()
-            .then((values) => {
-                setFilterString({ ...values, advanceFilter: true });
-            })
-            .catch((err) => {
-                return;
-            });
-    };
-
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         form.resetFields();
@@ -371,8 +361,6 @@ export const VehicleDetailMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        // handleResetFilter,
-
         title,
         data,
         setAdvanceSearchVisible,
@@ -381,18 +369,14 @@ export const VehicleDetailMasterBase = (props) => {
         setOtfSearchRules,
         searchForm,
         onFinishSearch,
-        handleSearchTypeChange,
-        handleSearchParamSearch,
     };
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-
         icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,
-        // handleResetFilter,
         filterString,
         setFilterString,
         advanceFilterForm,

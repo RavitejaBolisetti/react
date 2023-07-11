@@ -5,18 +5,18 @@
  */
 import { combineReducers } from 'redux';
 
+import { VehicleDetail } from './vehicleDetail';
 import { MakeVehicleDetails } from './makeDetails';
 import { ModelVehicleDetails } from './modelDetails';
 import { VariantVehicleDetails } from './variantDetails';
-import { VehicleDetail } from './vehicleDetail';
 import { Contacts } from './contacts';
 import { EntitelmentDetail } from './entitelmentDetail';
 
 export const Vehicle = combineReducers({
+    VehicleDetail,
     MakeVehicleDetails,
     ModelVehicleDetails,
     VariantVehicleDetails,
-    VehicleDetail,
     Contacts,
     EntitelmentDetail,
 });
