@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { entitelmentDetailDataActions } from 'store/actions/data/vehicle/entitelmentDetail';
-// import { showGlobalNotification } from 'store/actions/notification';
+import { showGlobalNotification } from 'store/actions/notification';
 import { DataTable } from 'utils/dataTable';
 
 import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: entitelmentDetailDataActions.fetchList,
             listShowLoading: entitelmentDetailDataActions.listShowLoading,
             resetData: entitelmentDetailDataActions.reset,
-            // showGlobalNotification,
+            showGlobalNotification,
         },
         dispatch
     ),
@@ -73,7 +73,7 @@ export const EntitelmentMasterBase = (props) => {
     };
 
     const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     useEffect(() => {
