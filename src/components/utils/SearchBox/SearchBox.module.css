@@ -4,9 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
- .selectSearchBg {
-    width: 100%;
-    height: 36px;
+.selectSearchBg {
+    /* width: 100%; */
+    /* height: 36px; */
     background-color: #ffffff;
     padding: 4px 6px;
     border: 1px solid #b5b5b6;
@@ -19,6 +19,10 @@
 
 .selectSearchBg :global .anticon-close-circle {
     margin-right: 12px;
+}
+
+.selectSearchBg :global .ant-form-vertical {
+    height: 26px;
 }
 
 .selectSearchBg :global .ant-form-vertical .ant-form-item {
@@ -35,8 +39,20 @@
     border-inline-end-width: 0px;
 }
 
-.selectSearchBg :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.selectSearchBg .headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper .ant-input {
+    height: 18px !important;
+    padding: 0 !important;
+}
+
+.selectSearchBg .headerSearchField :global .anticon svg {
+    width: 1.25em;
+    height: 1.25em;
+    margin-top: 4px;
+}
+
+.selectSearchBg :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     margin-top: -4px;
+    background-color: #ffffff;
 }
 
 .selectSearchBg :global .ant-form-item .ant-form-item-explain .ant-form-item-explain-error {
@@ -52,10 +68,10 @@
     position: absolute;
     left: 0px;
     background: #fee3d4;
-    color: #ED302D;
+    color: #ed302d;
     font-size: 13px;
     text-align: center;
-    padding:5px 10px;
+    padding: 5px 10px;
     border-radius: 5px;
 }
 .selectSearchBg :global .ant-form-vertical .ant-form-item:first-child .ant-form-item-explain .ant-form-item-explain-error:after {
@@ -81,10 +97,10 @@
     position: absolute;
     left: 140px;
     background: #fee3d4;
-    color: #ED302D;
+    color: #ed302d;
     font-size: 13px;
     text-align: center;
-    padding:5px 10px;
+    padding: 5px 10px;
     border-radius: 5px;
 }
 .selectSearchBg :global .ant-form-vertical .ant-form-item:last-child .ant-form-item-explain .ant-form-item-explain-error:after {
