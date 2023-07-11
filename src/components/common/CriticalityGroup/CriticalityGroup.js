@@ -268,7 +268,7 @@ export const CriticalityGroupMain = (props) => {
         }
     };
 
-    const title = 'Criticality Group Name';
+    const title = 'Criticality Group List';
 
     const advanceFilterResultProps = {
         advanceFilter: false,

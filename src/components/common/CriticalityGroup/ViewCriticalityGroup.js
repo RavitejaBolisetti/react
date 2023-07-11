@@ -17,7 +17,7 @@ const ViewCriticalityGroupMain = (props) => {
     };
 
     return (
-        <div className={`${style.viewContainer} ${style.hierarchyRightContaners}`}>
+        <div className={`${style.viewContainer} ${style.drwaerDetailsView}`}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Criticality Group Id">{formData?.criticalityGroupCode}</Descriptions.Item>
