@@ -7,7 +7,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Col, Form, Row } from 'antd';
+import { Col, Form, Row, Modal } from 'antd';
 import { tableColumn } from './tableColumn';
 import { AiOutlineWarning } from 'react-icons/ai';
 import AdvanceOtfFilter from './AdvanceOtfFilter';
@@ -25,11 +25,15 @@ import { validateRequiredInputField, validateMobileNoField, validateLettersWithW
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
+import { OTFConfirmationModal } from './OTFConfirmationModal';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'components/common/Common.module.css';
 
 import { validateOTFMenu } from './utils/validateOTFMenu';
+import { withModal } from 'components/withModal';
+
 import { FilterIcon } from 'Icons';
+const { confirm } = Modal;
 
 const mapStateToProps = (state) => {
     const {
@@ -101,6 +105,11 @@ export const OtfMasterBase = (props) => {
     const [isCancelVisible, setIsCancelVisible] = useState(false);
     const [isTransferVisible, setIsTransferVisible] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalTitle, setModalTitle] = useState('');
+    const [modalMessage, setModalMessage] = useState('');
+    const [confirms, setConfirm] = useState(false);
+
+    const [otfTransferForm] = Form.useForm();
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -362,6 +371,40 @@ export const OtfMasterBase = (props) => {
 
     const title = 'Search OTF';
 
+    const showConfirm = () => {
+        confirm({
+            title: modalTitle,
+            icon: '',
+            content: modalMessage,
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            wrapClassName: styles.confirmModal,
+            centered: true,
+            closable: true,
+            onOk() {
+                setConfirm(false);
+                // transferOTF({});
+            },
+            onCancel() {
+                setConfirm(false);
+            },
+        });
+    };
+
+    const onFinishOTFTansfer = (values)=>{
+        console.log('OTF Transfer Form values', values);
+        setModalTitle('OTF Transfer');
+        setIsTransferVisible(false);
+        //setIsModalOpen(true);
+        setConfirm(true);
+        setModalMessage(`Do you want to transfer this ${values?.otfNumber}`) ;
+        showConfirm();
+    }
+
+    const handleCloseModal = () =>{
+        setIsModalOpen(false);
+    }
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
@@ -464,18 +507,21 @@ export const OtfMasterBase = (props) => {
 
     const transferOTFProps = {
         ...props,
+        otfTransferForm,
+        onFinishOTFTansfer,
         selectedOrder,
         TRANSFER_ACTION,
         isVisible: isTransferVisible,
         onCloseAction: onCancelCloseAction,
     };
 
-    // const modalProps = {
-    //     isVisible: isModalOpen,
-    //     titleOverride: 'OTF T/C',
-    //     closable: false,
-    //     onCloseAction,
-    // };
+    const modalProps = {
+        isVisible: isModalOpen,
+        titleOverride: modalTitle,
+        closable: false,
+        information: modalMessage,
+        handleCloseModal,
+    };
     
     return (
         <>
@@ -489,7 +535,7 @@ export const OtfMasterBase = (props) => {
             <OTFMainConatiner {...containerProps} />
             <CancellationMaster {...cancelProps} />
             <TransferMaster {...transferOTFProps} />
-            {/* <CommonModal {...modalProps} /> */}
+            <OTFConfirmationModal {...modalProps} />
         </>
     );
 };

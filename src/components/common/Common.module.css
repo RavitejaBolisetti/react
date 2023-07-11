@@ -2695,7 +2695,11 @@
     margin-bottom: 40px;
     background: #f2f2f2;
     border-radius: 8px;
-    margin-bottom: 50px;
+    margin-bottom: 24px;
+}
+
+.ExchangeCard :global .ant-card-body {
+    padding: 20px 30px;
 }
 
 /* .marginBottom60 {
@@ -2711,8 +2715,13 @@
     color: #00a310;
 }
 
-.drawerCardView :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
+.drawerCardView :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item,
+.ExchangeCard :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
     padding-bottom: 0px;
+}
+
+.ExchangeCard :global .ant-card-body .ant-descriptions .ant-descriptions-row:last-child >td {
+    padding-bottom: 0;
 }
 
 .drawerCardView :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(even) .ant-descriptions-item {

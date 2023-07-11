@@ -156,4 +156,8 @@ export const PARAM_MASTER = {
         id: 'MONTH',
         title: 'Months of year',
     },
+    TRNSFER_REASON: {
+        id: 'TRNSFER_REASON',
+        title: 'TRNSFER_REASON',
+    },
 };
