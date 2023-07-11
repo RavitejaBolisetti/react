@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Application Criticality Group';
+    const moduleTitle = 'Application Criticality Group Details';
 
     let returnValue = {
         collapsed,
