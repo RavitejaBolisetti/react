@@ -66,13 +66,7 @@ export const tableColumn = () => {
             width: '15',
             sorter: true,
         }),
-        // tblPrepareColumns({
-        //     title: 'Active Flag',
-        //     dataIndex: 'status',
-        //     render: (text) => <>{text? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</>,
-        //     width: '15',
-        //     sorter: true,
-        // }),
+       
         tblStatusColumn({ styles, width: '15%' }),
     ];
 
