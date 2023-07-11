@@ -85,7 +85,7 @@ export const TaxChargesCategoryMain = ({ moduleTitle, isChangeHistoryVisible, fe
 
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
-    const [attributeType, setAttributeType] = useState('Tax_Type');
+    const [attributeType, setAttributeType] = useState();
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -252,7 +252,7 @@ export const TaxChargesCategoryMain = ({ moduleTitle, isChangeHistoryVisible, fe
         formActionType,
         isVisible: isFormVisible,
         onFinishFailed,
-        onCloseAction: () => setIsFormVisible(false),
+        onCloseAction: () => {setIsFormVisible(false);setAttributeType()},
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         selectedTreeKey,

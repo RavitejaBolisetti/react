@@ -9,6 +9,7 @@ import TreeSelectField from 'components/common/TreeSelectField';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import styles from 'components/common/Common.module.css';
+import {ATTRIBUTE_TYPE} from './AttributeTypeConstant';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -17,7 +18,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, unFilteredAttributeData, setSelectedTreeSelectKey, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, manufacturerOrgHierarchyData, attributeType, setAttributeType } = props;
+    const { onCloseAction, unFilteredAttributeData,documentDescription, setSelectedTreeSelectKey,financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, manufacturerOrgHierarchyData, attributeType, setAttributeType } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed } = props;
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
@@ -85,33 +86,17 @@ const AddEditFormMain = (props) => {
         setCalType(val);
     };
 
-    const taxChargeDropDown = [
-        {
-            id: 1,
-            key: 'Tax_Type',
-            value: 'Tax Type',
-        },
-        {
-            id: 2,
-            key: 'Tax_Calculation',
-            value: 'Tax Calculation',
-        },
-        {
-            id: 3,
-            key: 'Tax_Document',
-            value: 'Tax Document',
-        },
-    ];
+   
 
     return (
         <>
             <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={'Tax_Type'} name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
+                        <Form.Item  name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
                             <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} disabled={formData?.id || isReadOnly} showSearch allowClear>
-                                {taxChargeDropDown?.map((item) => (
-                                    <Option key={item?.id} value={item?.key}>
+                                {ATTRIBUTE_TYPE?.map((item) => (
+                                    <Option key={item?.key} value={item?.key}>
                                         {item?.value}
                                     </Option>
                                 ))}
@@ -144,7 +129,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                             <Form.Item initialValue={null} label="Calculation Type" name="Calculation_Type" rules={[validateRequiredInputField('Calculation_Type')]}>
-                                <Switch onChange={calTypeFun} checkedChildren="Percentage" unCheckedChildren="Rate" defaultChecked={true} {...disabledProps} />
+                                <Switch onChange={calTypeFun} checkedChildren="Percentage" unCheckedChildren="Amount" defaultChecked={true} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         {calType ? (
@@ -162,7 +147,34 @@ const AddEditFormMain = (props) => {
                         )}
                     </Row>
                 ) : attributeType === 'Tax_Document' ? (
-                    <></>
+                    <>
+                    <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Form.Item  name="documentDescription" label="Document Description" rules={[validateRequiredSelectField('Document Description')]}>
+                            <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Document Description')} disabled={formData?.id || isReadOnly} showSearch allowClear>
+                                {documentDescription?.map((item) => (
+                                    <Option key={item?.id} value={item?.key}>
+                                        {item?.value}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                    </Row>
+                    <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Form.Item  name="accountHead" label="Financial Account Head" rules={[validateRequiredSelectField('Financial Account Head')]}>
+                            <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Financial Account Head')} disabled={formData?.id || isReadOnly} showSearch allowClear>
+                                {financialAccount?.map((item) => (
+                                    <Option key={item?.id} value={item?.key}>
+                                        {item?.value}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                    </Row>
+                    </>
                 ) : null}
 
                 <Row gutter={20}>

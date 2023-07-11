@@ -12,6 +12,7 @@ import styles from 'components/common/Common.module.css';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { ATTRIBUTE_TYPE, SALE_TYPE,CHARGE_TYPE,CHARGE_CODE} from './AttributeTypeConstant';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -23,6 +24,7 @@ const AddEditFormMain = (props) => {
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
     const [form] = Form.useForm();
+    const [codeType, setCodeType] =useState();
     const [calType, setCalType] = useState(true);
 
     let attributeHierarchyFieldValidation = {
@@ -85,32 +87,20 @@ const AddEditFormMain = (props) => {
         setCalType(val);
     };
 
-    const taxChargeDropDown = [
-        {
-            id: 1,
-            key: 'Tax_Type',
-            value: 'Tax Type',
-        },
-        {
-            id: 2,
-            key: 'Tax_Calculation',
-            value: 'Tax Calculation',
-        },
-        {
-            id: 3,
-            key: 'Tax_Document',
-            value: 'Tax Document',
-        },
-    ];
+    const onHandleClick=(values)=>{
+        setCodeType(values)
+    }
+
+   
 
     return (
         <>
             <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={'Tax_Type'} name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
+                        <Form.Item  name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
                             <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} disabled={formData?.id || isReadOnly} showSearch allowClear>
-                                {taxChargeDropDown?.map((item) => (
+                                {ATTRIBUTE_TYPE?.map((item) => (
                                     <Option key={item?.id} value={item?.key}>
                                         {item?.value}
                                     </Option>
@@ -128,41 +118,68 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={null} label="Tax/Charge Type Code" name="Tax/Charge_Type_Code" rules={[validateRequiredInputField('Tax/Charge Type Code')]}>
+                        <Form.Item initialValue={null} label="Tax/Charge Category Code" name="Tax/Charge_Category_Code" rules={[validateRequiredInputField('Tax/Charge Category Code')]}>
                             <Input maxLength={6} placeholder={preparePlaceholderText('Tax/Charge Type Code')} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={null} label="Tax/Charge Type Descrption" name="Tax/Charge_Type_Descrption" rules={[validateRequiredInputField('Tax/Charge Type Descrption')]}>
+                        <Form.Item initialValue={null} label="Tax/Charge Category Descrption" name="Tax/Charge_Category_Descrption" rules={[validateRequiredInputField('Tax/Charge Category Descrption')]}>
                             <TextArea className={styles.inputBox} placeholder={preparePlaceholderText('Tax/Charge Type Descrption')} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
                 </Row>
 
                 {attributeType === 'Tax_Calculation' ? (
+                    <>
                     <Row gutter={20}>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={null} label="Calculation Type" name="Calculation_Type" rules={[validateRequiredInputField('Calculation_Type')]}>
-                                <Switch onChange={calTypeFun} checkedChildren="Percentage" unCheckedChildren="Rate" defaultChecked={true} {...disabledProps} />
-                            </Form.Item>
-                        </Col>
-                        {calType ? (
-                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                <Form.Item initialValue={null} label="Percentage" name="Percentage" rules={[validateRequiredInputField('Percentage')]}>
-                                    <Input placeholder={preparePlaceholderText('Percentage')} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
-                                </Form.Item>
-                            </Col>
-                        ) : (
-                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                <Form.Item initialValue={null} label="Rate" name="Rate" rules={[validateRequiredInputField('Rate')]}>
-                                    <Input placeholder={preparePlaceholderText('Rate')} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
-                                </Form.Item>
-                            </Col>
-                        )}
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Form.Item  name="type" label="Tax/Charge Type " rules={[validateRequiredSelectField('Tax/Charge Type')]}>
+                            <Select loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Tax/Charge Type')} disabled={formData?.id || isReadOnly} showSearch allowClear>
+                                {CHARGE_TYPE?.map((item) => (
+                                    <Option key={item?.id} value={item?.key}>
+                                        {item?.value}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </Col>
                     </Row>
-                ) : attributeType === 'Tax_Document' ? (
-                    <></>
+                    <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Form.Item  name="code" label="Tax/Charge Code " rules={[validateRequiredSelectField('Tax/Charge Code')]}>
+                            <Select  loading={!isDataAttributeLoaded} onChange={onHandleClick} placeholder={preparePlaceholderSelect('Tax/Charge Code')} disabled={formData?.id || isReadOnly} showSearch allowClear>
+                                {CHARGE_CODE?.map((item) => (
+                                    <Option key={item?.id} value={item?.key}>
+                                        {item?.value}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                    </Row>
+                    <Row gutter={16}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Form.Item  label="Charge Descrption" name="Charge_Descrption" rules={[validateRequiredInputField('Charge Descrption')]}>
+                            <TextArea className={styles.inputBox} placeholder={preparePlaceholderText('Charge Descrption')} disabled />
+                        </Form.Item>
+                    </Col>
+                    </Row>
+                    </>
+                ) : attributeType === 'Sale_Type' ? (
+                    <><Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Form.Item  name="saleType" label="Sale Type " rules={[validateRequiredSelectField('Sale Type')]}>
+                            <Select  loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Sale Type')} disabled={formData?.id || isReadOnly} showSearch allowClear>
+                                {SALE_TYPE?.map((item) => (
+                                    <Option key={item?.id} value={item?.key}>
+                                        {item?.value}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                    </Row></>
                 ) : null}
 
                 <Row gutter={20}>
