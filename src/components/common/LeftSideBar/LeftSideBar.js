@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -228,10 +228,10 @@ const LeftSideBarMain = (props) => {
                             <div className={styles.searchContainer}>
                                 <Form autoComplete="off" layout="vertical" form={menuForm}>
                                     {collapsed ? (
-                                        <BsSearch size={18} onClick={onMenuCollapsed} />
+                                        <BsSearch size={20} onClick={onMenuCollapsed} />
                                     ) : (
                                         <Form.Item name="searchKeyword">
-                                            <AutoComplete className={styles.searchField} options={options} onSelect={onSelect} onChange={handleSearch}>
+                                            <AutoComplete options={options} onSelect={onSelect} onChange={handleSearch}>
                                                 <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" />
                                             </AutoComplete>
                                         </Form.Item>
@@ -272,18 +272,18 @@ const LeftSideBarMain = (props) => {
                     <div className={styles.changeThemeBorder}>
                         {collapsed ? (
                             theme === 'light' ? (
-                                <BsSun size={30} className={styles.sun} />
+                                <BsSun size={20} className={styles.sun} />
                             ) : (
-                                <BsMoon size={30} className={styles.moon} />
+                                <BsMoon size={20} className={styles.moon} />
                             )
                         ) : (
                             <>
                                 <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger onClick={() => handleThemeChange()}>
-                                    <BsSun size={30} /> Light Mode
+                                    <BsSun size={20} /> Light Mode
                                 </Button>
 
                                 <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger onClick={() => handleThemeChange()}>
-                                    <BsMoon size={30} /> Dark Mode
+                                    <BsMoon size={20} /> Dark Mode
                                 </Button>
                             </>
                         )}
