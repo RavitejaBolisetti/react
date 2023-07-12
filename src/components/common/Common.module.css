@@ -1942,16 +1942,16 @@
     border-color: #0b0b0c;
 }
 
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input-affix-wrapper .ant-input,
+/* .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input-affix-wrapper .ant-input,
 .drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-affix-wrapper .ant-input {
     height: 23px;
-}
+} */
 
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input,
+/* .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-control-input .ant-input,
 .drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-textarea-affix-wrapper .ant-input,
 .drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input {
     height: 36px;
-}
+} */
 
 .drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-textarea-affix-wrapper,
 .drawerBodyRight :global .ant-card .ant-form-item .ant-form-item-control-input .ant-input-textarea-affix-wrapper {
@@ -2563,9 +2563,9 @@
     padding-right: 8px !important;
 }
 
-.viewDrawerContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item:last-child {
+/* .viewDrawerContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item:last-child {
     padding-left: 16px !important;
-}
+} */
 
 .viewDrawerContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item .ant-descriptions-item-container .ant-descriptions-item-content {
     text-overflow: ellipsis;
@@ -2966,6 +2966,8 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 
 .accordianIconWithText {
     font-size: 16px !important;
+    font-weight: 600;
+    line-height: 22px;
 }
 
 .inputWrapper :global .ant-btn-default {

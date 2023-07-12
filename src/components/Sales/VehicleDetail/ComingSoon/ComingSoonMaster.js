@@ -7,64 +7,19 @@
 import React, { useEffect } from 'react';
 import { Row, Col, Space, Form, Card } from 'antd';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import { entitelmentDetailDataActions } from 'store/actions/data/vehicle/entitelmentDetail';
-import { showGlobalNotification } from 'store/actions/notification';
-import { DataTable } from 'utils/dataTable';
-
 import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
-
-import { tableColumn } from './tableColumn';
 
 import styles from 'components/common/Common.module.css';
 
-const mapStateToProps = (state) => {
-    const {
-        auth: { userId },
-        data: {
-            Vehicle: {
-                EntitelmentDetail: { isLoaded: isDataLoaded = false, isLoading, data: entitelmentData = [] },
-            },
-        },
-    } = state;
-    const moduleTitle = 'Entitelment & Scheme Information';
-
-    let returnValue = {
-        userId,
-        isDataLoaded,
-        entitelmentData,
-        isLoading,
-        moduleTitle,
-    };
-
-    return returnValue;
-};
-
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    ...bindActionCreators(
-        {
-            fetchList: entitelmentDetailDataActions.fetchList,
-            listShowLoading: entitelmentDetailDataActions.listShowLoading,
-            resetData: entitelmentDetailDataActions.reset,
-            showGlobalNotification,
-        },
-        dispatch
-    ),
-});
-
-export const EntitelmentMasterBase = (props) => {
+export const ComingSoonMasterBase = (props) => {
     const { form, fetchList, userId, isDataLoaded, entitelmentData, listShowLoading, showGlobalNotification, handleButtonClick, NEXT_ACTION } = props;
-    const { section, selectedOrderId, selectedOrder: { orderStatus = false } = {} } = props;
-    const selectedVinOrder = 'MAKGF1F57A7192174';
+    const { section, selectedRecordId, selectedOrder: { orderStatus = false } = {} } = props;
 
     const extraParams = [
         {
             key: 'vin',
             title: 'vin',
-            value: selectedVinOrder,
+            value: selectedRecordId,
             name: 'VIN ',
         },
     ];
@@ -103,9 +58,7 @@ export const EntitelmentMasterBase = (props) => {
                         </Col>
                     </Row>
                     <Space size="middle" direction="vertical" className={styles.accordianContainer}>
-                        <Card>
-                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumn()} tableData={entitelmentData?.entitlementsAndSchemeResponses} />
-                        </Card>
+                        <Card>Coming Soon</Card>
                     </Space>
                 </Col>
             </Row>
@@ -118,4 +71,4 @@ export const EntitelmentMasterBase = (props) => {
     );
 };
 
-export const EntitelmentMaster = connect(mapStateToProps, mapDispatchToProps)(EntitelmentMasterBase);
+export const ComingSoonMaster = ComingSoonMasterBase;
