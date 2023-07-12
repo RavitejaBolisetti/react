@@ -54,9 +54,9 @@ const AddEditForm = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Preferred Contact Time">
-                                <Form.Item name={'preferredContactTimeFrom'} rules={[validateRequiredInputField('Preferred Contact Time')]}>
+                                {/* <Form.Item name={'preferredContactTimeFrom'} rules={[validateRequiredInputField('Preferred Contact Time')]}>
                                     <TimePicker.RangePicker use12Hours size="small" format="h:mm A" />
-                                </Form.Item>
+                                </Form.Item> */}
 
                                 {/* <Form.Item name={'preferredContactTimeTo'} rules={[validateRequiredInputField('end time')]}>
                                     <TimePicker placeholder={'End time*'} use12Hours size="small" format="h:mm A" />
