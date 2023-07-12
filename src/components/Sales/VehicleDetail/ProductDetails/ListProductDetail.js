@@ -83,7 +83,7 @@ const ProductDetailMasterMain = (props) => {
     const [openAccordian, setOpenAccordian] = useState('1');
 
     const [tooltTipText, settooltTipText] = useState();
-    const [isReadOnly, setIsReadOnly] = useState();
+    const [isReadOnly, setIsReadOnly] = useState(false);
 
     const [ProductHierarchyDataOptions, setProductHierarchyDataOptions] = useState();
     const [modelData, setmodelData] = useState();

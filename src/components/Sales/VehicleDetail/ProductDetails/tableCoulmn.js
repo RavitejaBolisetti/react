@@ -8,34 +8,56 @@ import styles from 'components/common/Common.module.css';
 import { Button } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 
-export const tableColumn = (handleEdit) => {
+export const tableColumn = (props) => {
+    const { handleEdit, identification, isEditing, viewMode = false, handleSave, handleCancel, renderFormItems, handleDelete } = props;
     const tableColumn = [
         {
             title: 'Item',
             dataIndex: 'serviceName',
-            width: '25%',
+            width: '20%',
+            render: (text, record, index) => renderFormItems({ dataIndex: 'serviceName', ...props, Index: index, text: text }),
         },
 
         {
             title: 'Make ',
             dataIndex: 'make',
-            width: '25%',
+            width: '20%',
+            render: (text, record, index) => renderFormItems({ dataIndex: 'make', ...props, Index: index, text: text }),
         },
         {
             title: 'Serial No. ',
             dataIndex: 'amount',
-            width: '25%',
+            width: '20%',
+            render: (text, record, index) => renderFormItems({ dataIndex: 'amount', ...props, Index: index, text: text }),
         },
-        {
+        !viewMode && {
             title: 'Action',
             dataIndex: 'Action',
             key: 'Action',
             width: '25%',
             render: (text, record, index) => {
+                console.log('tableRecord', index);
                 return (
-                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleEdit(record)}>
-                        <FiEdit />
-                    </Button>
+                    <>
+                        {index !== identification ? (
+                            <>
+                                <Button disabled={isEditing} data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" icon={<FiEdit />} onClick={(e) => handleEdit({ record, index })} />
+                                <Button disabled={isEditing} data-testid="edit" className={styles.tableIcons} aria-label="fa-trash" icon={<FiTrash />} onClick={(e) => handleDelete({ record, index })} />
+                            </>
+                        ) : (
+                            isEditing &&
+                            index === identification && (
+                                <>
+                                    <Button data-testid="Save" type="link" aria-label="fa-edit" onClick={(e) => handleSave({ record, index })}>
+                                        Save
+                                    </Button>
+                                    <Button data-testid="Cancel" type="link" aria-label="fa-edit" onClick={(e) => handleCancel({ record, index })}>
+                                        Cancel
+                                    </Button>
+                                </>
+                            )
+                        )}
+                    </>
                 );
             },
         },

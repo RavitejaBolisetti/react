@@ -12,34 +12,8 @@ import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validat
 
 const AggregatesFormMain = (props) => {
     const { typeData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, showGlobalNotification, formData, optionForm } = props;
-    const [MakeOptions, setMakeOptions] = useState([
-        {
-            value: '1',
-            label: 'Year',
-        },
-        {
-            value: '2',
-            label: 'Month',
-        },
-        {
-            value: '3',
-            label: 'WeekDays',
-        },
-    ]);
-    const [serviceNameOptions, setserviceNameOptions] = useState([
-        {
-            value: '1',
-            label: 'Not Identified',
-        },
-        {
-            value: '2',
-            label: 'Closed',
-        },
-        {
-            value: '3',
-            label: 'Identified',
-        },
-    ]);
+    const { serviceNameOptions, setserviceNameOptions, MakeOptions, setMakeOptions, MakefieldNames, serviceNames } = props;
+    const { handleSelect } = props;
     const isServiceNamePresent = (serviceName) => {
         let found = false;
         optionsServiceModified?.find((element, index) => {
@@ -69,31 +43,7 @@ const AggregatesFormMain = (props) => {
             })
             .catch((err) => {});
     };
-    const MakefieldNames = { label: 'label', value: 'value' };
-    const serviceNames = { label: 'label', value: 'value' };
-    const handleSelect = (value, selectObj, labelName) => {
-        if (!value) return;
-        switch (labelName) {
-            case 'Item': {
-                console.log('Item', value, selectObj, labelName);
-                optionForm.setFieldsValue({
-                    serviceNameValue: selectObj?.label,
-                });
-                break;
-            }
-            case 'make': {
-                console.log('make', value, selectObj, labelName);
-                optionForm.setFieldsValue({
-                    makeValue: selectObj?.label,
-                });
-                break;
-            }
-            default: {
-                console.log('Default', value, selectObj, labelName);
-                break;
-            }
-        }
-    };
+
     return (
         <>
             <Row gutter={20}>

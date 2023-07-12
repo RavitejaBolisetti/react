@@ -88,7 +88,7 @@ const ViewDetailMain = (props) => {
                 </Collapse>
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
                     <Panel header="Aggregates" key="3">
-                        <DataTable tableColumn={tableColumn()} tableData={formData['optionalServices']} removePagination={true} />
+                        <DataTable tableColumn={tableColumn({ viewMode: true })} tableData={formData['optionalServices']} removePagination={true} />
                     </Panel>
                 </Collapse>
             </Space>

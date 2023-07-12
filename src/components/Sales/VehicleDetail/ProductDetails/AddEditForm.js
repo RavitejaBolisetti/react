@@ -16,7 +16,7 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 import { expandIconWithText, dynamicExpandIcon } from 'utils/accordianExpandIcon';
 
-import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, validatInstagramProfileUrl } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { disableFutureDate } from 'utils/disableDate';
 import { expandIcon } from 'utils/accordianExpandIcon';
@@ -35,12 +35,46 @@ const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
     const { formData, setIsReadOnly, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadConsentDocumentFile, setOpenAccordian, typeData, showGlobalNotification, optionsServicesMapping, setoptionsServicesMapping, fetchList, listShowLoading, saveData, onSuccessAction, selectedOrderId, onErrorAction, optionsServiceModified, setoptionsServiceModified, handleFormValueChange, openAccordian, tooltTipText } = props;
-    const { isReadOnly = false } = props;
+    const { isReadOnly } = props;
     const [optionForm] = Form.useForm();
+    const [tableForm] = Form.useForm();
 
     const [isRead, setIsRead] = useState(false);
     const [customer, setCustomer] = useState(false);
     const [activeKey, setActiveKey] = useState([1]);
+    const [isEditing, setisEditing] = useState(false);
+    const [identification, setidentification] = useState('');
+    const [MakeOptions, setMakeOptions] = useState([
+        {
+            value: '1',
+            label: 'Year',
+        },
+        {
+            value: '2',
+            label: 'Month',
+        },
+        {
+            value: '3',
+            label: 'WeekDays',
+        },
+    ]);
+    const [serviceNameOptions, setserviceNameOptions] = useState([
+        {
+            value: '1',
+            label: 'Not Identified',
+        },
+        {
+            value: '2',
+            label: 'Closed',
+        },
+        {
+            value: '3',
+            label: 'Identified',
+        },
+    ]);
+
+    const MakefieldNames = { label: 'label', value: 'value' };
+    const serviceNames = { label: 'label', value: 'value' };
 
     useEffect(() => {
         setCustomer(formData?.customerCategory);
@@ -198,13 +232,39 @@ const AddEditFormMain = (props) => {
         uploadProps,
         formData,
     };
-    const handleCancel = () => {
+    const handleCanceler = () => {
         setIsReadOnly(false);
+    };
+    const handleSelect = (value, selectObj, labelName) => {
+        if (!value) return;
+        switch (labelName) {
+            case 'Item': {
+                optionForm.setFieldsValue({
+                    serviceNameValue: selectObj?.label,
+                });
+                tableForm.setFieldsValue({
+                    serviceNameValue: selectObj?.label,
+                });
+                break;
+            }
+            case 'make': {
+                optionForm.setFieldsValue({
+                    makeValue: selectObj?.label,
+                });
+                tableForm.setFieldsValue({
+                    makeValue: selectObj?.label,
+                });
+                break;
+            }
+            default: {
+                break;
+            }
+        }
     };
 
     const OptionServicesFormProps = {
         typeData,
-        handleCancel,
+        handleCancel: handleCanceler,
         optionForm,
         optionsServicesMapping,
         setoptionsServicesMapping,
@@ -222,11 +282,106 @@ const AddEditFormMain = (props) => {
         optionsServiceModified,
         setoptionsServiceModified,
         handleFormValueChange,
+        serviceNameOptions,
+        setserviceNameOptions,
+        MakeOptions,
+        setMakeOptions,
+        MakefieldNames,
+        serviceNames,
+        handleSelect,
     };
 
     const disabledProps = { disabled: isReadOnly };
-    const handleEdit = (record) => {
-        console.log('record', record);
+
+    const handleEdit = ({ record, index }) => {
+        console.log('record', record, index);
+        tableForm.setFieldsValue({
+            serviceName: record?.serviceName ?? '',
+            make: record?.make ?? '',
+            amount: record?.amount ?? '',
+            serviceNameValue: record?.serviceNameValue ?? '',
+            makeValue: record?.makeValue ?? '',
+        });
+        setidentification(index);
+        setisEditing(true);
+    };
+    const handleTableCancel = ({ record, index }) => {
+        setisEditing(false);
+        setidentification('');
+        tableForm.resetFields();
+    };
+    const handleSave = ({ record, index }) => {
+        tableForm
+            .validateFields()
+            .then(() => {
+                const UpdateValues = tableForm.getFieldsValue();
+                const data = { ...UpdateValues, serviceName: UpdateValues?.serviceNameValue, make: UpdateValues?.makeValue, id: '' };
+
+                setidentification('');
+                setisEditing(false);
+                const newarr = [...optionsServiceModified];
+                newarr[index] = data;
+                console.log('newarr', UpdateValues, newarr);
+
+                setoptionsServiceModified(newarr);
+                tableForm.resetFields();
+            })
+            .catch((err) => {});
+    };
+    const handleDelete = ({ record, index }) => {
+        setoptionsServiceModified(optionsServiceModified.filter((element, i) => i !== index));
+    };
+    const renderFormItems = (props) => {
+        const { handleEdit, identification, isEditing, viewMode = false, handleSave, handleCancel, renderFormItems, dataIndex, Index, text } = props;
+        const FormItemReturn = isEditing && identification === Index;
+        console.log('FormItemReturn', FormItemReturn, text, dataIndex);
+        switch (dataIndex) {
+            case 'serviceName': {
+                if (FormItemReturn) {
+                    return (
+                        <>
+                            <Form.Item name="serviceName" rules={[validateRequiredSelectField('Item')]}>
+                                <Select onChange={(codeValue, serviceObject) => handleSelect(codeValue, serviceObject, 'Item')} allowClear placeholder={preparePlaceholderSelect('item')} options={serviceNameOptions} fieldNames={serviceNames} />
+                            </Form.Item>
+                            <Form.Item name="serviceNameValue" hidden></Form.Item>
+                        </>
+                    );
+                } else {
+                    return text;
+                }
+                break;
+            }
+            case 'make': {
+                if (FormItemReturn) {
+                    return (
+                        <>
+                            <Form.Item name="make" rules={[validateRequiredInputField('Make')]}>
+                                <Select onChange={(codeValue, makeObject) => handleSelect(codeValue, makeObject, 'make')} allowClear placeholder={preparePlaceholderSelect('Make')} fieldNames={MakefieldNames} options={MakeOptions} />
+                            </Form.Item>
+                            <Form.Item name="makeValue" hidden></Form.Item>
+                        </>
+                    );
+                } else {
+                    return text;
+                }
+                break;
+            }
+            case 'amount': {
+                if (FormItemReturn) {
+                    return (
+                        <Form.Item name="amount" rules={[validateRequiredInputField('Srl no'), validationFieldLetterAndNumber('Srl no')]}>
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Srl no')} />
+                        </Form.Item>
+                    );
+                } else {
+                    return text;
+                }
+                break;
+            }
+            default: {
+                return;
+            }
+        }
     };
     return (
         <>
@@ -343,7 +498,9 @@ const AddEditFormMain = (props) => {
                                 key="3"
                             >
                                 {isReadOnly && <AggregatesForm {...OptionServicesFormProps} />}
-                                <DataTable tableColumn={tableColumn(handleEdit)} tableData={optionsServiceModified} removePagination={true} />
+                                <Form autoComplete="off" layout="vertical" form={tableForm}>
+                                    <DataTable  tableColumn={tableColumn({ handleEdit, identification, isEditing, handleCancel: handleTableCancel, renderFormItems, handleSave, handleDelete })} tableData={optionsServiceModified} removePagination={true} />
+                                </Form>
                             </Panel>
                         </Collapse>
                     </Space>
