@@ -10,6 +10,7 @@ import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 
 import { VehicleDetailsMaster } from './VehicleDetails';
 import { CustomerDetailsMaster } from './CustomerDetails';
+import { ProductDetailMaster } from './ProductDetails';
 import { SupportingDocumentMaster } from './SupportingDocument';
 import { ContactMaster } from './Contacts';
 import { EntitlementsAndSchemesMaster } from './EntitlementsAndSchemes';
@@ -32,6 +33,9 @@ const VehicleDetailMainContainerMain = (props) => {
             }
             case VEHICLE_DETAIL_SECTION.CUSTOMER_DETAILS.id: {
                 return <CustomerDetailsMaster {...myProps} />;
+            }
+            case VEHICLE_DETAIL_SECTION.PRODUCT_DETAILS.id: {
+                return <ProductDetailMaster {...myProps} />;
             }
             case VEHICLE_DETAIL_SECTION.DOCUMENTS.id: {
                 return <SupportingDocumentMaster {...myProps} />;

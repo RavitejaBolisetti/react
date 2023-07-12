@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -8,7 +8,6 @@ import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
 import { BASE_URL_MANUFACTURER_ADMINISTRATION_HIERARCHY, BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY, BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY, BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SAVE, BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH, BASE_URL_MANUFACTURER_AUTHORITY_TYPE_DROPDOWN } from 'constants/routingApi';
 import { message } from 'antd';
-// import { message } from 'antd';
 export const MANUFACTURER_ADMIN_HIERARCHY_DATA_LOADED = 'MANUFACTURER_ADMIN_HIERARCHY_DATA_LOADED';
 export const MANUFACTURER_ADMIN_HIERARCHY_DATA_SHOW_LOADING = 'MANUFACTURER_ADMIN_HIERARCHY_DATA_SHOW_LOADING';
 
@@ -72,7 +71,7 @@ const receiveAuthorityTypeData = (data) => ({
 
 const manufacturerAdminHierarchyDataActions = {};
 
-manufacturerAdminHierarchyDataActions.errorTokenValidate = ({message, isUpdating}) => ({
+manufacturerAdminHierarchyDataActions.errorTokenValidate = ({ message, isUpdating }) => ({
     type: ON_ERROR_TOKEN_VALIDATION,
     data: message,
     isUpdating: isUpdating,
@@ -131,7 +130,7 @@ manufacturerAdminHierarchyDataActions.uploadModelClose = (visible) => ({
 });
 
 manufacturerAdminHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, errorAction, data, id = '' } = params;
+    const { setIsLoading, errorAction, data, id = '', manufacturerOrgId = '' } = params;
 
     setIsLoading(true);
     const onError = () => errorAction('Internal Error, Please try again');
@@ -147,7 +146,7 @@ manufacturerAdminHierarchyDataActions.fetchList = withAuthToken((params) => ({ t
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_MANUFACTURER_ADMINISTRATION_HIERARCHY + (id ? `?manufacturerAdminId=${id}` : ''),
+        url: BASE_URL_MANUFACTURER_ADMINISTRATION_HIERARCHY + (manufacturerOrgId ? `?manufacturerOrgId=${manufacturerOrgId}` : id ? `?manufacturerAdminId=${id}` : ''),
         token,
         accessToken,
         userId,
