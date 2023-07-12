@@ -14,6 +14,8 @@ import { disablePastDate } from 'utils/disableDate';
 import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
+
+    
     const {
         formData,
         typeData,
@@ -23,10 +25,16 @@ const AddEditFormMain = (props) => {
         loginUserData: { userType = 'ADM' },
     } = props;
     const disabledProps = { disabled: isReadOnly };
+     
+
     const handleOnChange = (e) => {
+        console.log("e:", e);
+        console.log("formData-mnmCtcVehicle:", formData?.mnmCtcVehicle);        
         if (e.target.checked) {
+            // formData.mnmCtcVehicle = true;
             setMnmCtcVehicleFlag(true);
         } else {
+            // formData.mnmCtcVehicle = false;
             setMnmCtcVehicleFlag(false);
         }
     };
@@ -36,17 +44,17 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={convertCalenderDate(formData?.mnfcWarrEndDate, 'YYYY/MM/DD')} label="Manufacturer Warranty End Date" name="mnfcWarrEndDate">
-                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} />
+                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} style={{ display: 'auto', width: '100%' }}/>
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={convertCalenderDate(formData?.deliveryDate, 'YYYY/MM/DD')} label="Delivery Date" name="deliveryDate">
-                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} />
+                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={convertCalenderDate(formData?.saleDate, 'YYYY/MM/DD')} label="Sale Date" name="saleDate">
-                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} />
+                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} style={{ display: 'auto', width: '100%' }}/>
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -77,18 +85,18 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={convertCalenderDate(formData?.nextServiceDueDate, 'YYYY/MM/DD')} label="Next Service Due Date" name="nextServiceDueDate">
-                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} />
+                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} style={{ display: 'auto', width: '100%' }}/>
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={convertCalenderDate(formData?.pucExpiryDate, 'YYYY/MM/DD')} label="PUC Expiry Date" name="pucExpiryDate">
-                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} />
+                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={convertCalenderDate(formData?.insuranceExpiryDate, 'YYYY/MM/DD')} label="Insurance Expiry Date" name="insuranceExpiryDate">
-                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} />
+                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -151,8 +159,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
 
-                {mnmCtcVehicleFlag ||
-                    (formData?.mnmCtcVehicle && (
+                {(mnmCtcVehicleFlag || formData?.mnmCtcVehicle && (
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.manageBy} name="manageBy" label="Managed By">
                                 <Select placeholder="Select" showSearch allowClear options={typeData['CTC_TYP']} fieldNames={{ label: 'value', value: 'key' }} />

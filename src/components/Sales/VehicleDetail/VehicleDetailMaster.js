@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vechile Details';
+    const moduleTitle = 'Vehicle Details';
 
     let returnValue = {
         userId,

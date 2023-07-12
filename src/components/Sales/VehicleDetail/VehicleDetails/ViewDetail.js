@@ -12,12 +12,9 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 const { Panel } = Collapse;
-// const { Text } = Typography;
-
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, typeData, salesConsultantLov, activeKey, onChange} = props;
-  
     const viewProps = {
         bordered: false,
         colon: false,
@@ -55,20 +52,20 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Customer Category-SSI">{checkAndSetDefaultValue(formData?.customerCategorySsi, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Customer Category-CSI">{checkAndSetDefaultValue(formData?.customerCategoryCsi, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Customer Category-IQS">{checkAndSetDefaultValue(formData?.customerCategoryIQS, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="OEM Priviledge Customer">{checkAndSetDefaultValue(formData?.oemPrivilegeCustomer , isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Key Account Vihicle">{checkAndSetDefaultValue(formData?.keyAccountVehicle, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Theft Vihicle">{checkAndSetDefaultValue(formData?.theftVehicle, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="PDI Done">{checkAndSetDefaultValue(formData?.pdiDone, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="OEM Priviledge Customer">{checkAndSetDefaultValue(formData?.oemPrivilegeCustomer ? 'true': '', isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Key Account Vihicle">{checkAndSetDefaultValue(formData?.keyAccountVehicle ? 'true': '', isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Theft Vihicle">{checkAndSetDefaultValue(formData?.theftVehicle ? 'true': '', isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="PDI Done">{checkAndSetDefaultValue(formData?.pdiDone ? 'true': '', isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Buy Back Vehicle">{checkAndSetDefaultValue(formData?.buyBackVehicle, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Government Vehicle">{checkAndSetDefaultValue(formData?.govtVehicle, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Government Vehicle">{checkAndSetDefaultValue(formData?.govtVehicle ? 'true': '', isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Taxi/Non Taxi">{checkAndSetDefaultValue(formData?.taxiOrNonTaxi, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="M&M CTC Vehicle">{checkAndSetDefaultValue(formData?.mnmCtcVehicle, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="M&M CTC Vehicle">{checkAndSetDefaultValue(formData?.mnmCtcVehicle ? 'true': '', isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Managed By">{checkAndSetDefaultValue(formData?.manageBy, isLoading)}</Descriptions.Item>                
                             
-                            <Descriptions.Item label="Warranty Blocked">{checkAndSetDefaultValue(formData?.warrantyBlocked, isLoading)}</Descriptions.Item>
+                            {/* <Descriptions.Item label="Warranty Blocked">{checkAndSetDefaultValue(formData?.warrantyBlocked ? 'true': '', isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Care Plus">{checkAndSetDefaultValue(formData?.carePlus, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Legal">{checkAndSetDefaultValue(formData?.legal, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Dealership Vehicle">{checkAndSetDefaultValue(formData?.dealershipVehicle, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Dealership Vehicle">{checkAndSetDefaultValue(formData?.dealershipVehicle, isLoading)}</Descriptions.Item> */}
                         </Descriptions>
                             </Panel>
                         </Collapse>

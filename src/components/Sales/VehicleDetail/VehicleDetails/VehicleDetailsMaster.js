@@ -22,8 +22,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Vehicle: {
-                VehicleDetail: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
-                ViewVehicleDetail: { isLoaded, data: vehicleDetails = {} },
+                ViewVehicleDetail: { isLoaded, isLoading, data: vehicleDetails = {} },
             },
         },
         common: {
@@ -37,7 +36,6 @@ const mapStateToProps = (state) => {
         userId,
         typeData,
         isDataLoaded: true,
-        otfData: [],
         isLoading,
         moduleTitle,
         vehicleDetails,
@@ -62,7 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VechileDetailsMasterBase = (props) => {
     const { typeData, listConsultantShowLoading } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading, vehicleDetails } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading, vehicleDetails } = props;
     const { form, selectedRecordId, formActionType, handleFormValueChange, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
     const [mnmCtcVehicleFlag, setMnmCtcVehicleFlag] = useState(false);
     const [activeKey, setactiveKey] = useState([1]);
@@ -108,7 +106,7 @@ const VechileDetailsMasterBase = (props) => {
         const vin = vehicleDetails.vehicleDetails?.vin || '';
         const registrationNumber = vehicleDetails.vehicleDetails?.registrationNumber || '';
 
-        const data = { ...values, id: recordId, vehicleIdentificationNumber: vin, mnfcWarrEndDate: values?.mnfcWarrEndDate?.format('YYYY-MM-DD'), deliveryDate: values?.deliveryDate?.format('YYYY-MM-DD'), nextServiceDueDate: values?.nextServiceDueDate?.format('YYYY-MM-DD'), pucExpiryDate: values?.pucExpiryDate?.format('YYYY-MM-DD'), insuranceExpiryDate: values?.insuranceExpiryDate?.format('YYYY-MM-DD'), saleDate: values?.saleDate?.format('YYYY-MM-DD'), registrationNumber: registrationNumber };
+        const data = { ...values, id: recordId, vin: vin, mnfcWarrEndDate: values?.mnfcWarrEndDate?.format('YYYY-MM-DD'), deliveryDate: values?.deliveryDate?.format('YYYY-MM-DD'), nextServiceDueDate: values?.nextServiceDueDate?.format('YYYY-MM-DD'), pucExpiryDate: values?.pucExpiryDate?.format('YYYY-MM-DD'), insuranceExpiryDate: values?.insuranceExpiryDate?.format('YYYY-MM-DD'), saleDate: values?.saleDate?.format('YYYY-MM-DD'), registrationNumber: registrationNumber };
         const onSuccess = (res) => {
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -120,7 +118,7 @@ const VechileDetailsMasterBase = (props) => {
         };
 
         const requestData = {
-            data: data,
+            data: {"vehicleDetails":data},
             method: 'put',
             setIsLoading: listShowLoading,
             userId,
