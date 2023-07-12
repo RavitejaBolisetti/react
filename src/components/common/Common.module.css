@@ -2942,6 +2942,8 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 
 .accordianIconWithText {
     font-size: 16px !important;
+    font-weight: 600;
+    line-height: 22px;
 }
 
 
