@@ -30,6 +30,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { validateOTFMenu } from './utils/validateOTFMenu';
 import { withModal } from 'components/withModal';
+import styles from 'components/common/Common.module.css';
 
 import { FilterIcon } from 'Icons';
 const { confirm } = Modal;
@@ -69,9 +70,14 @@ const mapDispatchToProps = (dispatch) => ({
             fetchOTFSearchedList: otfSearchListAction.fetchList,
             setFilterString: otfSearchListAction.setFilter,
             resetData: otfSearchListAction.reset,
-            fetchList: otfDetailsDataActions.fetchList,
-            saveData: otfDetailsDataActions.saveData,
+            transferOTF: otfSearchListAction.transferOTF,
+
+            //fetchList: otfDetailsDataActions.fetchList,
+            //saveData: otfDetailsDataActions.saveData,
+            fetchList: otfSearchListAction.fetchSeachParameter,
+            saveData: otfSearchListAction.saveData,
             listShowLoading: otfDetailsDataActions.listShowLoading,
+             
             showGlobalNotification,
         },
         dispatch
@@ -80,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const OtfMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
-    const { typeData, moduleTitle } = props;
+    const { typeData, moduleTitle, transferOTF } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
@@ -377,7 +383,7 @@ export const OtfMasterBase = (props) => {
 
     const title = 'Search OTF';
 
-    const showConfirm = () => {
+    const showConfirm = (values) => {
         confirm({
             title: modalTitle,
             icon: '',
@@ -390,7 +396,22 @@ export const OtfMasterBase = (props) => {
             closable: true,
             onOk() {
                 setConfirm(false);
-                // transferOTF({});
+                console.log('OTF Transfer Form valuesss', values);
+
+                const onSuccess = (res) => {
+                };
+        
+                const onError = (message) => {
+                };
+        
+                const requestData = {
+                    data: values,
+                    userId,
+                    onError,
+                    onSuccess,
+                    setIsLoading: listShowLoading,
+                };
+                transferOTF(requestData);
             },
             onCancel() {
                 setConfirm(false);
@@ -399,13 +420,13 @@ export const OtfMasterBase = (props) => {
     };
 
     const onFinishOTFTansfer = (values)=>{
-        console.log('OTF Transfer Form values', values);
+        console.log("🚀 ~ file: OtfMaster.js:423 ~ onFinishOTFTansfer ~ values:", values)
         setModalTitle('OTF Transfer');
+        setModalMessage(`Do you want to transfer this ${values?.otfNumber}`) ;
         setIsTransferVisible(false);
         //setIsModalOpen(true);
         setConfirm(true);
-        setModalMessage(`Do you want to transfer this ${values?.otfNumber}`) ;
-        showConfirm();
+        showConfirm(values);
     }
 
     const handleCloseModal = () =>{

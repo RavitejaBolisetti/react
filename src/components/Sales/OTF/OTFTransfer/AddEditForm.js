@@ -77,7 +77,7 @@ const AddEditFormMain = (props) => {
             </Card>
             <Form form={otfTransferForm} onFinish={onFinishOTFTansfer} layout="vertical" autocomplete="off" colon="false">
                 <Form.Item name="id" initialValue={selectedOrder?.id} hidden={true} />
-                <Form.Item name="otfNumber"  initialValue={selectedOrder?.otfNumber} hidden={true} />
+                <Form.Item name="otfNumber" initialValue={selectedOrder?.otfNumber} hidden={true} />
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
