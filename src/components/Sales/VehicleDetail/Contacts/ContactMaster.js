@@ -172,7 +172,7 @@ const ContactMasterMain = (props) => {
     };
 
     const onFinish = () => {
-        let data = { vehicleIdentificationNumber: selectedRecordId, contact: contactData?.map((el) => ({ ...el, id: '', preferredContactTimeFrom: '02:30', preferredContactTimeTo: '03:30' })) };
+        let data = { vehicleIdentificationNumber: selectedRecordId, contact: contactData?.map((el) => ({ ...el, preferredContactTimeFrom: '02:30', preferredContactTimeTo: '03:30' })) };
         const onSuccess = (res) => {
             contactform.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -189,7 +189,7 @@ const ContactMasterMain = (props) => {
 
         const requestData = {
             data: data,
-            method: 'post',
+            method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,

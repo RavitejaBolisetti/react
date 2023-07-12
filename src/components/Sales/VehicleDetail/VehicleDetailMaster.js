@@ -231,6 +231,7 @@ export const VehicleDetailMasterBase = (props) => {
         console.log('🚀 ~ file: VehicleDetailMaster.js:231 ~ handleButtonClick ~ record:', record);
         form.resetFields();
         form.setFieldsValue(undefined);
+        setSelectedRecordId('MAKGF1F57A7192174')
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);

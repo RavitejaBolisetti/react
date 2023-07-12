@@ -22,7 +22,7 @@ const AddEditForm = (props) => {
 
     return (
         <>
-            <Form form={contactform} autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
+            <Form form={contactform} id="myContacts" autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
                 <Space direction="vertical">
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -64,6 +64,9 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
+                    <Form.Item hidden name="id" initialValue={''}>
+                        <Input />
+                    </Form.Item>
                     {!formActionType?.viewMode && (
                         <Row gutter={20}>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
