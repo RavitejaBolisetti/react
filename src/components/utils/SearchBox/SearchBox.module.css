@@ -34,7 +34,7 @@
 }
 
 .selectSearchBg .headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper {
-    height: 26px !important;
+    height: 26px;
     padding: 4px 12px;
     border-inline-end-width: 0px;
 }

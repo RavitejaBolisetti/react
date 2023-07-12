@@ -51,7 +51,7 @@ const AddEditFormMain = (props) => {
     return (
         <Card style={{ backgroundColor: '#F2F2F2' }}>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.referralSearch}>
                     <SearchBox {...serachBoxProps} />
                 </Col>
             </Row>
