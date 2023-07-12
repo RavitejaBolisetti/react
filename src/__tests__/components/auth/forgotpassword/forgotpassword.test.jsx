@@ -1,13 +1,13 @@
 import { screen, fireEvent, cleanup } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
-import { act } from 'react-dom/test-utils'
+import { act } from 'react-dom/test-utils';
 import customRender from "@utils/test-utils";
 import { ForgotPassword } from "@components/Auth/ForgotPassword/ForgotPassword";
 
 afterEach(cleanup);
 
 describe('Forgot Password Component render', () => {
-    it('should render snapshots of ForgotPassword', async () => {
+    it('should render ForgotPassword component page', async () => {
         customRender(<ForgotPassword />);
         expect(screen.getByRole('heading', {
             name: /forgot your password/i
@@ -39,7 +39,7 @@ describe('Forgot Password Component render', () => {
             fireEvent.click(verifyUserButton); 
         });
         expect(await screen.findByText('Please enter user id', undefined, {
-            timeout: 5000})).toBeVisible();
+            timeout: 2000})).toBeVisible();
     })
 });
   
