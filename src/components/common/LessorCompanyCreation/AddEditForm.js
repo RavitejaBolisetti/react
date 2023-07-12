@@ -185,7 +185,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Button type="primary" onClick={handleTemplateDownLoad}>
+                            <Button type="primary" className={styles.marT20} onClick={handleTemplateDownLoad}>
                                 Download Template
                             </Button>
                         </Col>
@@ -198,6 +198,7 @@ const AddEditFormMain = (props) => {
                         <div className={styles.uploadContainer} style={{ opacity: '100' }}>
                             <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
                                 <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
                                     description={
                                         <>
                                             <span>

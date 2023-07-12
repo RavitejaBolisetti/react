@@ -14,13 +14,13 @@ export const DrawerFormButton = ({ formData, onCloseAction, buttonData, setButto
         <Row gutter={20} className={styles.formFooter}>
             <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.footerBtnLeft}>
                 {buttonData?.closeBtn && (
-                    <Button danger onClick={onCloseAction}>
+                    <Button data-testId="closeBtn" danger onClick={onCloseAction}>
                         Close
                     </Button>
                 )}
 
                 {buttonData?.cancelBtn && (
-                    <Button danger onClick={onCloseAction}>
+                    <Button data-testId="cancelBtn" danger onClick={onCloseAction}>
                         Cancel
                     </Button>
                 )}
@@ -28,19 +28,19 @@ export const DrawerFormButton = ({ formData, onCloseAction, buttonData, setButto
 
             <Col xs={24} sm={18} md={18} lg={18} xl={18} className={styles.footerBtnRight}>
                 {buttonData?.saveBtn && (
-                    <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                    <Button data-testId="saveBtn" loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                         {saveButtonName}
                     </Button>
                 )}
 
                 {buttonData?.saveAndNewBtn && (
-                    <Button loading={isLoadingOnSave} htmlType="submit" disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: true })} type="primary">
+                    <Button data-testId="saveAddBtn" loading={isLoadingOnSave} htmlType="submit" disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: true })} type="primary">
                         Save & Add New
                     </Button>
                 )}
 
                 {buttonData?.editBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record: formData })} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
+                    <Button data-testId="editBtn" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record: formData })} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
                         Edit
                     </Button>
                 )}
