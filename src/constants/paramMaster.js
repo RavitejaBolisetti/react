@@ -176,4 +176,8 @@ export const PARAM_MASTER = {
         id: 'LSRCUSTTMPLT',
         title: 'Lessor creation template download',
     },
+    ADMINAUTHTMPLT: {
+        id: 'ADMINAUTHTMPLT',
+        title: 'Authority template download',
+    },
 };
