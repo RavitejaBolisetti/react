@@ -48,3 +48,5 @@ export const DrawerFormButton = ({ formData, onCloseAction, buttonData, setButto
         </Row>
     );
 };
+
+export default DrawerFormButton;
