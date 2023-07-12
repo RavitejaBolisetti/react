@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Row, Col, Form } from 'antd';
 
 import { connect } from 'react-redux';
@@ -17,17 +17,20 @@ import styles from 'components/common/Common.module.css';
 
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-import dayjs from 'dayjs';
+
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { convertCalenderDate } from 'utils/formatDateTime';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
-                Referrals: { isLoaded: isDataLoaded = false, isLoading, data: referralData = [] },
+                Referrals: { isLoaded: isDataLoaded = false, isLoading, data: referralData = [], filter: filterString },
+                // ReferralDetails: { isLoaded: isReferralDataLoaded = false, isLoading: isReferralLoading, data: referralDetail = [] },
             },
         },
         customer: {
@@ -43,6 +46,8 @@ const mapStateToProps = (state) => {
         isDataCustomerLoaded,
         isCustomerLoading,
         customerDetail,
+        typeData,
+        filterString,
     };
     return returnValue;
 };
@@ -54,6 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchCustomerList: customerDetailDataActions.fetchList,
             listCustomerShowLoading: customerDetailDataActions.listShowLoading,
             fetchList: otfReferralsDataActions.fetchList,
+            setFilterString: otfReferralsDataActions.setFilter,
             listShowLoading: otfReferralsDataActions.listShowLoading,
             resetData: otfReferralsDataActions.reset,
             saveData: otfReferralsDataActions.saveData,
@@ -68,23 +74,58 @@ const ReferralsMasterBase = (props) => {
     const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, listCustomerShowLoading, typeData, handleButtonClick, NEXT_ACTION } = props;
 
     const [formData, setFormData] = useState();
+    const [viewFormData, setViewFormData] = useState();
     const [resetField, setResetField] = useState(false);
+    const { filterString, setFilterString } = props;
+    const [vehicleRegNum, setVehicleRegNum] = useState();
+
+    const extraParams = useMemo(() => {
+        return [
+            {
+                key: 'searchType',
+                title: 'Type',
+                value: filterString?.searchType,
+                canRemove: false,
+                filter: true,
+            },
+            {
+                key: 'searchParam',
+                title: 'Value',
+                value: filterString?.searchParam,
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'pageNumber',
+                title: 'Value',
+                value: 1,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'pageSize',
+                title: 'Value',
+                value: 1000,
+                canRemove: true,
+                filter: false,
+            },
+        ];
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
 
     useEffect(() => {
-        if (referralData?.mobileNumber) {
-            setFormData(referralData);
+        if (userId) {
+            fetchList({
+                setIsLoading: listShowLoading,
+                extraParams,
+                onSuccessAction: (res) => {
+                    res?.data?.referralData?.referralDetails.length === 1 ? setFormData(res?.data?.referralData?.referralDetails[0]) : setVehicleRegNum(res?.data?.referralData?.referralDetails);
+                },
+                onErrorAction,
+                userId,
+            });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [referralData]);
-
-    const extraParams = [
-        {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'OTF Number',
-        },
-    ];
+    }, [userId, extraParams]);
 
     const onFinish = (values) => {
         const data = { ...values, otfNumber: selectedOrderId, dob: convertCalenderDate(values?.dob, 'YYYY-MM-DD'), id: referralData?.id };
@@ -122,7 +163,23 @@ const ReferralsMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && selectedOrderId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+            const extraParams = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOrderId,
+                    name: 'OTF Number',
+                },
+            ];
+            fetchList({
+                setIsLoading: listShowLoading,
+                userId,
+                extraParams,
+                onSuccessAction: (res) => {
+                    setViewFormData(res?.data);
+                },
+                onErrorAction,
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -185,13 +242,19 @@ const ReferralsMasterBase = (props) => {
         onFinish,
         onFinishFailed,
         onSearch,
-
+        // handleSearchParamSearch,
         resetField,
+        optionType: typeData[PARAM_MASTER.REFERRAL_SEARCH.id],
+        // searchParamRule: referralSearchRules,
+        filterString,
+        setFilterString,
+        vehicleRegNum,
+        typeData,
     };
 
     const viewProps = {
         styles,
-        formData,
+        formData: viewFormData,
         isLoading,
         typeData,
     };
