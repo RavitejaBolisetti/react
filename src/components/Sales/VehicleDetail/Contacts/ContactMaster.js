@@ -69,6 +69,7 @@ const ContactMasterMain = (props) => {
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
+    console.log('🚀 ~ file: ContactMaster.js:72 ~ ContactMasterMain ~ contactData:', contactData);
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
@@ -93,7 +94,7 @@ const ContactMasterMain = (props) => {
     }, [userId, selectedRecordId]);
 
     useEffect(() => {
-        if ( selectedRecordId && vehicleContactData?.contact) {
+        if (selectedRecordId && vehicleContactData?.contact) {
             setContactData(vehicleContactData?.contact || []);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -111,22 +112,20 @@ const ContactMasterMain = (props) => {
         contactform
             .validateFields()
             .then((value) => {
+                let preferredContactTimeFrom = value?.preferredContactTime?.[0]?.format('HH:mm');
+                let preferredContactTimeTo = value?.preferredContactTime[1]?.format('HH:mm');
+
                 if (isEditing) {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
-                        formData.splice(index, 1, { ...value });
+                        formData.splice(index, 1, { ...value, preferredContactTimeFrom, preferredContactTimeTo });
                         return [...formData];
                     });
                 } else {
                     setContactData((prev) => {
-                        let formData = prev?.length ? [...prev] : [];
-                        if (value?.defaultaddress && formData?.length >= 1) {
-                            return [...formData, { ...value }];
-                        } else {
-                            const updVal = prev?.length ? [...prev, { ...value }] : [{ ...value }];
-                            return updVal;
-                        }
+                        const updVal = prev?.length ? [...prev, { ...value, preferredContactTimeFrom, preferredContactTimeTo }] : [{ ...value }];
+                        return updVal;
                     });
                 }
                 setShowAddEditForm(false);

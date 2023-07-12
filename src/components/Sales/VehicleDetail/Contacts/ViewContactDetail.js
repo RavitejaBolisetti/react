@@ -9,14 +9,11 @@ import AddEditForm from './AddEditForm';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import moment from 'moment';
-
-
-import { CUSTOMER_TYPE } from 'constants/CustomerType';
+import { formatTime } from 'utils/formatDateTime';
 
 const ViewContactDetailBase = (props) => {
     const { formData, styles } = props;
     const { setShowAddEditForm, setContactData, onFinish, form, preferredContactTimeFrom, preferredContactTimeTo, isEditing, isLoading, typeData } = props;
-    const { customerType } = props;
 
     const viewProps = {
         bordered: false,
@@ -34,16 +31,18 @@ const ViewContactDetailBase = (props) => {
     };
 
     return (
-        <div className={styles.viewDrawerContainer} >
+        <div className={styles.viewDrawerContainer}>
             {!isEditing ? (
                 <>
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Contact Type">{checkAndSetDefaultValue(getCodeValue(typeData?.VH_CONTACT_TYPE, formData?.contactType),isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Contact Type">{checkAndSetDefaultValue(getCodeValue(typeData?.VH_CONTACT_TYPE, formData?.contactType), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Preferred Days For Contact">{checkAndSetDefaultValue(formData?.preferredDayForContact, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Name">{checkAndSetDefaultValue( formData?.name, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="E-mail">{checkAndSetDefaultValue( formData?.emailId, isLoading)}</Descriptions.Item>
-                        {/* <Descriptions.Item label="Preferred Contact Time">{formData?.preferredContactTimeFrom.format('hh:mm A')}</Descriptions.Item> */}
+                        <Descriptions.Item label="Name">{checkAndSetDefaultValue(formData?.name, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="E-mail">{checkAndSetDefaultValue(formData?.emailId, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Preferred Contact Time">
+                            {formData?.preferredContactTimeFrom} - {formData?.preferredContactTimeTo}
+                        </Descriptions.Item>
                     </Descriptions>
                 </>
             ) : (

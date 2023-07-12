@@ -15,7 +15,6 @@ import { FiEdit } from 'react-icons/fi';
 import moment from 'moment';
 import { LANGUAGE_EN } from 'language/en';
 
-
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { getNameFromKey } from 'utils/checkAndSetDefaultValue';
 
@@ -32,7 +31,6 @@ const ViewList = (props) => {
     const disableProp = { disabled: formActionType?.viewMode };
     const [timingForm] = Form.useForm();
 
-
     const editContactHandeler = (e, data, i) => {
         e.stopPropagation();
         setOpenAccordian(i);
@@ -41,35 +39,10 @@ const ViewList = (props) => {
         contactform.setFieldsValue(data);
     };
 
-    const validatedDuplicateTime = (preferredContactTimeFrom, preferredContactTimeTo) => {
-        const isBefore = moment(preferredContactTimeFrom, 'HH:mm').isBefore(moment(preferredContactTimeTo, 'HH:mm'));
-        if (!isBefore) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: LANGUAGE_EN.GENERAL.START_TIME_GREATER_THAN_END_TIME.MESSAGE, placement: 'bottomRight' });
-            return true;
-        }
-        let timeSegments = [...timeData, { preferredContactTimeFrom, preferredContactTimeTo }];
-        if (timeSegments?.length === 1) {
-            return false;
-        }
-
-        timeSegments?.sort((timeSegment1, timeSegment2) => timeSegment1['preferredContactTimeFrom']?.localeCompare(timeSegment2['preferredContactTimeFrom']));
-
-        for (let i = 0; i < timeSegments.length - 1; i++) {
-            const currentEndTime = timeSegments[i]['preferredContactTimeTo'];
-            const nextStartTime = timeSegments[i + 1]['preferredContactTimeFrom'];
-            if (currentEndTime > nextStartTime) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: LANGUAGE_EN.GENERAL.TIME_OVERLAPPING.MESSAGE, placement: 'bottomRight' });
-                return true;
-            }
-        }
-        return false;
-    };
-
     const onTimingFormFinish = (values) => {
-        let preferredContactTimeFrom = values?.preferredContactTimeFrom?.format('HH:mm');
-        let preferredContactTimeTo = values?.preferredContactTimeTo?.format('HH:mm');
-        let overlap = validatedDuplicateTime(preferredContactTimeFrom, preferredContactTimeTo);
-        !overlap && setTimeData([...timeData, { preferredContactTimeFrom, preferredContactTimeTo }]);
+        let preferredContactTimeFrom = values?.preferredContactTime?.[0]?.format('HH:mm');
+        let preferredContactTimeTo = values?.preferredContactTime[1]?.format('HH:mm');
+        setTimeData([...timeData, { preferredContactTimeFrom, preferredContactTimeTo }]);
         timingForm.resetFields();
         setAllowedTimingSave(true);
         forceUpdate();
