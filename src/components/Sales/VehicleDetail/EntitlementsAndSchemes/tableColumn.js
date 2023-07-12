@@ -12,42 +12,42 @@ export const tableColumn = () => {
         tblPrepareColumns({
             title: 'Entitlement/Scheme Type',
             dataIndex: 'schemeType',
-            width: '15',
+            width: '150',
             sorter: true,
         }),
 
         tblPrepareColumns({
             title: 'Entitlement/Scheme Description ',
             dataIndex: 'description',
-            width: '20',
+            width: '200',
             sorter: true,
         }),
 
         tblPrepareColumns({
             title: 'Entitlement/Scheme Doc No',
             dataIndex: 'documentNumber',
-            width: '15',
+            width: '150',
             sorter: true,
         }),
 
         tblPrepareColumns({
             title: 'Entitlement/Scheme Doc Date',
             dataIndex: 'documentDate',
-            width: '15',
+            width: '150',
             sorter: true,
         }),
 
         tblPrepareColumns({
             title: 'Entitlement/Scheme Booklet No',
             dataIndex: 'bookletNumber',
-            width: '15',
+            width: '150',
             sorter: true,
         }),
 
         tblPrepareColumns({
             title: 'Validity Start Date',
             dataIndex: 'validityStartDate',
-            width: '15',
+            width: '150',
             sorter: true,
         }),
 
@@ -61,14 +61,14 @@ export const tableColumn = () => {
         tblPrepareColumns({
             title: 'Validity Start KM',
             dataIndex: 'validityStartKm',
-            width: '15',
+            width: '150',
             sorter: true,
         }),
 
         tblPrepareColumns({
             title: 'Validity End KM',
             dataIndex: 'validityEndKm',
-            width: '15',
+            width: '150',
             sorter: true,
         }),
 

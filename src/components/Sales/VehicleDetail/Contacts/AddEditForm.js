@@ -36,7 +36,7 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item  label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
+                            <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
                                 <Input maxLength={10} placeholder={preparePlaceholderText('mobile number')} allowClear size="small" />
                             </Form.Item>
                         </Col>
@@ -53,19 +53,15 @@ const AddEditForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            {/* <Form.Item  label="Preferred Contact Time">
-                                <Space>
-                                    <Form.Item name={'preferredContactTimeFrom'} rules={[validateRequiredInputField('start time')]}>
-                                        <TimePicker placeholder={'Start time*'} use12Hours size="small" format="h:mm A" />
-                                    </Form.Item>
-                                    <Button className={style.marB20} type="link" style={{ color: '#0b0b0c', pointerEvents: 'none' }}>
-                                        -
-                                    </Button>
-                                    <Form.Item name={'preferredContactTimeTo'} rules={[validateRequiredInputField('end time')]}>
-                                        <TimePicker placeholder={'End time*'} use12Hours size="small" format="h:mm A" />
-                                    </Form.Item>
-                                </Space>
-                            </Form.Item> */}
+                            <Form.Item label="Preferred Contact Time">
+                                <Form.Item name={'preferredContactTimeFrom'} rules={[validateRequiredInputField('Preferred Contact Time')]}>
+                                    <TimePicker.RangePicker use12Hours size="small" format="h:mm A" />
+                                </Form.Item>
+
+                                {/* <Form.Item name={'preferredContactTimeTo'} rules={[validateRequiredInputField('end time')]}>
+                                    <TimePicker placeholder={'End time*'} use12Hours size="small" format="h:mm A" />
+                                </Form.Item> */}
+                            </Form.Item>
                         </Col>
                     </Row>
                     {!formActionType?.viewMode && (
