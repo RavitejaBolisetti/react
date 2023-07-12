@@ -117,7 +117,7 @@ const ViewList = (props) => {
                                             <Col xs={10} sm={10} md={10} lg={10} xl={10}>
                                                 <div className={styles.floatRight}>
                                                     <Divider type="vertical" />
-                                                    <Text type="secondary">{data?.contactType}</Text>
+                                                    <Text type="secondary">{getNameFromKey(typeData['VH_CONTACT_TYPE'], data?.contactType)}</Text>
                                                 </div>
                                             </Col>
                                         )}
