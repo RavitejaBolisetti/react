@@ -10,7 +10,7 @@ import { BiLockAlt } from 'react-icons/bi';
 import { validateLettersWithWhitespaces, validateEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import UploadUtils from './../UploadUtils';
+import UploadUtils from 'components/common/CustomerMaster/Common/UploadUtils';
 
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
