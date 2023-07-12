@@ -3,16 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
+import { viewVehicleDetailDataActions } from 'store/actions/data/vehicle/viewVehicleDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'components/common/Common.module.css';
@@ -22,22 +21,27 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            // Vechile: {
-            //     // VehicleDetail: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
-            // },
+            Vehicle: {
+                VehicleDetail: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
+                ViewVehicleDetail: { isLoaded, data: vehicleDetails = {} },
+            },
+        },
+        common: {
+            Header: { data: loginUserData = [] },
         },
     } = state;
 
-    const moduleTitle = 'Vechile Details';
+    const moduleTitle = 'Vehicle Details';
 
     let returnValue = {
         userId,
         typeData,
-        isDataLoaded:true,
-
-        otfData:[],
-        isLoading:false,
+        isDataLoaded: true,
+        otfData: [],
+        isLoading,
         moduleTitle,
+        vehicleDetails,
+        loginUserData,
     };
     return returnValue;
 };
@@ -46,10 +50,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: vehicleDetailDataActions.fetchList,
-            saveData: vehicleDetailDataActions.saveData,
-            resetData: vehicleDetailDataActions.reset,
-            listShowLoading: vehicleDetailDataActions.listShowLoading,
+            fetchList: viewVehicleDetailDataActions.fetchList,
+            saveData: viewVehicleDetailDataActions.saveData,
+            resetData: viewVehicleDetailDataActions.reset,
+            listShowLoading: viewVehicleDetailDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -58,46 +62,52 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VechileDetailsMasterBase = (props) => {
     const { typeData, listConsultantShowLoading } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange,  salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading, vehicleDetails } = props;
+    const { form, selectedRecordId, formActionType, handleFormValueChange, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
+    const [mnmCtcVehicleFlag, setMnmCtcVehicleFlag] = useState(false);
+    const [activeKey, setactiveKey] = useState([1]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
 
+    const onChange = (values) => {
+        const isPresent = activeKey.includes(values);
+
+        if (isPresent) {
+            const newActivekeys = [];
+
+            activeKey.forEach((item) => {
+                if (item !== values) {
+                    newActivekeys.push(item);
+                }
+            });
+            setactiveKey(newActivekeys);
+        } else {
+            setactiveKey([...activeKey, values]);
+        }
+    };
+
     const extraParams = [
         {
-            key: 'otfNumber',
-            title: 'otfNumber',
+            key: 'vin',
+            title: 'vin',
             value: selectedOrderId,
-            name: 'OTF Number',
+            name: 'VIN Number',
         },
     ];
-
     useEffect(() => {
-        if (userId && selectedOrderId) {
-            const extraParams = [
-                {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOrderId,
-                    name: 'OTF Number',
-                },
-            ];
+        if (userId) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
+    }, [userId]);
 
     const onFinish = (values) => {
-        const recordId = otfData?.id || '';
-        const otfNum = otfData?.otfNumber || '';
-        const exchange = values?.exchange === true ? 1 : 0;
-        const data = { ...values, id: recordId, otfNumber: otfNum, loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
-        delete data?.mitraName;
-        delete data?.mitraType;
-        delete data?.modeOfPAyment;
+        const recordId = vehicleDetails.vehicleDetails?.id || '';
+        const vin = vehicleDetails.vehicleDetails?.vin || '';
+        const registrationNumber = vehicleDetails.vehicleDetails?.registrationNumber || '';
 
+        const data = { ...values, id: recordId, vehicleIdentificationNumber: vin, mnfcWarrEndDate: values?.mnfcWarrEndDate?.format('YYYY-MM-DD'), deliveryDate: values?.deliveryDate?.format('YYYY-MM-DD'), nextServiceDueDate: values?.nextServiceDueDate?.format('YYYY-MM-DD'), pucExpiryDate: values?.pucExpiryDate?.format('YYYY-MM-DD'), insuranceExpiryDate: values?.insuranceExpiryDate?.format('YYYY-MM-DD'), saleDate: values?.saleDate?.format('YYYY-MM-DD'), registrationNumber: registrationNumber };
         const onSuccess = (res) => {
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -129,20 +139,30 @@ const VechileDetailsMasterBase = (props) => {
         onFinishFailed,
         fetchList,
         typeData,
-
         userId,
         isDataLoaded,
-        formData: otfData,
+        formData: vehicleDetails?.vehicleDetails,
         isLoading,
         salesConsultantLov,
+        mnmCtcVehicleFlag,
+        setMnmCtcVehicleFlag,
+        onChange,
+        activeKey,
+        setactiveKey,
     };
 
     const viewProps = {
         typeData,
-        formData: otfData,
+        fetchList,
+        formData: vehicleDetails?.vehicleDetails,
         styles,
         isLoading,
         salesConsultantLov,
+        mnmCtcVehicleFlag,
+        setMnmCtcVehicleFlag,
+        onChange,
+        activeKey,
+        setactiveKey,
     };
 
     return (

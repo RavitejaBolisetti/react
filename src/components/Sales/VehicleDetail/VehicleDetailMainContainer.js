@@ -29,8 +29,9 @@ const VehicleDetailMainContainerMain = (props) => {
             case VEHICLE_DETAIL_SECTION.CUSTOMER_DETAILS.id: {
                 return <CustomerDetailsMaster {...myProps} />;
             }
+           
             default: {
-                return <>Coming Soon</>;
+                return <>Coming Soon...</>;
             }
         }
     };
