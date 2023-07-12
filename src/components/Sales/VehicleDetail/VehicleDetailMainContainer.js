@@ -13,6 +13,7 @@ import { CustomerDetailsMaster } from './CustomerDetails';
 import { SupportingDocumentMaster } from './SupportingDocument';
 import { ContactMaster } from './Contacts';
 import { EntitlementsAndSchemesMaster } from './EntitlementsAndSchemes';
+import { ComingSoonMaster } from './ComingSoon';
 import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'components/common/Common.module.css';
@@ -42,7 +43,7 @@ const VehicleDetailMainContainerMain = (props) => {
                 return <EntitlementsAndSchemesMaster {...myProps} />;
             }
             default: {
-                return <>Coming Soon...</>;
+                return <ComingSoonMaster {...myProps} />;
             }
         }
     };

@@ -231,7 +231,7 @@ export const VehicleDetailMasterBase = (props) => {
         console.log('🚀 ~ file: VehicleDetailMaster.js:231 ~ handleButtonClick ~ record:', record);
         form.resetFields();
         form.setFieldsValue(undefined);
-        setSelectedRecordId('MAKGF1F57A7192174')
+        setSelectedRecordId('MAKGF1F57A7192174');
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -408,7 +408,7 @@ export const VehicleDetailMasterBase = (props) => {
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={isLoading} {...tableProps} showAddButton={true} />
+                    <ListDataTable isLoading={isLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <VehicleDetailMainContainer {...containerProps} />

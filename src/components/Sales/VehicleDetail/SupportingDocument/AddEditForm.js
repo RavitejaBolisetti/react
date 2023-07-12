@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Select, Input, Upload, Button, Empty, Card, Space, Collapse } from 'antd';
+import { Row, Col, Form, Select, Input, Upload, Button, Empty, Divider, Space, Collapse } from 'antd';
 
 import { FiEye, FiTrash } from 'react-icons/fi';
 // import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -143,70 +143,71 @@ const AddEditForm = (props) => {
     };
 
     return (
-        <Card>
-            <Space style={{ display: 'flex' }} direction="vertical" size="middle" className={styles.accordianContainer}>
-                <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                    <Panel header="Supporting/Reference Documents" key="1">
-                        {/* <Form layout="vertical" autoComplete="off" form={uploadForm} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={handleUpload}> */}
-                        <Row gutter={16}>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <Form.Item label="Document Type" name="documentTypeCd" placeholder={preparePlaceholderSelect('document type')} validateTrigger={['handleUpload']}>
-                                    <Select className={styles.headerSelectField} loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps}>
-                                        {typeData?.map((item) => (
-                                            <Option key={item?.key} value={item?.key}>
-                                                {item?.value}
-                                            </Option>
-                                        ))}
-                                    </Select>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <Form.Item label="Document Name" name="documentTitle" validateTrigger={['handleUpload']}>
-                                    <Input placeholder={preparePlaceholderText('File Name')} allowClear />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={16}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                                    <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps}>
-                                        <div>
-                                            <img src={Svg} alt="" />
-                                        </div>
-                                        <Empty
-                                            description={
-                                                <>
-                                                    <span>
-                                                        Click or drop your file here to upload the signed and <br />
-                                                        scanned customer form.
-                                                    </span>
-                                                    <span>
-                                                        <br />
-                                                        File type should be png, jpg or pdf and max file size to be 5Mb
-                                                    </span>
-                                                </>
-                                            }
-                                        />
+        <Space style={{ display: 'flex' }} direction="vertical" size="middle" className={styles.accordianContainer}>
+            <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                <Panel header="Supporting/Reference Documents" key="1">
+                    {/* <Form layout="vertical" autoComplete="off" form={uploadForm} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={handleUpload}> */}
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                            <Form.Item label="Document Type" name="documentTypeCd" placeholder={preparePlaceholderSelect('document type')} validateTrigger={['handleUpload']}>
+                                <Select className={styles.headerSelectField} loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps}>
+                                    {typeData?.map((item) => (
+                                        <Option key={item?.key} value={item?.key}>
+                                            {item?.value}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                            <Form.Item label="Document Name" name="documentTitle" validateTrigger={['handleUpload']}>
+                                <Input placeholder={preparePlaceholderText('File Name')} allowClear />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                                <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps}>
+                                    <div>
+                                        <img src={Svg} alt="" />
+                                    </div>
+                                    <Empty
+                                        description={
+                                            <>
+                                                <span>
+                                                    Click or drop your file here to upload the signed and <br />
+                                                    scanned customer form.
+                                                </span>
+                                                <span>
+                                                    <br />
+                                                    File type should be png, jpg or pdf and max file size to be 5Mb
+                                                </span>
+                                            </>
+                                        }
+                                    />
 
-                                        <Button type="primary">Upload File</Button>
-                                    </Dragger>
-                                </div>
-                            </Col>
-                        </Row>
-                        {/* </Form> */}
-                        <ViewSupportingDocDetail {...viewProps} />
-                    </Panel>
-                </Collapse>
-                <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                    <Panel header="Technical Documents" key="2">
-                        <Row gutter={16}>
+                                    <Button type="primary">Upload File</Button>
+                                </Dragger>
+                            </div>
+                        </Col>
+                    </Row>
+                    {/* </Form> */}
+                    <ViewSupportingDocDetail {...viewProps} />
+                </Panel>
+            </Collapse>
+            <Collapse defaultActiveKey={['2']} bordered={false} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                <Panel header="Technical Documents" key="2">
+                    <Divider className={styles.marT20} />
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             Coming Soon
-                            {/* <ViewTechnicalDocDetail {...viewProps} /> */}
-                        </Row>
-                    </Panel>
-                </Collapse>
-            </Space>
-        </Card>
+                        </Col>
+                        {/* <ViewTechnicalDocDetail {...viewProps} /> */}
+                    </Row>
+                </Panel>
+            </Collapse>
+        </Space>
     );
 };
 
