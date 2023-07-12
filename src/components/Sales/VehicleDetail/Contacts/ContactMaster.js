@@ -93,7 +93,7 @@ const ContactMasterMain = (props) => {
     }, [userId, selectedRecordId]);
 
     useEffect(() => {
-        if (searchType === searchType?.VEHICLE_DETAIL_SECTION && selectedRecordId && vehicleContactData?.contact) {
+        if ( selectedRecordId && vehicleContactData?.contact) {
             setContactData(vehicleContactData?.contact || []);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
