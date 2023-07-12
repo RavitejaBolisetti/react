@@ -3,6 +3,16 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+
+ :global .ant-form-vertical .ant-form-item-label >label, 
+ :global .ant-col-24.ant-form-item-label >label, 
+ :global .ant-col-xl-24.ant-form-item-label >label {
+    color: #545454;
+    font-size: 14px;
+    line-height: 23px;
+    font-weight: 400;
+    margin-bottom: 6px;
+ }
 :global .ant-tree .ant-tree-switcher-leaf-line:before {
     border-inline-end: 1px dashed #d9d9d9;
 }
@@ -116,6 +126,7 @@
     border-radius: 4px;
     box-shadow: none;
     height: 36px;
+    padding-top: 2px;
 }
 
 :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
@@ -438,8 +449,8 @@
 }
 
 :global .ant-input {
-    /* height: 36px; */
-    padding: 5px 12px;
+    height: 36px;
+    padding: 4px 12px 5px;
     border-color: #b5b5b6;
     color: #0b0b0c;
     border-radius: 4px;
