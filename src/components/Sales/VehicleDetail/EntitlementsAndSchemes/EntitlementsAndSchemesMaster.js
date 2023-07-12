@@ -55,16 +55,15 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const EntitelmentMasterBase = (props) => {
+export const EntitlementsAndSchemesMasterBase = (props) => {
     const { form, fetchList, userId, isDataLoaded, entitelmentData, listShowLoading, showGlobalNotification, handleButtonClick, NEXT_ACTION } = props;
-    const { section, selectedOrderId, selectedOrder: { orderStatus = false } = {} } = props;
-    const selectedVinOrder = 'MAKGF1F57A7192174';
+    const { section, selectedRecordId, selectedOrder: { orderStatus = false } = {} } = props;
 
     const extraParams = [
         {
             key: 'vin',
             title: 'vin',
-            value: selectedVinOrder,
+            value: selectedRecordId,
             name: 'VIN ',
         },
     ];
@@ -118,4 +117,4 @@ export const EntitelmentMasterBase = (props) => {
     );
 };
 
-export const EntitelmentMaster = connect(mapStateToProps, mapDispatchToProps)(EntitelmentMasterBase);
+export const EntitlementsAndSchemesMaster = connect(mapStateToProps, mapDispatchToProps)(EntitlementsAndSchemesMasterBase);

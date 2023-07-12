@@ -6,10 +6,9 @@
 import React from 'react';
 import { Collapse, Space, Avatar, Typography } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
-const { Text, Title } = Typography;
+const { Title } = Typography;
 
 const expandIcon = ({ isActive }) =>
     isActive ? (
@@ -25,9 +24,9 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VechileDetailCard = (props) => {
-    const { selectedOrder, typeData } = props;
-    const fullName = selectedOrder?.customerName?.split(' ');
-    const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
+    const { selectedRecord, selectedRecordId } = props;
+    const fullName = selectedRecord?.customerName?.split(' ');
+    const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1]?.slice(0, 1) : '') : '';
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
@@ -37,11 +36,14 @@ const VechileDetailCard = (props) => {
                             <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
                                 <Title level={5} style={{ textTransform: 'capitalize' }}>
-                                    {selectedOrder?.customerName?.toLowerCase()}
+                                    {selectedRecord?.customerName?.toLowerCase()}
                                 </Title>
-                                <Text>
-                                    Reg No.: <span>{selectedOrder?.otfNumber}</span>
-                                </Text>
+                                <div>
+                                    VIN.: <span>{selectedRecordId}</span>
+                                </div>
+                                <div>
+                                    Reg No.: <span>{selectedRecord?.registrationNumber}</span>
+                                </div>
                             </div>
                         </Space>
                     </>
@@ -49,24 +51,20 @@ const VechileDetailCard = (props) => {
                 key={1}
             >
                 <p>
-                    Customer Name: <span>{selectedOrder && getCodeValue(typeData['CUST_TYPE'], selectedOrder?.customerType)}</span>
+                    Customer ID: <span>{selectedRecord?.customerCode}</span>
                 </p>
                 <p>
-                    Customer ID: <span>{selectedOrder && getCodeValue(typeData['CUST_TYPE'], selectedOrder?.customerType)}</span>
+                    Mobile No.: <span>{selectedRecord?.mobileNumber || 'NA'}</span>
                 </p>
                 <p>
-                    Mobile No.: <span>{selectedOrder?.mobileNumber || 'NA'}</span>
-                </p>
-
-                <p>
-                    Model: <span>{selectedOrder?.model || 'NA'}</span>
+                    Model: <span>{selectedRecord?.model || 'NA'}</span>
                 </p>
 
                 <p>
-                    Color: <span>{selectedOrder?.model || 'NA'}</span>
+                    Color: <span>{selectedRecord?.color || 'NA'}</span>
                 </p>
                 <p>
-                    MFG Warrenty: <span>Expired</span>
+                    MFG Warrenty: <span>{selectedRecord?.mfgWarranty || 'NA'}</span>
                 </p>
             </Panel>
         </Collapse>

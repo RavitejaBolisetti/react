@@ -4,9 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-
 import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
-import { Tag } from 'antd';
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = () => {
@@ -31,36 +29,42 @@ export const tableColumn = () => {
             width: '15',
             sorter: true,
         }),
+
         tblPrepareColumns({
             title: 'Entitlement/Scheme Doc Date',
             dataIndex: 'documentDate',
             width: '15',
             sorter: true,
         }),
+
         tblPrepareColumns({
             title: 'Entitlement/Scheme Booklet No',
             dataIndex: 'bookletNumber',
             width: '15',
             sorter: true,
         }),
+
         tblPrepareColumns({
             title: 'Validity Start Date',
             dataIndex: 'validityStartDate',
             width: '15',
             sorter: true,
         }),
+
         tblPrepareColumns({
             title: 'Validity End Date',
             dataIndex: 'validityEndDate',
             width: '15',
             sorter: true,
         }),
+
         tblPrepareColumns({
             title: 'Validity Start KM',
             dataIndex: 'validityStartKm',
             width: '15',
             sorter: true,
         }),
+
         tblPrepareColumns({
             title: 'Validity End KM',
             dataIndex: 'validityEndKm',

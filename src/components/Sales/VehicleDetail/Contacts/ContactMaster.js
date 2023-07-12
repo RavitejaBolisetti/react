@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Space, Typography, Button, Empty, Card, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -13,15 +13,15 @@ import { connect } from 'react-redux';
 import { vehicleContactDataActions } from 'store/actions/data/vehicle/contacts';
 import { showGlobalNotification } from 'store/actions/notification';
 
+import { CustomerFormButton } from 'components/common/CustomerMaster/CustomerFormButton/CustomerFormButton';
 import AddEditForm from './AddEditForm';
+import ViewList from './ViewList';
 
-import { CustomerFormButton } from '../../../common/CustomerMaster/CustomerFormButton/CustomerFormButton';
 import { CardSkeleton } from 'components/common/Skeleton';
 import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 import { LANGUAGE_EN } from 'language/en';
 
 import styles from 'components/common/Common.module.css';
-import ViewList from './ViewList';
 
 const { Text } = Typography;
 
@@ -63,20 +63,16 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ContactMasterMain = (props) => {
-    const { form, section, userId, searchType, customerData, vehicleContactData, listShowLoading, showGlobalNotification, typeData } = props;
-    const { isContactDataLoading, selectedCustomer, fetchList, saveData, resetData } = props;
-    const { buttonData, setButtonData, formActionType, handleButtonClick, setSelectedCustomer, setSelectedCustomerId, NEXT_ACTION } = props;
+    const { form, section, userId, searchType, vehicleContactData, listShowLoading, showGlobalNotification, typeData } = props;
+    const { isContactDataLoading, selectedRecordId, fetchList, saveData } = props;
+    const { buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
-    const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
-    const [continueWithOldMobNo, setContinueWithOldMobNo] = useState(false);
     const [isAdding, setIsAdding] = useState(false);
-    const [timeData, setTimeData] = useState([]);
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
@@ -84,22 +80,20 @@ const ContactMasterMain = (props) => {
         {
             key: 'vin',
             title: 'vin',
-            value: selectedCustomer,
+            value: selectedRecordId,
             name: 'vin',
         },
     ];
 
     useEffect(() => {
-        if (selectedCustomer && userId) {
-            if (searchType === searchType?.VEHICLE_DETAIL_SECTION) {
-                fetchList({ setIsLoading: listShowLoading, extraParams });
-            }
+        if (selectedRecordId && userId) {
+            fetchList({ setIsLoading: listShowLoading, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCustomer]);
+    }, [userId, selectedRecordId]);
 
     useEffect(() => {
-        if (searchType === searchType?.VEHICLE_DETAIL_SECTION && selectedCustomer && vehicleContactData?.contact) {
+        if (searchType === searchType?.VEHICLE_DETAIL_SECTION && selectedRecordId && vehicleContactData?.contact) {
             setContactData(vehicleContactData?.contact || []);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -171,8 +165,6 @@ const ContactMasterMain = (props) => {
         typeData,
         setButtonData,
         handleFormValueChange,
-        setContinueWithOldMobNo,
-
         searchType,
         isAdding,
         setIsAdding,
@@ -180,8 +172,7 @@ const ContactMasterMain = (props) => {
     };
 
     const onFinish = () => {
-        let data = { vehicleIdentificationNumber: selectedCustomer, contact: contactData?.map((el) => ({ ...el, id: 'b887d945-a6cf-4eac-ad2f-5552d6aaeded', preferredContactTimeFrom: '02:30', preferredContactTimeTo: '03:30' })) };
-
+        let data = { vehicleIdentificationNumber: selectedRecordId, contact: contactData?.map((el) => ({ ...el, id: '', preferredContactTimeFrom: '02:30', preferredContactTimeTo: '03:30' })) };
         const onSuccess = (res) => {
             contactform.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
