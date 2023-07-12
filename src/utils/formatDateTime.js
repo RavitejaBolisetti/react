@@ -25,3 +25,5 @@ export const covertCalenderDateToDate = (dateToConvert = moment(), defaultFormat
 
 export const formatDate = (dateToFormat, converToFormat = 'YYYY-MM-DD') => (dateToFormat ? dateToFormat?.format(converToFormat) : null);
 export const formatDateToCalenderDate = (dateToFormat, converToFormat = 'YYYY-MM-DD') => (dateToFormat ? dayjs(dateToFormat, converToFormat) : null);
+
+export const formatTime = (dateToFormat, converToFormat = 'HH:mm') => (dateToFormat ? dayjs(dateToFormat, converToFormat) : null);

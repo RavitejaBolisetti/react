@@ -53,8 +53,10 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchViewDocument: documentViewDataActions.fetchList,
+            resetViewData: documentViewDataActions.reset,
             viewListShowLoading: documentViewDataActions.listShowLoading,
             fetchList: supportingDocumentDataActions.fetchList,
+            resetData: supportingDocumentDataActions.reset,
             saveData: supportingDocumentDataActions.saveData,
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
             downloadFile: supportingDocumentDataActions.downloadFile,
@@ -67,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupportingDocumentBase = (props) => {
-    const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form } = props;
+    const { isViewDataLoaded, resetData, resetViewData, isDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form } = props;
 
     const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, supportingData, fetchViewDocument } = props;
     const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
@@ -92,14 +94,24 @@ const SupportingDocumentBase = (props) => {
     ];
 
     useEffect(() => {
-        if (!formActionType?.addMode && selectedCustomerId) {
+        if (!formActionType?.addMode && selectedCustomerId && !isDataLoaded) {
+            resetData();
+            resetViewData();
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCustomerId]);
+    }, [userId, selectedCustomerId, isDataLoaded]);
+    
+    useEffect(() => {
+        return () => {
+            resetData();
+            resetViewData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
-        if (viewDocument && isViewDataLoaded) {
+        if (viewDocument && isViewDataLoaded && isDataLoaded) {
             let a = document.createElement('a');
             a.href = `data:image/png;base64,${viewDocument?.base64}`;
             a.download = viewDocument?.fileName;

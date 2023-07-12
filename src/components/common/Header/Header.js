@@ -87,8 +87,8 @@ const HeaderMain = (props) => {
     const [confirms, setConfirm] = useState(false);
 
     const { firstName = '', lastName = '', dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
-    const fullName = firstName.concat(lastName ? ' ' + lastName : '');
-    const userAvatar = firstName.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
+    const fullName = firstName?.concat(lastName ? ' ' + lastName : '');
+    const userAvatar = firstName?.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
 
     useEffect(() => {
         if (confirms || isChangePasswordModalOpen) {
@@ -234,8 +234,8 @@ const HeaderMain = (props) => {
         setCollapsed(!collapsed);
     };
 
-    const onSearch = (value) => console.log(value);
-    const isDashboard = pagePath === routing.ROUTING_DASHBOARD;
+    // const onSearch = (value) => console.log(value);
+    const isDashboard = false; //pagePath === routing.ROUTING_DASHBOARD;
 
     return (
         <>
@@ -272,13 +272,13 @@ const HeaderMain = (props) => {
                                     </Space>
                                 </div>
                             </Col>
-                            {pagePath === routing.ROUTING_DASHBOARD && (
+                            {/* {pagePath === routing.ROUTING_DASHBOARD && (
                                 <Col xs={0} sm={0} md={7} lg={7} xl={7} xxl={7}>
                                     <div className={styles.headerRight} style={{ width: '100%' }}>
                                         <Search data-testid="search" allowClear placeholder="Search by Doc ID" onSearch={onSearch} />
                                     </div>
                                 </Col>
-                            )}
+                            )} */}
                             <Col xs={10} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                 <div className={styles.headerRight}>
                                     <div className={styles.navbarNav}>

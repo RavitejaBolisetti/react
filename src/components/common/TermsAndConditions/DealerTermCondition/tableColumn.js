@@ -35,13 +35,13 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
         tblPrepareColumns({
             title: 'Effective From',
             dataIndex: 'effectiveFrom',
-            width: '15%',
+            width: '14%',
             render: (text) => convertDate(text),
         }),
         tblPrepareColumns({
             title: 'Effective To',
             dataIndex: 'effectiveTo',
-            width: '15%',
+            width: '14%',
             render: (text) => convertDate(text),
         }),
         // tblPrepareColumns({
@@ -71,7 +71,7 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
                 );
             },
         }),
-        tblActionColumn({ styles, handleButtonClick, width: '8%' })
+        tblActionColumn({ styles, handleButtonClick, width: '10%' })
     );
 
     return tableColumn;

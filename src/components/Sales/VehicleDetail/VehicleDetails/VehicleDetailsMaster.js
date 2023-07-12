@@ -33,10 +33,10 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         typeData,
-        isDataLoaded:true,
+        isDataLoaded: true,
 
-        otfData:[],
-        isLoading:false,
+        otfData: [],
+        isLoading: false,
         moduleTitle,
     };
     return returnValue;
@@ -59,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 const VechileDetailsMasterBase = (props) => {
     const { typeData, listConsultantShowLoading } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange,  salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
+    const { form, selectedOrderId, formActionType, handleFormValueChange, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });

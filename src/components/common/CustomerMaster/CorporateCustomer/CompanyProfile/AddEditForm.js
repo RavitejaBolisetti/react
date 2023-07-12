@@ -337,6 +337,26 @@ const AddEditFormMain = (props) => {
                                                     </Form.Item>
                                                 </>
                                             )}
+                                            {/* <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                                                <Dragger customRequest={handleUpload} {...uploadProps}>
+                                                    <div>
+                                                        <img src={Svg} alt="" />
+                                                    </div>
+                                                    <Empty
+                                                        description={
+                                                            <>
+                                                                <span>Upload supporting documents</span>
+                                                                <span>
+                                                                    <br />
+                                                                    File type should be .png and .jpg and max file size to be 5MB
+                                                                </span>
+                                                            </>
+                                                        }
+                                                    />
+
+                                                    <Button type="primary">Upload File</Button>
+                                                </Dragger>
+                                            </div> */}
                                         </Col>
                                     </Row>
                                 </div>

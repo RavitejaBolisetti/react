@@ -32,13 +32,13 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Effective From',
             dataIndex: 'effectivefrom',
-            width: '13%',
+            width: '12%',
             render: (text) => convertDate(text),
         }),
         tblPrepareColumns({
             title: 'Effective To',
             dataIndex: 'effectiveto',
-            width: '13%',
+            width: '12%',
             render: (text) => convertDate(text),
         }),
 
@@ -55,7 +55,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '2%',
         }),
 
-        tblActionColumn({ styles, handleButtonClick, width: '8%' })
+        tblActionColumn({ styles, handleButtonClick, width: '10%' })
     );
 
     return tableColumn;

@@ -44,6 +44,7 @@ export const BASE_URL_ROLE = BASE_URL_DEALER_MANPOWER + '/roles';
 export const BASE_URL_CUSTOMER_MASTER = BASE_URL + 'customers';
 export const BASE_URL_PARTY_MASTER = BASE_URL_CUSTOMER_MASTER + '/partymaster';
 export const BASE_URL_LESSOR_COMPANY_MASTER = BASE_URL_CUSTOMER_MASTER + '/lessorcompany';
+export const BASE_URL_LESSOR_COMPANY_CREATION = BASE_URL_CUSTOMER_MASTER + '/lessorcustomer';
 export const BASE_URL_CUSTOMER_MASTER_LIST = BASE_URL + 'customers/search';
 export const BASE_URL_SUPPORTING_DOCUMENT = BASE_URL_CUSTOMER_MASTER + '/document';
 
@@ -155,7 +156,11 @@ export const BASE_URL_DOCUMENT_VIEW_URL = BASE_URL + 'common/document/view';
 
 export const BASE_URL_SALES_CONSULTANT = BASE_URL + 'users/dealer/employees/lov';
 export const BASE_URL_OTF_CUSTOMER = BASE_URL + 'otf/customerdetails';
+
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
+export const BASE_URL_VEHICLE_SEARCH = BASE_URL_VEHICLE + 'search';
 export const BASE_URL_VEHICLE_VARIANT = BASE_URL_VEHICLE + 'variant';
 export const BASE_URL_VEHICLE_MAKE = BASE_URL_VEHICLE + 'make';
 export const BASE_URL_VEHICLE_MODEL = BASE_URL_VEHICLE + 'model';
+export const BASE_URL_VEHICLE_CONTACTS = BASE_URL_VEHICLE + 'contacts';
+export const BASE_URL_VEHICLE_ENTITELMENT = BASE_URL_VEHICLE + 'schemes';
