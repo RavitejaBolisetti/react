@@ -21,7 +21,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { disableFutureDate } from 'utils/disableDate';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { AggregatesForm } from './aggregateForm';
-import { aggregatesCoulmn } from './tableCoulmn';
+import { tableColumn } from './tableCoulmn';
 
 import styles from 'components/common/Common.module.css';
 // import ViewImageUtils from '../../Common/ViewImageUtils';
@@ -225,6 +225,9 @@ const AddEditFormMain = (props) => {
     };
 
     const disabledProps = { disabled: isReadOnly };
+    const handleEdit = (record) => {
+        console.log('record', record);
+    };
     return (
         <>
             <Row gutter={20}>
@@ -340,7 +343,7 @@ const AddEditFormMain = (props) => {
                                 key="3"
                             >
                                 {isReadOnly && <AggregatesForm {...OptionServicesFormProps} />}
-                                <DataTable tableColumn={aggregatesCoulmn} tableData={optionsServiceModified} removePagination={true} />
+                                <DataTable tableColumn={tableColumn(handleEdit)} tableData={optionsServiceModified} removePagination={true} />
                             </Panel>
                         </Collapse>
                     </Space>

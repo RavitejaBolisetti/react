@@ -12,6 +12,7 @@ import { aggregatesCoulmn } from './tableCoulmn';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { tableColumn } from './tableCoulmn';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 
@@ -87,7 +88,7 @@ const ViewDetailMain = (props) => {
                 </Collapse>
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
                     <Panel header="Aggregates" key="3">
-                        <DataTable tableColumn={aggregatesCoulmn} tableData={formData['optionalServices']} removePagination={true} />
+                        <DataTable tableColumn={tableColumn()} tableData={formData['optionalServices']} removePagination={true} />
                     </Panel>
                 </Collapse>
             </Space>

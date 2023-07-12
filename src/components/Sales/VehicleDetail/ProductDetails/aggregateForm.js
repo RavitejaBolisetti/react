@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Button } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
 const AggregatesFormMain = (props) => {
     const { typeData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, showGlobalNotification, formData, optionForm } = props;
@@ -60,15 +60,40 @@ const AggregatesFormMain = (props) => {
                     return;
                 }
 
-                const data = { ...values, id: '' };
-                setoptionsServiceModified([data, ...optionsServiceModified]);
+                const data = { ...values, serviceName: values?.serviceNameValue, make: values?.makeValue, id: '' };
+                setoptionsServiceModified([data, ...optionsServiceModified]); //Adding data to table
+
                 setoptionsServicesMapping([...optionsServicesMapping, data]);
                 optionForm.resetFields();
                 handleFormValueChange();
             })
             .catch((err) => {});
     };
-    const MakefieldNames = { label: '', value: '' };
+    const MakefieldNames = { label: 'label', value: 'value' };
+    const serviceNames = { label: 'label', value: 'value' };
+    const handleSelect = (value, selectObj, labelName) => {
+        if (!value) return;
+        switch (labelName) {
+            case 'Item': {
+                console.log('Item', value, selectObj, labelName);
+                optionForm.setFieldsValue({
+                    serviceNameValue: selectObj?.label,
+                });
+                break;
+            }
+            case 'make': {
+                console.log('make', value, selectObj, labelName);
+                optionForm.setFieldsValue({
+                    makeValue: selectObj?.label,
+                });
+                break;
+            }
+            default: {
+                console.log('Default', value, selectObj, labelName);
+                break;
+            }
+        }
+    };
     return (
         <>
             <Row gutter={20}>
@@ -77,18 +102,24 @@ const AggregatesFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                                 <Form.Item name="serviceName" label="Item" rules={[validateRequiredSelectField('Item')]}>
-                                    <Select placeholder={preparePlaceholderSelect('Srl no')} options={serviceNameOptions} />
+                                    <Select onChange={(codeValue, serviceObject) => handleSelect(codeValue, serviceObject, 'Item')} allowClear placeholder={preparePlaceholderSelect('item')} options={serviceNameOptions} fieldNames={serviceNames} />
+                                    {/* placeholder="Select item" allowClear options={typeData['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }}  */}
+                                </Form.Item>
+                                <Form.Item name="serviceNameValue" hidden>
                                     {/* placeholder="Select item" allowClear options={typeData['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }}  */}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Make" name="make" rules={[validateRequiredInputField('Make')]}>
-                                    <Select placeholder={preparePlaceholderSelect('Srl no')} fieldNames={MakefieldNames} options={MakeOptions} />
+                                    <Select onChange={(codeValue, makeObject) => handleSelect(codeValue, makeObject, 'make')} allowClear placeholder={preparePlaceholderSelect('Make')} fieldNames={MakefieldNames} options={MakeOptions} />
                                     {/* placeholder="Select make" allowClear options={typeData['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }} */}
+                                </Form.Item>
+                                <Form.Item name="makeValue" hidden>
+                                    {/* placeholder="Select item" allowClear options={typeData['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }}  */}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Serial No." name="amount" rules={[validateRequiredInputField('Srl no')]}>
+                                <Form.Item label="Serial No." name="amount" rules={[validateRequiredInputField('Srl no'), validationFieldLetterAndNumber('Srl no')]}>
                                     <Input maxLength={50} placeholder={preparePlaceholderText('Srl no')} />
                                 </Form.Item>
                             </Col>
