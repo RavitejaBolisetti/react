@@ -2539,9 +2539,9 @@
     padding-right: 8px !important;
 }
 
-.viewDrawerContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item:last-child {
+/* .viewDrawerContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item:last-child {
     padding-left: 16px !important;
-}
+} */
 
 .viewDrawerContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item .ant-descriptions-item-container .ant-descriptions-item-content {
     text-overflow: ellipsis;
