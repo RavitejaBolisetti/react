@@ -156,4 +156,16 @@ export const PARAM_MASTER = {
         id: 'MONTH',
         title: 'Months of year',
     },
+    REFERRAL_SEARCH: {
+        id: 'REFERRAL_SEARCH',
+        title: 'REFERRAL_SEARCH',
+    },
+    FILE_DOWNLOAD_TMPLT: {
+        id: 'FILE_DOWNLOAD_TMPLT',
+        title: 'Template download',
+    },
+    LSRCUSTTMPLT: {
+        id: 'LSRCUSTTMPLT',
+        title: 'Lessor creation template download',
+    },
 };

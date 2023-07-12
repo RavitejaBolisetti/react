@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            LessorCompanyMaster: { isLoaded: isDataLoaded = false, isLoading, detailData },
+            LessorCompanyMaster: { isLoaded: isDataLoaded = false, isLoading, data },
         },
     } = state;
 
@@ -35,7 +35,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        detailData,
+        data: data.customerLessorCompanyMasterResponses,
         isLoading,
         moduleTitle,
     };
@@ -46,7 +46,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchDetail: lessorCompanyMasterDataActions.fetchDetail,
+            fetchList: lessorCompanyMasterDataActions.fetchList,
             saveData: lessorCompanyMasterDataActions.saveData,
             listShowLoading: lessorCompanyMasterDataActions.listShowLoading,
             showGlobalNotification,
@@ -56,12 +56,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListLessorCompanyMasterBase = (props) => {
-    const { detailData, saveData, fetchDetail, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [searchData, setSearchdata] = useState(detailData);
+    const [searchData, setSearchdata] = useState(data);
     const [refershData, setRefershData] = useState(false);
 
     const [formData, setFormData] = useState([]);
@@ -86,41 +86,62 @@ export const ListLessorCompanyMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
+    const extraParams = [
+        {
+            value: '',
+            key: 'status',
+        },
+        {
+            key: 'pageSize',
+            title: 'Value',
+            value: 100,
+            canRemove: true,
+            filter: false,
+        },
+        {
+            key: 'pageNumber',
+            title: 'Value',
+            value: 1,
+            canRemove: true,
+            filter: false,
+        },
+    ];
+
     useEffect(() => {
         if (userId && !isDataLoaded) {
-            fetchDetail({ setIsLoading: listShowLoading, userId, customerId: '673a6f88-6a5f-4e0b-9208-7b09819a5398', onSuccessAction, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {
-            fetchDetail({ setIsLoading: listShowLoading, userId, customerId: '673a6f88-6a5f-4e0b-9208-7b09819a5398', onSuccessAction, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
 
     useEffect(() => {
-        if (detailData?.length) {
-            setSearchdata(detailData);
+        if (data?.length) {
+            setSearchdata(data);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [detailData]);
+    }, [data]);
 
     useEffect(() => {
-        if (detailData?.length > 0 && userId) {
+        if (data?.length > 0 && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = detailData?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyDescription) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.companyName) : true));
                 setSearchdata(filterDataItem);
                 setShowDataLoading(false);
             } else {
-                setSearchdata(detailData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data);
                 setShowDataLoading(false);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, detailData, userId]);
+    }, [filterString, isDataLoaded, data, userId]);
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -157,14 +178,14 @@ export const ListLessorCompanyMasterBase = (props) => {
     const onFinish = (values) => {
         const recordId = formData?.id || '';
 
-        let data = { customerId: '673a6f88-6a5f-4e0b-9208-7b09819a5398', customerLessorCompanyDetails: [{ ...values, id: recordId }] };
+        let data = { ...values, id: recordId };
 
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchDetail({ setIsLoading: listShowLoading, userId, onSuccessAction, customerId: '673a6f88-6a5f-4e0b-9208-7b09819a5398' });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
 
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);

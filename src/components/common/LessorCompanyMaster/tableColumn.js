@@ -18,7 +18,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
 
         tblPrepareColumns({
             title: 'Company Name',
-            dataIndex: 'companyDescription',
+            dataIndex: 'companyName',
             width: '40%',
         }),
 

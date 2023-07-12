@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Application Criticality Group';
+    const moduleTitle = 'Application Criticality Group Details';
 
     let returnValue = {
         collapsed,
@@ -268,7 +268,7 @@ export const CriticalityGroupMain = (props) => {
         }
     };
 
-    const title = 'Criticality Group Name';
+    const title = 'Criticality Group List';
 
     const advanceFilterResultProps = {
         advanceFilter: false,
