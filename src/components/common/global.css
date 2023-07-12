@@ -3,6 +3,8 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+
+/* AntD Buttons Design Start*/
 :global .ant-btn {
     line-height: 22px;
     height: auto;
@@ -11,6 +13,10 @@
 
 :global .ant-btn-default {
     background-color: transparent;
+    box-shadow: none;
+}
+
+:global .ant-btn-primary {
     box-shadow: none;
 }
 
@@ -33,6 +39,19 @@
     color: #ffffff !important;
 }
 
+:global .ant-btn:not(.ant-btn-icon-only)>.ant-btn-icon.ant-btn-loading-icon,
+:global .ant-btn:not(.ant-btn-icon-only)>.ant-btn-icon:not(:last-child) {
+    margin-inline-end: 6px;
+}
+
+:global .ant-btn:not(.ant-btn-icon-only)>.ant-btn-icon.ant-btn-loading-icon .anticon,
+:global .ant-btn:not(.ant-btn-icon-only)>.ant-btn-icon:not(:last-child) .anticon {
+    color: #FFFFFF;
+}
+
+/* AntD Buttons Design End*/
+
+/* AntD Form Items & Input/Select Design Start*/
 :global .ant-input,
 :global .ant-input-affix-wrapper {
     height: auto;
