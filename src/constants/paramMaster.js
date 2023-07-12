@@ -160,4 +160,16 @@ export const PARAM_MASTER = {
         id: 'TRNSFER_REASON',
         title: 'TRNSFER_REASON',
     },
+    REFERRAL_SEARCH: {
+        id: 'REFERRAL_SEARCH',
+        title: 'REFERRAL_SEARCH',
+    },
+    FILE_DOWNLOAD_TMPLT: {
+        id: 'FILE_DOWNLOAD_TMPLT',
+        title: 'Template download',
+    },
+    LSRCUSTTMPLT: {
+        id: 'LSRCUSTTMPLT',
+        title: 'Lessor creation template download',
+    },
 };

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -17,7 +17,7 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, listShowLoading, userId, dealerParentData, dealerLovData } = props;
-    const { isVisible, buttonData, setButtonData, handleButtonClick, pincodeData, fetchPincodeDetail, isPinCodeLoading, forceUpdate, pinCodeShowLoading } = props;
+    const { showGlobalNotification, isVisible, buttonData, setButtonData, handleButtonClick, pincodeData, fetchPincodeDetail, isPinCodeLoading, forceUpdate, pinCodeShowLoading } = props;
 
     const [options, setOptions] = useState(false);
 
@@ -68,39 +68,43 @@ const AddEditFormMain = (props) => {
 
     const handleOnSelect = (key) => {
         const selectedPinCode = pincodeData?.find((i) => i.id === key);
-        if (selectedPinCode) {
-            form.setFieldsValue({
-                pinCode: selectedPinCode?.pinCode,
+        form.setFieldsValue({
+            pinCode: selectedPinCode?.pinCode,
 
-                stateCode: selectedPinCode?.stateCode,
-                cityCode: selectedPinCode?.cityCode,
-                tehsilCode: selectedPinCode?.tehsilCode,
-                districtCode: selectedPinCode?.districtCode,
+            stateCode: selectedPinCode?.stateCode,
+            cityCode: selectedPinCode?.cityCode,
+            tehsilCode: selectedPinCode?.tehsilCode,
+            districtCode: selectedPinCode?.districtCode,
 
-                stateName: selectedPinCode?.stateName,
-                cityName: selectedPinCode?.cityName,
-                tehsilName: selectedPinCode?.tehsilName,
-                districtName: selectedPinCode?.districtName,
-            });
-            forceUpdate();
-        }
+            stateName: selectedPinCode?.stateName,
+            cityName: selectedPinCode?.cityName,
+            tehsilName: selectedPinCode?.tehsilName,
+            districtName: selectedPinCode?.districtName,
+        });
+        forceUpdate();
     };
 
     const handleOnSearch = (value) => {
+        const pattern = /^\d{6}(?:\s*,\s*\d{6})*$/;
         if (!(typeof options === 'undefined')) {
             return;
         }
         setOptions();
-        if (value.length <= 5) {
-            form.validateFields(['pinCode']);
-        } else if (value.length > 5) {
-            const extraParams = [
-                {
-                    key: 'pincode',
-                    value: value,
-                },
-            ];
-            fetchPincodeDetail({ setIsLoading: pinCodeShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        if (pattern.test(value)) {
+            if (value.length <= 5) {
+                form.validateFields(['pinCode']);
+            } else if (value.length > 5) {
+                const extraParams = [
+                    {
+                        key: 'pincode',
+                        value: value,
+                    },
+                ];
+                fetchPincodeDetail({ setIsLoading: pinCodeShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            }
+        } else {
+            showGlobalNotification({ message: 'Please enter 6 digit valid pincode' });
+            return false;
         }
     };
 
@@ -206,8 +210,8 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Correct Pin Code'), validatePincodeField('Pin Code')]}>
-                                <AutoComplete className={styles.searchField} options={options} onSelect={handleOnSelect} onFocus={handleOnfocus}>
+                            <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validatePincodeField('Pin Code'), validatePincodeField('Pin Code')]}>
+                                <AutoComplete className={styles.searchField} options={options} onSelect={handleOnSelect} maxLength={6} onFocus={handleOnfocus}>
                                     <Input.Search type="number" onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} allowClear />
                                 </AutoComplete>
                             </Form.Item>

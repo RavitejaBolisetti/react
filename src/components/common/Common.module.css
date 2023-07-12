@@ -10,9 +10,11 @@
     align-items: center;
     justify-content: center;
 }
+
 .marT5 {
     margin-top: 5px;
 }
+
 .marT20 {
     margin-top: 20px !important;
 }
@@ -125,7 +127,7 @@
 .contentHeaderBackground {
     background-color: #f2f2f2;
     border: 1px solid #e6e6e6;
-    padding: 8px 20px !important;
+    padding: 10px 20px !important;
     margin-bottom: 20px;
     border-radius: 4px !important;
     font-weight: 500;
@@ -752,6 +754,26 @@
     align-items: center;
 }
 
+.accessInfo {
+    margin-bottom: 20px;
+}
+
+.accessInfo .headText {
+    font-weight: 400 !important;
+    font-size: 14px !important;
+    line-height: 23px !important;
+    color: #0b0b0c !important;
+    margin-right: 5px !important;
+}
+
+.accessInfo .subSection {
+    font-weight: 400 !important;
+    font-size: 12px !important;
+    line-height: 22px !important;
+    color: #858585 !important;
+    margin-right: 5px !important;
+}
+
 /* .viewCardSize :global .ant-card-body .ant-space .ant-space-item p,
  .viewCardSize :global .ant-card-body .ant-space .ant-space-item span {
      font-weight: 400;
@@ -865,11 +887,11 @@
     box-shadow: none !important;
 }
 
-.headerSearchField :global .anticon svg {
+/* .headerSearchField :global .anticon svg {
     width: 1.25em;
     height: 1.25em;
     margin-top: 4px;
-}
+} */
 
 .headerSelectField {
     vertical-align: middle;
@@ -1015,6 +1037,15 @@
 .hierarchyRightContaners {
     border-radius: 4px 4px 0px 0px;
     border: none;
+}
+
+.drwaerDetailsView {
+    background: #F2F2F2;
+    border: 1px solid #E6E6E6;
+    padding: 12px 16px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
 }
 
 .hierarchyRightContaner {
@@ -1351,7 +1382,7 @@
     display: flex;
     align-items: center;
     flex-direction: row-reverse;
-    margin-bottom: -2px;
+    /* margin-bottom: -2px; */
 }
 
 .advanceFilterTop .advanceFilterTitle {
@@ -1426,8 +1457,8 @@
 
 .timingCardItem {
     margin: 10px 0px;
-    background-color: #F2F2F2;
-    border: 1px solid #E6E6E6;
+    background-color: #f2f2f2;
+    border: 1px solid #e6e6e6;
     border-radius: 4px;
     padding: 12px 16px;
 }
@@ -1474,7 +1505,7 @@
 
 .masterListSearchForm :global .ant-form-item .ant-form-item-explain-error {
     margin-bottom: -18px;
-    margin-top: -2px;
+    margin-top: -3px;
 }
 
 .drawerBodyLeft {
@@ -1727,7 +1758,7 @@
 .drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-affix-wrapper {
     height: 36px !important;
     padding: 5px 12px;
-    border: 1px solid #b5b5b6;
+    border: 1px solid #b5b5b6 !important;
     border-right: none;
     border-start-start-radius: 4px;
     border-end-start-radius: 4px;
@@ -1735,7 +1766,7 @@
 
 .drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-affix-wrapper:hover {
     border-color: #0b0b0c !important;
-    border-right: none;
+    border-right: none !important;
     box-shadow: none;
 }
 
@@ -1761,10 +1792,10 @@
     border-end-end-radius: 4px;
 }
 
-.drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-affix-wrapper-focused+.ant-input-group-addon {
+/* .drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-affix-wrapper-focused+.ant-input-group-addon {
     border: 1px solid #0b0b0c;
     border-left: none;
-}
+} */
 
 .drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-group-addon .ant-input-search-button {
     background: #ffffff;
@@ -1919,7 +1950,7 @@
 .drawerBodyRight :global .ant-card .ant-form-item .ant-form-item-control-input .ant-input-affix-wrapper:focus,
 .drawerBodyRight :global .ant-card .ant-form-item .ant-form-item-control-input .ant-input-affix-wrapper-focused {
     border: 1px solid #0b0b0c;
-    border-right: none;
+    border-right: none !important;
     box-shadow: none;
 }
 
@@ -2499,6 +2530,24 @@
     border-spacing: 0;
 }
 
+.viewDrawerContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item:first-child {
+    padding-right: 16px !important;
+}
+
+.viewDrawerContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item:nth-child(2) {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+}
+
+.viewDrawerContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item:last-child {
+    padding-left: 16px !important;
+}
+
+.viewDrawerContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item .ant-descriptions-item-container .ant-descriptions-item-content {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 .viewDrawerContainer :global .ant-descriptions .ant-descriptions-view table tbody tr th {
     padding: 0 !important;
 }
@@ -2775,7 +2824,7 @@
 }
 
 .drawerBodyRight .uploadContainer :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 10px 20px;
     background: #e6e6e6;
     border: 1px solid #b5b5b6;
@@ -2834,7 +2883,7 @@
 }
 
 .drawerBodyRight :global .ant-result-success .ant-result-icon>.anticon-check-circle {
-    border: 47px solid #EEFCD2;
+    border: 47px solid #eefcd2;
     border-radius: 100px;
 }
 
@@ -2897,11 +2946,33 @@
 
 li.ant-timeline-item.active .ant-timeline-item-content p {
     background-color: rgb(255, 62, 91) !important;
-    font-size: 30px !important
+    font-size: 30px !important;
 }
 
 .accordianIconWithText {
     font-size: 16px !important;
+}
+
+
+.inputWrapper :global .ant-btn-default {
+    padding: 5px 0;
+}
+
+.inputWrapper :global .ant-input-affix-wrapper {
+    padding: 5px 6px 5px 0;
+    border-color: #B5B5B6;
+}
+
+.supportingDocument :global .ant-input-affix-wrapper {
+    padding: 5px 6px;
+    border-color: #B5B5B6;
+    height: 36px;
+}
+
+.supportingDocument :global .ant-input-affix-wrapper-focused {
+    padding: 5px 6px;
+    border: 1px solid #0B0B0C !important;
+    border-right: 1px solid !important;
 }
 
 @media (max-width: 768px) {

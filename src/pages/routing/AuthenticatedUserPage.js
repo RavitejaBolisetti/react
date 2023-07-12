@@ -36,6 +36,7 @@ import {
     TermConditionDealerMasterPage,
     TermConditionManufacturerMasterPage,
     OtfReportsPage,
+    LessorCompanyCreationPage,
 } from 'pages/common';
 
 import { OTFMasterPage, VehicleDetailMasterPage } from 'pages/Sales';
@@ -87,6 +88,7 @@ export const AuthenticatedUserPage = () => {
 
             <Route path={routing.ROUTING_COMMON_PARTY_MASTER} element={<PartyMasterPage />} />
             <Route path={routing.ROUTING_COMMON_LESSOR_COMPANY_MASTER} element={<LessorCompanyMasterPage />} />
+            <Route path={routing.ROUTING_COMMON_LESSOR_COMPANY_CREATION} element={<LessorCompanyCreationPage />} />
             <Route path={routing.ROUTING_USER_PROFILE} element={<ProfilePage />} exact />
             <Route path={routing.ROUTING_COMMON_CUSTOMER_MASTER} element={<CustomerMasterPage />} />
             <Route path={routing.ROUTING_COMMON_TERM_CONDITION_DEALER} element={<TermConditionDealerMasterPage />} />
