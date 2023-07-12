@@ -14,7 +14,7 @@ import { expandIconWithText } from 'utils/accordianExpandIcon';
 const { Panel } = Collapse;
 
 const AddEditFormBase = (props) => {
-    const { form, formData, setSameAsBookingCustomer } = props;
+    const { form, formData, sameAsBookingCustomer, setSameAsBookingCustomer } = props;
     const { typeData, activeKey, setActiveKey } = props;
 
     useEffect(() => {
@@ -45,20 +45,21 @@ const AddEditFormBase = (props) => {
         }
     };
 
-    const bilingCustomerProps = {
-        ...props,
-        AutoComplete,
-        typeData,
-        formData: formData?.billingCustomer,
-        formType: 'billingCustomer',
-    };
-
     const bookingCustomerProps = {
         ...props,
         AutoComplete,
         typeData,
         formData: formData?.bookingCustomer,
         formType: 'bookingCustomer',
+    };
+
+    const bilingCustomerProps = {
+        ...props,
+        AutoComplete,
+        typeData,
+        formData: formData?.billingCustomer,
+        formType: 'billingCustomer',
+        disabledProps: { disabled: sameAsBookingCustomer },
     };
 
     const handleOnChange = (vall) => {
@@ -75,12 +76,12 @@ const AddEditFormBase = (props) => {
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                    <Collapse expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                    <Collapse collapsible='icon' expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                         <Panel header="Booking Customer" key="1">
                             <AddressCommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} />
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                    <Collapse collapsible='icon' expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                         <Panel header="Billing Customer" key="2">
                             <Row>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

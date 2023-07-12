@@ -13,7 +13,7 @@ const { Option } = Select;
 const { Search } = Input;
 
 const SearchBox = (props) => {
-    const { searchForm, filterString, optionType, searchParamRule, setFilterString, handleChange } = props;
+    const { searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };

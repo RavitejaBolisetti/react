@@ -7,17 +7,17 @@ import { useState } from 'react';
 import { Button, Form, Row, Col, Space, Select, Input, Divider, Checkbox } from 'antd';
 import { BiLockAlt } from 'react-icons/bi';
 
-import { validateLettersWithWhitespaces, validateEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
+import { validateLettersWithWhitespaces, validateEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, duplicateValidator } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import UploadUtils from './../UploadUtils';
+import UploadUtils from 'components/common/CustomerMaster/Common/UploadUtils';
 
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
-import style from '../../../Common.module.css';
+import style from 'components/common/Common.module.css';
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding } = props;
+    const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding, contactData, editingData } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
 
@@ -78,11 +78,11 @@ const AddEditForm = (props) => {
                     <Divider className={style.contactDivider} />
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                            <Form.Item label="Purpose of Contact" name="purposeOfContact" rules={[validateRequiredSelectField('purpose of contact')]}>
+                            <Form.Item label="Purpose of Contact" name="purposeOfContact" rules={[validateRequiredSelectField('purpose of contact'), { validator: (rule, value) => duplicateValidator(value, 'purposeOfContact', contactData, editingData?.purposeOfContact) }]}>
                                 <Select {...disabledProps} placeholder={preparePlaceholderSelect('purpose of contact')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['PURPOSE']} allowClear></Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8} className={style.inputWrapper}>
                             <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
                                 <Input
                                     maxLength={10}
@@ -218,7 +218,7 @@ const AddEditForm = (props) => {
                     </Row>
                     {!formActionType?.viewMode && (
                         <Row gutter={20}>
-                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Button className={style.marR20} onClick={onSaveFormData} type="primary">
                                     Save
                                 </Button>

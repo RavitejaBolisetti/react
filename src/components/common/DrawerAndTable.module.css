@@ -267,7 +267,7 @@
 }
 
 :global .ant-btn-link:not(:disabled):hover {
-    color: #ff3e5bda;
+    color: #ff3e5b !important;
 }
 
 :global .ant-drawer .ant-drawer-header-title {
@@ -288,13 +288,13 @@
 }
 
 :global .ant-drawer .ant-drawer-header {
-    padding: 16px 28px;
+    padding: 16px 20px;
 }
 
 :global .ant-drawer .ant-drawer-title {
     font-weight: 600;
-    font-size: 20px;
-    line-height: 28px;
+    font-size: 18px;
+    line-height: 27px;
     color: #262626;
 }
 

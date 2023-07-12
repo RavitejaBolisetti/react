@@ -92,15 +92,16 @@ const VechileDetailsMasterBase = (props) => {
         {
             key: 'vin',
             title: 'vin',
-            value: selectedOrderId,
+            value: selectedRecordId,
             name: 'VIN Number',
         },
     ];
     useEffect(() => {
-        if (userId) {
+        if (userId && selectedRecordId) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
-    }, [userId]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedRecordId]);
 
     const onFinish = (values) => {
         const recordId = vehicleDetails.vehicleDetails?.id || '';

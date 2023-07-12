@@ -92,6 +92,8 @@ const CustomerDetailMasterBase = (props) => {
     const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [supportingDataView, setSupportingDataView] = useState();
 
+    const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: null, contactOverWhatsAppActive: null, sameMobileNoAsWhatsApp: null, sameMobileNoAsWhatsAppActive: null });
+
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -100,12 +102,18 @@ const CustomerDetailMasterBase = (props) => {
         if (isDataLoaded) {
             form.setFieldsValue({ ...data });
             setFormData(data);
+            // setWhatsAppConfiguration({ contactOverWhatsApp: data?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: data?.mobileNumberAsWhatsappNumber });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded]);
+
+    useEffect(() => {
         return () => {
             resetData();
         };
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
+    }, []);
 
     useEffect(() => {
         if (userId && !isCorporateLovDataLoaded) {
@@ -233,6 +241,27 @@ const CustomerDetailMasterBase = (props) => {
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, selectedDocument });
         setSupportingDataView(supportingData);
     };
+    const handleFormFieldChange = (data = undefined) => {
+        const { whatsappCommunicationIndicator, mobileNumberAsWhatsappNumber, whatsAppNumber, mobileNumber } = form.getFieldsValue();
+
+        if (whatsappCommunicationIndicator) {
+            if (whatsappCommunicationIndicator && mobileNumberAsWhatsappNumber) {
+                form.setFieldsValue({ whatsAppNumber: mobileNumber });
+                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: true, contactOverWhatsApp: true });
+            } else {
+                form.setFieldsValue({ whatsAppNumber: whatsAppNumber });
+                setWhatsAppConfiguration({ contactOverWhatsAppActive: false, sameMobileNoAsWhatsAppActive: false, contactOverWhatsApp: true });
+            }
+        } else if (!whatsappCommunicationIndicator) {
+            if (mobileNumberAsWhatsappNumber) {
+                form.setFieldsValue({ mobileNumberAsWhatsappNumber: null });
+                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false });
+            } else {
+                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsAppActive: true });
+                form.setFieldsValue({ whatsAppNumber: null });
+            }
+        }
+    };
 
     const formProps = {
         ...props,
@@ -268,6 +297,9 @@ const CustomerDetailMasterBase = (props) => {
         handlePreview,
         supportingDataView,
         setSupportingDataView,
+        whatsAppConfiguration,
+        setWhatsAppConfiguration,
+        handleFormFieldChange,
     };
 
     const viewProps = {
@@ -279,7 +311,7 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title}</h2>

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -27,11 +27,11 @@ import { ListSkeleton } from '../Skeleton';
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
 
-const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true, showTitle = true, captlized = false }) =>
+const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true, showTitle = true, isParentMenu = false, captlized = false }) =>
     id && getMenuValue(MenuConstant, id, 'link') ? (
         <Link to={getMenuValue(MenuConstant, id, 'link')} title={tooltip ? menuOrgTitle : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
-            {showTitle && (
+            {(showTitle || isParentMenu) && (
                 <span id={id} className={styles.menuTitle}>
                     {title}
                 </span>
@@ -40,7 +40,7 @@ const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true
     ) : (
         <Link to="#" title={tooltip ? menuOrgTitle : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
-            {showTitle && (
+            {(showTitle || isParentMenu) && (
                 <span id={id} className={styles.menuTitle}>
                     {title}
                 </span>
@@ -165,7 +165,7 @@ const LeftSideBarMain = (props) => {
                 </SubMenu>
             ) : (
                 <Item key={menuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
-                    {prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
+                    {prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
                 </Item>
             );
         });

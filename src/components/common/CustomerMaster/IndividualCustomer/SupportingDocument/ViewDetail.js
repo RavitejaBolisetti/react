@@ -20,9 +20,9 @@ export const ViewDetail = (props) => {
 
     return (
         <div className={styles.viewDrawerContainer}>
-            {supportingData.length > 0 ? (
+            {supportingData?.length > 0 ? (
                 <Card>
-                    {supportingData.map((uploadData) => {
+                    {supportingData?.map((uploadData) => {
                         return (
                             <Card
                                 className={styles.viewDocumentStrip}
