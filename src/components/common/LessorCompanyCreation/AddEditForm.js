@@ -106,7 +106,13 @@ const AddEditFormMain = (props) => {
 
     const uploadProps = {
         multiple: false,
-        // accept: 'image/png, image/jpeg, application/pdf',
+        beforeUpload: (file) => {
+            const isExcel = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            if (!isExcel) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not a excel file` });
+            }
+            return isExcel || Upload.LIST_IGNORE;
+        },
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: false,
