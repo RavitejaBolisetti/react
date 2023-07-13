@@ -540,11 +540,11 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                 <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                     <Form.Item label={`${title}`} name="code">
                                         <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={!organizationId && !manufacturerAdminHierarchyData?.length > 0 ? 24 : 12} lg={!organizationId && !manufacturerAdminHierarchyData?.length > 0 ? 24 : 12} xl={!organizationId && !manufacturerAdminHierarchyData?.length > 0 ? 24 : 12}>
+                                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                                 <TreeSelectField {...treeSelectFieldProps} />
                                             </Col>
                                             {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
-                                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                                     <Search
                                                         placeholder="Search"
                                                         style={{
@@ -560,21 +560,23 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                     </Form.Item>
                                 </Form>
                             </Col>
-                            <Col className={styles.buttonHeadingContainer} xs={10} sm={10} md={10} lg={10} xl={10}>
-                                <Button type="primary" onClick={handleOnClickUpload}>
-                                    Upload
-                                </Button>
+                            {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
+                                <Col className={styles.buttonHeadingContainer} xs={10} sm={10} md={10} lg={10} xl={10}>
+                                    <Button type="primary" onClick={handleOnClickUpload}>
+                                        Upload
+                                    </Button>
 
-                                <Button
-                                    type="primary"
-                                    onClick={() => {
-                                        setIsChangeHistoryVisible(true);
-                                    }}
-                                >
-                                    <FaHistory className={styles.buttonIcon} />
-                                    Change History
-                                </Button>
-                            </Col>
+                                    <Button
+                                        type="primary"
+                                        onClick={() => {
+                                            setIsChangeHistoryVisible(true);
+                                        }}
+                                    >
+                                        <FaHistory className={styles.buttonIcon} />
+                                        Change History
+                                    </Button>
+                                </Col>
+                            )   }
                         </Row>
                     </div>
                     <div className={styles.content}>
