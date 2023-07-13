@@ -16,7 +16,7 @@ import { bindActionCreators } from 'redux';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
-
+import { OTFNoDataFound } from '../utils/OTFNoDataFound';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 
 import styles from 'components/common/Common.module.css';
@@ -70,6 +70,9 @@ const OtfDetailsMasterBase = (props) => {
     const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
+    const [noData, setNoData] = useState(false);
+    const [errMsg, setErrMsg] = useState('');
+
     useEffect(() => {
         if (otfData?.exchange) {
             setexchangeValue(false);
@@ -84,6 +87,8 @@ const OtfDetailsMasterBase = (props) => {
     }, [otfData]);
 
     const onErrorAction = (message) => {
+        setNoData(true);
+        setErrMsg(message[0]);
         showGlobalNotification({ message });
     };
 
@@ -134,7 +139,7 @@ const OtfDetailsMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            // showGlobalNotification({ message });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -203,7 +208,7 @@ const OtfDetailsMasterBase = (props) => {
                             <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    {formActionType?.viewMode ? noData ? <OTFNoDataFound errMsg={errMsg} /> : <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

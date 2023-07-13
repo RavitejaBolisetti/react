@@ -22,7 +22,7 @@ import { ViewDetail } from './ViewDetail';
 
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
-
+import { OTFNoDataFound } from '../utils/OTFNoDataFound';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'components/common/Common.module.css';
@@ -129,6 +129,8 @@ const ExchangeVehiclesBase = (props) => {
     const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
 
     const [formData, setFormData] = useState('');
+    const [noData, setNoData] = useState(false);
+    const [errMsg, setErrMsg] = useState('');
 
     useEffect(() => {
         setFormData(exchangeData);
@@ -145,7 +147,9 @@ const ExchangeVehiclesBase = (props) => {
     ];
 
     const errorAction = (message) => {
-        // showGlobalNotification(message);
+        setNoData(true);
+        setErrMsg(message[0]);
+        showGlobalNotification(message);
     };
 
     const onSuccessAction = (res) => {
@@ -319,7 +323,7 @@ const ExchangeVehiclesBase = (props) => {
                         </Col>
                     </Row>
 
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    {formActionType?.viewMode ? noData ? <OTFNoDataFound errMsg={errMsg} /> : <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>
