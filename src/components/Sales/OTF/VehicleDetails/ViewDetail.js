@@ -13,6 +13,7 @@ import { InputSkeleton } from 'components/common/Skeleton';
 import { addToolTip } from 'utils/customMenuLink';
 import { DataTable } from 'utils/dataTable';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import styles from 'components/common/Common.module.css';
 
 import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 
@@ -66,7 +67,9 @@ const ViewDetailMain = (props) => {
 
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
                             <Panel header="Tax Details" key="2">
-                                <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
+                                <div className={styles.noHorizontalScroll}>
+                                    <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
+                                </div>
                             </Panel>
                         </Collapse>
 
