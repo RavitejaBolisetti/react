@@ -14,7 +14,7 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
     const { formData, isLoading } = props;
-    const [activeKey, setactiveKey] = useState([1]);
+    const [activeKey, setactiveKey] = useState([]);
 
     const viewProps = {
         bordered: false,

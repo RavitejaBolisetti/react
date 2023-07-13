@@ -32,6 +32,7 @@ const OptionServicesFormMain = (props) => {
                 })
             );
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [serviceOptions, optionsServiceModified]);
     const isServiceNamePresent = (serviceName) => {
         let found = false;
