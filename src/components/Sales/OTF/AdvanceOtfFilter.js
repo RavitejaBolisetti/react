@@ -34,11 +34,10 @@ export default function AdvanceOTFFilter(props) {
                             </Col>
                         )}
                         {advanceFilter && (
-                            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                            <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
                                 <Button
                                     icon={<FilterIcon />}
                                     type="link"
-                                    className={styles.filterBtn}
                                     onClick={() => {
                                         setAdvanceSearchVisible(true);
                                     }}

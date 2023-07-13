@@ -11,6 +11,16 @@
     justify-content: center;
 }
 
+.verticallyCentered {
+    display: flex;
+    align-items: center;
+}
+
+.horizontallyCentered {
+    display: flex;
+    justify-content: center;
+}
+
 .marT5 {
     margin-top: 5px;
 }
@@ -171,12 +181,12 @@
     border-color: transparent;
 }
 
-.contentHeaderBackground :global .ant-input-group {
+/* .contentHeaderBackground :global .ant-input-group {
     border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border: 1px solid #d9d9d9;
-}
+} */
 
 .contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper .ant-input-clear-icon {
     color: #0b0b0c;
