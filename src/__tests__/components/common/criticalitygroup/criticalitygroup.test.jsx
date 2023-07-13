@@ -6,8 +6,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { render, screen, fireEvent, userEvent, getByTestId } from '@testing-library/react';
-import { useState } from 'react';
+import { screen, fireEvent } from '@testing-library/react';
 
 import { CriticalityGroup } from '@components/common/CriticalityGroup/CriticalityGroup';
 
@@ -94,7 +93,6 @@ describe('Criticality Group Test', () => {
         });
 
         const result = await onFinish();
-        // fireEvent.click(SaveBtn);
         buttonLookAndFireEventWithText('Save');
 
         expect(result).toBeTruthy();

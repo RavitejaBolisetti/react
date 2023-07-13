@@ -1,6 +1,12 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { render, screen, fireEvent, userEvent, getByTestId } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
 import { QualificationMaster } from '@components/common/QualificationMaster/QualificationMaster';
@@ -32,7 +38,6 @@ describe('Qualification Master Test', () => {
         customRender(<QualificationMaster />);
         const inputBox = screen.getByRole('textbox');
         fireEvent.change(inputBox, { target: { value: 'Dm' } });
-        // expect(inputBox.value.includes('Dmatest'));
         await act(async () => {
             const searchButton = screen.getByRole('button', { name: /search/i });
             fireEvent.click(searchButton);
