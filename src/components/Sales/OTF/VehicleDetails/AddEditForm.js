@@ -197,7 +197,7 @@ const AddEditFormMain = (props) => {
                             }
                             key="3"
                         >
-                            <Divider />
+                            {!isReadOnly && <Divider />}
                             {isReadOnly && <OptionServicesForm {...OptionServicesFormProps} />}
                             <DataTable tableColumn={optionalServicesColumns} tableData={optionsServiceModified} removePagination={true} />
                         </Panel>
