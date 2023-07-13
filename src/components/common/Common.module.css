@@ -2524,6 +2524,7 @@
 
 .viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-label,
 .viewDrawerContainer :global .ant-collapse .ant-collapse-content .ant-descriptions .ant-descriptions-item-label {
+    display: inline-block;
     color: #545454;
     font-weight: 400;
     font-size: 14px;
@@ -2567,13 +2568,15 @@
     padding-right: 8px !important;
 }
 
-/* .viewDrawerContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item:last-child {
+.viewDrawerContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item:nth-child(3) {
     padding-left: 16px !important;
-} */
+}
 
 .viewDrawerContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item .ant-descriptions-item-container .ant-descriptions-item-content {
-    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .viewDrawerContainer :global .ant-descriptions .ant-descriptions-view table tbody tr th {
