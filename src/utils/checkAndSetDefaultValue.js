@@ -6,14 +6,14 @@
 
 import { InputSkeleton } from 'components/common/Skeleton';
 import { convertDate } from 'utils/formatDateTime';
+import { DATA_TYPE } from 'constants/dataType';
 
 export const checkAndSetDefaultValue = (value, isLoading, type) => {
     if (isLoading) <InputSkeleton width={'100px'} height={20} theme={'card'} />;
-
     switch (type) {
-        case 'bool':
+        case DATA_TYPE?.BOOL?.id:
             return value ? 'Yes' : 'No';
-        case 'date':
+        case DATA_TYPE?.DATE?.id:
             return value ? convertDate(value, 'DD MMM YYYY') : 'NA';
         default:
             return value || 'NA';
