@@ -2040,14 +2040,14 @@
     background: #ffffff;
 }
 
-.drawerBodyRight :global .ant-table-wrapper .ant-table-content {
+/* .drawerBodyRight :global .ant-table-wrapper .ant-table-content {
     background: #f2f2f2;
     margin-bottom: 20px;
     padding-top: 20px;
     border-top: 1px solid #e6e6e6;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-}
+} */
 
 .drawerBodyRight :global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:hover>th,
 .drawerBodyRight :global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:hover>td,
