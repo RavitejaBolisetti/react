@@ -3,12 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Row, Col, Form, Select, DatePicker, Card, Input, Checkbox, Switch } from 'antd';
 
 import { convertCalenderDate } from 'utils/formatDateTime';
 
-import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
+import { validateRequiredSelectField } from 'utils/validation';
 import { disablePastDate } from 'utils/disableDate';
 import { USER_TYPE } from 'constants/userType';
 
