@@ -7,26 +7,27 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form, Select, Card, Descriptions, Upload, Button, Empty, message } from 'antd';
 
 import styles from 'components/common/Common.module.css';
+import { convertDateTime } from 'utils/formatDateTime';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
-import Svg from 'assets/images/Filter.svg';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { convertDateTime } from 'utils/formatDateTime';
+import TreeSelectField from 'components/common/TreeSelectField';
 
 import { FiEye, FiTrash, FiDownload } from 'react-icons/fi';
+import Svg from 'assets/images/Filter.svg';
 
-const { Search } = Input;
+const { Search, TextArea } = Input;
 const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { formData, form, isLoading, otfData, selectedOrder } = props;
+    const { formData, form, isLoading, otfData, selectedOrder, fieldNames, productHierarchyData  } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview, emptyList, setEmptyList } = props;
 
+    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const [showStatus, setShowStatus] = useState('');
+    const [reasonTypeChange, setReasonTypeChange] = useState('');
     const [cancelForm] = Form.useForm();
 
     const onDrop = (e) => {};
@@ -40,7 +41,7 @@ const AddEditFormMain = (props) => {
         a.download = viewDocument?.fileName;
         a.click();
     };
-
+    console.log('typeData', typeData);
     const uploadProps = {
         multiple: false,
         accept: 'image/png, image/jpeg, application/pdf',
@@ -72,6 +73,10 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showStatus]);
 
+    const handleCancellationReasonTypeChange = (value) => {
+        setReasonTypeChange(value);
+    }
+
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
         setEmptyList(true);
@@ -95,7 +100,7 @@ const AddEditFormMain = (props) => {
 
     const selectProps = {
         optionFilterProp: 'children',
-        showSearch: true,
+        showSearch: false,
         allowClear: true,
         className: styles.headerSelectField,
     };
@@ -113,6 +118,16 @@ const AddEditFormMain = (props) => {
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 2, lg: 2, xl: 2, xxl: 2 },
+    };
+
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: productHierarchyData,
+        //treeDisabled: treeCodeReadOnly || isReadOnly,
+        //selectedTreeSelectKey,
+        //handleSelectTreeClick,
+        //defaultValue: treeCodeId,
+        placeholder: preparePlaceholderSelect('Parent'),
     };
 
     return (
@@ -133,52 +148,53 @@ const AddEditFormMain = (props) => {
                         <Form.Item name="reasonType" label="Cancellation Reason Type" initialValue={formData?.reasonType} rules={[validateRequiredSelectField('Reason Type')]}>
                             <Select
                                 {...selectProps}
-                                placeholder="Select"
+                                placeholder="Select" onChange={handleCancellationReasonTypeChange}
                                 // loading={isConfigLoading}
                                 allowClear
                                 fieldNames={{ label: 'value', value: 'key' }}
-                                options={typeData['REL_TYPE']}
+                                options={typeData['OTF_CANCL_REASON_TYPE']}
                             ></Select>
                         </Form.Item>
                     </Col>
                 </Row>
-                <Row>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="oemName" label="OEM Name" initialValue={formData?.oemName} rules={[validateRequiredSelectField('OEM Name')]}>
-                            <Select
-                                {...selectProps}
-                                style={{
-                                    width: '100%',
-                                }}
-                                // loading={isConfigLoading}
-                                options={typeData['MONTH']}
-                                placeholder={preparePlaceholderSelect('OEM Name')}
-                            />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="product" label="Product" initialValue={formData?.product} rules={[validateRequiredSelectField('product')]}>
-                            <Select
-                                {...selectProps}
-                                style={{
-                                    width: '100%',
-                                }}
-                                // loading={isConfigLoading}
-                                options={typeData['MONTH']}
-                                placeholder={preparePlaceholderSelect('Product')}
-                            />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="findDealerName" label="Find Dealer Name" initialValue={formData?.findDealerName} rules={[validateRequiredSelectField('Find Dealer Name')]}>
-                            <Input placeholder={preparePlaceholderText('Find Dealer Name')} />
-                        </Form.Item>
-                    </Col>
-                </Row>
+                { reasonTypeChange === 'LTC' && (
+                    <Row>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item name="oemName" label="OEM Name" initialValue={formData?.oemName} rules={[validateRequiredSelectField('OEM Name')]}>
+                                <Select
+                                    {...selectProps}
+                                    style={{
+                                        width: '100%',
+                                    }}
+                                    // loading={isConfigLoading}
+                                    options={typeData['OEM_CODE']}
+                                    placeholder={preparePlaceholderSelect('OEM Name')}
+                                />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                )}
+
+                { reasonTypeChange === 'PRDCH' && (
+                    <Row>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item name="product" label="Product" initialValue={formData?.product} rules={[validateRequiredSelectField('product')]}>
+                                <TreeSelectField {...treeSelectFieldProps} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                )}
+                
+                { reasonTypeChange === 'LOMMD' && (
+                    <Row>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item name="findDealerName" label="Find Dealer Name" initialValue={formData?.findDealerName} rules={[validateRequiredSelectField('Find Dealer Name')]}>
+                                <Input placeholder={preparePlaceholderText('Find Dealer Name')} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                )}
+
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item name="reasonForCancellation" label="Reason For Cancellation" initialValue={formData?.reasonForCancellation} rules={[validateRequiredSelectField('Reason For Cancellation')]}>
@@ -188,7 +204,7 @@ const AddEditFormMain = (props) => {
                                     width: '100%',
                                 }}
                                 // loading={isConfigLoading}
-                                options={typeData['MONTH']}
+                                options={typeData['DLR_OTF_CANC_RSN']}
                                 placeholder={preparePlaceholderSelect('Reason For Cancellation')}
                             />
                         </Form.Item>
@@ -197,7 +213,7 @@ const AddEditFormMain = (props) => {
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item name="remarks" label="Cancellation Remarks" initialValue={formData?.remarks} >
-                            <Input placeholder={preparePlaceholderText('Cancellation Remarks')} />
+                            <TextArea placeholder={preparePlaceholderText('Cancellation Remarks')} />
                         </Form.Item>
                     </Col>
                 </Row>
