@@ -66,7 +66,7 @@ const ChangeHistoryMain = (props) => {
                 fetchAdminHierarchy({ setIsLoading: changeHistoryAdminShowLoading, userId });
             } else {
                 fetchOrgChangeHistoryList({ setIsLoading: changeHistoryOrgShowLoading, userId });
-        }
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, activeKey]);
@@ -84,4 +84,4 @@ const ChangeHistoryMain = (props) => {
     );
 };
 
-export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: '', width: '90%' }));
+export const ChangeHistory1 = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: '', width: '90%' }));

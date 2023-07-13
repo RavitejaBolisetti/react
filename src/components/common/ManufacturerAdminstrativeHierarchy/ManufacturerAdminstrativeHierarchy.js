@@ -26,7 +26,7 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { AddEditForm } from './AddEditForm';
 import { ManufactureAdminHierarchyUpload } from '../ManufacturerAdminstrativeHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
-import { ChangeHistory } from './ChangeHistory';
+import { ChangeHistory1 } from './ChangeHistory';
 import { disableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
 import LeftPanel from '../LeftPanel';
@@ -126,7 +126,6 @@ const mapDispatchToProps = (dispatch) => ({
             authorityShowLoading: manufacturerAdminUploadDataActions.listShowLoading,
             resetData: manufacturerAdminUploadDataActions.reset,
 
-
             showGlobalNotification,
         },
         dispatch
@@ -139,7 +138,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const { resetData, resetViewData, detailData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { uploadDocumentFile, accessToken, token } = props;
 
-    const { authorityShowLoading,isAuthorityDataLoaded, isAuthorityDataLoading, authorityData, typeData, lessorData } = props;
+    const { authorityShowLoading, isAuthorityDataLoaded, isAuthorityDataLoading, authorityData, typeData, lessorData } = props;
     const { saveAuthorityData, isViewDataLoaded, isLoading, viewListShowLoading, fetchViewDocument, viewDocument } = props;
 
     const [form] = Form.useForm();
@@ -169,7 +168,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
     const fieldNames = { title: 'manufactureAdminShortName', key: 'id', children: 'subManufactureAdmin' };
 
-
     const [uploadForm] = Form.useForm();
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
@@ -183,7 +181,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const [isUploadDrawer, setIsUploadDrawer] = useState(false);
 
     const errorAction = () => {};
-    
+
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -517,14 +515,14 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         defaultValue: 'organizationId',
         placeholder: preparePlaceholderSelect('Organization Hierarchy'),
     };
-console.log("organizationId", organizationId)
+    console.log('organizationId', organizationId);
     const title = 'Hierarchy';
 
     const handleOnClickUpload = () => {
         setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: true, saveBtn: true });
         setIsUploadDrawer(true);
     };
-    
+
     const drawerProps = {
         isVisible: isChangeHistoryVisible,
         onCloseAction: myCloseAction,
@@ -637,7 +635,7 @@ console.log("organizationId", organizationId)
             </Row>
 
             <ManufactureAdminHierarchyUpload {...uploadProps} />
-            <ChangeHistory {...drawerProps} />
+            <ChangeHistory1 {...drawerProps} />
             <AddEditForm {...formProps} />
         </>
     );
