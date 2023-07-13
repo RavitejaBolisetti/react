@@ -4,7 +4,7 @@ import customRender from '@utils/test-utils';
 import AllowedTimingCard  from '@components/common/CriticalityGroup/AllowedTimings/AllowedTimingCard';
 
 describe('AllowedTimingCard Components', () => {
-    it('should render AllowedTimingCard components', () => {
+    it('should render Allowed Timing Card components', () => {
         const { container } = customRender(<AllowedTimingCard />);
         expect(container.firstChild).toHaveClass('timingCardItem');
     });

@@ -46,7 +46,8 @@ export default function AppliedAdvanceFilter(props) {
                             </Col>
                             {advanceFilter && (
                                 <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                                    <Button
+                                    <Button 
+                                        data-testid="advanceFiltersBtn"
                                         icon={<FilterIcon />}
                                         type="link"
                                         className={styles.filterBtn}
@@ -64,19 +65,19 @@ export default function AppliedAdvanceFilter(props) {
                         <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                             {showChangeHistoryButton && (
                                 <>
-                                    <Button onClick={showChangeHistoryList} className={styles.actionbtn} type="primary" danger>
+                                    <Button data-testid="changeHistoryBtn" onClick={showChangeHistoryList} className={styles.actionbtn} type="primary" danger>
                                         Change History
                                     </Button>
                                 </>
                             )}
 
                             {advanceFilter && filterString?.advanceFilter && downloadReport && (
-                                <Button icon={<BsDownload />} className={styles.refreshBtn} onClick={handleDownloadReport} danger>
+                                <Button data-testid="downloadBtn" icon={<BsDownload />} className={styles.refreshBtn} onClick={handleDownloadReport} danger>
                                     Download
                                 </Button>
                             )}
-                            <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                            <Button data-testid="refreshBtn" icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+                            <Button data-testid="addActionBtn" icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                 Add
                             </Button>
                         </Col>
@@ -104,7 +105,7 @@ export default function AppliedAdvanceFilter(props) {
                                     })}
                                 </Col>
                                 <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                    <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                                    <Button data-testid="clearBtn" className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
                                         Clear
                                     </Button>
                                 </Col>
