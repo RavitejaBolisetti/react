@@ -136,7 +136,7 @@ const SupportingDocumentBase = (props) => {
 
     const deleteFile = (uploadData) => {
         const data = { customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName };
-        
+
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
@@ -158,10 +158,10 @@ const SupportingDocumentBase = (props) => {
     };
 
     const downloadFileFromList = () => {
-        onSuccessAction = (res) => {
+        const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res.responseMessage });
         };
-        onErrorAction = (message) => {
+        const onErrorAction = (message) => {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message });
         };
         const extraParams = [
@@ -173,7 +173,7 @@ const SupportingDocumentBase = (props) => {
             },
         ];
         const supportingDocument = uploadedFileName;
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
+        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument, onSuccessAction, onErrorAction });
     };
 
     const onFinish = (values) => {
@@ -188,8 +188,9 @@ const SupportingDocumentBase = (props) => {
                 setEmptyList(false);
                 setUploadedFile();
                 form.resetFields();
-                showGlobalNotification({ notificationType: 'success', title, message });
+                showGlobalNotification({ notificationType: 'success', title, message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+                setIsFormVisible(false);
             };
 
             const onError = (message) => {
@@ -208,26 +209,12 @@ const SupportingDocumentBase = (props) => {
             saveData(requestData);
         } else {
             showGlobalNotification({ notificationType: 'success', title, message });
-
             setFileList([]);
             setEmptyList(false);
             setUploadedFile();
             form.resetFields();
             setIsFormVisible(false);
         }
-    };
-
-    const handlePreview = (selectedDocument) => {
-        const extraParams = [
-            {
-                key: 'docId',
-                title: 'docId',
-                value: selectedDocument?.docId,
-                name: 'docId',
-            },
-        ];
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, selectedDocument });
-        setSupportingDataView(supportingData);
     };
 
     const viewProps = {
@@ -238,7 +225,6 @@ const SupportingDocumentBase = (props) => {
         setSupportingDataView,
         deleteFile,
 
-        handlePreview,
         viewDocument,
         showGlobalNotification,
         formActionType,
@@ -266,7 +252,6 @@ const SupportingDocumentBase = (props) => {
         downloadFileFromButton,
         downloadFileFromList,
         viewListShowLoading,
-        handlePreview,
 
         ADD_ACTION,
         EDIT_ACTION,

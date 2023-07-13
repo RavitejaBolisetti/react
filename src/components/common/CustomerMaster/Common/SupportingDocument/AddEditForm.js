@@ -26,10 +26,17 @@ const AddEditForm = (props) => {
     const uploadProps = {
         multiple: false,
         accept: 'image/png, image/jpeg, application/pdf',
+        beforeUpload: (file) => {
+            const isAccepted = file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'application/pdf';
+            if (!isAccepted) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not a accepted file format`, placement: 'bottomRight' });
+            }
+            return isAccepted || Upload.LIST_IGNORE;
+        },
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
-            showPreviewIcon : true,
+            showPreviewIcon: true,
             removeIcon: <FiTrash />,
             downloadIcon: <FiDownload onClick={() => downloadFileFromList()} style={{ color: '#ff3e5b' }} />,
             showProgress: true,
@@ -90,7 +97,7 @@ const AddEditForm = (props) => {
         <Card>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="Document hgh" name="documentTypeId" placeholder={preparePlaceholderSelect('document type')}>
+                    <Form.Item label="Document Type" name="documentTypeId" placeholder={preparePlaceholderSelect('document type')}>
                         <Select className={styles.headerSelectField} loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps}>
                             {typeData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
@@ -129,7 +136,7 @@ const AddEditForm = (props) => {
                                 }
                             />
 
-                            <Button type="primary">Upload</Button>
+                            <Button type="primary">Upload File</Button>
                         </Dragger>
                     </div>
                 </Col>

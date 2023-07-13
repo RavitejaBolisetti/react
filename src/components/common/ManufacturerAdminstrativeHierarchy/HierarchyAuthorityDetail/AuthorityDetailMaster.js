@@ -43,12 +43,12 @@ const AuthorityDetailMain = ({ tokenNumber, handleFormValueChange, errorTokenVal
     const [actionForm] = Form.useForm();
 
     const onActionFormFinish = (val) => {
-        const { authorityTypeCode, ...rest } = val;
-        const { label, value } = authorityTypeCode;
-        setDocumentTypesList((prev) => [...prev, { ...rest, authorityTypeCode: value, authorityTypeName: label, effectiveFrom: dayjs(val?.effectiveFrom).format('YYYY-MM-DD'), effectiveTo: dayjs(val?.effectiveTo).format('YYYY-MM-DD'), isModified: val?.isModified ?? false, employeeName: tokenNumber?.employeeName }]);
+        // const { authorityTypeCode, ...rest } = val;
+        // const { label, value } = authorityTypeCode;
+        setDocumentTypesList((prev) => [...prev, { ...val, effectiveFrom: dayjs(val?.effectiveFrom).format('YYYY-MM-DD'), effectiveTo: dayjs(val?.effectiveTo).format('YYYY-MM-DD'), isModified: val?.isModified ?? false, employeeName: tokenNumber?.employeeName }]);
         actionForm.resetFields();
         errorTokenValidate('');
-        forceUpdate();
+        // forceUpdate();
     };
 
     return (

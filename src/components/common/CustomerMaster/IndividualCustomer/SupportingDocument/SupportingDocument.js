@@ -5,6 +5,6 @@
  */
 import { SupportingDocumentMaster } from 'components/common/CustomerMaster/Common/SupportingDocument';
 
-export const SupportingDocumentMaster = (props) => {
+export const IndividualSupportingDocumentMaster = (props) => {
    return <SupportingDocumentMaster {...props} />;
 };

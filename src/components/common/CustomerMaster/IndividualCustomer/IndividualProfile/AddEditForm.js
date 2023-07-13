@@ -25,7 +25,7 @@ const { TextArea } = Input;
 const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadedFile, uploadConsentDocumentFile } = props;
+    const { showGlobalNotification,formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadedFile, uploadConsentDocumentFile } = props;
     const { isReadOnly = false } = props;
     const [isRead, setIsRead] = useState(false);
     const [isReadUpload, setIsReadUpload] = useState(false);
@@ -125,7 +125,13 @@ const AddEditFormMain = (props) => {
     const uploadConsentProps = {
         multiple: false,
         accept: 'image/png, image/jpeg, application/pdf',
-
+        beforeUpload: (file) => {
+            const isAccepted = file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'application/pdf';
+            if (!isAccepted) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not a accepted file format`, placement: 'bottomRight' });
+            }
+            return isAccepted || Upload.LIST_IGNORE;
+        },
         showUploadList: {
             showRemoveIcon: true,
             removeIcon: <FiTrash />,
