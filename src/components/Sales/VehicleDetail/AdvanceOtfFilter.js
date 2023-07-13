@@ -19,7 +19,7 @@ export default function AdvanceOTFFilter(props) {
         otfFilter = false,
         title,
         filterString,
-        handleSearchTypeChange,
+        setFilterString,
         handleSearchParamSearch,
         typeData,
         setAdvanceSearchVisible,
@@ -33,13 +33,12 @@ export default function AdvanceOTFFilter(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
-    const serachBoxProps = {
+    const searchBoxProps = {
         searchForm,
         filterString,
+        setFilterString,
         optionType: typeData,
-        handleSearchTypeChange,
-        handleSearchParamSearch,
-        searchParamRule: otfSearchRules,
+        // handleChange,
     };
 
     const handleResetFilter = (e) => {
@@ -54,7 +53,7 @@ export default function AdvanceOTFFilter(props) {
                     <Row gutter={20}>
                         {otfFilter && (
                             <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                                <SearchBox {...serachBoxProps} />
+                                <SearchBox {...searchBoxProps} />
                             </Col>
                         )}
                         {advanceFilter && (

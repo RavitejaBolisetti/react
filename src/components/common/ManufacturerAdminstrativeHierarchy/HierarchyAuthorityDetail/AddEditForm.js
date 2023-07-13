@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -19,13 +19,11 @@ import style from 'components/common/Common.module.css';
 const { Search } = Input;
 const { Text } = Typography;
 
-let apiData = [];
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], recordId: formRecordId, tokenNumber = [], errorMessage, isUpdating, changeHistoryVisible, historyData = [], authTypeDropdown = [], authorityVisible },
+            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [],  recordId: formRecordId, tokenNumber = [], errorMessage, isUpdating, changeHistoryVisible, historyData = [], authTypeDropdown:authTypeDropdownData = [], authorityVisible },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -33,7 +31,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    apiData = state.data.ManufacturerAdminHierarchy.authTypeDropdown;
+    // apiData = state.data.ManufacturerAdminHierarchy.authTypeDropdown;
 
     let returnValue = {
         collapsed,
@@ -44,7 +42,7 @@ const mapStateToProps = (state) => {
         manufacturerAdminHierarchyData,
         isDataAttributeLoaded,
         tokenNumber,
-        authTypeDropdown,
+        authTypeDropdownData,
         historyData,
         authorityVisible,
         attributeData: attributeData?.filter((i) => i),
@@ -74,7 +72,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, handleFormValueChange, record, tokenValidationData, errorTokenValidate, tokenValidate, errorMessage, setTokenValidate, setEmployeeName = undefined, employeeName = '', recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction }) => {
+const AuthorityFormMin = (props) => {
+    const { isUpdating, isMainForm, setTokenValidationData, handleFormValueChange, tokenValidationData, errorTokenValidate, tokenValidate, errorMessage, setTokenValidate, setEmployeeName = undefined, employeeName = '', recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction } = props;
+    const { setselectedValueOnUpdate, authTypeDropdownData } = props;
     const disableAddBtn = { disabled: isBtnDisabled || !tokenNumber?.employeeName };
 
     const onFinishFailed = (err) => {
@@ -86,7 +86,6 @@ const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, hand
     };
 
     const onSearchHandle = (recordId) => (data) => {
-        setTokenValidate({ ['tokenVisible' + recordId]: true });
         data && searchList({ setIsLoading: listShowLoading, tokenNumber: data, recordId, errorAction });
     };
 
@@ -94,7 +93,6 @@ const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, hand
         if (!isMainForm) {
             setTokenValidationData({});
         }
-        setTokenValidate({ tokenVisible: !!e.target.value });
         if (tokenNumber?.employeeName || errorMessage) {
             errorTokenValidate({ errorMessage: '', isUpdating: isEditing });
         }
@@ -114,7 +112,7 @@ const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, hand
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type')]}>
-                        <Select labelInValue getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" fieldNames={fieldNames} options={apiData} disabled={isBtnDisabled} />
+                        <Select labelInValue getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" fieldNames={fieldNames} options={authTypeDropdownData} disabled={isBtnDisabled} onChange={(value, valueObject) => setselectedValueOnUpdate(valueObject)} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>

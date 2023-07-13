@@ -24,7 +24,7 @@ const AddEditForm = (props) => {
     const onDrop = (e) => {};
 
     const uploadProps = {
-        multiple: false,
+        multiple: true,
         accept: 'image/png, image/jpeg, application/pdf',
 
         showUploadList: {
@@ -38,7 +38,7 @@ const AddEditForm = (props) => {
         onDrop,
         onChange: (info) => {
             let fileList = [...info.fileList];
-            fileList = fileList.slice(-1);
+            // fileList = fileList.slice(-1);
             setFileList(fileList);
             handleFormValueChange();
             const { status } = info.file;

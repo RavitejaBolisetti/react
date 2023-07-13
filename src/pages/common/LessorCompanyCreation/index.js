@@ -5,4 +5,4 @@
  */
 import { LessorCompanyCreationPage } from './LessorCompanyCreationPage';
 
-export { LessorCompanyCreationPage };
+export { LessorCompanyCreationPage }; 

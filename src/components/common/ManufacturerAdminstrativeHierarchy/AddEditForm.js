@@ -65,6 +65,7 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setFormBtnActive(true);
     };
+
     return (
         <>
             <Space direction="vertical" size="small" className={styles.accordianContainer}>
@@ -111,8 +112,8 @@ const AddEditFormMain = (props) => {
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                            <Form.Item initialValue={formData?.status} label="Status" name="status">
-                                <Switch value={formData?.status} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
+                            <Form.Item initialValue={typeof formData?.status === 'boolean' ? formData?.status : true} label="Status" name="status">
+                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={typeof formData?.status === 'boolean' ? formData?.status : true} {...disabledProps} onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
                         </Col>
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>

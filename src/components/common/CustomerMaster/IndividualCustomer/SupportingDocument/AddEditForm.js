@@ -106,6 +106,7 @@ const AddEditForm = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
+
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.uploadContainer} style={{ opacity: '100' }}>
@@ -133,6 +134,7 @@ const AddEditForm = (props) => {
                     </div>
                 </Col>
             </Row>
+            
         </Card>
     );
 };
