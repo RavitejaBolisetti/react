@@ -8,4 +8,5 @@ describe('AllowedTimingCard Components', () => {
         const { container } = customRender(<AllowedTimingCard />);
         expect(container.firstChild).toHaveClass('timingCardItem');
     });
+    
 });
