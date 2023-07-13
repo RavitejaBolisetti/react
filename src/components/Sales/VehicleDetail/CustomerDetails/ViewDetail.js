@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { Col, Row, Space, Collapse, Typography, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-// import { convertCalenderDate } from 'utils/formatDateTime';
+import { DATA_TYPE } from 'constants/dataType';
 
 import styles from 'components/common/Common.module.css';
 
@@ -90,7 +90,7 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData.bookingCustomer?.gstin, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Driving License">{checkAndSetDefaultValue(formData.bookingCustomer?.drivingLicense, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Trade Licence">{checkAndSetDefaultValue(formData.bookingCustomer?.tradeLicense, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(bookingBirthDate, isLoading, 'date')} </Descriptions.Item>
+                                    <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(bookingBirthDate, isLoading, DATA_TYPE?.DATE?.id)} </Descriptions.Item>
                                     {/* <Descriptions.Item label="Do You Want to Add Corporate Details">{checkAndSetDefaultValue(formData.bookingCustomer?.sameAsBookingCustomer, isLoading)}</Descriptions.Item> */}
                                 </Descriptions>
                             </Panel>
