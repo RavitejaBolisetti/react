@@ -14,7 +14,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData, salesConsultantLov, activeKey, onChange} = props;
+    const { formData, isLoading, typeData, salesConsultantLov, activeKey, onChange } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -30,43 +30,42 @@ const ViewDetailMain = (props) => {
     const pucExpiryDate = dayjs(formData?.pucExpiryDate).format('DD/MM/YYYY');
 
     return (
-
         <div className={styles.drawerCardView}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space direction="vertical" size="middle" className={styles.accordianContainer}>
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
-                            <Panel header="Vehicle Details" key="1">                                
-                            <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Manufacturer Warranty End Date">{checkAndSetDefaultValue(mnfcWarrEndDate, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Delivery Date">{checkAndSetDefaultValue(deliveryDate, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Sale Date">{checkAndSetDefaultValue(saleDate, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Sold By">{checkAndSetDefaultValue(formData?.soldBy, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Last Odometer Reading">{checkAndSetDefaultValue(formData?.lastOdometerReading, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Average Run">{checkAndSetDefaultValue(formData?.averageRun, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Next Due Service">{checkAndSetDefaultValue(formData?.nextDueService, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Relationship Manager">{checkAndSetDefaultValue(formData?.relationshipManager, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Next Service Due Date">{checkAndSetDefaultValue(nextServiceDueDate, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="PUC Expiry Date">{checkAndSetDefaultValue(pucExpiryDate, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Insurance Expiry Date">{checkAndSetDefaultValue(insuranceExpiryDate, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Category-SSI">{checkAndSetDefaultValue(formData?.customerCategorySsi, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Category-CSI">{checkAndSetDefaultValue(formData?.customerCategoryCsi, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Category-IQS">{checkAndSetDefaultValue(formData?.customerCategoryIQS, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="OEM Priviledge Customer">{checkAndSetDefaultValue(formData?.oemPrivilegeCustomer ? 'true': '', isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Key Account Vihicle">{checkAndSetDefaultValue(formData?.keyAccountVehicle ? 'true': '', isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Theft Vihicle">{checkAndSetDefaultValue(formData?.theftVehicle ? 'true': '', isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="PDI Done">{checkAndSetDefaultValue(formData?.pdiDone ? 'true': '', isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Buy Back Vehicle">{checkAndSetDefaultValue(formData?.buyBackVehicle, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Government Vehicle">{checkAndSetDefaultValue(formData?.govtVehicle ? 'true': '', isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Taxi/Non Taxi">{checkAndSetDefaultValue(formData?.taxiOrNonTaxi, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="M&M CTC Vehicle">{checkAndSetDefaultValue(formData?.mnmCtcVehicle ? 'true': '', isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Managed By">{checkAndSetDefaultValue(formData?.manageBy, isLoading)}</Descriptions.Item>                
-                            
-                            {/* <Descriptions.Item label="Warranty Blocked">{checkAndSetDefaultValue(formData?.warrantyBlocked ? 'true': '', isLoading)}</Descriptions.Item>
+                            <Panel header="Vehicle Details" key="1">
+                                <Descriptions {...viewProps}>
+                                    <Descriptions.Item label="Manufacturer Warranty End Date">{checkAndSetDefaultValue(mnfcWarrEndDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Delivery Date">{checkAndSetDefaultValue(deliveryDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Sale Date">{checkAndSetDefaultValue(saleDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Sold By">{checkAndSetDefaultValue(formData?.soldBy, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Last Odometer Reading">{checkAndSetDefaultValue(formData?.lastOdometerReading, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Average Run">{checkAndSetDefaultValue(formData?.averageRun, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Next Due Service">{checkAndSetDefaultValue(formData?.nextDueService, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Relationship Manager">{checkAndSetDefaultValue(formData?.relationshipManager, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Next Service Due Date">{checkAndSetDefaultValue(nextServiceDueDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="PUC Expiry Date">{checkAndSetDefaultValue(pucExpiryDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Insurance Expiry Date">{checkAndSetDefaultValue(insuranceExpiryDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Customer Category-SSI">{checkAndSetDefaultValue(formData?.customerCategorySsi, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Customer Category-CSI">{checkAndSetDefaultValue(formData?.customerCategoryCsi, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Customer Category-IQS">{checkAndSetDefaultValue(formData?.customerCategoryIQS, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="OEM Priviledge Customer">{checkAndSetDefaultValue(formData?.oemPrivilegeCustomer, isLoading, 'bool')}</Descriptions.Item>
+                                    <Descriptions.Item label="Key Account Vihicle">{checkAndSetDefaultValue(formData?.keyAccountVehicle, isLoading, 'bool')}</Descriptions.Item>
+                                    <Descriptions.Item label="Theft Vihicle">{checkAndSetDefaultValue(formData?.theftVehicle, isLoading, 'bool')}</Descriptions.Item>
+                                    <Descriptions.Item label="PDI Done">{checkAndSetDefaultValue(formData?.pdiDone, isLoading, 'bool', '')}</Descriptions.Item>
+                                    <Descriptions.Item label="Buy Back Vehicle">{checkAndSetDefaultValue(formData?.buyBackVehicle, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Government Vehicle">{checkAndSetDefaultValue(formData?.govtVehicle, isLoading, 'bool')}</Descriptions.Item>
+                                    <Descriptions.Item label="Taxi/Non Taxi">{checkAndSetDefaultValue(formData?.taxiOrNonTaxi, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="M&M CTC Vehicle">{checkAndSetDefaultValue(formData?.mnmCtcVehicle, isLoading, 'bool')}</Descriptions.Item>
+                                    <Descriptions.Item label="Managed By">{checkAndSetDefaultValue(formData?.manageBy, isLoading)}</Descriptions.Item>
+
+                                    {/* <Descriptions.Item label="Warranty Blocked">{checkAndSetDefaultValue(formData?.warrantyBlocked , isLoading,'','bool')}</Descriptions.Item>
                             <Descriptions.Item label="Care Plus">{checkAndSetDefaultValue(formData?.carePlus, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Legal">{checkAndSetDefaultValue(formData?.legal, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Dealership Vehicle">{checkAndSetDefaultValue(formData?.dealershipVehicle, isLoading)}</Descriptions.Item> */}
-                        </Descriptions>
+                                </Descriptions>
                             </Panel>
                         </Collapse>
 
@@ -75,16 +74,10 @@ const ViewDetailMain = (props) => {
                                 <div>Coming Soon...</div>
                             </Panel>
                         </Collapse>
- 
                     </Space>
                 </Col>
             </Row>
         </div>
-         
-      
-
-        
-        
     );
 };
 
