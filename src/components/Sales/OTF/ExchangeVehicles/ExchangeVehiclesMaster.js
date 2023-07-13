@@ -180,21 +180,14 @@ const ExchangeVehiclesBase = (props) => {
     }, [userId, selectedOrderId]);
 
     const onErrorAction = (message) => {
-        // showGlobalNotification(message);
+        showGlobalNotification({ message });
     };
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId };
-        delete data.hypothicatedTo;
-        delete data.usage;
-        delete data.schemeName;
-        delete data.relationship;
-        delete data.monthOfRegistration;
-        delete data.yearOfRegistration;
+        const data = { ...values, id: exchangeData?.id || '', otfNumber: selectedOrderId };
 
         const onSuccess = (res) => {
             form.resetFields();
-            // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
