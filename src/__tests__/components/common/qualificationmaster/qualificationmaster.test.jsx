@@ -33,6 +33,12 @@ describe('Qualification Master Test', () => {
             fireEvent.click(buttonClick);
         });
     });
+    it('should click refresh', async () => {
+        customRender(<QualificationMaster />);
+        const buttonClick = screen.getByTestId('refreshBtn');
+        expect(buttonClick).toBeTruthy();
+        fireEvent.click(buttonClick);
+    });
 
     it('should validate search', async () => {
         customRender(<QualificationMaster />);
