@@ -254,6 +254,7 @@ const IndividualProfileBase = (props) => {
         uploadedFile,
         setUploadedFiles,
         uploadedFiles,
+        showGlobalNotification,
 
         saveDocumentData,
         userId,
