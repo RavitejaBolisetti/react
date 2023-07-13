@@ -172,7 +172,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item name="accountHead" label="Financial Account Head" rules={[validateRequiredSelectField('Financial Account Head')]}>
-                                    <Select loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Financial Account Head')} disabled={formData?.id || isReadOnly} showSearch allowClear>
+                                    <Select loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Financial Account Head')} disabled={formData?.id || isReadOnly}>
                                         {financialAccount?.map((item) => (
                                             <Option key={item?.id} value={item?.key}>
                                                 {item?.value}
