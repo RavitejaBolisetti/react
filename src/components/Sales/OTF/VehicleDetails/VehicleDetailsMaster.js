@@ -94,6 +94,7 @@ const VehicleDetailsMasterMain = (props) => {
 
     const onErrorAction = (message) => {
         resetData();
+        showGlobalNotification({ message: message });
     };
     const extraParams = [
         {
@@ -186,7 +187,7 @@ const VehicleDetailsMasterMain = (props) => {
                     name: 'Product Code',
                 },
             ];
-            fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraparams: LovParams });
+            VehicleDetailsData?.model && VehicleDetailsData?.model !== '' && fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraparams: LovParams });
             setformData(VehicleDetailsData);
             setoptionsServiceModified(VehicleDetailsData['optionalServices']);
         }

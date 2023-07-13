@@ -3,14 +3,38 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
-import { Col, Input, Form, Row, Select, Button} from 'antd';
-import { preparePlaceholderText,preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import React, { useState, useEffect } from 'react';
+import { Col, Input, Form, Row, Select, Button } from 'antd';
+import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validateRequiredSelectField } from 'utils/validation';
 
 const OptionServicesFormMain = (props) => {
-    const { typeData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, showGlobalNotification,  formData, optionForm } = props;
+    const { typeData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, showGlobalNotification, formData, optionForm } = props;
+    const [serviceOptions, setserviceOptions] = useState([]);
+    useEffect(() => {
+        if (typeData && typeData['OPT_SRV']) {
+            setserviceOptions(typeData['OPT_SRV']);
+        }
+    }, [typeData]);
+    useEffect(() => {
+        if (serviceOptions && serviceOptions?.length) {
+            const arr = [];
+            optionsServiceModified?.map((option) => {
+                arr.push(option?.serviceName);
+            });
+
+            setserviceOptions(
+                serviceOptions?.map((element) => {
+                    if (arr?.includes(element?.value)) {
+                        return { ...element, disabled: true };
+                    } else {
+                        return element;
+                    }
+                })
+            );
+        }
+    }, [typeData, optionsServiceModified]);
     const isServiceNamePresent = (serviceName) => {
         let found = false;
         optionsServiceModified?.find((element, index) => {
@@ -52,9 +76,10 @@ const OptionServicesFormMain = (props) => {
                                         style={{
                                             width: '100%',
                                         }}
-                                        options={typeData['OPT_SRV']}
+                                        options={serviceOptions}
                                         fieldNames={{ label: 'value', value: 'value' }}
                                         placeholder={preparePlaceholderSelect('Service Name')}
+                                        allowClear
                                     />
                                 </Form.Item>
                             </Col>
