@@ -84,6 +84,6 @@ describe('DrawerFormButton components', () => {
             const editButton = screen.getByRole('button', {
                 name: /Edit/i
             });
-            fireEvent.click(editButtons); 
+            fireEvent.click(editButton); 
         });
 })
