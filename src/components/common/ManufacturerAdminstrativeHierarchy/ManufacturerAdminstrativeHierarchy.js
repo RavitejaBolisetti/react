@@ -445,8 +445,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         setIsUploadDrawer(false);
-        resetData();
-        resetViewData();
+        // resetData();
+        // resetViewData();
     };
 
     const drawerTitle = 'Upload Authority Details';
