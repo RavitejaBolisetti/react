@@ -31,7 +31,7 @@ import { OTF } from './otf';
 import { Vehicle } from './vehicle';
 import { CustomerMaster } from './customerMaster';
 import { SupportingDocument } from './supportingDocument';
-import { FinancialAccounting } from './financialAccounting'
+import { FinancialAccounting } from './financialAccounting';
 import { ManufacturerAdmin } from './ManufacturerAdmin';
 import { ManufacturerOrg } from './ManufacturerOrg';
 
@@ -63,7 +63,7 @@ export const data = combineReducers({
     CustomerMaster,
     SupportingDocument,
     Vehicle,
-    FinancialAccounting
+    FinancialAccounting,
     ManufacturerAdmin,
     ManufacturerOrg,
 });
