@@ -123,7 +123,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
 
-                {attributeType === 'Tax_Calculation' ? (
+                {attributeType === ATTRIBUTE_TYPE[1]?.key ? (
                     <>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -139,13 +139,13 @@ const AddEditFormMain = (props) => {
                             </Col>
                         </Row>
                         <Row gutter={20}>
-                            {calType === 'Percentage' ? (
+                            {calType === CALCULTION_TYPE[1]?.key ? (
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Form.Item initialValue={null} label="Percentage" name="Percentage" rules={[validateRequiredInputField('Percentage'), valueOfPer('Percentage')]}>
                                         <InputNumber placeholder={preparePlaceholderText('Percentage')} className={styles.inputBox} type="number" />
                                     </Form.Item>
                                 </Col>
-                            ) : calType === 'Amount' ? (
+                            ) : calType === CALCULTION_TYPE[0]?.key ? (
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Form.Item initialValue={null} label="Rate" name="Rate" rules={[validateRequiredInputField('Rate'), validateNumberWithTwoDecimalPlaces('Rate')]}>
                                         <InputNumber placeholder={preparePlaceholderText('Rate')} className={styles.inputBox} type="number" />
@@ -154,7 +154,7 @@ const AddEditFormMain = (props) => {
                             ) : null}
                         </Row>
                     </>
-                ) : attributeType === 'Tax_Document' ? (
+                ) : attributeType === ATTRIBUTE_TYPE[2]?.key ? (
                     <>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
