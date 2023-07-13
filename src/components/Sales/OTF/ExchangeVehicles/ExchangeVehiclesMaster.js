@@ -16,14 +16,13 @@ import { schemeDataActions } from 'store/actions/data/otf/exchangeVehicle';
 import { vehicleMakeDetailsDataActions } from 'store/actions/data/vehicle/makeDetails';
 import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
 import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
-import { OTFNoDataFound } from '../utils/OTFNoDataFound';
-import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'components/common/Common.module.css';
 
@@ -119,7 +118,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ExchangeVehiclesBase = (props) => {
-    const { exchangeData, isLoading, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, section } = props;
+    const { exchangeData, isLoading, fetchList, userId, listShowLoading, showGlobalNotification, section } = props;
     const { typeData } = props;
     const { fetchMakeLovList, listMakeShowLoading, fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isMakeDataLoaded, isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
@@ -129,8 +128,6 @@ const ExchangeVehiclesBase = (props) => {
     const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
 
     const [formData, setFormData] = useState('');
-    const [noData, setNoData] = useState(false);
-    const [errMsg, setErrMsg] = useState('');
 
     useEffect(() => {
         setFormData(exchangeData);
@@ -147,9 +144,6 @@ const ExchangeVehiclesBase = (props) => {
     ];
 
     const errorAction = (message) => {
-        setNoData(true);
-        setErrMsg(message[0]);
-        console.log(message, 'message');
         showGlobalNotification({ message });
     };
 
@@ -324,7 +318,7 @@ const ExchangeVehiclesBase = (props) => {
                         </Col>
                     </Row>
 
-                    {formActionType?.viewMode ? noData ? <OTFNoDataFound errMsg={errMsg} /> : <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

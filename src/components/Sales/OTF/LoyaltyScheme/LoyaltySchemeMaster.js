@@ -14,7 +14,6 @@ import { bindActionCreators } from 'redux';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { OTFFormButton } from '../OTFFormButton';
 import { ViewDetail } from './ViewDetail';
-import { OTFNoDataFound } from '../utils/OTFNoDataFound';
 
 const mapStateToProps = (state) => {
     const {
@@ -56,12 +55,8 @@ const LoyaltySchemeMasterMain = (props) => {
     const { form, selectedOrderId, formActionType, handleFormValueChange, onFinishFailed, handleButtonClick, NEXT_ACTION } = props;
 
     const [formdata, setformdata] = useState();
-    const [noData, setNoData] = useState(false);
-    const [errMsg, setErrMsg] = useState('');
 
     const onErrorAction = (message) => {
-        setNoData(true);
-        setErrMsg(message[0]);
         showGlobalNotification({ message });
     };
 
@@ -126,7 +121,7 @@ const LoyaltySchemeMasterMain = (props) => {
                             <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? noData ? <OTFNoDataFound errMsg={errMsg} /> : <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

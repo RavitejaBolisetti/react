@@ -14,7 +14,6 @@ import { insuranceDetailDataActions } from 'store/actions/data/otf/insuranceDeta
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { OTFFormButton } from '../OTFFormButton';
 import { AddEditForm } from './AddEditForm';
-import { OTFNoDataFound } from '../utils/OTFNoDataFound';
 
 const mapStateToProps = (state) => {
     const {
@@ -56,8 +55,6 @@ const InsuranceDetailsMasterBase = (props) => {
     const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed } = props;
 
     const [formData, setFormData] = useState();
-    const [noData, setNoData] = useState(false);
-    const [errMsg, setErrMsg] = useState('');
 
     useEffect(() => {
         setFormData(insuranceData);
@@ -81,8 +78,6 @@ const InsuranceDetailsMasterBase = (props) => {
     }, [userId, selectedOrderId]);
 
     const onErrorAction = (message) => {
-        setNoData(true);
-        setErrMsg(message[0]);
         showGlobalNotification({ message: message });
     };
 
@@ -130,7 +125,7 @@ const InsuranceDetailsMasterBase = (props) => {
                         </Col>
                     </Row>
 
-                    {formActionType?.viewMode ? noData ? <OTFNoDataFound errMsg={errMsg} /> : <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

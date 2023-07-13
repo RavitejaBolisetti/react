@@ -14,7 +14,6 @@ import { ViewDetail } from './ViewDetail';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { OTFFormButton } from '../OTFFormButton';
-import { OTFNoDataFound } from '../utils/OTFNoDataFound';
 import styles from 'components/common/Common.module.css';
 
 import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetail';
@@ -56,9 +55,6 @@ const SchemeDetailsMasterBase = (props) => {
     const { form, selectedOrderId, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
 
     const [formData, setFormData] = useState();
-    const [noData, setNoData] = useState(false);
-    const [errMsg, setErrMsg] = useState('');
-
     useEffect(() => {
         if (schemeData) {
             form.setFieldsValue({ ...schemeData });
@@ -76,8 +72,6 @@ const SchemeDetailsMasterBase = (props) => {
     }, []);
 
     const onErrorAction = (message) => {
-        setNoData(true);
-        setErrMsg(message[0]);
         showGlobalNotification({ message: message });
     };
 
@@ -129,7 +123,7 @@ const SchemeDetailsMasterBase = (props) => {
                             <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? noData ? <OTFNoDataFound errMsg={errMsg} /> : <ViewDetail {...viewProps} /> : <AddEditForm {...myProps} />}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...myProps} />}
                 </Col>
             </Row>
             <Row>

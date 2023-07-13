@@ -18,7 +18,6 @@ import { OTFFormButton } from '../OTFFormButton';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
-import { OTFNoDataFound } from '../utils/OTFNoDataFound';
 
 import styles from 'components/common/Common.module.css';
 
@@ -86,8 +85,6 @@ export const CustomerDetailsMain = (props) => {
     const [formData, setFormData] = useState('');
     const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
     const [activeKey, setActiveKey] = useState([1]);
-    const [noData, setNoData] = useState(false);
-    const [errMsg, setErrMsg] = useState('');
 
     useEffect(() => {
         if (userId && customerFormData) {
@@ -109,8 +106,6 @@ export const CustomerDetailsMain = (props) => {
     };
 
     const onErrorAction = (message) => {
-        setNoData(true);
-        setErrMsg(message[0]);
         showGlobalNotification({ message: message });
     };
 
@@ -210,7 +205,7 @@ export const CustomerDetailsMain = (props) => {
                             <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? noData ? <OTFNoDataFound errMsg={errMsg} /> : <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

@@ -9,7 +9,7 @@ import { Empty, Card } from 'antd';
 import styles from 'components/common/Common.module.css';
 
 export const NoDataFound = (props) => {
-    const { errMsg } = props;
+    const { informtion = 'No Data Found' } = props;
     return (
         <Card>
             <Empty
@@ -17,7 +17,7 @@ export const NoDataFound = (props) => {
                 imageStyle={{
                     height: 60,
                 }}
-                description={<span className={styles.descriptionText}> {errMsg}</span>}
+                description={<span className={styles.descriptionText}>{informtion}</span>}
             />
         </Card>
     );

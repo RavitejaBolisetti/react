@@ -17,7 +17,6 @@ import styles from 'components/common/Common.module.css';
 
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-import { OTFNoDataFound } from '../utils/OTFNoDataFound';
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { convertCalenderDate } from 'utils/formatDateTime';
@@ -78,8 +77,6 @@ const ReferralsMasterBase = (props) => {
     const [resetField, setResetField] = useState(false);
     const { filterString, setFilterString } = props;
     const [vehicleRegNum, setVehicleRegNum] = useState();
-    const [noData, setNoData] = useState(false);
-    const [errMsg, setErrMsg] = useState('');
 
     const extraParams = useMemo(() => {
         return [
@@ -121,7 +118,6 @@ const ReferralsMasterBase = (props) => {
                 setIsLoading: listShowLoading,
                 extraParams,
                 onSuccessAction: (res) => {
-                    console.log(res, 'RES');
                     res?.data?.referralData?.referralDetails.length === 1 ? setFormData(res?.data?.referralData?.referralDetails[0]) : setVehicleRegNum(res?.data?.referralData?.referralDetails);
                 },
                 onErrorAction,
@@ -158,9 +154,6 @@ const ReferralsMasterBase = (props) => {
     };
 
     const onErrorAction = (message) => {
-        setNoData(true);
-        console.log(message, 'message');
-        setErrMsg(message[0]);
         showGlobalNotification({ message });
     };
 
@@ -249,7 +242,6 @@ const ReferralsMasterBase = (props) => {
         onFinish,
         onFinishFailed,
         onSearch,
-        // handleSearchParamSearch,
         resetField,
         optionType: typeData[PARAM_MASTER.REFERRAL_SEARCH.id],
         // searchParamRule: referralSearchRules,
@@ -278,7 +270,7 @@ const ReferralsMasterBase = (props) => {
                             <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? noData ? <OTFNoDataFound errMsg={errMsg} /> : <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>
