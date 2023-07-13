@@ -67,9 +67,7 @@ const ViewDetailMain = (props) => {
 
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
                             <Panel header="Tax Details" key="2">
-                                <div className={styles.noHorizontalScroll}>
-                                    <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
-                                </div>
+                                <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
                             </Panel>
                         </Collapse>
 
