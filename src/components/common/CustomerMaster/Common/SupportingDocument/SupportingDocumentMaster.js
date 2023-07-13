@@ -217,19 +217,6 @@ const SupportingDocumentBase = (props) => {
         }
     };
 
-    const handlePreview = (selectedDocument) => {
-        const extraParams = [
-            {
-                key: 'docId',
-                title: 'docId',
-                value: selectedDocument?.docId,
-                name: 'docId',
-            },
-        ];
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, selectedDocument });
-        setSupportingDataView(supportingData);
-    };
-
     const viewProps = {
         downloadFileFromButton,
         isViewDataLoaded,
@@ -238,7 +225,6 @@ const SupportingDocumentBase = (props) => {
         setSupportingDataView,
         deleteFile,
 
-        handlePreview,
         viewDocument,
         showGlobalNotification,
         formActionType,
@@ -266,7 +252,6 @@ const SupportingDocumentBase = (props) => {
         downloadFileFromButton,
         downloadFileFromList,
         viewListShowLoading,
-        handlePreview,
 
         ADD_ACTION,
         EDIT_ACTION,
