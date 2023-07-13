@@ -128,7 +128,6 @@ const IndividualProfileBase = (props) => {
     }, [userId, selectedCustomerId, isIndiviualProfileLoaded]);
 
     const downloadFileFromButton = () => {
-        console.log('indiviualData', indiviualData);
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
         const extraParams = [
             {
