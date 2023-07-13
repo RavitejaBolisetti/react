@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        typeData: typeData[PARAM_MASTER.CUST_MST.id],
+        typeData: typeData[PARAM_MASTER.VH_DTLS_SER.id],
         isDataLoaded: true,
         data: data?.vehicleSearch,
         vehicleDetailStatusList: Object.values(VEHICLE_DETAIL_STATUS),

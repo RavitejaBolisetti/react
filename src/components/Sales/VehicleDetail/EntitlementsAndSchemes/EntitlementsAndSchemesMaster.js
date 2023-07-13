@@ -93,7 +93,7 @@ export const EntitlementsAndSchemesMasterBase = (props) => {
     const onFinishFailed = () => {};
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
@@ -101,11 +101,11 @@ export const EntitlementsAndSchemesMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    <Space size="middle" direction="vertical" className={styles.accordianContainer}>
-                        <Card>
-                            <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumn()} tableData={entitelmentData?.entitlementsAndSchemeResponses} />
-                        </Card>
-                    </Space>
+                    {/* <Space size="middle" direction="vertical" className={styles.accordianContainer}> */}
+                    {/* <Card> */}
+                    <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumn()} tableData={entitelmentData?.entitlementsAndSchemeResponses} />
+                    {/* </Card> */}
+                    {/* </Space> */}
                 </Col>
             </Row>
             <Row>
@@ -113,7 +113,7 @@ export const EntitlementsAndSchemesMasterBase = (props) => {
                     <VehicleDetailFormButton {...myProps} />
                 </Col>
             </Row>
-        </Form>
+        </>
     );
 };
 

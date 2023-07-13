@@ -180,4 +180,8 @@ export const PARAM_MASTER = {
         id: 'ADMINAUTHTMPLT',
         title: 'Authority template download',
     },
+    VH_DTLS_SER: {
+        id: 'VH_DTLS_SER',
+        title: 'Vehicle Detail List',
+    },
 };

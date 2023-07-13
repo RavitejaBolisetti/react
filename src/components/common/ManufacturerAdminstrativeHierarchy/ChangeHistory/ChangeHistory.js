@@ -59,11 +59,9 @@ const ChangeHistoryMain = (props) => {
     const { fetchAdminHierarchy, changeHistoryAdminShowLoading, fetchOrgChangeHistoryList, changeHistoryOrgShowLoading } = props;
     const { userId, isAdminHierarchyHistoryLoading, isHistoryOrgHierarchyLoading, isOrgHistoryLoaded, isAdminHistoryLoaded, ChangeHistoryAdminData, ChangeHistoryOrgData } = props;
     const { activeKey } = props;
-    const onSuccessAction = (res) => {
-    };
+    const onSuccessAction = (res) => {};
 
-    const onErrorAction = (message) => {
-    };
+    const onErrorAction = (message) => {};
     useEffect(() => {
         if (userId && activeKey) {
             fetchAdminHierarchy({ setIsLoading: changeHistoryAdminShowLoading, userId, onErrorAction, onSuccessAction });
@@ -72,16 +70,12 @@ const ChangeHistoryMain = (props) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, activeKey]);
-    console.log('ChangeHistoryAdminData', ChangeHistoryAdminData);
-    console.log('ChangeHistoryOrgData', ChangeHistoryOrgData);
-    console.log('activeKey', activeKey);
 
     const tableProps = {
-        isLoading: activeKey == '1' ? isAdminHierarchyHistoryLoading : isHistoryOrgHierarchyLoading,
-        tableColumn: activeKey == '1' ? tableColumnAuthority : tableColumnAdmin,
-        tableData: activeKey == '1' ? ChangeHistoryAdminData : ChangeHistoryOrgData,
+        isLoading: activeKey === '1' ? isAdminHierarchyHistoryLoading : isHistoryOrgHierarchyLoading,
+        tableColumn: activeKey === '1' ? tableColumnAuthority : tableColumnAdmin,
+        tableData: activeKey === '1' ? ChangeHistoryAdminData : ChangeHistoryOrgData,
     };
-    console.log('tableProps', tableProps);
 
     return (
         <div className={styles.changeHistoryContainer}>
