@@ -10,11 +10,10 @@ import { bindActionCreators } from 'redux';
 import { Row, Col, Form, Button } from 'antd';
 
 import { AddEditForm } from './AddEditForm';
-import { lessorCompanyCreationDataActions } from 'store/actions/data/lessorCompanyCreation';
+import { lessorCustomerCreationDataActions } from 'store/actions/data/lessorCustomerCreation';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { geoStateDataActions } from 'store/actions/data/geo/state';
-
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
@@ -27,7 +26,7 @@ const mapStateToProps = (state) => {
         auth: { userId, accessToken, token },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            LessorCompanyCreation: { isLoaded: isDataLoaded = false, isLoading, data: lessorData },
+            LessorCustomerCreation: { isLoaded: isDataLoaded = false, isLoading, data: lessorData },
             SupportingDocument: { isLoaded: isSupportingDataLoaded = false, isSupportingDataLoading, data: supportingData },
             CustomerMaster: {
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
@@ -38,7 +37,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Lessor Company';
+    const moduleTitle = 'Lessor Customer';
 
     let returnValue = {
         userId,
@@ -72,11 +71,11 @@ const mapDispatchToProps = (dispatch) => ({
             viewListShowLoading: documentViewDataActions.listShowLoading,
             resetViewData: documentViewDataActions.reset,
 
-            fetchList: lessorCompanyCreationDataActions.fetchList,
-            saveData: lessorCompanyCreationDataActions.saveData,
-            resetData: lessorCompanyCreationDataActions.reset,
+            fetchList: lessorCustomerCreationDataActions.fetchList,
+            saveData: lessorCustomerCreationDataActions.saveData,
+            resetData: lessorCustomerCreationDataActions.reset,
 
-            listLessorShowLoading: lessorCompanyCreationDataActions.listShowLoading,
+            listLessorShowLoading: lessorCustomerCreationDataActions.listShowLoading,
 
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
             downloadFile: supportingDocumentDataActions.downloadFile,
@@ -88,7 +87,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ListCompanyCreationBase = (props) => {
+export const ListCustomerCreationBase = (props) => {
     const { stateData, resetData, resetViewData, fetchStateLovList, isStateDataLoaded, listStateShowLoading, detailData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { listLessorShowLoading, isSupportingDataLoaded, isSupportingDataLoading, supportingData, uploadDocumentFile, accessToken, token } = props;
 
@@ -125,14 +124,15 @@ export const ListCompanyCreationBase = (props) => {
         const data = { docId: uploadedFile };
 
         const onSuccess = (res) => {
+            setIsFormVisible(false)
             setEmptyList(false);
             setUploadedFile();
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
+        const onError = (res) => {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res });
         };
 
         const requestData = {
@@ -243,4 +243,4 @@ export const ListCompanyCreationBase = (props) => {
     );
 };
 
-export const ListCompanyCreation = connect(mapStateToProps, mapDispatchToProps)(ListCompanyCreationBase);
+export const ListCustomerCreation = connect(mapStateToProps, mapDispatchToProps)(ListCustomerCreationBase);

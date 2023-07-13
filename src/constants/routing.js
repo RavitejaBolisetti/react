@@ -41,7 +41,7 @@ export const ROUTING_COMMON_BRANCH_DEALER_MAPPING = ROUTING_COMMON.concat('branc
 
 export const ROUTING_COMMON_PARTY_MASTER = ROUTING_COMMON.concat('party-master');
 export const ROUTING_COMMON_LESSOR_COMPANY_MASTER = ROUTING_COMMON.concat('lessor-company-master');
-export const ROUTING_COMMON_LESSOR_COMPANY_CREATION = ROUTING_COMMON.concat('lessor-company-creation');
+export const ROUTING_COMMON_LESSOR_CUSTOMER_CREATION = ROUTING_COMMON.concat('lessor-customer-creation');
 
 export const ROUTING_COMMON_QUALIFICATION_MASTER = ROUTING_COMMON.concat('qualification-master');
 

@@ -4,12 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { ListCompanyCreation } from 'components/common/LessorCompanyCreation';
+import { ListCustomerCreation } from 'components/common/LessorCustomerCreation';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
-export const LessorCompanyCreationBase = (props) => {
-    const pageTitle = 'Lessor Company Creation';
+export const LessorCustomerCreationBase = (props) => {
+    const pageTitle = 'Lessor Customer Creation';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
@@ -20,9 +20,9 @@ export const LessorCompanyCreationBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <ListCompanyCreation />
+            <ListCustomerCreation />
         </>
     );
 };
 
-export const LessorCompanyCreationPage = withLayoutMaster(LessorCompanyCreationBase);
+export const LessorCustomerCreationPage = withLayoutMaster(LessorCustomerCreationBase);
