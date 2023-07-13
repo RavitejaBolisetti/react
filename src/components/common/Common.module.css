@@ -753,7 +753,9 @@
 .drawerBodyRight .accordianContainer .viewCardSize :global .ant-card-body .ant-space {
     align-items: center;
 }
-
+.drawerBodyRight :global .ant-input-search .ant-input{
+    height:25px;
+}
 .accessInfo {
     margin-bottom: 20px;
 }
