@@ -6,7 +6,7 @@
 export const VEHICLE_DETAIL_SECTION = {
     VEHICLE_DETAILS: {
         id: 1,
-        title: 'Vechile Details',
+        title: 'Vehicle Details',
         displayOnList: true,
     },
     CUSTOMER_DETAILS: {

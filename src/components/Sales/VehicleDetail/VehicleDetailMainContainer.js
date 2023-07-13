@@ -10,7 +10,11 @@ import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 
 import { VehicleDetailsMaster } from './VehicleDetails';
 import { CustomerDetailsMaster } from './CustomerDetails';
-import { EntitelmentMaster } from './ Entitlements&Schemes';
+import { ProductDetailMaster } from './ProductDetails';
+import { SupportingDocumentMaster } from './SupportingDocument';
+import { ContactMaster } from './Contacts';
+import { EntitlementsAndSchemesMaster } from './EntitlementsAndSchemes';
+import { ComingSoonMaster } from './ComingSoon';
 import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'components/common/Common.module.css';
@@ -30,11 +34,20 @@ const VehicleDetailMainContainerMain = (props) => {
             case VEHICLE_DETAIL_SECTION.CUSTOMER_DETAILS.id: {
                 return <CustomerDetailsMaster {...myProps} />;
             }
+            case VEHICLE_DETAIL_SECTION.PRODUCT_DETAILS.id: {
+                return <ProductDetailMaster {...myProps} />;
+            }
+            case VEHICLE_DETAIL_SECTION.DOCUMENTS.id: {
+                return <SupportingDocumentMaster {...myProps} />;
+            }
+            case VEHICLE_DETAIL_SECTION.CONTACTS.id: {
+                return <ContactMaster {...myProps} />;
+            }
             case VEHICLE_DETAIL_SECTION.ENTITLEMENTS_SCHEMES.id: {
-                return <EntitelmentMaster {...myProps} />;
+                return <EntitlementsAndSchemesMaster {...myProps} />;
             }
             default: {
-                return <>Coming Soon</>;
+                return <ComingSoonMaster {...myProps} />;
             }
         }
     };

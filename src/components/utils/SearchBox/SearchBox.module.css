@@ -34,7 +34,7 @@
 }
 
 .selectSearchBg .headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper {
-    height: 26px !important;
+    height: 26px;
     padding: 4px 12px;
     border-inline-end-width: 0px;
 }
@@ -148,6 +148,7 @@
 
 .selectSearchBg .headerSelectField :global .ant-select-selector {
     background: #e6e6e6;
+    padding-top: 0px;
 }
 
 .selectSearchBg .headerSelectField :global .ant-select-selector .ant-select-selection-placeholder,
@@ -158,6 +159,7 @@
     font-weight: 500;
     line-height: 24px;
 }
+
 
 .selectSearchBg .headerSearchField :global .ant-input-group {
     border: none;

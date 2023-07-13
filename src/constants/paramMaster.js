@@ -160,6 +160,14 @@ export const PARAM_MASTER = {
         id: 'TRNSFER_REASON',
         title: 'TRNSFER_REASON',
     },
+    VH_CONTACT_TYPE: {
+        id: 'VH_CONTACT_TYPE',
+        title: 'Vehicle Contact Type',
+    },
+    VH_CONTACT_DAYS: {
+        id: 'VH_CONTACT_DAYS',
+        title: 'Vehicle Contact Days',
+    },
     REFERRAL_SEARCH: {
         id: 'REFERRAL_SEARCH',
         title: 'REFERRAL_SEARCH',
@@ -171,5 +179,13 @@ export const PARAM_MASTER = {
     LSRCUSTTMPLT: {
         id: 'LSRCUSTTMPLT',
         title: 'Lessor creation template download',
+    },
+    ADMINAUTHTMPLT: {
+        id: 'ADMINAUTHTMPLT',
+        title: 'Authority template download',
+    },
+    VH_DTLS_SER: {
+        id: 'VH_DTLS_SER',
+        title: 'Vehicle Detail List',
     },
 };

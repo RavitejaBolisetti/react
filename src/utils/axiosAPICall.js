@@ -44,7 +44,7 @@ const baseAPICall = (params) => {
     };
 
     const onUnAuthenticated = (message = '') => {
-        // clearLocalStorageData();
+        clearLocalStorageData();
         onError && onError(message);
     };
 
@@ -66,9 +66,9 @@ const baseAPICall = (params) => {
                     } else if (response?.statusCode === 401) {
                         onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else if (response.statusCode === 403) {
-                        onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
+                        onError && onError(response?.errors || unAuthorizedMessage);
                     } else if (response.statusCode === 500) {
-                        onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
+                        onError && onError(response?.errors || unAuthorizedMessage);
                     } else {
                         handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.INTERNAL_SERVER_ERROR.TITLE, errorMessage: response?.data?.errors || response?.data?.responseMessage || LANGUAGE_EN.GENERAL.INTERNAL_SERVER_ERROR.MESSAGE });
                     }
