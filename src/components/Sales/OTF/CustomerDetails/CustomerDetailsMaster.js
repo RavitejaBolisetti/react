@@ -85,7 +85,7 @@ export const CustomerDetailsMain = (props) => {
     const [billCstmForm] = Form.useForm();
     const [formData, setFormData] = useState('');
     const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
-    const [activeKey, setActiveKey] = useState([1]);
+    const [activeKey, setActiveKey] = useState([]);
     const [noData, setNoData] = useState(false);
     const [errMsg, setErrMsg] = useState('');
 
