@@ -7,30 +7,9 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 
 import { CriticalityGroup } from '@components/common/CriticalityGroup/CriticalityGroup';
-
-const fetchData = () => {
-    return;
-};
-const saveData = () => {
-    return;
-};
-
-const criticalityGroupData1 = [
-    {
-        criticalityGroupCode: 'Test50',
-        criticalityGroupName: 'Test50',
-        status: 1,
-        defaultGroup: '1',
-        allowedTimings: [
-            {
-                startTime: '11:00',
-                endTime: '12:00',
-            },
-        ],
-    },
-];
 
 export const buttonLookAndFireEventWithText = async (btnText) => {
     const CancelBtn = await screen.findByText(btnText);
@@ -47,55 +26,45 @@ describe('CriticalityGroup Components', () => {
     it('should render CriticalityGroup components', () => {
         customRender(<CriticalityGroup />);
     });
-});
-
-describe('Criticality Group Test', () => {
-    test('Is the search Field Present or not', () => {
-        customRender(<CriticalityGroup fetchData={fetchData} saveData={saveData} />);
-        const btn = screen.findByPlaceholderText('Search');
-        expect(btn).toBeTruthy();
-        expect(screen.getByRole('img', { name: 'search' })).toBeTruthy();
-        fireEvent.click(screen.getByRole('img', { name: 'search' }));
-        const Btn = screen.getByRole('button', { name: 'search' });
-        expect(Btn).toBeTruthy();
-        fireEvent.click(Btn);
-    });
-
-    test('is drawer closing on click of cancel button', async () => {
-        customRender(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
-        buttonLookAndFireEventWithText('Add Group');
-        buttonLookAndFireEventWithText('Cancel');
-    });
-
-    test('is drawer opening on click of Add Criticality', async () => {
-        customRender(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
-        buttonLookAndFireEventWithText('Add Group');
-        InputFieldAvailablity('Please enter id');
-        InputFieldAvailablity('Please enter code');
-    });
-    test('should render page title', () => {
+    it('should render page', () => {
         customRender(<CriticalityGroup />);
-        const value = screen.getAllByText('Criticality Group Name');
-        expect(value).toBeTruthy();
+        expect(screen.getAllByText(/Criticality Group List/i)).toBeTruthy();
     });
-
-    test('Save drawer element', async () => {
-        const onFinish = jest.fn();
-        customRender(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
-
-        buttonLookAndFireEventWithText('Add Group');
-        InputFieldAvailablity('Please enter id');
-        InputFieldAvailablity('Please enter code');
-
-        onFinish.mockResolvedValue({
-            criticalityGroupCode: 'Test50',
-            criticalityGroupName: 'Test50',
+    it('should able to search data', async () => {
+        customRender(<CriticalityGroup />);
+        const inputBox = screen.getByRole('textbox');
+        fireEvent.change(inputBox, { target: { value: 'Dmatest' } });
+        expect(inputBox.value.includes('Dmatest'));
+        await act(async () => {
+            const searchButton = screen.getByRole('button', { name: /search/i });
+            fireEvent.click(searchButton);
         });
-
-        const result = await onFinish();
-        buttonLookAndFireEventWithText('Save');
-
-        expect(result).toBeTruthy();
-        expect(onFinish).toHaveBeenCalled();
+    });
+    it('should click add', async () => {
+        customRender(<CriticalityGroup />);
+        await act(async () => {
+            const buttonClick = screen.getByRole('button', { name: /Add/i });
+            fireEvent.click(buttonClick);
+        });
+    });
+    it('should click refresh', async () => {
+        customRender(<CriticalityGroup />);
+        const buttonClick = screen.getByTestId('refreshBtn');
+        expect(buttonClick).toBeTruthy();
+        fireEvent.click(buttonClick);
+    });
+    it('should validate search', async () => {
+        customRender(<CriticalityGroup />);
+        const inputBox = screen.getByRole('textbox');
+        fireEvent.change(inputBox, { target: { value: 'Dm' } });
+        await act(async () => {
+            const searchButton = screen.getByRole('button', { name: /search/i });
+            fireEvent.click(searchButton);
+        });
+        expect(
+            await screen.findByText('Please enter atleast 3 character to search', undefined, {
+                timeout: 5000,
+            })
+        ).toBeVisible();
     });
 });
