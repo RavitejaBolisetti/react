@@ -3,6 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { act } from 'react-dom/test-utils'
 import customRender from "@utils/test-utils";
 import { Logins } from "@components/Auth/Login/Login";
+import  Captcha  from "@components/Auth/Login/Captcha";
 
 describe('Login Form Component', () => {
 
@@ -44,4 +45,22 @@ describe('Login Form Component', () => {
                 fireEvent.click(getByTestId("Login"));
             });
         });
+});
+describe('Captcha Component', () => {
+    it('should render Captcha component', async () => {
+        customRender(<Captcha />);
+        expect(screen.getByRole('button', {
+            name: /Submit/i
+        })).toBeInTheDocument();
+    });
+    it('should render check button event', async () => {
+        customRender(<Captcha />);
+        const inputBox = screen.getByRole("textbox");
+        fireEvent.change(inputBox, { target: { value: "Dmatest" } });
+        await act(async () => {
+            fireEvent.click(screen.getByRole('button', {
+                name: /Submit/i
+            }));
+        });
+    });
 });
