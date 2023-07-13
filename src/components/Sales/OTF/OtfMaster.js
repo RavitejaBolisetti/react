@@ -428,6 +428,15 @@ export const OtfMasterBase = (props) => {
         setConfirm(true);
         showConfirm(values);
     }
+    const onFinishOTFCancellation = (values)=>{
+        console.log("🚀 ~ file: OtfMaster.js:423 ~ onFinishOTFTansfer ~ values:", values)
+        setModalTitle('OTF Cancel');
+        setModalMessage(`Do you want to cancel this ${values?.otfNumber}`) ;
+        setIsCancelVisible(false);
+        //setIsModalOpen(true);
+        setConfirm(true);
+        showConfirm(values);
+    }
 
     const handleCloseModal = () =>{
         setIsModalOpen(false);
@@ -530,6 +539,7 @@ export const OtfMasterBase = (props) => {
         CANCEL_ACTION,
         isVisible: isCancelVisible,
         onCloseAction: onCancelCloseAction,
+        onFinishOTFCancellation
     };
 
     const transferOTFProps = {

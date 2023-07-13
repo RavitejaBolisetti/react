@@ -65,7 +65,7 @@ const CancellationMasterBase = (props) => {
     const { accessToken, token, onFinishFailed, form, otfData, selectedOrder } = props;
     const { userId, showGlobalNotification, section, listShowLoading, uploadDocumentFile, typeData, saveData, fetchList, supportingData, fetchViewDocument } = props;
     const { formActionType, handleFormValueChange, selectedCustomerId, moduleTitle } = props;
-    const { fetchProductHierarchyList, productHierarchyData } = props;
+    const { fetchProductHierarchyList, productHierarchyData, onFinishOTFCancellation } = props;
 
     const [uploadedFile, setUploadedFile] = useState();
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOtfBtn: true };
@@ -98,7 +98,8 @@ const CancellationMasterBase = (props) => {
         setEmptyList,
         setUploadedFile,
         fieldNames,
-        productHierarchyData
+        productHierarchyData,
+        onFinishOTFCancellation
     };
 
     return (

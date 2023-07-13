@@ -22,7 +22,7 @@ const { Search, TextArea } = Input;
 const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { formData, form, isLoading, otfData, selectedOrder, fieldNames, productHierarchyData  } = props;
+    const { formData, form, isLoading, otfData, selectedOrder, fieldNames, productHierarchyData, onFinishOTFCancellation  } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview, emptyList, setEmptyList } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
@@ -142,7 +142,7 @@ const AddEditFormMain = (props) => {
                     <Descriptions.Item label="Order Status">{checkAndSetDefaultValue(selectedOrder?.orderStatus, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </Card>
-            <Form form={cancelForm} layout="vertical" autocomplete="off" colon="false">
+            <Form form={cancelForm} onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false">
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item name="reasonType" label="Cancellation Reason Type" initialValue={formData?.reasonType} rules={[validateRequiredSelectField('Reason Type')]}>
@@ -166,7 +166,7 @@ const AddEditFormMain = (props) => {
                                     style={{
                                         width: '100%',
                                     }}
-                                    // loading={isConfigLoading}
+                                    fieldNames={{ label: 'value', value: 'key' }}
                                     options={typeData['OEM_CODE']}
                                     placeholder={preparePlaceholderSelect('OEM Name')}
                                 />
