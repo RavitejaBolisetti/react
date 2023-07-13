@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Select, Upload, Button, Empty } from 'antd';
+import { Row, Col, Form, Select, Upload, Button, Empty, Space, Typography } from 'antd';
 
 import { FiEye, FiTrash } from 'react-icons/fi';
 
@@ -18,24 +18,28 @@ import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 const { Dragger } = Upload;
+const { Text, Title } = Typography;
 
 const UploadMain = (props) => {
     const { isViewDataLoaded, resetData, resetViewData, form, formData, onCloseAction, onFinishFailed } = props;
 
     const { buttonData, setButtonData, handleButtonClick } = props;
     const { lessorData, fetchList, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, emptyList, setEmptyList } = props;
-    const { downloadForm, isDataLoaded, listLessorShowLoading, viewListShowLoading, fetchViewDocument } = props;
+    const { downloadForm, isDataLoaded, listLessorShowLoading, viewListShowLoading, fetchViewDocument, organizationId } = props;
     const { authorityShowLoading, saveAuthorityData, uploadedFile, isAuthorityDataLoaded, isAuthorityDataLoading, authorityData } = props;
 
-    
     useEffect(() => {
+        console.log("useEffect 1")
+
         if (isViewDataLoaded && viewDocument) {
             let a = document.createElement('a');
             a.href = `data:image/png;base64,${viewDocument?.base64}`;
             a.download = viewDocument?.fileName;
             a.click();
-            resetViewData();
         }
+        return(()=>{
+            resetViewData();
+        })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isViewDataLoaded, viewDocument]);
 
@@ -50,8 +54,13 @@ const UploadMain = (props) => {
                 },
             ];
             fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, authorityData });
-            resetData();
+            
         }
+        console.log("useEffect 2")
+        console.log("authorityData", authorityData)
+        return(() => {
+            resetData();
+        })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authorityData]);
 
@@ -184,48 +193,37 @@ const UploadMain = (props) => {
         <>
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <div className={styles.contentHeaderBackground}>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                            Authority Form
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            Please download "Authority Form Template" using below button
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Space direction="vertical">
+                        <Space className={styles.accordianIconWithText}>Authority Form</Space>
+                        <Space>Please download "Authority Form Template" using below button</Space>
+                        <Space>
                             <Button type="primary" onClick={handleTemplateDownLoad}>
                                 Download Template
                             </Button>
-                        </Col>
-                    </Row>
+                        </Space>
+                    </Space>
                 </div>
-
+            
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                            <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
-                                <Empty
-                                    description={
-                                        <>
-                                            <span>
-                                                Click or drop your file here to upload
-                                                <br />
-                                                scanned customer form.
-                                            </span>
-                                            <span>
-                                                <br />
-                                                File should be .xlsx and max file size to be 8Mb
-                                            </span>
-                                        </>
-                                    }
-                                />
-
-                                <Button type="primary">Upload Authority Form</Button>
-                            </Dragger>
-                        </div>
+                        <Space direction="vertical" style={{ width: '100%' }}>
+                            <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                                <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
+                                    <Empty
+                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                        description={
+                                            <>
+                                                <Title level={5}>Click or drop your file here to upload</Title>
+                                                <Text>File type should be .xlsx and max file size to be 8Mb</Text>
+                                            </>
+                                        }
+                                    />
+                                    <Button className={styles.marB20} type="primary">
+                                        Upload Authority Form
+                                    </Button>
+                                </Dragger>
+                            </div>
+                        </Space>
                     </Col>
                     <DrawerFormButton {...buttonProps} />
                 </Row>
