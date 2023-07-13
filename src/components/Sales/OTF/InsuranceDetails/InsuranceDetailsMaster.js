@@ -83,7 +83,7 @@ const InsuranceDetailsMasterBase = (props) => {
     const onErrorAction = (message) => {
         setNoData(true);
         setErrMsg(message[0]);
-        showGlobalNotification(message);
+        showGlobalNotification({ message: message });
     };
 
     const onSuccessAction = (res) => {

@@ -159,8 +159,9 @@ const ReferralsMasterBase = (props) => {
 
     const onErrorAction = (message) => {
         setNoData(true);
+        console.log(message, 'message');
         setErrMsg(message[0]);
-        showGlobalNotification({ message: message });
+        showGlobalNotification({ message });
     };
 
     const onSuccessAction = (res) => {

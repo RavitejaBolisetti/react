@@ -19,7 +19,7 @@ import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
-
+import { OTFNoDataFound } from '../utils/OTFNoDataFound';
 import dayjs from 'dayjs';
 
 const mapStateToProps = (state) => {
@@ -88,11 +88,16 @@ const VehicleDetailsMasterMain = (props) => {
 
     const [ProductHierarchyDataOptions, setProductHierarchyDataOptions] = useState();
     const [modelData, setmodelData] = useState();
+    const [noData, setNoData] = useState(false);
+    const [errMsg, setErrMsg] = useState('');
+
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
+        setNoData(true);
+        setErrMsg(message[0]);
         resetData();
         showGlobalNotification({ message: message });
     };
@@ -304,7 +309,7 @@ const VehicleDetailsMasterMain = (props) => {
                             <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    {formActionType?.viewMode ? noData ? <OTFNoDataFound errMsg={errMsg} /> : <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

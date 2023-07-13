@@ -149,7 +149,8 @@ const ExchangeVehiclesBase = (props) => {
     const errorAction = (message) => {
         setNoData(true);
         setErrMsg(message[0]);
-        showGlobalNotification(message);
+        console.log(message, 'message');
+        showGlobalNotification({ message });
     };
 
     const onSuccessAction = (res) => {
