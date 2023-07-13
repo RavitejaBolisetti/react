@@ -75,7 +75,6 @@ const AuthorityFormMin = (props) => {
     const { isUpdating, isMainForm, setTokenValidationData, handleFormValueChange, tokenValidationData, errorTokenValidate, tokenValidate, errorMessage, setTokenValidate, setEmployeeName = undefined, employeeName = '', recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction } = props;
     const { setselectedValueOnUpdate, authTypeDropdownData, hierarchyAttributeListShowLoading, searchLoading } = props;
     const disableAddBtn = { disabled: isBtnDisabled || !tokenNumber?.employeeName };
-    console.log("🚀 ~ file: AddEditForm.js:78 ~ AuthorityFormMin ~ searchLoading:", searchLoading)
 
     const onFinishFailed = (err) => {
         console.error(err);
@@ -112,7 +111,7 @@ const AuthorityFormMin = (props) => {
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type')]}>
-                        <Select labelInValue getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" fieldNames={fieldNames} options={authTypeDropdownData} disabled={isBtnDisabled} onChange={(value, valueObject) => setselectedValueOnUpdate(valueObject)} />
+                        <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" fieldNames={fieldNames} options={authTypeDropdownData} disabled={isBtnDisabled} onChange={(value, valueObject) => setselectedValueOnUpdate(valueObject)} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>

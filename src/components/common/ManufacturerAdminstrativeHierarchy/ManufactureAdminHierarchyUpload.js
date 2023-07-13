@@ -4,44 +4,26 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Select, Upload, Button, Empty, Space, Typography } from 'antd';
+import { Row, Col, Form, Upload, Button, Empty, Space, Typography } from 'antd';
 
 import { FiEye, FiTrash } from 'react-icons/fi';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import { LANGUAGE_EN } from 'language/en';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
 
-const { Option } = Select;
 const { Dragger } = Upload;
 const { Text, Title } = Typography;
 
 const UploadMain = (props) => {
-    const { isViewDataLoaded, resetData, resetViewData, form, formData, onCloseAction, onFinishFailed } = props;
+    const { form, formData, onCloseAction, onFinishFailed } = props;
 
     const { buttonData, setButtonData, handleButtonClick } = props;
-    const { lessorData, fetchList, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, emptyList, setEmptyList } = props;
-    const { downloadForm, isDataLoaded, listLessorShowLoading, viewListShowLoading, fetchViewDocument, organizationId } = props;
-    const { authorityShowLoading, saveAuthorityData, uploadedFile, isAuthorityDataLoaded, isAuthorityDataLoading, authorityData } = props;
-
-    useEffect(() => {
-        console.log("useEffect 1")
-
-        if (isViewDataLoaded && viewDocument) {
-            let a = document.createElement('a');
-            a.href = `data:image/png;base64,${viewDocument?.base64}`;
-            a.download = viewDocument?.fileName;
-            a.click();
-        }
-        return(()=>{
-            resetViewData();
-        })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isViewDataLoaded, viewDocument]);
+    const { typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, emptyList, setEmptyList } = props;
+    const { isDataLoaded, viewListShowLoading, fetchViewDocument } = props;
+    const { authorityShowLoading, saveAuthorityData, uploadedFile, authorityData } = props;
 
     useEffect(() => {
         if (isDataLoaded && authorityData) {
@@ -54,13 +36,7 @@ const UploadMain = (props) => {
                 },
             ];
             fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, authorityData });
-            
         }
-        console.log("useEffect 2")
-        console.log("authorityData", authorityData)
-        return(() => {
-            resetData();
-        })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authorityData]);
 
@@ -91,7 +67,6 @@ const UploadMain = (props) => {
     };
 
     const handleTemplateDownLoad = () => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: LANGUAGE_EN.GENERAL.DOWNLOAD_START.MESSAGE });
         const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id]?.filter((value) => value.key === PARAM_MASTER.ADMINAUTHTMPLT.id);
         let templateID = null;
         if (filteredTypeData.length === 1) {
@@ -108,8 +83,19 @@ const UploadMain = (props) => {
         const name = {
             docName: 'Authority Template',
         };
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, name });
-        resetData();
+
+        const onSuccessAction = (res) => {
+            const viewDocument = res?.data;
+            if (viewDocument) {
+                let a = document.createElement('a');
+                a.href = `data:image/png;base64,${viewDocument?.base64}`;
+                a.download = viewDocument?.fileName;
+                a.click();
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            }
+        };
+
+        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, name, onSuccessAction });
     };
 
     const handleFormValueChange = () => {
@@ -203,7 +189,7 @@ const UploadMain = (props) => {
                         </Space>
                     </Space>
                 </div>
-            
+
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space direction="vertical" style={{ width: '100%' }}>
