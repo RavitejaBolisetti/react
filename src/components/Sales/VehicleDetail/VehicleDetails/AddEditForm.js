@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Form, Select, DatePicker, Card, Input, Checkbox, Switch } from 'antd';
 
 import { convertCalenderDate } from 'utils/formatDateTime';
@@ -11,11 +11,13 @@ import { convertCalenderDate } from 'utils/formatDateTime';
 import { validateRequiredSelectField } from 'utils/validation';
 import { disablePastDate } from 'utils/disableDate';
 import { USER_TYPE } from 'constants/userType';
+import { convertDateToCalender } from 'utils/formatDateTime';
 
 import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
     const {
+        form,
         formData,
         typeData,
         mnmCtcVehicleFlag,
@@ -25,9 +27,16 @@ const AddEditFormMain = (props) => {
     } = props;
     const disabledProps = { disabled: isReadOnly };
 
+    useEffect(() => {
+        if (formData) {
+            setMnmCtcVehicleFlag(formData?.mnmCtcVehicle);
+            // form.setFieldsValue({ ...formData});
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
+
     const handleOnChange = (e) => {
         setMnmCtcVehicleFlag(e.target.checked);
-        console.log('🚀 ~ file: AddEditForm.js:29 ~ handleOnChange ~ e.target.checked:', e.target.checked);
     };
 
     return (
@@ -106,9 +115,15 @@ const AddEditFormMain = (props) => {
                         <Input maxLength={50} {...disabledProps} />
                     </Form.Item>
                 </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="taxiOrNonTaxi" label="Taxi/Non Taxi" initialValue={formData?.taxiOrNonTaxi}>
                         <Input maxLength={50} {...disabledProps} />
+                    </Form.Item>
+                </Col> */}
+
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item initialValue={formData?.taxiOrNonTaxiKey} name="taxiOrNonTaxiKey" label="Taxi/Non Taxi">
+                        <Select placeholder="Select" showSearch allowClear options={typeData['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -153,7 +168,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
 
-                {(mnmCtcVehicleFlag || formData?.mnmCtcVehicle) && (
+                {mnmCtcVehicleFlag && (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.manageBy} rules={[validateRequiredSelectField('managed by')]} name="manageBy" label="Managed By">
                             <Select placeholder="Select" showSearch allowClear options={typeData['CTC_TYP']} fieldNames={{ label: 'value', value: 'key' }} />

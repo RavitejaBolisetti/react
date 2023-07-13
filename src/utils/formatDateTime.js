@@ -9,8 +9,8 @@ import dayjs from 'dayjs';
 
 export const dateFormat = 'YYYY-MM-DD';
 
-export const convertCalenderDate = (dateToConvert = moment(), defaultFormat = 'DD-MM-YYYY') => {
-    return dateToConvert ? dayjs(moment(dateToConvert).format('YYYY/MM/DD'), defaultFormat) : null;
+export const convertCalenderDate = (dateToConvert = '', defaultFormat = 'DD-MM-YYYY', currentDate = false) => {
+    return dateToConvert || currentDate ? dayjs(moment(dateToConvert || moment()).format('YYYY/MM/DD'), defaultFormat) : null;
 };
 export const convertDate = (dateToConvert = moment(), defaultFormat = 'YYYY-MM-DD') => moment(dateToConvert).format(defaultFormat);
 export const convertDateTime = (dateToConvert = '', defaultFormat = 'YYYY-MM-DD HH:mm:ss') => (dateToConvert ? moment(dateToConvert).format(defaultFormat) : 'NA');
