@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Col, Input, Form, Row, Select, Button } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
@@ -11,22 +11,19 @@ import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validat
 
 const OptionServicesFormMain = (props) => {
     const { typeData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, showGlobalNotification, formData, optionForm } = props;
-    const [serviceOptions, setserviceOptions] = useState([]);
-    useEffect(() => {
-        if (typeData && typeData['OPT_SRV']) {
-            setserviceOptions(typeData['OPT_SRV']);
-        }
-    }, [typeData]);
+    const [serviceOptions, setserviceOptions] = useState(typeData['OPT_SRV']);
+    const [includedOption, setincludedOption] = useState([]);
     useEffect(() => {
         if (serviceOptions && serviceOptions?.length) {
             const arr = [];
-            optionsServiceModified?.map((option) => {
-                arr.push(option?.serviceName);
+            optionsServiceModified?.map((element) => {
+                arr.push(element?.serviceName);
             });
+            setincludedOption(arr);
 
             setserviceOptions(
                 serviceOptions?.map((element) => {
-                    if (arr?.includes(element?.value)) {
+                    if (includedOption?.includes(element?.value)) {
                         return { ...element, disabled: true };
                     } else {
                         return element;
@@ -34,7 +31,7 @@ const OptionServicesFormMain = (props) => {
                 })
             );
         }
-    }, [typeData, optionsServiceModified]);
+    }, [serviceOptions, optionsServiceModified]);
     const isServiceNamePresent = (serviceName) => {
         let found = false;
         optionsServiceModified?.find((element, index) => {
@@ -85,7 +82,7 @@ const OptionServicesFormMain = (props) => {
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Amount" name="amount" rules={[validateRequiredInputField('Amount'), validateNumberWithTwoDecimalPlaces('Amount')]}>
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('Amount')} />
+                                    <Input maxLength={10} placeholder={preparePlaceholderText('Amount')} />
                                 </Form.Item>
                             </Col>
                             <Col style={{ marginTop: '28px' }} xs={24} sm={24} md={4} lg={4} xl={4}>
