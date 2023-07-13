@@ -172,8 +172,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
     const [uploadForm] = Form.useForm();
 
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
@@ -477,6 +475,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         downloadForm,
         setDownLoadForm,
         resetData,
+        organizationId,
 
         listShowLoading,
         showGlobalNotification,
@@ -494,12 +493,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         buttonData,
         setButtonData,
 
-        uploadedFile,
         setUploadedFile,
-        uploadDocumentFile,
         emptyList,
         setEmptyList,
-        resetData,
         resetViewData,
         isLoading,
     };
@@ -521,12 +517,19 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         defaultValue: 'organizationId',
         placeholder: preparePlaceholderSelect('Organization Hierarchy'),
     };
-
+console.log("organizationId", organizationId)
     const title = 'Hierarchy';
 
     const handleOnClickUpload = () => {
         setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: true, saveBtn: true });
         setIsUploadDrawer(true);
+    };
+    
+    const drawerProps = {
+        isVisible: isChangeHistoryVisible,
+        onCloseAction: myCloseAction,
+        titleOverride: chgHistoryToggleButton,
+        activeKey,
     };
 
     return (
@@ -634,7 +637,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             </Row>
 
             <ManufactureAdminHierarchyUpload {...uploadProps} />
-            <ChangeHistory />
+            <ChangeHistory {...drawerProps} />
             <AddEditForm {...formProps} />
         </>
     );
