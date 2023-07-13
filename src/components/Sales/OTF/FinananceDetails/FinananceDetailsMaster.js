@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -17,6 +17,7 @@ import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
+import { OTFNoDataFound } from '../utils/OTFNoDataFound';
 import styles from 'components/common/Common.module.css';
 
 import { convertDateToCalender } from 'utils/formatDateTime';
@@ -80,6 +81,8 @@ export const FinananceDetailsMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const [formData, setFormData] = useState();
+    const [noData, setNoData] = useState(false);
+    const [errMsg, setErrMsg] = useState('');
 
     useEffect(() => {
         if (financeData) {
@@ -125,6 +128,8 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const onErrorAction = (message) => {
+        setNoData(true);
+        setErrMsg(message[0]);
         showGlobalNotification(message);
     };
 
@@ -203,7 +208,7 @@ export const FinananceDetailsMasterBase = (props) => {
                         </Col>
                     </Row>
 
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    {formActionType?.viewMode ? noData ? <OTFNoDataFound errMsg={errMsg} /> : <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>

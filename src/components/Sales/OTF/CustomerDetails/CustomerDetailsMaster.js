@@ -18,6 +18,7 @@ import { OTFFormButton } from '../OTFFormButton';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
+import { OTFNoDataFound } from '../utils/OTFNoDataFound';
 
 import styles from 'components/common/Common.module.css';
 
@@ -85,6 +86,8 @@ export const CustomerDetailsMain = (props) => {
     const [formData, setFormData] = useState('');
     const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
     const [activeKey, setActiveKey] = useState([1]);
+    const [noData, setNoData] = useState(false);
+    const [errMsg, setErrMsg] = useState('');
 
     useEffect(() => {
         if (userId && customerFormData) {
@@ -105,6 +108,12 @@ export const CustomerDetailsMain = (props) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
+    const onErrorAction = (message) => {
+        setNoData(true);
+        setErrMsg(message[0]);
+        showGlobalNotification({ message: message });
+    };
+
     const extraParams = [
         {
             key: 'otfNumber',
@@ -116,7 +125,7 @@ export const CustomerDetailsMain = (props) => {
 
     useEffect(() => {
         if (userId && selectedOrderId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -131,7 +140,7 @@ export const CustomerDetailsMain = (props) => {
         const data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onError, extraParams });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
@@ -201,7 +210,7 @@ export const CustomerDetailsMain = (props) => {
                             <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    {formActionType?.viewMode ? noData ? <OTFNoDataFound errMsg={errMsg} /> : <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>
