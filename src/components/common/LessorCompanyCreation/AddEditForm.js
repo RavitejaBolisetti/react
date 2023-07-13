@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Select, Upload, Button, Empty } from 'antd';
+import { Space, Form, Select, Upload, Button, Empty, Divider, Typography } from 'antd';
 
 import { FiEye, FiTrash } from 'react-icons/fi';
 
@@ -18,6 +18,7 @@ import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 const { Dragger } = Upload;
+const { Text, Title } = Typography;
 
 const AddEditFormMain = (props) => {
     const { isViewDataLoaded, resetData, resetViewData, form, formData, onCloseAction, onFinish, onFinishFailed } = props;
@@ -105,7 +106,13 @@ const AddEditFormMain = (props) => {
 
     const uploadProps = {
         multiple: false,
-        // accept: 'image/png, image/jpeg, application/pdf',
+        beforeUpload: (file) => {
+            const isExcel = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            if (!isExcel) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not a excel file` });
+            }
+            return isExcel || Upload.LIST_IGNORE;
+        },
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: false,
@@ -172,54 +179,42 @@ const AddEditFormMain = (props) => {
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!downloadForm && (
-                <div className={styles.contentHeaderBackground}>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                            Lessor Customer Form
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            Please download "Lessor Customer Template" using below button
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Button type="primary" className={styles.marT20} onClick={handleTemplateDownLoad}>
-                                Download Template
-                            </Button>
-                        </Col>
-                    </Row>
-                </div>
-            )}
-            <Row gutter={16}>
-                {!downloadForm && (
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <>
+                    <div className={styles.contentHeaderBackground}>
+                        <Space direction="vertical">
+                            <Space className={styles.accordianIconWithText}>Lessor Customer Form</Space>
+                            <Space>Please download "Lessor Customer Template" using below button</Space>
+                            <Space>
+                                <Button type="primary" onClick={handleTemplateDownLoad}>
+                                    Download Template
+                                </Button>
+                            </Space>
+                        </Space>
+                    </div>
+                    <Divider className={`${styles.marT20} ${styles.marB20}`} />
+                    <Space direction="vertical" style={{ width: '100%' }}>
                         <div className={styles.uploadContainer} style={{ opacity: '100' }}>
                             <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
                                     description={
                                         <>
-                                            <span>
-                                                Click or drop your file here to upload the signed and <br />
-                                                scanned customer form.
-                                            </span>
-                                            <span>
-                                                <br />
-                                                File type should be png, jpg or pdf and max file size to be 5Mb
-                                            </span>
+                                            <Title level={5}>Click or drop your file here to upload</Title>
+                                            <Text>File type should be .xlsx and max file size to be 8Mb</Text>
                                         </>
                                     }
                                 />
-
-                                <Button type="primary">Upload Lessor Form</Button>
+                                <Button className={styles.marB20} type="primary">
+                                    Upload Lessor Form
+                                </Button>
                             </Dragger>
                         </div>
-                    </Col>
-                )}
-                {downloadForm && (
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    </Space>
+                </>
+            )}
+            {downloadForm && (
+                <>
+                    <Space direction="vertical" style={{ width: '100%' }}>
                         <Form.Item label="State Name" name="stateCode">
                             <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps}>
                                 {stateData?.map((item) => (
@@ -227,15 +222,12 @@ const AddEditFormMain = (props) => {
                                 ))}
                             </Select>
                         </Form.Item>
-                    </Col>
-                )}
-            </Row>
-            {downloadForm && (
-                <Button type="primary" onClick={handleDownload}>
-                    Download
-                </Button>
+                        <Button type="primary" onClick={handleDownload}>
+                            Download
+                        </Button>
+                    </Space>
+                </>
             )}
-
             <DrawerFormButton {...buttonProps} />
         </Form>
     );

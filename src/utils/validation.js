@@ -27,6 +27,12 @@ export const validateEmailField = (fieldName, lowercase = true) => ({
     message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
+export const validateRequiredEmailField = (fieldName, lowercase = true) => ({
+    required: true,
+    type: 'email',
+    message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
+});
+
 export const validationFieldLetterAndNumber = (fieldName, lowercase = true) => ({
     pattern: /^[A-Za-z0-9]*$/,
     message: 'Please use only letters and numbers in ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
