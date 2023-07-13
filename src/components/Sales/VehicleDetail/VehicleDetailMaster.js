@@ -13,18 +13,16 @@ import AdvanceOtfFilter from './AdvanceOtfFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { ListDataTable } from 'utils/ListDataTable';
-import { AdvancedSearch } from './AdvancedSearch';
 import { VehicleDetailMainContainer } from './VehicleDetailMainContainer';
+// import { AdvancedSearch } from './AdvancedSearch';
 
 import { VEHICLE_DETAIL_STATUS } from 'constants/VehicleDetailStatus';
 import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
-import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
+import { validateRequiredInputField } from 'utils/validation';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 import { PARAM_MASTER } from 'constants/paramMaster';
-
-import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
     const {
@@ -37,19 +35,19 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vechile Details';
+    const moduleTitle = 'Vehicle Details';
 
     let returnValue = {
         userId,
-        typeData: typeData[PARAM_MASTER.CUST_MST.id],
+        typeData: typeData[PARAM_MASTER.VH_DTLS_SER.id],
         isDataLoaded: true,
-        data: [],
-        otfStatusList: Object.values(VEHICLE_DETAIL_STATUS),
+        data: data?.vehicleSearch,
+        vehicleDetailStatusList: Object.values(VEHICLE_DETAIL_STATUS),
         vehicleDetailData: [],
         moduleTitle,
         isLoading: false,
         isDetailLoaded: true,
-        filterString: '',
+        filterString,
     };
     return returnValue;
 };
@@ -72,13 +70,12 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleDetailMasterBase = (props) => {
     const { fetchList, saveData, isLoading, listShowLoading, userId, fetchDetail, data, vehicleDetailData } = props;
     const { typeData, moduleTitle } = props;
-    const { filterString, setFilterString, otfStatusList } = props;
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+    const { filterString, setFilterString, vehicleDetailStatusList } = props;
 
     const [listFilterForm] = Form.useForm();
 
-    const [selectedOrder, setSelectedOrder] = useState();
-    const [selectedOrderId, setSelectedOrderId] = useState();
+    const [selectedRecord, setSelectedRecord] = useState();
+    const [selectedRecordId, setSelectedRecordId] = useState();
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -88,10 +85,10 @@ export const VehicleDetailMasterBase = (props) => {
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
-    const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [selectedCustomer, setselectedCustomer] = useState('');
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -167,7 +164,7 @@ export const VehicleDetailMasterBase = (props) => {
                 key: 'otfStatus',
                 title: 'OTF Status',
                 value: filterString?.otfStatus,
-                name: otfStatusList?.find((i) => i?.title === filterString?.otfStatus)?.desc,
+                name: vehicleDetailStatusList?.find((i) => i?.title === filterString?.otfStatus)?.desc,
                 canRemove: true,
                 filter: true,
             },
@@ -185,6 +182,20 @@ export const VehicleDetailMasterBase = (props) => {
                 canRemove: true,
                 filter: false,
             },
+            // {
+            //     key: 'sortBy',
+            //     title: 'Sort by',
+            //     value: 'customerName',
+            //     canRemove: true,
+            //     filter: false,
+            // },
+            // {
+            //     key: 'sortIn',
+            //     title: 'Sort By',
+            //     value: 'ASC',
+            //     canRemove: true,
+            //     filter: false,
+            // },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
@@ -218,20 +229,22 @@ export const VehicleDetailMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+        console.log('🚀 ~ file: VehicleDetailMaster.js:231 ~ handleButtonClick ~ record:', record);
         form.resetFields();
         form.setFieldsValue(undefined);
+        setSelectedRecordId('MAKGF1F57A7192174');
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case EDIT_ACTION:
-                setSelectedOrder(record);
-                record && setSelectedOrderId(record?.otfNumber);
+                setSelectedRecord(record);
+                record && setSelectedRecordId(record?.vin || record?.vehicleIdentificationNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
-                setSelectedOrder(record);
-                record && setSelectedOrderId(record?.otfNumber);
+                setSelectedRecord(record);
+                record && setSelectedRecordId(record?.vin || record?.vehicleIdentificationNumber);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
@@ -256,12 +269,6 @@ export const VehicleDetailMasterBase = (props) => {
     };
 
     const onFinishSearch = (values) => {};
-
-    // const handleResetFilter = (e) => {
-    //     setFilterString();
-    //     setShowDataLoading(true);
-    //     advanceFilterForm.resetFields();
-    // };
 
     const onFinish = (values) => {
         const recordId = formData?.parentId || form.getFieldValue('parentId');
@@ -306,7 +313,7 @@ export const VehicleDetailMasterBase = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
-        setSelectedOrder();
+        setSelectedRecord();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
@@ -315,35 +322,6 @@ export const VehicleDetailMasterBase = (props) => {
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
-    };
-
-    const handleSearchTypeChange = (searchType) => {
-        if (searchType === 'mobileNumber') {
-            setOtfSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
-        } else if (searchType === 'customerName') {
-            setOtfSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
-        } else if (searchType === 'otfNumber') {
-            setOtfSearchRules({ rules: [validateRequiredInputField('OTF Number')] });
-        } else {
-            // searchForm.setFieldsValue({ searchParam: undefined, searchType: undefined });
-            // setFilterString({ ...filterString, searchParam: undefined, searchType: undefined });
-        }
-    };
-
-    const handleSearchParamSearch = (values) => {
-        searchForm
-            .validateFields()
-            .then((values) => {
-                setFilterString({ ...values, advanceFilter: true });
-            })
-            .catch((err) => {
-                return;
-            });
-    };
-
-    const onAdvanceSearchCloseAction = () => {
-        setAdvanceSearchVisible(false);
-        form.resetFields();
     };
 
     const removeFilter = (key) => {
@@ -356,47 +334,25 @@ export const VehicleDetailMasterBase = (props) => {
         }
     };
 
-    const title = 'Search Model';
+    const title = 'Search Vehicle';
 
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
-        otfStatusList,
-        advanceFilter: true,
+        vehicleDetailStatusList,
+        advanceFilter: false,
         otfFilter: true,
         filterString,
         setFilterString,
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        // handleResetFilter,
-
         title,
         data,
-        setAdvanceSearchVisible,
         typeData,
         otfSearchRules,
         setOtfSearchRules,
         searchForm,
-        onFinishSearch,
-        handleSearchTypeChange,
-        handleSearchParamSearch,
-    };
-
-    const advanceFilterProps = {
-        isVisible: isAdvanceSearchVisible,
-
-        icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
-
-        onCloseAction: onAdvanceSearchCloseAction,
-        // handleResetFilter,
-        filterString,
-        setFilterString,
-        advanceFilterForm,
-        setAdvanceSearchVisible,
-        otfStatusList,
-        typeData,
         onFinishSearch,
     };
 
@@ -411,7 +367,8 @@ export const VehicleDetailMasterBase = (props) => {
     }, [formActionType]);
 
     const containerProps = {
-        record: selectedOrder,
+        record: selectedRecord,
+        selectedCustomer,
         form,
         formActionType,
         setFormActionType,
@@ -431,10 +388,10 @@ export const VehicleDetailMasterBase = (props) => {
         handleButtonClick,
         defaultFormActionType,
         defaultBtnVisiblity,
-        selectedOrderId,
-        setSelectedOrderId,
-        selectedOrder,
-        setSelectedOrder,
+        selectedRecordId,
+        setSelectedRecordId,
+        selectedRecord,
+        setSelectedRecord,
         section,
         currentSection,
         sectionName,
@@ -444,7 +401,7 @@ export const VehicleDetailMasterBase = (props) => {
         isLastSection,
         typeData,
         vehicleDetailData,
-        saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
     };
 
     return (
@@ -452,10 +409,9 @@ export const VehicleDetailMasterBase = (props) => {
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={isLoading} {...tableProps} showAddButton={true} />
+                    <ListDataTable isLoading={isLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
-            <AdvancedSearch {...advanceFilterProps} />
             <VehicleDetailMainContainer {...containerProps} />
         </>
     );

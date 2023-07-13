@@ -517,7 +517,7 @@ const AddEditFormMain = (props) => {
                         <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel header="Upload Customer Form" key="5">
                                 <>
-                                    <div className={styles.marB20}>
+                                    <div>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                 <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">
