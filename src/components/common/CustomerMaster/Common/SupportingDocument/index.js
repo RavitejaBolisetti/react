@@ -5,4 +5,4 @@
  */
 import { SupportingDocumentMaster } from './SupportingDocumentMaster';
 
-export { SupportingDocumentMaster as IndividualSupportingDocument };
+export { SupportingDocumentMaster };

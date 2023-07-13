@@ -5,7 +5,7 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Empty } from 'antd';
+import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Empty, Upload } from 'antd';
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -17,9 +17,9 @@ import { NameChangeHistory } from './NameChangeHistory';
 
 import styles from 'components/common/Common.module.css';
 import Svg from 'assets/images/Filter.svg';
-import Dragger from 'antd/es/upload/Dragger';
 
-const { Text } = Typography;
+const { Dragger } = Upload;
+const { Text, Title } = Typography;
 
 const AddEditFormMain = (props) => {
     const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
@@ -215,7 +215,7 @@ const AddEditFormMain = (props) => {
                             {editMode && (
                                 <>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                                        {/* <div className={styles.uploadContainer} style={{ opacity: '100' }}>
                                             <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps}>
                                                 <div>
                                                     <img src={Svg} alt="" />
@@ -234,7 +234,26 @@ const AddEditFormMain = (props) => {
 
                                                 <Button type="primary">Upload File</Button>
                                             </Dragger>
-                                        </div>
+                                        </div> */}
+
+                                        <Space direction="vertical" style={{ width: '100%' }}>
+                                            <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                                                <Dragger customRequest={handleUpload} {...uploadProps} fileList={fileList}>
+                                                    <Empty
+                                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                        description={
+                                                            <>
+                                                                <Title level={5}>Upload supporting documents</Title>
+                                                                <Text>File type should be .png and .jpg and max file size to be 5MB</Text>
+                                                            </>
+                                                        }
+                                                    />
+                                                    <Button className={styles.marB20} type="primary">
+                                                        Upload File
+                                                    </Button>
+                                                </Dragger>
+                                            </div>
+                                        </Space>
                                     </Col>
                                 </>
                             )}

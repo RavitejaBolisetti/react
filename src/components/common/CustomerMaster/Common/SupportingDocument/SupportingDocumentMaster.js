@@ -5,10 +5,10 @@
  */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { LANGUAGE_EN } from 'language/en';
 
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
+import { LANGUAGE_EN } from 'language/en';
 
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
@@ -53,8 +53,10 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchViewDocument: documentViewDataActions.fetchList,
+            resetViewData: documentViewDataActions.reset,
             viewListShowLoading: documentViewDataActions.listShowLoading,
             fetchList: supportingDocumentDataActions.fetchList,
+            resetData: supportingDocumentDataActions.reset,
             saveData: supportingDocumentDataActions.saveData,
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
             downloadFile: supportingDocumentDataActions.downloadFile,
@@ -67,11 +69,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupportingDocumentBase = (props) => {
-    const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form } = props;
+    const { isViewDataLoaded, resetData, resetViewData, isDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form } = props;
 
-    const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, supportingData, fetchViewDocument, setIsFormVisible } = props;
+    const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, supportingData, fetchViewDocument } = props;
     const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
-    const { selectedCustomerId, viewDocument, viewListShowLoading, downloadFile } = props;
+    const { selectedCustomerId, viewDocument, viewListShowLoading, downloadFile, setIsFormVisible } = props;
 
     const [uploadedFile, setUploadedFile] = useState();
     const [emptyList, setEmptyList] = useState(true);
@@ -92,14 +94,24 @@ const SupportingDocumentBase = (props) => {
     ];
 
     useEffect(() => {
-        if (!formActionType?.addMode && selectedCustomerId) {
+        if (!formActionType?.addMode && selectedCustomerId && !isDataLoaded) {
+            resetData();
+            resetViewData();
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCustomerId]);
+    }, [userId, selectedCustomerId, isDataLoaded]);
 
     useEffect(() => {
-        if (viewDocument && isViewDataLoaded) {
+        return () => {
+            resetData();
+            resetViewData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (viewDocument && isViewDataLoaded && isDataLoaded) {
             let a = document.createElement('a');
             a.href = `data:image/png;base64,${viewDocument?.base64}`;
             a.download = viewDocument?.fileName;
@@ -124,8 +136,9 @@ const SupportingDocumentBase = (props) => {
 
     const deleteFile = (uploadData) => {
         const data = { customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName };
+        
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         };
 
@@ -145,7 +158,12 @@ const SupportingDocumentBase = (props) => {
     };
 
     const downloadFileFromList = () => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res.responseMessage });
+        };
+        onErrorAction = (message) => {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message });
+        };
         const extraParams = [
             {
                 key: 'docId',
@@ -171,9 +189,7 @@ const SupportingDocumentBase = (props) => {
                 setUploadedFile();
                 form.resetFields();
                 showGlobalNotification({ notificationType: 'success', title, message });
-
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
-                setIsFormVisible(false);
             };
 
             const onError = (message) => {
@@ -192,6 +208,7 @@ const SupportingDocumentBase = (props) => {
             saveData(requestData);
         } else {
             showGlobalNotification({ notificationType: 'success', title, message });
+
             setFileList([]);
             setEmptyList(false);
             setUploadedFile();
@@ -270,6 +287,7 @@ const SupportingDocumentBase = (props) => {
         ...props,
         buttonData: { ...props.buttonData, formBtnActive: true },
     };
+
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>

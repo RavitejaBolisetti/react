@@ -12,7 +12,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
-    const { setActiveKey, activeKey, styles, formData, viewDocument, handleOnClickCustomerForm, isLoading, appCategoryData } = props;
+    const { downloadFileFromButton,setActiveKey, activeKey, styles, formData, viewDocument, handleOnClickCustomerForm, isLoading, appCategoryData } = props;
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -114,7 +114,7 @@ const ViewDetailMain = (props) => {
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end">
                     <Panel header="Upload Customer Form" key="4">
                         <Divider />
-                        <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClickCustomerForm}></Card>
+                        <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
                     </Panel>
                 </Collapse>
             </Space>

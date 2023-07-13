@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Select, Input, Upload, Button, Empty, Card } from 'antd';
 
-import { FiEye, FiTrash } from 'react-icons/fi';
+import { FiDownload, FiTrash } from 'react-icons/fi';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
@@ -24,21 +24,21 @@ const AddEditForm = (props) => {
     const onDrop = (e) => {};
 
     const uploadProps = {
-        multiple: true,
+        multiple: false,
         accept: 'image/png, image/jpeg, application/pdf',
-
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
+            showPreviewIcon : true,
             removeIcon: <FiTrash />,
-            downloadIcon: <FiEye onClick={() => downloadFileFromList()} style={{ color: '#ff3e5b' }} />,
+            downloadIcon: <FiDownload onClick={() => downloadFileFromList()} style={{ color: '#ff3e5b' }} />,
             showProgress: true,
         },
         progress: { strokeWidth: 3, showInfo: true },
         onDrop,
         onChange: (info) => {
             let fileList = [...info.fileList];
-            // fileList = fileList.slice(-1);
+            fileList = fileList.slice(-1);
             setFileList(fileList);
             handleFormValueChange();
             const { status } = info.file;
@@ -90,7 +90,7 @@ const AddEditForm = (props) => {
         <Card>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="Document Type" name="documentTypeId" placeholder={preparePlaceholderSelect('document type')}>
+                    <Form.Item label="Document hgh" name="documentTypeId" placeholder={preparePlaceholderSelect('document type')}>
                         <Select className={styles.headerSelectField} loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps}>
                             {typeData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
@@ -100,12 +100,13 @@ const AddEditForm = (props) => {
                         </Select>
                     </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.supportingDocument}>
                     <Form.Item label="File Name" name="documentName">
-                        <Input placeholder={preparePlaceholderText('File Name')} rules={[validateRequiredInputField('fileName')]} allowClear />
+                        <Input placeholder={preparePlaceholderText('File Name')} rules={[validateRequiredInputField('fileName')]} size="small" allowClear />
                     </Form.Item>
                 </Col>
             </Row>
+
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.uploadContainer} style={{ opacity: '100' }}>
@@ -128,7 +129,7 @@ const AddEditForm = (props) => {
                                 }
                             />
 
-                            <Button type="primary">Upload File</Button>
+                            <Button type="primary">Upload</Button>
                         </Dragger>
                     </div>
                 </Col>
