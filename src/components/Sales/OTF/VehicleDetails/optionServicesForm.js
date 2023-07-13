@@ -6,6 +6,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Col, Input, Form, Row, Select, Button } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import styles from 'components/common/Common.module.css';
 
 import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validateRequiredSelectField } from 'utils/validation';
 
@@ -69,31 +70,21 @@ const OptionServicesFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                                 <Form.Item name="serviceName" label="Service Name" initialValue={formData?.serviceName} rules={[validateRequiredSelectField('Service Name')]}>
-                                    <Select
-                                        style={{
-                                            width: '100%',
-                                        }}
-                                        options={serviceOptions}
-                                        fieldNames={{ label: 'value', value: 'value' }}
-                                        placeholder={preparePlaceholderSelect('Service Name')}
-                                        allowClear
-                                    />
+                                    <Select options={serviceOptions} fieldNames={{ label: 'value', value: 'value' }} placeholder={preparePlaceholderSelect('Service Name')} allowClear />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Amount" name="amount" rules={[validateRequiredInputField('Amount'), validateNumberWithTwoDecimalPlaces('Amount')]}>
-                                    <Input maxLength={10} placeholder={preparePlaceholderText('Amount')} />
+                                    <Input maxLength={7} placeholder={preparePlaceholderText('Amount')} />
                                 </Form.Item>
                             </Col>
-                            <Col style={{ marginTop: '28px' }} xs={24} sm={24} md={4} lg={4} xl={4}>
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <Button onClick={onFinish} style={{ marginLeft: '20px' }} type="primary">
-                                        Save
-                                    </Button>
-                                    <Button style={{ marginLeft: '20px' }} onClick={handleCancel} danger>
-                                        Cancel
-                                    </Button>
-                                </div>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.marT30}>
+                                <Button className={styles.marR20} onClick={onFinish} type="primary">
+                                    Save
+                                </Button>
+                                <Button onClick={handleCancel} danger>
+                                    Cancel
+                                </Button>
                             </Col>
                         </Row>
                     </Form>
