@@ -73,7 +73,6 @@ const AuthorityCardItemMain = (props) => {
     const recordId = record?.id;
 
     const onEdit = ({ employeeName, authorityTypeCode, authorityEmployeeTokenNo, effectiveTo, effectiveFrom, id }) => {
-        // setTokenValidate({ ['tokenVisible' + recordId]: true });
         if (!isUpdating || tokenNumber?.employeeName || errorMessage) {
             errorTokenValidate({ errorMessage: '', isUpdating: true });
         }
@@ -93,7 +92,7 @@ const AuthorityCardItemMain = (props) => {
                 setDocumentTypesList((prev) => {
                     const updatedData = [...prev];
                     const index = updatedData?.findIndex((el) => el?.authorityEmployeeTokenNo === record?.authorityEmployeeTokenNo);
-                    updatedData?.splice(index, 1, { ...data, authorityEmployeeTokenNo: tokenValidationData?.authorityEmployeeTokenNo || data?.authorityEmployeeTokenNo, employeeName: tokenValidationData?.employeeName || data?.employeeName });
+                    updatedData?.splice(index, 1, { ...data, authorityEmployeeTokenNo: tokenNumber?.authorityEmployeeTokenNo || data?.authorityEmployeeTokenNo, employeeName: tokenNumber?.employeeName || data?.employeeName });
                     return updatedData;
                 });
             })
