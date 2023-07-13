@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography } from 'antd';
+import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Divider } from 'antd';
 import { validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined } from '@ant-design/icons';
@@ -177,6 +177,7 @@ const AddEditFormMain = (props) => {
                     </Collapse>
                     <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
                         <Panel header="Tax Details" key="2">
+                            <Divider />
                             <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
                         </Panel>
                     </Collapse>
@@ -196,6 +197,7 @@ const AddEditFormMain = (props) => {
                             }
                             key="3"
                         >
+                            <Divider />
                             {isReadOnly && <OptionServicesForm {...OptionServicesFormProps} />}
                             <DataTable tableColumn={optionalServicesColumns} tableData={optionsServiceModified} removePagination={true} />
                         </Panel>
