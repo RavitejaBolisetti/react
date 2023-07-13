@@ -63,7 +63,7 @@ export const data = combineReducers({
     CustomerMaster,
     SupportingDocument,
     Vehicle,
-    FinancialAccounting
+    FinancialAccounting,
     ManufacturerAdmin,
     ManufacturerOrg,
 });
