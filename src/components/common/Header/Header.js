@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Input } from 'antd';
+import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
 import Icon, { DownOutlined } from '@ant-design/icons';
 import { FaRegBell } from 'react-icons/fa';
 import { IoIosLogOut } from 'react-icons/io';
@@ -31,7 +31,6 @@ import IMG_ICON from 'assets/img/icon.png';
 
 import { HeadPhoneIcon, MenuArrow } from 'Icons';
 
-const { Search } = Input;
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
     const {
@@ -44,7 +43,7 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
-    console.log('loginUserData', loginUserData);
+
     return {
         passwordStatus,
         loginUserData,
