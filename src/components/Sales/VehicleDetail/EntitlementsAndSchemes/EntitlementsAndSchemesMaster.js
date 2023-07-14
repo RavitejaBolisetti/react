@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { Row, Col, Space, Form, Card } from 'antd';
+import { Row, Col } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -56,8 +56,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const EntitlementsAndSchemesMasterBase = (props) => {
-    const { form, fetchList, userId, isDataLoaded, entitelmentData, listShowLoading, showGlobalNotification, handleButtonClick, NEXT_ACTION } = props;
-    const { section, selectedRecordId, selectedOrder: { orderStatus = false } = {} } = props;
+    const { fetchList, userId, entitelmentData, listShowLoading, showGlobalNotification } = props;
+    const { section, selectedRecordId } = props;
 
     const extraParams = [
         {
@@ -68,7 +68,7 @@ export const EntitlementsAndSchemesMasterBase = (props) => {
         },
     ];
     const errorAction = (message) => {
-        // showGlobalNotification(message);
+        showGlobalNotification(message);
     };
 
     const onSuccessAction = (res) => {
@@ -76,21 +76,16 @@ export const EntitlementsAndSchemesMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (!isDataLoaded && userId) {
+        if (userId && selectedRecordId) {
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, userId]);
+    }, [userId, selectedRecordId]);
 
     const myProps = {
         ...props,
-        buttonData: { ...props.buttonData, nextBtn: true, saveBtn: false },
+        buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
     };
-
-    const onFinish = (values) => {
-        handleButtonClick({ record: undefined, buttonAction: NEXT_ACTION });
-    };
-    const onFinishFailed = () => {};
 
     return (
         <>
@@ -101,11 +96,7 @@ export const EntitlementsAndSchemesMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    {/* <Space size="middle" direction="vertical" className={styles.accordianContainer}> */}
-                    {/* <Card> */}
-                    <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumn()} tableData={entitelmentData?.entitlementsAndSchemeResponses} />
-                    {/* </Card> */}
-                    {/* </Space> */}
+                    <DataTable scroll={1800} srlTitle={'#'} removePagination={true} tableColumn={tableColumn()} tableData={entitelmentData?.entitlementsAndSchemeResponses} />
                 </Col>
             </Row>
             <Row>

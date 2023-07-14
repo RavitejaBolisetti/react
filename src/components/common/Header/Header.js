@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Input } from 'antd';
+import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
 import Icon, { DownOutlined } from '@ant-design/icons';
 import { FaRegBell } from 'react-icons/fa';
 import { IoIosLogOut } from 'react-icons/io';
@@ -12,6 +12,8 @@ import { FiLock, FiUser, FiSettings } from 'react-icons/fi';
 import { CgProfile } from 'react-icons/cg';
 
 import * as routing from 'constants/routing';
+import { USER_TYPE } from 'constants/userType';
+
 import { setCollapsed } from 'store/actions/common/leftsidebar';
 import customMenuLink, { addToolTip } from 'utils/customMenuLink';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
@@ -29,7 +31,6 @@ import IMG_ICON from 'assets/img/icon.png';
 
 import { HeadPhoneIcon, MenuArrow } from 'Icons';
 
-const { Search } = Input;
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
     const {
@@ -208,7 +209,7 @@ const HeaderMain = (props) => {
         // }),
     ];
 
-    userType === 'DLR' &&
+    userType === USER_TYPE?.DEALER?.key &&
         userSettingMenu.push(
             customMenuLink({
                 key: '5',
@@ -253,12 +254,12 @@ const HeaderMain = (props) => {
                                             <div className={styles.dealerName}>{dealerName}</div>
                                             <div className={styles.dealerInfo}>
                                                 <span className={styles.dealerLocation}>{dealerLocation}</span>
-                                                {userType === 'DLR' && (
+                                                {userType === USER_TYPE?.DEALER?.key && (
                                                     <Dropdown className={styles.dropdownIcon} menu={{ items: locationMenuOption }}>
                                                         <DownOutlined />
                                                     </Dropdown>
                                                 )}{' '}
-                                                {userType === 'DLR' && (
+                                                {userType === USER_TYPE?.DEALER?.key && (
                                                     <>
                                                         <span className={styles.seprator}>|</span>
                                                         <span className={styles.dealerLocation}>FY2023</span>
@@ -310,7 +311,7 @@ const HeaderMain = (props) => {
                                                 </div>
                                                 <div className={styles.userText}>
                                                     <div className={styles.userName}>{addToolTip(fullName)(fullName)}</div>
-                                                    <span className={styles.userRoleName}>{userType === 'DLR' ? 'Admin' : 'Super Admin'}</span>
+                                                    <span className={styles.userRoleName}>{userType === USER_TYPE?.DEALER?.key ? 'Admin' : 'Super Admin'}</span>
                                                 </div>
                                                 <div className={`${styles.webmenuDropDownArrow} ${styles.dropdownArrow}`}>
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>

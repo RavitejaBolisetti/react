@@ -28,6 +28,10 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
         accessoryForm
             .validateFields()
             .then((values) => {
+                if (isPresent(values?.partNumber)) {
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Duplicate Part Number' });
+                    return;
+                }
                 if (!values?.partNumber) {
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide part number' });
                     return;
@@ -55,7 +59,9 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
     const handleOnSearch = (value) => {
         onSearchPart(value);
     };
-    const handlePartSearch = () => {
+    const handlePartSearch = (values) => {
+        const { partNumber } = accessoryForm.getFieldsValue();
+        accessoryForm.setFieldsValue({ partNumber: partNumber?.trim() });
         accessoryForm.resetFields(['type', 'sellingPrice', 'mrp', 'partDescription']);
     };
 

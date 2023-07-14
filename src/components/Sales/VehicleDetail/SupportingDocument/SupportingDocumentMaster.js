@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupportingDocumentBase = (props) => {
-    const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form } = props;
+    const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form, setIsFormVisible } = props;
 
     const { userId, selectedRecordId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, documentData, fetchViewDocument, resetData, resetViewData } = props;
     const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
@@ -166,6 +166,7 @@ const SupportingDocumentBase = (props) => {
                 showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
 
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+                setIsFormVisible(false);
             };
 
             const onError = (message) => {
@@ -182,12 +183,14 @@ const SupportingDocumentBase = (props) => {
             };
 
             saveData(requestData);
+            setSupportingDocs([]);
         } else {
             // showGlobalNotification({ notificationType: 'success', title, message });
             setFileList([]);
             setEmptyList(false);
             setUploadedFile();
             form.resetFields();
+            setIsFormVisible(false);
         }
     };
 

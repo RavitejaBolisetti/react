@@ -183,8 +183,8 @@ const AddEditFormMain = (props) => {
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Vechicle Deployment Details" initialValue={formData?.vechileDeploymentDetails} name="vechileDeploymentDetails">
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Vechicle Deployment Details')} />
+                                                <Form.Item label="Vehicle Deployment Details" initialValue={formData?.vechileDeploymentDetails} name="vechileDeploymentDetails">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Vehicle Deployment Details')} />
                                                 </Form.Item>
                                             </Col>
 

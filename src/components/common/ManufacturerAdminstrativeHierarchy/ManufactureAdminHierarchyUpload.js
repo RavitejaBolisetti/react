@@ -19,26 +19,28 @@ const { Text, Title } = Typography;
 
 const UploadMain = (props) => {
     const { form, formData, onCloseAction, onFinishFailed } = props;
-
     const { buttonData, setButtonData, handleButtonClick } = props;
-    const { typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, emptyList, setEmptyList } = props;
-    const { isDataLoaded, viewListShowLoading, fetchViewDocument } = props;
-    const { authorityShowLoading, saveAuthorityData, uploadedFile, authorityData } = props;
+    const { userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, emptyList, setEmptyList } = props;
+    const { isDataLoaded, viewListShowLoading, fetchViewDocument, organizationId } = props;
+    const { authorityShowLoading, saveAuthorityData, uploadedFile, authorityData, fetchDocumentFileDocId } = props;
+    const [showStatus, setShowStatus] = useState('');
+    const [errDocId, setErrDocId] = useState('');
 
     useEffect(() => {
-        if (isDataLoaded && authorityData) {
-            const extraParams = [
-                {
-                    key: 'docId',
-                    title: 'docId',
-                    value: authorityData?.docId,
-                    name: 'docId',
-                },
-            ];
-            fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, authorityData });
+        if ((isDataLoaded && authorityData?.docId) || errDocId) {
+            // const extraParams = [
+            //     {
+            //         key: 'docId',
+            //         title: 'docId',
+            //         value: authorityData?.docId,
+            //         name: 'docId',
+            //     },
+            // ];
+            handleTemplateDownLoad();
+            // fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, authorityData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [authorityData]);
+    }, [authorityData?.docId, errDocId]);
 
     const onFinish = () => {
         const data = { docId: uploadedFile };
@@ -67,16 +69,17 @@ const UploadMain = (props) => {
     };
 
     const handleTemplateDownLoad = () => {
-        const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id]?.filter((value) => value.key === PARAM_MASTER.ADMINAUTHTMPLT.id);
-        let templateID = null;
-        if (filteredTypeData.length === 1) {
-            templateID = filteredTypeData[0];
-        }
+        // const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id]?.filter((value) => value.key === PARAM_MASTER.ADMINAUTHTMPLT.id);
+        // let templateID = null;
+        // if (filteredTypeData.length === 1) {
+        //     templateID = filteredTypeData[0];
+        // }
+
         const extraParams = [
             {
                 key: 'docId',
                 title: 'docId',
-                value: templateID?.value,
+                value: errDocId || authorityData?.docId,
                 name: 'docId',
             },
         ];
@@ -98,6 +101,34 @@ const UploadMain = (props) => {
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, name, onSuccessAction });
     };
 
+    const getDocIdFromOrgId = () => {
+        const extraParams = [
+            {
+                key: 'manufacturerOrgId',
+                title: 'manufacturerOrgId',
+                value: organizationId,
+                name: 'manufacturerOrgId',
+            },
+        ];
+        const onError = (err) => {
+            console.error(err);
+        };
+        const onSuccess = (msg) => {
+            console.log(msg);
+        };
+
+        const requestData = {
+            method: 'get',
+            setIsLoading: authorityShowLoading,
+            extraParams,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        fetchDocumentFileDocId(requestData);
+    };
+
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -105,8 +136,6 @@ const UploadMain = (props) => {
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
-
-    const [showStatus, setShowStatus] = useState('');
 
     const onDrop = (e) => {};
 
@@ -183,7 +212,7 @@ const UploadMain = (props) => {
                         <Space className={styles.accordianIconWithText}>Authority Form</Space>
                         <Space>Please download "Authority Form Template" using below button</Space>
                         <Space>
-                            <Button type="primary" onClick={handleTemplateDownLoad}>
+                            <Button type="primary" onClick={getDocIdFromOrgId}>
                                 Download Template
                             </Button>
                         </Space>

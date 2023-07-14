@@ -30,9 +30,19 @@
     border-bottom: 1px dashed #d9d9d9;
 }
 
+:global .ant-input-search>.ant-input-group>.ant-input-group-addon {
+    background-color: #fff;
+}
+
+:global .ant-btn-default {
+    height: 33.5px;
+    box-shadow: none;
+}
+
 :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary),
 :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):hover {
     color: #ff3e5b;
+    border-color: transparent;
 }
 
 :global .ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
@@ -93,7 +103,7 @@
 
 :global .ant-btn-default.ant-btn-dangerous:not(:disabled) {
     background-color: transparent;
-    color: #ff3e5b !important;
+    /* color: #ff3e5b !important; */
     border: 1px solid #ff3e5b;
 }
 
@@ -126,7 +136,7 @@
     transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
     border-radius: 4px;
     box-shadow: none;
-    /* height: 36px; */
+    height: 36px;
 }
 
 :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
@@ -224,6 +234,10 @@
 
 :global .ant-drawer-body .ant-input-number {
     width: 100%;
+}
+
+:global .ant-picker-dropdown .ant-picker-time-panel-column::after {
+    height: auto;
 }
 
 :global .ant-drawer-body .ant-picker-range {
