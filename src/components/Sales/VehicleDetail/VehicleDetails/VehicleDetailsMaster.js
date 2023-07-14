@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Vehicle: {
-                ViewVehicleDetail: { isLoaded, isLoading, data: vehicleDetails = {} },
+                ViewVehicleDetail: { isLoaded: isDataLoaded = false, isLoading, data: vehicleDetails = {} },
             },
         },
         common: {
@@ -35,11 +35,11 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         typeData,
-        isDataLoaded: true,
+        isDataLoaded,
         isLoading,
         moduleTitle,
         vehicleDetails,
-        loginUserData,
+        userType: loginUserData?.userType || '',
     };
     return returnValue;
 };
@@ -59,9 +59,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VechileDetailsMasterBase = (props) => {
-    const { typeData, listConsultantShowLoading } = props;
+    const { typeData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading, vehicleDetails } = props;
-    const { form, selectedRecordId, formActionType, handleFormValueChange, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
+    const { form, selectedRecordId, formActionType, handleFormValueChange, salesConsultantLov, NEXT_ACTION, handleButtonClick } = props;
     const [mnmCtcVehicleFlag, setMnmCtcVehicleFlag] = useState(false);
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -114,11 +114,11 @@ const VechileDetailsMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            // showGlobalNotification({ message });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
-            data: {"vehicleDetails":data},
+            data: { vehicleDetails: data },
             method: 'put',
             setIsLoading: listShowLoading,
             userId,

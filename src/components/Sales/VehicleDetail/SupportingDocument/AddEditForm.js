@@ -67,6 +67,7 @@ const AddEditForm = (props) => {
         onChange: (info) => {
             form.validateFields()
                 .then((values) => {
+                    deleteFileFromList(info);
                     let fileList = [...info.fileList];
                     fileList = fileList.slice(-1);
                     setFileList(fileList);
@@ -109,7 +110,7 @@ const AddEditForm = (props) => {
 
     useEffect(() => {
         if (showStatus.status === 'done') {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File uploaded successfully' });
         } else if (showStatus.status === 'error') {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
         }
@@ -154,9 +155,9 @@ const AddEditForm = (props) => {
     return (
         <Space style={{ display: 'flex' }} direction="vertical" size="middle" className={styles.accordianContainer}>
             <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                {!formActionType?.viewMode && (
-                    <>
-                        <Panel header="Supporting/Reference Documents" key="1">
+                <Panel header="Supporting/Reference Documents" key="1">
+                    {!formActionType?.viewMode && (
+                        <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item {...documentTypeRule} label="Document Type" name="documentTypeCd" placeholder={preparePlaceholderSelect('document type')} validateTrigger={['onChange']}>
@@ -170,8 +171,8 @@ const AddEditForm = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}  className={`${styles.inputWrapper} ${styles.allowsection}`}>
-                                    <Form.Item {...documentTitleRule} label="File Name" name="documentTitle" validateTrigger={['onChange']}>
-                                        <Input placeholder={preparePlaceholderText('File Name')} onChange={handleDocumentTitle} allowClear  />
+                                    <Form.Item {...documentTitleRule} label="Document Name" name="documentTitle" validateTrigger={['onChange']}>
+                                        <Input placeholder={preparePlaceholderText('File Name')} onChange={handleDocumentTitle} allowClear />
                                     </Form.Item>
                                     
                                 </Col>
@@ -203,14 +204,14 @@ const AddEditForm = (props) => {
                                     </div>
                                 </Col>
                             </Row>
-                        </Panel>
-                    </>
-                )}
-                <ViewSupportingDocDetail {...viewProps} />
+                        </>
+                    )}
+                    <ViewSupportingDocDetail {...viewProps} />
+                </Panel>
             </Collapse>
             <Collapse defaultActiveKey={['2']} bordered={false} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                 <Panel header="Technical Documents" key="2">
-                    {/* <Divider className={styles.marT20} /> */}
+                    <Divider className={styles.marT20} />
                     <Row gutter={16}>
                         <ViewTechnicalDocDetail {...viewProps} />
                     </Row>

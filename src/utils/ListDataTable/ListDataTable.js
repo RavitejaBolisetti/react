@@ -5,11 +5,11 @@
  */
 import { DataTable } from 'utils/dataTable';
 import { Button, Empty, ConfigProvider } from 'antd';
-import styles from 'components/common/Common.module.css';
 import { PlusOutlined } from '@ant-design/icons';
 import { LANGUAGE_EN } from 'language/en';
 
-export default function ListDataTable({ isLoading, tableColumn, tableData, handleAdd, addTitle = 'Group', scroll = 'auto', showAddButton = true, srl, noDataMessage = '' }) {
+export default function ListDataTable(props) {
+    const { isLoading, tableColumn, tableData, handleAdd, addTitle = 'Group', scroll = 'auto', showAddButton = true, srl, noDataMessage = '', addButtonOption = false, styles = '' } = props;
     const noDataExistTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataExistMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', addTitle);
 
@@ -31,6 +31,8 @@ export default function ListDataTable({ isLoading, tableColumn, tableData, handl
                         description={!tableData?.length ? <span>{noDataMessage || noDataInformation}</span> : <span> No records found.</span>}
                     >
                         {!tableData?.length
+                            ? addButtonOption
+                            : addButtonOption
                             ? showAddButton && (
                                   <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                       {`Add`}

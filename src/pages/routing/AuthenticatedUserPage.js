@@ -19,6 +19,7 @@ import {
     CriticalityGroupPage,
     RoleManagementPage,
     StatePage,
+    StateCrudPage,
     DistrictPage,
     CityPage,
     TehsilPage,
@@ -65,6 +66,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER} element={<HierarchyAttributeMasterPage />} exact />
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY} element={<ManufacturerAdministrativeHierarchyPage />} />
 
+            <Route path={routing.ROUTING_COMMON_GEO_STATE_CRUD} element={<StateCrudPage />} />
             <Route path={routing.ROUTING_COMMON_GEO_STATE} element={<StatePage />} />
             <Route path={routing.ROUTING_COMMON_GEO_CITY} element={<CityPage />} />
             <Route path={routing.ROUTING_COMMON_GEO_DISTRICT} element={<DistrictPage />} />

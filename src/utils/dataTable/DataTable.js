@@ -25,7 +25,7 @@ export default function DataTable({ isLoading, removePagination = false, srl = t
 
     const skeletonData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
-    const tableColumnWithSrl = [tblSerialNumberColumn({ page: tablePagination?.current, title: srlTitle, pageSize: tablePagination?.pageSize, width: '5%' }), ...tableColumn];
+    const tableColumnWithSrl = [tblSerialNumberColumn({ page: tablePagination?.current, title: srlTitle, pageSize: tablePagination?.pageSize, width: scroll === 'auto' ? '5%' : '50px' }), ...tableColumn];
 
     const tableSkeletonColumn = tableColumnWithSrl?.map((item) => {
         return { ...item, render: () => <InputSkeleton height={40} /> };
