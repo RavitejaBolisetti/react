@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState } from 'react';
 import { Form, Modal, message as antMessage } from 'antd';
 import { connect } from 'react-redux';
@@ -49,7 +54,7 @@ export const crudAddPage = ({ dataActions, addActions, showGlobalNotification, m
             // fetchList({ setIsLoading: editShowLoading, userId });
             if (buttonData?.saveAndNewBtnClicked) {
                 // setIsFormVisible(true);
-                
+
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             } else {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
