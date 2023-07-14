@@ -57,7 +57,8 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: corporateCompanyProfileDataActions.listShowLoading,
 
             fetchCompanyProfileData: corporateCompanyProfileDataActions.fetchList,
-            fecthViewDocument: documentViewDataActions.fetchList,
+            fetchViewDocument: documentViewDataActions.fetchList,
+            resetViewData: documentViewDataActions.reset,
 
             saveData: corporateCompanyProfileDataActions.saveData,
             uploadFile: supportingDocumentDataActions.uploadFile,
@@ -70,8 +71,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CompanyProfileBase = (props) => {
-    const { showGlobalNotification, buttonData, setButtonData, formActionType, handleButtonClick, defaultBtnVisiblity, selectedCustomer, selectedCustomerId } = props;
-    const { listShowLoading, section, saveData, uploadFile, userId, fetchCompanyProfileData, downloadFile, appCategoryData, customerProfileData, fecthViewDocument, viewDocument, resetData } = props;
+    const { showGlobalNotification, buttonData, setButtonData, formActionType, handleButtonClick, defaultBtnVisiblity, selectedCustomer, selectedCustomerId, isViewDataLoaded, resetViewData } = props;
+    const { listShowLoading, section, saveData, uploadFile, userId, fetchCompanyProfileData, appCategoryData, customerProfileData, fetchViewDocument, viewDocument, resetData } = props;
     const { uploadListShowLoading } = props;
 
     const [form] = Form.useForm();
@@ -80,6 +81,7 @@ const CompanyProfileBase = (props) => {
     const [appCategory, setAppCustomerCategory] = useState();
     const [appSubCategory, setAppSubCategory] = useState();
     const [customerCategory, setCustomerCategory] = useState();
+    const [fileList, setFileList] = useState([]);
 
     const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
 
@@ -109,7 +111,7 @@ const CompanyProfileBase = (props) => {
                     name: 'docId',
                 },
             ];
-            fecthViewDocument({ setIsLoading: listShowLoading, userId, extraParams });
+            fetchViewDocument({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, customerProfileData?.customerFormDocId]);
@@ -134,6 +136,7 @@ const CompanyProfileBase = (props) => {
         // customerId: customerId
 
         const onSuccess = (res) => {
+            setFileList([]);
             listShowLoading(false);
             form.resetFields();
 
@@ -178,6 +181,32 @@ const CompanyProfileBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    useEffect(() => {
+        return () => {
+            resetViewData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const downloadFileFromList = () => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: uploadedFile,
+                name: 'docId',
+            },
+        ];
+        fetchViewDocument({ setIsLoading: listShowLoading, userId, extraParams });
+        if (viewDocument && isViewDataLoaded) {
+            let a = document.createElement('a');
+            a.href = `data:image/png;base64,${viewDocument?.base64}`;
+            a.download = viewDocument?.fileName;
+            a.click();
+        }
+    };
+
     const handleOnClick = () => {
         const extraParams = [
             {
@@ -187,7 +216,13 @@ const CompanyProfileBase = (props) => {
                 name: 'docId',
             },
         ];
-        downloadFile({ setIsLoading: listShowLoading, userId, extraParams });
+        fetchViewDocument({ setIsLoading: listShowLoading, userId, extraParams });
+        if (viewDocument && isViewDataLoaded) {
+            let a = document.createElement('a');
+            a.href = `data:image/png;base64,${viewDocument?.base64}`;
+            a.download = viewDocument?.fileName;
+            a.click();
+        }
     };
 
     const formProps = {
@@ -211,6 +246,9 @@ const CompanyProfileBase = (props) => {
         customerCategory,
         setCustomerCategory,
         viewDocument,
+        downloadFileFromList,
+        fileList,
+        setFileList,
     };
 
     const viewProps = {

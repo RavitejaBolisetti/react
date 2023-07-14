@@ -181,7 +181,7 @@ export const MenuConstant = {
 
     [getMenyKey('COMN-10.04')]: {
         key: 'COMN-10.04',
-        link: routing.ROUTING_COMMON_LESSOR_COMPANY_CREATION,
+        link: routing.ROUTING_COMMON_LESSOR_CUSTOMER_CREATION,
         icon: undefined,
         parentMenuId: 'COMN-10.a',
     },

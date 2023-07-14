@@ -40,7 +40,7 @@ const baseAPICall = (params) => {
     const unAuthorizedMessage = LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE;
 
     const handleErrorMessage = ({ onError, displayErrorTitle, errorTitle, errorMessage }) => {
-        onError && (displayErrorTitle ? onError({ title: errorTitle, message: Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }) : onError(errorMessage));
+        onError && (displayErrorTitle ? onError({ title: errorTitle, message: Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }) : onError(Array.isArray(errorMessage) ? errorMessage[0] : errorMessage));
     };
 
     const onUnAuthenticated = (message = '') => {

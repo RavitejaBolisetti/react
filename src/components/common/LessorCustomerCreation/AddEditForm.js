@@ -10,7 +10,6 @@ import { FiEye, FiTrash } from 'react-icons/fi';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import { LANGUAGE_EN } from 'language/en';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
@@ -55,7 +54,13 @@ const AddEditFormMain = (props) => {
     }, [lessorData]);
 
     const handleTemplateDownLoad = () => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: LANGUAGE_EN.GENERAL.DOWNLOAD_START.MESSAGE });
+        const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage , placement: 'bottomRight'});
+        };
+
+        const onErrorAction = (res) => {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
+        };
         const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.LSRCUSTTMPLT.id);
         let templateID = null;
         if (filteredTypeData.length === 1) {
@@ -72,7 +77,7 @@ const AddEditFormMain = (props) => {
         const name = {
             docName: 'Lessor Template',
         };
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, name });
+        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, name, onSuccessAction, onErrorAction });
         resetData();
     };
 
@@ -89,10 +94,15 @@ const AddEditFormMain = (props) => {
     const onDrop = (e) => {};
 
     const handleDownload = (file) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: LANGUAGE_EN.GENERAL.DOWNLOAD_START.MESSAGE });
+        const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage , placement: 'bottomRight'});
+        };
 
+        const onErrorAction = (res) => {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res , placement: 'bottomRight'});
+        };
         if (typeof form.getFieldValue('stateCode') === 'undefined') {
-            fetchList({ setIsLoading: listLessorShowLoading, isDataLoaded, userId });
+            fetchList({ setIsLoading: listLessorShowLoading, isDataLoaded, userId, onSuccessAction, onErrorAction });
         } else {
             const extraParams = [
                 {
@@ -100,7 +110,7 @@ const AddEditFormMain = (props) => {
                     value: `${form.getFieldValue('stateCode')}`,
                 },
             ];
-            fetchList({ setIsLoading: listLessorShowLoading, isDataLoaded, userId, extraParams });
+            fetchList({ setIsLoading: listLessorShowLoading, isDataLoaded, userId, extraParams, onSuccessAction, onErrorAction });
         }
     };
 
@@ -109,7 +119,7 @@ const AddEditFormMain = (props) => {
         beforeUpload: (file) => {
             const isExcel = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
             if (!isExcel) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not a excel file` });
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not a excel file`, placement: 'bottomRight' });
             }
             return isExcel || Upload.LIST_IGNORE;
         },
@@ -134,9 +144,9 @@ const AddEditFormMain = (props) => {
 
     useEffect(() => {
         if (showStatus.status === 'done') {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}`, placement: 'bottomRight' });
         } else if (showStatus.status === 'error') {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error', placement: 'bottomRight' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showStatus]);

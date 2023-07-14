@@ -26,7 +26,7 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { AddEditForm } from './AddEditForm';
 import { ManufactureAdminHierarchyUpload } from '../ManufacturerAdminstrativeHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
-import { ChangeHistory } from './ChangeHistory';
+import { ChangeHistory1 } from './ChangeHistory';
 import { disableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
 import LeftPanel from '../LeftPanel';
@@ -126,7 +126,6 @@ const mapDispatchToProps = (dispatch) => ({
             authorityShowLoading: manufacturerAdminUploadDataActions.listShowLoading,
             resetData: manufacturerAdminUploadDataActions.reset,
 
-
             showGlobalNotification,
         },
         dispatch
@@ -139,7 +138,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const { resetData, resetViewData, detailData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { uploadDocumentFile, accessToken, token } = props;
 
-    const { authorityShowLoading,isAuthorityDataLoaded, isAuthorityDataLoading, authorityData, typeData, lessorData } = props;
+    const { authorityShowLoading, isAuthorityDataLoaded, isAuthorityDataLoading, authorityData, typeData, lessorData } = props;
     const { saveAuthorityData, isViewDataLoaded, isLoading, viewListShowLoading, fetchViewDocument, viewDocument } = props;
 
     const [form] = Form.useForm();
@@ -169,10 +168,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
     const fieldNames = { title: 'manufactureAdminShortName', key: 'id', children: 'subManufactureAdmin' };
 
-
     const [uploadForm] = Form.useForm();
-
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -185,7 +181,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const [isUploadDrawer, setIsUploadDrawer] = useState(false);
 
     const errorAction = () => {};
-    
+
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -318,6 +314,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     };
 
     const onFinish = (values) => {
+        console.log("🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:317 ~ onFinish ~ values:", values)
         const recordId = formData?.id || '';
 
         const data = { isModified: false, id: recordId, manufactureOrganizationId: organizationId, adminAuthority: documentTypesList, ...values };
@@ -400,6 +397,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setEmployeeName,
         tokenValidate,
         setTokenValidate,
+        onFinish,
     };
 
     const viewProps = {
@@ -449,8 +447,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         setIsUploadDrawer(false);
-        resetData();
-        resetViewData();
+        // resetData();
+        // resetViewData();
     };
 
     const drawerTitle = 'Upload Authority Details';
@@ -477,6 +475,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         downloadForm,
         setDownLoadForm,
         resetData,
+        organizationId,
 
         listShowLoading,
         showGlobalNotification,
@@ -494,12 +493,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         buttonData,
         setButtonData,
 
-        uploadedFile,
         setUploadedFile,
-        uploadDocumentFile,
         emptyList,
         setEmptyList,
-        resetData,
         resetViewData,
         isLoading,
     };
@@ -521,12 +517,19 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         defaultValue: 'organizationId',
         placeholder: preparePlaceholderSelect('Organization Hierarchy'),
     };
-
+    console.log('organizationId', organizationId);
     const title = 'Hierarchy';
 
     const handleOnClickUpload = () => {
         setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: true, saveBtn: true });
         setIsUploadDrawer(true);
+    };
+
+    const drawerProps = {
+        isVisible: isChangeHistoryVisible,
+        onCloseAction: myCloseAction,
+        titleOverride: chgHistoryToggleButton,
+        activeKey,
     };
 
     return (
@@ -536,14 +539,14 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                                <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                    <Form.Item label={`${title}`} name="code">
+                                {/* <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}> */}
+                                    <h1>{`${title}`}</h1>
                                         <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={!organizationId && !manufacturerAdminHierarchyData?.length > 0 ? 24 : 12} lg={!organizationId && !manufacturerAdminHierarchyData?.length > 0 ? 24 : 12} xl={!organizationId && !manufacturerAdminHierarchyData?.length > 0 ? 24 : 12}>
+                                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                                 <TreeSelectField {...treeSelectFieldProps} />
                                             </Col>
                                             {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
-                                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                                     <Search
                                                         placeholder="Search"
                                                         style={{
@@ -556,24 +559,26 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                                 </Col>
                                             )}
                                         </Row>
-                                    </Form.Item>
-                                </Form>
+                                    {/* </Form.Item> */}
+                                {/* </Form> */}
                             </Col>
-                            <Col className={styles.buttonHeadingContainer} xs={10} sm={10} md={10} lg={10} xl={10}>
-                                <Button type="primary" onClick={handleOnClickUpload}>
-                                    Upload
-                                </Button>
+                            {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
+                                <Col className={styles.buttonHeadingContainer} xs={10} sm={10} md={10} lg={10} xl={10}>
+                                    <Button type="primary" onClick={handleOnClickUpload}>
+                                        Upload
+                                    </Button>
 
-                                <Button
-                                    type="primary"
-                                    onClick={() => {
-                                        setIsChangeHistoryVisible(true);
-                                    }}
-                                >
-                                    <FaHistory className={styles.buttonIcon} />
-                                    Change History
-                                </Button>
-                            </Col>
+                                    <Button
+                                        type="primary"
+                                        onClick={() => {
+                                            setIsChangeHistoryVisible(true);
+                                        }}
+                                    >
+                                        <FaHistory className={styles.buttonIcon} />
+                                        Change History
+                                    </Button>
+                                </Col>
+                            )   }
                         </Row>
                     </div>
                     <div className={styles.content}>
@@ -634,7 +639,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             </Row>
 
             <ManufactureAdminHierarchyUpload {...uploadProps} />
-            <ChangeHistory />
+            <ChangeHistory1 {...drawerProps} />
             <AddEditForm {...formProps} />
         </>
     );

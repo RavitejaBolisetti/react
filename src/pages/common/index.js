@@ -22,7 +22,7 @@ import { TermConditionDealerMasterPage } from './TermsAndConditions/DealerTermCo
 import { TermConditionManufacturerMasterPage } from './TermsAndConditions/ManufacturerTermCondition';
 import { DealerCompanyPage, DealerParentPage } from './Dealer';
 import { LessorCompanyMasterPage } from './LessorCompanyMaster';
-import { LessorCompanyCreationPage } from './LessorCompanyCreation';
+import { LessorCustomerCreationPage } from './LessorCustomerCreation';
 import { OtfReportsPage } from './OTFReports';
 
 export {
@@ -50,7 +50,7 @@ export {
     RoleMasterPage,
     PartyMasterPage,
     LessorCompanyMasterPage,
-    LessorCompanyCreationPage,
+    LessorCustomerCreationPage,
     DealerCompanyPage,
     DealerParentPage,
     CustomerMasterPage,

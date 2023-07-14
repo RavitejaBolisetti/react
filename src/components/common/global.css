@@ -4,15 +4,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-:global .ant-form-vertical .ant-form-item-label > label,
-:global .ant-col-24.ant-form-item-label > label,
-:global .ant-col-xl-24.ant-form-item-label > label {
+:global .ant-form-vertical .ant-form-item-label>label,
+:global .ant-col-24.ant-form-item-label>label,
+:global .ant-col-xl-24.ant-form-item-label>label {
     color: #545454;
     font-size: 14px;
     line-height: 23px;
     font-weight: 400;
     margin-bottom: 6px;
 }
+
 :global .ant-tree .ant-tree-switcher-leaf-line:before {
     border-inline-end: 1px dashed #d9d9d9;
 }
@@ -47,14 +48,14 @@
 
 :global .ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled),
 :global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper.ant-select-tree-node-selected,
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox + span.ant-select-tree-node-selected {
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox+span.ant-select-tree-node-selected {
     background-color: transparent !important;
     color: #ff3e5b;
     font-size: 14px;
 }
 
 :global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper:hover,
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox + span:hover {
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox+span:hover {
     background-color: transparent !important;
 }
 
@@ -298,7 +299,7 @@
     background: #70c922;
 }
 
-:global .ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+:global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
     margin-inline-end: 8px;
     margin-top: -2px;
 }
@@ -309,7 +310,7 @@
     /* overflow: inherit !important; */
 }
 
-:global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-texts {
+:global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-texts {
     font-weight: 600;
     font-size: 16px;
 }
@@ -372,25 +373,25 @@
     box-shadow: none;
 }
 
-:global .ant-table-wrapper .ant-table-container table > thead > tr:first-child > *:first-child {
+:global .ant-table-wrapper .ant-table-container table>thead>tr:first-child>*:first-child {
     border-start-start-radius: 4px;
 }
 
-:global .ant-table-wrapper .ant-table-container table > thead > tr:first-child > *:last-child {
+:global .ant-table-wrapper .ant-table-container table>thead>tr:first-child>*:last-child {
     border-start-end-radius: 4px;
 }
 
-:global .ant-table-wrapper .ant-table-tbody > tr:last-child > td:first-child,
-:global .ant-table-wrapper .ant-table-tbody > tr.ant-table-row:last-child:hover > td:first-child {
+:global .ant-table-wrapper .ant-table-tbody>tr:last-child>td:first-child,
+:global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:last-child:hover>td:first-child {
     border-radius: 0 0 0 4px;
 }
 
-:global .ant-table-wrapper .ant-table-tbody > tr:last-child > td:last-child,
-:global .ant-table-wrapper .ant-table-tbody > tr.ant-table-row:last-child:hover > td:last-child {
+:global .ant-table-wrapper .ant-table-tbody>tr:last-child>td:last-child,
+:global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:last-child:hover>td:last-child {
     border-radius: 0 0 4px 0;
 }
 
-:global .ant-table-wrapper .ant-table-thead > tr > th {
+:global .ant-table-wrapper .ant-table-thead>tr>th {
     color: #0b0b0c;
     line-height: 20px;
     background: #f2f2f2;
@@ -402,7 +403,7 @@
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
 }
 
-:global .ant-table-wrapper .ant-table-tbody > tr > td {
+:global .ant-table-wrapper .ant-table-tbody>tr>td {
     color: #545454;
     font-weight: 500;
     line-height: 23px;
@@ -415,11 +416,11 @@
     padding-left: 16px;
 } */
 
-:global .ant-table-wrapper .ant-table-tbody > tr > td:last-child .ant-space .ant-space-item:last-child button {
+:global .ant-table-wrapper .ant-table-tbody>tr>td:last-child .ant-space .ant-space-item:last-child button {
     margin-right: 0;
 }
 
-:global .ant-table-wrapper .ant-table-tbody > tr:last-child > td {
+:global .ant-table-wrapper .ant-table-tbody>tr:last-child>td {
     border-bottom: none;
 }
 
