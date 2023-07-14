@@ -7,10 +7,8 @@
 import { Button, Form, Row, Col, Space, Select, Input, TimePicker } from 'antd';
 import { validateLettersWithWhitespaces, validateRequiredEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { formatTime } from 'utils/formatDateTime';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
-import styles from '../../../common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 
 const AddEditForm = (props) => {
     const { onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, formActionType, handleFormValueChange, setIsAdding } = props;
@@ -57,8 +55,6 @@ const AddEditForm = (props) => {
                             <Form.Item label="Preferred Contact Time" name={'preferredContactTime'} rules={[validateRequiredInputField('contact time')]}>
                                 <TimePicker.RangePicker use12Hours size="small" format="h:mm A" />
                             </Form.Item>
-                            {/* preferredContactTimeFrom preferredContactTimeTo */}
-                            {/* defaultValue={[formatTime('13:00:00'), formatTime('13:00:00', 'HH:mm:ss')]} */}
                         </Col>
                     </Row>
                     <Form.Item hidden initialValue={''} name="id">
