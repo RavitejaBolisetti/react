@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
@@ -25,7 +25,6 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
                 OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
                 salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
@@ -37,7 +36,6 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        typeData,
         isDataLoaded,
 
         otfData,
@@ -70,9 +68,25 @@ const OtfDetailsMasterBase = (props) => {
     const { typeData, listConsultantShowLoading } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
     const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
+    const [exchangeValue, setexchangeValue] = useState(false);
+    const [loyaltyValue, setloyaltyValue] = useState(false);
+
+    useEffect(() => {
+        if (otfData?.exchange) {
+            setexchangeValue(false);
+            setloyaltyValue(true);
+        } else if (otfData?.loyaltyScheme) {
+            setexchangeValue(true);
+            setloyaltyValue(false);
+        } else {
+            setexchangeValue(false);
+            setloyaltyValue(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [otfData]);
 
     const onErrorAction = (message) => {
-        // showGlobalNotification({ message });
+        showGlobalNotification({ message });
     };
 
     const extraParams = [
@@ -122,7 +136,7 @@ const OtfDetailsMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            // showGlobalNotification({ message });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -152,6 +166,10 @@ const OtfDetailsMasterBase = (props) => {
         formData: otfData,
         isLoading,
         salesConsultantLov,
+        exchangeValue,
+        setexchangeValue,
+        loyaltyValue,
+        setloyaltyValue,
     };
 
     const viewProps = {
@@ -162,8 +180,22 @@ const OtfDetailsMasterBase = (props) => {
         salesConsultantLov,
     };
 
+    const handleFieldsChange = () => {
+        const { loyaltyScheme, exchange } = form.getFieldsValue();
+        if (loyaltyScheme) {
+            setexchangeValue(true);
+            setloyaltyValue(false);
+        } else if (exchange) {
+            setexchangeValue(false);
+            setloyaltyValue(true);
+        } else {
+            setexchangeValue(false);
+            setloyaltyValue(false);
+        }
+    };
+
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFieldsChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

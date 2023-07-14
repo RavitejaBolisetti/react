@@ -27,6 +27,12 @@ export const validateEmailField = (fieldName, lowercase = true) => ({
     message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
 });
 
+export const validateRequiredEmailField = (fieldName, lowercase = true) => ({
+    required: true,
+    type: 'email',
+    message: 'Please enter valid ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
+});
+
 export const validationFieldLetterAndNumber = (fieldName, lowercase = true) => ({
     pattern: /^[A-Za-z0-9]*$/,
     message: 'Please use only letters and numbers in ' + (lowercase ? fieldName?.toLowerCase() : fieldName),
@@ -148,19 +154,17 @@ export const NumberValidation = (fieldName) => ({
     message: 'Please enter valid ' + fieldName,
 });
 
-export const duplicateProductValidator = (value, dataList, props) => {
+export const duplicateProductValidator = (value, dataList) => {
     if (dataList?.length > 0) {
-        if (props?.attributeName === value?.attributeName?.label) {
-            return Promise.resolve('');
-        } else {
-            for (let i = 0; i < dataList?.length; i++) {
-                if (dataList[i]?.attributeName?.label === value?.attributeName?.label) {
-                    return Promise.reject('Duplicate found');
-                }
+        for (let i = 0; i < dataList?.length; i++) {
+            if (dataList[i]?.code === value?.attributeName?.label) {
+                return Promise.reject('Duplicate found');
             }
         }
+        return Promise.resolve('');
+    } else {
+        return Promise.resolve('');
     }
-    return Promise.resolve('');
 };
 
 export const searchValidator = (_, value) => {
@@ -172,7 +176,7 @@ export const searchValidator = (_, value) => {
 
 export const searchValidatorPincode = (_, value) => {
     const pattern = /^\d{6}$/;
-    if (pattern.test(value)) {
+    if (!value || pattern.test(value)) {
         return Promise.resolve();
     } else {
         return Promise.reject(new Error('Please enter 6 digit numeric value to search'));

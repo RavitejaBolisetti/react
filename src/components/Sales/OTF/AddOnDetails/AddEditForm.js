@@ -14,7 +14,8 @@ import AMCForm from './AMC/AMCForm';
 import FMSForm from './FMS/FMSForm';
 import RSAForm from './RSA/RSAForm';
 import { dynamicExpandIcon } from 'utils/accordianExpandIcon';
-import { AddonConstantSection } from 'constants/AddonConstants';
+import { expandIcon } from 'utils/accordianExpandIcon';
+import { OTF_ADDON_SECTION } from 'constants/OTFAddonSection';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -22,7 +23,7 @@ const { Text } = Typography;
 const AddEditFormMain = (props) => {
     const { formData, accessoryForm, shieldForm, rsaForm, amcForm, fmsForm, addOnItemInfo, setAddOnItemInfo, formActionType, selectedOrderId, formDataSetter, setformDataSetter, handleFormValueChange, showGlobalNotification, onSearchPart, AddonPartsData, setsearchData, searchData } = props;
 
-    const [openAccordian, setOpenAccordian] = useState(['ci']);
+    const [openAccordian, setOpenAccordian] = useState(formData?.partDetailsResponses?.length ? ['ci'] : []);
 
     const [addButtonDisabled, setaddButtonDisabled] = useState({
         shield: false,
@@ -35,6 +36,7 @@ const AddEditFormMain = (props) => {
 
     useEffect(() => {
         setformDataSetter({ ...formDataSetter, partDetailsResponses: addOnItemInfo });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [addOnItemInfo]);
 
     const handleCollapse = (key) => {
@@ -111,32 +113,32 @@ const AddEditFormMain = (props) => {
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Space direction="vertical" size="small" className={styles.accordianContainer}>
-                    <Collapse onChange={() => handleCollapse('Accessories Information')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                        <Panel header={headerPropsFn(AddonConstantSection?.ACCESSORIES_INFORMATION?.headerText, AddonConstantSection?.ACCESSORIES_INFORMATION?.dataKey, AddonConstantSection?.ACCESSORIES_INFORMATION?.openKey, AddonConstantSection?.ACCESSORIES_INFORMATION?.types)} key="Accessories Information">
+                    <Collapse onChange={() => handleCollapse('Accessories Information')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
+                        <Panel header={headerPropsFn(OTF_ADDON_SECTION?.ACCESSORIES_INFORMATION?.headerText, OTF_ADDON_SECTION?.ACCESSORIES_INFORMATION?.dataKey, OTF_ADDON_SECTION?.ACCESSORIES_INFORMATION?.openKey, OTF_ADDON_SECTION?.ACCESSORIES_INFORMATION?.types)} key="Accessories Information">
                             <AccessoriesAddonMain {...AccerssoriesInformationProps} />
                         </Panel>
                     </Collapse>
 
-                    <Collapse onChange={() => handleCollapse('Shield')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                        <Panel header={headerPropsFn(AddonConstantSection?.SHIELD?.headerText, AddonConstantSection?.SHIELD?.dataKey, AddonConstantSection?.SHIELD?.openKey, AddonConstantSection?.SHIELD?.types)} key="Shield">
+                    <Collapse onChange={() => handleCollapse('Shield')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
+                        <Panel header={headerPropsFn(OTF_ADDON_SECTION?.SHIELD?.headerText, OTF_ADDON_SECTION?.SHIELD?.dataKey, OTF_ADDON_SECTION?.SHIELD?.openKey, OTF_ADDON_SECTION?.SHIELD?.types)} key="Shield">
                             <ShieldForm {...commonProps} />
                         </Panel>
                     </Collapse>
 
-                    <Collapse onChange={() => handleCollapse('RSA')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                        <Panel header={headerPropsFn(AddonConstantSection?.RSA?.headerText, AddonConstantSection?.RSA?.dataKey, AddonConstantSection?.RSA?.openKey, AddonConstantSection?.RSA?.types)} key="RSA">
+                    <Collapse onChange={() => handleCollapse('RSA')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
+                        <Panel header={headerPropsFn(OTF_ADDON_SECTION?.RSA?.headerText, OTF_ADDON_SECTION?.RSA?.dataKey, OTF_ADDON_SECTION?.RSA?.openKey, OTF_ADDON_SECTION?.RSA?.types)} key="RSA">
                             <RSAForm {...commonProps} />
                         </Panel>
                     </Collapse>
 
-                    <Collapse onChange={() => handleCollapse('AMC')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                        <Panel header={headerPropsFn(AddonConstantSection?.AMC?.headerText, AddonConstantSection?.AMC?.dataKey, AddonConstantSection?.AMC?.openKey, AddonConstantSection?.AMC?.types)} key="AMC">
+                    <Collapse onChange={() => handleCollapse('AMC')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
+                        <Panel header={headerPropsFn(OTF_ADDON_SECTION?.AMC?.headerText, OTF_ADDON_SECTION?.AMC?.dataKey, OTF_ADDON_SECTION?.AMC?.openKey, OTF_ADDON_SECTION?.AMC?.types)} key="AMC">
                             <AMCForm {...commonProps} />
                         </Panel>
                     </Collapse>
 
-                    <Collapse onChange={() => handleCollapse('FMS')} expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} expandIconPosition="end">
-                        <Panel header={headerPropsFn(AddonConstantSection?.FMS?.headerText, AddonConstantSection?.FMS?.dataKey, AddonConstantSection?.FMS?.openKey, AddonConstantSection?.FMS?.types)} key="FMS">
+                    <Collapse onChange={() => handleCollapse('FMS')} expandIcon={expandIcon} activeKey={openAccordian} expandIconPosition="end">
+                        <Panel header={headerPropsFn(OTF_ADDON_SECTION?.FMS?.headerText, OTF_ADDON_SECTION?.FMS?.dataKey, OTF_ADDON_SECTION?.FMS?.openKey, OTF_ADDON_SECTION?.FMS?.types)} key="FMS">
                             <FMSForm {...commonProps} />
                         </Panel>
                     </Collapse>

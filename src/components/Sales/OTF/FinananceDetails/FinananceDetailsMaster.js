@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -108,7 +108,7 @@ export const FinananceDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && selectedOrderId) {
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
+            fetchList({ setIsLoading: listShowLoading, extraParams, onErrorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -121,27 +121,21 @@ export const FinananceDetailsMasterBase = (props) => {
     }, [userId, isFinanceLovDataLoaded]);
 
     const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
-    const errorAction = (message) => {
-        // showGlobalNotification(message);
+    const onErrorAction = (message) => {
+        showGlobalNotification(message);
     };
 
     const onFinish = (values) => {
-        const data = { ...values, id: financeData?.id, otfNumber: selectedOrderId };
+        const data = { ...values, id: financeData?.id, otfNumber: selectedOrderId, doDate: values?.doDate?.format('YYYY-MM-DD') };
 
         const onSuccess = (res) => {
             form.resetFields();
-
-            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
-
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-        };
-
-        const onError = (message) => {
-            // showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -149,7 +143,7 @@ export const FinananceDetailsMasterBase = (props) => {
             method: financeData?.id ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
-            onError,
+            onError: onErrorAction,
             onSuccess,
         };
 

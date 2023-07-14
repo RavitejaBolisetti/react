@@ -11,7 +11,7 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 import { withDrawer } from 'components/withDrawer';
 import { ListDataTable } from 'utils/ListDataTable';
 import { convertDate } from 'utils/formatDateTime';
-
+import styles from '../../ChangeHistory/ChangeHistory.module.css';
 const ChangeHistoryMain = (props) => {
     const { ChangeHistoryTermsConditionsData } = props;
 
@@ -69,7 +69,9 @@ const ChangeHistoryMain = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <div className={styles.changeHistoryContainer}>
                     <ListDataTable {...tableProps} />
+                </div>
                 </Col>
             </Row>
         </>

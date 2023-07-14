@@ -78,7 +78,7 @@ const InsuranceDetailsMasterBase = (props) => {
     }, [userId, selectedOrderId]);
 
     const onErrorAction = (message) => {
-        // showGlobalNotification(message);
+        showGlobalNotification({ message: message });
     };
 
     const onSuccessAction = (res) => {

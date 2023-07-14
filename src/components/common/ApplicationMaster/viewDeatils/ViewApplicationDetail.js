@@ -1,16 +1,17 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
 import { Descriptions, Typography, Collapse, Space, Row, Col, Divider } from 'antd';
-import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 import { ACCESSIBLE_LOCATION_INDICATOR } from 'constants/modules/applicationMaster';
 
 import CardDocument from './CardDocument';
 import CardLocation from './CardLocation';
 import CardAction from './CardAction';
+
+import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -44,16 +45,12 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                 <Descriptions.Item label="Application Criticality Group">{rest?.criticalityGroupName || 'NA'}</Descriptions.Item>
                 <Descriptions.Item label="Document number to be generated">{rest?.documentNumRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
 
-                <Space
-                    direction="vertical"
-                    size="small"
-                    className={styles.accordianContainer}
-                >
+                <Space direction="vertical" size="small" className={styles.accordianContainer}>
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             {applicationAction.length > 0 && (
-                                <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
-                                    <Panel header={<span>Application Actions</span>} key="1">
+                                <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
+                                    <Panel header={<><span>Application Actions</span><span style={{color:'#ff3e5b'}}>*</span></>} key="1">
                                         <Divider />
                                         {applicationAction.map((el) => (
                                             <CardAction {...el} />
@@ -64,8 +61,8 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             {documentType.length > 0 && (
-                                <Collapse onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
-                                    <Panel header={<span>Document Types</span>} key="2">
+                                <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
+                                    <Panel header={<><span>Document Type</span><span style={{color:'#ff3e5b'}}>*</span></>} key="2">
                                         <Divider />
                                         {documentType.map((el) => (
                                             <CardDocument {...el} />
@@ -76,8 +73,8 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             {accessibleLocation?.length > 0 && (
-                                <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
-                                    <Panel header={<span >Accessible Dealer Location</span>} key="3">
+                                <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
+                                    <Panel header={<><span>Accessible Dealer Location</span><span style={{color:'#ff3e5b'}}>*</span></>} key="3">
                                         <Divider />
                                         {accessibleLocation.map((el) => (
                                             <CardLocation {...el} />

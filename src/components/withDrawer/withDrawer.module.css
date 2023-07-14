@@ -3,6 +3,10 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+ .changeHistoryWrapper :global .ant-drawer-wrapper-body .ant-drawer-body {
+    padding: 16px 20px;
+    overflow: hidden;
+} 
 .myDrawerStyle :global .ant-drawer-body {
     padding-top: 10px;
     height: calc(100vh - 100px);
@@ -10,14 +14,12 @@
     overflow-y: auto;
 }
 
-.bigDrawerStyle :global .ant-drawer-wrapper-body .ant-drawer-body {
-    padding: 0px !important;
+ .bigDrawerStyle :global .ant-drawer-wrapper-body .ant-drawer-body {
+    padding: 0px;
     overflow: hidden;
-}
+} 
 
-.bigDrawerStyle :global .ant-collapse>.ant-collapse-item {
-    border-bottom: none;
-}
+
 
 .myDrawerStyle :global .ant-drawer-body::-webkit-scrollbar-track {
     background-color: #ffffff;
@@ -40,7 +42,7 @@
 }
 
 .myDrawerStyle :global .ant-input-affix-wrapper {
-    border-color: #d9d9d9 !important;
+    border-color: #B5B5B6 !important;
     height: max-content !important;
 }
 

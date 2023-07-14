@@ -4,14 +4,17 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Space, Collapse, Typography, Descriptions } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { Row, Col, Space, Collapse, Typography, Descriptions, Divider } from 'antd';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { InputSkeleton } from 'components/common/Skeleton';
 
 import { addToolTip } from 'utils/customMenuLink';
 import { DataTable } from 'utils/dataTable';
+import { expandIcon } from 'utils/accordianExpandIcon';
+import styles from 'components/common/Common.module.css';
+
 import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 
 const { Panel } = Collapse;
@@ -31,29 +34,8 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space direction="vertical" size="middle" className={styles.accordianContainer}>
-                        <Collapse
-                            expandIcon={() => {
-                                if (activeKey.includes(1)) {
-                                    return <MinusOutlined className={styles.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(1)}
-                            expandIconPosition="end"
-                            className={styles.collapseContainer}
-                        >
-                            <Panel
-                                header={
-                                    <div className={styles.alignUser}>
-                                        <Text strong level={5} style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Vehicle Information
-                                        </Text>
-                                    </div>
-                                }
-                                key="1"
-                            >
+                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
+                            <Panel header="Vehicle Information" key="1">
                                 <Descriptions {...viewProps}>
                                     <Descriptions.Item label="Vehicle Usage Type ">{checkAndSetDefaultValue(formData?.vehicleUsageType, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Model">
@@ -83,56 +65,16 @@ const ViewDetailMain = (props) => {
                             </Panel>
                         </Collapse>
 
-                        <Collapse
-                            expandIcon={() => {
-                                if (activeKey.includes(2)) {
-                                    return <MinusOutlined className={styles.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(2)}
-                            expandIconPosition="end"
-                            className={styles.collapseContainer}
-                        >
-                            <Panel
-                                header={
-                                    <div className={styles.alignUser}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Tax Details
-                                        </Text>
-                                    </div>
-                                }
-                                key="2"
-                            >
+                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
+                            <Panel header="Tax Details" key="2">
+                                <Divider />
                                 <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
                             </Panel>
                         </Collapse>
 
-                        <Collapse
-                            expandIcon={() => {
-                                if (activeKey.includes(3)) {
-                                    return <MinusOutlined className={styles.iconsColor} />;
-                                } else {
-                                    return <PlusOutlined className={styles.iconsColor} />;
-                                }
-                            }}
-                            activeKey={activeKey}
-                            onChange={() => onChange(3)}
-                            expandIconPosition="end"
-                            className={styles.collapseContainer}
-                        >
-                            <Panel
-                                header={
-                                    <div className={styles.alignUser}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Charges
-                                        </Text>
-                                    </div>
-                                }
-                                key="3"
-                            >
+                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" className={styles.collapseContainer}>
+                            <Panel header="Charges" key="3">
+                                <Divider />
                                 <DataTable tableColumn={optionalServicesColumns} tableData={formData['optionalServices']} removePagination={true} />
                             </Panel>
                         </Collapse>

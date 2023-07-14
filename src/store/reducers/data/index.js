@@ -25,11 +25,14 @@ import { TermCondition } from './termsConditions';
 import { DealerHierarchy } from './dealer';
 import { PincodeDetails } from './pincodeDetails';
 import { LessorCompanyMaster } from './lessorCompanyMaster';
+import { LessorCustomerCreation } from './lessorCustomerCreation';
 import { OtfReports } from './otfReports';
 import { OTF } from './otf';
 import { Vehicle } from './vehicle';
 import { CustomerMaster } from './customerMaster';
 import { SupportingDocument } from './supportingDocument';
+import { ManufacturerAdmin } from './ManufacturerAdmin';
+import { ManufacturerOrg } from './ManufacturerOrg';
 
 export const data = combineReducers({
     Menu,
@@ -53,9 +56,12 @@ export const data = combineReducers({
     DealerHierarchy,
     PincodeDetails,
     LessorCompanyMaster,
+    LessorCustomerCreation,
     OtfReports,
     OTF,
     CustomerMaster,
     SupportingDocument,
-    Vehicle
+    Vehicle,
+    ManufacturerAdmin,
+    ManufacturerOrg,
 });

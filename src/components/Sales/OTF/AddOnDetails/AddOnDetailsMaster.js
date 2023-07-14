@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
         data: {
             OTF: {
                 AddonDetails: { isLoaded: isDataLoaded = false, isLoading, data: AddonDetailsData = [] },
-                AddonParts: { isLoaded: isAddonPartsDataLoaded = false, isAddonPartsLoading, data: AddonPartsData = [] },
+                AddonParts: { isLoaded: isAddonPartsDataLoaded = false, data: AddonPartsData = [] },
             },
         },
     } = state;
@@ -73,10 +73,9 @@ export const AddOnDetailsMasterMain = (props) => {
         fms: {},
         partDetailsResponses: [],
     });
-
     const [searchData, setsearchData] = useState({});
     const [addOnItemInfo, setAddOnItemInfo] = useState([]);
-    const [openAccordian, setopenAccordian] = useState(['ci']);
+    const [openAccordian, setopenAccordian] = useState();
     const [accessoryForm] = Form.useForm();
     const [shieldForm] = Form.useForm();
     const [rsaForm] = Form.useForm();
@@ -93,12 +92,14 @@ export const AddOnDetailsMasterMain = (props) => {
     };
 
     const onSearchPart = (searchvalue) => {
-        if (!searchvalue) return;
+        const partNumber = searchvalue?.trim();
+        if (!partNumber) return false;
+
         const extraParams = [
             {
                 key: 'partNumber',
                 title: 'partNumber',
-                value: searchvalue,
+                value: partNumber,
                 name: 'partNumber',
             },
         ];
@@ -121,20 +122,24 @@ export const AddOnDetailsMasterMain = (props) => {
     useEffect(() => {
         if (userId && selectedOrderId) {
             accessoryForm.resetFields();
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
+
     useEffect(() => {
         if (isDataLoaded && AddonDetailsData) {
             accessoryForm.resetFields();
             setformData(AddonDetailsData);
+            AddonDetailsData?.partDetailsResponses?.length ? setopenAccordian(['ci']) : setopenAccordian([]);
             setformDataSetter(AddonDetailsData);
             setAddOnItemInfo(
                 AddonDetailsData['partDetailsResponses']?.map((element, index) => {
                     return { ...element, isDeleting: false };
                 })
             );
+        } else {
+            setopenAccordian([]);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,9 +164,10 @@ export const AddOnDetailsMasterMain = (props) => {
         let detailsRequest = [];
         formDataSetter?.partDetailsResponses?.map((element, index) => {
             const { id, otfNumber, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp } = element;
-
             detailsRequest.push({ id, otfNumber, partNumber, requiredQuantity, type, partDescription, sellingPrice, mrp });
+            return undefined;
         });
+
         const data = { id: formData?.id ?? '', otfNumber: selectedOrderId, partDetailsRequests: detailsRequest, shield: formDataSetter?.shield, rsa: formDataSetter?.rsa, amc: formDataSetter?.amc, fms: formDataSetter?.fms };
 
         const onSuccess = (res) => {

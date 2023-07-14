@@ -6,18 +6,41 @@
 import React from 'react';
 import { Form, Select, Input } from 'antd';
 
-import { validateRequiredSelectField } from 'utils/validation';
-
-// import styles from 'components/common/Common.module.css';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import styles from './SearchBox.module.css';
 
 const { Option } = Select;
 const { Search } = Input;
 
 const SearchBox = (props) => {
-    const { searchForm, filterString, optionType, handleSearchTypeChange, handleSearchParamSearch, searchParamRule } = props;
+    const { searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
+    };
+
+    // const handleSearchTypeChange = (searchType) => {
+    // if (searchType === 'mobileNumber') {
+    //     setCustomerSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
+    // } else if (searchType === 'customerName') {
+    //     setCustomerSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
+    // } else if (searchType === 'otfNumber') {
+    //     setCustomerSearchRules({ rules: [validateRequiredInputField('OTF Number')] });
+    // } else {
+    // searchForm.setFieldsValue({ searchParam: undefined, searchType: undefined });
+    // setFilterString({ ...filterString, searchParam: undefined, searchType: undefined });
+    // }
+    // };
+
+    const handleSearchParamSearch = (values) => {
+        searchForm
+            .validateFields()
+            .then((values) => {
+                setFilterString({ ...values, advanceFilter: true });
+                searchForm.resetFields();
+            })
+            .catch((err) => {
+                return;
+            });
     };
 
     const selectProps = {
@@ -28,17 +51,18 @@ const SearchBox = (props) => {
     return (
         <div className={styles.selectSearchBg}>
             <Form onKeyPress={onKeyPressHandler} form={searchForm} layout="vertical" autoComplete="off">
-                <Form.Item name="searchType" initialValue={filterString?.searchType} rules={[validateRequiredSelectField('parameter')]}>
-                    <Select onChange={handleSearchTypeChange} placeholder="Select Parameter" {...selectProps}>
+                <Form.Item name="searchType" rules={[validateRequiredSelectField('parameter')]}>
+                    <Select placeholder="Select Parameter" {...selectProps}>
                         {optionType?.map((item) => (
-                            <Option value={item.key} selected>
+                            <Option key={'st' + item.key} value={item.key} selected>
                                 {item.value}
                             </Option>
                         ))}
                     </Select>
                 </Form.Item>
-                <Form.Item {...searchParamRule} name="searchParam" initialValue={filterString?.searchParam} validateTrigger={['onChange', 'onSearch']}>
-                    <Search placeholder="Search" value={filterString?.searchParam} allowClear onSearch={handleSearchParamSearch} className={styles.headerSearchField} />
+
+                <Form.Item {...searchParamRule} name="searchParam" rules={[validateRequiredInputField('search parametar')]} validateTrigger={['onChange', 'onSearch']}>
+                    <Search placeholder="Search" value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={handleSearchParamSearch} className={styles.headerSearchField} />
                 </Form.Item>
             </Form>
         </div>

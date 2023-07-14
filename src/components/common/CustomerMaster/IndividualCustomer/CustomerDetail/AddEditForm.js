@@ -5,35 +5,100 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button } from 'antd';
-
+import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Empty, Upload } from 'antd';
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { BiTimeFive } from 'react-icons/bi';
-import UploadUtils from '../../Common/UploadUtils';
+import { FiEye, FiTrash } from 'react-icons/fi';
 
+import { PARAM_MASTER } from 'constants/paramMaster';
 import { NameChangeHistory } from './NameChangeHistory';
-import styles from 'components/common/Common.module.css';
 
-const { Text } = Typography;
+import styles from 'components/common/Common.module.css';
+import Svg from 'assets/images/Filter.svg';
+
+const { Dragger } = Upload;
+const { Text, Title } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { form, typeData, formData, corporateLovData, setUploadImgDocId, isViewModeVisible, formActionType: { editMode } = undefined, customerType } = props;
+    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
+    const { setUploadedFileName, downloadFileFromList, fileList, setFileList, handleFormValueChange, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
+
+    const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
+    const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
+
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [corporateType, setCorporateType] = useState('');
 
-    const [firstToggle, setFirstToggle] = useState(false);
-    const [secondToggle, setSecondToggle] = useState(false);
-    const [disableWhatsapp, setDisableWhatsapp] = useState(true);
+    const [showStatus, setShowStatus] = useState('');
+    useEffect(() => {
+        if (showStatus.status === 'done') {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name} file uploaded successfully` });
+        } else if (showStatus.status === 'error') {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showStatus]);
 
-    const firstToggleFun = () => {
-        setFirstToggle(!firstToggle);
+    useEffect(() => {
+        setCorporateType(formData?.corporateType);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData?.corporateType]);
+
+    useEffect(() => {
+        setWhatsAppConfiguration({ contactOverWhatsApp: formData?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: formData?.mobileNumberAsWhatsappNumber });
+        handleFormFieldChange();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
+
+    const onDrop = (e) => {};
+
+    const uploadProps = {
+        multiple: false,
+        accept: 'image/png, image/jpeg, application/pdf',
+        showUploadList: {
+            showRemoveIcon: true,
+            showDownloadIcon: true,
+            removeIcon: <FiTrash />,
+            downloadIcon: <FiEye onClick={() => downloadFileFromList()} style={{ color: '#ff3e5b' }} />,
+            showProgress: true,
+        },
+        progress: { strokeWidth: 3, showInfo: true },
+        onDrop,
+        onChange: (info) => {
+            let fileList = [...info.fileList];
+            fileList = fileList.slice(-1);
+            setFileList(fileList);
+            handleFormValueChange();
+            const { status } = info.file;
+            setShowStatus(info.file);
+            if (status === 'done') {
+                setUploadedFile(info?.file?.response?.docId);
+                setUploadedFileName(info?.file?.response?.documentName);
+            }
+        },
     };
 
-    const secondToggleFun = () => {
-        setSecondToggle(!secondToggle);
-    }
+    const handleUpload = (options) => {
+        const { file, onSuccess, onError } = options;
+        setEmptyList(true);
+
+        const data = new FormData();
+        data.append('applicationId', 'app');
+        data.append('file', file);
+
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        uploadDocumentFile(requestData);
+    };
 
     const handleCorporateChange = (value) => {
         setCorporateType(value);
@@ -41,9 +106,10 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 corporateName: null,
             });
-        }else if(value === 'LIS') {
+        } else if (value === 'LIS') {
             form.setFieldsValue({
                 corporateCode: null,
+                corporateName: null,
             });
         }
     };
@@ -63,47 +129,14 @@ const AddEditFormMain = (props) => {
         onCloseAction: changeHistoryClose,
     };
 
-    console.log(formData,"formData")
-
-    useEffect( () => {
-        setFirstToggle(formData?.whatsappCommunicationIndicator);
-    },[formData] )
-
-    useEffect( () => {
-        setSecondToggle(formData?.mobileNumberAsWhatsappNumber);
-    },[formData] )
-
-    useEffect( () => {
-        
-        if(firstToggle && !secondToggle){
-            setDisableWhatsapp(false)
-        } else if(!firstToggle && !secondToggle){
-            setDisableWhatsapp(true);
-            form.setFieldsValue({
-                whatsAppNumber: null,
-            });
-        } else if(!firstToggle && secondToggle){
-            setSecondToggle(false);
+    const validateSameNumber = (_, value) => {
+        const { mobileNumber } = form.getFieldsValue();
+        if (value === mobileNumber && contactOverWhatsApp && !sameMobileNoAsWhatsApp) {
+            return Promise.reject('whatsapp number same as mobile number');
+        } else {
+            return Promise.resolve('');
         }
-         // eslint-disable-next-line react-hooks/exhaustive-deps
-    } ,[firstToggle, ] );
-
-    useEffect( () => {
-        if(secondToggle && firstToggle){
-            setDisableWhatsapp(true);
-            let number = form.getFieldsValue();
-            form.setFieldsValue({
-                whatsAppNumber: number?.mobileNumber,
-            });
-        }else if(firstToggle && !secondToggle){
-            setDisableWhatsapp(false);
-        } else{
-            form.setFieldsValue({
-                whatsAppNumber: null,
-            });
-        }
-         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [secondToggle] )
+    };
 
     return (
         <>
@@ -143,12 +176,11 @@ const AddEditFormMain = (props) => {
 
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                                    <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['CUST_TYPE']} allowClear></Select>
+                                    <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.[PARAM_MASTER?.CUST_TYPE?.id]} allowClear></Select>
                                 </Form.Item>
                             </Col>
                         </Row>
                     </div>
-                    {/* <Divider /> */}
                     <div className={styles.cardInsideBox}>
                         <Row>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -156,21 +188,12 @@ const AddEditFormMain = (props) => {
                                     Customer Name
                                 </Text>
                             </Col>
-
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                                {editMode && (
-                                    <Button type="link" icon={<BiTimeFive />}>
-                                        View History
-                                    </Button>
-                                )}
-                            </Col>
                         </Row>
-
                         <Divider />
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={4} lg={4} xl={4}>
                                 <Form.Item label="Title" initialValue={formData?.titleCode} name="titleCode" data-testid="title" rules={[validateRequiredSelectField('title')]}>
-                                    <Select placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['TITLE']}></Select>
+                                    <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['TITLE']}></Select>
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6}>
@@ -192,7 +215,45 @@ const AddEditFormMain = (props) => {
                             {editMode && (
                                 <>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <UploadUtils {...props} isViewModeVisible={isViewModeVisible} setUploadImgDocId={setUploadImgDocId} />
+                                        {/* <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                                            <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps}>
+                                                <div>
+                                                    <img src={Svg} alt="" />
+                                                </div>
+                                                <Empty
+                                                    description={
+                                                        <>
+                                                            <span>Upload supporting documents</span>
+                                                            <span>
+                                                                <br />
+                                                                File type should be .png and .jpg and max file size to be 5MB
+                                                            </span>
+                                                        </>
+                                                    }
+                                                />
+
+                                                <Button type="primary">Upload File</Button>
+                                            </Dragger>
+                                        </div> */}
+
+                                        <Space direction="vertical" style={{ width: '100%' }}>
+                                            <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                                                <Dragger customRequest={handleUpload} {...uploadProps} fileList={fileList}>
+                                                    <Empty
+                                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                        description={
+                                                            <>
+                                                                <Title level={5}>Upload supporting documents</Title>
+                                                                <Text>File type should be .png and .jpg and max file size to be 5MB</Text>
+                                                            </>
+                                                        }
+                                                    />
+                                                    <Button className={styles.marB20} type="primary">
+                                                        Upload File
+                                                    </Button>
+                                                </Dragger>
+                                            </div>
+                                        </Space>
                                     </Col>
                                 </>
                             )}
@@ -207,32 +268,34 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                {/* value={formData?.whatsappCommunicationIndicator === null || false ? false : true}  */}
                                 <Form.Item label="Contact over WhatsApp?" initialValue={formData?.whatsappCommunicationIndicator} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
                                     <Switch
-                                        onChange={firstToggleFun}
-                                        defaultChecked={formData?.whatsappCommunicationIndicator}
-                                        checked={firstToggle}
-                                        // defaultChecked={editMode ? true : formData?.whatsappCommunicationIndicator === true || null || undefined ? true : false}
+                                        onChange={(prev) => {
+                                            if (!prev) {
+                                                form.setFieldsValue({ whatsAppNumber: null });
+                                                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsAppActive: true });
+                                            }
+                                        }}
+                                        checked={contactOverWhatsApp}
                                     />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Want to use mobile no as WhatsApp no?" initialValue={formData?.mobileNumberAsWhatsappNumber} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
                                     <Switch
-                                        onChange={secondToggleFun}
-                                        disabled={!firstToggle}
-                                        checked={secondToggle}
-                                        defaultChecked={formData?.whatsappCommunicationIndicator}
-                                        // defaultChecked={editMode ? true : formData?.mobileNumberAsWhatsappNumber === true || null || undefined ? true : false}
+                                        disabled={sameMobileNoAsWhatsAppActive}
+                                        onChange={() => {
+                                            form.validateFields(['whatsAppNumber']);
+                                        }}
+                                        checked={sameMobileNoAsWhatsApp}
                                     />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Whatsapp Number" initialValue={editMode ? formData?.whatsAppNumber : false} name="whatsAppNumber" data-testid="whatsAppNumber" rules={[validateMobileNoField('whatsapp number')]}>
-                                    <Input placeholder={preparePlaceholderText('WhatsApp Number')} disabled={disableWhatsapp} maxLength={10} />
+                                <Form.Item label="Whatsapp Number" initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsAppNumber" rules={[validateMobileNoField('whatsapp number'), { validator: validateSameNumber }]}>
+                                    <Input placeholder={preparePlaceholderText('WhatsApp Number')} disabled={contactOverWhatsAppActive} maxLength={10} />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -241,13 +304,13 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Corporate Type" initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType" rules={[validateRequiredSelectField('corporate type')]}>
-                                <Select placeholder={preparePlaceholderSelect('corporate type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_TYPE']} onChange={handleCorporateChange} allowClear></Select>
+                                <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('corporate type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_TYPE']} onChange={handleCorporateChange} allowClear></Select>
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Corporate Name" initialValue={corporateType === 'NON-LIS' ? '' : formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
-                                {corporateType === 'NON-LIS' ? <Input placeholder={preparePlaceholderText('corporate name')} /> : <Select onSelect={onHandleSelect} disabled={false} loading={false} placeholder={preparePlaceholderSelect('corporate name')} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select>}
+                                {corporateType === 'NON-LIS' ? <Input placeholder={preparePlaceholderText('corporate name')} /> : <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} onSelect={onHandleSelect} disabled={false} loading={false} placeholder={preparePlaceholderSelect('corporate name')} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select>}
                             </Form.Item>
                         </Col>
 
@@ -261,12 +324,12 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Corporate Category" initialValue={formData?.corporateCategory} name="corporateCategory" data-testid="corporateCategory">
-                                <Select placeholder={preparePlaceholderSelect('corporate category')} disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_CATE']}></Select>
+                                <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('corporate category')} disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_CATE']}></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Membership Type" initialValue={formData?.membershipType} name="membershipType" data-testid="membershipType" rules={[validateRequiredSelectField('membership type')]}>
-                                <Select placeholder={preparePlaceholderSelect('membership type')} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['MEM_TYPE']}></Select>
+                                <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('membership type')} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['MEM_TYPE']}></Select>
                             </Form.Item>
                         </Col>
                     </Row>

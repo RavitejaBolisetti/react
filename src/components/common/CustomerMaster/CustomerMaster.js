@@ -7,10 +7,9 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Form, Empty, ConfigProvider } from 'antd';
+import { RxCross2 } from 'react-icons/rx';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
-import { showGlobalNotification } from 'store/actions/notification';
-import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { tableColumn } from './tableColumn';
@@ -23,6 +22,7 @@ import { SearchBox } from 'components/utils/SearchBox';
 import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection';
 import { CUSTOMER_CORPORATE_SECTION } from 'constants/CustomerCorporateSection';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
+import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 
 import DataTable from 'utils/dataTable/DataTable';
 import { CustomerMainConatiner } from './CustomerMainConatiner';
@@ -35,7 +35,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
         customer: {
-            customerDetail: { isLoaded: isDataLoaded = false, isLoading, data, filter: filterString = {} },
+            customerDetail: { isLoaded: isDataLoaded = false, isLoading, data, filter: filterString },
         },
     } = state;
 
@@ -62,32 +62,32 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: customerDetailDataActions.setFilter,
             resetData: customerDetailDataActions.reset,
             listShowLoading: customerDetailDataActions.listShowLoading,
-            showGlobalNotification,
+            resetViewData: documentViewDataActions.reset,
         },
         dispatch
     ),
 });
 
 const CustomerMasterMain = (props) => {
-    const { data, fetchList, userId, isLoading, listShowLoading, showGlobalNotification, resetData, moduleTitle, typeData } = props;
+    const { data, fetchList, userId, isLoading, listShowLoading, moduleTitle, typeData, resetData } = props;
     const { filterString, setFilterString } = props;
+    const { resetViewData } = props;
 
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
     const [selectedCustomer, setSelectedCustomer] = useState();
     const [selectedCustomerId, setSelectedCustomerId] = useState();
     const [shouldResetForm, setShouldResetForm] = useState(false);
-    const [refreshList, setRefreshList] = useState(false);
-
+    const [refreshCustomerList, setRefreshCustomerList] = useState(false);
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
-    const [customerSearchRules, setCustomerSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
+    const [profileCardLoading, setProfileCardLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
@@ -96,58 +96,94 @@ const CustomerMasterMain = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    const defaultExtraParam = [
-        {
-            key: 'customerType',
-            title: 'Customer Type',
-            value: customerType,
-            canRemove: true,
-        },
-        {
-            key: 'pageSize',
-            title: 'Value',
-            value: 1000,
-            canRemove: true,
-        },
-        {
-            key: 'pageNumber',
-            title: 'Value',
-            value: 1,
-            canRemove: true,
-        },
-    ];
+    const defaultExtraParam = useMemo(() => {
+        return [
+            {
+                key: 'customerType',
+                title: 'Customer Type',
+                value: customerType,
+                canRemove: true,
+            },
+            {
+                key: 'pageSize',
+                title: 'Value',
+                value: 100,
+                canRemove: true,
+            },
+            {
+                key: 'pageNumber',
+                title: 'Value',
+                value: 1,
+                canRemove: true,
+            },
+        ];
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [customerType]);
 
-    const extraParams = [
-        ...defaultExtraParam,
-        {
-            key: 'searchType',
-            title: 'Type',
-            value: filterString?.searchType,
-            canRemove: true,
-        },
-        {
-            key: 'searchParam',
-            title: 'Value',
-            value: filterString?.searchParam,
-            canRemove: true,
-        },
-    ];
+    const extraParams = useMemo(() => {
+        if (filterString) {
+            return [
+                ...defaultExtraParam,
+                {
+                    key: 'searchType',
+                    title: 'Type',
+                    value: filterString?.searchType,
+                    name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
+                    canRemove: false,
+                    filter: true,
+                },
+                {
+                    key: 'searchParam',
+                    title: 'Value',
+                    value: filterString?.searchParam,
+                    name: filterString?.searchParam,
+                    canRemove: true,
+                    filter: true,
+                },
+            ];
+        } else {
+            return defaultExtraParam;
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [defaultExtraParam, filterString]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setShowDataLoading(false);
+        setRefreshCustomerList(false);
     };
 
     const onErrorAction = (res) => {
-        showGlobalNotification({ message: res?.responseMessage });
         setShowDataLoading(false);
+        setRefreshCustomerList(false);
     };
 
     useEffect(() => {
-        const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
-        setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
-        setDefaultSection(defaultSection);
-        setSection(defaultSection);
+        if (data && selectedCustomerId) {
+            data && setSelectedCustomer(data?.find((i) => i.customerId === selectedCustomerId));
+            setProfileCardLoading(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data, selectedCustomerId]);
+
+    useEffect(() => {
+        return () => {
+            resetData();
+            setFilterString();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (customerType) {
+            const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
+            setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
+            setDefaultSection(defaultSection);
+            setSection(defaultSection);
+            setFilterString();
+            setShowDataLoading(true);
+            resetData();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType]);
 
@@ -162,16 +198,12 @@ const CustomerMasterMain = (props) => {
     }, [currentSection, sectionName]);
 
     useEffect(() => {
-        if (userId && customerType) {
-            resetData();
-            fetchList({ setIsLoading: listShowLoading, extraParams: defaultExtraParam, userId, onSuccessAction, onErrorAction });
+        if (userId && customerType && extraParams) {
+            setShowDataLoading(true);
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams || defaultExtraParam, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerType, userId, refreshList]);
-
-    // useEffect(() => {
-    //     setFilterString(() => '');
-    // }, [filterString]);
+    }, [userId, customerType, extraParams, refreshCustomerList]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
@@ -200,6 +232,7 @@ const CustomerMasterMain = (props) => {
             default:
                 break;
         }
+        setProfileCardLoading(false);
 
         if (buttonAction !== NEXT_ACTION) {
             setFormActionType({
@@ -225,21 +258,8 @@ const CustomerMasterMain = (props) => {
         tableColumn: tableColumn(handleButtonClick),
     };
 
-    const onChange = (sorter, filters) => {
-        form.resetFields();
-    };
-
-    // const onSearchHandle = (value) => {
-    //     searchForm
-    //         .validateFields()
-    //         .then((values) => {
-    //             setShowDataLoading(true);
-    //             fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction, onErrorAction });
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //             return;
-    //         });
+    // const onChange = (sorter, filters) => {
+    //     form.resetFields();
     // };
 
     const handleFormValueChange = () => {
@@ -254,6 +274,7 @@ const CustomerMasterMain = (props) => {
         setFormActionType(defaultFormActionType);
         setButtonData(defaultBtnVisiblity);
         setSelectedCustomer();
+        setProfileCardLoading();
         setSelectedCustomerId();
         setShouldResetForm(true);
     };
@@ -300,9 +321,13 @@ const CustomerMasterMain = (props) => {
         setCurrentSection,
         shouldResetForm,
         handleFormValueChange,
-        setRefreshList,
         isLastSection,
         saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        setIsFormVisible,
+        setRefreshCustomerList,
+        profileCardLoading,
+        setProfileCardLoading,
+        resetViewData,
     };
 
     const handleCustomerTypeChange = (id) => {
@@ -310,38 +335,46 @@ const CustomerMasterMain = (props) => {
         searchForm.resetFields();
     };
 
-    const handleSearchTypeChange = (searchType) => {
-        if (searchType === 'mobileNumber') {
-            setCustomerSearchRules({ rules: [validateMobileNoField('Mobile Number'), validateRequiredInputField('Mobile Number')] });
-        } else if (searchType === 'customerName') {
-            setCustomerSearchRules({ rules: [validateLettersWithWhitespaces('Customer Name'), validateRequiredInputFieldMinLength('Customer Name')] });
-        } else if (searchType === 'otfNumber') {
-            setCustomerSearchRules({ rules: [validateRequiredInputField('OTF Number')] });
+    const removeFilter = (key) => {
+        if (key === 'searchParam') {
+            const { searchType, searchParam, ...rest } = filterString;
+            setFilterString({ ...rest });
+
+            searchForm.resetFields();
         } else {
-            // searchForm.setFieldsValue({ searchParam: undefined, searchType: undefined });
-            // setFilterString({ ...filterString, searchParam: undefined, searchType: undefined });
+            const { [key]: names, ...rest } = filterString;
+            setFilterString({ ...rest });
+
+            searchForm.resetFields();
         }
     };
 
-    const handleSearchParamSearch = (values) => {
-        searchForm
-            .validateFields()
-            .then((values) => {
-                setFilterString({ ...values, advanceFilter: true });
-            })
-            .catch((err) => {
-                return;
-            });
+    const handleResetFilter = (e) => {
+        setFilterString();
+        setShowDataLoading(true);
+        searchForm.resetFields();
     };
 
-    const serachBoxProps = {
+    const handleChange = (e) => {
+        if (e.target.value.length > 2) {
+            searchForm.validateFields(['code']);
+        } else if (e?.target?.value === '') {
+            setFilterString();
+            searchForm.resetFields();
+            setShowDataLoading(false);
+        }
+    };
+
+    const searchBoxProps = {
         searchForm,
         filterString,
+        setFilterString,
         optionType: typeData,
-        handleSearchTypeChange,
-        handleSearchParamSearch,
-        searchParamRule: customerSearchRules,
+        handleChange,
     };
+
+    const showAddButton = true;
+
     return (
         <>
             <Row gutter={20}>
@@ -358,48 +391,76 @@ const CustomerMasterMain = (props) => {
                                         );
                                     })}
                                 </div>
-                                <SearchBox {...serachBoxProps} />
-                                {/* <div className={styles.selectSearchBg}>
-                                    <Form onKeyPress={onKeyPressHandler} form={searchForm} layout="vertical" autoComplete="off">
-                                        <Form.Item name="parameter" rules={[validateRequiredSelectField('parameter')]}>
-                                            <Select {...selectProps} value={filterString?.searchType} className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter">
-                                                {typeData?.map((item) => (
-                                                    <Option key={'pnc' + item?.key} value={item?.key}>
-                                                        {item?.value}
-                                                    </Option>
-                                                ))}
-                                            </Select>
-                                        </Form.Item>
-                                        <Form.Item {...customerSearchRules} name="keyword" validateTrigger={['onChange', 'onSearch']}>
-                                            <Search placeholder="Search" value={filterString?.searchParam} onChange={onChangeHandle} onSearch={onSearchHandle} allowClear className={styles.headerSearchField} htmlType="submit" />
-                                        </Form.Item>
-                                    </Form>
-                                </div> */}
+                                <div className={styles.headerSearchField}>
+                                    <SearchBox {...searchBoxProps} />
+                                </div>
                             </Col>
                             <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
-                                <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                {/* <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                     Add
-                                </Button>
+                                </Button> */}
                             </Col>
                         </Row>
+                        {filterString && extraParams.find((i) => i.name) && (
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
+                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                            {extraParams?.map((filter) => {
+                                                return (
+                                                    filter?.value &&
+                                                    filter?.filter && (
+                                                        <div className={styles.advanceFilterItem} key={filter?.key}>
+                                                            {filter?.name}
+                                                            {filter?.canRemove && (
+                                                                <span>
+                                                                    <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    )
+                                                );
+                                            })}
+                                        </Col>
+                                        <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
+                                            <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                                                Clear
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        )}
                     </div>
                 </Col>
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.datasearh}>
                     <ConfigProvider
                         renderEmpty={() => (
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                                 imageStyle={{
-                                    height: 60,
+                                    height: '20%',
                                 }}
-                                description={<span> No record found.</span>}
-                            ></Empty>
+                                description={
+                                    <>
+                                        No Record Found <br /> Please <b>"Add New Customer"</b> using below <br />
+                                        button
+                                    </>
+                                }
+                            >
+                                {showAddButton && !data?.length && (
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                        {`Add`}
+                                    </Button>
+                                )}
+                            </Empty>
                         )}
                     >
-                        <DataTable isLoading={showDataLoading} {...tableProps} onChange={onChange} />
+                        <DataTable isLoading={showDataLoading} {...tableProps} />
                     </ConfigProvider>
                 </Col>
             </Row>

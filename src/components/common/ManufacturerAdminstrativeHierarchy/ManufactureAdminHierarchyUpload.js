@@ -3,113 +3,219 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
-import { Button, Form, Row, Col, Upload, message } from 'antd';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Form, Upload, Button, Empty, Space, Typography } from 'antd';
+
+import { FiEye, FiTrash } from 'react-icons/fi';
+
 import { withDrawer } from 'components/withDrawer';
-import { bindActionCreators } from 'redux';
-import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
+import { DrawerFormButton } from 'components/common/Button';
+import { PARAM_MASTER } from 'constants/paramMaster';
+
 import styles from 'components/common/Common.module.css';
-import Svg from '../../../assets/images/Filter.svg';
 
 const { Dragger } = Upload;
-
-const mapStateToProps = (state) => {
-    const {
-        data: {
-            ManufacturerAdminHierarchy: { uploadVisible },
-        },
-    } = state;
-
-    let returnValue = {
-        isVisible: uploadVisible,
-    };
-    return returnValue;
-};
-
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    ...bindActionCreators(
-        {
-            onCloseAction: manufacturerAdminHierarchyDataActions.uploadModelClose,
-        },
-        dispatch
-    ),
-});
-
-const uploadProps = {
-    name: 'file',
-    multiple: true,
-    action: '',
-    onChange(info) {
-        const { status } = info.file;
-        if (status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully.`);
-        } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-};
+const { Text, Title } = Typography;
 
 const UploadMain = (props) => {
-    const { isFormBtnActive } = props;
-    const { onCloseAction } = props;
+    const { form, formData, onCloseAction, onFinishFailed } = props;
+
+    const { buttonData, setButtonData, handleButtonClick } = props;
+    const { typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, emptyList, setEmptyList } = props;
+    const { isDataLoaded, viewListShowLoading, fetchViewDocument } = props;
+    const { authorityShowLoading, saveAuthorityData, uploadedFile, authorityData } = props;
+
+    useEffect(() => {
+        if (isDataLoaded && authorityData) {
+            const extraParams = [
+                {
+                    key: 'docId',
+                    title: 'docId',
+                    value: authorityData?.docId,
+                    name: 'docId',
+                },
+            ];
+            fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, authorityData });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [authorityData]);
+
+    const onFinish = () => {
+        const data = { docId: uploadedFile };
+
+        const onSuccess = (res) => {
+            setEmptyList(false);
+            setUploadedFile();
+            form.resetFields();
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: authorityShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveAuthorityData(requestData);
+    };
+
+    const handleTemplateDownLoad = () => {
+        const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id]?.filter((value) => value.key === PARAM_MASTER.ADMINAUTHTMPLT.id);
+        let templateID = null;
+        if (filteredTypeData.length === 1) {
+            templateID = filteredTypeData[0];
+        }
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: templateID?.value,
+                name: 'docId',
+            },
+        ];
+        const name = {
+            docName: 'Authority Template',
+        };
+
+        const onSuccessAction = (res) => {
+            const viewDocument = res?.data;
+            if (viewDocument) {
+                let a = document.createElement('a');
+                a.href = `data:image/png;base64,${viewDocument?.base64}`;
+                a.download = viewDocument?.fileName;
+                a.click();
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            }
+        };
+
+        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, name, onSuccessAction });
+    };
+
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
+
+    const handleFormFieldChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
+
+    const [showStatus, setShowStatus] = useState('');
+
+    const onDrop = (e) => {};
+
+    const uploadProps = {
+        multiple: false,
+        beforeUpload: (file) => {
+            const isExcel = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            if (!isExcel) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not a excel file` });
+            }
+            return isExcel || Upload.LIST_IGNORE;
+        },
+        showUploadList: {
+            showRemoveIcon: true,
+            showDownloadIcon: false,
+            removeIcon: <FiTrash />,
+            downloadIcon: <FiEye style={{ color: '#ff3e5b' }} />,
+            showProgress: true,
+        },
+        progress: { strokeWidth: 3, showInfo: true },
+        onDrop,
+        onChange: (info) => {
+            handleFormValueChange();
+            const { status } = info.file;
+            setShowStatus(info.file);
+            if (status === 'done') {
+                setUploadedFile(info?.file?.response?.docId);
+            }
+        },
+    };
+
+    useEffect(() => {
+        if (showStatus.status === 'done') {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
+        } else if (showStatus.status === 'error') {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showStatus]);
+
+    const handleUpload = (options) => {
+        const { file, onSuccess, onError } = options;
+        setEmptyList(true);
+
+        const data = new FormData();
+        data.append('applicationId', 'app');
+        data.append('file', file);
+
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        uploadDocumentFile(requestData);
+    };
+
+    const buttonProps = {
+        formData,
+        onCloseAction,
+        buttonData,
+        setButtonData,
+        handleButtonClick,
+    };
+
     return (
         <>
-            <Form autoComplete="off">
-                <Row gutter={20}>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <div className={styles.contentHeaderBackground}>
+                    <Space direction="vertical">
+                        <Space className={styles.accordianIconWithText}>Authority Form</Space>
+                        <Space>Please download "Authority Form Template" using below button</Space>
+                        <Space>
+                            <Button type="primary" onClick={handleTemplateDownLoad}>
+                                Download Template
+                            </Button>
+                        </Space>
+                    </Space>
+                </div>
+
+                <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Button style={{ width: '100%', padding: '1.75rem 20px', color: '#0B0B0C', fontWeight: '400', fontSize: '14px', lineHeight: '23px', background: 'rgba(190, 190, 190, 0.1)', border: '1px solid rgba(62, 62, 62, 0.1)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            Please download file and after filling the details upload it.
-                            <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12.4768 13.2119L9.08699 16.5763C8.8532 16.8087 8.47563 16.8087 8.24184 16.5763L4.85207 13.2119C4.49523 12.8579 4.74555 12.25 5.24758 12.25H7.03906H7.53906V11.75V9.4375C7.53906 9.12672 7.79078 8.875 8.10156 8.875H9.22656C9.53734 8.875 9.78906 9.12672 9.78906 9.4375V11.75V12.25H10.2891H12.0805C12.5826 12.25 12.8329 12.8579 12.4768 13.2119ZM12.4768 13.2119L12.1243 12.8573L8.73477 16.2215L8.73451 16.2217C8.69573 16.2603 8.6331 16.2603 8.59432 16.2217L8.59406 16.2215L5.2043 12.857L5.20422 12.8569C5.18909 12.8419 5.1862 12.8315 5.1851 12.8252C5.18351 12.8162 5.18413 12.803 5.19014 12.7884C5.19616 12.7738 5.20498 12.7641 5.21232 12.7589C5.21737 12.7553 5.22656 12.75 5.24758 12.75H7.53906H8.03906V12.25V9.4375C8.03906 9.40286 8.06692 9.375 8.10156 9.375H9.22656C9.2612 9.375 9.28906 9.40286 9.28906 9.4375V12.25V12.75H9.78906H12.0805C12.1016 12.75 12.1108 12.7553 12.1158 12.7589C12.1232 12.7641 12.1321 12.7739 12.1381 12.7886C12.1442 12.8033 12.1448 12.8166 12.1432 12.8257C12.1421 12.832 12.1393 12.8423 12.1243 12.8572L12.1245 12.857L12.4768 13.2119ZM10.2891 1V0.5H9.78906H2.75781C2.01409 0.5 1.41406 1.10003 1.41406 1.84375V18.1562C1.41406 18.9 2.01409 19.5 2.75781 19.5H14.5703C15.314 19.5 15.9141 18.9 15.9141 18.1562V6.625V6.125H15.4141H10.6328C10.4449 6.125 10.2891 5.96917 10.2891 5.78125V1ZM12.0799 0.892721L12.0797 0.89254L15.5217 4.33803L15.5215 4.33785L12.0799 0.892721ZM11.7262 1.24608L11.7262 1.24607L11.7262 1.24608Z"
-                                    stroke="#FF3E5B"
-                                />
-                            </svg>
-                        </Button>
+                        <Space direction="vertical" style={{ width: '100%' }}>
+                            <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                                <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
+                                    <Empty
+                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                        description={
+                                            <>
+                                                <Title level={5}>Click or drop your file here to upload</Title>
+                                                <Text>File type should be .xlsx and max file size to be 8Mb</Text>
+                                            </>
+                                        }
+                                    />
+                                    <Button className={styles.marB20} type="primary">
+                                        Upload Authority Form
+                                    </Button>
+                                </Dragger>
+                            </div>
+                        </Space>
                     </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Dragger
-                            {...uploadProps}
-                            style={{
-                                margin: '1.5rem 0 0 0',
-                                background: '#F2F2F2',
-
-                                border: '1px dashed #B5B5B5',
-
-                                borderRadius: '6px',
-                                minHeight: '172px',
-                                padding: '1rem 0 0 0',
-                            }}
-                        >
-                            <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
-                                <img src={Svg} alt="" />
-                            </p>
-                            <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '600', fontSize: '18px', lineHeight: '23px', color: '#0B0B0C' }}>
-                                Click or drag file to this area to upload
-                            </p>
-                        </Dragger>
-                    </Col>
-                </Row>
-                <Row gutter={20} className={styles.formFooter}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                        <Button danger onClick={onCloseAction}>
-                            Cancel
-                        </Button>
-                    </Col>
-
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button htmlType="submit" danger disabled={!isFormBtnActive}>
-                            Save
-                        </Button>
-                    </Col>
+                    <DrawerFormButton {...buttonProps} />
                 </Row>
             </Form>
         </>
     );
 };
 
-export const ManufactureAdminHierarchyUpload = connect(mapStateToProps, mapDispatchToProps)(withDrawer(UploadMain, { title: 'Upload', width: '520px' }));
+export const ManufactureAdminHierarchyUpload = withDrawer(UploadMain, { title: 'Upload', width: '520px' });

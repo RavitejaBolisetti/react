@@ -5,13 +5,14 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Input, Form, Collapse, Col, Row, Switch, Select, Button } from 'antd';
-import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 import { withDrawer } from 'components/withDrawer';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import TreeSelectField from '../TreeSelectField';
 import ProductAttributeMaster from './ProductAttribute/ProductAttributeMaster';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { accordianExpandIcon } from 'utils/accordianExpandIcon';
+
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
@@ -20,12 +21,11 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, unFilteredAttributeData, formActionType, isReadOnly = false, formData, fieldNames, isDataAttributeLoaded, attributeData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute } = props;
-    const { isFormBtnActive, setFormBtnActive, showGlobalNotification } = props;
-    const { form, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
+    const { isFormBtnActive, setFormBtnActive, showGlobalNotification, disabledEdit, setDisabledEdit } = props;
+    const { form, skuAttributes, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
     const { selectedTreeKey, flatternData, setSelectedTreeSelectKey, selectedTreeSelectKey, handleSelectTreeClick, productHierarchyData } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
-    const [actionForm] = Form.useForm();
     const [openAccordian, setOpenAccordian] = useState(1);
     const [isAddBtnDisabled, setAddBtnDisabled] = useState(false);
 
@@ -79,12 +79,6 @@ const AddEditFormMain = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-    const onActionFormFinish = (val) => {
-        const { value, label } = val?.attributeName;
-        setSKUAttributes((prev) => [...prev, { attributeName: label, id: value, attributeValue: val.attributeValue }]);
-        actionForm.resetFields();
-    };
-
     let treeCodeId = '';
     let treeCodeReadOnly = false;
 
@@ -116,17 +110,20 @@ const AddEditFormMain = (props) => {
 
     const attributeFormProps = {
         form,
-        skuAttributes: formData?.skuAttributes,
+        skuAttributes,
+        // formData?.skuAttributes,
         setSKUAttributes,
         isAddBtnDisabled,
         setAddBtnDisabled,
-        onFinish: onActionFormFinish,
+        // onFinish: onActionFormFinish,
         setFormBtnActive,
         productHierarchyAttributeData,
         isVisible,
         selectedTreeData,
         formActionType,
         showGlobalNotification,
+        disabledEdit,
+        setDisabledEdit,
     };
 
     const selectProps = {
@@ -209,10 +206,9 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
             </Form>
-            {/* <ProductDetail {...productDetailsProps} /> */}
             {showProductAttribute && (
-                <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
-                    <Panel header={<span className={openAccordian === 1 ? styles.accordianHeader : ''}>Product Atrribute Details</span>} key="1">
+                <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon}>
+                    <Panel header="Product Atrribute Details" key="1">
                         <ProductAttributeMaster {...attributeFormProps} />
                     </Panel>
                 </Collapse>

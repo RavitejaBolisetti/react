@@ -205,7 +205,13 @@ export const ListRoleMasterBase = (props) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
         }
+        else if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
     };
+
 
     const handleFilterChange =
         (name, type = 'value') =>
@@ -213,7 +219,7 @@ export const ListRoleMasterBase = (props) => {
             const filterValue = type === 'text' ? value.target.value : value;
 
             if (name === 'code') {
-                setFilteredDepartmentData(departmentData?.filter((i) => i?.patentKey === filterValue));
+                setFilteredDepartmentData(departmentData?.filter((i) => i?.parentKey === filterValue));
                 advanceFilterForm.setFieldsValue({ departmentCode: undefined });
             }
         };
@@ -308,11 +314,12 @@ export const ListRoleMasterBase = (props) => {
     };
 
     const onAdvanceSearchCloseAction = () => {
-        console.log('hello');
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
-        setFilteredDepartmentData([]);
-        advanceFilterForm.setFieldsValue({ departmentCode: undefined });
+        extraParams[0]?.value && setFilteredDepartmentData(departmentData?.filter((i) => i?.parentKey === extraParams[0]?.value));
+
+        // setFilteredDepartmentData([]);
+        // advanceFilterForm.setFieldsValue({ departmentCode: undefined });
     };
 
     const handleResetFilter = () => {
@@ -320,6 +327,7 @@ export const ListRoleMasterBase = (props) => {
         listFilterForm.resetFields();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
+        setFilteredDepartmentData([]);
     };
 
     const advanceFilterProps = {
@@ -348,7 +356,7 @@ export const ListRoleMasterBase = (props) => {
     const removeFilter = (key) => {
         if (key === 'divisionCode') {
             const { divisionCode, departmentCode, ...rest } = filterString;
-            if (!filterString?.keyword) {
+            if (!rest?.keyword) {
                 setFilterString();
             } else {
                 setFilterString({ ...rest });
@@ -359,7 +367,7 @@ export const ListRoleMasterBase = (props) => {
         } else {
             const { [key]: names, ...rest } = filterString;
             advanceFilterForm.setFieldsValue({ keyword: undefined, divisionCode: undefined });
-            if (!filterString?.keyword && !filterString?.divisionCode && !filterString?.departmentCode) {
+            if (!rest?.keyword && !rest?.divisionCode && !rest?.departmentCode) {
                 setFilterString();
             } else {
                 setFilterString({ ...rest });

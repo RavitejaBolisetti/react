@@ -3,13 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
-import styles from 'components/common/Common.module.css';
+
 import { OTF_SECTION } from 'constants/OTFSection';
-import { OTF_STATUS } from 'constants/OTFStatus';
+import { validateOTFMenu } from '../utils/validateOTFMenu';
+
+import styles from 'components/common/Common.module.css';
 
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, otfData, selectedOrder: { orderStatus = false } = {} } = props;
@@ -38,39 +40,16 @@ const MenuNav = (props) => {
         setCurrentSection(key);
     };
 
-    const validateMenu = (item) => {
-        if (item?.id === OTF_SECTION.INVOICE_INFORMATION.id) {
-            return orderStatus === OTF_STATUS?.INVOICED.title || orderStatus === OTF_STATUS?.DELIVERED.title;
-        }
-        switch (item?.id) {
-            case OTF_SECTION.FINANCE_DETAILS.id:
-                return otfData?.financeArrangedBy === 'DLR';
-            case OTF_SECTION.EXCHANGE_VEHICLE.id:
-                return otfData?.exchange === 1;
-            case OTF_SECTION.REFERRALS.id:
-                return otfData?.referral === 'Y';
-            case OTF_SECTION.LOYALTY_SCHEME.id:
-                return otfData?.loyaltyScheme === 1;
-            case OTF_SECTION.INVOICE_INFORMATION.id:
-                return otfData?.loyaltyScheme === 1;
-            default:
-                return true;
-        }
-    };
-
     const items = otfSectionList
         ?.filter((i) => i?.displayOnList)
         ?.map(
             (item) =>
-                validateMenu(item) && {
+                validateOTFMenu({ item, status: orderStatus, otfData }) && {
                     dot: item?.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
                     children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
                     className: item?.id === currentSection ? 'active' : 'noactive',
                 }
         );
-
-    console.log('items', items);
-
     const finalItem = items?.filter((i) => i);
 
     return finalItem && <Timeline items={finalItem} />;

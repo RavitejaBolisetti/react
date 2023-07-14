@@ -3,12 +3,11 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Button, Space, Collapse, Typography, Divider } from 'antd';
 import { validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
-import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import { FiEdit } from 'react-icons/fi';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { OptionServicesForm } from './optionServicesForm';
@@ -17,26 +16,19 @@ import dayjs from 'dayjs';
 
 import { DataTable } from 'utils/dataTable';
 import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
-import { ActiveText, dynamicExpandIcon } from 'utils/accordianExpandIcon';
+import { expandIconWithText, dynamicExpandIcon } from 'utils/accordianExpandIcon';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 const { Text } = Typography;
-
-const { Option } = Select;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { activeKey, tooltTipText, handleFormValueChange, onHandleSelect, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, onFinish, onFinishFailed, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, onChange, ProductHierarchyData, setactiveKey, typeData, formActionType, setIsViewModeVisible } = props;
+    const { tooltTipText, isVehicleLovDataLoading, handleFormValueChange, onHandleSelect, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, ProductHierarchyData, typeData, formActionType } = props;
     const [optionForm] = Form.useForm();
     const findUsageType = (usage) => {
-        let foundVal;
-        typeData[PARAM_MASTER.VEHCL_TYPE.id]?.map((element, index) => {
-            if (element?.value === usage) {
-                foundVal = element?.key;
-            }
-        });
-        return foundVal;
+        const foundVal = typeData[PARAM_MASTER.VEHCL_TYPE.id]?.find((element, index) => element?.value === usage);
+        return foundVal?.key;
     };
 
     const disabledProp = { disabled: true };
@@ -85,8 +77,6 @@ const AddEditFormMain = (props) => {
         addContactHandeler,
         optionsServiceModified,
         setoptionsServiceModified,
-        optionsServicesMapping,
-        setoptionsServicesMapping,
         handleFormValueChange,
     };
 
@@ -94,17 +84,8 @@ const AddEditFormMain = (props) => {
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Space size="middle" direction="vertical" className={styles.accordianContainer}>
-                    <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => ActiveText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={openAccordian}>
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                        Vehicle Information
-                                    </Text>
-                                </div>
-                            }
-                            key="1"
-                        >
+                    <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={openAccordian}>
+                        <Panel header="Vehicle Information" key="1">
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label="Vehicle Usage Type" name="vehicleUsageType" data-testid="usageType" rules={[validateRequiredSelectField('vehicle usage Type')]}>
@@ -114,7 +95,7 @@ const AddEditFormMain = (props) => {
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.modelTooltip}>
                                     {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                                     <Form.Item label="Model" name="model" data-testid="model" rules={[validateRequiredSelectField('Model')]}>
-                                        <Select onSelect={onHandleSelect} placeholder="Select" allowClear options={ProductHierarchyData} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                                        <Select loading={isVehicleLovDataLoading} onSelect={onHandleSelect} placeholder="Select" allowClear options={ProductHierarchyData} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -195,39 +176,28 @@ const AddEditFormMain = (props) => {
                         </Panel>
                     </Collapse>
                     <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
-                        <Panel
-                            header={
-                                <div className={styles.alignUser}>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Tax Details
-                                        </Text>
-                                    </Col>
-                                </div>
-                            }
-                            key="2"
-                        >
+                        <Panel header="Tax Details" key="2">
+                            <Divider />
                             <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
                         </Panel>
                     </Collapse>
                     <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
                         <Panel
                             header={
-                                <div className={styles.alignUser}>
-                                    <Col xs={24} sm={24} md={5} lg={5} xl={5}>
+                                <Row>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                         <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                             Charges
                                         </Text>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={19} lg={19} xl={19}>
                                         <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
                                             Add
                                         </Button>
                                     </Col>
-                                </div>
+                                </Row>
                             }
                             key="3"
                         >
+                            {!isReadOnly && <Divider />}
                             {isReadOnly && <OptionServicesForm {...OptionServicesFormProps} />}
                             <DataTable tableColumn={optionalServicesColumns} tableData={optionsServiceModified} removePagination={true} />
                         </Panel>

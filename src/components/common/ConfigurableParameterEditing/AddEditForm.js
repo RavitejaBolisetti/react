@@ -10,11 +10,11 @@ import { withDrawer } from 'components/withDrawer';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { ViewConfigDetails } from './ViewConfigDetails';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+
 import styles from 'components/common/Common.module.css';
 
-const { Option } = Select;
 const { TextArea } = Input;
-
 const AddEditFormMain = (props) => {
     const { typeData, configData, parameterType, setParameterType, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
@@ -58,16 +58,8 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.controlId} label="Control ID" name="controlId" rules={[validateRequiredInputField('ControlID')]}>
-                                <Select placeholder="Select" showSearch allowClear onChange={handleControlChange} disabled={isReadOnly}>
-                                    {typeData &&
-                                        typeData[PARAM_MASTER.CFG_PARAM.id] &&
-                                        typeData[PARAM_MASTER.CFG_PARAM.id]?.map((item) => (
-                                            <Option key={'id' + item?.key} value={item?.key}>
-                                                {item?.value}
-                                            </Option>
-                                        ))}
-                                </Select>
+                            <Form.Item initialValue={formData?.controlId} label="Control ID" name="controlId" rules={[validateRequiredInputField('Control ID')]}>
+                                <Select showSearch allowClear placeholder={preparePlaceholderSelect('Select')} onChange={handleControlChange} disabled={isReadOnly} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.CFG_PARAM.id]}></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -79,28 +71,12 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Control Group" initialValue={formData?.controlGroup} name="controlGroup" rules={[validateRequiredSelectField('controlGroup')]}>
-                                <Select disabled={isReadOnly} placeholder="Select">
-                                    {typeData &&
-                                        typeData[PARAM_MASTER.CTRL_GRP.id] &&
-                                        typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => (
-                                            <Option key={'cg' + item?.key} value={item?.key}>
-                                                {item?.value}
-                                            </Option>
-                                        ))}
-                                </Select>
+                                <Select showSearch allowClear placeholder={preparePlaceholderSelect('control group')} disabled={isReadOnly} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.CTRL_GRP.id]}></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Configurable Parameter Type" intialValue={parameterType} name="parameterType" rules={[validateRequiredSelectField('ConfigParamType')]}>
-                                <Select placeholder="Select Parameter Type" onChange={changeSelectOptionHandler} disabled={isReadOnly}>
-                                    {typeData &&
-                                        typeData[PARAM_MASTER.CFG_PARAM_TYPE.id] &&
-                                        typeData[PARAM_MASTER.CFG_PARAM_TYPE.id]?.map((item) => (
-                                            <Option key={'cpt' + item?.key} value={item?.key}>
-                                                {item?.value}
-                                            </Option>
-                                        ))}
-                                </Select>
+                            <Form.Item label="Configurable Parameter Type" rules={[validateRequiredSelectField('ConfigParamType')]}>
+                                <Select defaultValue={parameterType} placeholder={preparePlaceholderSelect('Parameter Type')} onChange={changeSelectOptionHandler} disabled={isReadOnly} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.CFG_PARAM_TYPE.id]} allowClear></Select>
                             </Form.Item>
                         </Col>
                     </Row>

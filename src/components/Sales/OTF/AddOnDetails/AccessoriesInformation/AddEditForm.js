@@ -6,7 +6,7 @@
 import React, { useEffect } from 'react';
 import { Input, Form, Col, Row, Button, Divider } from 'antd';
 
-import { validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField, validationNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 
@@ -28,9 +28,8 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
         accessoryForm
             .validateFields()
             .then((values) => {
-                console.log('I am heree', values);
-
-                if (isPresent(values?.partNumber)) {
+                if (!values?.partNumber) {
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide part number' });
                     return;
                 }
 
@@ -40,7 +39,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                     return;
                 }
 
-                setAddOnItemInfo((prev) => [myvalues, ...prev]);
+                setAddOnItemInfo((prev) => (prev ? [myvalues, ...prev] : [myvalues]));
                 accessoryForm.resetFields();
                 setsearchData();
                 setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
@@ -62,7 +61,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
 
     return (
         <>
-            <Form form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
+            <Form autoComplete="off" form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                         <Form.Item label="Part Number" name="partNumber" rules={[validateRequiredInputField('part number')]}>
@@ -88,13 +87,10 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity')]}>
-                            <Input placeholder={preparePlaceholderText('required quantity')} />
+                        <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity'), validationNumber('required quantity')]}>
+                            <Input type="number" placeholder={preparePlaceholderText('required quantity')} />
                         </Form.Item>
                     </Col>
-                    {/* </Row>
-            <Row gutter={20}> */}
-
                     <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                         <Form.Item label="Part Description" name="partDescription">
                             <TextArea
@@ -108,7 +104,6 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                             />
                         </Form.Item>
                     </Col>
-
                     <Form.Item hidden name="id">
                         <Input />
                     </Form.Item>

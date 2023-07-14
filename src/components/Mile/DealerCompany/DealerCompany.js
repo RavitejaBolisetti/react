@@ -24,8 +24,8 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             DealerHierarchy: {
+                DealerParent: { isFilteredListLoaded: isDealerParentDataLoaded = false, isLoading: isDealerParentDataLoading, filteredListData: dealerParentData },
                 DealerCompany: { isLoaded: isDataLoaded = false, isLoading, data = [] },
-                DealerParent: { isLoaded: isDealerParentDataLoaded = false, isLoading: isDealerParentDataLoading = false, data: dealerParentData = [] },
             },
             Geo: {
                 Pincode: { isLoaded: isPinCodeDataLoaded = false, isLoading: isPinCodeLoading, data: pincodeData },
@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchDealerParentList: dealerParentDataActions.fetchList,
+            fetchDealerParentLovList: dealerParentDataActions.fetchFilteredList,
             listDealerParentShowLoading: dealerParentDataActions.listShowLoading,
 
             fetchList: dealerCompanyDataActions.fetchList,
@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const DealerCompanyBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isPinCodeLoading, pinCodeShowLoading } = props;
-    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail } = props;
+    const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentLovList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -110,7 +110,7 @@ export const DealerCompanyBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
         }
         if (userId && !isDealerParentDataLoaded) {
-            fetchDealerParentList({ setIsLoading: listDealerParentShowLoading, userId });
+            fetchDealerParentLovList({ setIsLoading: listDealerParentShowLoading, userId });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -256,6 +256,7 @@ export const DealerCompanyBase = (props) => {
         isPinCodeLoading,
         forceUpdate,
         pinCodeShowLoading,
+        showGlobalNotification,
     };
 
     const tableProps = {
@@ -285,7 +286,7 @@ export const DealerCompanyBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={title} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />

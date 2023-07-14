@@ -156,4 +156,32 @@ export const PARAM_MASTER = {
         id: 'MONTH',
         title: 'Months of year',
     },
+    VH_CONTACT_TYPE: {
+        id: 'VH_CONTACT_TYPE',
+        title: 'Vehicle Contact Type',
+    },
+    VH_CONTACT_DAYS: {
+        id: 'VH_CONTACT_DAYS',
+        title: 'Vehicle Contact Days',
+    },
+    REFERRAL_SEARCH: {
+        id: 'REFERRAL_SEARCH',
+        title: 'REFERRAL_SEARCH',
+    },
+    FILE_DOWNLOAD_TMPLT: {
+        id: 'FILE_DOWNLOAD_TMPLT',
+        title: 'Template download',
+    },
+    LSRCUSTTMPLT: {
+        id: 'LSRCUSTTMPLT',
+        title: 'Lessor creation template download',
+    },
+    ADMINAUTHTMPLT: {
+        id: 'ADMINAUTHTMPLT',
+        title: 'Authority template download',
+    },
+    VH_DTLS_SER: {
+        id: 'VH_DTLS_SER',
+        title: 'Vehicle Detail List',
+    },
 };

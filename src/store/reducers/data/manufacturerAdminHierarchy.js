@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -79,7 +79,7 @@ export const ManufacturerAdminHierarchy = (state = initialState, action) => {
             return { ...state, isHistoryLoading: action.isLoading };
 
         case MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_DATA_LOADED:
-            return { ...state, isHistoryLoaded: action.isLoaded, authHistoryData: action.data };
+            return { ...state, isHistoryLoaded: action.isLoaded, historyData: action.data };
 
         case MANUFACTURER_ADMIN_HIERARCHY_SEARCH_DATA_LOADED:
             return { ...state, isHistoryLoaded: action.isLoaded, tokenNumber: action.data, errorMessage: '', recordId: action.id };

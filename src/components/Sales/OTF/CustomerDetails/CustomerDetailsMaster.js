@@ -19,7 +19,6 @@ import { OTFFormButton } from '../OTFFormButton';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 
-import dayjs from 'dayjs';
 import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
@@ -79,13 +78,13 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const CustomerDetailsMain = (props) => {
     const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, handleFormValueChange, section } = props;
-    const { typeData, selectedOrderId } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section } = props;
+    const { setButtonData, buttonData, typeData, selectedOrderId } = props;
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
     const [formData, setFormData] = useState('');
     const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
-    const [activeKey, setActiveKey] = useState([1]);
+    const [activeKey, setActiveKey] = useState([]);
 
     useEffect(() => {
         if (userId && customerFormData) {
@@ -103,7 +102,11 @@ export const CustomerDetailsMain = (props) => {
     }, []);
 
     const onSuccessAction = (res) => {
-        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    };
+
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message: message });
     };
 
     const extraParams = [
@@ -117,27 +120,27 @@ export const CustomerDetailsMain = (props) => {
 
     useEffect(() => {
         if (userId && selectedOrderId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
 
     const onFinish = (values) => {
-        if (!values?.bookingCustomer?.pan || !values?.billingCustomer?.pan) {
-            setActiveKey([...activeKey, !values?.bookingCustomer?.pan ? 1 : '']);
-            setActiveKey([...activeKey, !values?.billingCustomer?.pan ? 2 : '']);
+        if (!values?.bookingCustomer?.panNo || !values?.billingCustomer?.panNo) {
+            setActiveKey([...activeKey, !values?.bookingCustomer?.panNo ? 1 : '']);
+            setActiveKey([...activeKey, !values?.billingCustomer?.panNo ? 2 : '']);
             return false;
         }
         form.getFieldsValue();
-        const data = { bookingCustomer: { ...values?.bookingCustomer, birthDate: dayjs(values?.bookingCustomer?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, birthDate: dayjs(values?.billingCustomer?.birthDate).format('YYYY-MM-DD'), otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+        const data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onError, extraParams });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
         const onError = (message) => {
-            // showGlobalNotification({ message });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -180,6 +183,14 @@ export const CustomerDetailsMain = (props) => {
         isLoading,
         activeKey,
         setActiveKey,
+    };
+
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+        if (sameAsBookingCustomer) {
+            let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
+            form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
+        }
     };
 
     return (

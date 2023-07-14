@@ -5,14 +5,11 @@
  */
 import { AiFillCar } from 'react-icons/ai';
 import { FaAddressBook, FaCreativeCommonsShare } from 'react-icons/fa';
-import { HiCurrencyRupee } from 'react-icons/hi';
 import { MdStars } from 'react-icons/md';
 import { TbReport } from 'react-icons/tb';
 import { HomeIcon, AdminIcon, HrIcon, RupeeIcon, CrmIcon, ServiceIcon, SparesIcon } from 'Icons';
 
-import styles from 'components/common/Common.module.css';
 import { getMenyKey } from 'utils/menuKey';
-
 import * as routing from './routing';
 
 export const MenuConstant = {
@@ -182,11 +179,25 @@ export const MenuConstant = {
         parentMenuId: 'COMN-10',
     },
 
+    [getMenyKey('COMN-10.04')]: {
+        key: 'COMN-10.04',
+        link: routing.ROUTING_COMMON_LESSOR_CUSTOMER_CREATION,
+        icon: undefined,
+        parentMenuId: 'COMN-10.a',
+    },
+
     [getMenyKey('COMN-10.03')]: {
         key: 'COMN-10.03',
         link: routing.ROUTING_COMMON_LESSOR_COMPANY_MASTER,
         icon: undefined,
         parentMenuId: 'COMN-10.a',
+    },
+
+    [getMenyKey('COMN-11.01')]: {
+        key: 'COMN-11.01',
+        link: routing.ROUTING_VECHILE_DETAILS,
+        icon: undefined,
+        parentMenuId: 'COMN-11',
     },
 
     [getMenyKey('MILE-01.04')]: {

@@ -61,10 +61,13 @@ const mapDispatchToProps = (dispatch) => ({
 
             saveDocumentData: supportingDocumentDataActions.saveData,
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
+            uploadConsentDocumentFile: supportingDocumentDataActions.uploadFile,
             listDocumentShowLoading: supportingDocumentDataActions.listShowLoading,
 
-            fecthViewDocument: documentViewDataActions.fetchList,
+            fetchViewDocument: documentViewDataActions.fetchList,
             downloadFile: supportingDocumentDataActions.downloadFile,
+            resetViewData: documentViewDataActions.reset,
+            viewListShowLoading: documentViewDataActions.listShowLoading,
 
             showGlobalNotification,
         },
@@ -72,14 +75,15 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 const IndividualProfileBase = (props) => {
-    const { userId, isIndiviualProfileLoaded, fecthViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification, handleButtonClick } = props;
+    const { userId, isIndiviualProfileLoaded, fetchViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification, handleButtonClick } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, downloadFile } = props;
-    const { saveDocumentData, uploadDocumentFile, setRefreshList, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, NEXT_ACTION } = props;
+    const { saveDocumentData, uploadDocumentFile, uploadConsentDocumentFile, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, NEXT_ACTION } = props;
+    const { isViewDataLoaded, resetViewData, resetData, viewListShowLoading } = props;
     const [form] = Form.useForm();
 
-    const [formData, setFormData] = useState([]);
     const [activeKey, setActiveKey] = useState([1]);
     const [uploadedFile, setUploadedFile] = useState();
+    const [uploadedFiles, setUploadedFiles] = useState();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -89,7 +93,25 @@ const IndividualProfileBase = (props) => {
     };
 
     useEffect(() => {
-        if ( userId && selectedCustomerId) {
+        if (viewDocument && isViewDataLoaded && isIndiviualProfileLoaded) {
+            let a = document.createElement('a');
+            a.href = `data:image/png;base64,${viewDocument?.base64}`;
+            a.download = viewDocument?.fileName;
+            a.click();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isViewDataLoaded, viewDocument]);
+
+    useEffect(() => {
+        return () => {
+            resetData();
+            resetViewData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (userId && selectedCustomerId && !isIndiviualProfileLoaded) {
             const extraParams = [
                 {
                     key: 'customerId',
@@ -98,25 +120,25 @@ const IndividualProfileBase = (props) => {
                     name: 'Customer ID',
                 },
             ];
+            resetData();
+            resetViewData();
             fetchList({ setIsLoading: listIndiviualShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCustomerId]);
+    }, [userId, selectedCustomerId, isIndiviualProfileLoaded]);
 
-    useEffect(() => {
-        if (userId && isIndiviualProfileLoaded && indiviualData?.image) {
-            const extraParams = [
-                {
-                    key: 'docId',
-                    title: 'docId',
-                    value: indiviualData?.image,
-                    name: 'docId',
-                },
-            ];
-            fecthViewDocument({ setIsLoading: listIndiviualShowLoading, userId, extraParams, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isIndiviualProfileLoaded, indiviualData?.image]);
+    const downloadFileFromButton = () => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: indiviualData?.customerConsentForm,
+                name: 'docId',
+            },
+        ];
+        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams });
+    };
 
     useEffect(() => {
         if (indiviualData?.dateOfBirth === null || indiviualData?.dateOfBirth === undefined || indiviualData?.dateOfBirth === '') {
@@ -142,18 +164,19 @@ const IndividualProfileBase = (props) => {
     }, [indiviualData]);
 
     const onFinish = (values) => {
-        setRefreshList(false);
-        const recordId = formData?.id || '';
+        const recordId = '';
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
 
         const data = {
             ...rest,
             customerId: selectedCustomerId,
+            dateOfBirth: values?.dateOfBirth?.format('YYYY-MM-DD'),
+            weddingAnniversary: values?.weddingAnniversary?.format('YYYY-MM-DD'),
             keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode || '', accountName: values?.accountName || '', accountSegment: values?.accountSegment || '', accountClientName: values?.accountClientName || '', accountMappingDate: values?.accountMappingDate || '' },
             authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
             id: recordId,
             profileFileDocId: uploadedFile ? uploadedFile : '',
-            customerFormDocId: uploadedFile ? uploadedFile : '',
+            customerFormDocId: uploadedFiles ? uploadedFiles : '',
         };
 
         const onSuccess = (res) => {
@@ -163,7 +186,6 @@ const IndividualProfileBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                setRefreshList(true);
             }
             setButtonData({ ...buttonData, formBtnActive: false });
         };
@@ -173,7 +195,7 @@ const IndividualProfileBase = (props) => {
         };
         const requestData = {
             data: data,
-            method: indiviualData.customerId ? 'put' : 'post',
+            method: indiviualData?.customerId ? 'put' : 'post',
             setIsLoading: listIndiviualShowLoading,
             userId,
             onError,
@@ -189,7 +211,7 @@ const IndividualProfileBase = (props) => {
             {
                 key: 'docId',
                 title: 'docId',
-                value: indiviualData?.customerConsentForm,
+                value: indiviualData?.image,
                 name: 'docId',
             },
         ];
@@ -210,7 +232,6 @@ const IndividualProfileBase = (props) => {
         form.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
-        viewDocument = [];
     };
 
     const formProps = {
@@ -228,8 +249,12 @@ const IndividualProfileBase = (props) => {
         appCategoryData,
         listDocumentShowLoading,
         uploadDocumentFile,
+        uploadConsentDocumentFile,
         setUploadedFile,
         uploadedFile,
+        setUploadedFiles,
+        uploadedFiles,
+        showGlobalNotification,
 
         saveDocumentData,
         userId,
@@ -250,6 +275,7 @@ const IndividualProfileBase = (props) => {
         isViewDocumentLoading,
         handleOnClick,
         isLoading,
+        downloadFileFromButton,
     };
 
     const handleFormValueChange = () => {
