@@ -11,7 +11,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 
 import { VEHICLE_DETAIL_STATUS } from 'constants/VehicleDetailStatus';
 
-export const VechileStatusBar = (props) => {
+export const VehicleStatusBar = (props) => {
     const { status } = props;
 
     const otfStatusList = Object.values(VEHICLE_DETAIL_STATUS);

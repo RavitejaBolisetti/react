@@ -170,10 +170,11 @@ const AddEditForm = (props) => {
                                         </Select>
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12}  className={`${styles.inputWrapper} ${styles.allowsection}`}>
                                     <Form.Item {...documentTitleRule} label="Document Name" name="documentTitle" validateTrigger={['onChange']}>
                                         <Input placeholder={preparePlaceholderText('File Name')} onChange={handleDocumentTitle} allowClear />
                                     </Form.Item>
+                                    
                                 </Col>
                             </Row>
                             <Row gutter={16}>

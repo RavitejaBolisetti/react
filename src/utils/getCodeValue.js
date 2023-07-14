@@ -5,5 +5,13 @@
  */
 
 export const getCodeValue = (type, key) => {
-    return type && key ? Object.values(type).find((i) => i.key === key)?.value : 'NA';
+    if (Array.isArray(key)) {
+        const itemDetail = [];
+        for (let node of Object.values(type)) {
+            if (key.includes(node.key)) itemDetail.push(node?.value);
+        }
+        return itemDetail?.join(', ');
+    } else {
+        return type && key ? Object.values(type).find((i) => i.key === key)?.value : '-';
+    }
 };

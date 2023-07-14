@@ -13,7 +13,7 @@ import { AddEditForm } from './AddEditForm';
 import { lessorCustomerCreationDataActions } from 'store/actions/data/lessorCustomerCreation';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
-import { geoStateDataActions } from 'store/actions/data/geo/state';
+import { geoStateDataActions } from 'store/actions/data/geo/states';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
@@ -124,7 +124,7 @@ export const ListCustomerCreationBase = (props) => {
         const data = { docId: uploadedFile };
 
         const onSuccess = (res) => {
-            setIsFormVisible(false)
+            setIsFormVisible(false);
             setEmptyList(false);
             setUploadedFile();
             form.resetFields();
