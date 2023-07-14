@@ -17,11 +17,12 @@ const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
  
-        const { formData,
+        const { 
+              formData,
               isLoading,
               activeKey,
               onChange,
-              loginUserData: { userType = undefined },
+              userType = undefined,
              } = props;
              
     const viewProps = {
