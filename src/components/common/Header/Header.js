@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
-
+console.log('loginUserData',loginUserData);
     return {
         passwordStatus,
         loginUserData,

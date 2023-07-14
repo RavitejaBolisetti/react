@@ -118,7 +118,7 @@ const VechileDetailsMasterBase = (props) => {
         };
 
         const requestData = {
-            data: {"vehicleDetails":data},
+            data: { vehicleDetails: data },
             method: 'put',
             setIsLoading: listShowLoading,
             userId,
@@ -162,6 +162,7 @@ const VechileDetailsMasterBase = (props) => {
         onChange,
         activeKey,
         setactiveKey,
+        loginUserData,
     };
 
     return (
