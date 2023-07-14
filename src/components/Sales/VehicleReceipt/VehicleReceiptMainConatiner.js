@@ -9,7 +9,7 @@ import { withDrawer } from 'components/withDrawer';
 import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 
 import { SupplierInvoiceDetailsMaster } from './SupplierInvoiceDetail';
-// import { SchemeDetailsMaster } from './SchemeDetails';
+import { VehicleDetailsMaster } from './VehicleDetails';
 // import { ThankYouMaster } from './ThankYou';
 
 import { LeftSidebar } from './LeftSidebar';
@@ -28,9 +28,9 @@ const VehicleReceiptMainConatinerMain = (props) => {
             case VEHICLE_RECEIPT_SECTION.SUPPLIER_INVOICE_DETAILS.id: {
                 return <SupplierInvoiceDetailsMaster {...myProps} />;
             }
-            // case VEHICLE_RECEIPT_SECTION.VEHICLE_DETAILS.id: {
-            //     return <CustomerDetailsMaster {...myProps} />;
-            // }
+            case VEHICLE_RECEIPT_SECTION.VEHICLE_DETAILS.id: {
+                return <VehicleDetailsMaster {...myProps} />;
+            }
             default: {
                 return <SupplierInvoiceDetailsMaster {...myProps} />;
             }
