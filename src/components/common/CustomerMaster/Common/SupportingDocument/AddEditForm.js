@@ -107,8 +107,8 @@ const AddEditForm = (props) => {
                         </Select>
                     </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.supportingDocument}>
-                    <Form.Item label="File Name" name="documentName">
+                <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.inputWrapper}>
+                    <Form.Item initialValue={null} label="File Name" name="documentName">
                         <Input placeholder={preparePlaceholderText('File Name')} rules={[validateRequiredInputField('fileName')]} size="small" allowClear />
                     </Form.Item>
                 </Col>
