@@ -148,6 +148,7 @@ const VechileDetailsMasterBase = (props) => {
         onChange,
         activeKey,
         setactiveKey,
+        
     };
 
     const viewProps = {
@@ -162,7 +163,7 @@ const VechileDetailsMasterBase = (props) => {
         onChange,
         activeKey,
         setactiveKey,
-        loginUserData,
+        
     };
 
     return (

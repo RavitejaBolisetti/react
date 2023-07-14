@@ -16,12 +16,20 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
+ 
+        const { formData,
+              isLoading,
+              activeKey,
+              onChange,
+              loginUserData: { userType = undefined },
+             } = props;
+             
     const viewProps = {
-        const { formData, isLoading, activeKey, onChange, loginUserData: { userType = undefined } } = props;
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
+        
     };
 
     const mnfcWarrEndDate = dayjs(formData?.mnfcWarrEndDate).format('DD/MM/YYYY');
@@ -62,13 +70,13 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label="Taxi/Non Taxi">{checkAndSetDefaultValue(formData?.taxiOrNonTaxi, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="M&M CTC Vehicle">{checkAndSetDefaultValue(formData?.mnmCtcVehicle, isLoading, DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
                                     <Descriptions.Item label="Managed By">{checkAndSetDefaultValue(formData?.manageBy, isLoading)}</Descriptions.Item>
-                                    { userType === USER_TYPE?.ADMIN?.key &&   
-                                        <>                      
+                                    { userType === USER_TYPE?.ADMIN?.key && ( 
+                                         <>                   
                                             <Descriptions.Item label="Warranty Blocked">{checkAndSetDefaultValue(formData?.warrantyBlocked, isLoading, '', DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
                                     <Descriptions.Item label="Care Plus">{checkAndSetDefaultValue(formData?.carePlus, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Legal">{checkAndSetDefaultValue(formData?.legal, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Dealership Vehicle">{checkAndSetDefaultValue(formData?.dealershipVehicle, isLoading)}</Descriptions.Item>
-                                    </> }
+                                    </>  )}
                                     </Descriptions>
                             </Panel>
                         </Collapse>
