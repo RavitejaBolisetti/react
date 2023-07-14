@@ -29,8 +29,15 @@ const AddEditFormMain = (props) => {
 
     useEffect(() => {
         if (formData) {
-            setMnmCtcVehicleFlag(formData?.mnmCtcVehicle);
-            // form.setFieldsValue({ ...formData});
+            setMnmCtcVehicleFlag(formData?.mnmCtcVehicle);            
+            form.setFieldsValue({ ...formData,
+                mnfcWarrEndDate: convertDateToCalender(formData?.mnfcWarrEndDate),
+                deliveryDate: convertDateToCalender(formData?.deliveryDate),
+                saleDate: convertDateToCalender(formData?.saleDate),
+                nextServiceDueDate: convertDateToCalender(formData?.nextServiceDueDate),
+                pucExpiryDate: convertDateToCalender(formData?.pucExpiryDate),
+                insuranceExpiryDate: convertDateToCalender(formData?.insuranceExpiryDate),
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
