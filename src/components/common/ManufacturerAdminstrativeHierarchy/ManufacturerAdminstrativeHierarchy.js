@@ -314,7 +314,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     };
 
     const onFinish = (values) => {
-        console.log("🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:317 ~ onFinish ~ values:", values)
+        console.log('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:317 ~ onFinish ~ values:', values);
         const recordId = formData?.id || '';
 
         const data = { isModified: false, id: recordId, manufactureOrganizationId: organizationId, adminAuthority: documentTypesList, ...values };
@@ -538,32 +538,24 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                                {/* <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}> */}
-                                    <h1>{`${title}`}</h1>
+                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                    <Form.Item label={`${title}`} name="code">
                                         <Row gutter={20}>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                                 <TreeSelectField {...treeSelectFieldProps} />
                                             </Col>
                                             {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
-                                                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                                    <Search
-                                                        placeholder="Search"
-                                                        style={{
-                                                            width: '100%',
-                                                        }}
-                                                        allowClear
-                                                        onChange={onChange}
-                                                        className={styles.searchField}
-                                                    />
+                                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                                    <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
                                                 </Col>
                                             )}
                                         </Row>
-                                    {/* </Form.Item> */}
-                                {/* </Form> */}
+                                    </Form.Item>
+                                </Form>
                             </Col>
                             {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
-                                <Col className={styles.buttonHeadingContainer} xs={10} sm={10} md={10} lg={10} xl={10}>
+                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
                                     <Button type="primary" onClick={handleOnClickUpload}>
                                         Upload
                                     </Button>
@@ -578,8 +570,10 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                         Change History
                                     </Button>
                                 </Col>
-                            )   }
+                            )}
                         </Row>
+
+                        
                     </div>
                     <div className={styles.content}>
                         {!organizationId ? (
