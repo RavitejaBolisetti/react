@@ -1,0 +1,1 @@
+export const prefix = "GEO_STATE_";

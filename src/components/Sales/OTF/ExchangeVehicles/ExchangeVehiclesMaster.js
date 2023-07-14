@@ -184,6 +184,11 @@ const ExchangeVehiclesBase = (props) => {
     };
 
     const onFinish = (values) => {
+        const { customerName } = values;
+        if (!customerName) {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
+            return;
+        }
         const data = { ...values, id: exchangeData?.id || '', otfNumber: selectedOrderId };
 
         const onSuccess = (res) => {
@@ -254,6 +259,7 @@ const ExchangeVehiclesBase = (props) => {
             userId,
             onSuccessAction: (res) => {
                 res?.data && res?.data?.customerMasterDetails && res?.data?.customerMasterDetails[0] && setFormData(res?.data?.customerMasterDetails[0] ?? []);
+                !res?.data?.customerMasterDetails && showGlobalNotification({ message: res?.responseMessage });
             },
             onErrorAction,
         });

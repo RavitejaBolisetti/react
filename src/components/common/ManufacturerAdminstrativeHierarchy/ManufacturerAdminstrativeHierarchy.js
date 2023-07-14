@@ -122,6 +122,7 @@ const mapDispatchToProps = (dispatch) => ({
             resetViewData: documentViewDataActions.reset,
 
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
+            fetchDocumentFileDocId: manufacturerAdminUploadDataActions.fetchList,
             saveAuthorityData: manufacturerAdminUploadDataActions.saveData,
             authorityShowLoading: manufacturerAdminUploadDataActions.listShowLoading,
             resetData: manufacturerAdminUploadDataActions.reset,
@@ -134,13 +135,13 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const { viewTitle, manufacturerAdminHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, uploadModelOpen, cardBtnDisableAction } = props;
-    const { isDataOrgLoaded, manufacturerOrgHierarchyData, fetchOrgList } = props;
+    const { isDataOrgLoaded, manufacturerOrgHierarchyData, fetchOrgList, fetchDocumentFileDocId } = props;
     const { resetData, resetViewData, detailData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { uploadDocumentFile, accessToken, token } = props;
-
+    
     const { authorityShowLoading, isAuthorityDataLoaded, isAuthorityDataLoading, authorityData, typeData, lessorData } = props;
     const { saveAuthorityData, isViewDataLoaded, isLoading, viewListShowLoading, fetchViewDocument, viewDocument } = props;
-
+    
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
@@ -314,7 +315,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     };
 
     const onFinish = (values) => {
-        console.log('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:317 ~ onFinish ~ values:', values);
         const recordId = formData?.id || '';
 
         const data = { isModified: false, id: recordId, manufactureOrganizationId: organizationId, adminAuthority: documentTypesList, ...values };
@@ -327,8 +327,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId, manufacturerOrgId: organizationId, errorAction });
-                fetchList({ setIsLoading: listShowLoading, id: selectedId, userId, errorAction });
-
+                setOrganizationId(organizationId)
                 setSelectedTreeKey([res?.data?.id]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
@@ -447,8 +446,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         setIsUploadDrawer(false);
-        // resetData();
-        // resetViewData();
     };
 
     const drawerTitle = 'Upload Authority Details';
@@ -464,6 +461,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         accessToken,
         token,
         saveAuthorityData,
+        fetchDocumentFileDocId,
         authorityShowLoading,
         onFinish,
         uploadedFile,
@@ -517,7 +515,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         defaultValue: 'organizationId',
         placeholder: preparePlaceholderSelect('Organization Hierarchy'),
     };
-    console.log('organizationId', organizationId);
     const title = 'Hierarchy';
 
     const handleOnClickUpload = () => {
@@ -530,7 +527,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         onCloseAction: myCloseAction,
         titleOverride: chgHistoryToggleButton,
         activeKey,
+        organizationId,
     };
+    const onfinishHeader = (value) => {};
 
     return (
         <>
@@ -538,8 +537,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                                <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                        <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onfinishHeader} onFinishFailed={onFinishFailed}>
                                     <Form.Item label={`${title}`} name="code">
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
