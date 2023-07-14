@@ -3040,9 +3040,9 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 }
 
 .supportingDocument :global .ant-input-affix-wrapper {
-    padding: 5px 6px;
+    padding: 0px 6px;
     border-color: #b5b5b6;
-    height: 36px;
+    height: 38px;
 }
 
 .supportingDocument :global .ant-input-affix-wrapper-focused {
@@ -3069,14 +3069,25 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 .referralSearch :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child {
     padding: 0 10px;
 }
-
+.allowsection :global .ant-input-affix-wrapper {
+    padding: 0px 6px 5px 10px !important;
+    
+}
 .inputWrapper :global .ant-btn-default {
     padding: 5px 0;
 }
 .inputWrapper :global .ant-input-affix-wrapper {
-    padding: 5px 6px 5px 0;
-    border-color: #b5b5b6;
+    padding: 0px 6px 5px 0px;
+    border: 1px solid #b5b5b6;
+    height: 37px;
 }
+.inputWrapper :global .ant-input-affix-wrapper .ant-input {
+    height: 35px;
+}
+.inputWrapper :global .ant-input-affix-wrapper .ant-input-suffix{
+    margin-top: 5px;
+}
+
 
 @media (max-width: 768px) {
     /* For mobile phones: */
