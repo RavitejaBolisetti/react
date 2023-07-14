@@ -61,7 +61,7 @@ const SearchBox = (props) => {
                     </Select>
                 </Form.Item>
 
-                <Form.Item {...searchParamRule} name="searchParam" rules={[validateRequiredInputField('search parametar')]} validateTrigger={['onChange', 'onSearch']}>
+                <Form.Item {...searchParamRule} name="searchParam" rules={[validateRequiredInputField('search parameter')]} validateTrigger={['onChange', 'onSearch']}>
                     <Search placeholder="Search" value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={handleSearchParamSearch} className={styles.headerSearchField} />
                 </Form.Item>
             </Form>

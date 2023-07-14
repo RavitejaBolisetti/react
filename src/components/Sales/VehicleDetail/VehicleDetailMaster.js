@@ -15,13 +15,14 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 
 import { ListDataTable } from 'utils/ListDataTable';
 import { VehicleDetailMainContainer } from './VehicleDetailMainContainer';
 // import { AdvancedSearch } from './AdvancedSearch';
+import { showGlobalNotification } from 'store/actions/notification';
+import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 
 import { VEHICLE_DETAIL_STATUS } from 'constants/VehicleDetailStatus';
 import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 import { validateRequiredInputField } from 'utils/validation';
+import { LANGUAGE_EN } from 'language/en';
 
-import { showGlobalNotification } from 'store/actions/notification';
-import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 const mapStateToProps = (state) => {
@@ -229,10 +230,8 @@ export const VehicleDetailMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        console.log('🚀 ~ file: VehicleDetailMaster.js:231 ~ handleButtonClick ~ record:', record);
         form.resetFields();
         form.setFieldsValue(undefined);
-        setSelectedRecordId('MAKGF1F57A7192174');
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -322,6 +321,7 @@ export const VehicleDetailMasterBase = (props) => {
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
+        noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
     };
 
     const removeFilter = (key) => {
@@ -374,6 +374,7 @@ export const VehicleDetailMasterBase = (props) => {
         setFormActionType,
         onFinish,
         onFinishFailed,
+        setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
@@ -409,7 +410,7 @@ export const VehicleDetailMasterBase = (props) => {
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={isLoading} {...tableProps} showAddButton={false} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <VehicleDetailMainContainer {...containerProps} />

@@ -123,7 +123,7 @@ const ContactMasterMain = (props) => {
                     });
                 } else {
                     setContactData((prev) => {
-                        const updVal = prev?.length ? [ {...value} , ...prev] : [{ ...value, preferredContactTimeFrom, preferredContactTimeTo }];
+                        const updVal = prev?.length ? [{ ...value, preferredContactTimeFrom, preferredContactTimeTo }, ...prev] : [{ ...value, preferredContactTimeFrom, preferredContactTimeTo }];
                         return updVal;
                     });
                 }
@@ -170,7 +170,10 @@ const ContactMasterMain = (props) => {
     };
 
     const onFinish = () => {
-        let data = { vehicleIdentificationNumber: selectedRecordId, contact: contactData?.map((el) => ({ ...el})) };
+        let data = {
+            vehicleIdentificationNumber: selectedRecordId,
+            contact: contactData?.map(({ preferredContactTime, ...rest }) => rest),
+        };
         const onSuccess = (res) => {
             contactform.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });

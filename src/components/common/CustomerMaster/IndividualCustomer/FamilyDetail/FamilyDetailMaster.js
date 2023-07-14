@@ -135,7 +135,8 @@ const FamilyDetailMasterBase = (props) => {
         form.validateFields()
             .then(() => {
                 let values = form.getFieldsValue();
-                setFamilyDetailsList((items) => [{ ...values, customerId: selectedCustomerId, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
+                setFamilyDetailsList((items) => [{ ...values, customerId: selectedCustomerId, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth, editedId: values?.editedId === '' ? Math.floor(Math.random() * 100000000 + 1) : values?.editedId }, ...items]);
+
                 if (editedMode) {
                     const upd_obj = familyDetailList?.map((obj) => {
                         if (obj?.editedId === values?.editedId) {

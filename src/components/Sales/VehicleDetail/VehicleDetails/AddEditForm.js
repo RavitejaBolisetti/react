@@ -23,14 +23,14 @@ const AddEditFormMain = (props) => {
         mnmCtcVehicleFlag,
         setMnmCtcVehicleFlag,
         isReadOnly = true,
-        loginUserData: { userType = 'ADM' },
+        userType,
     } = props;
     const disabledProps = { disabled: isReadOnly };
 
     useEffect(() => {
         if (formData) {
             setMnmCtcVehicleFlag(formData?.mnmCtcVehicle);
-            // form.setFieldsValue({ ...formData});
+            form.setFieldsValue({ ...formData, mnfcWarrEndDate: convertDateToCalender(formData?.mnfcWarrEndDate), deliveryDate: convertDateToCalender(formData?.deliveryDate), saleDate: convertDateToCalender(formData?.saleDate), nextServiceDueDate: convertDateToCalender(formData?.nextServiceDueDate), pucExpiryDate: convertDateToCalender(formData?.pucExpiryDate), insuranceExpiryDate: convertDateToCalender(formData?.insuranceExpiryDate) });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
@@ -176,33 +176,33 @@ const AddEditFormMain = (props) => {
                     </Col>
                 )}
             </Row>
-            {/* {userType === USER_TYPE?.ADMIN?.key && ( */}
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <h4 className={styles.customHeading}> Below Fields to be shown for Mahindra users only</h4>
-                </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.warrantyBlocked} labelAlign="left" wrapperCol={{ span: 24 }} name="warrantyBlocked" label="Warranty Blocked" valuePropName="checked">
-                        <Switch checkedChildren="Yes" unCheckedChildren="No" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
-                    </Form.Item>
-                </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="carePlus" label="Care Plus" initialValue={formData?.carePlus}>
-                        <Input maxLength={50} {...disabledProps} />
-                    </Form.Item>
-                </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.legal} labelAlign="left" wrapperCol={{ span: 24 }} name="legal" label="Legal" valuePropName="checked">
-                        <Switch checkedChildren="Yes" unCheckedChildren="No" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
-                    </Form.Item>
-                </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.dealershipVehicle} labelAlign="left" wrapperCol={{ span: 24 }} name="dealershipVehicle" label="Dealership Vehicle" valuePropName="checked">
-                        <Switch checkedChildren="Yes" unCheckedChildren="No" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
-                    </Form.Item>
-                </Col>
-            </Row>
-            {/* )} */}
+            {userType === USER_TYPE?.ADMIN?.key && (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <h4 className={styles.customHeading}> Below Fields to be shown for Mahindra users only</h4>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={formData?.warrantyBlocked} labelAlign="left" wrapperCol={{ span: 24 }} name="warrantyBlocked" label="Warranty Blocked" valuePropName="checked">
+                            <Switch checkedChildren="Yes" unCheckedChildren="No" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item name="carePlus" label="Care Plus" initialValue={formData?.carePlus}>
+                            <Input maxLength={50} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={formData?.legal} labelAlign="left" wrapperCol={{ span: 24 }} name="legal" label="Legal" valuePropName="checked">
+                            <Switch checkedChildren="Yes" unCheckedChildren="No" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={formData?.dealershipVehicle} labelAlign="left" wrapperCol={{ span: 24 }} name="dealershipVehicle" label="Dealership Vehicle" valuePropName="checked">
+                            <Switch checkedChildren="Yes" unCheckedChildren="No" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                </Row>
+            )}
         </Card>
     );
 };
