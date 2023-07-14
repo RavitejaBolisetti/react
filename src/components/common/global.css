@@ -236,6 +236,10 @@
     width: 100%;
 }
 
+:global .ant-picker-dropdown .ant-picker-time-panel-column::after {
+    height: auto;
+}
+
 :global .ant-drawer-body .ant-picker-range {
     width: 100%;
 }
