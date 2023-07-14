@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Vehicle: {
-                ViewVehicleDetail: { isLoaded, isLoading, data: vehicleDetails = {} },
+                ViewVehicleDetail: { isLoaded: isDataLoaded = false, isLoading, data: vehicleDetails = {} },
             },
         },
         common: {
@@ -35,7 +35,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         typeData,
-        isDataLoaded: true,
+        isDataLoaded,
         isLoading,
         moduleTitle,
         vehicleDetails,
