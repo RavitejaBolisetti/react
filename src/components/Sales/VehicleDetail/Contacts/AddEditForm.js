@@ -10,7 +10,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { formatTime } from 'utils/formatDateTime';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
-import style from '../../../common/Common.module.css';
+import styles from '../../../common/Common.module.css';
 
 const AddEditForm = (props) => {
     const { onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, formActionType, handleFormValueChange, setIsAdding } = props;
@@ -31,7 +31,7 @@ const AddEditForm = (props) => {
                                 <Select placeholder={preparePlaceholderSelect('contact type')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData['VH_CONTACT_TYPE']}></Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8} className={styles.contactDays}>
                             <Form.Item label="Preferred Days For Contact" name="preferredDayForContact" rules={[validateRequiredSelectField('preferred days for contact')]}>
                                 <Select mode="multiple" placeholder={preparePlaceholderSelect('preferred days for contact')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData['VH_CONTACT_DAYS']}></Select>
                             </Form.Item>
@@ -45,12 +45,12 @@ const AddEditForm = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Name" name="name" rules={[validateRequiredInputField('Name'), validateLettersWithWhitespaces('Name')]}>
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('name')} />
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('name')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="E-mail" initialValue={''} name="emailId" rules={[validateRequiredEmailField('E-mail')]}>
-                                <Input className={style.inputBox} placeholder={preparePlaceholderText('email id')} />
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('email id')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8} style={{ display: 'flex' }}>
@@ -67,10 +67,10 @@ const AddEditForm = (props) => {
                     {!formActionType?.viewMode && (
                         <Row gutter={20}>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Button className={style.marR20} onClick={onSaveFormData} type="primary">
+                                <Button className={styles.marR20} onClick={onSaveFormData} type="primary">
                                     Save
                                 </Button>
-                                <Button className={style.marB20} onClick={handleCancelFormEdit} danger>
+                                <Button className={styles.marB20} onClick={handleCancelFormEdit} danger>
                                     Cancel
                                 </Button>
                             </Col>

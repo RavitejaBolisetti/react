@@ -3090,6 +3090,22 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     border-color: #b5b5b6;
 }
 
+.contactDays :global .ant-form-item .ant-form-item-control-input .ant-select-multiple .ant-select-selector {
+    height: auto;
+    min-height: 36px;
+}
+
+.contactDays :global .ant-form-item .ant-form-item-control-input .ant-select-multiple .ant-select-selection-item {
+    margin-top: 1px;
+    margin-bottom: 1px;
+    margin-inline-end: 2px;
+}
+
+.contactDays :global .ant-form-item .ant-form-item-control-input .ant-select-multiple .ant-select-arrow,
+.contactDays :global .ant-form-item .ant-form-item-control-input .ant-select-multiple .ant-select-clear {
+    top: 18px;
+}
+
 @media (max-width: 768px) {
 
     /* For mobile phones: */

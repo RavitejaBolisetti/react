@@ -103,7 +103,7 @@
 
 :global .ant-btn-default.ant-btn-dangerous:not(:disabled) {
     background-color: transparent;
-    color: #ff3e5b !important;
+    /* color: #ff3e5b !important; */
     border: 1px solid #ff3e5b;
 }
 
