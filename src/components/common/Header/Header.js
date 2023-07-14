@@ -12,6 +12,8 @@ import { FiLock, FiUser, FiSettings } from 'react-icons/fi';
 import { CgProfile } from 'react-icons/cg';
 
 import * as routing from 'constants/routing';
+import { USER_TYPE } from 'constants/userType';
+
 import { setCollapsed } from 'store/actions/common/leftsidebar';
 import customMenuLink, { addToolTip } from 'utils/customMenuLink';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
@@ -42,7 +44,7 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
-console.log('loginUserData',loginUserData);
+    console.log('loginUserData', loginUserData);
     return {
         passwordStatus,
         loginUserData,
@@ -208,7 +210,7 @@ const HeaderMain = (props) => {
         // }),
     ];
 
-    userType === 'DLR' &&
+    userType === USER_TYPE?.DEALER?.key &&
         userSettingMenu.push(
             customMenuLink({
                 key: '5',
@@ -253,12 +255,12 @@ const HeaderMain = (props) => {
                                             <div className={styles.dealerName}>{dealerName}</div>
                                             <div className={styles.dealerInfo}>
                                                 <span className={styles.dealerLocation}>{dealerLocation}</span>
-                                                {userType === 'DLR' && (
+                                                {userType === USER_TYPE?.DEALER?.key && (
                                                     <Dropdown className={styles.dropdownIcon} menu={{ items: locationMenuOption }}>
                                                         <DownOutlined />
                                                     </Dropdown>
                                                 )}{' '}
-                                                {userType === 'DLR' && (
+                                                {userType === USER_TYPE?.DEALER?.key && (
                                                     <>
                                                         <span className={styles.seprator}>|</span>
                                                         <span className={styles.dealerLocation}>FY2023</span>
@@ -310,7 +312,7 @@ const HeaderMain = (props) => {
                                                 </div>
                                                 <div className={styles.userText}>
                                                     <div className={styles.userName}>{addToolTip(fullName)(fullName)}</div>
-                                                    <span className={styles.userRoleName}>{userType === 'DLR' ? 'Admin' : 'Super Admin'}</span>
+                                                    <span className={styles.userRoleName}>{userType === USER_TYPE?.DEALER?.key ? 'Admin' : 'Super Admin'}</span>
                                                 </div>
                                                 <div className={`${styles.webmenuDropDownArrow} ${styles.dropdownArrow}`}>
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>

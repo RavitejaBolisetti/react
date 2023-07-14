@@ -9,7 +9,8 @@ import { convertDate } from 'utils/formatDateTime';
 import { DATA_TYPE } from 'constants/dataType';
 
 export const checkAndSetDefaultValue = (value, isLoading, type) => {
-    if (isLoading) <InputSkeleton width={'100px'} height={20} theme={'card'} />;
+    if (isLoading) return <InputSkeleton width={'100px'} height={20} theme={'card'} />;
+    
     switch (type) {
         case DATA_TYPE?.BOOL?.id:
             return value ? 'Yes' : 'No';

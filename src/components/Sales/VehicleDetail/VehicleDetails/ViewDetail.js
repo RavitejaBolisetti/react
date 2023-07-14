@@ -22,7 +22,7 @@ const ViewDetailMain = (props) => {
               isLoading,
               activeKey,
               onChange,
-              userType = undefined,
+              userType,
              } = props;
              
     const viewProps = {

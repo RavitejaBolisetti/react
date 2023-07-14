@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
         isLoading,
         moduleTitle,
         vehicleDetails,
-        loginUserData,
+        userType: loginUserData?.userType || '',
     };
     return returnValue;
 };
@@ -148,7 +148,6 @@ const VechileDetailsMasterBase = (props) => {
         onChange,
         activeKey,
         setactiveKey,
-        
     };
 
     const viewProps = {
@@ -163,7 +162,6 @@ const VechileDetailsMasterBase = (props) => {
         onChange,
         activeKey,
         setactiveKey,
-        
     };
 
     return (
