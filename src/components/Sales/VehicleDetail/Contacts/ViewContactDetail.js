@@ -36,7 +36,7 @@ const ViewContactDetailBase = (props) => {
                 <>
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Contact Type">{checkAndSetDefaultValue(getCodeValue(typeData?.VH_CONTACT_TYPE, formData?.contactType), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Preferred Days For Contact">{checkAndSetDefaultValue(formData?.preferredDayForContact, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Preferred Days For Contact">{checkAndSetDefaultValue(getCodeValue(typeData?.VH_CONTACT_DAYS, formData?.preferredDayForContact), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Name">{checkAndSetDefaultValue(formData?.name, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="E-mail">{checkAndSetDefaultValue(formData?.emailId, isLoading)}</Descriptions.Item>

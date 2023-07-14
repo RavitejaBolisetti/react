@@ -13,10 +13,10 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { tableColumn } from './tableColumn';
 
-import { geoCountryDataActions } from 'store/actions/data/geo/country';
-import { geoStateDataActions } from 'store/actions/data/geo/state';
-import { geoDistrictDataActions } from 'store/actions/data/geo/district';
-import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
+import { geoCountryDataActions } from 'store/actions/data/geo/countries';
+import { geoStateDataActions } from 'store/actions/data/geo/states';
+import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
+import { tehsilDataActions } from 'store/actions/data/geo/tehsils';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
@@ -78,10 +78,10 @@ const mapDispatchToProps = (dispatch) => ({
             listStateShowLoading: geoStateDataActions.listShowLoading,
             fetchDistrictLovList: geoDistrictDataActions.fetchFilteredList,
             listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
-            fetchList: geoTehsilDataActions.fetchList,
-            saveData: geoTehsilDataActions.saveData,
-            listShowLoading: geoTehsilDataActions.listShowLoading,
-            resetData: geoTehsilDataActions.reset,
+            fetchList: tehsilDataActions.fetchList,
+            saveData: tehsilDataActions.saveData,
+            listShowLoading: tehsilDataActions.listShowLoading,
+            resetData: tehsilDataActions.reset,
             showGlobalNotification,
         },
         dispatch
