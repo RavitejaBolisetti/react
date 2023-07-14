@@ -374,6 +374,7 @@ export const VehicleDetailMasterBase = (props) => {
         setFormActionType,
         onFinish,
         onFinishFailed,
+        setIsFormVisible,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
