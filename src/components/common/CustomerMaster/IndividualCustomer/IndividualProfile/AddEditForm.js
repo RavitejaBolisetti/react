@@ -25,7 +25,7 @@ const { TextArea } = Input;
 const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { showGlobalNotification,formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadedFile, uploadConsentDocumentFile } = props;
+    const { showGlobalNotification, formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadedFile, uploadConsentDocumentFile } = props;
     const { isReadOnly = false } = props;
     const [isRead, setIsRead] = useState(false);
     const [isReadUpload, setIsReadUpload] = useState(false);
@@ -448,43 +448,6 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
                         <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel header="Key Account details" key="3">
-                                <Divider />
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Code" name="accountCode" initialValue={formData?.keyAccountDetails?.accountCode}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter account code')} disabled />
-                                        </Form.Item>
-                                    </Col>
-
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Name" name="accountName" initialValue={formData?.keyAccountDetails?.accountName}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
-                                        </Form.Item>
-                                    </Col>
-
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Segement" name="accountSegment" initialValue={formData?.keyAccountDetails?.accountSegment}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} disabled />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Client Name" name="accountClientName" initialValue={formData?.keyAccountDetails?.accountClientName}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} disabled />
-                                        </Form.Item>
-                                    </Col>
-
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Mapping Date" name="accountMappingDate" initialValue={formData?.keyAccountDetails?.accountMappingDate}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                            </Panel>
-                        </Collapse>
-                        <Collapse defaultActiveKey={['4']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel header="Authority Details (Who Knowns Whom)" key="4">
                                 <Divider />
                                 <Row gutter={20}>
