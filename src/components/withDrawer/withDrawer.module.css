@@ -19,9 +19,7 @@
     overflow: hidden;
 } 
 
-.bigDrawerStyle :global .ant-collapse>.ant-collapse-item {
-    border-bottom: none !important;
-}
+
 
 .myDrawerStyle :global .ant-drawer-body::-webkit-scrollbar-track {
     background-color: #ffffff;
@@ -44,7 +42,7 @@
 }
 
 .myDrawerStyle :global .ant-input-affix-wrapper {
-    border-color: #d9d9d9 !important;
+    border-color: #B5B5B6 !important;
     height: max-content !important;
 }
 
