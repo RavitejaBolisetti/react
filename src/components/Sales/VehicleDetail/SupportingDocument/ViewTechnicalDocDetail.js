@@ -20,28 +20,26 @@ export const ViewTechnicalDocDetail = (props) => {
 
     return (
         <div className={styles.viewDrawerContainer}>
-            {supportingData?.length > 0 ? (
-                <Card>
-                    {supportingData?.map((uploadData) => {
-                        return (
-                            <Card
-                                className={styles.viewDocumentStrip}
-                                key={uploadData.id}
-                                title={uploadData?.documentName}
-                                extra={
-                                    <>
-                                        <FiDownload onClick={() => downloadFileFromButton(uploadData)} />
-                                        {/* {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} />} */}
-                                    </>
-                                }
-                            ></Card>
-                        );
-                    })}
-                </Card>
-            ) : (
-                // viewMode &&
-                <div className={styles.viewNoDataFound}>No Technical Document Available</div>
-            )}
+            {/* {supportingData?.length > 0 ? ( */}
+            <Card>
+                Coming Soon
+                {/* {supportingData?.map((uploadData) => {
+                    return (
+                        <Card
+                            className={styles.viewDocumentStrip}
+                            key={uploadData.id}
+                            title={uploadData?.documentName}
+                            extra={
+                                <>
+                                    <FiDownload onClick={() => downloadFileFromButton(uploadData)} />
+                                </>
+                            }
+                        ></Card>
+                    );
+                })} */}
+            </Card>
+            {/* // ) : ( // <div className={styles.viewNoDataFound}>No Technical Document Available</div>
+            // )} */}
         </div>
     );
 };

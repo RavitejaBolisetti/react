@@ -163,6 +163,7 @@
 
 .selectSearchBg .headerSearchField :global .ant-input-group {
     border: none;
+    height: 29px;
 }
 
 .selectSearchBg .headerSearchField :global .ant-input-group .ant-input-group-addon button {

@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Select, Input, Upload, Button, Empty, Card } from 'antd';
 
-import { FiEye, FiTrash } from 'react-icons/fi';
+import { FiDownload, FiTrash } from 'react-icons/fi';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
@@ -24,21 +24,28 @@ const AddEditForm = (props) => {
     const onDrop = (e) => {};
 
     const uploadProps = {
-        multiple: true,
+        multiple: false,
         accept: 'image/png, image/jpeg, application/pdf',
-
+        beforeUpload: (file) => {
+            const isAccepted = file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'application/pdf';
+            if (!isAccepted) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not a accepted file format`, placement: 'bottomRight' });
+            }
+            return isAccepted || Upload.LIST_IGNORE;
+        },
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
+            showPreviewIcon: true,
             removeIcon: <FiTrash />,
-            downloadIcon: <FiEye onClick={() => downloadFileFromList()} style={{ color: '#ff3e5b' }} />,
+            downloadIcon: <FiDownload onClick={() => downloadFileFromList()} style={{ color: '#ff3e5b' }} />,
             showProgress: true,
         },
         progress: { strokeWidth: 3, showInfo: true },
         onDrop,
         onChange: (info) => {
             let fileList = [...info.fileList];
-            // fileList = fileList.slice(-1);
+            fileList = fileList.slice(-1);
             setFileList(fileList);
             handleFormValueChange();
             const { status } = info.file;
@@ -100,12 +107,13 @@ const AddEditForm = (props) => {
                         </Select>
                     </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.supportingDocument}>
                     <Form.Item label="File Name" name="documentName">
-                        <Input placeholder={preparePlaceholderText('File Name')} rules={[validateRequiredInputField('fileName')]} allowClear />
+                        <Input placeholder={preparePlaceholderText('File Name')} rules={[validateRequiredInputField('fileName')]} size="small" allowClear />
                     </Form.Item>
                 </Col>
             </Row>
+
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.uploadContainer} style={{ opacity: '100' }}>

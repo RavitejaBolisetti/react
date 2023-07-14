@@ -23,12 +23,12 @@ const AddEditForm = (props) => {
 
     return (
         <>
-            <Form form={contactform} id="myContacts" autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
+            <Form form={contactform} autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
                 <Space direction="vertical">
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Contact Type" name="contactType" rules={[validateRequiredSelectField('contact type')]}>
-                                <Select placeholder={preparePlaceholderSelect('contact type')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData?.[PARAM_MASTER?.VH_CONTACT_TYPE?.id]}></Select>
+                                <Select placeholder={preparePlaceholderSelect('contact type')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData['VH_CONTACT_TYPE']}></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -61,7 +61,7 @@ const AddEditForm = (props) => {
                             {/* defaultValue={[formatTime('13:00:00'), formatTime('13:00:00', 'HH:mm:ss')]} */}
                         </Col>
                     </Row>
-                    <Form.Item hidden name="id" initialValue={''}>
+                    <Form.Item hidden initialValue={''} name="id">
                         <Input />
                     </Form.Item>
                     {!formActionType?.viewMode && (

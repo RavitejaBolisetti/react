@@ -16,7 +16,15 @@ import { convertDateToCalender } from 'utils/formatDateTime';
 import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
-    const { form, formData, typeData, mnmCtcVehicleFlag, setMnmCtcVehicleFlag, isReadOnly = true, userType } = props;
+    const {
+        form,
+        formData,
+        typeData,
+        mnmCtcVehicleFlag,
+        setMnmCtcVehicleFlag,
+        isReadOnly = true,
+        userType,
+    } = props;
     const disabledProps = { disabled: isReadOnly };
 
     useEffect(() => {
