@@ -9,7 +9,7 @@ import { PageHeader } from 'pages/common/PageHeader';
 import { VehicleDetailMaster } from 'components/Sales';
 
 const VehicleDetailMasterBase = (props) => {
-    const pageTitle = 'Vechile Details';
+    const pageTitle = 'Vehicle Details';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
