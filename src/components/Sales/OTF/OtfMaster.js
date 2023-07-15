@@ -267,7 +267,9 @@ export const OtfMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
-        setShowDataLoading(true);
+        if (filterString) {
+            setShowDataLoading(true);
+        }
         setFilterString();
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
