@@ -30,7 +30,7 @@ const ViewDetailMain = (props) => {
                 <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Email ID">{checkAndSetDefaultValue(formData?.emailId, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="D.O.B">{checkAndSetDefaultValue(formData?.dob, isLoading, 'date')}</Descriptions.Item>
+                <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(formData?.dob, isLoading, 'date')}</Descriptions.Item>
             </Descriptions>
         </Card>
     );
