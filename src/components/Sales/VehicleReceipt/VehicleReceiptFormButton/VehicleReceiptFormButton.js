@@ -34,54 +34,6 @@ export const VehicleReceiptFormButton = ({ record, onCloseAction, buttonData, se
                     </Button>
                 )}
 
-                {buttonData?.transferBtn && (
-                    <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER, record })} type="primary">
-                            Transfer
-                        </Button>
-                    </Popover>
-                )}
-
-                {buttonData?.allotBtn && (
-                    <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} type="primary">
-                            Allot
-                        </Button>
-                    </Popover>
-                )}
-
-                {buttonData?.unAllot && (
-                    <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
-                            Un-Allot
-                        </Button>
-                    </Popover>
-                )}
-
-                {buttonData?.invoiceBtn && (
-                    <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.INVOICE, record })} type="primary">
-                            Invoice
-                        </Button>
-                    </Popover>
-                )}
-
-                {buttonData?.deliveryNoteBtn && (
-                    <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.DELIVERY_NOTE, record })} type="primary">
-                            Delivery Note
-                        </Button>
-                    </Popover>
-                )}
-
-                {buttonData?.cancelOtfBtn && (
-                    <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                            Cancel OTF
-                        </Button>
-                    </Popover>
-                )}
-
                 {buttonData?.nextBtn && !isLastSection && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                         Next

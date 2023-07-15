@@ -4,20 +4,19 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Input, Form, Select, DatePicker, Switch, Card } from 'antd';
+import { Row, Col, Input, Form, Select, DatePicker, Card } from 'antd';
 
 import { convertCalenderDate } from 'utils/formatDateTime';
 
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { disablePastDate } from 'utils/disableDate';
 
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, formActionType, typeData, salesConsultantLov, exchangeValue, loyaltyValue } = props;
+    const { formData } = props;
 
     return (
         <Card className={styles.drawerCardView}>
@@ -40,8 +39,8 @@ const AddEditFormMain = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.priceType} label="Supplier Invoice Date" name="priceType">
-                        <DatePicker disabled={true} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
+                    <Form.Item label="Supplier Invoice Date" name="priceType">
+                        <DatePicker disabled={true} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -50,8 +49,8 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.saleConsultant} name="saleConsultant" label="Actual Dispatch Date" rules={[validateRequiredSelectField('Sales Consultant')]}>
-                        <DatePicker disabled={true} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
+                    <Form.Item name="saleConsultant" label="Actual Dispatch Date">
+                        <DatePicker disabled={true} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -80,8 +79,8 @@ const AddEditFormMain = (props) => {
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.mitraType} name="mitraType" label="GEO Fencing Date & Time">
-                        <DatePicker disabled={true} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
+                    <Form.Item name="mitraType" label="GEO Fencing Date & Time">
+                        <DatePicker disabled={true} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
             </Row>

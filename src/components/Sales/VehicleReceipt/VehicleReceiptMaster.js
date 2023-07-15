@@ -102,12 +102,7 @@ export const VehicleReceiptMasterBase = (props) => {
         closeBtn: false,
         cancelBtn: false,
         formBtnActive: false,
-        transferBtn: false,
-        allotBtn: false,
-        unAllotBtn: false,
-        invoiceBtn: false,
         deliveryNote: false,
-        cancelOtfBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
