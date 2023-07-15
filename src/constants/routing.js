@@ -23,6 +23,7 @@ export const ROUTING_COMMON_GEO = ROUTING_COMMON.concat('geo/');
 
 export const ROUTING_COMMON_GEO_COUNTRY = ROUTING_COMMON_GEO.concat('country');
 export const ROUTING_COMMON_GEO_STATE = ROUTING_COMMON_GEO.concat('state');
+export const ROUTING_COMMON_GEO_STATE_CRUD = ROUTING_COMMON_GEO.concat('state-crud');
 export const ROUTING_COMMON_GEO_DISTRICT = ROUTING_COMMON_GEO.concat('district');
 export const ROUTING_COMMON_GEO_CITY = ROUTING_COMMON_GEO.concat('city');
 export const ROUTING_COMMON_GEO_TEHSIL = ROUTING_COMMON_GEO.concat('tehsil');
@@ -42,7 +43,7 @@ export const ROUTING_COMMON_BRANCH_DEALER_MAPPING = ROUTING_COMMON.concat('branc
 
 export const ROUTING_COMMON_PARTY_MASTER = ROUTING_COMMON.concat('party-master');
 export const ROUTING_COMMON_LESSOR_COMPANY_MASTER = ROUTING_COMMON.concat('lessor-company-master');
-export const ROUTING_COMMON_LESSOR_COMPANY_CREATION = ROUTING_COMMON.concat('lessor-company-creation');
+export const ROUTING_COMMON_LESSOR_CUSTOMER_CREATION = ROUTING_COMMON.concat('lessor-customer-creation');
 
 export const ROUTING_COMMON_QUALIFICATION_MASTER = ROUTING_COMMON.concat('qualification-master');
 
@@ -86,7 +87,7 @@ export const ROUTING_ADMIN_USER_MANAGEMENT = ROUTING_ADMIN.concat('user-manageme
 export const ROUTING_USER_MANAGEMENT_DEALER = ROUTING_ADMIN_USER_MANAGEMENT.concat('dealer');
 export const ROUTING_USER_MANAGEMENT_MANUFACTURER = ROUTING_ADMIN_USER_MANAGEMENT.concat('manufacturer');
 export const ROUTING_OTF = ROUTING_SALES.concat('order-tracking-form');
-export const ROUTING_VECHILE_DETAILS = ROUTING_SALES.concat('vehicle-details');
+export const ROUTING_VEHICLE_DETAILS = ROUTING_SALES.concat('vehicle-details');
 
 export const ROUTING_TAX_CHARGES = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges');
 export const ROUTING_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges-category');

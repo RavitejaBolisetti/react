@@ -76,11 +76,10 @@ const ProductDetailMasterMain = (props) => {
     const { VehicleDetailsData, isVehicleLovDataLoading, VehicleLovData, resetProductLov, isVehicleLovDataLoaded, ProductHierarchyData, fetchProductLovCode, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
 
-    const [activeKey, setactiveKey] = useState([1]);
     const [formData, setformData] = useState({});
     const [optionsServiceModified, setoptionsServiceModified] = useState([]);
     const [optionsServicesMapping, setoptionsServicesMapping] = useState([]);
-    const [openAccordian, setOpenAccordian] = useState('1');
+    const [openAccordian, setOpenAccordian] = useState([]);
 
     const [tooltTipText, settooltTipText] = useState();
     const [isReadOnly, setIsReadOnly] = useState(false);
@@ -108,21 +107,11 @@ const ProductDetailMasterMain = (props) => {
         fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
     };
 
-    const onChange = (values) => {
-        const isPresent = activeKey.includes(values);
-
-        if (isPresent) {
-            const newActivekeys = [];
-
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setactiveKey(newActivekeys);
-        } else {
-            setactiveKey([...activeKey, values]);
+    const handleCollapse = (key) => {
+        if (key !== 3 && isReadOnly) {
+            setIsReadOnly(false);
         }
+        setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     useEffect(() => {
@@ -242,14 +231,13 @@ const ProductDetailMasterMain = (props) => {
             .then(() => {})
             .catch(() => {});
     };
+    
 
     const formProps = {
         ...props,
         formData,
         formActionType,
-        activeKey,
-        setactiveKey,
-        onChange,
+        onChange: handleCollapse,
         typeData,
         ProductHierarchyData: ProductHierarchyDataOptions,
         showGlobalNotification,
@@ -278,9 +266,9 @@ const ProductDetailMasterMain = (props) => {
     };
 
     const viewProps = {
-        activeKey,
-        setactiveKey,
-        onChange,
+        openAccordian,
+        setOpenAccordian,
+        onChange: handleCollapse,
         styles,
         formData,
         modelData,
@@ -288,6 +276,9 @@ const ProductDetailMasterMain = (props) => {
         settooltTipText,
         typeData,
         isLoading,
+        openAccordian,
+        setOpenAccordian,
+        optionsServiceModified,
     };
 
     return (

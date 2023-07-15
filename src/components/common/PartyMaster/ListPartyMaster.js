@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 
-import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 
 import { ListDataTable } from 'utils/ListDataTable';
@@ -66,8 +66,8 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: partyMasterDataActions.listShowLoading,
             showGlobalNotification,
 
-            listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
-            fetchPincodeDetail: geoPincodeDataActions.fetchList,
+            listPinCodeShowLoading: geoPinCodeDataActions.listShowLoading,
+            fetchPincodeDetail: geoPinCodeDataActions.fetchList,
         },
         dispatch
     ),

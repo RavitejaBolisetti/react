@@ -14,7 +14,7 @@ import { ConfigurableParameterEditingPage } from './ConfigurableParameterEditing
 import { ApplicationMasterPage } from './ApplicationMasterPage';
 import { UserManagementPage } from './UserManagementPage';
 import { UserManagementManufacturerPage } from './UserManagementManufacturer';
-import { StatePage, DistrictPage, TehsilPage, CityPage, PinCodePage } from './Geo';
+import { StateCrudPage, StatePage, DistrictPage, TehsilPage, CityPage, PinCodePage } from './Geo';
 import { DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DealerEmployeeDepartmentPage, DesignationMasterPage, RoleMasterPage } from './DealerManpower';
 import { PartyMasterPage } from './PartyMaster';
 import { CustomerMasterPage } from './CustomerMaster';
@@ -22,7 +22,7 @@ import { TermConditionDealerMasterPage } from './TermsAndConditions/DealerTermCo
 import { TermConditionManufacturerMasterPage } from './TermsAndConditions/ManufacturerTermCondition';
 import { DealerCompanyPage, DealerParentPage } from './Dealer';
 import { LessorCompanyMasterPage } from './LessorCompanyMaster';
-import { LessorCompanyCreationPage } from './LessorCompanyCreation';
+import { LessorCustomerCreationPage } from './LessorCustomerCreation';
 import { OtfReportsPage } from './OTFReports';
 
 export {
@@ -37,6 +37,7 @@ export {
     HierarchyAttributeMasterPage,
     UserManagementPage,
     UserManagementManufacturerPage,
+    StateCrudPage,
     StatePage,
     DistrictPage,
     CityPage,
@@ -50,7 +51,7 @@ export {
     RoleMasterPage,
     PartyMasterPage,
     LessorCompanyMasterPage,
-    LessorCompanyCreationPage,
+    LessorCustomerCreationPage,
     DealerCompanyPage,
     DealerParentPage,
     CustomerMasterPage,
