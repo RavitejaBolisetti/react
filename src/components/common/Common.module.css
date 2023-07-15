@@ -445,45 +445,6 @@
     color: #ffffff !important;
 }
 
-.uploadDragger :global .ant-upload-wrapper .ant-upload-drag {
-    border: 1px dashed #b5b5b5;
-    /* margin-bottom: 20px; */
-    height: auto;
-}
-
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list {
-    margin-top: 20px;
-}
-
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
-    height: 40px;
-    margin-top: 10px;
-    background-color: #e6e6e6;
-    border-radius: 6px;
-    padding: 6px 20px;
-    border: #b5b5b6 1px solid;
-    display: flex;
-    align-items: center;
-}
-
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
-    height: 40px;
-    margin-top: 20px;
-    background-color: #e6e6e6;
-    border-radius: 6px;
-    color: #0b0b0c;
-}
-
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-name,
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-icon .anticon {
-    color: black;
-}
-
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon,
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon:hover {
-    color: black;
-}
-
 .contactDivider {
     margin-bottom: 12px !important;
 }
@@ -2323,120 +2284,6 @@
     border-color: #e6e6e6 !important;
 }
 
-/* .drawerBodyRight :global .ant-upload-wrapper .ant-upload-drag {
-     border: 1px dashed #b5b5b5;
- } */
-
-.drawerBodyRight .uploadDragger :global .ant-card .ant-card-body {
-    padding: 20px;
-    background-color: #f2f2f2;
-    border-radius: 6px;
-}
-
-.drawerBodyRight .uploadDragger :global .ant-card .ant-card-body .ant-space button {
-    padding: 0;
-    position: absolute;
-    bottom: 20px;
-}
-
-.drawerBodyRight .uploadDragger :global .ant-space-horizontal .ant-avatar.ant-avatar-icon {
-    line-height: 44px !important;
-    font-size: 30px !important;
-    background-color: #70c922;
-}
-
-.drawerBodyRight .uploadDragger :global .ant-space-horizontal .ant-space-item h5 {
-    margin-top: 0;
-    margin-bottom: 0;
-    color: #0b0b0c;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 23px;
-}
-
-.drawerBodyRight .uploadDragger :global .ant-space-vertical {
-    gap: 20px !important;
-    margin-bottom: 0;
-}
-
-.drawerBodyRight .uploadDragger :global .ant-space-vertical .ant-space-horizontal {
-    gap: 10px !important;
-}
-
-.drawerBodyRight .uploadDragger :global .ant-space-horizontal .ant-space-item span.ant-typography {
-    color: #0b0b0c;
-    font-size: 12px;
-    line-height: 20px;
-}
-
-.drawerBodyRight .uploadDragger {
-    padding-top: 0px;
-    padding-bottom: 20px;
-    /* border-top: 1px solid #E6E6E6; */
-}
-
-/* .drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-drag {
-     border: 1px dashed #b5b5b5;
-     margin-bottom: 20px;
- } */
-
-/* .drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
-     height: 40px;
-     margin-top: 20px;
-     background-color: #e6e6e6;
-     border-radius: 6px;
-     padding: 6px 20px;
-     border: #b5b5b6 1px solid;
- } */
-
-.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item {
-    margin-top: 0px;
-    width: 100%;
-}
-
-.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action {
-    opacity: 1;
-}
-
-.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action:hover {
-    background-color: transparent;
-}
-
-.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item:hover {
-    background-color: transparent;
-}
-
-.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .anticon {
-    color: #ff3e5b;
-}
-
-/* .drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action.ant-btn-sm, */
-.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
-    /* height: 40px;
-     margin-top: 20px; */
-    background-color: #e6e6e6;
-    border-radius: 6px;
-    color: #0b0b0c;
-}
-
-.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
-    height: 40px;
-    margin-top: 20px;
-    background-color: #e6e6e6;
-    border-radius: 6px;
-    color: #0b0b0c;
-}
-
-.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-name,
-.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-icon .anticon {
-    color: black;
-}
-
-.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon,
-.drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .anticon:hover {
-    color: black;
-}
-
 .contactDivider {
     margin-bottom: 12px !important;
 }
@@ -2731,10 +2578,6 @@
     line-height: 20px;
 }
 
-.viewDrawerContainer .dashedBorder {
-    margin-bottom: 20px !important;
-}
-
 .viewDrawerContainer .otfcontanerBox {
     margin-bottom: 20px !important;
 }
@@ -2797,10 +2640,6 @@
     font-weight: 700;
     font-size: 16px;
     line-height: 24px;
-}
-
-.dashedBorder {
-    border: 1px dashed #b5b5b5 !important;
 }
 
 .borderRadiusSix {
