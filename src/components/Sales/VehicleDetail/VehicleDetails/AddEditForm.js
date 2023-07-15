@@ -3,40 +3,40 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Form, Select, DatePicker, Card, Input, Checkbox, Switch } from 'antd';
 
 import { convertCalenderDate } from 'utils/formatDateTime';
 
-import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
+import { validateRequiredSelectField } from 'utils/validation';
 import { disablePastDate } from 'utils/disableDate';
+import { USER_TYPE } from 'constants/userType';
+import { convertDateToCalender } from 'utils/formatDateTime';
 
 import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
-
-    
     const {
+        form,
         formData,
         typeData,
         mnmCtcVehicleFlag,
         setMnmCtcVehicleFlag,
         isReadOnly = true,
-        loginUserData: { userType = 'ADM' },
+        userType,
     } = props;
     const disabledProps = { disabled: isReadOnly };
-     
+
+    useEffect(() => {
+        if (formData) {
+            setMnmCtcVehicleFlag(formData?.mnmCtcVehicle);
+            form.setFieldsValue({ ...formData, mnfcWarrEndDate: convertDateToCalender(formData?.mnfcWarrEndDate), deliveryDate: convertDateToCalender(formData?.deliveryDate), saleDate: convertDateToCalender(formData?.saleDate), nextServiceDueDate: convertDateToCalender(formData?.nextServiceDueDate), pucExpiryDate: convertDateToCalender(formData?.pucExpiryDate), insuranceExpiryDate: convertDateToCalender(formData?.insuranceExpiryDate) });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const handleOnChange = (e) => {
-        console.log("e:", e);
-        console.log("formData-mnmCtcVehicle:", formData?.mnmCtcVehicle);        
-        if (e.target.checked) {
-            // formData.mnmCtcVehicle = true;
-            setMnmCtcVehicleFlag(true);
-        } else {
-            // formData.mnmCtcVehicle = false;
-            setMnmCtcVehicleFlag(false);
-        }
+        setMnmCtcVehicleFlag(e.target.checked);
     };
 
     return (
@@ -44,7 +44,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={convertCalenderDate(formData?.mnfcWarrEndDate, 'YYYY/MM/DD')} label="Manufacturer Warranty End Date" name="mnfcWarrEndDate">
-                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} style={{ display: 'auto', width: '100%' }}/>
+                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -54,7 +54,7 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={convertCalenderDate(formData?.saleDate, 'YYYY/MM/DD')} label="Sale Date" name="saleDate">
-                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} style={{ display: 'auto', width: '100%' }}/>
+                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -85,7 +85,7 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={convertCalenderDate(formData?.nextServiceDueDate, 'YYYY/MM/DD')} label="Next Service Due Date" name="nextServiceDueDate">
-                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} style={{ display: 'auto', width: '100%' }}/>
+                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" {...disabledProps} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
 
@@ -115,6 +115,17 @@ const AddEditFormMain = (props) => {
                         <Input maxLength={50} {...disabledProps} />
                     </Form.Item>
                 </Col>
+                {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name="taxiOrNonTaxi" label="Taxi/Non Taxi" initialValue={formData?.taxiOrNonTaxi}>
+                        <Input maxLength={50} {...disabledProps} />
+                    </Form.Item>
+                </Col> */}
+
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item initialValue={formData?.taxiOrNonTaxiKey} name="taxiOrNonTaxiKey" label="Taxi/Non Taxi">
+                        <Select placeholder="Select" showSearch allowClear options={typeData['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }} {...disabledProps} />
+                    </Form.Item>
+                </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -139,7 +150,9 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                     <Form.Item initialValue={formData?.pdiDone} valuePropName="checked" name="pdiDone">
-                        <Checkbox {...disabledProps}>PDI Done</Checkbox>
+                        <Checkbox value={true} {...disabledProps}>
+                            PDI Done
+                        </Checkbox>
                     </Form.Item>
                 </Col>
 
@@ -148,26 +161,22 @@ const AddEditFormMain = (props) => {
                         <Checkbox {...disabledProps}>Government Vehicle</Checkbox>
                     </Form.Item>
                 </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="taxiOrNonTaxi" label="Taxi/Non Taxi" initialValue={formData?.taxiOrNonTaxi}>
-                        <Input maxLength={50} {...disabledProps} />
-                    </Form.Item>
-                </Col>
+
                 <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={formData?.mnmCtcVehicle} valuePropName="checked" name="mnmCtcVehicle" label="&nbsp;">
+                    <Form.Item initialValue={formData?.mnmCtcVehicle} valuePropName="checked" name="mnmCtcVehicle">
                         <Checkbox onClick={handleOnChange}>M&M CTC Vehicle</Checkbox>
                     </Form.Item>
                 </Col>
 
-                {(mnmCtcVehicleFlag || formData?.mnmCtcVehicle && (
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.manageBy} name="manageBy" label="Managed By">
-                                <Select placeholder="Select" showSearch allowClear options={typeData['CTC_TYP']} fieldNames={{ label: 'value', value: 'key' }} />
-                            </Form.Item>
-                        </Col>
-                    ))}
+                {mnmCtcVehicleFlag && (
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item initialValue={formData?.manageBy} rules={[validateRequiredSelectField('managed by')]} name="manageBy" label="Managed By">
+                            <Select placeholder="Select" showSearch allowClear options={typeData['CTC_TYP']} fieldNames={{ label: 'value', value: 'key' }} />
+                        </Form.Item>
+                    </Col>
+                )}
             </Row>
-            {userType === 'ADM' && (
+            {userType === USER_TYPE?.ADMIN?.key && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <h4 className={styles.customHeading}> Below Fields to be shown for Mahindra users only</h4>

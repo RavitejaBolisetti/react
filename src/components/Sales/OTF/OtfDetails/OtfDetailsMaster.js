@@ -70,6 +70,7 @@ const OtfDetailsMasterBase = (props) => {
     const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
+
     useEffect(() => {
         if (otfData?.exchange) {
             setexchangeValue(false);
@@ -81,6 +82,7 @@ const OtfDetailsMasterBase = (props) => {
             setexchangeValue(false);
             setloyaltyValue(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [otfData]);
 
     const onErrorAction = (message) => {
@@ -134,7 +136,7 @@ const OtfDetailsMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            // showGlobalNotification({ message });
+            showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -177,6 +179,7 @@ const OtfDetailsMasterBase = (props) => {
         isLoading,
         salesConsultantLov,
     };
+
     const handleFieldsChange = () => {
         const { loyaltyScheme, exchange } = form.getFieldsValue();
         if (loyaltyScheme) {

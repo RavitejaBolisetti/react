@@ -11,7 +11,7 @@ import styles from './withDrawer.module.css';
 export const withDrawer =
     (InputComponent, { title = 'default title', width = 520, footer }) =>
     (props) => {
-        const { onCloseAction, isVisible, titleOverride, onOk = () => {} } = props;
+        const { onCloseAction, isVisible, isChangeHistoryContainer = false, titleOverride, onOk = () => {} } = props;
         useEffect(() => {
             if (isVisible) {
                 document.body.style.overflow = 'hidden';
@@ -21,7 +21,7 @@ export const withDrawer =
         }, [isVisible]);
 
         return (
-            <Drawer title={titleOverride || title} onOk={onOk} onClose={onCloseAction} width={width} open={isVisible} className={width === '90%' ? styles.bigDrawerStyle : styles.myDrawerStyle} keyboard={false} maskClosable={false}>
+            <Drawer title={titleOverride || title} onOk={onOk} onClose={onCloseAction} width={width} open={isVisible} className={width === '90%' ? (isChangeHistoryContainer ? styles.changeHistoryWrapper : styles.bigDrawerStyle) : styles.myDrawerStyle} keyboard={false} maskClosable={false}>
                 {isVisible && <InputComponent {...props} />}
             </Drawer>
         );

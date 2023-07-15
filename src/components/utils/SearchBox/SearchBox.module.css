@@ -17,9 +17,9 @@
     width: 410px;
 }
 
-.selectSearchBg :global .anticon-close-circle {
+/* .selectSearchBg :global .anticon-close-circle {
     margin-right: 12px;
-}
+} */
 
 .selectSearchBg :global .ant-form-vertical {
     height: 26px;
@@ -34,9 +34,10 @@
 }
 
 .selectSearchBg .headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper {
-    height: 26px !important;
+    height: 26px;
     padding: 4px 12px;
     border-inline-end-width: 0px;
+    border: none;
 }
 
 .selectSearchBg .headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper .ant-input {
@@ -50,7 +51,7 @@
     margin-top: 4px;
 }
 
-.selectSearchBg :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.selectSearchBg :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     margin-top: -4px;
     background-color: #ffffff;
 }
@@ -74,6 +75,7 @@
     padding: 5px 10px;
     border-radius: 5px;
 }
+
 .selectSearchBg :global .ant-form-vertical .ant-form-item:first-child .ant-form-item-explain .ant-form-item-explain-error:after {
     content: '';
     position: absolute;
@@ -103,6 +105,7 @@
     padding: 5px 10px;
     border-radius: 5px;
 }
+
 .selectSearchBg :global .ant-form-vertical .ant-form-item:last-child .ant-form-item-explain .ant-form-item-explain-error:after {
     content: '';
     position: absolute;
@@ -135,6 +138,7 @@
 
 .selectSearchBg :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     height: 26px;
+    background-color: #e6e6e6;
     /* margin-right: 20px; */
 }
 
@@ -146,7 +150,7 @@
     min-height: 26px;
 }
 
-.selectSearchBg .headerSelectField :global .ant-select-selector {
+.selectSearchBg .headerSelectField :global .ant-select-clear {
     background: #e6e6e6;
 }
 
@@ -159,8 +163,10 @@
     line-height: 24px;
 }
 
+
 .selectSearchBg .headerSearchField :global .ant-input-group {
     border: none;
+    height: 29px;
 }
 
 .selectSearchBg .headerSearchField :global .ant-input-group .ant-input-group-addon button {

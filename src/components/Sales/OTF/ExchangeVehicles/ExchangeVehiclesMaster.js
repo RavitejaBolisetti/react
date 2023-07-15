@@ -16,14 +16,13 @@ import { schemeDataActions } from 'store/actions/data/otf/exchangeVehicle';
 import { vehicleMakeDetailsDataActions } from 'store/actions/data/vehicle/makeDetails';
 import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
 import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
-
-import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'components/common/Common.module.css';
 
@@ -119,7 +118,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ExchangeVehiclesBase = (props) => {
-    const { exchangeData, isLoading, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, section } = props;
+    const { exchangeData, isLoading, fetchList, userId, listShowLoading, showGlobalNotification, section } = props;
     const { typeData } = props;
     const { fetchMakeLovList, listMakeShowLoading, fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isMakeDataLoaded, isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
@@ -145,7 +144,7 @@ const ExchangeVehiclesBase = (props) => {
     ];
 
     const errorAction = (message) => {
-        // showGlobalNotification(message);
+        showGlobalNotification({ message });
     };
 
     const onSuccessAction = (res) => {
@@ -181,21 +180,19 @@ const ExchangeVehiclesBase = (props) => {
     }, [userId, selectedOrderId]);
 
     const onErrorAction = (message) => {
-        // showGlobalNotification(message);
+        showGlobalNotification({ message });
     };
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId };
-        delete data.hypothicatedTo;
-        delete data.usage;
-        delete data.schemeName;
-        delete data.relationship;
-        delete data.monthOfRegistration;
-        delete data.yearOfRegistration;
+        const { customerName } = values;
+        if (!customerName) {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
+            return;
+        }
+        const data = { ...values, id: exchangeData?.id || '', otfNumber: selectedOrderId };
 
         const onSuccess = (res) => {
             form.resetFields();
-            // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
@@ -262,6 +259,7 @@ const ExchangeVehiclesBase = (props) => {
             userId,
             onSuccessAction: (res) => {
                 res?.data && res?.data?.customerMasterDetails && res?.data?.customerMasterDetails[0] && setFormData(res?.data?.customerMasterDetails[0] ?? []);
+                !res?.data?.customerMasterDetails && showGlobalNotification({ message: res?.responseMessage });
             },
             onErrorAction,
         });
