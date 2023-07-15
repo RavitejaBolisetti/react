@@ -91,7 +91,7 @@ const AddEditFormMain = (props) => {
             <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={'Tax_Type'} name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
+                        <Form.Item initialValue={'Tax_Type'} name="attributeTypeCode" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
                             <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} disabled={formData?.id || isReadOnly}>
                                 {ATTRIBUTE_TYPE?.map((item) => (
                                     <Option key={'key' + item?.key} value={item?.key}>
@@ -103,21 +103,22 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
-                        <Form.Item initialValue={treeCodeId} label="Parent" name="manufactureOrgParntId">
+                        <Form.Item initialValue={treeCodeId} label="Parent" name="parentCode">
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                     </Col>
+                    
                 </Row>
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={null} label="Tax/Charge Type Code" name="Tax/Charge_Type_Code" rules={[validateRequiredInputField('Tax/Charge Type Code')]}>
+                        <Form.Item initialValue={null} label="Tax/Charge Type Code" name="TaxChargesTypeCode" rules={[validateRequiredInputField('Tax/Charge Type Code')]}>
                             <Input maxLength={6} placeholder={preparePlaceholderText('Tax/Charge Type Code')} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={null} label="Tax/Charge Type Descrption" name="Tax/Charge_Type_Descrption" rules={[validateRequiredInputField('Tax/Charge Type Descrption')]}>
+                        <Form.Item initialValue={null} label="Tax/Charge Type Descrption" name="TaxChargesTypeDescrption" rules={[validateRequiredInputField('Tax/Charge Type Descrption')]}>
                             <TextArea className={styles.inputBox} placeholder={preparePlaceholderText('Tax/Charge Type Descrption')} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
@@ -127,7 +128,7 @@ const AddEditFormMain = (props) => {
                     <>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item label="Calculation Type" name="Calculation_Type" rules={[validateRequiredInputField('Calculation_Type')]}>
+                                <Form.Item label="Calculation Type" name="calculationType" rules={[validateRequiredInputField('Calculation_Type')]}>
                                     <Select onChange={calTypeFun} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Calculation Type')}>
                                         {CALCULTION_TYPE?.map((item) => (
                                             <Option key={item?.key} value={item?.key}>
@@ -141,13 +142,13 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             {calType === CALCULTION_TYPE[1]?.key ? (
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item initialValue={null} label="Percentage" name="Percentage" rules={[validateRequiredInputField('Percentage'), valueOfPer('Percentage')]}>
+                                    <Form.Item initialValue={null} label="Percentage" name="percentage" rules={[validateRequiredInputField('Percentage'), valueOfPer('Percentage')]}>
                                         <InputNumber placeholder={preparePlaceholderText('Percentage')} className={styles.inputBox} type="number" />
                                     </Form.Item>
                                 </Col>
                             ) : calType === CALCULTION_TYPE[0]?.key ? (
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item initialValue={null} label="Rate" name="Rate" rules={[validateRequiredInputField('Rate'), validateNumberWithTwoDecimalPlaces('Rate')]}>
+                                    <Form.Item initialValue={null} label="Rate" name="rate" rules={[validateRequiredInputField('Rate'), validateNumberWithTwoDecimalPlaces('Rate')]}>
                                         <InputNumber placeholder={preparePlaceholderText('Rate')} className={styles.inputBox} type="number" />
                                     </Form.Item>
                                 </Col>
@@ -158,7 +159,7 @@ const AddEditFormMain = (props) => {
                     <>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item name="documentDescription" label="Document Description" rules={[validateRequiredSelectField('Document Description')]}>
+                                <Form.Item name="documentTypeCode" label="Document Description" rules={[validateRequiredSelectField('Document Description')]}>
                                     <Select loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Document Description')} disabled={formData?.id || isReadOnly} showSearch allowClear>
                                         {documentDescription?.map((item) => (
                                             <Option key={item?.documentCode} value={item?.documentCode}>
@@ -171,7 +172,7 @@ const AddEditFormMain = (props) => {
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item name="accountHead" label="Financial Account Head" rules={[validateRequiredSelectField('Financial Account Head')]}>
+                                <Form.Item name="financialAccountHeadCode" label="Financial Account Head" rules={[validateRequiredSelectField('Financial Account Head')]}>
                                     <Select loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Financial Account Head')} disabled={formData?.id || isReadOnly}>
                                         {financialAccount?.map((item) => (
                                             <Option key={item?.id} value={item?.key}>
