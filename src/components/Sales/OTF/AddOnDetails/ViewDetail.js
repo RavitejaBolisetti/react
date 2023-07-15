@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Space, Collapse, Typography, Row, Col } from 'antd';
+import { Space, Collapse, Typography, Row, Col, Divider } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import AccessoriesInformationCard from './ViewDetails/AccessoriesInformationCard';
@@ -31,30 +31,32 @@ const ViewDetailMain = (props) => {
                     <Space className={styles.ViewCardCollapse} style={{ display: 'flex' }} direction="vertical" size="large">
                         <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('ci')} expandIconPosition="end">
                             <Panel header="Accessories Information" key={'ci'}>
+                                <Divider />
+
                                 {formData?.partDetailsResponses?.map((element, i) => {
                                     return (
                                         <div className={styles.accessInfo}>
-                                        <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end" className={styles.innerCollapseBorder}>
-                                            <Panel
-                                                header={
-                                                    <Row justify="space-between">
-                                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                                            <Space >
-                                                                <Text className={styles.headText}> {`${element?.partDescription ? element?.partDescription : 'NA'} `}</Text>
-                                                                <Text className={styles.headText}> {`|`}</Text>
-                                                                <Text className={styles.headText}> {`${element?.partNumber ? element?.partNumber : 'NA'} `}</Text>
-                                                            </Space>
-                                                            <Row>
-                                                                <Text className={styles.subSection}> {`${element?.partNumber ? element?.partNumber : 'NA'} `}</Text>
-                                                            </Row>
-                                                        </Col>
-                                                    </Row>
-                                                }
-                                                key={i}
-                                            >
-                                                <AccessoriesInformationCard formData={element} />
-                                            </Panel>
-                                        </Collapse>
+                                            <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end" className={styles.innerCollapseBorder}>
+                                                <Panel
+                                                    header={
+                                                        <Row justify="space-between">
+                                                            <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                                                <Space>
+                                                                    <Text className={styles.headText}> {`${element?.partDescription ? element?.partDescription : 'NA'} `}</Text>
+                                                                    <Text className={styles.headText}> {`|`}</Text>
+                                                                    <Text className={styles.headText}> {`${element?.partNumber ? element?.partNumber : 'NA'} `}</Text>
+                                                                </Space>
+                                                                <Row>
+                                                                    <Text className={styles.subSection}> {`${element?.partNumber ? element?.partNumber : 'NA'} `}</Text>
+                                                                </Row>
+                                                            </Col>
+                                                        </Row>
+                                                    }
+                                                    key={i}
+                                                >
+                                                    <AccessoriesInformationCard formData={element} />
+                                                </Panel>
+                                            </Collapse>
                                         </div>
                                     );
                                 })}

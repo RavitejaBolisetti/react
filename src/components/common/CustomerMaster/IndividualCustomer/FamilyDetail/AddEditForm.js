@@ -45,10 +45,6 @@ const AddEditFormMain = (props) => {
         form.resetFields();
         setShowForm(true);
         setCustomerType('Yes');
-        let id = Math.floor(Math.random() * 100000000 + 1);
-        form.setFieldsValue({
-            editedId: id,
-        });
     };
 
     const onEdit = (values, index) => {
