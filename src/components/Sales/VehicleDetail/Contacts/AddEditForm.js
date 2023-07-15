@@ -7,10 +7,8 @@
 import { Button, Form, Row, Col, Space, Select, Input, TimePicker } from 'antd';
 import { validateLettersWithWhitespaces, validateRequiredEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { formatTime } from 'utils/formatDateTime';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
-import styles from '../../../common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 
 const AddEditForm = (props) => {
     const { onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, formActionType, handleFormValueChange, setIsAdding } = props;
@@ -36,7 +34,7 @@ const AddEditForm = (props) => {
                                 <Select mode="multiple" placeholder={preparePlaceholderSelect('preferred days for contact')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData['VH_CONTACT_DAYS']}></Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8} className={style.inputWrapper}>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8} className={styles.inputWrapper}>
                             <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
                                 <Input maxLength={10} placeholder={preparePlaceholderText('mobile number')} allowClear size="small" />
                             </Form.Item>
@@ -57,8 +55,6 @@ const AddEditForm = (props) => {
                             <Form.Item label="Preferred Contact Time" name={'preferredContactTime'} rules={[validateRequiredInputField('contact time')]}>
                                 <TimePicker.RangePicker use12Hours size="small" format="h:mm A" />
                             </Form.Item>
-                            {/* preferredContactTimeFrom preferredContactTimeTo */}
-                            {/* defaultValue={[formatTime('13:00:00'), formatTime('13:00:00', 'HH:mm:ss')]} */}
                         </Col>
                     </Row>
                     <Form.Item hidden initialValue={''} name="id">
