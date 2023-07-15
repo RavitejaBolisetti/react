@@ -693,7 +693,6 @@
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
 }
-
 .accordianContainer :global .ant-input-group:hover {
     border: 1px solid #0b0b0c;
 }
