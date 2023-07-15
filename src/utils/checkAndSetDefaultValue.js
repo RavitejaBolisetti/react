@@ -10,14 +10,14 @@ import { DATA_TYPE } from 'constants/dataType';
 
 export const checkAndSetDefaultValue = (value, isLoading, type) => {
     if (isLoading) return <InputSkeleton width={'100px'} height={20} theme={'card'} />;
-    
+
     switch (type) {
         case DATA_TYPE?.BOOL?.id:
             return value ? 'Yes' : 'No';
         case DATA_TYPE?.DATE?.id:
-            return value ? convertDate(value, 'DD MMM YYYY') : 'NA';
+            return value ? convertDate(value, 'DD MMM YYYY') : '-';
         default:
-            return value || 'NA';
+            return value || '-';
     }
 };
 

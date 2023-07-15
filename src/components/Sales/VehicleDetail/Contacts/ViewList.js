@@ -3,20 +3,13 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-/*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
- *   All rights reserved.
- *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
- */
 import React, { useState } from 'react';
-import { Collapse, Space, Typography, Row, Col, Form, Checkbox, Divider, Button } from 'antd';
+import { Collapse, Typography, Row, Col, Form, Divider, Button } from 'antd';
 import { FiEdit } from 'react-icons/fi';
-
-import moment from 'moment';
-import { LANGUAGE_EN } from 'language/en';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { getNameFromKey } from 'utils/checkAndSetDefaultValue';
+import { formatTime } from 'utils/formatDateTime';
 
 import { ViewContactDetail } from './ViewContactDetail';
 
@@ -24,8 +17,8 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewList = (props) => {
-    const { styles, contactData, deleteContactHandeler, timeData, setTimeData, forceUpdate, setAllowedTimingSave, showGlobalNotification, setEditingData, typeData } = props;
-    const { isAdding, setShowAddEditForm, showAddEditForm, setContactData, onFinish, form, contactform, isEditing, setIsEditing, formActionType } = props;
+    const { styles, contactData, deleteContactHandeler, timeData, setTimeData, forceUpdate, setAllowedTimingSave, setEditingData, typeData } = props;
+    const { isAdding, setShowAddEditForm, showAddEditForm, setContactData, contactform, isEditing, setIsEditing, formActionType } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
     const disableProp = { disabled: formActionType?.viewMode };
@@ -36,7 +29,8 @@ const ViewList = (props) => {
         setOpenAccordian(i);
         setIsEditing(true);
         setEditingData(data);
-        contactform.setFieldsValue(data);
+        // contactform.setFieldsValue(data);
+        contactform.setFieldsValue({ ...data, preferredContactTime: [formatTime(data?.preferredContactTimeFrom), formatTime(data?.preferredContactTimeTo)] });
     };
 
     const onTimingFormFinish = (values) => {

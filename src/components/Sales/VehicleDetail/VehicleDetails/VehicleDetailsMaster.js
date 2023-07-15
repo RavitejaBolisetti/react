@@ -58,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const VechileDetailsMasterBase = (props) => {
+const VehicleDetailsMasterBase = (props) => {
     const { typeData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading, vehicleDetails } = props;
     const { form, selectedRecordId, formActionType, handleFormValueChange, salesConsultantLov, NEXT_ACTION, handleButtonClick } = props;
@@ -185,4 +185,4 @@ const VechileDetailsMasterBase = (props) => {
     );
 };
 
-export const VehicleDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(VechileDetailsMasterBase);
+export const VehicleDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleDetailsMasterBase);
