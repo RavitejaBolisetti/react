@@ -13,7 +13,7 @@ const { Option } = Select;
 const { Search } = Input;
 
 const SearchBox = (props) => {
-    const { searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange } = props;
+    const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -46,7 +46,7 @@ const SearchBox = (props) => {
     const selectProps = {
         optionFilterProp: 'children',
         allowClear: true,
-        className: styles.headerSelectField,
+        className: selectWide ? styles.headerSelectFieldWide : styles.headerSelectField,
     };
     return (
         <div className={styles.selectSearchBg}>
@@ -62,7 +62,7 @@ const SearchBox = (props) => {
                 </Form.Item>
 
                 <Form.Item {...searchParamRule} name="searchParam" rules={[validateRequiredInputField('search parameter')]} validateTrigger={['onChange', 'onSearch']}>
-                    <Search placeholder="Search" value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={handleSearchParamSearch} className={styles.headerSearchField} />
+                    <Search placeholder="Search" value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={handleSearchParamSearch} className={selectWide ? styles.headerSearchFieldWide : styles.headerSearchField} />
                 </Form.Item>
             </Form>
         </div>

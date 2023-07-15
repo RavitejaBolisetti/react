@@ -41,6 +41,7 @@ const AddEditFormMain = (props) => {
         filterString,
         optionType: optionType,
         setFilterString,
+        selectWide: true,
     };
 
     return (
@@ -51,15 +52,15 @@ const AddEditFormMain = (props) => {
                 </Col>
             </Row>
             <Row gutter={20} className={styles.marT20}>
-                {(filterString?.searchType === 'vehicleRegistrationNumber' || formData?.length === 1) && (
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
-                        <Form.Item name="vehicleRegistrationNumber" label="Vehicle Registration Number" initialValue={formData?.mobileNumber}>
-                            <Input disabled={true} maxLength={6} placeholder={preparePlaceholderText('Vehicle Registration Number')} />
-                        </Form.Item>
-                    </Col>
-                )}
+                {/* {(filterString?.searchType === 'vehicleRegistrationNumber' || formData?.length === 1) && ( */}
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
+                    <Form.Item name="vehicleRegistrationNumber" label="Vehicle Registration Number" initialValue={formData?.vehicleRegistrationNumber}>
+                        <Input disabled={true} maxLength={30} placeholder={preparePlaceholderText('Vehicle Registration Number')} />
+                    </Form.Item>
+                </Col>
+                {/* )} */}
 
-                {filterString?.searchType !== 'vehicleRegistrationNumber' && vehicleRegNum?.length >= 1 && (
+                {/* {filterString?.searchType !== 'vehicleRegistrationNumber' && vehicleRegNum?.length >= 1 && (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                         <Form.Item name="vehicleRegistrationNumber" label="Vehicle Registration Number" initialValue={formData?.referralDetails[0].vehicleRegistrationNumber}>
                             <Select placeholder="Select Parameter" onChange={getReferralDetail}>
@@ -71,7 +72,7 @@ const AddEditFormMain = (props) => {
                             </Select>
                         </Form.Item>
                     </Col>
-                )}
+                )} */}
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="chassisNumber" label="Chassis Number" initialValue={formData?.chassisNumber}>
@@ -109,7 +110,7 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="dateOfBirth" label="Date of Birth">
-                        <DatePicker disabled={false} format="YYYY-MM-DD" placeholder={preparePlaceholderSelect('Date of Birth')} style={{ width: '250px' }} />
+                        <DatePicker disabled={true} format="YYYY-MM-DD" placeholder={preparePlaceholderSelect('Date of Birth')} style={{ width: '250px' }} />
                     </Form.Item>
                 </Col>
             </Row>
