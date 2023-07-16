@@ -215,3 +215,11 @@
     border-color: transparent;
     box-shadow: none;
 }
+
+.selectSearchBg :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector .ant-select-selection-placeholder {
+    line-height: 23px !important;
+}
+
+.selectSearchBg :global .ant-select-single .ant-select-selector .ant-select-selection-item {
+    line-height: 26px !important;
+}

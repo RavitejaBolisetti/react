@@ -110,7 +110,7 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="dateOfBirth" label="Date of Birth">
-                        <DatePicker disabled={true} format="YYYY-MM-DD" placeholder={preparePlaceholderSelect('Date of Birth')} style={{ width: '250px' }} />
+                        <DatePicker disabled={true} format="YYYY-MM-DD" placeholder={preparePlaceholderText('Date of Birth')} style={{ width: '250px' }} />
                     </Form.Item>
                 </Col>
             </Row>
