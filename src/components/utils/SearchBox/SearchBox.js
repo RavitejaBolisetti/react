@@ -13,7 +13,7 @@ const { Option } = Select;
 const { Search } = Input;
 
 const SearchBox = (props) => {
-    const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, dee } = props;
+    const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -48,7 +48,6 @@ const SearchBox = (props) => {
         allowClear: true,
         className: selectWide ? styles.headerSelectFieldWide : styles.headerSelectField,
     };
-
     return (
         <div className={styles.selectSearchBg}>
             <Form onKeyPress={onKeyPressHandler} form={searchForm} layout="vertical" autoComplete="off">
