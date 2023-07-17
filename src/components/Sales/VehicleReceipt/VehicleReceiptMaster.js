@@ -15,7 +15,7 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 
 import { VehicleReceiptMainConatiner } from './VehicleReceiptMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
-import { OTF_STATUS } from 'constants/OTFStatus';
+import { VEHICLE_RECEIPT_STATUS } from 'constants/VehicleReceiptStatus';
 import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -43,7 +43,7 @@ const mapStateToProps = (state) => {
         typeData,
         isDataLoaded,
         data: data?.otfDetails,
-        otfStatusList: Object.values(OTF_STATUS),
+        vehicleReceiptStatusList: Object.values(VEHICLE_RECEIPT_STATUS),
         otfData,
         isLoading,
         moduleTitle,
@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleReceiptMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
     const { typeData, moduleTitle } = props;
-    const { filterString, setFilterString, otfStatusList } = props;
+    const { filterString, setFilterString, vehicleReceiptStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const [listFilterForm] = Form.useForm();
@@ -162,7 +162,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 key: 'otfStatus',
                 title: 'OTF Status',
                 value: filterString?.otfStatus,
-                name: otfStatusList?.find((i) => i?.key === filterString?.otfStatus)?.desc,
+                name: vehicleReceiptStatusList?.find((i) => i?.key === filterString?.otfStatus)?.desc,
                 canRemove: true,
                 filter: true,
             },
@@ -348,7 +348,7 @@ export const VehicleReceiptMasterBase = (props) => {
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
-        otfStatusList,
+        vehicleReceiptStatusList,
         advanceFilter: true,
         otfFilter: true,
         filterString,
@@ -379,7 +379,7 @@ export const VehicleReceiptMasterBase = (props) => {
         setFilterString,
         advanceFilterForm,
         setAdvanceSearchVisible,
-        otfStatusList,
+        vehicleReceiptStatusList,
         typeData,
         onFinishSearch,
     };
