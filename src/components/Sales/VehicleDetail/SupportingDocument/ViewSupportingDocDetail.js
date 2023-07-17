@@ -20,7 +20,7 @@ export const ViewSupportingDocDetail = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             {documentData?.supportingDocuments?.length > 0 ? (
-                <Card>
+                <div className={styles.marT20}>
                     {documentData?.supportingDocuments?.map((uploadData) => {
                         return (
                             <Card
@@ -36,7 +36,7 @@ export const ViewSupportingDocDetail = (props) => {
                             ></Card>
                         );
                     })}
-                </Card>
+                </div>
             ) : (
                 // viewMode &&
                 <div className={styles.viewNoDataFound}>No Supporting Document Available</div>

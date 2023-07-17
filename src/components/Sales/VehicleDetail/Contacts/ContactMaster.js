@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ContactMasterMain = (props) => {
-    const { form, section, userId, searchType, vehicleContactData, listShowLoading, showGlobalNotification, typeData } = props;
+    const { form, section, userId, searchType, vehicleContactData, resetData, listShowLoading, showGlobalNotification, typeData } = props;
     const { isContactDataLoading, selectedRecordId, fetchList, saveData } = props;
     const { buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
@@ -84,6 +84,13 @@ const ContactMasterMain = (props) => {
             name: 'vin',
         },
     ];
+
+    useEffect(() => {
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (selectedRecordId && userId) {

@@ -335,7 +335,7 @@ const AddEditFormMain = (props) => {
                                 {formData?.customerFormDocId && (
                                     <>
                                         <div className={styles.viewDrawerContainer}>
-                                            <Card>
+                                            <div className={styles.marT20}>
                                                 <Card
                                                     className={styles.viewDocumentStrip}
                                                     key={viewDocument?.fileName}
@@ -347,7 +347,7 @@ const AddEditFormMain = (props) => {
                                                         </>
                                                     }
                                                 ></Card>
-                                            </Card>
+                                            </div>
                                         </div>
                                     </>
                                 )}
