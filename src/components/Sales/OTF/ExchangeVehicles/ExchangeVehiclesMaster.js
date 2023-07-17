@@ -141,7 +141,7 @@ const ExchangeVehiclesBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exchangeData, isDataLoaded]);
-    const makeExtraParams = ({ key, title, value, name }) => {
+    const makeExtraParams = (key, title, value, name) => {
         const extraParams = [
             {
                 key: key,
@@ -161,7 +161,7 @@ const ExchangeVehiclesBase = (props) => {
         },
     ];
 
-    const errorAction = (message) => {
+    const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
 
@@ -172,17 +172,19 @@ const ExchangeVehiclesBase = (props) => {
     useEffect(() => {
         if (isModelDataLoaded && modelData) {
             setfilteredModelData(modelData);
-            resetModel();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [modelData]);
+    useEffect(() => {
         if (isVariantDataLoaded && variantData) {
             setfilteredVariantData(variantData);
-            resetVariant();
         }
-    }, [isModelDataLoaded, variantData, modelData, isVariantDataLoaded]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [variantData]);
 
     useEffect(() => {
         if (userId && selectedOrderId) {
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
+            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
             fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId });
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, userId });
             fetchMakeLovList({ setIsLoading: listMakeShowLoading, userId });
@@ -193,9 +195,6 @@ const ExchangeVehiclesBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
 
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-    };
     const handleFilterChange = (name, value, selectobj) => {
         if (!value) {
             switch (name) {
@@ -227,10 +226,18 @@ const ExchangeVehiclesBase = (props) => {
             }
             return;
         } else if (name === 'make') {
-            // setfilteredModelData(modelData?.filter((element, index) => element?.parentKey === value));
+            setfilteredModelData();
+            setfilteredVariantData();
+            form.setFieldsValue({
+                modelGroup: undefined,
+                variant: undefined,
+            });
             fetchModelLovList({ setIsLoading: listMakeShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });
         } else if (name === 'modelGroup') {
-            // setfilteredVariantData(variantData?.filter((element, index) => element?.parentKey === value));
+            form.setFieldsValue({
+                variant: undefined,
+            });
+            setfilteredVariantData();
             fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('model', 'model', value, 'model') });
         }
     };
@@ -244,7 +251,7 @@ const ExchangeVehiclesBase = (props) => {
 
         const onSuccess = (res) => {
             form.resetFields();
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
+            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
