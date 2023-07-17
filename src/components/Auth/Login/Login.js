@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
         notification,
         isUnauthenticated: authApiCall.isUnauthenticated,
         isLoggedIn: authApiCall.isLoggedIn,
-        isLoading: state.authPages.LoginPage.isLoading,
+        isLoading: state.authPages?.LoginPage.isLoading,
         data: authApiCall.data,
         passwordStatus: authApiCall.passwordStatus,
         authData: authApiCall.authData,
