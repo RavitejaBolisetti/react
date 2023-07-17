@@ -48,7 +48,7 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                        <Collapse expandIcon={expandIcon} collapsible='icon' activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
+                        <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
                             <Panel header="Booking Customer" key="1">
                                 <Descriptions {...viewProps}>
                                     <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData.bookingCustomer?.customerId, isLoading)}</Descriptions.Item>
@@ -72,7 +72,7 @@ const ViewDetailMain = (props) => {
                                 </Descriptions>
                             </Panel>
                         </Collapse>
-                        <Collapse expandIcon={expandIcon} collapsible='icon' activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
+                        <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
                             <Panel header="Billing Customer" key="2">
                                 {/* <Checkbox>Same as Booking Customer</Checkbox> */}
                                 <Descriptions {...viewProps}>
