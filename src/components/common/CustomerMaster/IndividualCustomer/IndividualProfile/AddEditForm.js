@@ -124,6 +124,7 @@ const AddEditFormMain = (props) => {
 
     const uploadConsentProps = {
         multiple: false,
+        maxCount: 1,
         accept: 'image/png, image/jpeg, application/pdf',
         beforeUpload: (file) => {
             const isAccepted = file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'application/pdf';

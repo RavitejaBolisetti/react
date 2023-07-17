@@ -177,7 +177,7 @@ export const OtfMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 1000,
+                value: 100,
                 canRemove: true,
                 filter: false,
             },

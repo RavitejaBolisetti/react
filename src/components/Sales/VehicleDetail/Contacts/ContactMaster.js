@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { vehicleContactDataActions } from 'store/actions/data/vehicle/contacts';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { CustomerFormButton } from 'components/common/CustomerMaster/CustomerFormButton/CustomerFormButton';
+import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 import AddEditForm from './AddEditForm';
 import ViewList from './ViewList';
 
@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ContactMasterMain = (props) => {
-    const { form, section, userId, searchType, vehicleContactData, listShowLoading, showGlobalNotification, typeData } = props;
+    const { form, section, userId, searchType, vehicleContactData, resetData, listShowLoading, showGlobalNotification, typeData } = props;
     const { isContactDataLoading, selectedRecordId, fetchList, saveData } = props;
     const { buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
@@ -84,6 +84,13 @@ const ContactMasterMain = (props) => {
             name: 'vin',
         },
     ];
+
+    useEffect(() => {
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (selectedRecordId && userId) {
@@ -266,7 +273,7 @@ const ContactMasterMain = (props) => {
                 </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <CustomerFormButton {...props} />
+                        <VehicleDetailFormButton {...props} />
                     </Col>
                 </Row>
             </Form>
