@@ -15,22 +15,22 @@ export const tableColumn = (props) => {
             title: 'Item',
             dataIndex: 'serviceName',
             width: '20%',
-            render: (text, record, index) => renderFormItems({ dataIndex: 'serviceName', ...props, Index: index, text: text }),
+            render: (text, record, index) => (viewMode ? text : renderFormItems({ dataIndex: 'serviceName', ...props, Index: index, text: text })),
         },
 
         {
             title: 'Make ',
             dataIndex: 'make',
             width: '20%',
-            render: (text, record, index) => renderFormItems({ dataIndex: 'make', ...props, Index: index, text: text }),
+            render: (text, record, index) =>(viewMode ? text : renderFormItems({ dataIndex: 'make', ...props, Index: index, text: text })),
         },
         {
             title: 'Serial No. ',
             dataIndex: 'amount',
             width: '20%',
-            render: (text, record, index) => renderFormItems({ dataIndex: 'amount', ...props, Index: index, text: text }),
+            render: (text, record, index) => (viewMode ? text : renderFormItems({ dataIndex: 'amount', ...props, Index: index, text: text })),
         },
-        !viewMode && {
+        {
             title: 'Action',
             dataIndex: 'Action',
             key: 'Action',
@@ -41,8 +41,8 @@ export const tableColumn = (props) => {
                     <>
                         {index !== identification ? (
                             <>
-                                <Button disabled={isEditing} data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" icon={<FiEdit />} onClick={(e) => handleEdit({ record, index })} />
-                                <Button disabled={isEditing} data-testid="edit" className={styles.tableIcons} aria-label="fa-trash" icon={<FiTrash />} onClick={(e) => handleDelete({ record, index })} />
+                                <Button disabled={isEditing || viewMode} data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" icon={<FiEdit />} onClick={(e) => handleEdit({ record, index })} />
+                                <Button disabled={isEditing || viewMode} data-testid="edit" className={styles.tableIcons} aria-label="fa-trash" icon={<FiTrash />} onClick={(e) => handleDelete({ record, index })} />
                             </>
                         ) : (
                             isEditing &&

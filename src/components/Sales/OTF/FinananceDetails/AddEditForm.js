@@ -65,7 +65,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formData?.fileNumber} label="File Number" name="fileNumber">
-                                            <Input placeholder={preparePlaceholderText('file number')} maxLength={55} />
+                                            <Input placeholder={preparePlaceholderText('file number')} maxLength={30} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -73,12 +73,12 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formData?.loanAmount} label="Loan Amount" name="loanAmount" rules={[validateNumberWithTwoDecimalPlaces('loan amount')]}>
-                                            <Input placeholder={preparePlaceholderText('loan amount')} maxLength={55} />
+                                            <Input placeholder={preparePlaceholderText('loan amount')} maxLength={10} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formData?.emi} label="EMI" name="emi" rules={[validateNumberWithTwoDecimalPlaces('emi')]}>
-                                            <Input placeholder={preparePlaceholderText('emi')} maxLength={55} />
+                                            <Input placeholder={preparePlaceholderText('emi')} maxLength={10} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -296,17 +296,13 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                                 <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                    <Form.Item
-                                        label={`${title}`}
-                                        name="code"
-                                        validateTrigger={['onSearch']}
-                                    >
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                            <Form.Item label={`${title}`} name="code" validateTrigger={['onSearch']}>
                                                 <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
-                                            </Col>
-                                        </Row>
-                                    </Form.Item>
+                                            </Form.Item>{' '}
+                                        </Col>
+                                    </Row>
                                 </Form>
                             </Col>
                             {manufacturerOrgHierarchyData?.length > 0 && (

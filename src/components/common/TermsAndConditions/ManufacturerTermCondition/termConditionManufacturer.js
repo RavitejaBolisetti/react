@@ -122,7 +122,10 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setRefershData(false);
         setShowDataLoading(false);
     };
-
+    const onErrorAction = (res) => {
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
@@ -134,7 +137,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
 
     useEffect(() => {
         if (userId) {
-            fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData, userId]);

@@ -6,9 +6,11 @@
 
 import React, { useState } from 'react';
 import { ViewIndividualAddressDetails } from './ViewIndividualAddressDetails';
-import { Button, Collapse, Space, Typography, Row, Col, Checkbox, Divider } from 'antd';
+import { Button, Collapse, Typography, Row, Col, Checkbox, Divider } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { getCodeValue } from 'utils/getCodeValue';
+
 
 import AddEditForm from './AddEditForm';
 
@@ -16,7 +18,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewAddressList = (props) => {
-    const { form, addressForm, setShowAddEditForm, showAddEditForm, onCheckdefaultAddClick, formActionType, setAddressData, onFinish, setIsEditing, isEditing, styles, addressData, onCheckClick, setEditingData, isAdding, setIsAdding } = props;
+    const { form, addressForm, setShowAddEditForm, showAddEditForm, onCheckdefaultAddClick, formActionType, setAddressData, onFinish, setIsEditing, isEditing, styles, addressData, addData, setEditingData, isAdding, setIsAdding } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
     const disableProp = { disabled: formActionType?.viewMode };
@@ -67,7 +69,7 @@ const ViewAddressList = (props) => {
                                 header={
                                     <Row justify="space-between">
                                         <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                            <Text strong> {`${data?.addressType ? data?.addressType : ''} `}</Text>
+                                            <Text strong> { getCodeValue(addData, data?.addressType)}</Text>
                                             {!formActionType?.viewMode && (
                                                 <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding} className={styles.buttonEdit}>
                                                     Edit{' '}

@@ -28,12 +28,15 @@ import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
 import { OTFConfirmationModal } from './OTFConfirmationModal';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
+import { LANGUAGE_EN } from 'language/en';
 import { validateOTFMenu } from './utils/validateOTFMenu';
 import { withModal } from 'components/withModal';
 import styles from 'components/common/Common.module.css';
 
 import { FilterIcon } from 'Icons';
 const { confirm } = Modal;
+
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -197,7 +200,7 @@ export const OtfMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 1000,
+                value: 100,
                 canRemove: true,
                 filter: false,
             },
@@ -299,7 +302,9 @@ export const OtfMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
-        setShowDataLoading(true);
+        if (filterString) {
+            setShowDataLoading(true);
+        }
         setFilterString();
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
@@ -362,6 +367,7 @@ export const OtfMasterBase = (props) => {
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
+        noDataMessage: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -564,7 +570,7 @@ export const OtfMasterBase = (props) => {
         <>
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.tableProduct}>
                     <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
