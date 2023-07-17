@@ -33,6 +33,7 @@ import { CustomerMaster } from './customerMaster';
 import { SupportingDocument } from './supportingDocument';
 import { ManufacturerAdmin } from './ManufacturerAdmin';
 import { ManufacturerOrg } from './ManufacturerOrg';
+import { VehicleReceipt } from './vehicleReceipt';
 
 export const data = combineReducers({
     Menu,
@@ -64,4 +65,5 @@ export const data = combineReducers({
     Vehicle,
     ManufacturerAdmin,
     ManufacturerOrg,
+    VehicleReceipt,
 });

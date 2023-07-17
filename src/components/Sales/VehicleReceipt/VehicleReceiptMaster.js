@@ -19,7 +19,7 @@ import { VEHICLE_RECEIPT_STATUS } from 'constants/VehicleReceiptStatus';
 import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
+import { vehicleReceiptDataActions } from 'store/actions/data/vehicleReceipt/vehicleReceipt';
 import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -31,9 +31,9 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            OTF: {
-                OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
-                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString },
+            VehicleReceipt: {
+                VehicleReceiptSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString },
+                // VehicleReceiptDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
             },
         },
     } = state;
@@ -41,11 +41,11 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         typeData,
-        isDataLoaded,
+        // isDataLoaded,
         data: data?.otfDetails,
         vehicleReceiptStatusList: Object.values(VEHICLE_RECEIPT_STATUS),
-        otfData,
-        isLoading,
+        // otfData,
+        // isLoading,
         moduleTitle,
         isOTFSearchLoading,
         isSearchDataLoaded,
@@ -58,12 +58,12 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchOTFSearchedList: otfSearchListAction.fetchList,
+            fetchOTFSearchedList: vehicleReceiptDataActions.fetchList,
             setFilterString: otfSearchListAction.setFilter,
             resetData: otfSearchListAction.reset,
-            fetchList: otfDetailsDataActions.fetchList,
-            saveData: otfDetailsDataActions.saveData,
-            listShowLoading: otfDetailsDataActions.listShowLoading,
+            // fetchList: vehicleReceiptDataActions.fetchList,
+            saveData: vehicleReceiptDataActions.saveData,
+            listShowLoading: vehicleReceiptDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -333,25 +333,25 @@ export const VehicleReceiptMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const removeFilter = (key) => {
-        if (key === 'searchParam') {
-            const { searchType, searchParam, ...rest } = filterString;
-            setFilterString({ ...rest });
-        } else {
-            const { [key]: names, ...rest } = filterString;
-            setFilterString({ ...rest });
-        }
-    };
+    // const removeFilter = (key) => {
+    //     if (key === 'searchParam') {
+    //         const { searchType, searchParam, ...rest } = filterString;
+    //         setFilterString({ ...rest });
+    //     } else {
+    //         const { [key]: names, ...rest } = filterString;
+    //         setFilterString({ ...rest });
+    //     }
+    // };
 
     const title = 'Search OTF';
 
     const advanceFilterResultProps = {
         extraParams,
-        removeFilter,
+        // removeFilter,
         vehicleReceiptStatusList,
         advanceFilter: true,
         otfFilter: true,
-        filterString,
+        // filterString,
         setFilterString,
         from: listFilterForm,
         onFinish,
@@ -375,7 +375,7 @@ export const VehicleReceiptMasterBase = (props) => {
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
-        filterString,
+        // filterString,
         setFilterString,
         advanceFilterForm,
         setAdvanceSearchVisible,
