@@ -138,10 +138,10 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const { isDataOrgLoaded, manufacturerOrgHierarchyData, fetchOrgList, fetchDocumentFileDocId } = props;
     const { resetData, resetViewData, detailData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { uploadDocumentFile, accessToken, token } = props;
-    
+
     const { authorityShowLoading, isAuthorityDataLoaded, isAuthorityDataLoading, authorityData, typeData } = props;
     const { saveAuthorityData, isViewDataLoaded, isLoading, viewListShowLoading, fetchViewDocument, viewDocument } = props;
-    
+
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
@@ -327,7 +327,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId, manufacturerOrgId: organizationId, errorAction });
-                setOrganizationId(organizationId)
+                setOrganizationId(organizationId);
                 setSelectedTreeKey([res?.data?.id]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
@@ -537,7 +537,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                        <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                                 <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onfinishHeader} onFinishFailed={onFinishFailed}>
                                     <Form.Item label={`${title}`} name="code">
                                         <Row gutter={20}>
@@ -571,11 +571,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                 </Col>
                             )}
                         </Row>
-
-                        
                     </div>
                     <div className={styles.content}>
-                        {!organizationId ? (
+                        {!manufacturerAdminHierarchyData?.length ? (
                             <div className={styles.emptyContainer}>
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -588,7 +586,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                         </span>
                                     }
                                 >
-                                    {!manufacturerAdminHierarchyData?.length && organizationId && (
+                                    {organizationId && (
                                         <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                             Add
                                         </Button>
