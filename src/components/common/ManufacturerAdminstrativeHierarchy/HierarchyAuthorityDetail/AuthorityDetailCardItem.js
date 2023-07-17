@@ -14,6 +14,8 @@ import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufa
 import styles from 'components/common/Common.module.css';
 import { showGlobalNotification } from 'store/actions/notification';
 
+import { getCodeValue } from 'utils/getCodeValue';
+
 import { AddEditForm } from './AddEditForm';
 
 const { Text } = Typography;
@@ -21,7 +23,7 @@ const { Text } = Typography;
 const mapStateToProps = (state) => {
     const {
         data: {
-            ManufacturerAdminHierarchy: { authorityVisible, tokenNumber = [], errorMessage, isUpdating },
+            ManufacturerAdminHierarchy: { authorityVisible, tokenNumber = [], errorMessage, isUpdating, authTypeDropdown: authTypeDropdownData },
         },
     } = state;
 
@@ -30,6 +32,7 @@ const mapStateToProps = (state) => {
         tokenNumber,
         errorMessage,
         isUpdating,
+        authTypeDropdownData,
     };
     return returnValue;
 };
@@ -48,6 +51,7 @@ const mapDispatchToProps = (dispatch) => ({
 const AuthorityCardItemMain = (props) => {
     const { isUpdating, viewMode, onFinish, setDocumentTypesList, documentTypesList, setIsBtnDisabled, isBtnDisabled, record, handleFormValueChange } = props;
     const { employeeName, setEmployeeName, tokenValidate, setTokenValidate, errorTokenValidate, tokenNumber, errorMessage, showGlobalNotification } = props;
+    const { selectedValueOnUpdate, setselectedValueOnUpdate, authTypeDropdownData } = props;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
     const [tokenValidationData, setTokenValidationData] = useState({});
@@ -69,12 +73,10 @@ const AuthorityCardItemMain = (props) => {
     const recordId = record?.id;
 
     const onEdit = ({ employeeName, authorityTypeCode, authorityEmployeeTokenNo, effectiveTo, effectiveFrom, id }) => {
-        setTokenValidate({ ['tokenVisible' + recordId]: true });
         if (!isUpdating || tokenNumber?.employeeName || errorMessage) {
             errorTokenValidate({ errorMessage: '', isUpdating: true });
         }
         form.setFieldsValue({ ...record, effectiveTo: dayjs(record?.effectiveTo), effectiveFrom: dayjs(record?.effectiveFrom) });
-        // form.resetFields();
         setIsEditing(true);
         setIsBtnDisabled(true);
     };
@@ -82,7 +84,6 @@ const AuthorityCardItemMain = (props) => {
     const onUpdate = () => {
         const tokenNo = form.getFieldValue('authorityEmployeeTokenNo');
         if (record?.authorityEmployeeTokenNo !== tokenNo && !tokenNumber?.employeeName) {
-            // return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
             return showGlobalNotification({ notificationType: 'warning', title: 'Warning', message: 'Validate token to proceed' });
         }
 
@@ -91,7 +92,7 @@ const AuthorityCardItemMain = (props) => {
                 setDocumentTypesList((prev) => {
                     const updatedData = [...prev];
                     const index = updatedData?.findIndex((el) => el?.authorityEmployeeTokenNo === record?.authorityEmployeeTokenNo);
-                    updatedData?.splice(index, 1, { ...data, employeeName: tokenNumber?.employeeName || tokenValidationData?.employeeName });
+                    updatedData?.splice(index, 1, { ...data, authorityEmployeeTokenNo: tokenNumber?.authorityEmployeeTokenNo || data?.authorityEmployeeTokenNo, employeeName: tokenNumber?.employeeName || data?.employeeName });
                     return updatedData;
                 });
             })
@@ -99,8 +100,6 @@ const AuthorityCardItemMain = (props) => {
         setIsEditing(false);
         setIsBtnDisabled(false);
         errorTokenValidate('');
-        // form.resetFields();
-        // forceUpdate();
     };
 
     const handleDelete = (val) => {
@@ -131,7 +130,7 @@ const AuthorityCardItemMain = (props) => {
                 <Row align="middle">
                     <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                            <Text type="secondary">Authority : {record?.authorityTypeCode}</Text>
+                            <Text type="secondary">Authority : {getCodeValue(authTypeDropdownData, record?.authorityTypeCode)}</Text>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -148,21 +147,16 @@ const AuthorityCardItemMain = (props) => {
                         <Col xs={colRight} sm={colRight} md={colRight} lg={colRight} xl={colRight} xxl={colRight}>
                             <Row justify="end">
                                 {!isEditing ? (
-                                    <div>
-                                        {/* <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}> */}
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(record)} />
-                                        {/* </Col> */}
-                                        {!record?.id && (
-                                            // <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                            <Button disabled={isBtnDisabled} onClick={() => handleDelete(record)} type="link" icon={<FiTrash />}></Button>
-                                            // </Col>
-                                        )}
-
-                                        {/* <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} style={{ float: 'right', display: 'flex' }}>
+                                    <>
+                                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                                             <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(record)} />
-                                            {!record?.id && <Button onClick={() => handleDelete(record)} type="link" icon={<FiTrash />}></Button>}
-                                        </Col> */}
-                                    </div>
+                                        </Col>
+                                        {!record?.id > 0 && (
+                                            <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
+                                                <Button disabled={isBtnDisabled} onClick={() => handleDelete(record)} type="link" icon={<FiTrash />}></Button>
+                                            </Col>
+                                        )}
+                                    </>
                                 ) : (
                                     <>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -185,7 +179,7 @@ const AuthorityCardItemMain = (props) => {
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <AddEditForm handleFormValueChange={handleFormValueChange} tokenValidationData={tokenValidationData} setTokenValidationData={setTokenValidationData} tokenValidate={tokenValidate} setEmployeeName={setEmployeeName} setTokenValidate={setTokenValidate} employeeName={employeeName} record={record} recordId={recordId} onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} isEditing={isEditing} />
+                        <AddEditForm handleFormValueChange={handleFormValueChange} tokenValidationData={tokenValidationData} setTokenValidationData={setTokenValidationData} tokenValidate={tokenValidate} setEmployeeName={setEmployeeName} setTokenValidate={setTokenValidate} employeeName={employeeName} record={record} recordId={recordId} onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} isEditing={isEditing} selectedValueOnUpdate={selectedValueOnUpdate} setselectedValueOnUpdate={setselectedValueOnUpdate} />
                     </Fragment>
                 )}
             </Card>

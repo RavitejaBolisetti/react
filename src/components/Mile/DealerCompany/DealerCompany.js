@@ -17,7 +17,7 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 import { AddEditForm } from './AddEditForm';
 import { ListDataTable } from 'utils/ListDataTable';
 import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
-import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 
 const mapStateToProps = (state) => {
     const {
@@ -62,8 +62,8 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: dealerCompanyDataActions.saveData,
             listShowLoading: dealerCompanyDataActions.listShowLoading,
 
-            fetchPincodeDetail: geoPincodeDataActions.fetchList,
-            pinCodeShowLoading: geoPincodeDataActions.listShowLoading,
+            fetchPincodeDetail: geoPinCodeDataActions.fetchList,
+            pinCodeShowLoading: geoPinCodeDataActions.listShowLoading,
 
             showGlobalNotification,
         },
@@ -256,6 +256,7 @@ export const DealerCompanyBase = (props) => {
         isPinCodeLoading,
         forceUpdate,
         pinCodeShowLoading,
+        showGlobalNotification,
     };
 
     const tableProps = {
@@ -285,7 +286,7 @@ export const DealerCompanyBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={title} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />

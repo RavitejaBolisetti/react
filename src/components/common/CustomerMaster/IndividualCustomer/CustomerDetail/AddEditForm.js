@@ -5,7 +5,7 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Empty } from 'antd';
+import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Empty, Upload } from 'antd';
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -17,9 +17,9 @@ import { NameChangeHistory } from './NameChangeHistory';
 
 import styles from 'components/common/Common.module.css';
 import Svg from 'assets/images/Filter.svg';
-import Dragger from 'antd/es/upload/Dragger';
 
-const { Text } = Typography;
+const { Dragger } = Upload;
+const { Text, Title } = Typography;
 
 const AddEditFormMain = (props) => {
     const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
@@ -193,7 +193,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={4} lg={4} xl={4}>
                                 <Form.Item label="Title" initialValue={formData?.titleCode} name="titleCode" data-testid="title" rules={[validateRequiredSelectField('title')]}>
-                                    <Select placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['TITLE']}></Select>
+                                    <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['TITLE']}></Select>
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6}>
@@ -215,7 +215,7 @@ const AddEditFormMain = (props) => {
                             {editMode && (
                                 <>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                                        {/* <div className={styles.uploadContainer} style={{ opacity: '100' }}>
                                             <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps}>
                                                 <div>
                                                     <img src={Svg} alt="" />
@@ -234,7 +234,26 @@ const AddEditFormMain = (props) => {
 
                                                 <Button type="primary">Upload File</Button>
                                             </Dragger>
-                                        </div>
+                                        </div> */}
+
+                                        <Space direction="vertical" style={{ width: '100%' }}>
+                                            <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                                                <Dragger customRequest={handleUpload} {...uploadProps} fileList={fileList}>
+                                                    <Empty
+                                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                        description={
+                                                            <>
+                                                                <Title level={5}>Upload supporting documents</Title>
+                                                                <Text>File type should be .png and .jpg and max file size to be 5MB</Text>
+                                                            </>
+                                                        }
+                                                    />
+                                                    <Button className={styles.marB20} type="primary">
+                                                        Upload File
+                                                    </Button>
+                                                </Dragger>
+                                            </div>
+                                        </Space>
                                     </Col>
                                 </>
                             )}
@@ -285,13 +304,13 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Corporate Type" initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType" rules={[validateRequiredSelectField('corporate type')]}>
-                                <Select placeholder={preparePlaceholderSelect('corporate type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_TYPE']} onChange={handleCorporateChange} allowClear></Select>
+                                <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('corporate type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_TYPE']} onChange={handleCorporateChange} allowClear></Select>
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Corporate Name" initialValue={corporateType === 'NON-LIS' ? '' : formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
-                                {corporateType === 'NON-LIS' ? <Input placeholder={preparePlaceholderText('corporate name')} /> : <Select onSelect={onHandleSelect} disabled={false} loading={false} placeholder={preparePlaceholderSelect('corporate name')} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select>}
+                                {corporateType === 'NON-LIS' ? <Input placeholder={preparePlaceholderText('corporate name')} /> : <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} onSelect={onHandleSelect} disabled={false} loading={false} placeholder={preparePlaceholderSelect('corporate name')} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select>}
                             </Form.Item>
                         </Col>
 
@@ -305,12 +324,12 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Corporate Category" initialValue={formData?.corporateCategory} name="corporateCategory" data-testid="corporateCategory">
-                                <Select placeholder={preparePlaceholderSelect('corporate category')} disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_CATE']}></Select>
+                                <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('corporate category')} disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_CATE']}></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item label="Membership Type" initialValue={formData?.membershipType} name="membershipType" data-testid="membershipType" rules={[validateRequiredSelectField('membership type')]}>
-                                <Select placeholder={preparePlaceholderSelect('membership type')} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['MEM_TYPE']}></Select>
+                                <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('membership type')} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['MEM_TYPE']}></Select>
                             </Form.Item>
                         </Col>
                     </Row>

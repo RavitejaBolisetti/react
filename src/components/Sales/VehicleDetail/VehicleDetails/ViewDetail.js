@@ -4,14 +4,19 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Card, Descriptions } from 'antd';
+import { Row, Col, Space, Collapse, Descriptions } from 'antd';
+
 import styles from 'components/common/Common.module.css';
 import dayjs from 'dayjs';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { getCodeValue } from 'utils/getCodeValue';
+import { DATA_TYPE } from 'constants/dataType';
+import { USER_TYPE } from 'constants/userType';
+
+import { expandIcon } from 'utils/accordianExpandIcon';
+const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData, salesConsultantLov } = props;
+    const { formData, isLoading, activeKey, onChange, userType } = props;
 
     const viewProps = {
         bordered: false,
@@ -20,30 +25,65 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
 
-    const promiseDeliveryDate = dayjs(formData?.initialPromiseDeliveryDate).format('DD/MM/YYYY');
-    const expectedDeliveryDate = dayjs(formData?.custExpectedDeliveryDate).format('DD/MM/YYYY');
+    const mnfcWarrEndDate = dayjs(formData?.mnfcWarrEndDate).format('DD/MM/YYYY');
+    const deliveryDate = dayjs(formData?.deliveryDate).format('DD/MM/YYYY');
+    const saleDate = dayjs(formData?.saleDate).format('DD/MM/YYYY');
+    const nextServiceDueDate = dayjs(formData?.nextServiceDueDate).format('DD/MM/YYYY');
+    const insuranceExpiryDate = dayjs(formData?.insuranceExpiryDate).format('DD/MM/YYYY');
+    const pucExpiryDate = dayjs(formData?.pucExpiryDate).format('DD/MM/YYYY');
 
     return (
-        <Card className={styles.drawerCardView}>
-            <Descriptions {...viewProps}>
-                <Descriptions.Item label="Initial Promise Delivery Date">{checkAndSetDefaultValue(promiseDeliveryDate, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Cust. Expected Delivery Date">{checkAndSetDefaultValue(expectedDeliveryDate, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYP, formData?.saleType), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Booking Amount">{checkAndSetDefaultValue(formData?.bookingAmount, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Sales Consultant">{checkAndSetDefaultValue(getCodeValue(salesConsultantLov, formData?.saleConsultant), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Special Request">{checkAndSetDefaultValue(formData?.specialRequest, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Place Of Registration">{checkAndSetDefaultValue(formData?.placeOfRegistration, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Delivery At">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_AT, formData?.deliveryAt), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Referral">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.referral), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Influencer/Mitra Type">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Influencer/Mitra Name">{checkAndSetDefaultValue(formData?.mitraName, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Mode Of Payment">{checkAndSetDefaultValue(formData?.modeOfPAyment, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Finance Agreed">{checkAndSetDefaultValue(getCodeValue(typeData?.FNC_ARNGD, formData?.financeArrangedBy), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Exchange">{checkAndSetDefaultValue(formData?.exchange === 1 ? <span className={styles.activeText}>Yes</span> : 'No', isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Loyality Scheme">{checkAndSetDefaultValue(formData?.loyaltyScheme ? <span className={styles.activeText}>Yes</span> : 'No', isLoading)}</Descriptions.Item>
-            </Descriptions>
-        </Card>
+        <div className={styles.drawerCardView}>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Space direction="vertical" size="middle" className={styles.accordianContainer}>
+                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
+                            <Panel header="Vehicle Details" key="1">
+                                <Descriptions {...viewProps}>
+                                    <Descriptions.Item label="Manufacturer Warranty End Date">{checkAndSetDefaultValue(mnfcWarrEndDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Delivery Date">{checkAndSetDefaultValue(deliveryDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Sale Date">{checkAndSetDefaultValue(saleDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Sold By">{checkAndSetDefaultValue(formData?.soldBy, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Last Odometer Reading">{checkAndSetDefaultValue(formData?.lastOdometerReading, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Average Run">{checkAndSetDefaultValue(formData?.averageRun, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Next Due Service">{checkAndSetDefaultValue(formData?.nextDueService, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Relationship Manager">{checkAndSetDefaultValue(formData?.relationshipManager, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Next Service Due Date">{checkAndSetDefaultValue(nextServiceDueDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="PUC Expiry Date">{checkAndSetDefaultValue(pucExpiryDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Insurance Expiry Date">{checkAndSetDefaultValue(insuranceExpiryDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Customer Category-SSI">{checkAndSetDefaultValue(formData?.customerCategorySsi, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Customer Category-CSI">{checkAndSetDefaultValue(formData?.customerCategoryCsi, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Customer Category-IQS">{checkAndSetDefaultValue(formData?.customerCategoryIqs, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="OEM Priviledge Customer">{checkAndSetDefaultValue(formData?.oemPrivilegeCustomer, isLoading, DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
+                                    <Descriptions.Item label="Key Account Vihicle">{checkAndSetDefaultValue(formData?.keyAccountVehicle, isLoading, DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
+                                    <Descriptions.Item label="Theft Vihicle">{checkAndSetDefaultValue(formData?.theftVehicle, isLoading, DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
+                                    <Descriptions.Item label="PDI Done">{checkAndSetDefaultValue(formData?.pdiDone, isLoading, DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
+                                    <Descriptions.Item label="Buy Back Vehicle">{checkAndSetDefaultValue(formData?.buyBackVehicle, isLoading, DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
+                                    <Descriptions.Item label="Government Vehicle">{checkAndSetDefaultValue(formData?.govtVehicle, isLoading, DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
+                                    <Descriptions.Item label="Taxi/Non Taxi">{checkAndSetDefaultValue(formData?.taxiOrNonTaxi, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="M&M CTC Vehicle">{checkAndSetDefaultValue(formData?.mnmCtcVehicle, isLoading, DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
+                                    <Descriptions.Item label="Managed By">{checkAndSetDefaultValue(formData?.manageBy, isLoading)}</Descriptions.Item>
+                                    {userType === USER_TYPE?.ADMIN?.key && (
+                                        <>
+                                            <Descriptions.Item label="Warranty Blocked">{checkAndSetDefaultValue(formData?.warrantyBlocked, isLoading, '', DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
+                                            <Descriptions.Item label="Care Plus">{checkAndSetDefaultValue(formData?.carePlus, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label="Legal">{checkAndSetDefaultValue(formData?.legal, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label="Dealership Vehicle">{checkAndSetDefaultValue(formData?.dealershipVehicle, isLoading)}</Descriptions.Item>
+                                        </>
+                                    )}
+                                </Descriptions>
+                            </Panel>
+                        </Collapse>
+
+                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
+                            <Panel header="Registration Number Change Request" key="2">
+                                <div>Coming Soon...</div>
+                            </Panel>
+                        </Collapse>
+                    </Space>
+                </Col>
+            </Row>
+        </div>
     );
 };
 

@@ -122,7 +122,7 @@ export const dataActions = (params) => {
         }),
 
         fetchDetail: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, code = '', onErrorAction = undefined, partyCode = '', parameterType = '', onSuccessAction = undefined, id = '', type = '', customerId = '' } = params;
+            const { customURL = '', setIsLoading, data, code = '', onErrorAction = undefined, partyCode = '', parameterType = '', onSuccessAction = undefined, id = '', type = '', customerId = '', extraParams = [] } = params;
             setIsLoading(true);
 
             const onError = (message) => {
@@ -138,17 +138,17 @@ export const dataActions = (params) => {
                 }
             };
 
-            // let sExtraParamsString = '?';
-            // extraParams?.forEach((item, index) => {
-            //     sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
-            // });
+            let sExtraParamsString = '?';
+            extraParams?.forEach((item, index) => {
+                sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+            });
 
-            // sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+            sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
 
             const apiCallParams = {
                 data,
                 method: 'get',
-                url: inBaseURL + (id ? '?id=' + id : '') + (type ? '?type=' + type : '') + (code ? '?code=' + code : '') + (partyCode ? '?partyCode=' + partyCode : '') + (parameterType ? '?parameterType=' + parameterType : '') + (customerId ? '?customerId=' + customerId : ''),
+                url: (customURL || inBaseURL) + (id ? '?id=' + id : '') + (type ? '?type=' + type : '') + (code ? '?code=' + code : '') + (partyCode ? '?partyCode=' + partyCode : '') + (parameterType ? '?parameterType=' + parameterType : '') + (customerId ? '?customerId=' + customerId : '') + (sExtraParamsString ? sExtraParamsString : ''),
                 token,
                 accessToken,
                 userId,
@@ -164,7 +164,7 @@ export const dataActions = (params) => {
         }),
 
         saveData: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, onError, data, userId, onSuccess, method = 'post' } = params;
+            const { setIsLoading, onError, data, userId, onSuccess, method = 'post', customURL } = params;
             setIsLoading(true);
 
             const onSuccessAction = (res) => {
@@ -175,7 +175,7 @@ export const dataActions = (params) => {
             const apiCallParams = {
                 data,
                 method: method,
-                url: inBaseURL,
+                url: customURL || inBaseURL,
                 token,
                 accessToken,
                 userId,

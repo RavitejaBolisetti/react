@@ -82,6 +82,12 @@ export const OTFFormButton = ({ record, handleChangeHistory, onCloseAction, butt
                     </Popover>
                 )}
 
+                {buttonData?.transferOtfBtn && (
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF, record })} type="primary">
+                        Transfer OTF
+                    </Button>
+                )}
+
                 {buttonData?.nextBtn && !isLastSection && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                         Next

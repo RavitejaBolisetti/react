@@ -40,11 +40,11 @@ const baseAPICall = (params) => {
     const unAuthorizedMessage = LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE;
 
     const handleErrorMessage = ({ onError, displayErrorTitle, errorTitle, errorMessage }) => {
-        onError && (displayErrorTitle ? onError({ title: errorTitle, message: Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }) : onError(errorMessage));
+        onError && (displayErrorTitle ? onError({ title: errorTitle, message: Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }) : onError(Array.isArray(errorMessage) ? errorMessage[0] : errorMessage));
     };
 
     const onUnAuthenticated = (message = '') => {
-        // clearLocalStorageData();
+        clearLocalStorageData();
         onError && onError(message);
     };
 
@@ -66,9 +66,9 @@ const baseAPICall = (params) => {
                     } else if (response?.statusCode === 401) {
                         onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else if (response.statusCode === 403) {
-                        onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
+                        onError && onError(response?.errors || unAuthorizedMessage);
                     } else if (response.statusCode === 500) {
-                        onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
+                        onError && onError(response?.errors || unAuthorizedMessage);
                     } else {
                         handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.INTERNAL_SERVER_ERROR.TITLE, errorMessage: response?.data?.errors || response?.data?.responseMessage || LANGUAGE_EN.GENERAL.INTERNAL_SERVER_ERROR.MESSAGE });
                     }

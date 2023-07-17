@@ -64,8 +64,10 @@ const mapDispatchToProps = (dispatch) => ({
             uploadConsentDocumentFile: supportingDocumentDataActions.uploadFile,
             listDocumentShowLoading: supportingDocumentDataActions.listShowLoading,
 
-            fecthViewDocument: documentViewDataActions.fetchList,
+            fetchViewDocument: documentViewDataActions.fetchList,
             downloadFile: supportingDocumentDataActions.downloadFile,
+            resetViewData: documentViewDataActions.reset,
+            viewListShowLoading: documentViewDataActions.listShowLoading,
 
             showGlobalNotification,
         },
@@ -73,9 +75,10 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 const IndividualProfileBase = (props) => {
-    const { userId, isIndiviualProfileLoaded, fecthViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification, handleButtonClick } = props;
+    const { userId, isIndiviualProfileLoaded, fetchViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification, handleButtonClick } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, downloadFile } = props;
     const { saveDocumentData, uploadDocumentFile, uploadConsentDocumentFile, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, NEXT_ACTION } = props;
+    const { isViewDataLoaded, resetViewData, resetData, viewListShowLoading } = props;
     const [form] = Form.useForm();
 
     const [activeKey, setActiveKey] = useState([1]);
@@ -90,7 +93,25 @@ const IndividualProfileBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId && selectedCustomerId) {
+        if (viewDocument && isViewDataLoaded && isIndiviualProfileLoaded) {
+            let a = document.createElement('a');
+            a.href = `data:image/png;base64,${viewDocument?.base64}`;
+            a.download = viewDocument?.fileName;
+            a.click();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isViewDataLoaded, viewDocument]);
+
+    useEffect(() => {
+        return () => {
+            resetData();
+            resetViewData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (userId && selectedCustomerId && !isIndiviualProfileLoaded) {
             const extraParams = [
                 {
                     key: 'customerId',
@@ -99,25 +120,25 @@ const IndividualProfileBase = (props) => {
                     name: 'Customer ID',
                 },
             ];
+            resetData();
+            resetViewData();
             fetchList({ setIsLoading: listIndiviualShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCustomerId]);
+    }, [userId, selectedCustomerId, isIndiviualProfileLoaded]);
 
-    useEffect(() => {
-        if (userId && isIndiviualProfileLoaded && indiviualData?.image) {
-            const extraParams = [
-                {
-                    key: 'docId',
-                    title: 'docId',
-                    value: indiviualData?.image,
-                    name: 'docId',
-                },
-            ];
-            fecthViewDocument({ setIsLoading: listIndiviualShowLoading, userId, extraParams, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isIndiviualProfileLoaded, indiviualData?.image]);
+    const downloadFileFromButton = () => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: indiviualData?.customerConsentForm,
+                name: 'docId',
+            },
+        ];
+        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams });
+    };
 
     useEffect(() => {
         if (indiviualData?.dateOfBirth === null || indiviualData?.dateOfBirth === undefined || indiviualData?.dateOfBirth === '') {
@@ -174,7 +195,7 @@ const IndividualProfileBase = (props) => {
         };
         const requestData = {
             data: data,
-            method: indiviualData.customerId ? 'put' : 'post',
+            method: indiviualData?.customerId ? 'put' : 'post',
             setIsLoading: listIndiviualShowLoading,
             userId,
             onError,
@@ -233,6 +254,7 @@ const IndividualProfileBase = (props) => {
         uploadedFile,
         setUploadedFiles,
         uploadedFiles,
+        showGlobalNotification,
 
         saveDocumentData,
         userId,
@@ -253,6 +275,7 @@ const IndividualProfileBase = (props) => {
         isViewDocumentLoading,
         handleOnClick,
         isLoading,
+        downloadFileFromButton,
     };
 
     const handleFormValueChange = () => {

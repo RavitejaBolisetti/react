@@ -57,7 +57,7 @@ supportingDocumentDataActions.uploadFile = withAuthToken((params) => ({ token, a
 });
 
 supportingDocumentDataActions.downloadFile = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, userId, extraParams = [], selectedDocument = undefined } = params;
+    const { setIsLoading, userId, extraParams = [], documentName = undefined } = params;
     setIsLoading(true);
 
     let sExtraParamsString = '?';
@@ -77,7 +77,7 @@ supportingDocumentDataActions.downloadFile = withAuthToken((params) => ({ token,
             let url = window.URL.createObjectURL(blob);
             let a = document.createElement('a');
             a.href = url;
-            a.download = selectedDocument?.documentName + '.pdf';
+            a.download = documentName + '.pdf';
             a.click();
         });
     });

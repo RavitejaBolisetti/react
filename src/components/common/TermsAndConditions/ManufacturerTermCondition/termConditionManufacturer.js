@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -122,7 +122,10 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setRefershData(false);
         setShowDataLoading(false);
     };
-
+    const onErrorAction = (res) => {
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
@@ -134,7 +137,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
 
     useEffect(() => {
         if (userId) {
-            fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData, userId]);
@@ -230,6 +233,16 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setFilterString(value);
     };
 
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
+        } else if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
+    };
+
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
@@ -301,12 +314,6 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
     };
 
     const title = 'Term & Condition';
-    const handleClearInSearch = (e) => {
-        if (e?.target?.value === '') {
-            setFilterString();
-            listFilterForm.resetFields();
-        }
-    };
 
     const showChangeHistoryList = () => {
         setButtonData({ cancelBtn: true });
@@ -337,6 +344,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         isVisible: isHistoryVisible,
         ChangeHistoryTermsConditionsData,
         onCloseAction: changeHistoryClose,
+        isChangeHistoryContainer: true,
     };
 
     return (

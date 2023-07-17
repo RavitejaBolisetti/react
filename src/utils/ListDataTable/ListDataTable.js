@@ -5,25 +5,20 @@
  */
 import { DataTable } from 'utils/dataTable';
 import { Button, Empty, ConfigProvider } from 'antd';
-import styles from 'components/common/Common.module.css';
 import { PlusOutlined } from '@ant-design/icons';
+import { LANGUAGE_EN } from 'language/en';
 
-export default function ListDataTable({
-    isLoading,
-    tableColumn,
-    tableData,
-    handleAdd,
-    addTitle = 'Group',
-    scroll = 'auto',
-    showAddButton = true,
-    srl,
-    noDataMessage = (
+export default function ListDataTable(props) {
+    const { isLoading, tableColumn, tableData, handleAdd, addTitle = 'Group', scroll = 'auto', showAddButton = true, srl, noDataMessage = '', addButtonOption = false, styles = '' } = props;
+    const noDataExistTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataExistMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', addTitle);
+
+    const noDataInformation = (
         <>
-            Use <b>"Search"</b> at top to find customer and <br />
-            select the same to update customer details.
+            {noDataExistTitle} <br /> {noDataExistMessage}{' '}
         </>
-    ),
-}) {
+    );
+
     return (
         <>
             <ConfigProvider
@@ -33,10 +28,11 @@ export default function ListDataTable({
                         imageStyle={{
                             height: '20%',
                         }}
-                        
-                        description={!tableData?.length ? <span>{noDataMessage}</span> : <span> No records found.</span>}
+                        description={!tableData?.length ? <span>{noDataMessage || noDataInformation}</span> : <span> No records found.</span>}
                     >
                         {!tableData?.length
+                            ? addButtonOption
+                            : addButtonOption
                             ? showAddButton && (
                                   <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                       {`Add`}
@@ -46,7 +42,7 @@ export default function ListDataTable({
                     </Empty>
                 )}
             >
-                <div className={`${styles.tableProduct} ${styles.datasearh}`}  >
+                <div className={`${styles.tableProduct} ${styles.datasearh}`}>
                     <DataTable isLoading={isLoading} tableData={tableData} srl={srl} tableColumn={tableColumn} showAddButton={showAddButton} scroll={scroll} />
                 </div>
             </ConfigProvider>
