@@ -7,14 +7,14 @@ import { Select } from 'antd';
 
 const { Option } = Select;
 
-export const customSelectBox = ({ data, placeholder = 'Select' }) => {
+export const customSelectBox = ({ data, placeholder = 'Select', onChange = undefined }) => {
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
     };
     return (
-        <Select placeholder={placeholder} {...selectProps}>
+        <Select placeholder={placeholder} onChange={onChange} {...selectProps}>
             {data?.map((item) => (
                 <Option value={item.key}>{item.value}</Option>
             ))}
