@@ -410,11 +410,38 @@ export const OtfMasterBase = (props) => {
 
     const onFinishOTFTansfer = (values) => {
         setIsTransferVisible(false);
+
+        const onSuccess = (res) => {
+            // otfTransferForm.resetFields();
+            setShowDataLoading(true);
+
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+
+            setButtonData({ ...buttonData, formBtnActive: false });
+
+            setIsFormVisible(false);
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+
+        const requestData = {
+            data: data,
+            baseURL,
+            method: 'put',
+            setIsLoading: () => {},
+            userId,
+            onError,
+            onSuccess,
+        };
+
         showConfirm({
             modalTitle: 'OTF Transfer',
             modalMessage: `Do you want to transfer this ${otfData?.otfNumber}`,
             data: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
-            callBackMethod: transferOTF,
+            callBackMethod: transferOTF(requestData),
         });
     };
 
