@@ -184,4 +184,8 @@ export const PARAM_MASTER = {
         id: 'VH_DTLS_SER',
         title: 'Vehicle Detail List',
     },
+    VH_PURCHASE_RORDER_SER: {
+        id: 'VH_PURCHASE_RORDER_SER',
+        title: 'Vehicle Purchase Order List', 
+    },
 };
