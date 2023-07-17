@@ -34,7 +34,7 @@ const AddEditForm = (props) => {
                                 <Select mode="multiple" placeholder={preparePlaceholderSelect('preferred days for contact')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData['VH_CONTACT_DAYS']}></Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8} className={style.inputWrapper}>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8} className={styles.inputWrapper}>
                             <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
                                 <Input maxLength={10} placeholder={preparePlaceholderText('mobile number')} allowClear size="small" />
                             </Form.Item>
