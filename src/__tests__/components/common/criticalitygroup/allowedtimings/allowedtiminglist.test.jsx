@@ -34,6 +34,9 @@ describe('AllowedTimingList Components', () => {
         const addTimeBtn = screen.findByText('.addTimeBtn');
         expect(addTimeBtn).toBeTruthy();
     });
+
+    /// Not valuable test////
+
     it('should not render the add time button when the form action type is view mode', () => {
         props.formActionType = 'viewMode';
         const wrapper = customRender(<AllowedTimingList {...props} />);
@@ -42,6 +45,9 @@ describe('AllowedTimingList Components', () => {
         const received = null;
         expect(received).toBeFalsy();
     });
+
+    /// Not valuable test ends////
+
     it('should render the timing header when there are timing data', () => {
         props.timeData = [
             {
