@@ -2033,7 +2033,7 @@
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector .ant-select-selection-placeholder {
     color: #b5b5b6;
     font-size: 14px;
-    line-height: 34px;
+    /* line-height: 34px; */
     font-weight: 400;
 }
 

@@ -22,10 +22,10 @@ const ViewDetailMain = (props) => {
     return (
         <Card className={styles.drawerCardView} style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Referral ID">{checkAndSetDefaultValue(formData?.customerId, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Referral ID">{checkAndSetDefaultValue(formData?.referralId, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Registration Number">{checkAndSetDefaultValue(formData?.registrationNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Chassis Number">{checkAndSetDefaultValue(formData?.chasisNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData?.chasisNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData?.customerId, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CUST_TYPE, formData?.customerType), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
