@@ -130,7 +130,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                     <Form.Item initialValue={formData?.oemPrivilegeCustomer} valuePropName="checked" name="oemPrivilegeCustomer">
-                        <Checkbox>OEM Priviledge Customer</Checkbox>
+                        <Checkbox>OEM Privileged Customer</Checkbox>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -145,7 +145,7 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                     <Form.Item initialValue={formData?.theftVehicle} valuePropName="checked" name="theftVehicle">
-                        <Checkbox {...disabledProps}>Theft Vihicle</Checkbox>
+                        <Checkbox {...disabledProps}>Theft Vehicle</Checkbox>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={12} md={8} lg={8} xl={8}>
