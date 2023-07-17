@@ -367,7 +367,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                 </Col>
             </Row>
             <AddEditForm {...formProps} />
-            <ManufacturerOrgHierarchyChangeHistory />
+            <ManufacturerOrgHierarchyChangeHistory isChangeHistoryContainer= {true} />
         </>
     );
 };
