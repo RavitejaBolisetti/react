@@ -143,7 +143,7 @@ const AddEditForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type'), { validator: (rule, value) => duplicateValidator(value, 'addressType', addressData, editingData?.addressType) }]}>
-                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('address type')} fieldNames={{ label: 'value', value: 'value' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={addData} allowClear></Select>
+                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('address type')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={addData} allowClear></Select>
                         </Form.Item>
                     </Col>
 

@@ -151,8 +151,7 @@ const ReferralsMasterBase = (props) => {
                 extraParams: searchParams,
                 onSuccessAction: (res) => {
                     res?.data?.customerMasterDetails && setFormData(res?.data?.customerMasterDetails?.[0]);
-
-                    // res?.data?.referralData?.referralDetails.length === 1 ? setFormData(res?.data?.referralData?.referralDetails[0]) : setVehicleRegNum(res?.data?.referralData?.referralDetails);
+                    handleFormValueChange();
                 },
                 onErrorAction,
                 userId,
@@ -255,8 +254,7 @@ const ReferralsMasterBase = (props) => {
         onSearch,
         resetField,
         // optionType: typeData[PARAM_MASTER.REFERRAL_SEARCH.id],
-        optionType: typeData[PARAM_MASTER.CUST_MST.id],
-        // searchParamRule: referralSearchRules,
+        optionType: typeData[PARAM_MASTER.CUST_MST.id]?.filter((i) => ['registrationNumber', 'customerName', 'customerId']?.includes(i?.key)),
         filterString,
         setFilterString,
         vehicleRegNum,

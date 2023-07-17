@@ -27,6 +27,8 @@ import { LANGUAGE_EN } from 'language/en';
 import { validateOTFMenu } from './utils/validateOTFMenu';
 import { FilterIcon } from 'Icons';
 
+import styles from 'components/common/Common.module.css';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -267,7 +269,9 @@ export const OtfMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
-        setShowDataLoading(true);
+        if (filterString) {
+            setShowDataLoading(true);
+        }
         setFilterString();
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
@@ -442,7 +446,7 @@ export const OtfMasterBase = (props) => {
         <>
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.tableProduct}>
                     <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
