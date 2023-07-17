@@ -24,14 +24,12 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [],  recordId: formRecordId, tokenNumber = [], errorMessage, isUpdating, changeHistoryVisible, historyData = [], authTypeDropdown:authTypeDropdownData = [], authorityVisible },
-            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
+            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, isLoading: searchLoading, data: attributeData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
         },
     } = state;
-
-    // apiData = state.data.ManufacturerAdminHierarchy.authTypeDropdown;
 
     let returnValue = {
         collapsed,
@@ -48,6 +46,7 @@ const mapStateToProps = (state) => {
         attributeData: attributeData?.filter((i) => i),
         errorMessage: errorMessage?.length ? errorMessage[0] : errorMessage,
         isUpdating,
+        searchLoading,
     };
     return returnValue;
 };
@@ -74,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AuthorityFormMin = (props) => {
     const { isUpdating, isMainForm, setTokenValidationData, handleFormValueChange, tokenValidationData, errorTokenValidate, tokenValidate, errorMessage, setTokenValidate, setEmployeeName = undefined, employeeName = '', recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction } = props;
-    const { setselectedValueOnUpdate, authTypeDropdownData } = props;
+    const { setselectedValueOnUpdate, authTypeDropdownData, hierarchyAttributeListShowLoading, searchLoading } = props;
     const disableAddBtn = { disabled: isBtnDisabled || !tokenNumber?.employeeName };
 
     const onFinishFailed = (err) => {
@@ -86,7 +85,7 @@ const AuthorityFormMin = (props) => {
     };
 
     const onSearchHandle = (recordId) => (data) => {
-        data && searchList({ setIsLoading: listShowLoading, tokenNumber: data, recordId, errorAction });
+        data && searchList({ setIsLoading: hierarchyAttributeListShowLoading, tokenNumber: data, recordId, errorAction });
     };
 
     const onChangeHandle = (recordId) => (e) => {
@@ -112,12 +111,12 @@ const AuthorityFormMin = (props) => {
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type')]}>
-                        <Select labelInValue getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" fieldNames={fieldNames} options={authTypeDropdownData} disabled={isBtnDisabled} onChange={(value, valueObject) => setselectedValueOnUpdate(valueObject)} />
+                        <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" fieldNames={fieldNames} options={authTypeDropdownData} disabled={isBtnDisabled} onChange={(value, valueObject) => setselectedValueOnUpdate(valueObject)} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Token" name={'authorityEmployeeTokenNo'} rules={[validateRequiredInputField('Token Required')]}>
-                        <Search disabled={isBtnDisabled} allowClear onChange={onChangeHandle(recordId)} onSearch={onSearchHandle(recordId)} placeholder={preparePlaceholderText('Token')} />
+                        <Search loading={searchLoading} disabled={isBtnDisabled} allowClear onChange={onChangeHandle(recordId)} onSearch={onSearchHandle(recordId)} placeholder={preparePlaceholderText('Token')} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

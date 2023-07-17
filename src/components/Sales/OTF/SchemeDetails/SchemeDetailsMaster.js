@@ -14,7 +14,6 @@ import { ViewDetail } from './ViewDetail';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { OTFFormButton } from '../OTFFormButton';
-
 import styles from 'components/common/Common.module.css';
 
 import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetail';
@@ -56,7 +55,6 @@ const SchemeDetailsMasterBase = (props) => {
     const { form, selectedOrderId, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
 
     const [formData, setFormData] = useState();
-
     useEffect(() => {
         if (schemeData) {
             form.setFieldsValue({ ...schemeData });
@@ -74,7 +72,7 @@ const SchemeDetailsMasterBase = (props) => {
     }, []);
 
     const onErrorAction = (message) => {
-        // showGlobalNotification(message);
+        showGlobalNotification({ message: message });
     };
 
     const onSuccessAction = (res) => {

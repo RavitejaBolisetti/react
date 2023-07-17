@@ -13,7 +13,7 @@ import { HierarchyFormButton } from 'components/common/Button';
 
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
-import {financialAccountHeadDataActions} from 'store/actions/data/financialAccounting/financialAccountHead';
+import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 
@@ -32,11 +32,11 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ManufacturerOrgHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerOrgHierarchyData = [] },
-            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded , data: attributeData = [] },
-            FinancialAccounting:{
-            FinancialAccountHead : {isLoaded: isFinancialAccountHeadLoaded = false, data: financialAccount = [] },
-            DocumentDescription : {isLoaded: isDocumentDescriptionLoaded = false, data: documentDescription = []}
-            }
+            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
+            FinancialAccounting: {
+                FinancialAccountHead: { isLoaded: isFinancialAccountHeadLoaded = false, data: financialAccount = [] },
+                DocumentDescription: { isLoaded: isDocumentDescriptionLoaded = false, data: documentDescription = [] },
+            },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -77,14 +77,14 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
             fetchFinancialAccountHead: financialAccountHeadDataActions.fetchList,
             fetchDocumentDescriptionHead: documentDescriptionDataActions.fetchList,
-        
+
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocumentDescriptionHead, documentDescription,isDocumentDescriptionLoaded, fetchFinancialAccountHead,isFinancialAccountHeadLoaded,financialAccount,fetchChangeHistoryList, viewTitle, userId, changeHistoryModelOpen, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, manufacturerOrgHierarchyData, showGlobalNotification, unFilteredAttributeData }) => {
+export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocumentDescriptionHead, documentDescription, isDocumentDescriptionLoaded, fetchFinancialAccountHead, isFinancialAccountHeadLoaded, financialAccount, fetchChangeHistoryList, viewTitle, userId, changeHistoryModelOpen, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, manufacturerOrgHierarchyData, showGlobalNotification, unFilteredAttributeData }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -198,6 +198,7 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
     };
 
     const onFinish = (values) => {
+        console.log(values, 'VAL');
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, manufactureOrgParntId: codeToBeSaved };

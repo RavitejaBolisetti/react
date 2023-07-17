@@ -45,10 +45,6 @@ const AddEditFormMain = (props) => {
         form.resetFields();
         setShowForm(true);
         setCustomerType('Yes');
-        let id = Math.floor(Math.random() * 100000000 + 1);
-        form.setFieldsValue({
-            editedId: id,
-        });
     };
 
     const onEdit = (values, index) => {
@@ -151,7 +147,7 @@ const AddEditFormMain = (props) => {
                         {showForm && !editedMode && <FormContainer {...formProps} />}
                         {familyDetailList?.length > 0 ? (
                             familyDetailList?.map((item, index) => (
-                                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onCollapseChange(index)} expandIconPosition="end">
+                                <Collapse collapsible='icon' expandIcon={expandIcon} activeKey={activeKey} onChange={() => onCollapseChange(index)} expandIconPosition="end">
                                     <Panel
                                         header={
                                             <Row type="flex" justify="space-between" align="middle" size="large">

@@ -10,7 +10,7 @@ import { Row, Col, Form } from 'antd';
 
 import { bindActionCreators } from 'redux';
 import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails';
-import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
@@ -69,8 +69,8 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: otfCustomerDetailsAction.reset,
             showGlobalNotification,
 
-            listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
-            fetchPincodeDetail: geoPincodeDataActions.fetchList,
+            listPinCodeShowLoading: geoPinCodeDataActions.listShowLoading,
+            fetchPincodeDetail: geoPinCodeDataActions.fetchList,
         },
         dispatch
     ),
@@ -84,7 +84,7 @@ export const CustomerDetailsMain = (props) => {
     const [billCstmForm] = Form.useForm();
     const [formData, setFormData] = useState('');
     const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
-    const [activeKey, setActiveKey] = useState([1]);
+    const [activeKey, setActiveKey] = useState([]);
 
     useEffect(() => {
         if (userId && customerFormData) {
@@ -105,6 +105,10 @@ export const CustomerDetailsMain = (props) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message: message });
+    };
+
     const extraParams = [
         {
             key: 'otfNumber',
@@ -116,7 +120,7 @@ export const CustomerDetailsMain = (props) => {
 
     useEffect(() => {
         if (userId && selectedOrderId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -131,7 +135,7 @@ export const CustomerDetailsMain = (props) => {
         const data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onError, extraParams });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 

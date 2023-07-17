@@ -25,7 +25,7 @@ import { TermCondition } from './termsConditions';
 import { DealerHierarchy } from './dealer';
 import { PincodeDetails } from './pincodeDetails';
 import { LessorCompanyMaster } from './lessorCompanyMaster';
-import { LessorCompanyCreation } from './lessorCompanyCreation';
+import { LessorCustomerCreation } from './lessorCustomerCreation';
 import { OtfReports } from './otfReports';
 import { OTF } from './otf';
 import { Vehicle } from './vehicle';
@@ -57,7 +57,7 @@ export const data = combineReducers({
     DealerHierarchy,
     PincodeDetails,
     LessorCompanyMaster,
-    LessorCompanyCreation,
+    LessorCustomerCreation,
     OtfReports,
     OTF,
     CustomerMaster,
