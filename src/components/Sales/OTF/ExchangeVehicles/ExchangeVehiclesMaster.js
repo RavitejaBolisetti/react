@@ -103,9 +103,11 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchModelLovList: vehicleModelDetailsDataActions.fetchList,
             listModelShowLoading: vehicleModelDetailsDataActions.listShowLoading,
+            resetModel: vehicleModelDetailsDataActions.reset,
 
             fetchVariantLovList: vehicleVariantDetailsDataActions.fetchList,
             listVariantShowLoading: vehicleVariantDetailsDataActions.listShowLoading,
+            resetVariant: vehicleModelDetailsDataActions.reset,
 
             fetchList: schemeDataActions.fetchList,
             listShowLoading: schemeDataActions.listShowLoading,
@@ -127,19 +129,29 @@ const ExchangeVehiclesBase = (props) => {
     const { schemeLovData, isSchemeLovLoading, isSchemeLovDataLoaded, fetchSchemeLovList, listSchemeLovShowLoading } = props;
     const { form, selectedOrderId, formActionType, handleFormValueChange, isDataLoaded, resetData } = props;
     const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
-
+    const { resetModel, resetVariant } = props;
     const [formData, setFormData] = useState('');
     const [filteredModelData, setfilteredModelData] = useState([]);
     const [filteredVariantData, setfilteredVariantData] = useState([]);
     useEffect(() => {
-        if (exchangeData && isDataLoaded && isMakeDataLoaded && isModelDataLoaded && isVariantDataLoaded) {
+        if (exchangeData && isDataLoaded) {
             setFormData(exchangeData);
-            handleFilterChange('make', exchangeData?.make ?? '');
-            handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
+            exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
+            exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [exchangeData, isDataLoaded, isMakeDataLoaded, isModelDataLoaded, isVariantDataLoaded]);
-
+    }, [exchangeData, isDataLoaded]);
+    const makeExtraParams = ({ key, title, value, name }) => {
+        const extraParams = [
+            {
+                key: key,
+                title: title,
+                value: value,
+                name: name,
+            },
+        ];
+        return extraParams;
+    };
     const extraParams = [
         {
             key: 'otfNumber',
@@ -158,13 +170,22 @@ const ExchangeVehiclesBase = (props) => {
     };
 
     useEffect(() => {
+        if (isModelDataLoaded && modelData) {
+            setfilteredModelData(modelData);
+            resetModel();
+        }
+        if (isVariantDataLoaded && variantData) {
+            setfilteredVariantData(variantData);
+            resetVariant();
+        }
+    }, [isModelDataLoaded, variantData, modelData, isVariantDataLoaded]);
+
+    useEffect(() => {
         if (userId && selectedOrderId) {
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
             fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId });
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, userId });
             fetchMakeLovList({ setIsLoading: listMakeShowLoading, userId });
-            fetchModelLovList({ setIsLoading: listModelShowLoading, userId });
-            fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId });
         }
         return () => {
             resetData();
@@ -206,9 +227,11 @@ const ExchangeVehiclesBase = (props) => {
             }
             return;
         } else if (name === 'make') {
-            setfilteredModelData(modelData?.filter((element, index) => element?.parentKey === value));
+            // setfilteredModelData(modelData?.filter((element, index) => element?.parentKey === value));
+            fetchModelLovList({ setIsLoading: listMakeShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });
         } else if (name === 'modelGroup') {
-            setfilteredVariantData(variantData?.filter((element, index) => element?.parentKey === value));
+            // setfilteredVariantData(variantData?.filter((element, index) => element?.parentKey === value));
+            fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('model', 'model', value, 'model') });
         }
     };
     const onFinish = (values) => {
