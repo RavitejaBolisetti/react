@@ -337,7 +337,7 @@ const AddEditFormMain = (props) => {
         console.log('FormItemReturn', FormItemReturn, text, dataIndex);
         switch (dataIndex) {
             case 'serviceName': {
-                if (FormItemReturn) {
+                if (FormItemReturn && !viewMode) {
                     return (
                         <>
                             <Form.Item name="serviceName" rules={[validateRequiredSelectField('Item')]}>
@@ -352,7 +352,7 @@ const AddEditFormMain = (props) => {
                 break;
             }
             case 'make': {
-                if (FormItemReturn) {
+                if (FormItemReturn && !viewMode) {
                     return (
                         <>
                             <Form.Item name="make" rules={[validateRequiredInputField('Make')]}>
@@ -367,7 +367,7 @@ const AddEditFormMain = (props) => {
                 break;
             }
             case 'amount': {
-                if (FormItemReturn) {
+                if (FormItemReturn && !viewMode) {
                     return (
                         <Form.Item name="amount" rules={[validateRequiredInputField('Srl no'), validationFieldLetterAndNumber('Srl no')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('Srl no')} />
@@ -379,7 +379,8 @@ const AddEditFormMain = (props) => {
                 break;
             }
             default: {
-                return;
+                return text;
+
             }
         }
     };
@@ -499,7 +500,7 @@ const AddEditFormMain = (props) => {
                             >
                                 {isReadOnly && <AggregatesForm {...OptionServicesFormProps} />}
                                 <Form autoComplete="off" layout="vertical" form={tableForm}>
-                                    <DataTable  tableColumn={tableColumn({ handleEdit, identification, isEditing, handleCancel: handleTableCancel, renderFormItems, handleSave, handleDelete })} tableData={optionsServiceModified} removePagination={true} />
+                                    <DataTable tableColumn={tableColumn({ handleEdit, identification, isEditing, handleCancel: handleTableCancel, renderFormItems, handleSave, handleDelete })} tableData={optionsServiceModified} removePagination={true} />
                                 </Form>
                             </Panel>
                         </Collapse>

@@ -12,17 +12,34 @@ import styles from 'components/common/Common.module.css';
 
 export const ViewDetail = (props) => {
     const {
-        downloadFileFromButton,
+        showGlobalNotification,
+        fetchViewDocument,
+        viewListShowLoading,
+        userId,
         formActionType: { viewMode },
         supportingData,
         deleteFile,
     } = props;
+    const downloadFileFromButton = (uploadData) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: uploadData?.docId,
+                name: 'docId',
+            },
+        ];
+        const documentName = uploadData?.documentName;
+        console.log('uploadData', uploadData, 'extraParams', extraParams, 'supportingDocument', documentName);
+        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, documentName });
+    };
 
     return (
         <div className={styles.viewDrawerContainer}>
-            {supportingData?.length > 0 ? (
+            {supportingData.length > 0 ? (
                 <Card>
-                    {supportingData?.map((uploadData) => {
+                    {supportingData.map((uploadData) => {
                         return (
                             <Card
                                 className={styles.viewDocumentStrip}

@@ -139,7 +139,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const { resetData, resetViewData, detailData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { uploadDocumentFile, accessToken, token } = props;
     
-    const { authorityShowLoading, isAuthorityDataLoaded, isAuthorityDataLoading, authorityData, typeData, lessorData } = props;
+    const { authorityShowLoading, isAuthorityDataLoaded, isAuthorityDataLoading, authorityData, typeData } = props;
     const { saveAuthorityData, isViewDataLoaded, isLoading, viewListShowLoading, fetchViewDocument, viewDocument } = props;
     
     const [form] = Form.useForm();

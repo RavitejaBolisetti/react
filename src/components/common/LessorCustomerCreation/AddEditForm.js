@@ -4,38 +4,26 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Space, Form, Select, Upload, Button, Empty, Divider, Typography } from 'antd';
-
-import { FiEye, FiTrash } from 'react-icons/fi';
+import { Space, Form, Select, Button } from 'antd';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { UploadUtil } from 'utils/Upload';
 
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
-const { Dragger } = Upload;
-const { Text, Title } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { isViewDataLoaded, resetData, resetViewData, form, formData, onCloseAction, onFinish, onFinishFailed } = props;
+    const { resetData, form, formData, onCloseAction, onFinish, onFinishFailed } = props;
 
     const { buttonData, setButtonData, handleButtonClick } = props;
-    const { lessorData, fetchList, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, emptyList, setEmptyList } = props;
+    const { lessorData, fetchList, typeData, userId, showGlobalNotification } = props;
     const { downloadForm, isDataLoaded, listLessorShowLoading, stateData, viewListShowLoading, fetchViewDocument } = props;
 
-    useEffect(() => {
-        if (isViewDataLoaded && viewDocument) {
-            let a = document.createElement('a');
-            a.href = `data:image/png;base64,${viewDocument?.base64}`;
-            a.download = viewDocument?.fileName;
-            a.click();
-            resetViewData();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isViewDataLoaded, viewDocument]);
+    const { uploadProps } = props;
 
     useEffect(() => {
         if (isDataLoaded && lessorData) {
@@ -55,7 +43,7 @@ const AddEditFormMain = (props) => {
 
     const handleTemplateDownLoad = () => {
         const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage , placement: 'bottomRight'});
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
         };
 
         const onErrorAction = (res) => {
@@ -91,15 +79,13 @@ const AddEditFormMain = (props) => {
 
     const [showStatus, setShowStatus] = useState('');
 
-    const onDrop = (e) => {};
-
     const handleDownload = (file) => {
         const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage , placement: 'bottomRight'});
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
         };
 
         const onErrorAction = (res) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res , placement: 'bottomRight'});
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
         };
         if (typeof form.getFieldValue('stateCode') === 'undefined') {
             fetchList({ setIsLoading: listLessorShowLoading, isDataLoaded, userId, onSuccessAction, onErrorAction });
@@ -112,63 +98,6 @@ const AddEditFormMain = (props) => {
             ];
             fetchList({ setIsLoading: listLessorShowLoading, isDataLoaded, userId, extraParams, onSuccessAction, onErrorAction });
         }
-    };
-
-    const uploadProps = {
-        multiple: false,
-        beforeUpload: (file) => {
-            const isExcel = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-            if (!isExcel) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not a excel file`, placement: 'bottomRight' });
-            }
-            return isExcel || Upload.LIST_IGNORE;
-        },
-        showUploadList: {
-            showRemoveIcon: true,
-            showDownloadIcon: false,
-            removeIcon: <FiTrash />,
-            downloadIcon: <FiEye style={{ color: '#ff3e5b' }} />,
-            showProgress: true,
-        },
-        progress: { strokeWidth: 3, showInfo: true },
-        onDrop,
-        onChange: (info) => {
-            handleFormValueChange();
-            const { status } = info.file;
-            setShowStatus(info.file);
-            if (status === 'done') {
-                setUploadedFile(info?.file?.response?.docId);
-            }
-        },
-    };
-
-    useEffect(() => {
-        if (showStatus.status === 'done') {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}`, placement: 'bottomRight' });
-        } else if (showStatus.status === 'error') {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error', placement: 'bottomRight' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showStatus]);
-
-    const handleUpload = (options) => {
-        const { file, onSuccess, onError } = options;
-        setEmptyList(true);
-
-        const data = new FormData();
-        data.append('applicationId', 'app');
-        data.append('file', file);
-
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        uploadDocumentFile(requestData);
     };
 
     const selectProps = {
@@ -201,8 +130,8 @@ const AddEditFormMain = (props) => {
                             </Space>
                         </Space>
                     </div>
-                    <Divider className={`${styles.marT20} ${styles.marB20}`} />
-                    <Space direction="vertical" style={{ width: '100%' }}>
+                    {/* <Divider className={`${styles.marT20} ${styles.marB20}`} /> */}
+                    {/* <Space direction="vertical" style={{ width: '100%' }}>
                         <div className={styles.uploadContainer} style={{ opacity: '100' }}>
                             <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
                                 <Empty
@@ -219,7 +148,8 @@ const AddEditFormMain = (props) => {
                                 </Button>
                             </Dragger>
                         </div>
-                    </Space>
+                    </Space> */}
+                    <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
                 </>
             )}
             {downloadForm && (
