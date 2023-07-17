@@ -12,22 +12,19 @@ import { tableColumn } from './tableColumn';
 import AdvanceOtfFilter from './AdvanceOtfFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
-import { OTFMainConatiner } from './OTFMainConatiner';
+import { VehicleReceiptMainConatiner } from './VehicleReceiptMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { OTF_STATUS } from 'constants/OTFStatus';
-import { OTF_SECTION } from 'constants/OTFSection';
+import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-import { LANGUAGE_EN } from 'language/en';
-import { validateOTFMenu } from './utils/validateOTFMenu';
+import { validateVehicleReceiptMenu } from './utils/validateVehicleReceiptMenu';
 import { FilterIcon } from 'Icons';
-
-import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -40,7 +37,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Order Tracking Form';
+    const moduleTitle = 'Vehicle Receipt';
     let returnValue = {
         userId,
         typeData,
@@ -73,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const OtfMasterBase = (props) => {
+export const VehicleReceiptMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, otfStatusList } = props;
@@ -105,12 +102,7 @@ export const OtfMasterBase = (props) => {
         closeBtn: false,
         cancelBtn: false,
         formBtnActive: false,
-        transferBtn: false,
-        allotBtn: false,
-        unAllotBtn: false,
-        invoiceBtn: false,
         deliveryNote: false,
-        cancelOtfBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -177,7 +169,7 @@ export const OtfMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 100,
+                value: 1000,
                 canRemove: true,
                 filter: false,
             },
@@ -208,9 +200,9 @@ export const OtfMasterBase = (props) => {
     }, [userId, extraParams]);
 
     useEffect(() => {
-        const defaultSection = OTF_SECTION.OTF_DETAILS.id;
+        const defaultSection = VEHICLE_RECEIPT_SECTION.SUPPLIER_INVOICE_DETAILS.id;
         setDefaultSection(defaultSection);
-        setSetionName(OTF_SECTION);
+        setSetionName(VEHICLE_RECEIPT_SECTION);
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -246,7 +238,7 @@ export const OtfMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
-                const nextSection = Object.values(sectionName)?.find((i) => validateOTFMenu({ item: i, status: selectedOrder?.orderStatus, otfData }) && i.id > currentSection);
+                const nextSection = Object.values(sectionName)?.find((i) => validateVehicleReceiptMenu({ item: i, status: selectedOrder?.orderStatus, otfData }) && i.id > currentSection);
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
@@ -269,9 +261,7 @@ export const OtfMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
-        if (filterString) {
-            setShowDataLoading(true);
-        }
+        setShowDataLoading(true);
         setFilterString();
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
@@ -334,7 +324,6 @@ export const OtfMasterBase = (props) => {
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
-        noDataMessage: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -446,14 +435,14 @@ export const OtfMasterBase = (props) => {
         <>
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.tableProduct}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={true} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
-            <OTFMainConatiner {...containerProps} />
+            <VehicleReceiptMainConatiner {...containerProps} />
         </>
     );
 };
 
-export const OtfMaster = connect(mapStateToProps, mapDispatchToProps)(OtfMasterBase);
+export const VehicleReceiptMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleReceiptMasterBase);
