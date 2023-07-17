@@ -11,14 +11,12 @@ import { convertCalenderDate } from 'utils/formatDateTime';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { disablePastDate } from 'utils/disableDate';
+import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'components/common/Common.module.css';
 
-const { Option } = Select;
-
 const AddEditFormMain = (props) => {
     const { formData, formActionType, typeData, salesConsultantLov, exchangeValue, loyaltyValue } = props;
-
     return (
         <Card className={styles.drawerCardView}>
             <Row gutter={20}>
@@ -34,14 +32,14 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.saleType} name="saleType" label="Sale Type" rules={[validateRequiredSelectField('Sale Type')]}>
-                        <Select placeholder="Select" showSearch allowClear options={typeData['SALE_TYP']} fieldNames={{ label: 'value', value: 'key' }} />
+                        {customSelectBox({ data: typeData['SALE_TYP'] })}
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.priceType} label="Price Type" name="priceType">
-                        <Select placeholder="Select" showSearch allowClear options={typeData['PRC_TYP']} fieldNames={{ label: 'value', value: 'key' }} />
+                        {customSelectBox({ data: typeData['PRC_TYP'] })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -51,11 +49,7 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.saleConsultant} name="saleConsultant" label="Sales Consultant" rules={[validateRequiredSelectField('Sales Consultant')]}>
-                        <Select placeholder="Select" showSearch allowClear>
-                            {salesConsultantLov?.map((item) => (
-                                <Option value={item.key}>{item.value}</Option>
-                            ))}
-                        </Select>
+                        {customSelectBox({ data: salesConsultantLov })}
                     </Form.Item>
                 </Col>
             </Row>
@@ -72,14 +66,14 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.deliveryAt} label="Delivery At" name="deliveryAt" rules={[validateRequiredSelectField('Delivery At')]}>
-                        <Select placeholder="Select" showSearch allowClear options={typeData['DLVR_AT']} fieldNames={{ label: 'value', value: 'key' }} />
+                        {customSelectBox({ data: typeData['DLVR_AT'] })}
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.referral} label="Referral" name="referral">
-                        <Select placeholder="Select" showSearch allowClear options={typeData['RFRL']} fieldNames={{ label: 'value', value: 'key' }} />
+                        {customSelectBox({ data: typeData['RFRL'] })}
                     </Form.Item>
                 </Col>
 
@@ -102,7 +96,7 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.financeArrangedBy} name="financeArrangedBy" label="Finance Arranged By">
-                        <Select placeholder="Select" showSearch allowClear options={typeData['FNC_ARNGD']} fieldNames={{ label: 'value', value: 'key' }} />
+                        {customSelectBox({ data: typeData['FNC_ARNGD'] })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
