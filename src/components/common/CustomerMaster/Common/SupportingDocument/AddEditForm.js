@@ -38,7 +38,7 @@ const AddEditForm = (uploadProps) => {
                         </Select>
                     </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.inputWrapper}>
                     <Form.Item label="File Name" name="documentName">
                         <Input placeholder={preparePlaceholderText('File Name')} rules={[validateRequiredInputField('fileName')]} allowClear />
                     </Form.Item>

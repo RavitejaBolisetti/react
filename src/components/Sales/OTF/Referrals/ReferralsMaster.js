@@ -76,7 +76,6 @@ const ReferralsMasterBase = (props) => {
     const [viewFormData, setViewFormData] = useState();
     const [resetField, setResetField] = useState(false);
     const { filterString, setFilterString } = props;
-    const [vehicleRegNum, setVehicleRegNum] = useState();
 
     useEffect(() => {
         setFormData(referralData);
@@ -255,7 +254,6 @@ const ReferralsMasterBase = (props) => {
         optionType: typeData[PARAM_MASTER?.CUST_VEH_SEARCH?.id] || typeData[PARAM_MASTER?.CUST_MST?.id]?.filter((i) => ['registrationNumber', 'customerName', 'customerId']?.includes(i?.key)),
         filterString,
         setFilterString,
-        vehicleRegNum,
         typeData,
         searchForm,
     };

@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Input, Form, Select, DatePicker, Switch, Card } from 'antd';
+import { Row, Col, Input, Form, DatePicker, Switch, Card } from 'antd';
 
 import { convertCalenderDate } from 'utils/formatDateTime';
 
