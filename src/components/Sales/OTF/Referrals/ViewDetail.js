@@ -8,6 +8,7 @@ import { Card, Descriptions } from 'antd';
 import styles from 'components/common/Common.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
+import { DATA_TYPE } from 'constants/dataType';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, typeData } = props;
@@ -30,7 +31,7 @@ const ViewDetailMain = (props) => {
                 <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Email ID">{checkAndSetDefaultValue(formData?.emailId, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(formData?.dob, isLoading, 'date')}</Descriptions.Item>
+                <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(formData?.dob, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

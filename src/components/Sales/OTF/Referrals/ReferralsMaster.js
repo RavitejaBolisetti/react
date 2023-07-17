@@ -9,7 +9,7 @@ import { Row, Col, Form } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
+import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
 import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -54,9 +54,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchCustomerList: customerDetailDataActions.fetchList,
-            listCustomerShowLoading: customerDetailDataActions.listShowLoading,
             fetchList: otfReferralsDataActions.fetchList,
+            fetchCustomerList: otfReferralsDataActions.fetchData,
             setFilterString: otfReferralsDataActions.setFilter,
             listShowLoading: otfReferralsDataActions.listShowLoading,
             resetData: otfReferralsDataActions.reset,
@@ -109,12 +108,6 @@ const ReferralsMasterBase = (props) => {
         if (userId && filterString?.searchType && filterString?.searchParam) {
             const searchParams = [
                 {
-                    key: 'customerType',
-                    title: 'Customer Type',
-                    value: 'ALL',
-                    canRemove: true,
-                },
-                {
                     key: 'searchType',
                     title: 'Type',
                     value: filterString?.searchType,
@@ -145,6 +138,7 @@ const ReferralsMasterBase = (props) => {
             ];
 
             fetchCustomerList({
+                customURL,
                 setIsLoading: listShowLoading,
                 extraParams: searchParams,
                 onSuccessAction: (res) => {
@@ -251,7 +245,7 @@ const ReferralsMasterBase = (props) => {
         onFinishFailed,
         onSearch,
         resetField,
-        optionType: typeData[PARAM_MASTER?.CUST_VEH_SEARCH?.id] || typeData[PARAM_MASTER?.CUST_MST?.id]?.filter((i) => ['registrationNumber', 'customerName', 'customerId']?.includes(i?.key)),
+        optionType: typeData[PARAM_MASTER?.CUST_VEH_SEARCH?.id],
         filterString,
         setFilterString,
         typeData,

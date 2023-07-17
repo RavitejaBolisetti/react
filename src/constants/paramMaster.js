@@ -188,4 +188,8 @@ export const PARAM_MASTER = {
         id: 'YES_NO_FLG',
         title: 'Yes No Flag',
     },
+    CUST_VEH_SEARCH: {
+        id: 'CUST_VEH_SEARCH',
+        title: 'Yes CUST_VEH_SEARCH Flag',
+    },
 };

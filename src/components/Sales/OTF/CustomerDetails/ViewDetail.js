@@ -8,6 +8,7 @@ import { Col, Row, Space, Collapse, Descriptions } from 'antd';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { DATA_TYPE } from 'constants/dataType';
 
 import styles from 'components/common/Common.module.css';
 
@@ -67,7 +68,7 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData.bookingCustomer?.gstin, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Driving License">{checkAndSetDefaultValue(formData.bookingCustomer?.drivingLicense, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Trade Licence">{checkAndSetDefaultValue(formData.billingCustomer?.tradeLicense, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(bookingBirthDate, isLoading, 'date')} </Descriptions.Item>
+                                    <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(bookingBirthDate, isLoading, DATA_TYPE?.DATE?.key)} </Descriptions.Item>
                                     {/* <Descriptions.Item label="Do You Want to Add Corporate Details">{checkAndSetDefaultValue(formData.bookingCustomer?.sameAsBookingCustomer, isLoading)}</Descriptions.Item> */}
                                 </Descriptions>
                             </Panel>
@@ -92,7 +93,7 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData.billingCustomer?.gstin, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Driving License">{checkAndSetDefaultValue(formData.billingCustomer?.drivingLicense, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Trade Licence">{checkAndSetDefaultValue(formData.billingCustomer?.tradeLicense, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(billingBirthDate, isLoading, 'date')}</Descriptions.Item>
+                                    <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(billingBirthDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                     {/* <Descriptions.Item label="Do You Want to Add Corporate Details">{checkAndSetDefaultValue(formData.billingCustomer?.sameAsBookingCustomer, isLoading)}</Descriptions.Item> */}
                                 </Descriptions>
                             </Panel>

@@ -136,7 +136,7 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData.billingCustomer?.gstin, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Driving License">{checkAndSetDefaultValue(formData.billingCustomer?.drivingLicense, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Trade Licence">{checkAndSetDefaultValue(formData.billingCustomer?.tradeLicense, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(billingBirthDate, isLoading, 'date')}</Descriptions.Item>
+                                    <Descriptions.Item label="Birth Date">{checkAndSetDefaultValue(billingBirthDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                     {/* <Descriptions.Item label="Do You Want to Add Corporate Details">{checkAndSetDefaultValue(formData.billingCustomer?.sameAsBookingCustomer, isLoading)}</Descriptions.Item> */}
                                 </Descriptions>
                             </Panel>
