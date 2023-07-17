@@ -3,8 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { OtfMaster } from './OTF';
-import { VehicleDetailMaster } from './VehicleDetail';
-import { VehicleReceiptMaster } from './VehicleReceipt';
+import { VehicleReceiptMasterPage } from './VehicleReceiptMasterPage';
 
-export { OtfMaster, VehicleDetailMaster, VehicleReceiptMaster };
+export default VehicleReceiptMasterPage;
