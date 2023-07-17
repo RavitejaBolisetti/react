@@ -183,7 +183,7 @@ const VehicleDetailsMasterMain = (props) => {
                 {
                     key: 'prodctCode',
                     title: 'prodctCode',
-                    value: VehicleDetailsData?.model,
+                    value: VehicleDetailsData?.modelCode,
                     name: 'Product Code',
                 },
             ];

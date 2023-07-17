@@ -10,9 +10,10 @@ import { bindActionCreators } from 'redux';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 
-import { FiEye, FiTrash } from 'react-icons/fi';
+import { FiEye } from 'react-icons/fi';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { HiCheck } from 'react-icons/hi';
-import styles from 'components/common/Common.module.css';
+import styles from './UploadUtils.module.css';
 
 const { Dragger } = Upload;
 const { Text, Title } = Typography;
@@ -99,7 +100,7 @@ const UploadUtilsMain = (props) => {
             showRemoveIcon: true,
             showDownloadIcon: true,
             previewIcon: <FiEye onClick={(e) => console.log(e, 'custom removeIcon event')} />,
-            removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
+            removeIcon: <AiOutlineCloseCircle onClick={(e) => console.log(e, 'custom removeIcon event')} />,
             showProgress: true,
         },
         beforeUpload: (file) => {
@@ -153,19 +154,20 @@ const UploadUtilsMain = (props) => {
             <div className={styles.uploadDragger}>
                 {(!isReplacing && uploadImgDocId) || formActionType?.viewMode ? (
                     <>
-                        <Card className={styles.dashedBorder}>
+                        <Card>
                             <Space direction="vertical">
                                 <Space>
-                                    <Avatar size={40} icon={<HiCheck />} />
-                                    <div>
+                                    <Avatar size={24} icon={<HiCheck />} />
+                                    <Title level={5}>{uploadImgTitle || 'Contact Picture'}</Title>
+                                    {/* <div>
                                         <Title level={5}>{uploadImgTitle || 'Profile Picture'}</Title>
                                         <Text>File type should be .png and .jpg and max file size to be 5Mb</Text>
-                                    </div>
+                                    </div> */}
                                 </Space>
                                 <Space>
                                     <Image
                                         style={{ borderRadius: '6px' }}
-                                        width={150}
+                                        width={80}
                                         preview={{
                                             visible,
                                             scaleStep: 0.5,
@@ -174,7 +176,7 @@ const UploadUtilsMain = (props) => {
                                                 setVisible(value);
                                             },
                                         }}
-                                        placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={200} />}
+                                        placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={80} />}
                                         src={`data:image/png;base64,${viewDocument?.base64}`}
                                     />
                                     {!formActionType?.viewMode && (
@@ -193,21 +195,18 @@ const UploadUtilsMain = (props) => {
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
                                     imageStyle={{
-                                        height: 100,
+                                        height: 80,
                                     }}
                                     description={
                                         <>
-                                            <span>{uploadTitle || 'Upload Your Profile Picture '}</span>
-                                            <span>
-                                                <br />
-                                                {uploadDescription || 'File type should be .png and .jpg and max file size to be 5MB  '}
-                                            </span>
+                                            <Title level={5}>{uploadTitle || 'Upload your profile picture '}</Title>
+                                            <Text>{uploadDescription || '(File type should be png, jpg or pdf and max file size to be 5Mb)'}</Text>
                                         </>
                                     }
                                 />
-                                <Button className={styles.marR20} type="primary">
-                                    {uploadBtnName || 'Upload File'}
-                                </Button>
+                                {/* <Title level={5}>{uploadTitle || 'Upload your profile picture '}</Title>
+                                <Text>{uploadDescription || '(File type should be png, jpg or pdf and max file size to be 5Mb)'}</Text> */}
+                                <Button type="primary">{uploadBtnName || 'Upload File'}</Button>
                                 {isReplacing && (
                                     <Button onClick={onCancelReplac} danger>
                                         Cancel
