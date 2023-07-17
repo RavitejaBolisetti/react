@@ -5,4 +5,5 @@
  */
 
 import { ChangeHistory1 } from './ChangeHistory';
+
 export { ChangeHistory1 };
