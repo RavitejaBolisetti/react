@@ -62,7 +62,8 @@ export const dataActions = (params) => {
             setIsLoading(true);
 
             const onError = (message) => {
-                onErrorAction && onErrorAction(message);
+                onErrorAction && onErrorAction(message);                
+                dispatch(recieveData([]));
             };
 
             const onSuccess = (res) => {
@@ -103,7 +104,11 @@ export const dataActions = (params) => {
         fetchFilteredList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
             const { setIsLoading, data } = params;
             setIsLoading(true);
-            const onError = (errorMessage) => message.error(errorMessage);
+
+            const onError = (errorMessage) => {
+                message.error(errorMessage);
+                dispatch(filteredRecieveData([]));
+            };
 
             const onSuccess = (res) => {
                 if (res?.data) {
@@ -137,6 +142,7 @@ export const dataActions = (params) => {
 
             const onError = (message) => {
                 onErrorAction(message);
+                dispatch(recieveDataDetail([]));
             };
 
             const onSuccess = (res) => {
@@ -144,6 +150,8 @@ export const dataActions = (params) => {
                     onSuccessAction && onSuccessAction(res);
                     dispatch(recieveDataDetail(res?.data));
                 } else {
+                    dispatch(recieveDataDetail([]));
+
                     onError(LANGUAGE_EN.INTERNAL_SERVER_ERROR);
                 }
             };
@@ -201,10 +209,11 @@ export const dataActions = (params) => {
         }),
 
         changeHistory: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, onSuccessAction = undefined, onErrorAction = undefined, extraParams = [] } = params;
+            const { customURL = '', setIsLoading, data, onSuccessAction = undefined, onErrorAction = undefined, extraParams = [] } = params;
             setIsLoading(true);
 
             const onError = (message) => {
+                dispatch(recieveChangeHistoryData([]));
                 onErrorAction && onErrorAction(message);
             };
 
@@ -214,7 +223,6 @@ export const dataActions = (params) => {
                     dispatch(recieveChangeHistoryData(res?.data));
                 } else {
                     dispatch(recieveChangeHistoryData([]));
-                    // onErrorAction(res?.responseMessage || LANGUAGE_EN.INTERNAL_SERVER_ERROR);
                 }
             };
 
@@ -228,7 +236,7 @@ export const dataActions = (params) => {
             const apiCallParams = {
                 data,
                 method: 'get',
-                url: inBaseURL + '/changehisotry' + (sExtraParamsString ? sExtraParamsString : ''),
+                url: (customURL ? customURL : inBaseURL + '/changehistory') + (sExtraParamsString ? sExtraParamsString : ''),
                 token,
                 accessToken,
                 userId,

@@ -16,6 +16,8 @@ import styles from 'components/common/Common.module.css';
 
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
+import { BASE_URL_OTF_CHANGE_HISTORY as customURL } from 'constants/routingApi';
+
 import { Row, Button, Col } from 'antd';
 
 const mapStateToProps = (state) => {
@@ -49,9 +51,10 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangeHistoryMain = ({ fetchChangeHistoryList, onCloseAction, listShowChangeHistoryLoading, isChangeHistoryLoading, userId, isChangeHistoryLoaded, changeHistoryData, selectedOrderId }) => {
+const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChangeHistoryLoading, isChangeHistoryLoading, userId, isChangeHistoryLoaded, changeHistoryData, selectedOrderId }) => {
+   
     useEffect(() => {
-        if (!isChangeHistoryLoaded) {
+        if (selectedOrderId) {
             const extraParams = [
                 {
                     key: 'otfNumber',
@@ -60,44 +63,45 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, onCloseAction, listShowChan
                     name: 'OTF Number',
                 },
             ];
-            fetchChangeHistoryList({ setIsLoading: listShowChangeHistoryLoading, userId, extraParams });
+            fetchOTFChangeHistory({ customURL, setIsLoading: listShowChangeHistoryLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isChangeHistoryLoaded]);
+    }, [selectedOrderId]);
 
     const tableColumn = [
         tblPrepareColumns({
             title: 'Modified Date & Time',
             dataIndex: 'modifiedDate',
-            render: (text) => convertDateTime(text),
+            render: (text) => <div>{convertDateTime(text)}</div>,
+        }),
+        tblPrepareColumns({
+            title: 'Field Name',
+            dataIndex: 'fieldName',
+        }),
+        tblPrepareColumns({
+            title: 'Old Value',
+            dataIndex: 'oldValue',
+        }),
+        tblPrepareColumns({
+            title: 'New Value',
+            dataIndex: 'newValue',
         }),
         tblPrepareColumns({
             title: 'Modified By',
             dataIndex: 'modifiedBy',
-        }),
-        tblPrepareColumns({
-            title: 'AttriActivity Type',
-            dataIndex: 'activityType',
-        }),
-        tblPrepareColumns({
-            title: 'Activity Description',
-            dataIndex: 'activityDescription',
-        }),
-        tblPrepareColumns({
-            title: 'Remarks',
-            dataIndex: 'remarks',
         }),
     ];
 
     const tableProps = {
         isChangeHistoryLoading,
         tableColumn,
-        tableData: [{ modifiedDate: '', modifiedBy: 'Shakambhar', activityType: 'Cancellation', activityDescription: 'Otf Cancellation', remarks: 'Done' }],
+        tableData: changeHistoryData?.otfChangeHistoryListResponse || [],
     };
+
     return (
         <div className={ChangeHistoryStyles.ChangeHistoryDrawer}>
             <div className={ChangeHistoryStyles.changeHistoryMainContainer}>
-                <h2>OTF NUMBER: {selectedOrderId}</h2>
+                <h4>OTF NUMBER: {selectedOrderId}</h4>
                 <div className={ChangeHistoryStyles.ChangeHistoryContainer}>
                     <DataTable {...tableProps} />
                 </div>

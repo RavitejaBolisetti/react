@@ -88,6 +88,12 @@ export const OTFFormButton = ({ record, handleChangeHistory, onCloseAction, butt
                     </Button>
                 )}
 
+                {buttonData?.changeHistory && (
+                    <Button onClick={handleChangeHistory} type="primary">
+                        Change History
+                    </Button>
+                )}
+
                 {buttonData?.nextBtn && !isLastSection && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                         Next
@@ -97,12 +103,6 @@ export const OTFFormButton = ({ record, handleChangeHistory, onCloseAction, butt
                 {buttonData?.saveBtn && (
                     <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                         {saveButtonName}
-                    </Button>
-                )}
-
-                {buttonData?.changeHistory && (
-                    <Button onClick={handleChangeHistory} type="primary">
-                        {`Change History`}
                     </Button>
                 )}
             </Col>

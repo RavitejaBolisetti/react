@@ -17,7 +17,7 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { OTF_SECTION } from 'constants/OTFSection';
-import { CancellationMaster } from './OTF Cancellation/CancellationMaster';
+import { CancellationMaster } from './OTFCancellation/CancellationMaster';
 import { TransferMaster } from './OTFTransfer/TransferMaster';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -205,7 +205,7 @@ export const OtfMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 100,
+                value: 10,
                 canRemove: true,
                 filter: false,
             },
@@ -568,6 +568,7 @@ export const OtfMasterBase = (props) => {
         typeData,
         otfData,
         saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        handleChangeHistory,
     };
 
     const onCancelCloseAction = () => {
