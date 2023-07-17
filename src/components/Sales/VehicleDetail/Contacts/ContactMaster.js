@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { vehicleContactDataActions } from 'store/actions/data/vehicle/contacts';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { CustomerFormButton } from 'components/common/CustomerMaster/CustomerFormButton/CustomerFormButton';
+import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 import AddEditForm from './AddEditForm';
 import ViewList from './ViewList';
 
@@ -273,7 +273,7 @@ const ContactMasterMain = (props) => {
                 </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <CustomerFormButton {...props} />
+                        <VehicleDetailFormButton {...props} />
                     </Col>
                 </Row>
             </Form>

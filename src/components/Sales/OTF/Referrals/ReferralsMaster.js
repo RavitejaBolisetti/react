@@ -29,7 +29,6 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
                 Referrals: { isLoaded: isDataLoaded = false, isLoading, data: referralData = [], filter: filterString },
-                // ReferralDetails: { isLoaded: isReferralDataLoaded = false, isLoading: isReferralLoading, data: referralDetail = [] },
             },
         },
         customer: {
