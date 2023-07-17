@@ -32,20 +32,21 @@ const mapStateToProps = (state) => {
         data: {
             OTF: {
                 ExchangeVehicle: { isLoaded: isDataLoaded = false, isLoading, data: exchangeData = [] },
-                FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isloading: isFinanceLovLoading, data: financeLovData = [] },
-                SchemeDetail: { isFilteredListLoaded: isSchemeLovDataLoaded = false, isloading: isSchemeLovLoading, filteredListData: schemeLovData = [] },
+                FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isLoading: isFinanceLovLoading, data: financeLovData = [] },
+                SchemeDetail: { isFilteredListLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, filteredListData: schemeLovData = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Vehicle: {
-                MakeVehicleDetails: { isLoaded: isMakeDataLoaded = false, isMakeLoading, data: makeData = [] },
-                ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isModelLoading, data: modelData = [] },
-                VariantVehicleDetails: { isLoaded: isVariantDataLoaded = false, isVariantLoading, data: variantData = [] },
+                MakeVehicleDetails: { isLoaded: isMakeDataLoaded = false, isLoading: isMakeLoading, data: makeData = [] },
+                ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
+                VariantVehicleDetails: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
             },
         },
         customer: {
             customerDetail: { isLoaded: isDataCustomerLoaded = false, isLoading: isCustomerLoading = false, data: customerDetail = [] },
         },
     } = state;
+    console.log('state', state);
 
     const moduleTitle = 'Exchange Vehichle';
 
@@ -232,7 +233,7 @@ const ExchangeVehiclesBase = (props) => {
                 modelGroup: undefined,
                 variant: undefined,
             });
-            fetchModelLovList({ setIsLoading: listMakeShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });
+            fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });
         } else if (name === 'modelGroup') {
             form.setFieldsValue({
                 variant: undefined,
