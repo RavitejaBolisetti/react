@@ -6,10 +6,10 @@
 import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import { VehicleDetailMaster } from 'components/Sales';
+import { VehiclePurchaseOrderMaster } from 'components/Sales';
 
 const VehiclePurchaseOrderMasterBase = (props) => {
-    const pageTitle = 'Vehicle Purchase Order22';
+    const pageTitle = 'Vehicle Purchase Order';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
@@ -18,7 +18,7 @@ const VehiclePurchaseOrderMasterBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <VehicleDetailMaster />
+            <VehiclePurchaseOrderMaster />
         </>
     );
 };

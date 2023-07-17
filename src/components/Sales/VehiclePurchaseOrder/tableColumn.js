@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
-// import { VehicleDetailStatusTag } from './utils/VehicleDetailStatusTag';
+import { VechilePurchaseOrderStatusTag } from './utils/VechilePurchaseOrderStatusTag';
 // import { convertDateMonthYear } from 'utils/formatDateTime';
 
 import styles from 'components/common/Common.module.css';
@@ -12,27 +12,28 @@ import styles from 'components/common/Common.module.css';
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Registration No.',
+            title: 'Purchase Order ID',
             dataIndex: 'registrationNumber',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'Customer Name',
+            title: 'Purchase Order Date ',
             dataIndex: 'customerName',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'Mobile Number',
+            title: 'Order Type',
             dataIndex: 'mobileNumber',
             width: '14%',
         }),
 
         tblPrepareColumns({
-            title: 'Model Description',
-            dataIndex: 'model',
+            title: 'Status',
+            dataIndex: 'orderStatus',
             width: '14%',
+            render: (_, record) => VechilePurchaseOrderStatusTag(record.orderStatus),
         }),
 
         tblActionColumn({ handleButtonClick, styles, width: '8%' }),

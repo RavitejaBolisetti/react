@@ -3,15 +3,5 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const VEHICLE_PURCHASE_ORDER_SECTION = {
-    PURCHASE_ORDER: {
-        id: 1,
-        title: 'Purchase Order',
-        displayOnList: true,
-    },
-    PURCHASE_ORDER: {
-        id: 1,
-        title: 'Purchase Order',
-        displayOnList: true,
-    },
-};
+import { VehiclePurchaseOrderDetailMaster } from './VehiclePurchaseOrderDetailMaster';
+export { VehiclePurchaseOrderDetailMaster };

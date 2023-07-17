@@ -14,12 +14,10 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { VehiclePurchaseOrderMainContainer } from './VehiclePurchaseOrderMainContainer';
-import { AdvancedSearch } from './AdvancedSearch';
+// import { AdvancedSearch } from './AdvancedSearch';
 
 import { VEHICLE_DETAIL_STATUS } from 'constants/VehicleDetailStatus';
-// import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
-import { VEHICLE_PURCHASE_ORDER_SECTION } from 'constants/VehicleDetailSection';
-
+import { VEHICLE_PURCHASE_ORDER_SECTION } from 'constants/VehiclePurchaseOrderSection';
 
 import { validateRequiredInputField } from 'utils/validation';
 
@@ -212,9 +210,9 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     }, [userId, extraParams]);
 
     useEffect(() => {
-        const defaultSection = VEHICLE_DETAIL_SECTION.VEHICLE_DETAILS.id;
+        const defaultSection = VEHICLE_PURCHASE_ORDER_SECTION.PURCHASE_ORDER.id;
         setDefaultSection(defaultSection);
-        setSetionName(VEHICLE_DETAIL_SECTION);
+        setSetionName(VEHICLE_PURCHASE_ORDER_SECTION);
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -306,8 +304,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {   
-
+    const onFinishFailed = (errorInfo) => {
         return;
     };
 
@@ -339,7 +336,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         }
     };
 
-    const title = 'Search Vehicle22';
+    const title = 'Search Vehicle';
 
     const advanceFilterResultProps = {
         extraParams,
@@ -418,7 +415,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                     <ListDataTable isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
-            <VehicleDetailMainContainer {...containerProps} />
+            <VehiclePurchaseOrderMainContainer {...containerProps} />
         </>
     );
 };

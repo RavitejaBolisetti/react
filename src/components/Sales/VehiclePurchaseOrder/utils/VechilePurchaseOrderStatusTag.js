@@ -7,7 +7,7 @@ import { Tag } from 'antd';
 import { VEHICLE_DETAIL_STATUS } from 'constants/VehicleDetailStatus';
 import styles from 'components/common/Common.module.css';
 
-export const VehicleDetailStatusTag = (status) => {
+export const VechilePurchaseOrderStatusTag = (status) => {
     let tag = '';
     switch (status) {
         case VEHICLE_DETAIL_STATUS.BOOKED.title:
