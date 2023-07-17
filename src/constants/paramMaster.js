@@ -184,4 +184,8 @@ export const PARAM_MASTER = {
         id: 'VH_DTLS_SER',
         title: 'Vehicle Detail List',
     },
+    YES_NO_FLG: {
+        id: 'YES_NO_FLG',
+        title: 'Yes No Flag',
+    },
 };
