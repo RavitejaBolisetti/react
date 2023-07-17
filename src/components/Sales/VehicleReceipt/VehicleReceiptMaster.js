@@ -19,7 +19,6 @@ import { OTF_STATUS } from 'constants/OTFStatus';
 import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -60,9 +59,10 @@ const mapDispatchToProps = (dispatch) => ({
             fetchOTFSearchedList: otfDataActions.fetchList,
             setFilterString: otfDataActions.setFilter,
             resetData: otfDataActions.reset,
-            fetchList: otfDetailsDataActions.fetchList,
-            saveData: otfDetailsDataActions.saveData,
-            listShowLoading: otfDetailsDataActions.listShowLoading,
+
+            fetchList: otfDataActions.fetchList,
+            saveData: otfDataActions.saveData,
+            listShowLoading: otfDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
