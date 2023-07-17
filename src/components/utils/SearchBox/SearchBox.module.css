@@ -220,6 +220,6 @@
     line-height: 23px !important;
 }
 
-.selectSearchBg :global .ant-select-single .ant-select-selector .ant-select-selection-item {
+.drawerBodyRight .selectSearchBg :global .ant-select-single .ant-select-selector .ant-select-selection-item {
     line-height: 26px !important;
 }
