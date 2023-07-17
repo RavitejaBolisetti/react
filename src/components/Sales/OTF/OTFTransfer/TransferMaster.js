@@ -13,12 +13,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-import { Form } from 'antd';
-
-import { cancellationDataActions } from 'store/actions/data/otf/otfCancellation';
-import { btnVisiblity } from 'utils/btnVisiblity';
-
-import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 
@@ -30,7 +24,6 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
             OTF: {
-                OtfCancellation: { isLoaded: isCancellationLoaded = false, isLoading: isCancellationLoading, data: cancellationData },
                 salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
             },
         },
@@ -46,6 +39,7 @@ const mapStateToProps = (state) => {
         isLoading,
         supportingData,
         moduleTitle,
+        isSalesConsultantDataLoaded,
         salesConsultantLov,
         dealerLocations,
     };
@@ -69,17 +63,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const TransferMasterBase = (props) => {
-    const { accessToken, token, onFinishFailed, form, otfData, selectedOrder, fetchSalesConsultant, listConsultantShowLoading, fetchDealerLocations, dealerLocations, locationDataLoding } = props;
-    const { userId, showGlobalNotification, section, typeData, salesConsultantLov  } = props;
-    const { formActionType, handleFormValueChange } = props;
-    const { selectedCustomerId, moduleTitle } = props;
+    const { otfData, selectedOrder, fetchSalesConsultant, listConsultantShowLoading, fetchDealerLocations, dealerLocations, locationDataLoding } = props;
+    const { userId, salesConsultantLov } = props;
+    const { moduleTitle } = props;
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOtfBtn: false, transferOtfBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-    };
-    
+    const handleButtonClick = ({ record = null, buttonAction }) => {};
+
     useEffect(() => {
         if (userId) {
             fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
@@ -100,9 +92,7 @@ const TransferMasterBase = (props) => {
         dealerLocations,
     };
 
-    return (
-            <AddEditForm {...formProps} />
-    );
+    return <AddEditForm {...formProps} />;
 };
 
 export const TransferMaster = connect(mapStateToProps, mapDispatchToProps)(TransferMasterBase);

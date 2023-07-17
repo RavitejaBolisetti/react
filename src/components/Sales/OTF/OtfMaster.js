@@ -9,9 +9,8 @@ import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row, Modal } from 'antd';
 import { tableColumn } from './tableColumn';
-import { AiOutlineWarning } from 'react-icons/ai';
 import AdvanceOtfFilter from './AdvanceOtfFilter';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION,TRANSFER_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, TRANSFER_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { OTFMainConatiner } from './OTFMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -20,23 +19,18 @@ import { OTF_STATUS } from 'constants/OTFStatus';
 import { OTF_SECTION } from 'constants/OTFSection';
 import { CancellationMaster } from './OTF Cancellation/CancellationMaster';
 import { TransferMaster } from './OTFTransfer/TransferMaster';
-import { validateRequiredInputField, validateMobileNoField, validateLettersWithWhitespaces, validateRequiredInputFieldMinLength } from 'utils/validation';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
-import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
-import { OTFConfirmationModal } from './OTFConfirmationModal';
+import { otfDataActions } from 'store/actions/data/otf/otf';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { BASE_URL_OTF_DETAILS as baseURL } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
 import { validateOTFMenu } from './utils/validateOTFMenu';
-import { withModal } from 'components/withModal';
 import styles from 'components/common/Common.module.css';
 
 import { FilterIcon } from 'Icons';
 const { confirm } = Modal;
-
-import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -44,8 +38,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
-                OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
-                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString },
+                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString, isDetailLoaded, detailData: otfData = [] },
             },
         },
     } = state;
@@ -53,11 +46,13 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         typeData,
-        isDataLoaded,
         data: data?.otfDetails,
         otfStatusList: Object.values(OTF_STATUS),
+
+        isDetailLoaded,
+        isLoading: !isDetailLoaded,
         otfData,
-        isLoading,
+
         moduleTitle,
         isOTFSearchLoading,
         isSearchDataLoaded,
@@ -70,17 +65,13 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchOTFSearchedList: otfSearchListAction.fetchList,
-            setFilterString: otfSearchListAction.setFilter,
-            resetData: otfSearchListAction.reset,
-            transferOTF: otfSearchListAction.transferOTF,
-
-            //fetchList: otfDetailsDataActions.fetchList,
-            //saveData: otfDetailsDataActions.saveData,
-            fetchList: otfSearchListAction.fetchSeachParameter,
-            saveData: otfSearchListAction.saveData,
-            listShowLoading: otfDetailsDataActions.listShowLoading,
-             
+            fetchOTFSearchedList: otfDataActions.fetchList,
+            fetchOTFDetail: otfDataActions.fetchDetail,
+            saveData: otfDataActions.saveData,
+            setFilterString: otfDataActions.setFilter,
+            resetData: otfDataActions.reset,
+            transferOTF: otfDataActions.transferOTF,
+            listShowLoading: otfDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -88,7 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
+    const { fetchOTFDetail, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
     const { typeData, moduleTitle, transferOTF } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -96,7 +87,9 @@ export const OtfMasterBase = (props) => {
     const [listFilterForm] = Form.useForm();
 
     const [selectedOrder, setSelectedOrder] = useState();
+    console.log('🚀 ~ file: OtfMaster.js:90 ~ OtfMasterBase ~ selectedOrder:', selectedOrder);
     const [selectedOrderId, setSelectedOrderId] = useState();
+    console.log('🚀 ~ file: OtfMaster.js:92 ~ OtfMasterBase ~ selectedOrderId:', selectedOrderId);
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -115,7 +108,6 @@ export const OtfMasterBase = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState('');
     const [modalMessage, setModalMessage] = useState('');
-    const [confirms, setConfirm] = useState(false);
 
     const [otfTransferForm] = Form.useForm();
 
@@ -319,7 +311,7 @@ export const OtfMasterBase = (props) => {
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchOTFDetail({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
 
@@ -332,6 +324,7 @@ export const OtfMasterBase = (props) => {
 
         const requestData = {
             data: data,
+            baseURL,
             method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
@@ -388,8 +381,7 @@ export const OtfMasterBase = (props) => {
     };
 
     const title = 'Search OTF';
-
-    const showConfirm = (values) => {
+    const showConfirm = ({ modalTitle, modalMessage, data, callBackMethod }) => {
         confirm({
             title: modalTitle,
             icon: '',
@@ -401,52 +393,41 @@ export const OtfMasterBase = (props) => {
             centered: true,
             closable: true,
             onOk() {
-                setConfirm(false);
-                console.log('OTF Transfer Form valuesss', values);
-
-                const onSuccess = (res) => {
-                };
-        
-                const onError = (message) => {
-                };
-        
+                const onSuccess = (res) => {};
+                const onError = (message) => {};
                 const requestData = {
-                    data: values,
+                    data,
                     userId,
                     onError,
                     onSuccess,
                     setIsLoading: listShowLoading,
                 };
-                transferOTF(requestData);
+                callBackMethod(requestData);
             },
-            onCancel() {
-                setConfirm(false);
-            },
+            onCancel() {},
         });
     };
 
-    const onFinishOTFTansfer = (values)=>{
-        console.log("🚀 ~ file: OtfMaster.js:423 ~ onFinishOTFTansfer ~ values:", values)
-        setModalTitle('OTF Transfer');
-        setModalMessage(`Do you want to transfer this ${values?.otfNumber}`) ;
+    const onFinishOTFTansfer = (values) => {
         setIsTransferVisible(false);
-        //setIsModalOpen(true);
-        setConfirm(true);
-        showConfirm(values);
-    }
-    const onFinishOTFCancellation = (values)=>{
-        console.log("🚀 ~ file: OtfMaster.js:423 ~ onFinishOTFTansfer ~ values:", values)
-        setModalTitle('OTF Cancel');
-        setModalMessage(`Do you want to cancel this ${values?.otfNumber}`) ;
-        setIsCancelVisible(false);
-        //setIsModalOpen(true);
-        setConfirm(true);
-        showConfirm(values);
-    }
+        showConfirm({
+            modalTitle: 'OTF Transfer',
+            modalMessage: `Do you want to transfer this ${otfData?.otfNumber}`,
+            data: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
+            callBackMethod: transferOTF,
+        });
+    };
 
-    const handleCloseModal = () =>{
+    const onFinishOTFCancellation = (values) => {
+        setModalTitle('OTF Cancel');
+        setModalMessage(`Do you want to cancel this ${values?.otfNumber}`);
+        setIsCancelVisible(false);
+        showConfirm(values, transferOTF);
+    };
+
+    const handleCloseModal = () => {
         setIsModalOpen(false);
-    }
+    };
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
@@ -532,6 +513,9 @@ export const OtfMasterBase = (props) => {
         typeData,
         otfData,
         saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+
+        isTransferVisible,
+        setIsTransferVisible,
     };
 
     const onCancelCloseAction = () => {
@@ -545,7 +529,7 @@ export const OtfMasterBase = (props) => {
         CANCEL_ACTION,
         isVisible: isCancelVisible,
         onCloseAction: onCancelCloseAction,
-        onFinishOTFCancellation
+        onFinishOTFCancellation,
     };
 
     const transferOTFProps = {
@@ -565,7 +549,7 @@ export const OtfMasterBase = (props) => {
         information: modalMessage,
         handleCloseModal,
     };
-    
+
     return (
         <>
             <AdvanceOtfFilter {...advanceFilterResultProps} />
@@ -578,7 +562,6 @@ export const OtfMasterBase = (props) => {
             <OTFMainConatiner {...containerProps} />
             <CancellationMaster {...cancelProps} />
             <TransferMaster {...transferOTFProps} />
-            <OTFConfirmationModal {...modalProps} />
         </>
     );
 };
