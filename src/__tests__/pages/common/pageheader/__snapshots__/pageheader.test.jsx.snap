@@ -3,15 +3,15 @@
 exports[`PageHeader Component should render PageHeader component 1`] = `
 <div>
   <div
-    class="ant-row pageHeader css-dev-only-do-not-override-14wwjjs"
+    class="ant-row pageHeader css-dev-only-do-not-override-w8mnev"
     style="margin-left: -10px; margin-right: -10px;"
   >
     <div
-      class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-24 ant-col-xl-24 ant-col-xxl-24 css-dev-only-do-not-override-14wwjjs"
+      class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-24 ant-col-xl-24 ant-col-xxl-24 css-dev-only-do-not-override-w8mnev"
       style="padding-left: 10px; padding-right: 10px;"
     >
       <div
-        class="ant-space css-dev-only-do-not-override-14wwjjs ant-space-horizontal ant-space-align-center"
+        class="ant-space css-dev-only-do-not-override-w8mnev ant-space-horizontal ant-space-align-center"
       >
         <div
           class="ant-space-item"
@@ -26,11 +26,11 @@ exports[`PageHeader Component should render PageHeader component 1`] = `
     </div>
   </div>
   <div
-    class="ant-row css-dev-only-do-not-override-14wwjjs"
+    class="ant-row css-dev-only-do-not-override-w8mnev"
     style="margin-left: -10px; margin-right: -10px;"
   >
     <div
-      class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-24 ant-col-xl-24 ant-col-xxl-24 css-dev-only-do-not-override-14wwjjs"
+      class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-24 ant-col-xl-24 ant-col-xxl-24 css-dev-only-do-not-override-w8mnev"
       style="padding-left: 10px; padding-right: 10px;"
     >
       <div
