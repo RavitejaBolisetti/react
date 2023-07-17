@@ -10,7 +10,7 @@ import { doLogout, unAuthenticateUser } from '../../actions/auth';
 import { LANGUAGE_EN } from 'language/en';
 
 export const dataActions = (params) => {
-    const { baseURL: inBaseURL, RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT } = params;
+    const { baseURL: inBaseURL, RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT } = params;
 
     const saveFormShowLoading = (isLoading) => ({
         type: SAVE_FORM_DATA_LOADING_CONSTANT,
@@ -25,6 +25,16 @@ export const dataActions = (params) => {
     const recieveData = (data) => ({
         type: RECEIVE_DATA_ACTION_CONSTANT,
         data,
+    });
+
+    const recieveChangeHistoryData = (data) => ({
+        type: RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT,
+        data,
+    });
+
+    const listShowChangeHistoryLoading = (isLoading) => ({
+        type: RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT,
+        isLoading,
     });
 
     const setFilter = (filter) => ({
@@ -190,6 +200,49 @@ export const dataActions = (params) => {
             axiosAPICall(apiCallParams);
         }),
 
+        changeHistory: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+            const { setIsLoading, data, onSuccessAction = undefined, onErrorAction = undefined, extraParams = [] } = params;
+            setIsLoading(true);
+
+            const onError = (message) => {
+                onErrorAction && onErrorAction(message);
+            };
+
+            const onSuccess = (res) => {
+                if (res?.data) {
+                    onSuccessAction && onSuccessAction(res);
+                    dispatch(recieveChangeHistoryData(res?.data));
+                } else {
+                    dispatch(recieveChangeHistoryData([]));
+                    // onErrorAction(res?.responseMessage || LANGUAGE_EN.INTERNAL_SERVER_ERROR);
+                }
+            };
+
+            let sExtraParamsString = '?';
+            extraParams?.forEach((item, index) => {
+                sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+            });
+
+            sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+
+            const apiCallParams = {
+                data,
+                method: 'get',
+                url: inBaseURL + '/changehisotry' + (sExtraParamsString ? sExtraParamsString : ''),
+                token,
+                accessToken,
+                userId,
+                onSuccess,
+                onError,
+                onTimeout: () => onError('Request timed out, Please try again'),
+                onUnAuthenticated: () => dispatch(doLogout()),
+                onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+                postRequest: () => setIsLoading(false),
+            };
+
+            axiosAPICall(apiCallParams);
+        }),
+
         exportToExcel: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
             const { setIsLoading, data, type = '', mytype = '', onErrorAction = undefined, extraParams = [] } = params;
             setIsLoading(true);
@@ -311,6 +364,9 @@ export const dataActions = (params) => {
         },
         listShowLoading: (isLoading) => (dispatch) => {
             dispatch(listShowLoading(isLoading));
+        },
+        listShowChangeHistoryLoading: (isLoading) => (dispatch) => {
+            dispatch(listShowChangeHistoryLoading(isLoading));
         },
         saveFormShowLoading: (isLoading) => (dispatch) => {
             dispatch(saveFormShowLoading(isLoading));

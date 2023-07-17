@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
-                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString, isDetailLoaded, detailData: otfData = [] },
+                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString, isDetailLoaded, detailData: otfData = [], isChangeHistoryLoaded, isChangeHistoryLoading, isChangeHistoryData = [] },
             },
         },
     } = state;
@@ -63,6 +63,10 @@ const mapStateToProps = (state) => {
         isSearchDataLoaded,
         filterString,
         ChangeHistoryTitle,
+
+        isChangeHistoryLoaded,
+        isChangeHistoryLoading,
+        isChangeHistoryData,
     };
     return returnValue;
 };
@@ -72,6 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchOTFSearchedList: otfDataActions.fetchList,
+            fetchOTFChangeHistory: otfDataActions.changeHistory,
             fetchOTFDetail: otfDataActions.fetchDetail,
             saveData: otfDataActions.saveData,
             setFilterString: otfDataActions.setFilter,

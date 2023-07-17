@@ -9,6 +9,8 @@ import { bindActionCreators } from 'redux';
 import { convertDateTime } from 'utils/formatDateTime';
 
 import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
+import { otfDataActions } from 'store/actions/data/otf/otf';
+
 import ChangeHistoryStyles from './ChangeHistory.module.css';
 import styles from 'components/common/Common.module.css';
 
@@ -20,12 +22,18 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            // ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible: isVisible },
+            OTF: {
+                OtfSearchList: { detailData: otfData = [], isChangeHistoryLoaded, isChangeHistoryLoading, changeHistoryData = [] },
+            },
         },
     } = state;
 
     let returnValue = {
         userId,
+        otfData,
+        isChangeHistoryLoaded,
+        isChangeHistoryLoading,
+        changeHistoryData,
     };
     return returnValue;
 };
@@ -34,20 +42,28 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchDealerChangeHistory: '',
-            changeHistoryDealerShowLoading: '',
+            fetchOTFChangeHistory: otfDataActions.changeHistory,
+            listShowChangeHistoryLoading: otfDataActions.listShowChangeHistoryLoading,
         },
         dispatch
     ),
 });
 
-const ChangeHistoryMain = ({ fetchChangeHistoryList, onCloseAction, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData, selectedOrderId }) => {
+const ChangeHistoryMain = ({ fetchChangeHistoryList, onCloseAction, listShowChangeHistoryLoading, isChangeHistoryLoading, userId, isChangeHistoryLoaded, changeHistoryData, selectedOrderId }) => {
     useEffect(() => {
-        if (!isHistoryLoaded) {
-            // fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
+        if (!isChangeHistoryLoaded) {
+            const extraParams = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOrderId,
+                    name: 'OTF Number',
+                },
+            ];
+            fetchChangeHistoryList({ setIsLoading: listShowChangeHistoryLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isHistoryLoaded]);
+    }, [isChangeHistoryLoaded]);
 
     const tableColumn = [
         tblPrepareColumns({
@@ -74,7 +90,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, onCloseAction, changeHistor
     ];
 
     const tableProps = {
-        isLoading,
+        isChangeHistoryLoading,
         tableColumn,
         tableData: [{ modifiedDate: '', modifiedBy: 'Shakambhar', activityType: 'Cancellation', activityDescription: 'Otf Cancellation', remarks: 'Done' }],
     };
