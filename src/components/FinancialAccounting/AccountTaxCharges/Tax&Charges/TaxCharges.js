@@ -198,7 +198,6 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
     };
 
     const onFinish = (values) => {
-        console.log(values, 'VAL');
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, manufactureOrgParntId: codeToBeSaved };
