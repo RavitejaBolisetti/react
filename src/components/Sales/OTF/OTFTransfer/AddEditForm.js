@@ -19,7 +19,7 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { formData, isLoading, selectedOrder, salesConsultantLov, dealerLocations } = props;
-    const { otfTransferForm, onFinishOTFTansfer } = props;
+    const { otfTransferForm, onFinishOTFTansfer, handleOtfTransferLocationChange } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, typeData } = props;
 
     const selectProps = {
@@ -61,7 +61,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="otfTransferLocation" label="Transfer To Location" initialValue={formData?.otfTransferLocation} rules={[validateRequiredSelectField('Transfer To Location')]}>
-                            <Select placeholder="Select" showSearch allowClear>
+                            <Select placeholder="Select" showSearch allowClear onChange={ handleOtfTransferLocationChange }>
                                 {dealerLocations?.map((item) => (
                                     <Option value={item.locationId}>{item.dealerLocationName}</Option>
                                 ))}
