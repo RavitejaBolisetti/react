@@ -49,17 +49,18 @@ describe('AllowedTimingList Components', () => {
         const addTimeBtn = screen.getByText(/Add Time/i);
         user.click(addTimeBtn);
     });
-    // it('should check add time form field event', async () => {
-    //     customRender(<AllowedTimingList {...props} />);
-    //     const addTimeBtn = screen.getByPlaceholderText('Start time*');
-    //     user.type(addTimeBtn, '01:00');
-    //     expect(addTimeBtn).toHaveTextContent('01:00');
 
-    //     const addTimeBtn2 = screen.getByPlaceholderText('End time*');
-    //     user.type(addTimeBtn2, '04:00');
-    //     expect(addTimeBtn2).toHaveTextContent('04:00');
+    it('should check add time form field event', async () => {
+        customRender(<AllowedTimingList {...props} />);
+        const addTimeBtn = screen.getByPlaceholderText('Start time*');
+        user.type(addTimeBtn, '01:00');
+        expect(addTimeBtn).toHaveTextContent('01:00');
 
-    //     const saveBtn = screen.getByText(/Save/i);
-    //     user.click(saveBtn);
-    // });
+        const addTimeBtn2 = screen.getByPlaceholderText('End time*');
+        user.type(addTimeBtn2, '04:00');
+        expect(addTimeBtn2).toHaveTextContent('04:00');
+
+        const saveBtn = screen.getByText(/Save/i);
+        user.click(saveBtn);
+    });
 });
