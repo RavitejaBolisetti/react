@@ -36,7 +36,7 @@ const otfDataActions = dataActions({
 });
 
 otfDataActions.transferOTF = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onSuccessAction = undefined, onErrorAction = undefined, data, userId } = params;
+    const { setIsLoading, onSuccessAction = undefined, onErrorAction = undefined, data, userId, customURL } = params;
 
     setIsLoading(true);
 
@@ -55,7 +55,7 @@ otfDataActions.transferOTF = withAuthToken((params) => ({ token, accessToken, us
     const apiCallParams = {
         data,
         method: 'put',
-        url: BASE_URL_OTF_TRANSFER,
+        url: customURL,
         token,
         accessToken,
         userId,

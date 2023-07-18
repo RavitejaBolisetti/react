@@ -19,7 +19,7 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { formData, isLoading, selectedOrder, salesConsultantLov, dealerLocations } = props;
-    const { otfTransferForm, onFinishOTFTansfer, isTransferVisible, setIsTransferVisible } = props;
+    const { otfTransferForm, onFinishOTFTansfer } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, typeData } = props;
 
     const selectProps = {

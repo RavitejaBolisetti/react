@@ -7,13 +7,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Form } from 'antd';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { cancellationDataActions } from 'store/actions/data/otf/otfCancellation';
-import { btnVisiblity } from 'utils/btnVisiblity';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { BASE_URL_OTF_CANCELLATION_DEALER_SEARCH as customURL } from 'constants/routingApi';
@@ -26,11 +23,11 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
             OTF: {
-                OtfCancellation: { isLoaded: isCancellationLoaded = false, isLoading: isCancellationLoading, detailData: dealerDataList },
+                OtfCancellation: { detailData: dealerDataList },
             },
         },
     } = state;
-   
+
     const moduleTitle = 'Cancel OTF';
 
     let returnValue = {
@@ -44,8 +41,7 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isProductHierarchyLoading,
         productHierarchyData,
-        dealerDataList
-
+        dealerDataList,
     };
     return returnValue;
 };
@@ -66,9 +62,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CancellationMasterBase = (props) => {
-    const { accessToken, token, onFinishFailed, form, otfData, selectedOrder } = props;
-    const { userId, showGlobalNotification, section, listShowLoading, uploadDocumentFile, typeData, saveData, fetchList, supportingData, fetchViewDocument } = props;
-    const { formActionType, handleFormValueChange, selectedCustomerId, moduleTitle } = props;
+    const { otfData, selectedOrder } = props;
+    const { userId, listShowLoading, uploadDocumentFile } = props;
+    const { moduleTitle } = props;
     const { fetchProductHierarchyList, productHierarchyData, onFinishOTFCancellation, fetchDealerList, dealerDataList } = props;
 
     const [uploadedFile, setUploadedFile] = useState();
@@ -76,12 +72,10 @@ const CancellationMasterBase = (props) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [formData, setFormData] = useState([]);
     const [emptyList, setEmptyList] = useState(true);
-    const [searchDealerValue, setSearchDealerValue ] = useState('');
+    const [searchDealerValue, setSearchDealerValue] = useState('');
 
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
-    const handleButtonClick = ({ record = null, buttonAction }) => {
-        
-    };
+    const handleButtonClick = ({ record = null, buttonAction }) => {};
 
     useEffect(() => {
         if (userId) {
@@ -89,11 +83,9 @@ const CancellationMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
-    
-    
+
     useEffect(() => {
-        if (searchDealerValue?.length >= 3 && userId) 
-            fetchDealerList({ customURL, setIsLoading: listShowLoading, searchParam: searchDealerValue });
+        if (searchDealerValue?.length >= 3 && userId) fetchDealerList({ customURL, setIsLoading: listShowLoading, searchParam: searchDealerValue });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchDealerValue, userId]);
@@ -112,14 +104,12 @@ const CancellationMasterBase = (props) => {
         fieldNames,
         productHierarchyData,
         onFinishOTFCancellation,
-        searchDealerValue, 
+        searchDealerValue,
         setSearchDealerValue,
-        dealerDataList
+        dealerDataList,
     };
 
-    return (
-            <AddEditForm {...formProps} />
-    );
+    return <AddEditForm {...formProps} />;
 };
 
 export const CancellationMaster = connect(mapStateToProps, mapDispatchToProps)(CancellationMasterBase);

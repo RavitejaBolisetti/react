@@ -4,33 +4,32 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState, useMemo } from 'react';
-import { Row, Col, Input, Form, Select, Card, Descriptions, Upload, Button, Empty, message, AutoComplete } from 'antd';
+import { Row, Col, Input, Form, Select, Card, Descriptions, Upload, Button, Empty, AutoComplete } from 'antd';
 
 import styles from 'components/common/Common.module.css';
 import { convertDateTime } from 'utils/formatDateTime';
 import { preparePlaceholderText, preparePlaceholderSelect, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import TreeSelectField from 'components/common/TreeSelectField';
 import { debounce } from 'utils/debounce';
 
-import { FiEye, FiTrash, FiDownload } from 'react-icons/fi';
+import { FiEye, FiTrash } from 'react-icons/fi';
 import Svg from 'assets/images/Filter.svg';
 
-const { Search, TextArea } = Input;
+const { TextArea } = Input;
 const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { formData, form, isLoading, otfData, selectedOrder, fieldNames, productHierarchyData, onFinishOTFCancellation  } = props;
+    const { otfTransferForm, formData, otfData, selectedOrder, fieldNames, productHierarchyData, onFinishOTFCancellation } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview, emptyList, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const [showStatus, setShowStatus] = useState('');
     const [reasonTypeChange, setReasonTypeChange] = useState('');
-    const [cancelForm] = Form.useForm();
     const [dealerList, setDealerList] = useState([]);
 
     const onDrop = (e) => {};
@@ -78,12 +77,11 @@ const AddEditFormMain = (props) => {
 
     const handleCancellationReasonTypeChange = (value) => {
         setReasonTypeChange(value);
-    }
+    };
 
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
         setEmptyList(true);
-
 
         const data = new FormData();
         data.append('applicationId', 'app');
@@ -105,9 +103,7 @@ const AddEditFormMain = (props) => {
         setSearchDealerValue(text?.trim());
     }, 300);
 
-    const handleSelect = (value) => {
-    
-    }
+    const handleSelect = (value) => {};
 
     useEffect(() => {
         if (!searchDealerValue?.length > 2) {
@@ -181,6 +177,7 @@ const AddEditFormMain = (props) => {
         placeholder: preparePlaceholderSelect('Parent'),
     };
 
+    const isLoading = false;
     return (
         <>
             <Card className={styles.ExchangeCard}>
@@ -193,13 +190,14 @@ const AddEditFormMain = (props) => {
                     <Descriptions.Item label="Order Status">{checkAndSetDefaultValue(selectedOrder?.orderStatus, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </Card>
-            <Form form={cancelForm} onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false">
+            <Form form={otfTransferForm} onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false">
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item name="reasonType" label="Cancellation Reason Type" initialValue={formData?.reasonType} rules={[validateRequiredSelectField('Reason Type')]}>
                             <Select
                                 {...selectProps}
-                                placeholder="Select" onChange={handleCancellationReasonTypeChange}
+                                placeholder="Select"
+                                onChange={handleCancellationReasonTypeChange}
                                 // loading={isConfigLoading}
                                 allowClear
                                 fieldNames={{ label: 'value', value: 'key' }}
@@ -208,7 +206,7 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                 </Row>
-                { reasonTypeChange === 'LTC' && (
+                {reasonTypeChange === 'LTC' && (
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item name="oemName" label="OEM Name" initialValue={formData?.oemName} rules={[validateRequiredSelectField('OEM Name')]}>
@@ -226,7 +224,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                 )}
 
-                { reasonTypeChange === 'PRDCH' && (
+                {reasonTypeChange === 'PRDCH' && (
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item name="product" label="Product" initialValue={formData?.product} rules={[validateRequiredSelectField('product')]}>
@@ -235,13 +233,13 @@ const AddEditFormMain = (props) => {
                         </Col>
                     </Row>
                 )}
-                
-                { reasonTypeChange === 'LOMMD' && (
+
+                {reasonTypeChange === 'LOMMD' && (
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <AutoComplete options={dealerList} backfill={false} onSelect={handleSelect} onSearch={onSearchDealer} allowSearch notFoundContent="No Dealer found">
-                            <Input.Search size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
-                        </AutoComplete>
+                            <AutoComplete options={dealerList} backfill={false} onSelect={handleSelect} onSearch={onSearchDealer} allowSearch notFoundContent="No Dealer found">
+                                <Input.Search size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
+                            </AutoComplete>
                         </Col>
                     </Row>
                 )}
@@ -263,7 +261,7 @@ const AddEditFormMain = (props) => {
                 </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="remarks" label="Cancellation Remarks" initialValue={formData?.remarks} >
+                        <Form.Item name="remarks" label="Cancellation Remarks" initialValue={formData?.remarks}>
                             <TextArea placeholder={preparePlaceholderText('Cancellation Remarks')} />
                         </Form.Item>
                     </Col>
@@ -271,27 +269,27 @@ const AddEditFormMain = (props) => {
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                        <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
-                            <div>
-                                <img src={Svg} alt="" />
-                            </div>
-                            <Empty
-                                description={
-                                    <>
-                                        <span>
-                                            Click or drop your file here to upload the signed and <br />
-                                            scanned customer form.
-                                        </span>
-                                        <span>
-                                            <br />
-                                            File type should be png, jpg or pdf and max file size to be 5Mb
-                                        </span>
-                                    </>
-                                }
-                            />
+                            <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
+                                <div>
+                                    <img src={Svg} alt="" />
+                                </div>
+                                <Empty
+                                    description={
+                                        <>
+                                            <span>
+                                                Click or drop your file here to upload the signed and <br />
+                                                scanned customer form.
+                                            </span>
+                                            <span>
+                                                <br />
+                                                File type should be png, jpg or pdf and max file size to be 5Mb
+                                            </span>
+                                        </>
+                                    }
+                                />
 
-                            <Button type="primary">Upload File</Button>
-                        </Dragger>
+                                <Button type="primary">Upload File</Button>
+                            </Dragger>
                         </div>
                     </Col>
                 </Row>
