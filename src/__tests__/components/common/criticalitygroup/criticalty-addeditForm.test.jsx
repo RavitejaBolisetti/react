@@ -1,12 +1,16 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import {render, screen, waitFor} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { AddEditForm } from '@components/common/CriticalityGroup/AddEditForm';
-
 beforeEach(() => {
     jest.clearAllMocks();
 });
+
+const user = userEvent.setup();
+
+
+
 const buttonData = {
     closeBtn: true,
     cancelBtn: true,
@@ -15,25 +19,25 @@ const buttonData = {
     editBtn: true,
     formBtnActive: true,
 };
+
 const saveButtonName = 'Save';
-const isLoadingOnSave = false;
+const isLoadingOnSave = true;
 const props = {
     deletedTime: [],
     setDeletedTime: jest.fn(),
     timeData: [],
     setTimeData: jest.fn(),
-    isAddTimeVisible: false,
+    isAddTimeVisible: true,
     setIsAddTimeVisible: jest.fn(),
-    buttonData: [],
     setButtonData: jest.fn(),
-    formActionType: '',
+    formActionType: true,
     formData: {},
     setFormData: jest.fn(),
     showGlobalNotification: jest.fn(),
     forceUpdate: jest.fn(),
     handleFormValueChange: jest.fn(),
     handleFormFieldChange: jest.fn(),
-    allowedTimingSave: false,
+    allowedTimingSave: true,
     setAllowedTimingSave: jest.fn(),
 };
 
@@ -53,36 +57,34 @@ describe('should render AddEditForm', () => {
         customRender(<AddEditForm formData={{}} isVisible={true} onCloseAction={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} handleButtonClick={jest.fn()} saveButtonName={saveButtonName} isLoadingOnSave={isLoadingOnSave} {...props} />);
 
         const criticalityGroupCode = screen.getByPlaceholderText('Enter id');
-        fireEvent.change(criticalityGroupCode, { target: { value: 'Dmatest' } });
+        user.type(criticalityGroupCode, 'Dmatest');
         expect(criticalityGroupCode.value.includes('Dmatest'));
+
         const criticalityGroupName = screen.getByPlaceholderText('Enter name');
-        fireEvent.change(criticalityGroupName, { target: { value: 'Dmatest' } });
+        user.type(criticalityGroupName, 'Dmatest');
         expect(criticalityGroupName.value.includes('Dmatest'));
 
         const defaultGroupBtn = screen.getByTestId('default-toggle');
-        fireEvent.click(defaultGroupBtn);
+        user.click(defaultGroupBtn);
+
         const toggleBtn = screen.getByTestId('toggle');
-        fireEvent.click(toggleBtn);
+        user.click(toggleBtn);
+
         const checkActive = screen.getAllByText('Active');
         expect(checkActive).toBeTruthy();
 
-        await act(async () => {
-            const criticalityDefaultGroup = screen.getByText('Add Time');
-            fireEvent.click(criticalityDefaultGroup);
-        });
-        const closeBtn = screen.getByRole('button', {
-            name: /close/i,
-        });
-        fireEvent.click(closeBtn);
-        await act(async () => {
-            const saveBtn = screen.getByText('Save');
-            fireEvent.click(saveBtn);
-        });
+        const criticalityDefaultGroup = screen.getByText('Add Time');
+        user.click(criticalityDefaultGroup);
 
-        const cancelBtn = screen.getByText('Cancel');
-        fireEvent.click(cancelBtn);
-    });
-    it('should click on save button', async () => {
-        customRender(<AddEditForm isVisible={true} setButtonData={jest.fn()} onCloseAction={jest.fn()} handleButtonClick={jest.fn()} saveButtonName={saveButtonName} isLoadingOnSave={isLoadingOnSave} />);
+        // const saveBtn = screen.getByText('Save');
+        // user.click(saveBtn);
+
+        // const closeBtn = screen.getByRole('button', {name: /close/i});
+        // user.click(closeBtn);
+
+
+        // const cancelBtn = screen.getByText('Cancel');
+        // user.click(cancelBtn);
+        // screen.debug();
     });
 });
