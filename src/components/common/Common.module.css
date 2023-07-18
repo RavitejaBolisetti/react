@@ -1260,6 +1260,7 @@
     display: none;
 }
 
+/* 
 :global .ant-switch.ant-switch-checked .ant-switch-inner {
     padding-inline-end: 0px;
 }
@@ -1277,7 +1278,6 @@
 :global .ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked {
     margin-inline-start: 0px;
     color: #00a310;
-    /* margin-inline-end: 9px; */
 }
 
 :global .ant-switch .ant-switch-inner .ant-switch-inner-unchecked {
@@ -1293,7 +1293,7 @@
 
 :global .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
     background: #00a310;
-}
+} */
 
 .addGroup button:first-child {
     margin-left: 0;
@@ -1952,10 +1952,10 @@
     font-weight: 400;
 }
 
-.drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector {
+/* .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector {
     padding: 5px 12px;
     border-color: #b5b5b6;
-}
+} */
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector .ant-select-selection-item {
     font-size: 14px;

@@ -26,7 +26,7 @@
     padding: 0;
 }
 
-:global .ant-btn-link:not(:disabled):hover {
+:global .ant-btn-link:not(:disabled):not(.ant-btn-disabled):hover {
     color: #FF3E5B;
 }
 
@@ -59,7 +59,54 @@
     color: #FFFFFF;
 }
 
+:global .ant-btn-primary.ant-btn-dangerous:disabled,
+:global .ant-btn-primary:disabled {
+    border-color: #B5B5B6;
+    background-color: #E6E6E6;
+    color: #B5B5B6;
+}
+
 /* AntD Buttons Design End*/
+
+/* AntD Switch Checkbox Design Start*/
+:global .ant-switch {
+    min-width: 36px;
+}
+
+:global .ant-switch .ant-switch-inner,
+:global .ant-switch.ant-switch-checked .ant-switch-inner {
+    position: absolute;
+    margin-left: 36px;
+    margin-top: -12px;
+    padding-inline-start: 6px;
+}
+
+:global .ant-switch .ant-switch-inner .ant-switch-inner-checked,
+:global .ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked {
+    display: flex;
+    color: #70C922;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+:global .ant-switch.ant-switch-checked,
+:global .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
+    background: #70C922;
+}
+
+:global .ant-switch .ant-switch-inner .ant-switch-inner-unchecked {
+    color: #858585;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+:global .ant-switch:hover:not(.ant-switch-disabled) {
+    background: #858585;
+}
+
+/* AntD Switch Checkbox Design End*/
 
 /* AntD Form Items & Input/Select Design Start*/
 :global .ant-input,
@@ -80,9 +127,14 @@
     color: #B5B5B6;
 }
 
+:global .ant-input-affix-wrapper:hover,
 :global .ant-input-affix-wrapper:focus,
+:global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover,
 :global .ant-input-affix-wrapper-focused {
     box-shadow: none;
+    background: transparent;
+    z-index: 0;
+    border: 1px solid #0B0B0C;
 }
 
 :global .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper {
@@ -230,11 +282,6 @@
     box-shadow: none;
 }
 
-:global .ant-btn-primary.ant-btn-dangerous:disabled,
-:global .ant-btn-primary:disabled {
-    border-color: #b5b5b6;
-}
-
 :global .ant-tree {
     background: #f4f4f4;
 }
@@ -367,36 +414,6 @@
 :global .ant-tree .ant-tree-list-holder-inner {
     align-items: flex-start;
     margin-bottom: 50px;
-}
-
-:global .ant-switch .ant-switch-inner {
-    display: block;
-    overflow: hidden;
-    border-radius: 100px;
-    height: 100%;
-    position: absolute;
-    margin-left: 35px;
-    margin-top: -12px;
-}
-
-:global .ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked {
-    margin-inline-start: 0px;
-    color: #70c922;
-}
-
-:global .ant-switch .ant-switch-inner .ant-switch-inner-unchecked {
-    margin-top: -22px;
-    margin-inline-start: -10px;
-    color: #8e8585;
-    margin-inline-end: 9px;
-}
-
-:global .ant-switch.ant-switch-checked {
-    background: #70c922;
-}
-
-:global .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
-    background: #70c922;
 }
 
 :global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
