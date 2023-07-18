@@ -2967,6 +2967,9 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     margin-top: 5px;
 }
 
+.searchRedButt :global .ant-input{
+    padding-left: 0px !important;
+}
 
 @media (max-width: 768px) {
     /* For mobile phones: */
