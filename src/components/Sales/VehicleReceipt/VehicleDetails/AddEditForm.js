@@ -108,7 +108,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.deliveryAt} label="Physical Status" name="deliveryAt" rules={[validateRequiredSelectField('Delivery At')]}>
+                            <Form.Item initialValue={formData?.deliveryAt} label="Physical Status" name="deliveryAt">
                                 <Select placeholder="Select" showSearch allowClear options={typeData['SALE_TYP']} fieldNames={{ label: 'value', value: 'key' }} />
                             </Form.Item>
                         </Col>
