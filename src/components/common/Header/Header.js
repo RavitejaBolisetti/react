@@ -284,7 +284,7 @@ const HeaderMain = (props) => {
                                 <div className={styles.headerRight}>
                                     <div className={styles.navbarNav}>
                                         <div className={`${styles.floatLeft}`}>
-                                            <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
+                                            <Link className={styles.navLink} data-toggle="dropdown">
                                                 <Badge size="small" count={notificationCount}>
                                                     {addToolTip('Notification')(<FaRegBell size={20} />)}
                                                 </Badge>

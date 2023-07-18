@@ -3,15 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const DATA_TYPE = {
-    BOOL: {
+export const YES_NO_FLAG = {
+    YES: {
         id: 1,
-        key: 'bool',
-        title: 'Boolean',
+        key: 'Y',
+        title: 'Yes',
     },
-    DATE: {
+    NO: {
         id: 2,
-        key: 'date',
-        title: 'Date',
+        key: 'N',
+        title: 'No',
     },
 };

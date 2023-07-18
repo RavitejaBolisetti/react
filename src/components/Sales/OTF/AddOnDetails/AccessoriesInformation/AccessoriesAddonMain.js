@@ -52,6 +52,7 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, setOpenAccordia
     };
     const onCancel = () => {
         accessoryForm.resetFields();
+        setsearchData();
         setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
         if (!formData?.partDetailsResponses) {
             setOpenAccordian([]);
