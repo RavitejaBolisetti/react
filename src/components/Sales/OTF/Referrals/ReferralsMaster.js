@@ -88,8 +88,6 @@ const ReferralsMasterBase = (props) => {
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, []);
 
-    console.log('🚀 ~ file: ReferralsMaster.js:82 ~ ReferralsMasterBase ~ isCusomerSearchVisible:', isCusomerSearchVisible);
-
     useEffect(() => {
         setFilterString();
         setFormData(referralData);
@@ -237,6 +235,7 @@ const ReferralsMasterBase = (props) => {
         handleResetFilter,
         onCloseAction: () => {
             setCusomerSearchVisible(false);
+            setFilterString();
         },
         setCusomerSearchVisible,
         data: customerList,
