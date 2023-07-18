@@ -44,8 +44,9 @@ export const BASE_URL_ROLE = BASE_URL_DEALER_MANPOWER + '/roles';
 export const BASE_URL_CUSTOMER_MASTER = BASE_URL + 'customers';
 export const BASE_URL_PARTY_MASTER = BASE_URL_CUSTOMER_MASTER + '/partymaster';
 export const BASE_URL_LESSOR_COMPANY_MASTER = BASE_URL_CUSTOMER_MASTER + '/lessorcompany';
-export const BASE_URL_LESSOR_COMPANY_CREATION = BASE_URL_CUSTOMER_MASTER + '/lessorcustomer';
+export const BASE_URL_LESSOR_CUSTOMER_CREATION = BASE_URL_CUSTOMER_MASTER + '/lessorcustomer';
 export const BASE_URL_CUSTOMER_MASTER_LIST = BASE_URL + 'customers/search';
+export const BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST = BASE_URL + 'customers/vehicle/search';
 export const BASE_URL_SUPPORTING_DOCUMENT = BASE_URL_CUSTOMER_MASTER + '/document';
 
 export const BASE_URL_GEO_GRAPHY_CHANGE_HISTORY = BASE_URL + 'geochangehistory';
@@ -73,7 +74,8 @@ export const BASE_URL_MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'ma
 export const BASE_URL_MANUFACTURER_ADMINISTRATION_HIERARCHY = BASE_URL + 'manufacturer/admin/hierarchy';
 export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SAVE = BASE_URL + 'manufacturer/admin/hierarchy';
 export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'manufacturer/admin/changehistory';
-export const BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY = BASE_URL + 'manufacturer/authority/changehistory';
+export const BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY = BASE_URL + 'manufacturer/admin/authority/changehistory';
+
 export const BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_UPLOAD = BASE_URL + 'manufacturer/admin/authority';
 export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH = BASE_URL + 'users/manufacturer';
 export const BASE_URL_MANUFACTURER_AUTHORITY_TYPE_DROPDOWN = BASE_URL + 'configurableparametertypes';

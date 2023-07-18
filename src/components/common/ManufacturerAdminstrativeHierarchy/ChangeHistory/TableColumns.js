@@ -73,17 +73,17 @@ export const tableColumnAdmin = [
     }),
     tblPrepareColumns({
         title: 'Short Description',
-        dataIndex: 'shortDescript',
+        dataIndex: 'shortDescription',
         width: '14%',
     }),
     tblPrepareColumns({
         title: 'Long Description',
-        dataIndex: 'longDescript',
+        dataIndex: 'longDescription',
         width: '16%',
     }),
     tblPrepareColumns({
         title: 'Hierarchy Code',
-        dataIndex: 'hierarchyCode',
+        dataIndex: 'code',
         width: '14%',
     }),
     tblStatusColumn({ styles, width: '14%' }),

@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -57,24 +57,46 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ChangeHistoryMain = (props) => {
     const { fetchAdminHierarchy, changeHistoryAdminShowLoading, fetchOrgChangeHistoryList, changeHistoryOrgShowLoading } = props;
-    const { userId, isAdminHierarchyHistoryLoading, isHistoryOrgHierarchyLoading, isOrgHistoryLoaded, isAdminHistoryLoaded, ChangeHistoryAdminData, ChangeHistoryOrgData } = props;
-    const { activeKey } = props;
-    const onSuccessAction = (res) => {};
+    const { userId, isAdminHierarchyHistoryLoading, isHistoryOrgHierarchyLoading, ChangeHistoryAdminData, ChangeHistoryOrgData } = props;
+    const { activeKey, organizationId } = props;
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
 
-    const onErrorAction = (message) => {};
     useEffect(() => {
         if (userId && activeKey) {
-            fetchAdminHierarchy({ setIsLoading: changeHistoryAdminShowLoading, userId, onErrorAction, onSuccessAction });
-            fetchOrgChangeHistoryList({ setIsLoading: changeHistoryOrgShowLoading, userId, onErrorAction, onSuccessAction });
+            const extraParams = [
+                {
+                    key: 'manufacturerOrgId',
+                    title: 'manufacturerOrgId',
+                    value: organizationId,
+                    name: 'manufacturerOrgId',
+                },
+                {
+                    key: 'pageNumber',
+                    title: 'pageNumber',
+                    value: page?.current,
+                    name: 'pageNumber',
+                },
+                {
+                    key: 'pageSize',
+                    title: 'pageSize',
+                    value: page?.pageSize,
+                    name: 'pageSize',
+                },
+            ];
+            if (activeKey === '1') {
+                fetchAdminHierarchy({ setIsLoading: changeHistoryAdminShowLoading, userId, extraParams });
+            } else {
+                fetchOrgChangeHistoryList({ setIsLoading: changeHistoryOrgShowLoading, userId, extraParams });
+            }
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, activeKey]);
+    }, [userId, activeKey, page?.pageSize, page?.current]);
 
     const tableProps = {
         isLoading: activeKey === '1' ? isAdminHierarchyHistoryLoading : isHistoryOrgHierarchyLoading,
-        tableColumn: activeKey === '1' ? tableColumnAuthority : tableColumnAdmin,
+        tableColumn: activeKey === '1' ? tableColumnAdmin : tableColumnAuthority,
         tableData: activeKey === '1' ? ChangeHistoryAdminData : ChangeHistoryOrgData,
+        setPage,
     };
 
     return (
@@ -84,4 +106,4 @@ const ChangeHistoryMain = (props) => {
     );
 };
 
-export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: '', width: '90%' }));
+export const ChangeHistory1 = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: '', width: '90%' }));

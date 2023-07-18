@@ -200,6 +200,7 @@ p {
 .loginSection .loginWrap .loginHtml .loginForm .inputBox input {
     background: transparent;
     color: #ffffff;
+    height: auto;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .inputBox :global .ant-form-item-control-input {

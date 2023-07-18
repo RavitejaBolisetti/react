@@ -9,14 +9,15 @@ import { convertDate } from 'utils/formatDateTime';
 import { DATA_TYPE } from 'constants/dataType';
 
 export const checkAndSetDefaultValue = (value, isLoading, type) => {
-    if (isLoading) <InputSkeleton width={'100px'} height={20} theme={'card'} />;
+    if (isLoading) return <InputSkeleton width={'100px'} height={20} theme={'card'} />;
+
     switch (type) {
-        case DATA_TYPE?.BOOL?.id:
+        case DATA_TYPE?.BOOL?.key:
             return value ? 'Yes' : 'No';
-        case DATA_TYPE?.DATE?.id:
-            return value ? convertDate(value, 'DD MMM YYYY') : 'NA';
+        case DATA_TYPE?.DATE?.key:
+            return value ? convertDate(value, 'DD MMM YYYY') : '-';
         default:
-            return value || 'NA';
+            return value || '-';
     }
 };
 

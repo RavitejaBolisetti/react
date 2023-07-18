@@ -6,9 +6,10 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const ViewIndividualAddressDetailsBase = (props) => {
-    const { formData, styles, isLoading } = props;
+    const { formData, styles, isLoading, addData } = props;
 
     const viewProps = {
         bordered: false,
@@ -21,7 +22,7 @@ const ViewIndividualAddressDetailsBase = (props) => {
         <div className={styles.viewDrawerContainer}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Address Type">{checkAndSetDefaultValue(formData?.addressType, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Address Type">{checkAndSetDefaultValue(getCodeValue(addData, formData?.addressType), isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Address Line 1">{checkAndSetDefaultValue(formData?.addressLine1, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Address Line 2">{checkAndSetDefaultValue(formData?.addressLine2, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(formData?.pinCode, isLoading)}</Descriptions.Item>
