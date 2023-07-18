@@ -126,9 +126,9 @@ export const CustomerDetailsMain = (props) => {
     }, [userId, selectedOrderId]);
 
     const onFinish = (values) => {
-        if (!values?.bookingCustomer?.panNo || !values?.billingCustomer?.panNo) {
-            setActiveKey([...activeKey, !values?.bookingCustomer?.panNo ? 1 : '']);
-            setActiveKey([...activeKey, !values?.billingCustomer?.panNo ? 2 : '']);
+        if (!values?.bookingCustomer?.panNo || !values?.billingCustomer?.panNo || !values?.bookingCustomer?.customerId || !values?.billingCustomer?.customerId) {
+            setActiveKey([...activeKey, !values?.bookingCustomer?.panNo || !values?.bookingCustomer?.customerId ? 1 : '']);
+            setActiveKey([...activeKey, !values?.billingCustomer?.panNo || !values?.billingCustomer?.customerId ? 2 : '']);
             return false;
         }
         form.getFieldsValue();

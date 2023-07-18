@@ -104,7 +104,7 @@ const SchemeDetailsMasterBase = (props) => {
     const myProps = {
         ...props,
         formData,
-        buttonData: { ...props.buttonData, nextBtn: true, saveBtn: false },
+        buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
     };
 
     const onFinish = (values) => {

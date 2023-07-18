@@ -183,11 +183,11 @@ const VehicleDetailsMasterMain = (props) => {
                 {
                     key: 'prodctCode',
                     title: 'prodctCode',
-                    value: VehicleDetailsData?.model,
+                    value: VehicleDetailsData?.modelCode,
                     name: 'Product Code',
                 },
             ];
-            VehicleDetailsData?.model && VehicleDetailsData?.model !== '' && fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraparams: LovParams });
+            VehicleDetailsData?.modelCode && VehicleDetailsData?.modelCode !== '' && fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraparams: LovParams });
             setformData(VehicleDetailsData);
             setoptionsServiceModified(VehicleDetailsData['optionalServices']);
         }

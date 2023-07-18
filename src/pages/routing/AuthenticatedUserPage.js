@@ -40,7 +40,8 @@ import {
     LessorCustomerCreationPage,
 } from 'pages/common';
 import { TaxChargesPage, TaxChargesCategoryPage } from 'pages/FinancialAccounting';
-import { OTFMasterPage, VehicleDetailMasterPage } from 'pages/Sales';
+
+import { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage } from 'pages/Sales';
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
 
@@ -115,6 +116,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_CONTACT} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_OTF} element={<OTFMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_DETAILS} element={<VehicleDetailMasterPage />} exact />
+            <Route path={routing.ROUTING_VEHICLE_RECEIPT} element={<VehicleReceiptMasterPage />} exact />
             <Route path={routing.ROUTING_REPORT_OTF_REPORTS} element={<OtfReportsPage />} />
 
             <Route path={routing.ROUTING_TAX_CHARGES} element={<TaxChargesPage />} exact />

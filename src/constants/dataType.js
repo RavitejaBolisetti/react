@@ -6,12 +6,12 @@
 export const DATA_TYPE = {
     BOOL: {
         id: 1,
-        key: 'BOOL',
-        title: 'boolean',
+        key: 'bool',
+        title: 'Boolean',
     },
     DATE: {
         id: 2,
-        key: 'DATE',
+        key: 'date',
         title: 'Date',
     },
 };

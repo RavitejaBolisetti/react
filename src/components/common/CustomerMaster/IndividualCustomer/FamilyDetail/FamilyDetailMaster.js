@@ -108,34 +108,39 @@ const FamilyDetailMasterBase = (props) => {
     };
 
     const onSearch = (value) => {
-        if (value === selectedCustomerId) {
-            showGlobalNotification({ message: 'Can not Add Same User as family member' });
-            return;
-        } else {
-            let found = null;
-            found = familyDetailList?.find((e) => e?.relationCustomerId === value);
-            if (found) {
-                showGlobalNotification({ message: 'Entered Customer Id is already added to this customer' });
+        if(value){
+            if (value === selectedCustomerId) {
+                showGlobalNotification({ message: 'Can not Add Same User as family member' });
                 return;
+            } else {
+                let found = null;
+                found = familyDetailList?.find((e) => e?.relationCustomerId === value);
+                if (found) {
+                    showGlobalNotification({ message: 'Entered Customer Id is already added to this customer' });
+                    return;
+                }
             }
+            let searchParams = [
+                {
+                    key: 'customerId',
+                    title: 'Customer',
+                    value: value,
+                    name: 'customerId',
+                },
+            ];
+    
+            fetchFamilySearchList({ setIsLoading: listFamilySearchLoading, userId, extraParams: searchParams, onErrorAction });
         }
-        let searchParams = [
-            {
-                key: 'customerId',
-                title: 'Customer',
-                value: value,
-                name: 'customerId',
-            },
-        ];
-
-        fetchFamilySearchList({ setIsLoading: listFamilySearchLoading, userId, extraParams: searchParams, onErrorAction });
+        else{
+            showGlobalNotification({ message: 'Please enter value to search' });   
+        }
     };
 
     const onSave = () => {
         form.validateFields()
             .then(() => {
                 let values = form.getFieldsValue();
-                setFamilyDetailsList((items) => [{ ...values, customerId: selectedCustomerId, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth, editedId: values?.editedId === '' ? Math.floor(Math.random() * 100000000 + 1) : values?.editedId }, ...items]);
+                setFamilyDetailsList((items) => [{ ...values, customerId: selectedCustomerId, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth.split("-").reverse().join("-"), editedId: values?.editedId === '' ? Math.floor(Math.random() * 100000000 + 1) : values?.editedId }, ...items]);
 
                 if (editedMode) {
                     const upd_obj = familyDetailList?.map((obj) => {

@@ -190,6 +190,46 @@ export const dataActions = (params) => {
             axiosAPICall(apiCallParams);
         }),
 
+        fetchData: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+            const { setIsLoading, onSuccessAction = undefined, onErrorAction = undefined, extraParams = [], customURL = '' } = params;
+            setIsLoading(true);
+
+            const onError = (message) => {
+                onErrorAction && onErrorAction(message);
+            };
+
+            const onSuccess = (res) => {
+                if (res?.data) {
+                    onSuccessAction && onSuccessAction(res);
+                } else {
+                    onErrorAction(res?.responseMessage);
+                }
+            };
+
+            let sExtraParamsString = '?';
+            extraParams?.forEach((item, index) => {
+                sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+            });
+
+            sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+
+            const apiCallParams = {
+                method: 'get',
+                url: (customURL || inBaseURL) + (sExtraParamsString ? sExtraParamsString : ''),
+                token,
+                accessToken,
+                userId,
+                onSuccess,
+                onError,
+                onTimeout: () => onError('Request timed out, Please try again'),
+                onUnAuthenticated: () => dispatch(doLogout()),
+                onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+                postRequest: () => setIsLoading(false),
+            };
+
+            axiosAPICall(apiCallParams);
+        }),
+
         exportToExcel: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
             const { setIsLoading, data, type = '', mytype = '', onErrorAction = undefined, extraParams = [] } = params;
             setIsLoading(true);
