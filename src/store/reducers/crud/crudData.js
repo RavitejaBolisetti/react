@@ -19,6 +19,10 @@ export const initialState = {
     extraParam: [],
     filter: undefined,
     isLoadingOnSave: false,
+
+    isChangeHistoryLoaded: false,
+    isChangeHistoryLoading: false,
+    changeHistoryData: [],
 };
 
 const recieveDataCF = (state, action) => ({
@@ -26,6 +30,19 @@ const recieveDataCF = (state, action) => ({
     isLoaded: true,
     data: action.data,
     updatedAt: moment().toDate(),
+});
+
+const recieveChangeHistoryDataCF = (state, action) =>
+    console.log('action', action) || {
+        ...state,
+        isChangeHistoryLoaded: true,
+        changeHistoryData: action.data,
+        extraParam: action.extraParam,
+    };
+
+const recieveChangeHistoryDataLoadingCF = (state, action) => ({
+    ...state,
+    isChangeHistoryLoading: action.isLoading,
 });
 
 const setFilterDataCF = (state, action) => ({
@@ -58,7 +75,7 @@ const resetDataCF = (state, action) => ({
 });
 
 export const crudDataReducer =
-    ({ RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, SAVE_DATA_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT, myInitialState = initialState }) =>
+    ({ RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, SAVE_DATA_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT, myInitialState = initialState }) =>
     (state = myInitialState, action) => {
         switch (action.type) {
             case RECEIVE_DATA_LOADING_ACTION_CONSTANT:
@@ -75,8 +92,13 @@ export const crudDataReducer =
                 return recieveDataDetailCF(state, action);
             case SAVE_DATA_ACTION_CONSTANT:
                 return saveDataCF(state, action);
+            case RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT:
+                return recieveChangeHistoryDataCF(state, action);
+            case RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT:
+                return recieveChangeHistoryDataLoadingCF(state, action);
             case RESET_DATA_ACTION_CONSTANT:
                 return resetDataCF(state, action);
+
             default:
                 return state;
         }

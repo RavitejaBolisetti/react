@@ -136,6 +136,8 @@ export const BASE_URL_OTF = BASE_URL + 'otf/';
 
 export const BASE_URL_REFERRALS = BASE_URL_OTF + 'referrals';
 
+export const BASE_URL_OTF_REQUEST = BASE_URL_OTF + 'request/';
+export const BASE_URL_OTF_REJECT = BASE_URL_OTF_REQUEST + 'reject';
 export const BASE_URL_OTF_SEARCH_LIST = BASE_URL_OTF + 'search';
 export const BASE_URL_OTF_REPORTS = BASE_URL + 'customreports/otf/names';
 export const BASE_URL_OTF_DOWNLAOD_REPORT = BASE_URL + 'customreports/otf/register';
@@ -152,6 +154,11 @@ export const BASE_URL_OTF_INSURANCE_DETAIL = BASE_URL + 'otf/insurancedetails';
 export const BASE_URL_OTF_FINANCE_LOV = BASE_URL + 'otf/financiers/lov';
 export const BASE_URL_OTF_SCHEMES = BASE_URL_OTF + 'schemes';
 export const BASE_URL_OTF_EXCHANGE_VEHICLE = BASE_URL_OTF + 'exchangevehicle';
+export const BASE_URL_OTF_CHANGE_HISTORY = BASE_URL_OTF + 'changehistory';
+
+export const BASE_URL_OTF_TRANSFER = BASE_URL_OTF + 'transfer';
+export const BASE_URL_OTF_CANCELLATION = BASE_URL_OTF + 'request/cancel';
+export const BASE_URL_OTF_CANCELLATION_DEALER_SEARCH = BASE_URL + 'dealer/search/names';
 
 export const BASE_URL_DOCUMENT_UPLOAD = BASE_URL + 'common/document/upload';
 export const BASE_URL_DOCUMENT_DOWNLOAD = BASE_URL + 'common/document/download';

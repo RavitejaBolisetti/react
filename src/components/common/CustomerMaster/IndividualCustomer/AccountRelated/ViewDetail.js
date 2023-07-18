@@ -21,7 +21,12 @@ const ViewDetailBase = (props) => {
 
     const renderCheckbox = (value) => {
         if (value) {
-            return <CheckSquareOutlined />;
+            return (
+                <>
+                    <CheckSquareOutlined />
+                    VIP Dealer
+                </>
+            );
         } else {
             return;
         }
@@ -37,7 +42,7 @@ const ViewDetailBase = (props) => {
                     <Descriptions.Item label="Labour Discount">{checkAndSetDefaultValue(formData?.labourDiscount, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.remarks, isLoading)}</Descriptions.Item>
                     {/* <Descriptions.Item label="VIP Dealer">{checkAndSetDefaultValue(renderCheckbox(formData?.vipDealerInd), isLoading)}</Descriptions.Item> */}
-                    <div> {renderCheckbox(formData?.vipDealerInd)}VIP Dealer</div>
+                    <div> {renderCheckbox(formData?.vipDealerInd)}</div>
                 </Descriptions>
             </Card>
         </div>
