@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Row, Col, Input, Form, Select, DatePicker, Card, Collapse, Divider } from 'antd';
+import { Row, Col, Input, Form, Select, DatePicker, Card, Collapse, Divider, Space, Typography } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 import { validateRequiredSelectField } from 'utils/validation';
@@ -13,6 +13,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
+const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
@@ -40,7 +41,26 @@ const AddEditFormMain = (props) => {
     return (
         <Card className={styles.drawerCardView}>
             <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                <Panel header="Model: Scorpio | VIN: 234254543453" key="1">
+                <Panel
+                    header={
+                        <Row justify="space-between">
+                            <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                <Space>
+                                    <Text className={styles.headText}> Model: Scorpio </Text>
+                                    <Text className={styles.headText}> {`|`}</Text>
+                                    <Text className={styles.headText}> VIN: 234254543453"</Text>
+                                </Space>
+                                <Row>
+                                    <Text className={styles.subSection}> Vehicle Status: Received</Text>
+                                </Row>
+                            </Col>
+                        </Row>
+                    }
+                    key="1"
+                >
+                    {/* <AccessoriesInformationCard formData={element} /> */}
+                    {/* </Panel> */}
+                    {/* <Panel header="Model: Scorpio | VIN: 234254543453" key="1"> */}
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
