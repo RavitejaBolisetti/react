@@ -37,6 +37,7 @@ const AddEditFormMain = (props) => {
             companyName: formData?.authorityDetails?.companyName,
             remarks: formData?.authorityDetails?.remarks,
         });
+        setCustomerCategory(formData?.customerCategory);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
@@ -179,7 +180,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                {(customerCategory === 'CUS_CAT_2' || formData?.customerCategory === 'CUS_CAT_2') && (
+                                {customerCategory === 'CUS_CAT_2' && (
                                     <>
                                         <Divider />
                                         <Row gutter={20}>

@@ -238,7 +238,8 @@ export const VehicleReceiptMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
-                const nextSection = Object.values(sectionName)?.find((i) => validateVehicleReceiptMenu({ item: i, status: selectedOrder?.orderStatus, otfData }) && i.id > currentSection);
+                const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+                // validateVehicleReceiptMenu({ item: i, status: selectedOrder?.orderStatus, otfData }) &&
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
