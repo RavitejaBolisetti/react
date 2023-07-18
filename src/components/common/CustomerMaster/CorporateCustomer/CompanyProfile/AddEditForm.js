@@ -22,7 +22,7 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { appCategoryData, userId, formData, form, handleOnClick } = props;
-    const { uploadListShowLoading, uploadFile, setUploadedFile, downloadFileFromList, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory, viewDocument, fileList, setFileList } = props;
+    const { uploadListShowLoading, uploadFile, setUploadedFile, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory, viewDocument, fileList, setFileList } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -30,6 +30,14 @@ const AddEditFormMain = (props) => {
         form.setFieldsValue({
             ...formData,
         });
+        form.setFieldsValue({
+            gstin: formData?.gstinNumber,
+            personName: formData?.authorityDetails?.personName,
+            postion: formData?.authorityDetails?.postion,
+            companyName: formData?.authorityDetails?.companyName,
+            remarks: formData?.authorityDetails?.remarks,
+        });
+        setCustomerCategory(formData?.customerCategory);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
@@ -59,8 +67,8 @@ const AddEditFormMain = (props) => {
         accept: 'image/png, image/jpeg, application/pdf',
         showUploadList: {
             showRemoveIcon: true,
-            showDownloadIcon: true,
-            downloadIcon: <FiDownload onClick={() => downloadFileFromList()} />,
+            // showDownloadIcon: true,
+            // downloadIcon: <FiDownload onClick={() => downloadFileFromList()} />,
             removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
             showProgress: true,
         },
@@ -172,7 +180,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                {(customerCategory === 'CUS_CAT_2' || formData?.customerCategory === 'CUS_CAT_2') && (
+                                {customerCategory === 'CUS_CAT_2' && (
                                     <>
                                         <Divider />
                                         <Row gutter={20}>
@@ -343,7 +351,7 @@ const AddEditFormMain = (props) => {
                                                     extra={
                                                         <>
                                                             <FiDownload onClick={handleOnClick} />
-                                                            {/* {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} />} */}
+                                                            {/* <FiTrash onClick={() => deleteFile(formData?.customerFormDocId)} /> */}
                                                         </>
                                                     }
                                                 ></Card>
