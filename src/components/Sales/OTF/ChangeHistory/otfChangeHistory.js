@@ -52,7 +52,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChangeHistoryLoading, isChangeHistoryLoading, userId, isChangeHistoryLoaded, changeHistoryData, selectedOrderId }) => {
-   
     useEffect(() => {
         if (selectedOrderId) {
             const extraParams = [
@@ -75,6 +74,15 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
             render: (text) => <div>{convertDateTime(text)}</div>,
         }),
         tblPrepareColumns({
+            title: 'Modified By',
+            dataIndex: 'modifiedBy',
+        }),
+        tblPrepareColumns({
+            title: 'Change Source',
+            dataIndex: 'source',
+        }),
+
+        tblPrepareColumns({
             title: 'Field Name',
             dataIndex: 'fieldName',
         }),
@@ -85,10 +93,6 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
         tblPrepareColumns({
             title: 'New Value',
             dataIndex: 'newValue',
-        }),
-        tblPrepareColumns({
-            title: 'Modified By',
-            dataIndex: 'modifiedBy',
         }),
     ];
 
