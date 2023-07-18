@@ -26,7 +26,7 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { AddEditForm } from './AddEditForm';
 import { ManufactureAdminHierarchyUpload } from '../ManufacturerAdminstrativeHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
-import { ChangeHistory1 } from './ChangeHistory';
+import { ChangeHistory } from './ChangeHistory';
 import { disableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
 import LeftPanel from '../LeftPanel';
@@ -630,7 +630,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             </Row>
 
             <ManufactureAdminHierarchyUpload {...uploadProps} />
-            <ChangeHistory1 {...drawerProps} />
+            <ChangeHistory {...drawerProps} />
             <AddEditForm {...formProps} />
         </>
     );

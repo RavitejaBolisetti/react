@@ -206,10 +206,7 @@ const AddEditFormMain = (props) => {
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                             <Panel header="Individual Information" key="1">
                                 <Divider />
-                                <UploadUtils {...props} isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={formData?.image} {...ImageProps} />
-                                {/* <div className={styles.uploadDragger}>
-                                    <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} {...ImageProps} />
-                                </div> */}
+                                <UploadUtils {...props} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={formData?.image} {...ImageProps} />
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -521,43 +518,12 @@ const AddEditFormMain = (props) => {
                             <Panel header="Upload Customer Form" key="5">
                                 <Divider />
                                 <>
-                                    <div>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">
-                                                    <Checkbox> I Consent to share my details with Mahindra & Mahindra</Checkbox>
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <div className={styles.uploadContainer}>
-                                                    <Dragger customRequest={handleUploads} {...uploadConsentProps}>
-                                                        <div>
-                                                            <img src={Svg} alt="" />
-                                                        </div>
-                                                        <Empty
-                                                            description={
-                                                                <>
-                                                                    <span>
-                                                                        Click or drop your file here to upload the signed and <br /> scanned customer form.
-                                                                    </span>
-                                                                    <span>
-                                                                        <br />
-                                                                        File type should be png, jpg or pdf and max file size to be 5Mb
-                                                                    </span>
-                                                                </>
-                                                            }
-                                                        />
-
-                                                        <Button type="primary" style={{ marginLeft: '30px', marginTop: '16px' }}>
-                                                            Upload File
-                                                        </Button>
-                                                    </Dragger>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    </div>
+                                    <Space direction="vertical">
+                                        <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">
+                                            <Checkbox> I Consent to share my details with Mahindra & Mahindra</Checkbox>
+                                        </Form.Item>
+                                        <UploadUtils {...props} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={formData?.image} {...ImageProps} />
+                                    </Space>
                                     {formData?.customerConsentForm && (
                                         <Row gutter={16}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
