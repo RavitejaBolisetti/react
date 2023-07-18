@@ -173,3 +173,4 @@ export const BASE_URL_VEHICLE_MODEL = BASE_URL_VEHICLE + 'model';
 export const BASE_URL_VEHICLE_DETAILS_DOCUMENT = BASE_URL_VEHICLE + 'documents';
 export const BASE_URL_VEHICLE_ENTITELMENT = BASE_URL_VEHICLE + 'schemes';
 export const BASE_URL_OTF_TRANSFER = BASE_URL + 'otf/transfer';
+export const BASE_URL_OTF_CANCELLATION_DEALER_SEARCH = BASE_URL + 'dealer/search/names';

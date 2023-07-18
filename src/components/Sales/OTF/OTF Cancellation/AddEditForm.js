@@ -3,17 +3,18 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
-import { Row, Col, Input, Form, Select, Card, Descriptions, Upload, Button, Empty, message } from 'antd';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Row, Col, Input, Form, Select, Card, Descriptions, Upload, Button, Empty, message, AutoComplete } from 'antd';
 
 import styles from 'components/common/Common.module.css';
 import { convertDateTime } from 'utils/formatDateTime';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderText, preparePlaceholderSelect, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import TreeSelectField from 'components/common/TreeSelectField';
+import { debounce } from 'utils/debounce';
 
 import { FiEye, FiTrash, FiDownload } from 'react-icons/fi';
 import Svg from 'assets/images/Filter.svg';
@@ -24,11 +25,13 @@ const { Dragger } = Upload;
 const AddEditFormMain = (props) => {
     const { formData, form, isLoading, otfData, selectedOrder, fieldNames, productHierarchyData, onFinishOTFCancellation  } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview, emptyList, setEmptyList } = props;
+    const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const [showStatus, setShowStatus] = useState('');
     const [reasonTypeChange, setReasonTypeChange] = useState('');
     const [cancelForm] = Form.useForm();
+    const [dealerList, setDealerList] = useState([]);
 
     const onDrop = (e) => {};
     const onDownload = (file) => {
@@ -97,6 +100,54 @@ const AddEditFormMain = (props) => {
 
         uploadDocumentFile(requestData);
     };
+
+    const onSearchDealer = debounce(function (text) {
+        setSearchDealerValue(text?.trim());
+    }, 300);
+
+    const handleSelect = (value) => {
+    
+    }
+
+    useEffect(() => {
+        if (!searchDealerValue?.length > 2) {
+            setDealerList([]);
+        } else {
+            setDealerList(highlightFinalLocatonList(dealerDataList) || []);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dealerDataList, searchDealerValue]);
+
+    const highlightFinalLocatonList = useMemo(
+        () => (data) => {
+            if (data?.length < 1) return [];
+            let finalLocations = data?.map((item) => {
+                const index = item?.dealerName?.toLowerCase().indexOf(searchDealerValue);
+                const beforeStr = item?.dealerName?.substring(0, index);
+                const afterStr = item?.dealerName?.slice(index + searchDealerValue?.length);
+                let locatonName =
+                    index > -1 ? (
+                        <span>
+                            {beforeStr}
+                            <span className="site-tree-search-value" style={{ color: 'red' }}>
+                                {/* {searchString} */}
+                                {item?.dealerName?.substring(index, index + searchDealerValue?.length)}
+                            </span>
+                            {afterStr}
+                        </span>
+                    ) : (
+                        <span>{item?.dealerName}</span>
+                    );
+                return {
+                    value: item?.dealerName,
+                    label: locatonName,
+                };
+            });
+            return finalLocations;
+        },
+        [searchDealerValue]
+    );
 
     const selectProps = {
         optionFilterProp: 'children',
@@ -188,9 +239,9 @@ const AddEditFormMain = (props) => {
                 { reasonTypeChange === 'LOMMD' && (
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item name="findDealerName" label="Find Dealer Name" initialValue={formData?.findDealerName} rules={[validateRequiredSelectField('Find Dealer Name')]}>
-                                <Input placeholder={preparePlaceholderText('Find Dealer Name')} />
-                            </Form.Item>
+                        <AutoComplete options={dealerList} backfill={false} onSelect={handleSelect} onSearch={onSearchDealer} allowSearch notFoundContent="No Dealer found">
+                            <Input.Search size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
+                        </AutoComplete>
                         </Col>
                     </Row>
                 )}

@@ -393,16 +393,16 @@ export const OtfMasterBase = (props) => {
             centered: true,
             closable: true,
             onOk() {
-                const onSuccess = (res) => {};
-                const onError = (message) => {};
-                const requestData = {
-                    data,
-                    userId,
-                    onError,
-                    onSuccess,
-                    setIsLoading: listShowLoading,
-                };
-                callBackMethod(requestData);
+                // const onSuccess = (res) => {};
+                // const onError = (message) => {};
+                // const requestData = {
+                //     data,
+                //     userId,
+                //     onError,
+                //     onSuccess,
+                //     setIsLoading: listShowLoading,
+                // };
+                callBackMethod();
             },
             onCancel() {},
         });
@@ -441,7 +441,15 @@ export const OtfMasterBase = (props) => {
             modalTitle: 'OTF Transfer',
             modalMessage: `Do you want to transfer this ${otfData?.otfNumber}`,
             data: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
-            callBackMethod: transferOTF(requestData),
+            callBackMethod: transferOTF({
+                data: data,
+                baseURL,
+                method: 'put',
+                setIsLoading: () => {},
+                userId,
+                onError,
+                onSuccess,
+            }),
         });
     };
 
