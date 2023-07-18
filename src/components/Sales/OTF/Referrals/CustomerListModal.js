@@ -39,6 +39,7 @@ export const CustomerListBase = (props) => {
         isLoading: false,
         tableColumn,
         tableData: data,
+        srlTitle: 'Select',
     };
 
     return (
@@ -51,9 +52,9 @@ export const CustomerListBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
-                    <Button onClick={handleResetFilter} danger>
+                    {/* <Button onClick={handleResetFilter} danger>
                         Close
-                    </Button>
+                    </Button> */}
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>

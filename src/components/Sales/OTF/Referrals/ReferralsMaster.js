@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ReferralsMasterBase = (props) => {
-    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading } = props;
+    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, resetData, isLoading } = props;
     const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, listCustomerShowLoading, typeData, handleButtonClick, NEXT_ACTION } = props;
 
     const [searchForm] = Form.useForm();
@@ -80,6 +80,15 @@ const ReferralsMasterBase = (props) => {
 
     const [isCusomerSearchVisible, setCusomerSearchVisible] = useState(false);
     const [customerList, setCustomerList] = useState();
+
+    // useEffect(() => {
+    //     return () => {
+    //         resetData();
+    //     };
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, []);
+
+    console.log('🚀 ~ file: ReferralsMaster.js:82 ~ ReferralsMasterBase ~ isCusomerSearchVisible:', isCusomerSearchVisible);
 
     useEffect(() => {
         setFilterString();
@@ -161,7 +170,7 @@ const ReferralsMasterBase = (props) => {
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, filterString]);
+    }, [filterString]);
 
     const onFinish = (values) => {
         const data = { ...values, otfNumber: selectedOrderId, dob: convertCalenderDate(values?.dob, 'YYYY-MM-DD'), id: referralData?.id };
@@ -224,7 +233,7 @@ const ReferralsMasterBase = (props) => {
 
     const customerListProps = {
         isVisible: isCusomerSearchVisible,
-        titleOverride: 'Choose Customer',
+        titleOverride: 'Search Result',
         handleResetFilter,
         onCloseAction: () => {
             setCusomerSearchVisible(false);
