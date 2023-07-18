@@ -22,19 +22,19 @@ export const tableColumn = (props) => {
             title: 'Make ',
             dataIndex: 'make',
             width: '20%',
-            render: (text, record, index) =>(viewMode ? text : renderFormItems({ dataIndex: 'make', ...props, Index: index, text: text })),
+            render: (text, record, index) => (viewMode ? text : renderFormItems({ dataIndex: 'make', ...props, Index: index, text: text })),
         },
         {
             title: 'Serial No. ',
             dataIndex: 'amount',
-            width: '20%',
+            width: '30%',
             render: (text, record, index) => (viewMode ? text : renderFormItems({ dataIndex: 'amount', ...props, Index: index, text: text })),
         },
         {
             title: 'Action',
             dataIndex: 'Action',
             key: 'Action',
-            width: '25%',
+            width: '15%',
             render: (text, record, index) => {
                 console.log('tableRecord', index);
                 return (
