@@ -134,7 +134,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ManufacturerAdminstrativeHierarchyMain = (props) => {
-    const { viewTitle, manufacturerAdminHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, uploadModelOpen, cardBtnDisableAction } = props;
+    const { viewTitle, manufacturerAdminHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, cardBtnDisableAction } = props;
     const { isDataOrgLoaded, manufacturerOrgHierarchyData, fetchOrgList, fetchDocumentFileDocId } = props;
     const { resetData, resetViewData, detailData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { uploadDocumentFile, accessToken, token } = props;
@@ -573,7 +573,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                         </Row>
                     </div>
                     <div className={styles.content}>
-                        {!organizationId ? (
+                        {!manufacturerAdminHierarchyData?.length ? (
                             <div className={styles.emptyContainer}>
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -586,7 +586,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                         </span>
                                     }
                                 >
-                                    {!manufacturerAdminHierarchyData?.length && organizationId && (
+                                    {organizationId && (
                                         <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                             Add
                                         </Button>

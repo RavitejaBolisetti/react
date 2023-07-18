@@ -8,6 +8,7 @@ import { Card, Descriptions } from 'antd';
 import styles from 'components/common/Common.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
+import { DATA_TYPE } from 'constants/dataType';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, typeData, salesConsultantLov } = props;
@@ -22,8 +23,8 @@ const ViewDetailMain = (props) => {
     return (
         <Card className={styles.drawerCardView}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(formData?.initialPromiseDeliveryDate, isLoading, 'date')}</Descriptions.Item>
-                <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.custExpectedDeliveryDate, isLoading, 'date')}</Descriptions.Item>
+                <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(formData?.initialPromiseDeliveryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.custExpectedDeliveryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                 <Descriptions.Item label="Key Number">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYP, formData?.saleType), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="MFG Date">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Received On">{checkAndSetDefaultValue(formData?.bookingAmount, isLoading)}</Descriptions.Item>

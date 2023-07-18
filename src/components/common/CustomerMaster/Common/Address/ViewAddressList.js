@@ -11,7 +11,6 @@ import { FiEdit } from 'react-icons/fi';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { getCodeValue } from 'utils/getCodeValue';
 
-
 import AddEditForm from './AddEditForm';
 
 const { Panel } = Collapse;
@@ -47,6 +46,7 @@ const ViewAddressList = (props) => {
         isEditing,
         setIsEditing,
         editContactHandeler,
+        addData,
     };
 
     const formProps = {
@@ -69,7 +69,7 @@ const ViewAddressList = (props) => {
                                 header={
                                     <Row justify="space-between">
                                         <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                            <Text strong> { getCodeValue(addData, data?.addressType)}</Text>
+                                            <Text strong> {getCodeValue(addData, data?.addressType)}</Text>
                                             {!formActionType?.viewMode && (
                                                 <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding} className={styles.buttonEdit}>
                                                     Edit{' '}
@@ -83,7 +83,7 @@ const ViewAddressList = (props) => {
                                                         Mark As Default
                                                     </Checkbox>
                                                     <Divider type="vertical" />
-                                                    <Text type="secondary">{data?.addressType}</Text>
+                                                    <Text type="secondary">{getCodeValue(addData, data?.addressType)}</Text>
                                                 </div>
                                             )}
                                         </Col>

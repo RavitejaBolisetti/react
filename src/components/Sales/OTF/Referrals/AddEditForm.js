@@ -13,28 +13,19 @@ import { formatDateToCalenderDate } from 'utils/formatDateTime';
 import { SearchBox } from 'components/utils/SearchBox';
 import styles from 'components/common/Common.module.css';
 
-const { Option } = Select;
-
 const AddEditFormMain = (props) => {
-    const { form, formData, setFormData, optionType, searchForm, filterString, setFilterString, vehicleRegNum, typeData } = props;
+    const { form, formData, optionType, searchForm, filterString, setFilterString, typeData } = props;
 
     useEffect(() => {
         if (formData) {
             form.setFieldsValue({
                 ...formData,
-                dateOfBirth: formatDateToCalenderDate(formData?.dob),
+                dateOfBirth: formatDateToCalenderDate(formData?.dob || formData?.dateOfBirth),
+                vehicleRegistrationNumber: formData?.registrationNumber || formData?.registrationNumber,
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
-
-    const getReferralDetail = (value) => {
-        vehicleRegNum?.map((item) => {
-            if (item.vehicleRegistrationNumber === value) {
-                setFormData(item);
-            }
-        });
-    };
 
     const serachBoxProps = {
         searchForm,
@@ -52,27 +43,11 @@ const AddEditFormMain = (props) => {
                 </Col>
             </Row>
             <Row gutter={20} className={styles.marT20}>
-                {/* {(filterString?.searchType === 'vehicleRegistrationNumber' || formData?.length === 1) && ( */}
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                     <Form.Item name="vehicleRegistrationNumber" label="Vehicle Registration Number" initialValue={formData?.vehicleRegistrationNumber}>
                         <Input disabled={true} maxLength={30} placeholder={preparePlaceholderText('Vehicle Registration Number')} />
                     </Form.Item>
                 </Col>
-                {/* )} */}
-
-                {/* {filterString?.searchType !== 'vehicleRegistrationNumber' && vehicleRegNum?.length >= 1 && (
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
-                        <Form.Item name="vehicleRegistrationNumber" label="Vehicle Registration Number" initialValue={formData?.referralDetails[0].vehicleRegistrationNumber}>
-                            <Select placeholder="Select Parameter" onChange={getReferralDetail}>
-                                {vehicleRegNum?.map((item) => (
-                                    <Option value={item.vehicleRegistrationNumber} selected>
-                                        {item.vehicleRegistrationNumber}
-                                    </Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                )} */}
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="chassisNumber" label="Chassis Number" initialValue={formData?.chassisNumber}>

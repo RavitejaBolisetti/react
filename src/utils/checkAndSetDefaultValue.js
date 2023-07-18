@@ -12,9 +12,9 @@ export const checkAndSetDefaultValue = (value, isLoading, type) => {
     if (isLoading) return <InputSkeleton width={'100px'} height={20} theme={'card'} />;
 
     switch (type) {
-        case DATA_TYPE?.BOOL?.id:
+        case DATA_TYPE?.BOOL?.key:
             return value ? 'Yes' : 'No';
-        case DATA_TYPE?.DATE?.id:
+        case DATA_TYPE?.DATE?.key:
             return value ? convertDate(value, 'DD MMM YYYY') : '-';
         default:
             return value || '-';
