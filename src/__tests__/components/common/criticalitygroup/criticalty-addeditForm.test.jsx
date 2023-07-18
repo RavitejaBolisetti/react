@@ -1,15 +1,13 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import {render, screen, waitFor} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { AddEditForm } from '@components/common/CriticalityGroup/AddEditForm';
 beforeEach(() => {
     jest.clearAllMocks();
 });
 
 const user = userEvent.setup();
-
-
 
 const buttonData = {
     closeBtn: true,
@@ -75,13 +73,13 @@ describe('should render AddEditForm', () => {
 
         const criticalityDefaultGroup = screen.getByText('Add Time');
         user.click(criticalityDefaultGroup);
+        screen.debug();
 
         // const saveBtn = screen.getByText('Save');
         // user.click(saveBtn);
 
         // const closeBtn = screen.getByRole('button', {name: /close/i});
         // user.click(closeBtn);
-
 
         // const cancelBtn = screen.getByText('Cancel');
         // user.click(cancelBtn);
