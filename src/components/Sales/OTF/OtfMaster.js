@@ -192,7 +192,7 @@ export const OtfMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 100,
+                value: 10,
                 canRemove: true,
                 filter: false,
             },
@@ -382,6 +382,7 @@ export const OtfMasterBase = (props) => {
 
     const title = 'Search OTF';
     const showConfirm = ({ modalTitle, modalMessage, data, callBackMethod }) => {
+        console.log('🚀 ~ file: OtfMaster.js:385 ~ showConfirm ~ callBackMethod:', callBackMethod);
         confirm({
             title: modalTitle,
             icon: '',
@@ -392,65 +393,113 @@ export const OtfMasterBase = (props) => {
             wrapClassName: styles.confirmModal,
             centered: true,
             closable: true,
-            onOk() {
-                // const onSuccess = (res) => {};
-                // const onError = (message) => {};
-                // const requestData = {
-                //     data,
-                //     userId,
-                //     onError,
-                //     onSuccess,
-                //     setIsLoading: listShowLoading,
-                // };
-                callBackMethod();
-            },
+            onOk: callBackMethod,
             onCancel() {},
         });
     };
 
+    const openConfirmationModel = (modalTitle, modalMessage, values, callBackMethod) => {
+        console.log('🚀 ~ file: OtfMaster.js:402 ~ openConfirmationModel ~ modalTitle, modalMessage, values, callBackMethod:', modalTitle, modalMessage, values, callBackMethod);
+        // showConfirm({
+        //     modalTitle: 'OTF Transfer',
+        //     modalMessage: `Do you want to transfer this ${otfData?.otfNumber}`,
+        //     data: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
+        //     callBackMethod: transferOTF({
+        //         data: data,
+        //         baseURL,
+        //         method: 'put',
+        //         setIsLoading: () => {},
+        //         userId,
+        //         onError,
+        //         onSuccess,
+        //     }),
+        // });
+    };
+
     const onFinishOTFTansfer = (values) => {
+        const finalData = { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber };
         setIsTransferVisible(false);
 
-        const onSuccess = (res) => {
-            // otfTransferForm.resetFields();
+        const onSuccessAction = (res) => {
             setShowDataLoading(true);
-
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-
             setButtonData({ ...buttonData, formBtnActive: false });
-
             setIsFormVisible(false);
         };
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
+        const onErrorAction = (message) => {
+            showGlobalNotification(message);
         };
 
         const requestData = {
-            data: data,
+            data: finalData,
             baseURL,
             method: 'put',
             setIsLoading: () => {},
             userId,
-            onError,
-            onSuccess,
+            onSuccessAction,
+            onErrorAction,
         };
 
-        showConfirm({
-            modalTitle: 'OTF Transfer',
-            modalMessage: `Do you want to transfer this ${otfData?.otfNumber}`,
-            data: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
-            callBackMethod: transferOTF({
-                data: data,
-                baseURL,
-                method: 'put',
-                setIsLoading: () => {},
-                userId,
-                onError,
-                onSuccess,
-            }),
-        });
+        transferOTF(requestData);
+
+        // openConfirmationModel('OTF Transfer', `Do you want to transfer this ${otfData?.otfNumber}`, values, transferOTF(requestData));
+        // showConfirm({
+        //     modalTitle: 'OTF Transfer',
+        //     modalMessage: `Do you want to transfer this ${otfData?.otfNumber}`,
+        //     data: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
+        //     callBackMethod: transferOTF({
+        //         data: data,
+        //         baseURL,
+        //         method: 'put',
+        //         setIsLoading: () => {},
+        //         userId,
+        //         onError,
+        //         onSuccess,
+        //     }),
+        // });
+
+        // const onSuccess = (res) => {
+        //     // otfTransferForm.resetFields();
+        //     setShowDataLoading(true);
+
+        //     showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+        //     fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+
+        //     setButtonData({ ...buttonData, formBtnActive: false });
+
+        //     setIsFormVisible(false);
+        // };
+
+        // const onError = (message) => {
+        //     showGlobalNotification({ message });
+        // };
+
+        // const requestData = {
+        //     data: data,
+        //     baseURL,
+        //     method: 'put',
+        //     setIsLoading: () => {},
+        //     userId,
+        //     onError,
+        //     onSuccess,
+        // };
+
+        // showConfirm({
+        //     modalTitle: 'OTF Transfer',
+        //     modalMessage: `Do you want to transfer this ${otfData?.otfNumber}`,
+        //     data: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
+        //     callBackMethod: transferOTF({
+        //         data: data,
+        //         baseURL,
+        //         method: 'put',
+        //         setIsLoading: () => {},
+        //         userId,
+        //         onError,
+        //         onSuccess,
+        //     }),
+        // });
     };
 
     const onFinishOTFCancellation = (values) => {

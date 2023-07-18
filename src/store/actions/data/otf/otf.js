@@ -32,9 +32,21 @@ const otfDataActions = dataActions({
 });
 
 otfDataActions.transferOTF = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, userId, onSuccess } = params;
+    const { setIsLoading, onSuccessAction = undefined, onErrorAction = undefined, data, userId } = params;
 
     setIsLoading(true);
+
+    const onError = (message) => {
+        onErrorAction && onErrorAction(message);
+    };
+
+    const onSuccess = (res) => {
+        if (res?.data) {
+            onSuccessAction && onSuccessAction(res);
+        } else {
+            onErrorAction(res?.responseMessage);
+        }
+    };
 
     const apiCallParams = {
         data,
