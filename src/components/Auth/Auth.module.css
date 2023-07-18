@@ -296,11 +296,11 @@ p {
     border-color: #ff4d4f !important;
 }
 
-.loginSection .loginWrap .loginHtml .loginForm .inputBox :global .ant-input-affix-wrapper .ant-input-suffix {
+/* .loginSection .loginWrap .loginHtml .loginForm .inputBox :global .ant-input-affix-wrapper .ant-input-suffix {
     line-height: 12px;
     transform: scaleX(-1) !important;
     color: #FF3E5B;
-}
+} */
 
 .loginForm :global .ant-btn-primary:disabled {
     color: #858585;

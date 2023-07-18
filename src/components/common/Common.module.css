@@ -234,9 +234,9 @@
     background-color: #fff;
 }
 
-.contentHeaderBackground :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+/* .contentHeaderBackground :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     height: 36px;
-}
+} */
 
 .contentHeaderBackground :global .ant-select .ant-select-clear {
     background: #e6e6e6 !important;
@@ -894,9 +894,9 @@
 }
 
 .contentHeaderBackground .addGroup button {
-    margin-bottom: 0px !important;
+    /* margin-bottom: 0px !important; */
     margin-left: 10px;
-    background-color: #ff3e5b;
+    /* background-color: #ff3e5b; */
 }
 
 .contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
@@ -1104,12 +1104,12 @@
     padding-right: 0px;
 }
 
-.addTimeBtn button {
+/* .addTimeBtn button {
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
     padding-right: 0px;
-}
+} */
 
 .hideInViewMode {
     visibility: hidden;
