@@ -3,208 +3,95 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
-import TreeSelectField from 'components/common/TreeSelectField';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import React, { useState } from 'react';
+import { Col, Input, Form, Row, Switch, Collapse } from 'antd';
+import { validateRequiredInputField } from 'utils/validation';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
+import { DrawerFormButton } from 'components/common/Button';
+import { accordianExpandIcon } from 'utils/accordianExpandIcon';
+import MasterTaxChargeCal from './Tax&ChargesCal/MasterTax&ChargeCal'
+
 import styles from 'components/common/Common.module.css';
 
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { ATTRIBUTE_TYPE, SALE_TYPE,CHARGE_TYPE,CHARGE_CODE} from './AttributeTypeConstant';
-
-const { Option } = Select;
-const { TextArea } = Input;
+const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, unFilteredAttributeData, setSelectedTreeSelectKey, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, manufacturerOrgHierarchyData, attributeType, setAttributeType } = props;
-    const { isFormBtnActive, setFormBtnActive } = props;
-    const { onFinish, onFinishFailed } = props;
-    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
-    const disabledProps = { disabled: isReadOnly };
-    const [form] = Form.useForm();
-    const [codeType, setCodeType] =useState();
-    const [calType, setCalType] = useState(true);
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
+    const { buttonData, setButtonData, handleButtonClick } = props;
 
-    let attributeHierarchyFieldValidation = {
-        rules: [validateRequiredSelectField('attribute level')],
-    };
-    if (attributeData && formData?.attributeKey) {
-        if (attributeData.find((attribute) => attribute.id === formData?.attributeKey)) {
-            attributeHierarchyFieldValidation.initialValue = formData?.attributeKey;
-        } else {
-            const Attribute = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.attributeKey);
-            if (Attribute) {
-                attributeHierarchyFieldValidation.initialValue = Attribute?.hierarchyAttribueName;
-                attributeHierarchyFieldValidation.rules.push({ type: 'number', message: Attribute?.hierarchyAttribueName + ' is not active anymore. Please select a different attribute. ' });
-            }
-        }
-    }
-
-    let treeCodeId = '';
-    let treeCodeReadOnly = false;
-
-    if (formActionType === FROM_ACTION_TYPE.EDIT || formActionType === FROM_ACTION_TYPE.VIEW) {
-        treeCodeId = formData?.manufactureOrgParntId;
-    } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
-        treeCodeId = selectedTreeKey && selectedTreeKey[0];
-        treeCodeReadOnly = true;
-    } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-        treeCodeReadOnly = true;
-        const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
-        treeCodeId = treeCodeData && treeCodeData?.data?.manufactureOrgParntId;
-    }
-
-    useEffect(() => {
-        setSelectedTreeSelectKey(treeCodeId);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [treeCodeId]);
-
-    const treeSelectFieldProps = {
-        treeFieldNames,
-        treeData: manufacturerOrgHierarchyData,
-        treeDisabled: treeCodeReadOnly || isReadOnly,
-        selectedTreeSelectKey,
-        handleSelectTreeClick,
-        defaultValue: treeCodeId,
-        placeholder: preparePlaceholderSelect('Parent'),
-    };
+    const [openAccordian, setOpenAccordian] = useState(1);
 
     const handleFormValueChange = () => {
-        setFormBtnActive(true);
+        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const handleFormFieldChange = () => {
-        setFormBtnActive(true);
+        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    const handleAttributeChange = (props) => {
-        setAttributeType(props);
+    const handleCollapse = (key) => {
+        setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-    const calTypeFun = (val) => {
-        setCalType(val);
+    const viewProps = {
+        isVisible: viewMode,
+        formData,
+        styles,
     };
 
-    const onHandleClick=(values)=>{
-        setCodeType(values)
-    }
-
-   
+    const buttonProps = {
+        formData,
+        onCloseAction,
+        buttonData,
+        setButtonData,
+        handleButtonClick,
+    };
 
     return (
-        <>
-            <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item  name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
-                            <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} disabled={formData?.id || isReadOnly} showSearch allowClear>
-                                {ATTRIBUTE_TYPE?.map((item) => (
-                                    <Option key={item?.id} value={item?.key}>
-                                        {item?.value}
-                                    </Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
-                        <Form.Item initialValue={treeCodeId} label="Parent" name="manufactureOrgParntId">
-                            <TreeSelectField {...treeSelectFieldProps} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={null} label="Tax/Charge Category Code" name="Tax/Charge_Category_Code" rules={[validateRequiredInputField('Tax/Charge Category Code')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Tax/Charge Type Code')} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={null} label="Tax/Charge Category Descrption" name="Tax/Charge_Category_Descrption" rules={[validateRequiredInputField('Tax/Charge Category Descrption')]}>
-                            <TextArea className={styles.inputBox} placeholder={preparePlaceholderText('Tax/Charge Type Descrption')} disabled={formData?.id || isReadOnly} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                {attributeType === 'Tax_Calculation' ? (
-                    <>
-                    <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item  name="type" label="Tax/Charge Type " rules={[validateRequiredSelectField('Tax/Charge Type')]}>
-                            <Select loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Tax/Charge Type')} disabled={formData?.id || isReadOnly} showSearch allowClear>
-                                {CHARGE_TYPE?.map((item) => (
-                                    <Option key={item?.id} value={item?.key}>
-                                        {item?.value}
-                                    </Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    </Row>
-                    <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item  name="code" label="Tax/Charge Code " rules={[validateRequiredSelectField('Tax/Charge Code')]}>
-                            <Select  loading={!isDataAttributeLoaded} onChange={onHandleClick} placeholder={preparePlaceholderSelect('Tax/Charge Code')} disabled={formData?.id || isReadOnly} showSearch allowClear>
-                                {CHARGE_CODE?.map((item) => (
-                                    <Option key={item?.id} value={item?.key}>
-                                        {item?.value}
-                                    </Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    </Row>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            {viewMode ? (
+                <ViewDetail {...viewProps} />
+            ) : (
+                <>
                     <Row gutter={16}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item  label="Charge Descrption" name="Charge_Descrption" rules={[validateRequiredInputField('Charge Descrption')]}>
-                            <TextArea className={styles.inputBox} placeholder={preparePlaceholderText('Charge Descrption')} disabled />
-                        </Form.Item>
-                    </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item initialValue={formData?.code} label="Code" name="code" rules={[validateRequiredInputField('Code')]}>
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Code')} maxLength={6} disabled={editMode ? true : false} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item label="Description" initialValue={formData?.name} rules={[validateRequiredInputField('Description')]} name="description">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Description')} maxLength={50} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item label="State" initialValue={formData?.name} rules={[validateRequiredInputField('State')]} name="state">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State')} maxLength={50} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item label="State Type" initialValue={formData?.name} rules={[validateRequiredInputField('State Type')]} name="stateType">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Type')} maxLength={50} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                            </Form.Item>
+                        </Col>
                     </Row>
-                    </>
-                ) : attributeType === 'Sale_Type' ? (
-                    <><Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item  name="saleType" label="Sale Type " rules={[validateRequiredSelectField('Sale Type')]}>
-                            <Select  loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Sale Type')} disabled={formData?.id || isReadOnly} showSearch allowClear>
-                                {SALE_TYPE?.map((item) => (
-                                    <Option key={item?.id} value={item?.key}>
-                                        {item?.value}
-                                    </Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    </Row></>
-                ) : null}
+                    <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon}>
+                        <Panel header="Tax & Charges Calculation" key="1">
+                            <MasterTaxChargeCal />
+                        </Panel>
+                    </Collapse>
+                </>
+            )}
 
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                        <Form.Item initialValue={formData?.active === null || false ? false : true} label="Status" name="active">
-                            <Switch value={formData?.active === null || false ? false : true} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Row gutter={20} className={styles.formFooter}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                        <Button danger onClick={onCloseAction}>
-                            Cancel
-                        </Button>
-                    </Col>
-
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button data-testid="isFormBtnActive" htmlType="submit" danger disabled={!isFormBtnActive}>
-                            Save
-                        </Button>
-                    </Col>
-                </Row>
-            </Form>
-        </>
+            <DrawerFormButton {...buttonProps} />
+        </Form>
     );
 };
 

@@ -11,18 +11,30 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Bay Type Code',
+            title: 'Code',
             dataIndex: 'code',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'Bay Type Name',
+            title: 'Description',
             dataIndex: 'name',
-            width: '30%',
+            width: '20%',
         }),
 
-        tblStatusColumn({ styles, width: '20%' }),
+        tblPrepareColumns({
+            title: 'State',
+            dataIndex: 'name',
+            width: '20%',
+        }),
+
+        tblPrepareColumns({
+            title: 'State Type',
+            dataIndex: 'name',
+            width: '20%',
+        }),
+
+        tblStatusColumn({ styles, width: '10%' }),
 
         tblActionColumn({ handleButtonClick, styles })
     );
