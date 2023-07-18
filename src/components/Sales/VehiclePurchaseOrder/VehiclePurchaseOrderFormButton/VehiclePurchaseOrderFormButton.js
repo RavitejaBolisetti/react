@@ -7,9 +7,9 @@ import React from 'react';
 import { Button, Row, Col } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import styles from './VehicleDetailFormButton.module.css';
+import styles from './VehiclePurchaseOrderFormButton.module.css';
 
-export const VehicleDetailFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
         <Row gutter={20} className={styles.formFooter}>
             <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>

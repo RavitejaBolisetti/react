@@ -48,30 +48,11 @@ const ViewDetailMain = (props) => {
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
                             <Panel header="Vehicle Purchase Order" key="1">
                                 <Descriptions {...viewProps}>
-                                    <Descriptions.Item label="Manufacturer Warranty End Date">{checkAndSetDefaultValue(mnfcWarrEndDate, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Delivery Date">{checkAndSetDefaultValue(deliveryDate, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Sale Date">{checkAndSetDefaultValue(saleDate, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Sold By">{checkAndSetDefaultValue(formData?.soldBy, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Last Odometer Reading">{checkAndSetDefaultValue(formData?.lastOdometerReading, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Average Run">{checkAndSetDefaultValue(formData?.averageRun, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Next Due Service">{checkAndSetDefaultValue(formData?.nextDueService, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Relationship Manager">{checkAndSetDefaultValue(formData?.relationshipManager, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Next Service Due Date">{checkAndSetDefaultValue(nextServiceDueDate, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="PUC Expiry Date">{checkAndSetDefaultValue(pucExpiryDate, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Insurance Expiry Date">{checkAndSetDefaultValue(insuranceExpiryDate, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Customer Category-SSI">{checkAndSetDefaultValue(formData?.customerCategorySsi, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Customer Category-CSI">{checkAndSetDefaultValue(formData?.customerCategoryCsi, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Customer Category-IQS">{checkAndSetDefaultValue(formData?.customerCategoryIqs, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="OEM Priviledge Customer">{checkAndSetDefaultValue(formData?.oemPrivilegeCustomer, isLoading, DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
-                                    <Descriptions.Item label="Key Account Vihicle">{checkAndSetDefaultValue(formData?.keyAccountVehicle, isLoading, DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
-                                    <Descriptions.Item label="Theft Vihicle">{checkAndSetDefaultValue(formData?.theftVehicle, isLoading, DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
-                                    <Descriptions.Item label="PDI Done">{checkAndSetDefaultValue(formData?.pdiDone, isLoading, DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
-                                    <Descriptions.Item label="Buy Back Vehicle">{checkAndSetDefaultValue(formData?.buyBackVehicle, isLoading, DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
-                                    <Descriptions.Item label="Government Vehicle">{checkAndSetDefaultValue(formData?.govtVehicle, isLoading, DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
-                                    <Descriptions.Item label="Taxi/Non Taxi">{checkAndSetDefaultValue(formData?.taxiOrNonTaxi, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="M&M CTC Vehicle">{checkAndSetDefaultValue(formData?.mnmCtcVehicle, isLoading, DATA_TYPE?.BOOL?.id)}</Descriptions.Item>
-                                    <Descriptions.Item label="Managed By">{checkAndSetDefaultValue(formData?.manageBy, isLoading)}</Descriptions.Item>
-                                     
+                                    <Descriptions.Item label="Purchase Order ID">{checkAndSetDefaultValue(mnfcWarrEndDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Purchase Order Date">{checkAndSetDefaultValue(deliveryDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Order Type">{checkAndSetDefaultValue(saleDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Status">{checkAndSetDefaultValue(formData?.soldBy, isLoading)}</Descriptions.Item>
+                                    
                                     </Descriptions>
                             </Panel>
                         </Collapse>

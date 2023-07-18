@@ -9,12 +9,12 @@ import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
-import AdvanceOtfFilter from './AdvanceOtfFilter';
+import AdvanceVehiclePurchaseOrderFilter from './AdvanceVehiclePurchaseOrderFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
-
+ 
 import { ListDataTable } from 'utils/ListDataTable';
 import { VehiclePurchaseOrderMainContainer } from './VehiclePurchaseOrderMainContainer';
-// import { AdvancedSearch } from './AdvancedSearch';
+import { AdvancedSearch } from './AdvancedSearch';
 
 import { VEHICLE_DETAIL_STATUS } from 'constants/VehicleDetailStatus';
 import { VEHICLE_PURCHASE_ORDER_SECTION } from 'constants/VehiclePurchaseOrderSection';
@@ -24,6 +24,8 @@ import { validateRequiredInputField } from 'utils/validation';
 import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { FilterIcon } from 'Icons';
+
 
 const mapStateToProps = (state) => {
     const {
@@ -36,11 +38,10 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Details4444';
+    const moduleTitle = 'Vehicle Purchase Order';
 
     let returnValue = {
         userId,
-        // typeData: typeData[PARAM_MASTER.VH_DTLS_SER.id],
         typeData: typeData[PARAM_MASTER.VH_PURCHASE_RORDER_SER.id],
         isDataLoaded: true,
         data: data?.vehicleSearch,
@@ -73,7 +74,9 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const { fetchList, saveData, isLoading, listShowLoading, userId, fetchDetail, data, vehicleDetailData } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, vehicleDetailStatusList } = props;
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
+    
     const [listFilterForm] = Form.useForm();
 
     const [selectedRecord, setSelectedRecord] = useState();
@@ -86,12 +89,12 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const [isLastSection, setLastSection] = useState(false);
 
     const [form] = Form.useForm();
-    const [searchForm] = Form.useForm();
+    const [searchForm] = Form.useForm();     
+    const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [selectedCustomer, setselectedCustomer] = useState('');
-
+ 
     const defaultBtnVisiblity = {
         editBtn: false,
         saveBtn: false,
@@ -336,13 +339,13 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         }
     };
 
-    const title = 'Search Vehicle';
+    const title = 'Search';
 
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
         vehicleDetailStatusList,
-        advanceFilter: false,
+        advanceFilter: true,
         otfFilter: true,
         filterString,
         setFilterString,
@@ -356,8 +359,38 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         setOtfSearchRules,
         searchForm,
         onFinishSearch,
+        setAdvanceSearchVisible,
+        handleButtonClick,
+        
+        
     };
+    const handleResetFilter = (e) => {
+        setShowDataLoading(true);
+        setFilterString();
+        advanceFilterForm.resetFields();
+        setAdvanceSearchVisible(false);
+    };
+    const onAdvanceSearchCloseAction = () => {
+        form.resetFields();
+        advanceFilterForm.resetFields();
+        advanceFilterForm.setFieldsValue();
+        setAdvanceSearchVisible(false);
+    };
+    const advanceFilterProps = { 
+        isVisible: isAdvanceSearchVisible,
 
+        icon: <FilterIcon size={20} />,
+        titleOverride: 'Advance Filters',
+        onCloseAction: onAdvanceSearchCloseAction,
+        handleResetFilter,
+        filterString,
+        setFilterString,
+        advanceFilterForm,
+        setAdvanceSearchVisible,
+        // otfStatusList,
+        typeData,
+        onFinishSearch,
+    };
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
             return 'View ';
@@ -370,7 +403,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
 
     const containerProps = {
         record: selectedRecord,
-        selectedCustomer,
         form,
         formActionType,
         setFormActionType,
@@ -386,7 +418,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         VIEW_ACTION,
         NEXT_ACTION,
         buttonData,
-
         setButtonData,
         handleButtonClick,
         defaultFormActionType,
@@ -406,15 +437,19 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         vehicleDetailData,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
     };
+    console.log('isLastSection---',isLastSection);
+
+    console.log('setButtonData---',setButtonData);
 
     return (
         <>
-            <AdvanceOtfFilter {...advanceFilterResultProps} />
+            <AdvanceVehiclePurchaseOrderFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
+            <AdvancedSearch {...advanceFilterProps} />
             <VehiclePurchaseOrderMainContainer {...containerProps} />
         </>
     );

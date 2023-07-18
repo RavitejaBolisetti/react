@@ -8,11 +8,13 @@ import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
-import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
+import { VehiclePurchaseOrderFormButton } from '../VehiclePurchaseOrderFormButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { viewVehicleDetailDataActions } from 'store/actions/data/vehicle/viewVehicleDetails';
 import { showGlobalNotification } from 'store/actions/notification';
+import { ListDataTable } from 'utils/ListDataTable';
+import { tableColumn } from './tableColumn';
 
 import styles from 'components/common/Common.module.css';
 
@@ -62,7 +64,6 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
     const { typeData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading, vehicleDetails } = props;
     const { form, selectedRecordId, formActionType, handleFormValueChange, salesConsultantLov, NEXT_ACTION, handleButtonClick } = props;
-    const [mnmCtcVehicleFlag, setMnmCtcVehicleFlag] = useState(false);
     const [activeKey, setactiveKey] = useState([1]);
 
     const onErrorAction = (message) => {
@@ -143,8 +144,6 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         formData: vehicleDetails?.vehicleDetails,
         isLoading,
         salesConsultantLov,
-        mnmCtcVehicleFlag,
-        setMnmCtcVehicleFlag,
         onChange,
         activeKey,
         setactiveKey,
@@ -157,13 +156,15 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         styles,
         isLoading,
         salesConsultantLov,
-        mnmCtcVehicleFlag,
-        setMnmCtcVehicleFlag,
         onChange,
         activeKey,
         setactiveKey,
     };
-
+    const tableProps = {
+        tableColumn: tableColumn(handleButtonClick),
+        tableData: [], //data,
+        showAddButton: false,
+    };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
@@ -173,12 +174,12 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <><AddEditForm {...formProps} /> <ListDataTable {...tableProps} showAddButton={false} /></>}
                 </Col>
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehicleDetailFormButton {...props} />
+                    <VehiclePurchaseOrderFormButton {...props} />
                 </Col>
             </Row>
         </Form>

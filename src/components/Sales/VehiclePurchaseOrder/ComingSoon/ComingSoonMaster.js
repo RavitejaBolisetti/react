@@ -7,7 +7,7 @@
 import React, { useEffect } from 'react';
 import { Row, Col, Space, Form, Card } from 'antd';
 
-import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
+import { VehiclePurchaseOrderFormButton } from '../VehiclePurchaseOrderFormButton';
 
 import styles from 'components/common/Common.module.css';
 
@@ -64,7 +64,7 @@ export const ComingSoonMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehicleDetailFormButton {...myProps} />
+                    <VehiclePurchaseOrderFormButton {...myProps} />
                 </Col>
             </Row>
         </Form>
