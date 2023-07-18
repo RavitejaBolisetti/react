@@ -2963,6 +2963,10 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 .contactDays :global .ant-form-item .ant-form-item-control-input .ant-select-multiple .ant-select-clear {
     top: 18px;
 }
+.inputWrapper :global .ant-input-affix-wrapper .ant-input-suffix{
+    margin-top: 5px;
+}
+
 
 @media (max-width: 768px) {
     /* For mobile phones: */

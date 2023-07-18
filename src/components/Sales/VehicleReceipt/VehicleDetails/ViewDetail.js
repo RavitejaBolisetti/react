@@ -9,6 +9,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import styles from 'components/common/Common.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
+import { DATA_TYPE } from 'constants/dataType';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
