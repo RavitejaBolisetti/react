@@ -3,13 +3,13 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Form } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
+import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
 import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -17,7 +17,6 @@ import styles from 'components/common/Common.module.css';
 
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { convertCalenderDate } from 'utils/formatDateTime';
@@ -30,7 +29,6 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
                 Referrals: { isLoaded: isDataLoaded = false, isLoading, data: referralData = [], filter: filterString },
-                // ReferralDetails: { isLoaded: isReferralDataLoaded = false, isLoading: isReferralLoading, data: referralDetail = [] },
             },
         },
         customer: {
@@ -56,9 +54,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchCustomerList: customerDetailDataActions.fetchList,
-            listCustomerShowLoading: customerDetailDataActions.listShowLoading,
             fetchList: otfReferralsDataActions.fetchList,
+            fetchCustomerList: otfReferralsDataActions.fetchData,
             setFilterString: otfReferralsDataActions.setFilter,
             listShowLoading: otfReferralsDataActions.listShowLoading,
             resetData: otfReferralsDataActions.reset,
@@ -73,59 +70,87 @@ const ReferralsMasterBase = (props) => {
     const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading } = props;
     const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, listCustomerShowLoading, typeData, handleButtonClick, NEXT_ACTION } = props;
 
+    const [searchForm] = Form.useForm();
     const [formData, setFormData] = useState();
     const [viewFormData, setViewFormData] = useState();
     const [resetField, setResetField] = useState(false);
     const { filterString, setFilterString } = props;
-    const [vehicleRegNum, setVehicleRegNum] = useState();
-
-    const extraParams = useMemo(() => {
-        return [
-            {
-                key: 'searchType',
-                title: 'Type',
-                value: filterString?.searchType,
-                canRemove: false,
-                filter: true,
-            },
-            {
-                key: 'searchParam',
-                title: 'Value',
-                value: filterString?.searchParam,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: 1,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: 1000,
-                canRemove: true,
-                filter: false,
-            },
-        ];
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
 
     useEffect(() => {
-        if (userId) {
+        setFormData(referralData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [referralData]);
+
+    const extraParams = [
+        {
+            key: 'otfNumber',
+            title: 'otfNumber',
+            value: selectedOrderId,
+            name: 'OTF Number',
+        },
+    ];
+    useEffect(() => {
+        if (userId && selectedOrderId) {
             fetchList({
                 setIsLoading: listShowLoading,
+                userId,
                 extraParams,
                 onSuccessAction: (res) => {
-                    res?.data?.referralData?.referralDetails.length === 1 ? setFormData(res?.data?.referralData?.referralDetails[0]) : setVehicleRegNum(res?.data?.referralData?.referralDetails);
+                    setViewFormData(res?.data);
+                },
+                onErrorAction,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedOrderId]);
+
+    useEffect(() => {
+        if (userId && filterString?.searchType && filterString?.searchParam) {
+            const searchParams = [
+                {
+                    key: 'searchType',
+                    title: 'Type',
+                    value: filterString?.searchType,
+                    canRemove: false,
+                    filter: true,
+                },
+                {
+                    key: 'searchParam',
+                    title: 'Value',
+                    value: filterString?.searchParam,
+                    canRemove: true,
+                    filter: true,
+                },
+                {
+                    key: 'pageNumber',
+                    title: 'Value',
+                    value: 1,
+                    canRemove: true,
+                    filter: false,
+                },
+                {
+                    key: 'pageSize',
+                    title: 'Value',
+                    value: 1000,
+                    canRemove: true,
+                    filter: false,
+                },
+            ];
+
+            fetchCustomerList({
+                customURL,
+                setIsLoading: listShowLoading,
+                extraParams: searchParams,
+                onSuccessAction: (res) => {
+                    res?.data?.customerMasterDetails && setFormData(res?.data?.customerMasterDetails?.[0]);
+                    handleFormValueChange();
                 },
                 onErrorAction,
                 userId,
             });
         }
-    }, [userId, extraParams]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, filterString]);
 
     const onFinish = (values) => {
         const data = { ...values, otfNumber: selectedOrderId, dob: convertCalenderDate(values?.dob, 'YYYY-MM-DD'), id: referralData?.id };
@@ -133,8 +158,8 @@ const ReferralsMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction: onError, userId });
         };
 
         const onError = (message) => {
@@ -154,35 +179,12 @@ const ReferralsMasterBase = (props) => {
     };
 
     const onErrorAction = (message) => {
-        showGlobalNotification(message);
+        showGlobalNotification({ message });
     };
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
-
-    useEffect(() => {
-        if (userId && selectedOrderId) {
-            const extraParams = [
-                {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOrderId,
-                    name: 'OTF Number',
-                },
-            ];
-            fetchList({
-                setIsLoading: listShowLoading,
-                userId,
-                extraParams,
-                onSuccessAction: (res) => {
-                    setViewFormData(res?.data);
-                },
-                onErrorAction,
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
 
     const onSearch = (value) => {
         setResetField(false);
@@ -242,14 +244,12 @@ const ReferralsMasterBase = (props) => {
         onFinish,
         onFinishFailed,
         onSearch,
-        // handleSearchParamSearch,
         resetField,
-        optionType: typeData[PARAM_MASTER.REFERRAL_SEARCH.id],
-        // searchParamRule: referralSearchRules,
+        optionType: typeData[PARAM_MASTER?.CUST_VEH_SEARCH?.id],
         filterString,
         setFilterString,
-        vehicleRegNum,
         typeData,
+        searchForm,
     };
 
     const viewProps = {

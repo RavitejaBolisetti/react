@@ -19,7 +19,6 @@ import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
-
 import dayjs from 'dayjs';
 
 const mapStateToProps = (state) => {
@@ -88,12 +87,14 @@ const VehicleDetailsMasterMain = (props) => {
 
     const [ProductHierarchyDataOptions, setProductHierarchyDataOptions] = useState();
     const [modelData, setmodelData] = useState();
+
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
         resetData();
+        showGlobalNotification({ message: message });
     };
     const extraParams = [
         {
@@ -182,11 +183,11 @@ const VehicleDetailsMasterMain = (props) => {
                 {
                     key: 'prodctCode',
                     title: 'prodctCode',
-                    value: VehicleDetailsData?.model,
+                    value: VehicleDetailsData?.modelCode,
                     name: 'Product Code',
                 },
             ];
-            fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraparams: LovParams });
+            VehicleDetailsData?.modelCode && VehicleDetailsData?.modelCode !== '' && fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraparams: LovParams });
             setformData(VehicleDetailsData);
             setoptionsServiceModified(VehicleDetailsData['optionalServices']);
         }

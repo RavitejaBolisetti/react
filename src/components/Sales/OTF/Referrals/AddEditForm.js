@@ -3,49 +3,36 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, DatePicker, Card, Select } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { validateRequiredInputField, validateMobileNoField } from 'utils/validation';
-import { convertDateToCalender } from 'utils/formatDateTime';
+import { formatDateToCalenderDate } from 'utils/formatDateTime';
 
 import { SearchBox } from 'components/utils/SearchBox';
-
 import styles from 'components/common/Common.module.css';
 
-const { Option } = Select;
-
 const AddEditFormMain = (props) => {
-    const { formData, setFormData, optionType, searchForm, filterString, setFilterString, vehicleRegNum, typeData } = props;
+    const { form, formData, optionType, searchForm, filterString, setFilterString, typeData } = props;
 
-    // useEffect(() => {
-    //     if (formData?.hasOwnProperty('mobileNumber')) {
-    //         form.setFieldsValue({
-    //             ...formData,
-    //             registrationNumber: formData?.registrationNumber ?? 'NA',
-    //             dob: convertDateToCalender(formData?.dob),
-    //         });
-    //     } else {
-    //         form.resetFields();
-    //         form.setFieldsValue({ customerId: undefined, customerType: undefined, emailId: undefined, customerName: undefined, registrationNumber: undefined, chasisNumber: undefined });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [formData]);
-
-    const getReferralDetail = (value) => {
-        vehicleRegNum?.map((item) => {
-            if (item.vehicleRegistrationNumber === value) {
-                setFormData(item);
-            }
-        });
-    };
+    useEffect(() => {
+        if (formData) {
+            form.setFieldsValue({
+                ...formData,
+                dateOfBirth: formatDateToCalenderDate(formData?.dob || formData?.dateOfBirth),
+                vehicleRegistrationNumber: formData?.registrationNumber || formData?.registrationNumber,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const serachBoxProps = {
         searchForm,
         filterString,
         optionType: optionType,
         setFilterString,
+        selectWide: true,
     };
 
     return (
@@ -56,27 +43,11 @@ const AddEditFormMain = (props) => {
                 </Col>
             </Row>
             <Row gutter={20} className={styles.marT20}>
-                {(filterString?.searchType === 'vehicleRegistrationNumber' || formData?.length === 1) && (
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
-                        <Form.Item name="vehicleRegistrationNumber" label="Vehicle Registration Number" initialValue={formData?.mobileNumber}>
-                            <Input disabled={true} maxLength={6} placeholder={preparePlaceholderText('Vehicle Registration Number')} />
-                        </Form.Item>
-                    </Col>
-                )}
-
-                {filterString?.searchType !== 'vehicleRegistrationNumber' && vehicleRegNum?.length >= 1 && (
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
-                        <Form.Item name="vehicleRegistrationNumber" label="Vehicle Registration Number" initialValue={formData?.referralDetails[0].vehicleRegistrationNumber}>
-                            <Select placeholder="Select Parameter" onChange={getReferralDetail}>
-                                {vehicleRegNum?.map((item) => (
-                                    <Option value={item.vehicleRegistrationNumber} selected>
-                                        {item.vehicleRegistrationNumber}
-                                    </Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                )}
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
+                    <Form.Item name="vehicleRegistrationNumber" label="Vehicle Registration Number" initialValue={formData?.vehicleRegistrationNumber}>
+                        <Input disabled={true} maxLength={30} placeholder={preparePlaceholderText('Vehicle Registration Number')} />
+                    </Form.Item>
+                </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="chassisNumber" label="Chassis Number" initialValue={formData?.chassisNumber}>
@@ -113,8 +84,8 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="dateOfBirth" label="Date of Birth" initialValue={convertDateToCalender(formData?.dateOfBirth)}>
-                        <DatePicker disabled={true} format="YYYY-MM-DD" placeholder={preparePlaceholderSelect('Date of Birth')} style={{ width: '250px' }} />
+                    <Form.Item name="dateOfBirth" label="Date of Birth">
+                        <DatePicker disabled={true} format="YYYY-MM-DD" placeholder={preparePlaceholderText('Date of Birth')} style={{ width: '250px' }} />
                     </Form.Item>
                 </Col>
             </Row>

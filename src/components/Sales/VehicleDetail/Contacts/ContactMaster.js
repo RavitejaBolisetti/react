@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { vehicleContactDataActions } from 'store/actions/data/vehicle/contacts';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { CustomerFormButton } from 'components/common/CustomerMaster/CustomerFormButton/CustomerFormButton';
+import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 import AddEditForm from './AddEditForm';
 import ViewList from './ViewList';
 
@@ -63,13 +63,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ContactMasterMain = (props) => {
-    const { form, section, userId, searchType, vehicleContactData, listShowLoading, showGlobalNotification, typeData } = props;
+    const { form, section, userId, searchType, vehicleContactData, resetData, listShowLoading, showGlobalNotification, typeData } = props;
     const { isContactDataLoading, selectedRecordId, fetchList, saveData } = props;
     const { buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
-    console.log('🚀 ~ file: ContactMaster.js:72 ~ ContactMasterMain ~ contactData:', contactData);
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
@@ -85,6 +84,13 @@ const ContactMasterMain = (props) => {
             name: 'vin',
         },
     ];
+
+    useEffect(() => {
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (selectedRecordId && userId) {
@@ -113,7 +119,7 @@ const ContactMasterMain = (props) => {
             .validateFields()
             .then((value) => {
                 let preferredContactTimeFrom = value?.preferredContactTime?.[0]?.format('HH:mm');
-                let preferredContactTimeTo = value?.preferredContactTime[1]?.format('HH:mm');
+                let preferredContactTimeTo = value?.preferredContactTime?.[1]?.format('HH:mm');
 
                 if (isEditing) {
                     setContactData((prev) => {
@@ -124,7 +130,7 @@ const ContactMasterMain = (props) => {
                     });
                 } else {
                     setContactData((prev) => {
-                        const updVal = prev?.length ? [...prev, { ...value, preferredContactTimeFrom, preferredContactTimeTo }] : [{ ...value }];
+                        const updVal = prev?.length ? [{ ...value, preferredContactTimeFrom, preferredContactTimeTo }, ...prev] : [{ ...value, preferredContactTimeFrom, preferredContactTimeTo }];
                         return updVal;
                     });
                 }
@@ -171,7 +177,10 @@ const ContactMasterMain = (props) => {
     };
 
     const onFinish = () => {
-        let data = { vehicleIdentificationNumber: selectedRecordId, contact: contactData?.map((el) => ({ ...el, preferredContactTimeFrom: '02:30', preferredContactTimeTo: '03:30' })) };
+        let data = {
+            vehicleIdentificationNumber: selectedRecordId,
+            contact: contactData?.map(({ preferredContactTime, ...rest }) => rest),
+        };
         const onSuccess = (res) => {
             contactform.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -264,7 +273,7 @@ const ContactMasterMain = (props) => {
                 </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <CustomerFormButton {...props} />
+                        <VehicleDetailFormButton {...props} />
                     </Col>
                 </Row>
             </Form>

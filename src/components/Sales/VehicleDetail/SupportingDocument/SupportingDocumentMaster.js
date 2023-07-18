@@ -69,9 +69,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupportingDocumentBase = (props) => {
-    const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form } = props;
+    const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form, setIsFormVisible } = props;
 
-    const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, documentData, fetchViewDocument, resetData, resetViewData } = props;
+    const { userId, selectedRecordId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, documentData, fetchViewDocument, resetData, resetViewData } = props;
     const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
     const { viewDocument, viewListShowLoading } = props;
 
@@ -80,6 +80,8 @@ const SupportingDocumentBase = (props) => {
     const [fileList, setFileList] = useState([]);
     const [supportingDocs, setSupportingDocs] = useState([]);
     const [uploadedFileName, setUploadedFileName] = useState('');
+    const [documentTypeRule, setDocumentTypeRule] = useState([]);
+    const [documentTitleRule, setDocumentTitleRule] = useState([]);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -96,7 +98,7 @@ const SupportingDocumentBase = (props) => {
     const extraParams = [
         {
             key: 'vin',
-            value: 'MAKGF1F57A7192175',
+            value: selectedRecordId,
         },
     ];
 
@@ -151,19 +153,20 @@ const SupportingDocumentBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { vehicleIdentificationNumber: 'MAKGF1F57A7192175', supportingDocuments: supportingDocs, technicalDocuments: null };
-        const title = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.TITLE;
-        const message = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.MESSAGE;
+        const data = { vehicleIdentificationNumber: selectedRecordId, supportingDocuments: supportingDocs, technicalDocuments: null };
+        // const title = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.TITLE;
+        // const message = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.MESSAGE;
 
-        if (uploadedFile) {
+        if (supportingDocs.length) {
             const onSuccess = (res) => {
                 setFileList([]);
                 setEmptyList(false);
                 setUploadedFile();
                 form.resetFields();
-                showGlobalNotification({ notificationType: 'success', title, message });
+                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
 
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+                setIsFormVisible(false);
             };
 
             const onError = (message) => {
@@ -180,12 +183,14 @@ const SupportingDocumentBase = (props) => {
             };
 
             saveData(requestData);
+            setSupportingDocs([]);
         } else {
-            showGlobalNotification({ notificationType: 'success', title, message });
+            // showGlobalNotification({ notificationType: 'success', title, message });
             setFileList([]);
             setEmptyList(false);
             setUploadedFile();
             form.resetFields();
+            setIsFormVisible(false);
         }
     };
 
@@ -232,6 +237,10 @@ const SupportingDocumentBase = (props) => {
         setFileList,
         supportingDocs,
         setSupportingDocs,
+        documentTypeRule,
+        setDocumentTypeRule,
+        documentTitleRule,
+        setDocumentTitleRule,
     };
 
     const myProps = {

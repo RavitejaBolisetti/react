@@ -11,7 +11,7 @@ export const USER_TYPE = {
     },
     ADMIN: {
         id: 2,
-        key: 'ADM',
+        key: 'MNM',
         title: 'Admin',
     },
 };
