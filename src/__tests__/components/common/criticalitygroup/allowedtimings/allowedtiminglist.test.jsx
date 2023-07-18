@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { screen, fireEvent, getByTestId } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import userEvent from '@testing-library/user-event';
 
@@ -49,19 +49,4 @@ describe('AllowedTimingList Components', () => {
         const addTimeBtn = screen.getByText(/Add Time/i);
         user.click(addTimeBtn);
     });
-
-    // it('should check add time form field event', async () => {
-    //     customRender(<AllowedTimingList {...props} />);
-    //     const addTimeBtn = screen.getByPlaceholderText('Start time*');
-    //     screen.debug();
-    //     user.type(addTimeBtn, '2:00 AM');
-    //     expect(addTimeBtn).toHaveValue('2:00 AM');
-
-    //     const addTimeBtn2 = screen.getByPlaceholderText('End time*');
-    //     user.type(addTimeBtn2, '3:00 AM');
-    //     expect(addTimeBtn2).toHaveValue('3:00 AM');
-
-    //     const saveBtn = screen.getByText(/Save/i);
-    //     user.click(saveBtn);
-    // });
 });
