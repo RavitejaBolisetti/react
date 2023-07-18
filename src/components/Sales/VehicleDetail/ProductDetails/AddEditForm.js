@@ -20,7 +20,7 @@ import { validateRequiredInputField, validateRequiredSelectField, validationFiel
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { disableFutureDate } from 'utils/disableDate';
 import { expandIcon } from 'utils/accordianExpandIcon';
-import { AggregatesForm } from './aggregateForm';
+import { AggregateForm } from './AdvancedSearch';
 import { tableColumn } from './tableCoulmn';
 
 import styles from 'components/common/Common.module.css';
@@ -36,7 +36,7 @@ const { Dragger } = Upload;
 const AddEditFormMain = (props) => {
     const { formData, setIsReadOnly, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadConsentDocumentFile, setOpenAccordian, typeData, showGlobalNotification, optionsServicesMapping, setoptionsServicesMapping, fetchList, listShowLoading, saveData, onSuccessAction, selectedOrderId, onErrorAction, optionsServiceModified, setoptionsServiceModified, handleFormValueChange, openAccordian, tooltTipText } = props;
     const { isReadOnly } = props;
-    const [optionForm] = Form.useForm();
+    const [aggregateForm] = Form.useForm();
     const [tableForm] = Form.useForm();
 
     const [isRead, setIsRead] = useState(false);
@@ -44,6 +44,7 @@ const AddEditFormMain = (props) => {
     const [activeKey, setActiveKey] = useState([1]);
     const [isEditing, setisEditing] = useState(false);
     const [identification, setidentification] = useState('');
+    const [AdvanceformData, setAdvanceformData] = useState();
     const [MakeOptions, setMakeOptions] = useState([
         {
             value: '1',
@@ -202,7 +203,7 @@ const AddEditFormMain = (props) => {
         uploadDocumentFile(requestData);
     };
     const addContactHandeler = (e) => {
-        optionForm.resetFields();
+        aggregateForm.resetFields();
         setOpenAccordian('3');
         setIsReadOnly(true);
     };
@@ -234,12 +235,14 @@ const AddEditFormMain = (props) => {
     };
     const handleCanceler = () => {
         setIsReadOnly(false);
+        setisEditing(false);
+        aggregateForm.resetFields();
     };
     const handleSelect = (value, selectObj, labelName) => {
         if (!value) return;
         switch (labelName) {
             case 'Item': {
-                optionForm.setFieldsValue({
+                aggregateForm.setFieldsValue({
                     serviceNameValue: selectObj?.label,
                 });
                 tableForm.setFieldsValue({
@@ -248,7 +251,7 @@ const AddEditFormMain = (props) => {
                 break;
             }
             case 'make': {
-                optionForm.setFieldsValue({
+                aggregateForm.setFieldsValue({
                     makeValue: selectObj?.label,
                 });
                 tableForm.setFieldsValue({
@@ -262,10 +265,10 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const OptionServicesFormProps = {
+    const AggregateFormProps = {
         typeData,
         handleCancel: handleCanceler,
-        optionForm,
+        aggregateForm,
         optionsServicesMapping,
         setoptionsServicesMapping,
         showGlobalNotification,
@@ -290,20 +293,31 @@ const AddEditFormMain = (props) => {
         serviceNames,
         handleSelect,
     };
+    const advanceFilterProps = {
+        ...AggregateFormProps,
+        AdvanceformData,
+        setAdvanceformData,
+        aggregateForm,
+        isVisible: isReadOnly,
+        titleOverride: 'Aggregates',
+        onCloseAction: () => {
+            setIsReadOnly(false);
+        },
+        setAdvanceSearchVisible: setIsReadOnly,
+        isEditing,
+        setisEditing,
+        onCloseAction: handleCanceler,
+    };
 
     const disabledProps = { disabled: isReadOnly };
 
     const handleEdit = ({ record, index }) => {
-        console.log('record', record, index);
-        tableForm.setFieldsValue({
-            serviceName: record?.serviceName ?? '',
-            make: record?.make ?? '',
-            amount: record?.amount ?? '',
-            serviceNameValue: record?.serviceNameValue ?? '',
-            makeValue: record?.makeValue ?? '',
-        });
-        setidentification(index);
+        console.log('record', record);
+        setAdvanceformData({ ...record, index: index });
+        aggregateForm.resetFields();
+        setOpenAccordian('3');
         setisEditing(true);
+        setIsReadOnly(true);
     };
     const handleTableCancel = ({ record, index }) => {
         setisEditing(false);
@@ -380,7 +394,6 @@ const AddEditFormMain = (props) => {
             }
             default: {
                 return text;
-
             }
         }
     };
@@ -498,15 +511,16 @@ const AddEditFormMain = (props) => {
                                 }
                                 key="3"
                             >
-                                {isReadOnly && <AggregatesForm {...OptionServicesFormProps} />}
+                                {/* {isReadOnly && <AggregateForm {...advanceFilterProps} />} */}
                                 <Form autoComplete="off" layout="vertical" form={tableForm}>
-                                    <DataTable tableColumn={tableColumn({ handleEdit, identification, isEditing, handleCancel: handleTableCancel, renderFormItems, handleSave, handleDelete })} tableData={optionsServiceModified} removePagination={true} />
+                                    <DataTable tableColumn={tableColumn({ handleEdit, identification, isEditing, handleCancel: handleTableCancel, renderFormItems, handleSave, handleDelete })} tableData={optionsServiceModified} pagination={true} />
                                 </Form>
                             </Panel>
                         </Collapse>
                     </Space>
                 </Col>
             </Row>
+            <AggregateForm {...advanceFilterProps} />
         </>
     );
 };
