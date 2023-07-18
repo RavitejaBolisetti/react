@@ -17,7 +17,7 @@ export const ViewTaxChargesMain = ({ viewTitle, buttonData, attributeData, selec
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner}`}>
+        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner} ${styles.viewProductDetail}`}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Attribute Level">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
                 <Descriptions.Item label="Parent">{selectedTreeData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
