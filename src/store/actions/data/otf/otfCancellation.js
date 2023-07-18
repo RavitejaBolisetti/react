@@ -8,7 +8,7 @@ import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_OTF_CANCELLATION as baseURL } from 'constants/routingApi';
 
 const PREFIX = 'OTF_CANCELLATION_';
-const moduleName = 'OTF Cancellation';
+const moduleName = 'OTFCancellation';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';

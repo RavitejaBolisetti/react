@@ -17,7 +17,7 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { OTF_SECTION } from 'constants/OTFSection';
-import { CancellationMaster } from './OTF Cancellation/CancellationMaster';
+import { CancellationMaster } from './OTFCancellation/CancellationMaster';
 import { TransferMaster } from './OTFTransfer/TransferMaster';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -27,9 +27,12 @@ import { BASE_URL_OTF_DETAILS as baseURL } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
 import { validateOTFMenu } from './utils/validateOTFMenu';
-import styles from 'components/common/Common.module.css';
 
 import { FilterIcon } from 'Icons';
+import { ChangeHistory } from './ChangeHistory';
+
+import styles from 'components/common/Common.module.css';
+
 const { confirm } = Modal;
 
 const mapStateToProps = (state) => {
@@ -38,11 +41,13 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
-                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString, isDetailLoaded, detailData: otfData = [] },
+                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString, isDetailLoaded, detailData: otfData = [], isChangeHistoryLoaded, isChangeHistoryLoading, isChangeHistoryData = [] },
             },
         },
     } = state;
     const moduleTitle = 'Order Tracking Form';
+    const ChangeHistoryTitle = 'OTF Change History ';
+
     let returnValue = {
         userId,
         typeData,
@@ -57,6 +62,11 @@ const mapStateToProps = (state) => {
         isOTFSearchLoading,
         isSearchDataLoaded,
         filterString,
+        ChangeHistoryTitle,
+
+        isChangeHistoryLoaded,
+        isChangeHistoryLoading,
+        isChangeHistoryData,
     };
     return returnValue;
 };
@@ -66,6 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchOTFSearchedList: otfDataActions.fetchList,
+            fetchOTFChangeHistory: otfDataActions.changeHistory,
             fetchOTFDetail: otfDataActions.fetchDetail,
             saveData: otfDataActions.saveData,
             setFilterString: otfDataActions.setFilter,
@@ -80,6 +91,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const OtfMasterBase = (props) => {
     const { fetchOTFDetail, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
+    const { ChangeHistoryTitle } = props;
+
     const { typeData, moduleTitle, transferOTF } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -87,9 +100,7 @@ export const OtfMasterBase = (props) => {
     const [listFilterForm] = Form.useForm();
 
     const [selectedOrder, setSelectedOrder] = useState();
-    console.log('🚀 ~ file: OtfMaster.js:90 ~ OtfMasterBase ~ selectedOrder:', selectedOrder);
     const [selectedOrderId, setSelectedOrderId] = useState();
-    console.log('🚀 ~ file: OtfMaster.js:92 ~ OtfMasterBase ~ selectedOrderId:', selectedOrderId);
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -124,8 +135,9 @@ export const OtfMasterBase = (props) => {
         unAllotBtn: false,
         invoiceBtn: false,
         deliveryNote: false,
-        cancelOtfBtn: true, // for now only // for testing, it will change to false.
-        transferOtfBtn: true, // for now only // for testing, it will change to false.
+        cancelOtfBtn: false,
+        changeHistory: true,
+        transferOtfBtn: true,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -134,6 +146,7 @@ export const OtfMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
+    const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -337,6 +350,9 @@ export const OtfMasterBase = (props) => {
 
     const onFinishFailed = (errorInfo) => {
         return;
+    };
+    const handleChangeHistory = () => {
+        setChangeHistoryVisible(true);
     };
 
     const handleFormValueChange = () => {
@@ -560,6 +576,18 @@ export const OtfMasterBase = (props) => {
             return 'Add New ';
         }
     }, [formActionType]);
+    const ChangeHistoryProps = {
+        isVisible: ChangeHistoryVisible,
+        onCloseAction: () => {
+            setChangeHistoryVisible(false);
+        },
+        titleOverride: ChangeHistoryTitle,
+        formData,
+        setIsFormVisible,
+        buttonData,
+        ChangeHistoryTitle,
+        selectedOrderId,
+    };
 
     const containerProps = {
         record: selectedOrder,
@@ -597,9 +625,7 @@ export const OtfMasterBase = (props) => {
         typeData,
         otfData,
         saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
-
-        isTransferVisible,
-        setIsTransferVisible,
+        handleChangeHistory,
     };
 
     const onCancelCloseAction = () => {
@@ -646,6 +672,7 @@ export const OtfMasterBase = (props) => {
             <OTFMainConatiner {...containerProps} />
             <CancellationMaster {...cancelProps} />
             <TransferMaster {...transferOTFProps} />
+            <ChangeHistory {...ChangeHistoryProps} />
         </>
     );
 };

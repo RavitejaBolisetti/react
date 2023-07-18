@@ -19,7 +19,6 @@ import { OTF_STATUS } from 'constants/OTFStatus';
 import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 
 import { showGlobalNotification } from 'store/actions/notification';
-//import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 import { PARAM_MASTER } from 'constants/paramMaster';
 

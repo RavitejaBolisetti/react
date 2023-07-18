@@ -9,7 +9,7 @@ import { Button, Row, Col, Popover } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from './OTFFormButton.module.css';
 
-export const OTFFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const OTFFormButton = ({ record, handleChangeHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     const content = <div>Coming Soon</div>;
     return (
         <Row gutter={20} className={styles.formFooter}>
@@ -88,6 +88,12 @@ export const OTFFormButton = ({ record, onCloseAction, buttonData, setButtonData
                     </Button>
                 )}
 
+                {buttonData?.changeHistory && (
+                    <Button onClick={handleChangeHistory} type="primary">
+                        Change History
+                    </Button>
+                )}
+
                 {buttonData?.nextBtn && !isLastSection && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                         Next
@@ -99,8 +105,6 @@ export const OTFFormButton = ({ record, onCloseAction, buttonData, setButtonData
                         {saveButtonName}
                     </Button>
                 )}
-
-                {}
             </Col>
         </Row>
     );

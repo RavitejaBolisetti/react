@@ -13,7 +13,6 @@ import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-//import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 import { showGlobalNotification } from 'store/actions/notification';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
