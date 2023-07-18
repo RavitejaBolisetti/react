@@ -10,17 +10,20 @@ import { disableFutureDate } from 'utils/disableDate';
 import { convertDateToCalender } from 'utils/formatDateTime';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { customSelectBox } from 'utils/customSelectBox';
+
+import { YES_NO_FLAG } from 'constants/yesNoFlag';
 
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, FinanceLovData } = props;
+    const { formData, FinanceLovData, typeData } = props;
     const [doReceived, setDoReceived] = useState();
 
     useEffect(() => {
-        setDoReceived(formData?.doReceived || 'No');
+        setDoReceived(formData?.doReceived || 'N');
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
@@ -83,14 +86,11 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formData?.doReceived} label="D.O. Recived" name="doReceived">
-                                            <Select onChange={handleDOChange} placeholder="Select" {...selectProps}>
-                                                <Option value="yes">Yes</Option>
-                                                <Option value="no">No</Option>
-                                            </Select>
+                                            {customSelectBox({ data: typeData?.YES_NO_FLG, onChange: handleDOChange })}
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                {doReceived === 'yes' && (
+                                {doReceived === YES_NO_FLAG?.YES?.key && (
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item initialValue={formData?.doNumber} label="D.O. Number" name="doNumber">
