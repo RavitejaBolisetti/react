@@ -6,6 +6,7 @@
 import React, { useEffect, createContext, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { ConfigProvider, notification } from 'antd';
+import { Sample } from './components/Sample';
 import { MainPage } from './components/MainPage';
 import { readFromStorageAndValidateAuth } from 'store/actions/auth';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -88,6 +89,7 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => 
                 >
                     <NotificationContext.Provider value={informationModalBox}>
                         {contextInformationNotification}
+                        <Sample />
                         <MainPage />
                     </NotificationContext.Provider>
                 </ConfigProvider>
