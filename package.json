@@ -66,7 +66,6 @@
     },
     "devDependencies": {
         "@babel/preset-env": "^7.20.2",
-        "react-app-rewired": "^2.2.1",
         "redux-devtools-extension": "^2.13.9",
         "redux-mock-store": "^1.5.4",
         "sonarqube-scanner": "^3.0.1"

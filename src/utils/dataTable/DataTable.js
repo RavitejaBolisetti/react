@@ -30,7 +30,7 @@ export default function DataTable({ isLoading, removePagination = false, srl = t
 
     const skeletonData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
-    const tableColumnWithSrl = [tblSerialNumberColumn({ page: tablePagination?.current, title: srlTitle, pageSize: tablePagination?.pageSize, width: scroll === 'auto' ? '5%' : '50px' }), ...tableColumn];
+    const tableColumnWithSrl = srl ? [tblSerialNumberColumn({ page: tablePagination?.current, title: srlTitle, pageSize: tablePagination?.pageSize, width: scroll === 'auto' ? '5%' : '50px' }), ...tableColumn] : [...tableColumn];
 
     const tableSkeletonColumn = tableColumnWithSrl?.map((item) => {
         return { ...item, render: () => <InputSkeleton height={40} /> };
@@ -38,10 +38,11 @@ export default function DataTable({ isLoading, removePagination = false, srl = t
 
     return (
         <Table
+            rowSelection={rowSelection}
             columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl}
             dataSource={isLoading ? skeletonData : tableData}
             onChange={handleTableChange}
-            pagination={removePagination ? false : !isLoading && tablePagination}
+            pagination={pagination ? !isLoading && tablePagination : false}
             rowKey={rowKey}
             scroll={{
                 x: scroll,

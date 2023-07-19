@@ -7,7 +7,7 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Button } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-
+import styles from 'components/common/Common.module.css';
 import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
 const AggregatesFormMain = (props) => {
@@ -75,12 +75,12 @@ const AggregatesFormMain = (props) => {
                             </Col>
                         </Row>
                         <Row gutter={20}>
-                            <Col style={{ marginTop: '28px' }} xs={24} sm={24} md={8} lg={8} xl={8}>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.marB20}>
                                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <Button onClick={onFinish} style={{ marginLeft: '20px' }} type="primary">
+                                    <Button className={styles.marR20} onClick={onFinish}  type="primary">
                                         Save
                                     </Button>
-                                    <Button style={{ marginLeft: '20px' }} onClick={handleCancel} danger>
+                                    <Button onClick={handleCancel} danger>
                                         Cancel
                                     </Button>
                                 </div>
