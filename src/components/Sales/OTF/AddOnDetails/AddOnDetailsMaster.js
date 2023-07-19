@@ -92,13 +92,14 @@ export const AddOnDetailsMasterMain = (props) => {
     };
 
     const onSearchPart = (searchvalue) => {
-        if (!searchvalue) return false;
+        const partNumber = searchvalue?.trim();
+        if (!partNumber) return false;
 
         const extraParams = [
             {
                 key: 'partNumber',
                 title: 'partNumber',
-                value: searchvalue,
+                value: partNumber,
                 name: 'partNumber',
             },
         ];

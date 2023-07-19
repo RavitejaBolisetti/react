@@ -5,14 +5,16 @@
  */
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Card } from 'antd';
+import { Collapse, Form, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Card, Empty } from 'antd';
 import Svg from 'assets/images/Filter.svg';
-import { FiDownload } from 'react-icons/fi';
+import { FiDownload, FiTrash } from 'react-icons/fi';
 
 import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, validatInstagramProfileUrl } from 'utils/validation';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText, prepareDatePickerText } from 'utils/preparePlaceholder';
 import { disableFutureDate } from 'utils/disableDate';
 import { expandIcon } from 'utils/accordianExpandIcon';
+
+import UploadUtils from 'components/common/CustomerMaster/Common/UploadUtils';
 
 import styles from 'components/common/Common.module.css';
 import ViewImageUtils from '../../Common/ViewImageUtils';
@@ -23,11 +25,12 @@ const { TextArea } = Input;
 const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadConsentDocumentFile } = props;
+    const { showGlobalNotification, formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadedFile, uploadConsentDocumentFile } = props;
     const { isReadOnly = false } = props;
     const [isRead, setIsRead] = useState(false);
+    const [isReadUpload, setIsReadUpload] = useState(false);
     const [customer, setCustomer] = useState(false);
-    const [activeKey, setActiveKey] = useState([1]);
+    const [activeKey, setActiveKey] = useState([]);
 
     useEffect(() => {
         setCustomer(formData?.customerCategory);
@@ -94,9 +97,18 @@ const AddEditFormMain = (props) => {
     const uploadProps = {
         name: 'file',
         multiple: false,
+        accept: 'image/png, image/jpeg',
         action: '',
         progress: { strokeWidth: 10 },
         success: { percent: 100 },
+        beforeUpload: (file) => {
+            const isPNG = file.type === 'image/png';
+            const isJPG = file.type === 'image/jpeg';
+            if (!isPNG && !isJPG) {
+                message.error(`${file.name} is not a correct file format`);
+            }
+            return isPNG || isJPG || Upload.LIST_IGNORE;
+        },
         onDrop,
         onChange: (info, event) => {
             const { status } = info.file;
@@ -111,16 +123,28 @@ const AddEditFormMain = (props) => {
     };
 
     const uploadConsentProps = {
-        name: 'file',
         multiple: false,
-        action: '',
-        progress: { strokeWidth: 10 },
-        success: { percent: 100 },
+        maxCount: 1,
+        accept: 'image/png, image/jpeg, application/pdf',
+        beforeUpload: (file) => {
+            const isAccepted = file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'application/pdf';
+            if (!isAccepted) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not a accepted file format`, placement: 'bottomRight' });
+            }
+            return isAccepted || Upload.LIST_IGNORE;
+        },
+        showUploadList: {
+            showRemoveIcon: true,
+            removeIcon: <FiTrash />,
+            showProgress: true,
+        },
+        progress: { strokeWidth: 3, showInfo: true },
         onDrop,
         onChange: (info, event) => {
             const { status } = info.file;
             if (status === 'uploading') {
             } else if (status === 'done') {
+                setIsReadUpload(true);
                 setUploadedFiles(info?.file?.response?.docId);
                 message.success(`${info.file.name} file uploaded successfully.`);
             } else if (status === 'error') {
@@ -128,7 +152,6 @@ const AddEditFormMain = (props) => {
             }
         },
     };
-
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
 
@@ -183,14 +206,12 @@ const AddEditFormMain = (props) => {
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                             <Panel header="Individual Information" key="1">
                                 <Divider />
-                                <div className={styles.uploadDragger}>
-                                    <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} {...ImageProps} />
-                                </div>
+                                <UploadUtils {...props} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={formData?.image} {...ImageProps} />
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Date of Birth" name="dateOfBirth">
-                                            <DatePicker format="YYYY-MM-DD" disabledDate={disableFutureDate} disabled={isReadOnly} className={styles.datepicker} />
+                                            <DatePicker format="DD-MM-YYYY" disabledDate={disableFutureDate} disabled={isReadOnly} className={styles.datepicker} placeholder={prepareDatePickerText('DD-MM-YYYY')} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -219,7 +240,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label=" Wedding Anniversary Date" name="weddingAnniversary">
-                                            <DatePicker format="YYYY-MM-DD" disabledDate={disableFutureDate} className={styles.datepicker} disabled={isRead} />
+                                            <DatePicker format="DD-MM-YYYY" disabledDate={disableFutureDate} className={styles.datepicker} disabled={isRead} placeholder={prepareDatePickerText('DD-MM-YYYY')} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -306,7 +327,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin'), validateRequiredInputField('gstin')]}>
+                                        <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin')]}>
                                             <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
@@ -424,44 +445,44 @@ const AddEditFormMain = (props) => {
                                 </Row>
                             </Panel>
                         </Collapse>
+                        {/* <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
+                             <Panel header="Key Account details" key="3">
+                                 <Divider />
+                                 <Row gutter={20}>
+                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                         <Form.Item label="Account Code" name="accountCode" initialValue={formData?.keyAccountDetails?.accountCode}>
+                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter account code')} disabled />
+                                         </Form.Item>
+                                     </Col>
+ 
+                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                         <Form.Item label="Account Name" name="accountName" initialValue={formData?.keyAccountDetails?.accountName}>
+                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
+                                         </Form.Item>
+                                     </Col>
+ 
+                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                         <Form.Item label="Account Segement" name="accountSegment" initialValue={formData?.keyAccountDetails?.accountSegment}>
+                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} disabled />
+                                         </Form.Item>
+                                     </Col>
+                                 </Row>
+                                 <Row gutter={20}>
+                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                         <Form.Item label="Account Client Name" name="accountClientName" initialValue={formData?.keyAccountDetails?.accountClientName}>
+                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} disabled />
+                                         </Form.Item>
+                                     </Col>
+ 
+                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                         <Form.Item label="Account Mapping Date" name="accountMappingDate" initialValue={formData?.keyAccountDetails?.accountMappingDate}>
+                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
+                                         </Form.Item>
+                                     </Col>
+                                 </Row>
+                             </Panel>
+	                         </Collapse> */}
                         <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel header="Key Account details" key="3">
-                                <Divider />
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Code" name="accountCode" initialValue={formData?.keyAccountDetails?.accountCode}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter account code')} disabled />
-                                        </Form.Item>
-                                    </Col>
-
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Name" name="accountName" initialValue={formData?.keyAccountDetails?.accountName}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
-                                        </Form.Item>
-                                    </Col>
-
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Segement" name="accountSegment" initialValue={formData?.keyAccountDetails?.accountSegment}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} disabled />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Client Name" name="accountClientName" initialValue={formData?.keyAccountDetails?.accountClientName}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} disabled />
-                                        </Form.Item>
-                                    </Col>
-
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Account Mapping Date" name="accountMappingDate" initialValue={formData?.keyAccountDetails?.accountMappingDate}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} disabled />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                            </Panel>
-                        </Collapse>
-                        <Collapse defaultActiveKey={['4']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel header="Authority Details (Who Knowns Whom)" key="4">
                                 <Divider />
                                 <Row gutter={20}>
@@ -496,31 +517,12 @@ const AddEditFormMain = (props) => {
                         <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel header="Upload Customer Form" key="5">
                                 <>
-                                    <div className={styles.marB20}>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">
-                                                    <Checkbox> I Consent to share my details with Mahindra & Mahindra</Checkbox>
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Dragger {...uploadConsentProps} customRequest={handleUploads} className={styles.uploadContainer}>
-                                                    <div>
-                                                        <img src={Svg} alt="" />
-                                                    </div>
-                                                    <div className={styles.uploadtext}>
-                                                        Click or drop your file here to upload the signed and <br /> scanned customer form.
-                                                    </div>
-                                                    <div>File type should be png, jpg or pdf and max file size to be 5Mb</div>
-                                                    <Button {...disabledProps} type="primary" htmlType="submit" style={{ marginLeft: '30px', marginTop: '16px' }}>
-                                                        Upload File
-                                                    </Button>
-                                                </Dragger>
-                                            </Col>
-                                        </Row>
-                                    </div>
+                                    <Space direction="vertical">
+                                        <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">
+                                            <Checkbox> I Consent to share my details with Mahindra & Mahindra</Checkbox>
+                                        </Form.Item>
+                                        <UploadUtils {...props} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={formData?.image} {...ImageProps} />
+                                    </Space>
                                     {formData?.customerConsentForm && (
                                         <Row gutter={16}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>

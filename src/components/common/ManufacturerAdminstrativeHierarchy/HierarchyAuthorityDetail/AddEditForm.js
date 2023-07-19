@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -19,21 +19,17 @@ import style from 'components/common/Common.module.css';
 const { Search } = Input;
 const { Text } = Typography;
 
-let apiData = [];
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], recordId: formRecordId, tokenNumber = [], errorMessage, isUpdating, changeHistoryVisible, historyData = [], authTypeDropdown = [], authorityVisible },
-            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
+            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [],  recordId: formRecordId, tokenNumber = [], errorMessage, isUpdating, changeHistoryVisible, historyData = [], authTypeDropdown:authTypeDropdownData = [], authorityVisible },
+            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, isLoading: searchLoading, data: attributeData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
         },
     } = state;
-
-    apiData = state.data.ManufacturerAdminHierarchy.authTypeDropdown;
 
     let returnValue = {
         collapsed,
@@ -44,12 +40,13 @@ const mapStateToProps = (state) => {
         manufacturerAdminHierarchyData,
         isDataAttributeLoaded,
         tokenNumber,
-        authTypeDropdown,
+        authTypeDropdownData,
         historyData,
         authorityVisible,
         attributeData: attributeData?.filter((i) => i),
         errorMessage: errorMessage?.length ? errorMessage[0] : errorMessage,
         isUpdating,
+        searchLoading,
     };
     return returnValue;
 };
@@ -74,7 +71,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, handleFormValueChange, record, tokenValidationData, errorTokenValidate, tokenValidate, errorMessage, setTokenValidate, setEmployeeName = undefined, employeeName = '', recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction }) => {
+const AuthorityFormMin = (props) => {
+    const { isUpdating, isMainForm, setTokenValidationData, handleFormValueChange, tokenValidationData, errorTokenValidate, tokenValidate, errorMessage, setTokenValidate, setEmployeeName = undefined, employeeName = '', recordId = '', formRecordId, viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction } = props;
+    const { setselectedValueOnUpdate, authTypeDropdownData, hierarchyAttributeListShowLoading, searchLoading } = props;
     const disableAddBtn = { disabled: isBtnDisabled || !tokenNumber?.employeeName };
 
     const onFinishFailed = (err) => {
@@ -86,15 +85,13 @@ const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, hand
     };
 
     const onSearchHandle = (recordId) => (data) => {
-        setTokenValidate({ ['tokenVisible' + recordId]: true });
-        data && searchList({ setIsLoading: listShowLoading, tokenNumber: data, recordId, errorAction });
+        data && searchList({ setIsLoading: hierarchyAttributeListShowLoading, tokenNumber: data, recordId, errorAction });
     };
 
     const onChangeHandle = (recordId) => (e) => {
         if (!isMainForm) {
             setTokenValidationData({});
         }
-        setTokenValidate({ tokenVisible: !!e.target.value });
         if (tokenNumber?.employeeName || errorMessage) {
             errorTokenValidate({ errorMessage: '', isUpdating: isEditing });
         }
@@ -114,12 +111,12 @@ const AuthorityFormMin = ({ isUpdating, isMainForm, setTokenValidationData, hand
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type')]}>
-                        <Select labelInValue getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" fieldNames={fieldNames} options={apiData} disabled={isBtnDisabled} />
+                        <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" fieldNames={fieldNames} options={authTypeDropdownData} disabled={isBtnDisabled} onChange={(value, valueObject) => setselectedValueOnUpdate(valueObject)} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Token" name={'authorityEmployeeTokenNo'} rules={[validateRequiredInputField('Token Required')]}>
-                        <Search disabled={isBtnDisabled} allowClear onChange={onChangeHandle(recordId)} onSearch={onSearchHandle(recordId)} placeholder={preparePlaceholderText('Token')} />
+                        <Search loading={searchLoading} disabled={isBtnDisabled} allowClear onChange={onChangeHandle(recordId)} onSearch={onSearchHandle(recordId)} placeholder={preparePlaceholderText('Token')} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

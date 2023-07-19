@@ -19,6 +19,7 @@ import {
     CriticalityGroupPage,
     RoleManagementPage,
     StatePage,
+    StateCrudPage,
     DistrictPage,
     CityPage,
     TehsilPage,
@@ -36,9 +37,10 @@ import {
     TermConditionDealerMasterPage,
     TermConditionManufacturerMasterPage,
     OtfReportsPage,
+    LessorCustomerCreationPage,
 } from 'pages/common';
 
-import { OTFMasterPage, VehicleDetailMasterPage } from 'pages/Sales';
+import { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage } from 'pages/Sales';
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
 
@@ -64,6 +66,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER} element={<HierarchyAttributeMasterPage />} exact />
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY} element={<ManufacturerAdministrativeHierarchyPage />} />
 
+            <Route path={routing.ROUTING_COMMON_GEO_STATE_CRUD} element={<StateCrudPage />} />
             <Route path={routing.ROUTING_COMMON_GEO_STATE} element={<StatePage />} />
             <Route path={routing.ROUTING_COMMON_GEO_CITY} element={<CityPage />} />
             <Route path={routing.ROUTING_COMMON_GEO_DISTRICT} element={<DistrictPage />} />
@@ -87,6 +90,7 @@ export const AuthenticatedUserPage = () => {
 
             <Route path={routing.ROUTING_COMMON_PARTY_MASTER} element={<PartyMasterPage />} />
             <Route path={routing.ROUTING_COMMON_LESSOR_COMPANY_MASTER} element={<LessorCompanyMasterPage />} />
+            <Route path={routing.ROUTING_COMMON_LESSOR_CUSTOMER_CREATION} element={<LessorCustomerCreationPage />} />
             <Route path={routing.ROUTING_USER_PROFILE} element={<ProfilePage />} exact />
             <Route path={routing.ROUTING_COMMON_CUSTOMER_MASTER} element={<CustomerMasterPage />} />
             <Route path={routing.ROUTING_COMMON_TERM_CONDITION_DEALER} element={<TermConditionDealerMasterPage />} />
@@ -110,7 +114,8 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_DISCLAIMER} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_CONTACT} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_OTF} element={<OTFMasterPage />} exact />
-            <Route path={routing.ROUTING_VECHILE_DETAILS} element={<VehicleDetailMasterPage />} exact />
+            <Route path={routing.ROUTING_VEHICLE_DETAILS} element={<VehicleDetailMasterPage />} exact />
+            <Route path={routing.ROUTING_VEHICLE_RECEIPT} element={<VehicleReceiptMasterPage />} exact />
             <Route path={routing.ROUTING_REPORT_OTF_REPORTS} element={<OtfReportsPage />} />
 
             {/* <Route path="*" element={<LoginPage />} exact /> */}

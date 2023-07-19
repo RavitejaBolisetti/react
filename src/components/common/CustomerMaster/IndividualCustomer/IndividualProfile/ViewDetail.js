@@ -4,17 +4,15 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Space, Collapse, Typography, Descriptions, Card, Divider } from 'antd';
+import { Space, Collapse, Descriptions, Card, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { FiDownload } from 'react-icons/fi';
 import { getCodeValue } from 'utils/getCodeValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 const { Panel } = Collapse;
-const { Text } = Typography;
-
 const ViewDetailMain = (props) => {
-    const { setActiveKey, activeKey, styles, formData, viewDocument, handleOnClickCustomerForm, isLoading, appCategoryData } = props;
+    const { downloadFileFromButton, setActiveKey, activeKey, styles, formData, viewDocument, handleOnClickCustomerForm, isLoading, appCategoryData } = props;
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -44,6 +42,7 @@ const ViewDetailMain = (props) => {
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                     <Panel header="Individual Information" key="1">
+                        <Divider />
                         <Descriptions {...viewProps}>
                             <div>
                                 <img alt="uploaded suppoting document" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
@@ -82,6 +81,7 @@ const ViewDetailMain = (props) => {
                 </Collapse>
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end">
                     <Panel header="Social Profile" key="5">
+                        <Divider />
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="M1-MMFSL">{checkAndSetDefaultValue(formData?.mmfsl, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookLink, isLoading)}</Descriptions.Item>
@@ -92,19 +92,20 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </Panel>
                 </Collapse>
+                {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                     <Panel header="Key Account Details" key="2">
+                         <Descriptions {...viewProps}>
+                             <Descriptions.Item label="Account Code">{checkAndSetDefaultValue(formData?.accountCode, isLoading)}</Descriptions.Item>
+                             <Descriptions.Item label="Account Name">{checkAndSetDefaultValue(formData?.accountName, isLoading)}</Descriptions.Item>
+                             <Descriptions.Item label="Account Segement">{checkAndSetDefaultValue(formData?.accountSegement, isLoading)}</Descriptions.Item>
+                             <Descriptions.Item label="Account Client Name">{checkAndSetDefaultValue(formData?.accountClientName, isLoading)}</Descriptions.Item>
+                             <Descriptions.Item label="Account Mapping Date">{checkAndSetDefaultValue(formData?.accountMappingDate, isLoading)}</Descriptions.Item>
+                         </Descriptions>
+	                     </Panel>
+                 </Collapse> */}
+
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                    <Panel header="Key Account Details" key="2">
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Account Code">{checkAndSetDefaultValue(formData?.accountCode, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Account Name">{checkAndSetDefaultValue(formData?.accountName, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Account Segement">{checkAndSetDefaultValue(formData?.accountSegement, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Account Client Name">{checkAndSetDefaultValue(formData?.accountClientName, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Account Mapping Date">{checkAndSetDefaultValue(formData?.accountMappingDate, isLoading)}</Descriptions.Item>
-                        </Descriptions>
-                    </Panel>
-                </Collapse>
-                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
-                    <Panel header="Authority Details (Who Knows Whom)" key="3">
+                    <Panel header="Authority Details (Who Knows Whom)" key="2">
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Name Of Person">{checkAndSetDefaultValue(formData?.authorityDetails?.personName, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Position">{checkAndSetDefaultValue(formData?.authorityDetails?.postion, isLoading)}</Descriptions.Item>
@@ -113,10 +114,10 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </Panel>
                 </Collapse>
-                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end">
-                    <Panel header="Upload Customer Form" key="4">
+                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
+                    <Panel header="Upload Customer Form" key="3">
                         <Divider />
-                        <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClickCustomerForm}></Card>
+                        <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
                     </Panel>
                 </Collapse>
             </Space>

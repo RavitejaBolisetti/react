@@ -6,9 +6,19 @@
 
 import { InputSkeleton } from 'components/common/Skeleton';
 import { convertDate } from 'utils/formatDateTime';
+import { DATA_TYPE } from 'constants/dataType';
 
 export const checkAndSetDefaultValue = (value, isLoading, type) => {
-    return isLoading ? <InputSkeleton width={'100px'} height={20} theme={'card'} /> : type === 'date' ? value ? convertDate(value, 'DD MMM YYYY') : 'NA' : value || 'NA';
+    if (isLoading) return <InputSkeleton width={'100px'} height={20} theme={'card'} />;
+
+    switch (type) {
+        case DATA_TYPE?.BOOL?.key:
+            return value ? 'Yes' : 'No';
+        case DATA_TYPE?.DATE?.key:
+            return value ? convertDate(value, 'DD MMM YYYY') : '-';
+        default:
+            return value || '-';
+    }
 };
 
 export const getNameFromKey = (list, key) => {

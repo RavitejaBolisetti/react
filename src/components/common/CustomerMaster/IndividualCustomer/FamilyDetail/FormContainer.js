@@ -16,7 +16,7 @@ import dayjs from 'dayjs';
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
-const { TextArea } = Input;
+const { TextArea, Search } = Input;
 
 const FormBase = (props) => {
     const { customerType, onSave, form, onChange, relationData, onSearch, isSearchLoading, onCancel, showForm, initialVal, editedValues } = props;
@@ -84,13 +84,13 @@ const FormBase = (props) => {
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
-                            <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading} />
+                            <Search placeholder={preparePlaceholderText('Customer Id')} allowClear loading={isSearchLoading} onSearch={onSearch} style={{ width: '100%' }} />
                         </Form.Item>
                     </Col>
                 ) : (
                     <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                         <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
-                            <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading} />
+                            <Search placeholder={preparePlaceholderText('Customer Id')} allowClear loading={isSearchLoading} onSearch={onSearch} style={{ width: '100%' }} />
                         </Form.Item>
                     </Col>
                 )}
@@ -134,7 +134,7 @@ const FormBase = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>
-                        <DatePicker format="YYYY-MM-DD" onChange={onDateChange} disabledDate={disableFutureDate} style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} />
+                        <DatePicker format="DD-MM-YYYY" onChange={onDateChange} disabledDate={disableFutureDate} style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} getPopupContainer={(triggerNode) => triggerNode.parentElement} />
                     </Form.Item>
                 </Col>
 

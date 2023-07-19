@@ -28,6 +28,10 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
         accessoryForm
             .validateFields()
             .then((values) => {
+                if (isPresent(values?.partNumber)) {
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Duplicate Part Number' });
+                    return;
+                }
                 if (!values?.partNumber) {
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide part number' });
                     return;
@@ -55,7 +59,9 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
     const handleOnSearch = (value) => {
         onSearchPart(value);
     };
-    const handlePartSearch = () => {
+    const handlePartSearch = (values) => {
+        const { partNumber } = accessoryForm.getFieldsValue();
+        accessoryForm.setFieldsValue({ partNumber: partNumber?.trim() });
         accessoryForm.resetFields(['type', 'sellingPrice', 'mrp', 'partDescription']);
     };
 
@@ -63,7 +69,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
         <>
             <Form autoComplete="off" form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Part Number" name="partNumber" rules={[validateRequiredInputField('part number')]}>
                             <Search placeholder={preparePlaceholderText('Part Number')} maxLength={55} allowClear type="text" onSearch={handleOnSearch} onChange={handlePartSearch} />
                         </Form.Item>
@@ -88,7 +94,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity'), validationNumber('required quantity')]}>
-                            <Input placeholder={preparePlaceholderText('required quantity')} />
+                            <Input type="number" placeholder={preparePlaceholderText('required quantity')} />
                         </Form.Item>
                     </Col>
                     <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>

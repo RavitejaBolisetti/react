@@ -44,7 +44,9 @@ export const BASE_URL_ROLE = BASE_URL_DEALER_MANPOWER + '/roles';
 export const BASE_URL_CUSTOMER_MASTER = BASE_URL + 'customers';
 export const BASE_URL_PARTY_MASTER = BASE_URL_CUSTOMER_MASTER + '/partymaster';
 export const BASE_URL_LESSOR_COMPANY_MASTER = BASE_URL_CUSTOMER_MASTER + '/lessorcompany';
+export const BASE_URL_LESSOR_CUSTOMER_CREATION = BASE_URL_CUSTOMER_MASTER + '/lessorcustomer';
 export const BASE_URL_CUSTOMER_MASTER_LIST = BASE_URL + 'customers/search';
+export const BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST = BASE_URL + 'customers/vehicle/search';
 export const BASE_URL_SUPPORTING_DOCUMENT = BASE_URL_CUSTOMER_MASTER + '/document';
 
 export const BASE_URL_GEO_GRAPHY_CHANGE_HISTORY = BASE_URL + 'geochangehistory';
@@ -72,7 +74,9 @@ export const BASE_URL_MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'ma
 export const BASE_URL_MANUFACTURER_ADMINISTRATION_HIERARCHY = BASE_URL + 'manufacturer/admin/hierarchy';
 export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SAVE = BASE_URL + 'manufacturer/admin/hierarchy';
 export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'manufacturer/admin/changehistory';
-export const BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY = BASE_URL + 'manufacturer/authority/changehistory';
+export const BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY = BASE_URL + 'manufacturer/admin/authority/changehistory';
+
+export const BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_UPLOAD = BASE_URL + 'manufacturer/admin/authority';
 export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH = BASE_URL + 'users/manufacturer';
 export const BASE_URL_MANUFACTURER_AUTHORITY_TYPE_DROPDOWN = BASE_URL + 'configurableparametertypes';
 
@@ -132,6 +136,8 @@ export const BASE_URL_OTF = BASE_URL + 'otf/';
 
 export const BASE_URL_REFERRALS = BASE_URL_OTF + 'referrals';
 
+export const BASE_URL_OTF_REQUEST = BASE_URL_OTF + 'request/';
+export const BASE_URL_OTF_REJECT = BASE_URL_OTF_REQUEST + 'reject';
 export const BASE_URL_OTF_SEARCH_LIST = BASE_URL_OTF + 'search';
 export const BASE_URL_OTF_REPORTS = BASE_URL + 'customreports/otf/names';
 export const BASE_URL_OTF_DOWNLAOD_REPORT = BASE_URL + 'customreports/otf/register';
@@ -148,6 +154,11 @@ export const BASE_URL_OTF_INSURANCE_DETAIL = BASE_URL + 'otf/insurancedetails';
 export const BASE_URL_OTF_FINANCE_LOV = BASE_URL + 'otf/financiers/lov';
 export const BASE_URL_OTF_SCHEMES = BASE_URL_OTF + 'schemes';
 export const BASE_URL_OTF_EXCHANGE_VEHICLE = BASE_URL_OTF + 'exchangevehicle';
+export const BASE_URL_OTF_CHANGE_HISTORY = BASE_URL_OTF + 'changehistory';
+
+export const BASE_URL_OTF_TRANSFER = BASE_URL_OTF + 'transfer';
+export const BASE_URL_OTF_CANCELLATION = BASE_URL_OTF + 'request/cancel';
+export const BASE_URL_OTF_CANCELLATION_DEALER_SEARCH = BASE_URL + 'dealer/search/names';
 
 export const BASE_URL_DOCUMENT_UPLOAD = BASE_URL + 'common/document/upload';
 export const BASE_URL_DOCUMENT_DOWNLOAD = BASE_URL + 'common/document/download';
@@ -155,7 +166,16 @@ export const BASE_URL_DOCUMENT_VIEW_URL = BASE_URL + 'common/document/view';
 
 export const BASE_URL_SALES_CONSULTANT = BASE_URL + 'users/dealer/employees/lov';
 export const BASE_URL_OTF_CUSTOMER = BASE_URL + 'otf/customerdetails';
+
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
+export const BASE_URL_VEHICLE_SEARCH = BASE_URL_VEHICLE + 'search';
+export const BASE_URL_VIEW_VEHICLE_DETAILS = BASE_URL_VEHICLE + 'details';
+export const BASE_URL_VEHICLE_CONTACTS = BASE_URL_VEHICLE + 'contacts';
+
 export const BASE_URL_VEHICLE_VARIANT = BASE_URL_VEHICLE + 'variant';
 export const BASE_URL_VEHICLE_MAKE = BASE_URL_VEHICLE + 'make';
 export const BASE_URL_VEHICLE_MODEL = BASE_URL_VEHICLE + 'model';
+export const BASE_URL_VEHICLE_DETAILS_DOCUMENT = BASE_URL_VEHICLE + 'documents';
+export const BASE_URL_VEHICLE_ENTITELMENT = BASE_URL_VEHICLE + 'schemes';
+export const BASE_URL_VEHICLE_CUSTOMER_DETAIL = BASE_URL_VEHICLE + 'customerdetails';
+export const BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL = BASE_URL + 'customers/commondetails'

@@ -9,6 +9,6 @@ import { AddressMaster as IndividualAddressMaster } from '../Common/Address';
 import { ContactMaster as IndividualContactMaster } from './Contact';
 import { FamilyDetailMaster as IndividualFamilyDetailMaster } from './FamilyDetail';
 import { AccountRelatedMaster as IndividualAccountRelatedMaster } from './AccountRelated';
-import { SupportingDocumentMaster as IndividualSupportingDocument } from './SupportingDocument';
+import { IndividualSupportingDocument } from './SupportingDocument';
 
 export { IndivisualCustomerDetailMaster, IndividualProfileMaster, IndividualAddressMaster, IndividualContactMaster, IndividualFamilyDetailMaster, IndividualAccountRelatedMaster, IndividualSupportingDocument };

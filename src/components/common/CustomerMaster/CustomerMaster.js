@@ -10,7 +10,6 @@ import { Button, Col, Row, Form, Empty, ConfigProvider } from 'antd';
 import { RxCross2 } from 'react-icons/rx';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
-import { showGlobalNotification } from 'store/actions/notification';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { tableColumn } from './tableColumn';
@@ -23,6 +22,7 @@ import { SearchBox } from 'components/utils/SearchBox';
 import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection';
 import { CUSTOMER_CORPORATE_SECTION } from 'constants/CustomerCorporateSection';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
+import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 
 import DataTable from 'utils/dataTable/DataTable';
 import { CustomerMainConatiner } from './CustomerMainConatiner';
@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: customerDetailDataActions.setFilter,
             resetData: customerDetailDataActions.reset,
             listShowLoading: customerDetailDataActions.listShowLoading,
-            showGlobalNotification,
+            resetViewData: documentViewDataActions.reset,
         },
         dispatch
     ),
@@ -71,6 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 const CustomerMasterMain = (props) => {
     const { data, fetchList, userId, isLoading, listShowLoading, moduleTitle, typeData, resetData } = props;
     const { filterString, setFilterString } = props;
+    const { resetViewData } = props;
 
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
     const [selectedCustomer, setSelectedCustomer] = useState();
@@ -106,7 +107,7 @@ const CustomerMasterMain = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 1000,
+                value: 100,
                 canRemove: true,
             },
             {
@@ -326,6 +327,7 @@ const CustomerMasterMain = (props) => {
         setRefreshCustomerList,
         profileCardLoading,
         setProfileCardLoading,
+        resetViewData,
     };
 
     const handleCustomerTypeChange = (id) => {
@@ -389,7 +391,9 @@ const CustomerMasterMain = (props) => {
                                         );
                                     })}
                                 </div>
-                                <SearchBox {...searchBoxProps} />
+                                <div className={styles.headerSearchField}>
+                                    <SearchBox {...searchBoxProps} />
+                                </div>
                             </Col>
                             <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
                                 {/* <Button type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>

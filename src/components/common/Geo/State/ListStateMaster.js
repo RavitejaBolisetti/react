@@ -8,8 +8,8 @@ import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 
-import { geoCountryDataActions } from 'store/actions/data/geo/country';
-import { geoStateDataActions } from 'store/actions/data/geo/state';
+import { geoCountryDataActions } from 'store/actions/data/geo/countries';
+import { geoStateDataActions } from 'store/actions/data/geo/states';
 
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -196,14 +196,12 @@ export const ListStateMasterBase = (props) => {
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
-        }
-        else if (e?.target?.value === '') {
+        } else if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
         }
     };
-
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -346,7 +344,6 @@ export const ListStateMasterBase = (props) => {
         setAdvanceSearchVisible,
         handleReferesh,
         handleButtonClick,
-        advanceFilterProps,
         title,
     };
 

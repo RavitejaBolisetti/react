@@ -16,6 +16,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import AddEditForm from './AddEditForm';
 import ViewContactList from './ViewContactList';
+
 import { CustomerFormButton } from '../../CustomerFormButton';
 import { CardSkeleton } from 'components/common/Skeleton';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
@@ -74,11 +75,10 @@ const mapDispatchToProps = (dispatch) => ({
 const ContactMain = (props) => {
     const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, saveData, showGlobalNotification, typeData } = props;
     const { isCustomerIndDataLoading, isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
-    const { buttonData, setButtonData, formActionType, handleButtonClick, setSelectedCustomer, setSelectedCustomerId, NEXT_ACTION } = props;
+    const { buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
-    const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
@@ -142,15 +142,13 @@ const ContactMain = (props) => {
         contactform
             .validateFields()
             .then((value) => {
-                if (isEditing) {
-                    // let dataList = [...contactData];
-                    // const index = dataList?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
-                    // dataList.splice(index, 1);
-                    // const checkedIndex = dataList?.findIndex((el) => el?.defaultContactIndicator);
-                    // if (value?.defaultContactIndicator && checkedIndex !== -1) {
-                    //     return showGlobalNotification({ message: 'Only one contact can be default' });
-                    // }
+                
+                const defaultAdddress = contactData.find((i) => i?.defaultContactIndicator && i?.purposeOfContact !== value?.purposeOfContact) && value?.defaultContactIndicator;
+                if (defaultAdddress) {
+                    return showGlobalNotification({ message: 'Only one contact can be default' });
+                }
 
+                if (isEditing) {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
@@ -158,11 +156,6 @@ const ContactMain = (props) => {
                         return [...formData];
                     });
                 } else {
-                    // let dataList = [...contactData];
-                    // const checkedIndex = dataList?.findIndex((el) => el?.defaultContactIndicator);
-                    // if (checkedIndex !== -1) {
-                    //     return showGlobalNotification({ message: 'Only one contact can be default' });
-                    // }
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         if (value?.defaultaddress && formData?.length >= 1) {
@@ -213,6 +206,7 @@ const ContactMain = (props) => {
         styles,
         form,
         contactform,
+        editingData,
         isEditing,
         setIsEditing,
         formActionType,

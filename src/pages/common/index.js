@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -14,7 +14,7 @@ import { ConfigurableParameterEditingPage } from './ConfigurableParameterEditing
 import { ApplicationMasterPage } from './ApplicationMasterPage';
 import { UserManagementPage } from './UserManagementPage';
 import { UserManagementManufacturerPage } from './UserManagementManufacturer';
-import { StatePage, DistrictPage, TehsilPage, CityPage, PinCodePage } from './Geo';
+import { StateCrudPage, StatePage, DistrictPage, TehsilPage, CityPage, PinCodePage } from './Geo';
 import { DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DealerEmployeeDepartmentPage, DesignationMasterPage, RoleMasterPage } from './DealerManpower';
 import { PartyMasterPage } from './PartyMaster';
 import { CustomerMasterPage } from './CustomerMaster';
@@ -22,6 +22,7 @@ import { TermConditionDealerMasterPage } from './TermsAndConditions/DealerTermCo
 import { TermConditionManufacturerMasterPage } from './TermsAndConditions/ManufacturerTermCondition';
 import { DealerCompanyPage, DealerParentPage } from './Dealer';
 import { LessorCompanyMasterPage } from './LessorCompanyMaster';
+import { LessorCustomerCreationPage } from './LessorCustomerCreation';
 import { OtfReportsPage } from './OTFReports';
 
 export {
@@ -36,6 +37,7 @@ export {
     HierarchyAttributeMasterPage,
     UserManagementPage,
     UserManagementManufacturerPage,
+    StateCrudPage,
     StatePage,
     DistrictPage,
     CityPage,
@@ -49,6 +51,7 @@ export {
     RoleMasterPage,
     PartyMasterPage,
     LessorCompanyMasterPage,
+    LessorCustomerCreationPage,
     DealerCompanyPage,
     DealerParentPage,
     CustomerMasterPage,

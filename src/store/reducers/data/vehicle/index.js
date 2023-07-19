@@ -5,14 +5,28 @@
  */
 import { combineReducers } from 'redux';
 
+import { VehicleDetail } from './vehicleDetail';
 import { MakeVehicleDetails } from './makeDetails';
 import { ModelVehicleDetails } from './modelDetails';
 import { VariantVehicleDetails } from './variantDetails';
-import { VehicleDetail } from './vehicleDetail';
+import { VehicleDetailDocument } from './vehicleDetailDocument';
+import { ViewVehicleDetail } from './viewVehicleDetails';
+import { Contacts } from './contacts';
+import { EntitelmentDetail } from './entitelmentDetail';
+import { CustomerDetails } from './customerDetails';
+import { CustomerCommonDetails } from './customerCommonDetails';
+import { VehicleSearchList } from './vehicleSearch';
 
 export const Vehicle = combineReducers({
+    VehicleDetail,
     MakeVehicleDetails,
     ModelVehicleDetails,
     VariantVehicleDetails,
-    VehicleDetail,
+    VehicleDetailDocument,
+    ViewVehicleDetail,
+    Contacts,
+    EntitelmentDetail,
+    CustomerDetails,
+    CustomerCommonDetails,
+    VehicleSearchList,
 });

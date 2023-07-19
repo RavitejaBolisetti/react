@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { React, useEffect, useState } from 'react';
-import { Col, Input, Collapse, Row, Button, Space, Form, Select, Upload, message, Checkbox, Divider, Typography, Card } from 'antd';
+import { Col, Input, Collapse, Row, Button, Space, Form, Select, Upload, message, Checkbox, Divider, Card } from 'antd';
 import { validateRequiredInputField, validateLettersWithWhitespaces, validatePanField, validateGSTIN, validatFacebookProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 
 import Svg from 'assets/images/Filter.svg';
@@ -12,6 +12,7 @@ import { FiDownload, FiTrash } from 'react-icons/fi';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import UploadUtils from 'components/common/CustomerMaster/Common/UploadUtils';
 
 import styles from 'components/common/Common.module.css';
 
@@ -19,11 +20,10 @@ const { Panel } = Collapse;
 const { Option } = Select;
 const { Dragger } = Upload;
 const { TextArea } = Input;
-const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
     const { appCategoryData, userId, formData, form, handleOnClick } = props;
-    const { uploadListShowLoading, uploadFile, setUploadedFile, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory, viewDocument } = props;
+    const { uploadListShowLoading, uploadFile, setUploadedFile, downloadFileFromList, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory, viewDocument } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -56,10 +56,12 @@ const AddEditFormMain = (props) => {
     };
 
     const uploadProps = {
+        multiple: false,
+        accept: 'image/png, image/jpeg, application/pdf',
         showUploadList: {
             showRemoveIcon: true,
             showDownloadIcon: true,
-            previewIcon: <FiDownload onClick={(e) => console.log(e, 'custom removeIcon event')} />,
+            downloadIcon: <FiDownload onClick={() => downloadFileFromList()} />,
             removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
             showProgress: true,
         },
@@ -68,7 +70,6 @@ const AddEditFormMain = (props) => {
         onDrop,
         onChange: (info, event) => {
             const { status } = info.file;
-
             if (status === 'uploading') {
             } else if (status === 'done') {
                 setUploadedFile(info?.file?.response?.docId);
@@ -108,6 +109,13 @@ const AddEditFormMain = (props) => {
 
     const handleCategoryChange = (value) => {
         setCustomerCategory(value);
+    };
+
+    const ImageProps = {
+        viewDocument,
+        handleUpload,
+        uploadProps,
+        formData,
     };
 
     return (
@@ -180,8 +188,8 @@ const AddEditFormMain = (props) => {
                                             </Col>
 
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item label="Vechicle Deployment Details" initialValue={formData?.vechileDeploymentDetails} name="vechileDeploymentDetails">
-                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Vechicle Deployment Details')} />
+                                                <Form.Item label="Vehicle Deployment Details" initialValue={formData?.vechileDeploymentDetails} name="vechileDeploymentDetails">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Vehicle Deployment Details')} />
                                                 </Form.Item>
                                             </Col>
 
@@ -301,45 +309,32 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
 
-                        <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end">
+                        <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel key="5" header="Upload Customer Form">
                                 <Divider />
-                                <div className={styles.uploadContainer}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Form.Item initialValue={formData?.customerConsent} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="customerConsent">
-                                                <Checkbox className={styles.registered}>I Consent to share my details with Mahindra & Mahindra. </Checkbox>
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.uploadContainer}>
-                                            <Dragger customRequest={handleUpload} {...uploadProps}>
-                                                <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
-                                                    <img src={Svg} alt="" />
-                                                </p>
-
-                                                <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '500', fontSize: '14px', lineHeight: '23px', color: '#0B0B0C' }}>
-                                                    Click or drop your file here to upload the signed and <br />
-                                                    scanned customer form.
-                                                </p>
-
-                                                <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '400', fontSize: '12px', lineHeight: '23px', color: '#0B0B0C' }}>
-                                                    File type should be png, jpg or pdf and max file size to be 5Mb
-                                                </p>
-                                                <Button danger>Upload File</Button>
-                                            </Dragger>
-                                            {formData?.customerFormDocId && (
-                                                <>
-                                                    <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>
-                                                    <Form.Item hidden="true" label="Document" initialValue={formData?.customerFormDocId} name="customerFormDocId">
-                                                        <Input maxLength={50} placeholder={preparePlaceholderText('Document')} />
-                                                    </Form.Item>
-                                                </>
-                                            )}
-                                        </Col>
-                                    </Row>
-                                </div>
+                                <Space direction="vertical">
+                                    <Form.Item initialValue={formData?.customerConsent} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="customerConsent">
+                                        <Checkbox>I Consent to share my details with Mahindra & Mahindra. </Checkbox>
+                                    </Form.Item>
+                                    <UploadUtils {...props} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={formData?.image} {...ImageProps} />
+                                </Space>
+                                {formData?.customerFormDocId && (
+                                    <>
+                                        <div className={styles.viewDrawerContainer}>
+                                            <Card
+                                                className={styles.viewDocumentStrip}
+                                                key={viewDocument?.fileName}
+                                                title={viewDocument?.fileName}
+                                                extra={
+                                                    <>
+                                                        <FiDownload onClick={handleOnClick} />
+                                                        {/* {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} />} */}
+                                                    </>
+                                                }
+                                            ></Card>
+                                        </div>
+                                    </>
+                                )}
                             </Panel>
                         </Collapse>
                     </Space>

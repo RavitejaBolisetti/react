@@ -5,11 +5,11 @@
  */
 import React, { useState, useReducer, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Collapse, Divider, Form, Space, Row, Col, Typography, Button, Empty, Card } from 'antd';
+import { Form, Space, Row, Col, Typography, Button, Empty, Card, Divider } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 
-import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
@@ -25,9 +25,7 @@ import ViewAddressList from './ViewAddressList';
 import { CardSkeleton } from 'components/common/Skeleton';
 import { LANGUAGE_EN } from 'language/en';
 
-const { Panel } = Collapse;
 const { Text } = Typography;
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -73,8 +71,8 @@ const mapDispatchToProps = (dispatch) => ({
             resetDataCorporate: addressCorporateDataActions.reset,
             listShowLoadingCorporate: addressCorporateDataActions.listShowLoading,
 
-            listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
-            fetchPincodeDetail: geoPincodeDataActions.fetchList,
+            listPinCodeShowLoading: geoPinCodeDataActions.listShowLoading,
+            fetchPincodeDetail: geoPinCodeDataActions.fetchList,
 
             showGlobalNotification,
         },
@@ -89,7 +87,6 @@ const AddressMasterBase = (props) => {
 
     const [addressForm] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
-    const [openAccordian, setOpenAccordian] = useState('1');
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [isAdding, setIsAdding] = useState(false);
@@ -207,7 +204,6 @@ const AddressMasterBase = (props) => {
         addressForm.resetFields();
         setIsAdding(true);
         setShowAddEditForm(true);
-        setOpenAccordian('1');
     };
 
     const formProps = {
@@ -275,7 +271,7 @@ const AddressMasterBase = (props) => {
                                         )}
                                     </Row>
                                     <Divider className={styles.marT20} />
-                                    <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
+                                    <Space direction="vertical" style={{ width: '100%' }}>
                                         <div className={styles.headerBox}>
                                             {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
                                             {!addressData?.length && !isAdding ? (

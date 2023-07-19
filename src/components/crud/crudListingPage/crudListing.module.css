@@ -1,0 +1,681 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+@import url('components/common/global.css');
+
+.searchBox {
+  line-height: 33px;
+  padding-right: 0 !important;
+  margin-right: 20px;
+}
+
+.listFilterContainer {
+  background-color: #f4f4f4;
+  border: 1px solid #e8e8e8;
+  padding: 10px !important;
+  margin-bottom: 20px;
+  border-radius: 8px !important;
+  font-weight: 500;
+}
+
+.listFilterContainer .searchMainBox {
+  display: flex
+}
+
+.listFilterContainer .headerSelectField :global .ant-input-affix-wrapper,
+.listFilterContainer .headerSelectField :global .ant-btn-default,
+.listFilterContainer :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+  border-inline-end-width: 0px;
+  border-color: transparent;
+}
+
+.listFilterContainer .headerSelectField :global .ant-btn-default:not(:disabled):active,
+.listFilterContainer :global .ant-btn-default:not(:disabled):hover,
+.listFilterContainer :global .ant-input-search .ant-input:focus {
+  border-color: transparent;
+}
+
+.listFilterContainer :global .anticon-close-circle {
+  color: #0b0b0c;
+  width: 12px;
+  height: 12px;
+  vertical-align: sub !important;
+}
+
+.listFilterContainer .headerSelectField :global .ant-btn-default,
+.listFilterContainer .headerSelectField :global .ant-input-search .ant-input:focus,
+.listFilterContainer .headerSelectField :global .ant-input-affix-wrapper-focused {
+  border-color: transparent;
+}
+
+.listFilterContainer :global .ant-input-group {
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border: 1px solid #d9d9d9;
+}
+
+.listFilterContainer .headerSelectField :global .ant-input-affix-wrapper .ant-input-clear-icon {
+  color: #0b0b0c;
+}
+
+.listFilterContainer :global .ant-input-group:hover {
+  border: 1px solid #0b0b0c;
+}
+
+.listFilterContainer :global .ant-input-group .ant-input:focus,
+.listFilterContainer :global .ant-input-group .ant-input:hover {
+  border-inline-end-width: 0;
+}
+
+.listFilterContainer :global .ant-input-affix-wrapper:focus,
+.listFilterContainer :global .ant-input-affix-wrapper-focused {
+  box-shadow: 0 0 0 2px rgba(255, 5, 5, 0);
+}
+
+.listFilterContainer .headingToggle {
+  border: #e6e6e6 1px solid;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  padding: 7px 5px;
+  display: inline-block;
+}
+
+.listFilterContainer :global .ant-input-group-wrapper {
+  width: auto
+}
+
+.autoCompleteContent :global .ant-input-search .ant-input:hover,
+.autoCompleteContent :global .ant-input-search .ant-input:focus {
+  border-color: transparent;
+}
+
+.autoCompleteContent :global .ant-btn-default {
+  border-color: transparent;
+  background-color: #fff;
+}
+
+.listFilterContainer :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  height: 36px;
+}
+
+
+.advanceFilterTop {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: solid 1px #e6e6e6;
+}
+
+.advanceFilterContainer {
+  display: flex;
+  flex-flow: wrap;
+  /* align-items: center; */
+}
+
+.listFilterContainer .advanceFilterClear {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  margin-bottom: -2px;
+}
+
+.listFilterContainer .advanceFilterTop .advanceFilterTitle {
+  padding: 10px 0px;
+  margin-right: 10px;
+  width: 160px;
+}
+
+/* .advanceFilterTop .advanceFilterItem:first-child {
+  margin-left: -40px;
+} */
+
+.listFilterContainer .advanceFilterTop .advanceFilterItem {
+  height: 30px;
+  border-radius: 20px;
+  margin-top: 6px;
+  padding: 4px 10px;
+  border: solid 1px #ff3e5b;
+  color: #ff3e5b;
+  line-height: 18px;
+  margin-right: 12px;
+}
+
+.listFilterContainer .advanceFilterTop .advanceFilterItem span {
+  vertical-align: middle;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+.listFilterContainer .advanceFilterTop .clearBtn {
+  float: right !important;
+  height: 30px !important;
+  line-height: 16px;
+}
+
+.autoCompleteContent :global .ant-btn-default:not(:disabled):hover {
+  border-color: transparent;
+}
+
+.dataTable {
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+.dataTable :global .ant-pagination .ant-pagination-item {
+  height: 34px !important;
+  line-height: 32px !important;
+  background-color: #ffffff;
+  border: 1px solid #b5b5b6;
+  /* border-radius: 2px; */
+}
+
+.dataTable :global .ant-pagination .ant-pagination-item-active {
+  border: 1px solid #ff3e5b !important;
+  font-weight: 500;
+}
+
+.dataTable :global .ant-pagination .ant-pagination-prev .ant-pagination-item-link,
+.dataTable :global .ant-pagination .ant-pagination-next .ant-pagination-item-link {
+  height: 34px !important;
+  line-height: 32px !important;
+  border: 1px solid #b5b5b6;
+  color: #b5b5b6;
+}
+
+.lastheaderbutton {
+  margin-right: 0px;
+}
+
+.activeText {
+  color: #00a310;
+}
+
+.inactiveText {
+  color: #8e8585;
+}
+
+.container {
+  padding: 20px;
+}
+
+.mb10 {
+  margin-bottom: 20px;
+}
+
+.inputBox {
+  border-radius: 4px;
+  height: 36px;
+}
+
+
+.floatRight {
+  float: right;
+}
+
+.textRight {
+  text-align: right;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.buttonHeadingContainer {
+  margin-top: 0px;
+  display: inline-block;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+}
+
+.buttonHeadingContainer .buttonIcon {
+  margin-right: 6px;
+  padding-top: 2px;
+  float: none;
+}
+
+.hyrbuttonContainer {
+  border: 1px solid #e8e8e8;
+  border-top: 0px solid #e8e8e8;
+}
+
+.buttonContainer {
+  margin-top: 10px;
+  display: inline-block;
+  width: 100%;
+  padding: 0;
+}
+
+.buttonContainer .buttonIcon {
+  margin-right: 6px;
+  padding-top: 2px;
+}
+
+.buttonContainer .btnLeft {
+  text-align: left;
+  float: left;
+}
+
+.buttonContainer .btnRight {
+  text-align: right;
+  float: right;
+}
+
+.buttonContainer .btnRight button {
+  margin-left: 14px;
+}
+
+.buttonContainer :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
+  background-color: #ff3e5b;
+  color: #ffffff !important;
+}
+
+.ant-row {
+  display: flex;
+  flex-flow: row wrap;
+  min-width: 0;
+  /* margin-right: 0px !important; */
+}
+
+.formContainer {
+  padding: 0px;
+}
+
+.pad10 {
+  padding: 0px;
+}
+
+.padRight18 {
+  padding-right: 18px;
+}
+
+.padLeft10 :global .ant-form {
+  margin: 0px 0px 0px 46px;
+}
+
+.listFilterContainer :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost :hover {
+  background-color: #ff3e5b;
+}
+
+
+.listFilterContainer .headerSearchField :global .ant-btn-default {
+  border-color: transparent !important;
+}
+
+.container {
+  padding: 20px;
+}
+
+.mb10 {
+  margin-bottom: 20px;
+}
+
+.inputBox {
+  border-radius: 4px;
+  height: 36px;
+}
+
+.treemenu {
+  margin: 24px 0px;
+  padding-left: 0px;
+  padding-bottom: 0px;
+  line-height: 2em;
+  list-style: none;
+  background-color: transparent;
+  color: #0b0b0c;
+}
+
+.floatRight {
+  float: right;
+}
+
+
+
+.formFooter {
+  width: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0px;
+  background: #ffffff;
+  left: 10px;
+  bottom: 0px;
+  box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
+}
+
+.formFooter .footerBtnLeft {
+  text-align: left;
+}
+
+.formFooter .footerBtnRight {
+  text-align: right;
+  right: 10px;
+}
+
+.formFooter button {
+  margin-left: 14px;
+}
+
+.formFooter .buttonIcon {
+  margin-right: 6px;
+  padding-top: 2px;
+}
+
+.listFilterContainer .addGroup {
+  text-align: right
+}
+
+.listFilterContainer .addGroup button {
+  margin-bottom: 0px !important;
+  margin-left: 10px;
+  background-color: #ff3e5b;
+}
+
+.listFilterContainer :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+  background-color: #ffffff;
+  border-left: #ffffff;
+  background-color: #ffffff;
+}
+
+.listFilterContainer :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
+  background-color: #e6e6e6;
+  border-left: #e6e6e6;
+  background-color: #e6e6e6;
+}
+
+.listFilterContainer .userManagement :global .ant-btn-link {
+  color: #0b0b0c;
+  font-weight: 500;
+}
+
+.listFilterContainer .dataDisplay {
+  margin-top: 10px;
+  padding: 10px 0 0 0;
+  padding-bottom: 0;
+  border-top: 1px solid #e6e6e6;
+}
+
+.listFilterContainer .errorDisplay {
+  color: #ed302d;
+}
+
+.listFilterContainer .contentHeading {
+  font-size: 12px;
+  color: rgba(116, 116, 116, 0.85);
+  font-weight: 400;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.listFilterContainer .contentData {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 600;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.listFilterContainer .subheading .filterBtn {
+  line-height: 24px;
+  font-weight: 600;
+}
+
+.listFilterContainer .subheading .filterBtn svg {
+  margin-right: 6px;
+  margin-top: -4px;
+  vertical-align: middle;
+}
+
+.listFilterContainer :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+  border-left: #ff3e5b;
+}
+
+.listFilterContainer :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost :hover {
+  background-color: #ff3e5b;
+}
+
+.heading {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.content {
+  border: 1px solid #e8e8e8;
+  border-radius: 0 0 4px 4px;
+  margin-top: -21px;
+  overflow-y: hidden;
+  height: 62.6vh;
+}
+
+.emptyContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: calc(100vh - 174px);
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+}
+
+.viewContainer :global .ant-descriptions-view table tbody tr th {
+  padding: 8px 10px 2px !important;
+}
+
+.viewContainer :global .ant-descriptions-view table tbody tr td {
+  padding: 3px 10px 9px !important;
+}
+
+.viewContainer :global .ant-descriptions .ant-descriptions-item-label {
+  color: rgba(11, 11, 12, 1) !important;
+  font-size: 14px !important;
+  font-weight: 500;
+}
+
+.viewContainer :global .ant-descriptions .ant-descriptions-item-content {
+  color: rgba(142, 133, 133, 1) !important;
+  font-size: 14px !important;
+  display: inline-block;
+}
+
+.hierarchyRightContaners {
+  border-radius: 4px 4px 0px 0px;
+  border: none;
+}
+
+.hierarchyRightContaner {
+  border-radius: 4px 4px 0px 0px;
+  -moz-border-radius: 4px 4px 0px 0px;
+  -webkit-border-radius: 4px 4px 0px 0px;
+  border: 1px solid #e8e8e8;
+  /* height: calc(100vh - 234px); */
+  /* overflow-y: auto; */
+  margin-top: 0px;
+}
+
+.hideInViewMode {
+  visibility: hidden;
+}
+
+.paddingLeft {
+  padding-left: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.deleteBtn :disabled {
+  background-color: #ffffff;
+  color: #b5b5b6;
+  border-color: white;
+}
+
+.deleteBtn {
+  background-color: #ffffff;
+  color: #b5b5b6;
+  border-color: none !important;
+  border: none !important;
+}
+
+
+@media (max-width: 768px) {
+  /* For mobile phones: */
+  /* .listFilterContainer{text-align: center;} */
+
+  .headerSearchField {
+    vertical-align: middle;
+    margin: 0 0px;
+    width: 100%;
+  }
+
+  .headerSelectField {
+    vertical-align: middle;
+    margin: 0;
+    width: 100%;
+  }
+
+  .buttonHeadingContainer {
+    margin-top: 10px;
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+    text-align: center;
+    padding-right: 0px !important;
+  }
+
+  .hierarchyRightContaner {
+    margin-top: 10px;
+  }
+
+  .content {
+    margin-top: 10px;
+  }
+
+  .buttonHeadingContainer .buttonIcon {
+    margin-right: 6px;
+    padding-top: 2px;
+    float: none;
+  }
+
+  .leftpanel {
+    height: auto;
+    margin-left: 4px;
+  }
+
+  .buttonContainer {
+    margin-top: 4px;
+  }
+
+  .exitButton {
+    padding: 10px 15px;
+    margin: 0;
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 2px;
+  }
+
+  .formContainer {
+    padding: 10px;
+  }
+
+  .pad10 {
+    padding: 10px;
+  }
+
+  .padLeft10 {
+    padding-left: 10px !important;
+    padding-right: 0px !important;
+  }
+
+  .addGroup {
+    margin-top: 10px;
+  }
+
+  .lastheaderbutton {
+    margin-right: 15px;
+  }
+
+  .gap {
+    gap: 8px;
+  }
+
+  .treeCollapsibleButton {
+    top: 174px;
+  }
+
+  .TreeView_searchField__jn\+nY {
+    padding: 0 8px;
+    margin-bottom: 8px;
+    margin-top: 12px;
+    width: '100%';
+  }
+
+  .listFilterContainer .contentHeading {
+    width: 30%;
+    float: left;
+  }
+
+  .listFilterContainer .contentData {
+    width: 70%;
+    float: left;
+  }
+}
+
+@media (max-width: 576px) {
+  .leftpanel {
+    height: auto;
+    margin-left: 4px;
+  }
+
+  .buttonContainer {
+    margin-top: 4px;
+  }
+
+  .exitButton {
+    padding: 10px 15px;
+    margin: 0;
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 2px;
+  }
+
+  .formContainer {
+    padding: 10px;
+  }
+
+  .pad10 {
+    padding: 10px;
+  }
+
+  .padLeft10 {
+    padding-left: 10px !important;
+    padding-right: 0px !important;
+  }
+
+  .padRight0 {
+    padding-right: 0px !important;
+  }
+
+  .pad0 {
+    padding: 0px !important;
+  }
+
+  .gap {
+    gap: 8px;
+  }
+
+  .treeCollapsibleButton {
+    top: 184px;
+  }
+
+  .TreeView_searchField__jn\+nY {
+    padding: 0 8px;
+    margin-bottom: 8px;
+    margin-top: 12px;
+    width: '100%';
+  }
+}
