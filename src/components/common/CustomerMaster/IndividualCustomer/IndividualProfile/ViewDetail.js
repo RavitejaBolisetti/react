@@ -42,6 +42,7 @@ const ViewDetailMain = (props) => {
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                     <Panel header="Individual Information" key="1">
+                        <Divider />
                         <Descriptions {...viewProps}>
                             <div>
                                 <img alt="uploaded suppoting document" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
@@ -80,6 +81,7 @@ const ViewDetailMain = (props) => {
                 </Collapse>
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end">
                     <Panel header="Social Profile" key="5">
+                        <Divider />
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="M1-MMFSL">{checkAndSetDefaultValue(formData?.mmfsl, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookLink, isLoading)}</Descriptions.Item>

@@ -106,4 +106,4 @@ const ChangeHistoryMain = (props) => {
     );
 };
 
-export const ChangeHistory1 = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: '', width: '90%' }));
+export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: '', width: '90%' }));
