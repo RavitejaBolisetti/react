@@ -5,7 +5,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import { Collapse, Form, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Card, Empty } from 'antd';
+import { Collapse, Form, Upload, Button, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Card, Empty } from 'antd';
 import Svg from 'assets/images/Filter.svg';
 import { FiDownload, FiTrash } from 'react-icons/fi';
 
@@ -122,11 +122,59 @@ const AddEditFormMain = (props) => {
     //     },
     // };
 
+    const uploadConsentProps = {
+        multiple: false,
+        maxCount: 1,
+        accept: 'image/png, image/jpeg, application/pdf',
+        beforeUpload: (file) => {
+            const isAccepted = file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'application/pdf';
+            if (!isAccepted) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not a accepted file format`, placement: 'bottomRight' });
+            }
+            return isAccepted || Upload.LIST_IGNORE;
+        },
+        showUploadList: {
+            showRemoveIcon: true,
+            removeIcon: <FiTrash />,
+            showProgress: true,
+        },
+        progress: { strokeWidth: 3, showInfo: true },
+        onDrop,
+        onChange: (info, event) => {
+            const { status } = info.file;
+            if (status === 'uploading') {
+            } else if (status === 'done') {
+                setIsReadUpload(true);
+                setUploadedFiles(info?.file?.response?.docId);
+                message.success(`${info.file.name} file uploaded successfully.`);
+            } else if (status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
+    };
+
+    const handleUploads = (options) => {
+        const { file, onSuccess, onError } = options;
+
+        const data = new FormData();
+        data.append('applicationId', 'app');
+        data.append('file', file);
+
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listDocumentShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        uploadConsentDocumentFile(requestData);
+    };
 
     const ImageProps = {
         viewDocument,
-      
-        
+
         formData,
     };
 
@@ -281,7 +329,7 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label="Usage/Application Sub-Category" initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
-                                                <Select placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
+                                                <Select placeholder={preparePlaceholderSelect('usage/application sub-category')} {...disabledProps}>
                                                     {appCategoryData?.APP_SUB_CAT?.map((item) => (
                                                         <Option key={'ct' + item.key} value={item.key}>
                                                             {item.value}
@@ -292,7 +340,7 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label="Customer Category" initialValue={formData?.customerCategory} name="customerCategory">
-                                                <Select placeholder={preparePlaceholderSelect('annual income')} {...disabledProps} onChange={onCustomerCategoryChange}>
+                                                <Select placeholder={preparePlaceholderSelect('customer category')} {...disabledProps} onChange={onCustomerCategoryChange}>
                                                     {appCategoryData?.CUS_CAT?.map((item) => (
                                                         <Option key={'ct' + item.key} value={item.key}>
                                                             {item.value}
@@ -451,12 +499,43 @@ const AddEditFormMain = (props) => {
                         <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel header="Upload Customer Form" key="5">
                                 <>
-                                    <Space direction="vertical">
-                                        <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">
-                                            <Checkbox> I Consent to share my details with Mahindra & Mahindra</Checkbox>
-                                        </Form.Item>
-                                        <UploadUtils key={2} {...props} uploadImgTitle={'Consent Form'} setUploadImgDocId={setUploadedFiles} uploadImgDocId={formData?.consentForm} {...ImageProps} />
-                                    </Space>
+                                    <div>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">
+                                                    <Checkbox> I Consent to share my details with Mahindra & Mahindra</Checkbox>
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <div className={styles.uploadContainer}>
+                                                    <Dragger customRequest={handleUploads} {...uploadConsentProps}>
+                                                        <div>
+                                                            <img src={Svg} alt="" />
+                                                        </div>
+                                                        <Empty
+                                                            description={
+                                                                <>
+                                                                    <span>
+                                                                        Click or drop your file here to upload the signed and <br /> scanned customer form.
+                                                                    </span>
+                                                                    <span>
+                                                                        <br />
+                                                                        File type should be png, jpg or pdf and max file size to be 5Mb
+                                                                    </span>
+                                                                </>
+                                                            }
+                                                        />
+
+                                                        <Button type="primary" style={{ marginLeft: '30px', marginTop: '16px' }}>
+                                                            Upload File
+                                                        </Button>
+                                                    </Dragger>
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                    </div>
                                     {formData?.customerConsentForm && (
                                         <Row gutter={16}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>

@@ -93,15 +93,15 @@ const IndividualProfileBase = (props) => {
         showGlobalNotification({ message });
     };
 
-    // useEffect(() => {
-    //     if (viewDocument && isViewDataLoaded && isIndiviualProfileLoaded) {
-    //         let a = document.createElement('a');
-    //         a.href = `data:image/png;base64,${viewDocument?.base64}`;
-    //         a.download = viewDocument?.fileName;
-    //         a.click();
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [isViewDataLoaded, viewDocument]);
+    useEffect(() => {
+        if (viewDocument && isViewDataLoaded && isIndiviualProfileLoaded) {
+            let a = document.createElement('a');
+            a.href = `data:image/png;base64,${viewDocument?.base64}`;
+            a.download = viewDocument?.fileName;
+            a.click();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isViewDataLoaded, viewDocument]);
 
     useEffect(() => {
         return () => {
@@ -224,10 +224,10 @@ const IndividualProfileBase = (props) => {
                 key: 'docId',
                 title: 'docId',
                 value: indiviualData?.customerConsentForm,
-                name: 'docId',
+                name: 'docId',  
             },
         ];
-        downloadFile({ setIsLoading: listIndiviualShowLoading, userId, extraParams });
+        fetchViewDocument({ setIsLoading: listIndiviualShowLoading, userId, extraParams });
     };
     const onCloseAction = () => {
         form.resetFields();
