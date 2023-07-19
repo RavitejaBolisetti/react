@@ -94,7 +94,11 @@ const UploadBase = (props) => {
         setEmptyList,
         uploadButtonName = 'Upload File',
         supportedFileTypes = [],
-        messageText = ' Click or drop your file here to upload the signed and scanned customer form.',
+        messageText = (
+            <>
+                Click or drop your file here to upload the signed and <br /> scanned customer form.
+            </>
+        ),
         validationText = 'File type should be png, jpg or pdf and max file size to be 5Mb',
         maxSize = 5,
     } = props;

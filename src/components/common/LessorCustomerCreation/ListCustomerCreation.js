@@ -139,6 +139,7 @@ export const ListCustomerCreationBase = (props) => {
             setIsFormVisible(false);
             setEmptyList(false);
             setUploadedFile();
+            setFileList()
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
@@ -268,6 +269,7 @@ export const ListCustomerCreationBase = (props) => {
 
     const handleOnClick = () => {
         setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: true, saveBtn: true });
+        setFileList([])
         setDownLoadForm(false);
         setIsFormVisible(true);
         form.resetFields();
