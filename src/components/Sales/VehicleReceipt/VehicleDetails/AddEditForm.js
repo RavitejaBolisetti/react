@@ -4,10 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Row, Col, Input, Form, Select, DatePicker, Card, Collapse, Divider, Space, Typography } from 'antd';
+import { Row, Col, Input, Form, Select, DatePicker, Card, Collapse, Divider, Space, Typography, Tooltip } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { InfoCircleOutlined } from '@ant-design/icons';
 
-import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
@@ -61,7 +61,20 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item label="Model Description" name="initialPromiseDeliveryDate">
-                                <Input maxLength={10} placeholder={preparePlaceholderText('Model Description')} disabled={true} />
+                                <Input
+                                    maxLength={10}
+                                    suffix={
+                                        <Tooltip title="Extra information">
+                                            <InfoCircleOutlined
+                                                style={{
+                                                    color: 'rgba(0,0,0,.45)',
+                                                }}
+                                            />
+                                        </Tooltip>
+                                    }
+                                    placeholder={preparePlaceholderText('Model Description')}
+                                    disabled={true}
+                                />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
