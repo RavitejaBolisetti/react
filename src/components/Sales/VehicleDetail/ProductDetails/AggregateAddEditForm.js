@@ -27,6 +27,7 @@ export const AdvanceForm = (props) => {
                 item: AdvanceformData?.item ?? '',
                 make: AdvanceformData?.make ?? '',
                 serialNo: AdvanceformData?.serialNo ?? '',
+                id: AdvanceformData?.id ?? '',
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,6 +51,7 @@ export const AdvanceForm = (props) => {
                     newarr[AdvanceformData?.index] = data;
                     setoptionsServiceModified(newarr);
                     setAdvanceSearchVisible(false);
+                    handleFormValueChange();
                     setisEditing(false);
                 }
                 setAdvanceformData();

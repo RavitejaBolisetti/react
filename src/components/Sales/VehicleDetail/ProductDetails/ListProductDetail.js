@@ -108,10 +108,10 @@ const ProductDetailMasterMain = (props) => {
     }, [isDataLoaded, ProductDetailsData]);
     useEffect(() => {
         if (typeData) {
-            if (typeData['VEH_MAKE']) {
+            if (typeData[PARAM_MASTER?.VEH_MAKE?.id]) {
                 setmakeOptions(typeData[PARAM_MASTER?.VEH_MAKE?.id]);
             }
-            if (typeData['VEH_ITEM']) setitemOptions(typeData[PARAM_MASTER?.VEH_ITEM?.id]);
+            if (typeData[PARAM_MASTER?.VEH_ITEM?.id]) setitemOptions(typeData[PARAM_MASTER?.VEH_ITEM?.id]);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [typeData]);
@@ -127,13 +127,11 @@ const ProductDetailMasterMain = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedRecordId, OtfId: formData?.id, id: formData?.id, optionalServices: optionsServicesMapping };
-
+        const data = { ...formData, vehicleIdentificationNumber: selectedRecordId, aggregates: optionsServiceModified };
+        console.log('data', data);
         const onSuccess = (res) => {
-            setoptionsServicesMapping([]);
             setoptionsServiceModified([]);
-            setformData({});
-            setOpenAccordian('1');
+            setformData();
             setIsReadOnly(false);
             form.resetFields();
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });

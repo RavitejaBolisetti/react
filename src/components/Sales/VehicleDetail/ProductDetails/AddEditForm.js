@@ -119,21 +119,19 @@ const AddEditFormMain = (props) => {
         switch (item) {
             case 'item': {
                 const codeVal = itemOptions?.find((element, index) => {
-                    if (element?.key === value) {
+                    if (element?.value === value || element?.key === value) {
                         return element;
                     }
                 });
-
                 if (codeVal) return codeVal?.value;
                 return 'NA';
             }
             case 'make': {
                 const codeVal = makeOptions?.find((element, index) => {
-                    if (element?.key === value) {
+                    if (element?.value === value || element?.key === value) {
                         return element;
                     }
                 });
-                console.log('codeVal', codeVal);
 
                 if (codeVal) return codeVal?.value;
                 return 'NA';
@@ -216,10 +214,11 @@ const AddEditFormMain = (props) => {
                         <Form layout="vertical" autoComplete="off" form={connectedForm}>
                             <Collapse onChange={() => handleCollapse('Vehicle')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian}>
                                 <Panel header="Connected Vehicle" key="Vehicle">
+                                    <Divider />
                                     {formData?.connectedVehicle?.map((element, index) => {
                                         return (
                                             <Collapse onChange={() => handleInnerCollapse(index)} expandIconPosition="end" expandIcon={expandIcon} activeKey={InnerCollapse}>
-                                                <Panel header="Connected Vehicle Details" key={index}>
+                                                <Panel header={`${element?.tcuId} | ${element?.esimNo}`} key={index}>
                                                     <Divider />
                                                     <Row gutter={20}>
                                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -263,7 +262,6 @@ const AddEditFormMain = (props) => {
                                             </Collapse>
                                         );
                                     })}
-                                    <Divider />
                                 </Panel>
                             </Collapse>
                         </Form>
