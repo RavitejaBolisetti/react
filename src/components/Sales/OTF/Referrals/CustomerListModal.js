@@ -39,7 +39,6 @@ export const CustomerListBase = (props) => {
         isLoading: false,
         tableColumn,
         tableData: data,
-        srlTitle: 'Select',
     };
 
     return (
