@@ -14,18 +14,21 @@ import { tableColumn } from './tableColumn';
 import styles from 'components/common/Common.module.css';
 
 export const CustomerListBase = (props) => {
-    const { data, handleResetFilter, setFormData, handleFormValueChange } = props;
+    const { data, handleSelectedData, setSelectedRowData } = props;
     const [formBtnActive, setFormBtnActive] = useState(false);
+    const [selectedRows, setSelectedRows] = useState([]);
 
-    const handleSelectedData = (e) => {
-        setFormData({ ...formBtnActive });
-        handleResetFilter();
-        handleFormValueChange();
+    const handleViewDetail = (e) => {
+        handleSelectedData();
+        setSelectedRows([]);
+        setFormBtnActive(true);
     };
-
     const rowSelection = {
+        selectedRowKeys: selectedRows.map((row) => row.key),
         onChange: (selectedRowKeys, selectedRows) => {
-            setFormBtnActive(selectedRows?.[0]);
+            setSelectedRows(selectedRows);
+            setFormBtnActive(true);
+            setSelectedRowData(selectedRows?.[0]);
         },
     };
 
@@ -50,14 +53,9 @@ export const CustomerListBase = (props) => {
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
-                    {/* <Button onClick={handleResetFilter} danger>
-                        Close
-                    </Button> */}
-                </Col>
-
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}></Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button htmlType="submit" type="primary" onClick={handleSelectedData} disabled={!formBtnActive}>
+                    <Button htmlType="submit" type="primary" onClick={handleViewDetail} disabled={!formBtnActive}>
                         View Details
                     </Button>
                 </Col>

@@ -17,7 +17,7 @@ import styles from 'components/common/Common.module.css';
 
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-import { CustomerListModal } from './CustomerListModal';
+import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
@@ -76,17 +76,12 @@ const ReferralsMasterBase = (props) => {
     const [formData, setFormData] = useState();
     const [viewFormData, setViewFormData] = useState();
     const [resetField, setResetField] = useState(false);
+    const [selectedRowData, setSelectedRowData] = useState();
+    console.log('🚀 ~ file: ReferralsMaster.js:80 ~ ReferralsMasterBase ~ selectedRowData:', selectedRowData);
     const { filterString, setFilterString } = props;
 
     const [isCusomerSearchVisible, setCusomerSearchVisible] = useState(false);
     const [customerList, setCustomerList] = useState();
-
-    // useEffect(() => {
-    //     return () => {
-    //         resetData();
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
 
     useEffect(() => {
         setFilterString();
@@ -204,6 +199,11 @@ const ReferralsMasterBase = (props) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
+    const fnSetData = (data) => {
+        setFormData(data);
+        handleFormValueChange();
+    };
+
     const formProps = {
         ...props,
         form,
@@ -216,6 +216,7 @@ const ReferralsMasterBase = (props) => {
         setFilterString,
         typeData,
         searchForm,
+        fnSetData,
     };
 
     const viewProps = {
@@ -223,24 +224,6 @@ const ReferralsMasterBase = (props) => {
         formData: viewFormData,
         isLoading,
         typeData,
-    };
-
-    const handleResetFilter = (e) => {
-        setCusomerSearchVisible(false);
-    };
-
-    const customerListProps = {
-        isVisible: isCusomerSearchVisible,
-        titleOverride: 'Search Result',
-        handleResetFilter,
-        onCloseAction: () => {
-            setCusomerSearchVisible(false);
-            setFilterString();
-        },
-        setCusomerSearchVisible,
-        data: customerList,
-        setFormData,
-        handleFormValueChange,
     };
 
     return (
@@ -265,7 +248,6 @@ const ReferralsMasterBase = (props) => {
                     </Col>
                 </Row>
             </Form>
-            <CustomerListModal {...customerListProps} />
         </>
     );
 };

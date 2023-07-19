@@ -10,11 +10,11 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { validateRequiredInputField, validateMobileNoField } from 'utils/validation';
 import { formatDateToCalenderDate } from 'utils/formatDateTime';
 
-import { SearchBox } from 'components/utils/SearchBox';
+import { CustomerListMaster } from 'components/utils/CustomerListModal';
 import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
-    const { form, formData, optionType, searchForm, filterString, setFilterString, typeData } = props;
+    const { form, formData, typeData, fnSetData } = props;
 
     useEffect(() => {
         if (formData) {
@@ -27,19 +27,11 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const serachBoxProps = {
-        searchForm,
-        filterString,
-        optionType: optionType,
-        setFilterString,
-        selectWide: true,
-    };
-
     return (
         <Card style={{ backgroundColor: '#F2F2F2' }}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.referralSearch}>
-                    <SearchBox {...serachBoxProps} />
+                    <CustomerListMaster fnSetData={fnSetData} />
                 </Col>
             </Row>
             <Row gutter={20} className={styles.marT20}>
