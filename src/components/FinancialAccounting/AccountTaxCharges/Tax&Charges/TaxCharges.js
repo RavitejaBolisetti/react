@@ -8,9 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Input, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-
 import { HierarchyFormButton } from 'components/common/Button';
-
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
@@ -72,10 +70,13 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: manufacturerOrgHierarchyDataActions.listShowLoading,
             changeHistoryModelOpen: manufacturerOrgHierarchyDataActions.changeHistoryModelOpen,
             fetchChangeHistoryList: manufacturerOrgHierarchyDataActions.fetchChangeHistoryList,
+
             hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
+
             fetchFinancialAccountHead: financialAccountHeadDataActions.fetchList,
+
             fetchDocumentDescriptionHead: documentDescriptionDataActions.fetchList,
 
             showGlobalNotification,
@@ -283,7 +284,7 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
             setIsFormVisible(false);
             setAttributeType();
         },
-        titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (formData?.id ? FROM_ACTION_TYPE.EDIT : FROM_ACTION_TYPE.ADD).concat(moduleTitle),
         onFinish,
         selectedTreeKey,
         selectedTreeData,

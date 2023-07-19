@@ -14,6 +14,8 @@ const { Text } = Typography;
 const CardProductAttribute = (props) => {
     const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, productHierarchyAttributeData, showGlobalNotification, setDisabledEdit, taxChargeCalList, setTaxChargeCalList,objTaxCharge,objTaxCode,setOpenAccordian} = props;
   
+    console.log(props,'taxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCode')
+
     const [editForm] = Form.useForm();
     const [formEdit, setFormEdit] = useState(false);
 
@@ -21,9 +23,9 @@ const CardProductAttribute = (props) => {
         
         setFormEdit(true);
         editForm.setFieldsValue({
-            taxCharge: props?.taxCharge,
-            taxCode: props?.taxCode,
-            description: props?.description,
+            taxChargeTypeCode: props?.taxChargeTypeCode,
+            taxChargeCode: props?.taxChargeCode,
+            chargeDesc: props?.chargeDesc,
             internalId: props?.internalId,
         });
         
@@ -39,9 +41,9 @@ const CardProductAttribute = (props) => {
 
         const upd_obj = taxChargeCalList?.map((obj) => {
             if (obj?.internalId === newFormData?.internalId) {
-                obj.taxCharge = typeof newFormData?.taxCharge === 'object' ? newFormData?.taxCharge?.title : newFormData?.taxCharge;
-                obj.taxCode = typeof newFormData?.taxCode === 'object' ? newFormData?.taxCode?.title : newFormData?.taxCode;
-                obj.description = newFormData?.description;
+                obj.taxChargeTypeCode = typeof newFormData?.taxChargeTypeCode === 'object' ? newFormData?.taxChargeTypeCode?.title : newFormData?.taxChargeTypeCode;
+                obj.taxChargeCode = typeof newFormData?.taxChargeCode === 'object' ? newFormData?.taxChargeCode?.title : newFormData?.taxChargeCode;
+                obj.chargeDesc = newFormData?.chargeDesc;
                 obj.internalId = newFormData?.internalId;
             }
             return obj;
@@ -54,7 +56,7 @@ const CardProductAttribute = (props) => {
 
     const onAttributeDelete = (val) => {
         setTaxChargeCalList((prev) => {
-            const indx = prev.findIndex((el) => el.attributeId === val?.attributeId);
+            const indx = prev.findIndex((el) => el.internalId === val?.internalId);
             let updatedValue = prev;
             updatedValue?.splice(indx, 1);
             return updatedValue;
@@ -99,11 +101,11 @@ const CardProductAttribute = (props) => {
             <Row align="middle" justify="space-between">
                 <Row align="center">
                     <div>
-                        <Text>{props?.taxCharge}</Text>
+                        <Text>{props?.taxChargeTypeCode}</Text>
                     </div>
                     <Divider type="vertical" />
                     <div>
-                        <Text>{props?.taxCode}</Text>
+                        <Text>{props?.taxChargeCode}</Text>
                     </div>
                 </Row>
 

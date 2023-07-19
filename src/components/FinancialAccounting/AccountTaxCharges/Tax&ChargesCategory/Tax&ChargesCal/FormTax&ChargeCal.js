@@ -21,7 +21,7 @@ function FormProductAttribute(props) {
     };
 
     const onTaxCodeChange = (val) => {
-        formEdit ? editForm?.setFieldsValue({ description: val?.title }) : taxChargeCalForm.setFieldsValue({ description: val?.title });
+        formEdit ? editForm?.setFieldsValue({ chargeDesc: val?.title }) : taxChargeCalForm.setFieldsValue({ chargeDesc: val?.title });
     };
 
     return (
@@ -29,8 +29,8 @@ function FormProductAttribute(props) {
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        label="Tax Charge"
-                        name="taxCharge"
+                        label="Tax/Charge Type"
+                        name="taxChargeTypeCode"
                         rules={[
                             validateRequiredSelectField('Tax Charge'),
                             //{ validator: () => duplicateProductValidator(changeValue, taxChargeCalList) }
@@ -54,8 +54,8 @@ function FormProductAttribute(props) {
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        label="Tax Code"
-                        name="taxCode"
+                        label="Tax/Charge Code"
+                        name="taxChargeCode"
                         initialValue={props?.code}
                         rules={[
                             validateRequiredSelectField('Tax Code'),
@@ -79,8 +79,8 @@ function FormProductAttribute(props) {
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item labelAlign="left" name="description" label="Description" rules={[validateRequiredInputField('Description')]} initialValue={props?.value}>
-                        <Input placeholder={preparePlaceholderText('Description')} className={styles.inputBox} />
+                    <Form.Item labelAlign="left" name="chargeDesc" label="Description" rules={[validateRequiredInputField('Description')]} initialValue={props?.value}>
+                        <Input placeholder={preparePlaceholderText('Description')} className={styles.inputBox} disabled />
                     </Form.Item>
                 </Col>
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>

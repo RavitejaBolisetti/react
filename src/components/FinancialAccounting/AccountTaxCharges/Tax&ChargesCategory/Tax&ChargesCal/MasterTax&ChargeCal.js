@@ -14,14 +14,14 @@ const MasterTaxChargeCal = (props) => {
     const [taxChargeCalForm] = Form.useForm();
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [taxChargeCalList, setTaxChargeCalList] = useState([]);
-    const [disabledEdit, setDisabledEdit] = useState(false)
+    const [disabledEdit, setDisabledEdit] = useState(false);
 
     const addTaxChargeCal = (val) => {
         taxChargeCalForm
             .validateFields()
             .then(() => {
                 let data = taxChargeCalForm.getFieldsValue();
-                let pushData = {taxCharge: data?.taxCharge?.title, taxCode: data?.taxCode?.title, description: data?.description, internalId: Math.floor(Math.random() * 100000000 + 1)}
+                let pushData = { taxChargeTypeCode: data?.taxChargeTypeCode?.title, taxChargeCode: data?.taxChargeCode?.title, chargeDesc: data?.chargeDesc, internalId: Math.floor(Math.random() * 100000000 + 1) };
                 setTaxChargeCalList((item) => [pushData, ...item]);
                 taxChargeCalForm.resetFields();
                 forceUpdate();
@@ -74,7 +74,7 @@ const MasterTaxChargeCal = (props) => {
 
             {taxChargeCalList?.length > 0 &&
                 taxChargeCalList?.map((action) => {
-                    return <CardProductAttribute {...cardAttributeProps} taxCharge = {action?.taxCharge} taxCode = {action?.taxCode} description={action?.description} internalId = {action?.internalId}/>;
+                    return <CardProductAttribute {...cardAttributeProps} taxChargeTypeCode={action?.taxChargeTypeCode} taxChargeCode={action?.taxChargeCode} chargeDesc={action?.chargeDesc} internalId={action?.internalId} />;
                 })}
         </>
     );

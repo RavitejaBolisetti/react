@@ -19,9 +19,8 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, manufacturerOrgHierarchyData, attributeType, setAttributeType } = props;
-    const { isFormBtnActive, setFormBtnActive } = props;
-    const { onFinish, onFinishFailed } = props;
-    console.log(fieldNames,'fieldNamesfieldNamesfieldNamesfieldNamesfieldNames')
+    const { isFormBtnActive, setFormBtnActive,onFinish, onFinishFailed } = props;
+
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
     const [form] = Form.useForm();
