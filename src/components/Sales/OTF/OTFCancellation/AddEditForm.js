@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState, useMemo } from 'react';
-import { Row, Col, Input, Form, Select, Card, Descriptions, Upload, Button, Empty, AutoComplete, Space } from 'antd';
+import { Row, Col, Input, Form, Select, Card, Descriptions, AutoComplete } from 'antd';
 
 import styles from 'components/common/Common.module.css';
 import style from '../../../common/LeftSideBar/LeftSideBar.module.css';
@@ -13,20 +13,19 @@ import { preparePlaceholderText, preparePlaceholderSelect, preparePlaceholderAut
 import { validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import TreeSelectField from 'components/common/TreeSelectField';
 import { debounce } from 'utils/debounce';
 import { productHierarchyData } from './ProductHierarchyJSON';
 import { UploadUtil } from 'utils/Upload';
 
 import { FiEye, FiTrash } from 'react-icons/fi';
-import Svg from 'assets/images/Filter.svg';
+import { OTFStatusTag } from 'components/Sales/OTF/utils/OTFStatusTag';
 
 const { TextArea, Search } = Input;
-const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { otfTransferForm, formData, otfData, selectedOrder, fieldNames, onFinishOTFCancellation,selectedTreeSelectKey,handleSelectTreeClick,treeCodeId} = props;
+    const { otfTransferForm, formData, otfData, selectedOrder, fieldNames, onFinishOTFCancellation, selectedTreeSelectKey, handleSelectTreeClick, treeCodeId } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview, emptyList, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
 
@@ -49,7 +48,7 @@ const AddEditFormMain = (props) => {
     };
 
     const uploadProps = {
-        messageText : 'Upload Cancellation Letter',
+        messageText: 'Upload Cancellation Letter',
         setFileList,
         setEmptyList,
         multiple: false,
@@ -114,12 +113,12 @@ const AddEditFormMain = (props) => {
     const handleSelect = (value) => {
         let dealerDetails = dealerDataList?.find((dealer) => dealer?.dealerName === value);
         let formValues = otfTransferForm.getFieldsValue();
-        otfTransferForm.setFieldsValue({...formValues, dealerCode: dealerDetails?.dealerCode, dealerCodess : "hi"});
-        console.log(dealerDetails," handleSelect ~ values:", otfTransferForm.getFieldsValue())
+        otfTransferForm.setFieldsValue({ ...formValues, dealerCode: dealerDetails?.dealerCode, dealerCodess: 'hi' });
+        console.log(dealerDetails, ' handleSelect ~ values:', otfTransferForm.getFieldsValue());
     };
 
     useEffect(() => {
-        if ( !(searchDealerValue?.length > 2) ) {
+        if (!(searchDealerValue?.length > 2)) {
             setDealerList([]);
         } else {
             setDealerList(highlightFinalLocatonList(dealerDataList) || []);
@@ -186,7 +185,7 @@ const AddEditFormMain = (props) => {
         //treeDisabled: treeCodeReadOnly || isReadOnly,
         selectedTreeSelectKey,
         handleSelectTreeClick,
-        //defaultValue: treeCodeId,
+        defaultValue: treeCodeId,
         placeholder: preparePlaceholderSelect('Parent'),
     };
 
@@ -200,7 +199,7 @@ const AddEditFormMain = (props) => {
                     <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Model">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Order Status">{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
+                    <Descriptions.Item label="Order Status">{OTFStatusTag(selectedOrder?.orderStatus, 'title')}</Descriptions.Item>
                 </Descriptions>
             </Card>
             <Form form={otfTransferForm} onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false">
@@ -249,7 +248,7 @@ const AddEditFormMain = (props) => {
 
                 {reasonTypeChange === 'LOMMD' && (
                     <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.inputAutFillWrapper} >
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.inputAutFillWrapper}>
                             <Form.Item name="dealerName" label="Find Dealer Name" rules={[validateRequiredSelectField('Dealer Name')]}>
                                 <AutoComplete className={style.searchField} label="Find Dealer Name" options={dealerList} backfill={false} onSelect={handleSelect} onSearch={onSearchDealer} allowSearch notFoundContent="No Dealer found">
                                     <Search allowClear placeholder={preparePlaceholderAutoComplete(' / Search Dealer Name')} />

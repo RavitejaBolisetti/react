@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
         data: {
-            ProductHierarchy: { isLoading: isProductHierarchyLoading = false, isLoaded: isProductHierarchyLoaded = false, data: productHierarchyData = [], attributeData: productHierarchyAttributeData = [] },
+            ProductHierarchy: { isLoading: isProductHierarchyLoading = false, data: productHierarchyData = [] },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
             OTF: {
@@ -69,8 +69,7 @@ const CancellationMasterBase = (props) => {
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOtfBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const [formData, setFormData] = useState([]);
-    const [emptyList, setEmptyList] = useState(true);
+
     const [searchDealerValue, setSearchDealerValue] = useState('');
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
 
@@ -82,11 +81,7 @@ const CancellationMasterBase = (props) => {
     };
 
     const handleSelectTreeClick = (value) => {
-        // if (value === selectedTreeKey[0]) {
-        //     return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
-        // }
         setSelectedTreeSelectKey(value);
-        // setFormBtnActive(true);
     };
 
     useEffect(() => {
@@ -123,7 +118,6 @@ const CancellationMasterBase = (props) => {
         setButtonData,
         handleButtonClick,
         uploadDocumentFile,
-        setEmptyList,
         setUploadedFile,
         fieldNames,
         productHierarchyData,
