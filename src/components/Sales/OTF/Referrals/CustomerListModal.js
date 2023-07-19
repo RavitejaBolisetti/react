@@ -39,14 +39,13 @@ export const CustomerListBase = (props) => {
         isLoading: false,
         tableColumn,
         tableData: data,
-        srlTitle: 'Select',
     };
 
     return (
         <div className={styles.customerChooseContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <DataTable pagination={false} {...tableProps} />
+                    <DataTable scroll={1000} pagination={false} {...tableProps} />
                 </Col>
             </Row>
 
@@ -59,7 +58,7 @@ export const CustomerListBase = (props) => {
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary" onClick={handleSelectedData} disabled={!formBtnActive}>
-                        Apply
+                        Select
                     </Button>
                 </Col>
             </Row>
@@ -67,4 +66,4 @@ export const CustomerListBase = (props) => {
     );
 };
 
-export const CustomerListModal = withModal(CustomerListBase, { width: 600 });
+export const CustomerListModal = withModal(CustomerListBase, { width: 800 });
