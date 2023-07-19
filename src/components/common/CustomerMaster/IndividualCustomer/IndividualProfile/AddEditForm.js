@@ -25,7 +25,7 @@ const { TextArea } = Input;
 const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { showGlobalNotification, formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadedFile, uploadConsentDocumentFile } = props;
+    const { fileList, setFileList, showGlobalNotification, formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadedFile, uploadConsentDocumentFile } = props;
     const { isReadOnly = false } = props;
     const [isRead, setIsRead] = useState(false);
     const [isReadUpload, setIsReadUpload] = useState(false);
@@ -94,110 +94,44 @@ const AddEditFormMain = (props) => {
         // console.log('Dropped files', e.dataTransfer.files);
     };
 
-    const uploadProps = {
-        name: 'file',
-        multiple: false,
-        accept: 'image/png, image/jpeg',
-        action: '',
-        progress: { strokeWidth: 10 },
-        success: { percent: 100 },
-        beforeUpload: (file) => {
-            const isPNG = file.type === 'image/png';
-            const isJPG = file.type === 'image/jpeg';
-            if (!isPNG && !isJPG) {
-                message.error(`${file.name} is not a correct file format`);
-            }
-            return isPNG || isJPG || Upload.LIST_IGNORE;
-        },
-        onDrop,
-        onChange: (info, event) => {
-            const { status } = info.file;
-            if (status === 'uploading') {
-            } else if (status === 'done') {
-                setUploadedFile(info?.file?.response?.docId);
-                message.success(`${info.file.name} file uploaded successfully.`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
-    };
+    // const uploadProps = {
+    //     name: 'file',
+    //     multiple: false,
+    //     accept: 'image/png, image/jpeg',
+    //     action: '',
+    //     progress: { strokeWidth: 10 },
+    //     success: { percent: 100 },
+    //     beforeUpload: (file) => {
+    //         const isPNG = file.type === 'image/png';
+    //         const isJPG = file.type === 'image/jpeg';
+    //         if (!isPNG && !isJPG) {
+    //             message.error(`${file.name} is not a correct file format`);
+    //         }
+    //         return isPNG || isJPG || Upload.LIST_IGNORE;
+    //     },
+    //     onDrop,
+    //     onChange: (info, event) => {
+    //         const { status } = info.file;
+    //         if (status === 'uploading') {
+    //         } else if (status === 'done') {
+    //             setUploadedFile(info?.file?.response?.docId);
+    //             message.success(`${info.file.name} file uploaded successfully.`);
+    //         } else if (status === 'error') {
+    //             message.error(`${info.file.name} file upload failed.`);
+    //         }
+    //     },
+    // };
 
-    const uploadConsentProps = {
-        multiple: false,
-        maxCount: 1,
-        accept: 'image/png, image/jpeg, application/pdf',
-        beforeUpload: (file) => {
-            const isAccepted = file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'application/pdf';
-            if (!isAccepted) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not a accepted file format`, placement: 'bottomRight' });
-            }
-            return isAccepted || Upload.LIST_IGNORE;
-        },
-        showUploadList: {
-            showRemoveIcon: true,
-            removeIcon: <FiTrash />,
-            showProgress: true,
-        },
-        progress: { strokeWidth: 3, showInfo: true },
-        onDrop,
-        onChange: (info, event) => {
-            const { status } = info.file;
-            if (status === 'uploading') {
-            } else if (status === 'done') {
-                setIsReadUpload(true);
-                setUploadedFiles(info?.file?.response?.docId);
-                message.success(`${info.file.name} file uploaded successfully.`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
-    };
-    const handleUpload = (options) => {
-        const { file, onSuccess, onError } = options;
-
-        const data = new FormData();
-        data.append('applicationId', 'app');
-        data.append('file', file);
-
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listDocumentShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        uploadDocumentFile(requestData);
-    };
-
-    const handleUploads = (options) => {
-        const { file, onSuccess, onError } = options;
-
-        const data = new FormData();
-        data.append('applicationId', 'app');
-        data.append('file', file);
-
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listDocumentShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        uploadConsentDocumentFile(requestData);
-    };
 
     const ImageProps = {
         viewDocument,
-        handleUpload,
-        uploadProps,
+      
+        
         formData,
     };
 
     const disabledProps = { disabled: isReadOnly };
+
     return (
         <>
             <Row gutter={20}>
@@ -206,7 +140,7 @@ const AddEditFormMain = (props) => {
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                             <Panel header="Individual Information" key="1">
                                 <Divider />
-                                <UploadUtils {...props} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={formData?.image} {...ImageProps} />
+                                <UploadUtils key={1} {...props} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={formData?.image} {...ImageProps} />
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -521,7 +455,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">
                                             <Checkbox> I Consent to share my details with Mahindra & Mahindra</Checkbox>
                                         </Form.Item>
-                                        <UploadUtils {...props} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={formData?.image} {...ImageProps} />
+                                        <UploadUtils key={2} {...props} uploadImgTitle={'Consent Form'} setUploadImgDocId={setUploadedFiles} uploadImgDocId={formData?.consentForm} {...ImageProps} />
                                     </Space>
                                     {formData?.customerConsentForm && (
                                         <Row gutter={16}>

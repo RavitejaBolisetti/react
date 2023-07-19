@@ -84,6 +84,7 @@ const IndividualProfileBase = (props) => {
     const [activeKey, setActiveKey] = useState([1]);
     const [uploadedFile, setUploadedFile] = useState();
     const [uploadedFiles, setUploadedFiles] = useState();
+    const [fileList, setFileList] = useState([]);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -92,15 +93,15 @@ const IndividualProfileBase = (props) => {
         showGlobalNotification({ message });
     };
 
-    useEffect(() => {
-        if (viewDocument && isViewDataLoaded && isIndiviualProfileLoaded) {
-            let a = document.createElement('a');
-            a.href = `data:image/png;base64,${viewDocument?.base64}`;
-            a.download = viewDocument?.fileName;
-            a.click();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isViewDataLoaded, viewDocument]);
+    // useEffect(() => {
+    //     if (viewDocument && isViewDataLoaded && isIndiviualProfileLoaded) {
+    //         let a = document.createElement('a');
+    //         a.href = `data:image/png;base64,${viewDocument?.base64}`;
+    //         a.download = viewDocument?.fileName;
+    //         a.click();
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isViewDataLoaded, viewDocument]);
 
     useEffect(() => {
         return () => {
@@ -263,6 +264,8 @@ const IndividualProfileBase = (props) => {
         isViewDocumentLoading,
         handleOnClickCustomerForm,
         NEXT_ACTION,
+        fileList,
+        setFileList,
     };
 
     const viewProps = {
