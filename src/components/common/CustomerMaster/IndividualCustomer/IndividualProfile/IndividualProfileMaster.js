@@ -84,6 +84,7 @@ const IndividualProfileBase = (props) => {
     const [activeKey, setActiveKey] = useState([1]);
     const [uploadedFile, setUploadedFile] = useState();
     const [uploadedFiles, setUploadedFiles] = useState();
+    const [fileList, setFileList] = useState([]);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -228,7 +229,7 @@ const IndividualProfileBase = (props) => {
                 name: 'docId',
             },
         ];
-        downloadFile({ setIsLoading: listIndiviualShowLoading, userId, extraParams });
+        fetchViewDocument({ setIsLoading: listIndiviualShowLoading, userId, extraParams });
     };
     const onCloseAction = () => {
         form.resetFields();
@@ -267,7 +268,9 @@ const IndividualProfileBase = (props) => {
         NEXT_ACTION,
         isWhoKnowsWhom,
         setIsWhoKnowsWhom,
-    };
+        fileList,
+        setFileList,
+  };
 
     const viewProps = {
         ...props,
