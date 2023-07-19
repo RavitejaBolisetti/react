@@ -88,6 +88,8 @@ const IndividualProfileBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
+    const [isWhoKnowsWhom, setIsWhoKnowsWhom] = useState(false);
+
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -263,6 +265,8 @@ const IndividualProfileBase = (props) => {
         isViewDocumentLoading,
         handleOnClickCustomerForm,
         NEXT_ACTION,
+        isWhoKnowsWhom,
+        setIsWhoKnowsWhom,
     };
 
     const viewProps = {
@@ -278,8 +282,26 @@ const IndividualProfileBase = (props) => {
         downloadFileFromButton,
     };
 
+    function checkProperties(obj) {
+        for (var key in obj) {
+            if (obj[key].length > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
+        const valuesForm = form.getFieldsValue(['personName', 'postion', 'companyName', 'remarks']);
+
+        const isEmpty = checkProperties(valuesForm);
+        if (isEmpty === true) {
+            setIsWhoKnowsWhom(true);
+            // form.validateFields(['personName', 'companyName']);
+        } else if (isEmpty === false) {
+            setIsWhoKnowsWhom(false);
+        }
     };
 
     return (

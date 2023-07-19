@@ -25,7 +25,7 @@ const { TextArea } = Input;
 const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { showGlobalNotification, formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadedFile, uploadConsentDocumentFile } = props;
+    const { isWhoKnowsWhom, setIsWhoKnowsWhom, showGlobalNotification, formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadedFile, uploadConsentDocumentFile } = props;
     const { isReadOnly = false } = props;
     const [isRead, setIsRead] = useState(false);
     const [isReadUpload, setIsReadUpload] = useState(false);
@@ -36,6 +36,8 @@ const AddEditFormMain = (props) => {
         setCustomer(formData?.customerCategory);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData?.customerCategory]);
+
+  
 
     useEffect(() => {
         form.setFieldsValue({
@@ -487,7 +489,7 @@ const AddEditFormMain = (props) => {
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Name of Person" initialValue={formData?.authorityDetails?.personName} name="personName" rules={[validateRequiredInputField('Name of Person')]}>
+                                        <Form.Item label="Name of Person" initialValue={formData?.authorityDetails?.personName} name="personName" rules={isWhoKnowsWhom ? [validateRequiredInputField('Name of Person')] : null}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter name of person')} />
                                         </Form.Item>
                                     </Col>
@@ -499,7 +501,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Company Name" initialValue={formData?.authorityDetails?.companyName} name="companyName" rules={[validateRequiredInputField('Company Name')]}>
+                                        <Form.Item label="Company Name" initialValue={formData?.authorityDetails?.companyName} name="companyName" rules={isWhoKnowsWhom ? [validateRequiredInputField('Company Name')] : null}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter company name')} />
                                         </Form.Item>
                                     </Col>
