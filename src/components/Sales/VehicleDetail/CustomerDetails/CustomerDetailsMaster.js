@@ -19,6 +19,7 @@ import styles from 'components/common/Common.module.css';
 import { vehicleCustomerDetailsDataAction } from 'store/actions/data/vehicle/customerDetails';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
+import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 
 const mapStateToProps = (state) => {
     const {
@@ -72,6 +73,9 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: vehicleCustomerDetailsDataAction.saveData,
             resetData: vehicleCustomerDetailsDataAction.reset,
 
+            fetchCustomerDetailData: customerDetailsIndividualDataActions.fetchData,
+            listShowLoading: customerDetailsIndividualDataActions.listShowLoading,
+
             fetchCustomerList: customerDetailDataActions.fetchList,
             listCustomerShowLoading: customerDetailDataActions.listShowLoading,
             showGlobalNotification,
@@ -81,7 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMain = (props) => {
-    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, showGlobalNotification, data, onFinishFailed } = props;
+    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, fetchCustomerDetailData,showGlobalNotification, data, onFinishFailed } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section } = props;
     const { setButtonData, buttonData, typeData, selectedRecordId, filterString, isReferralDataLoaded, referralData, fetchOtfReferralList, setFilterString, listOtfReferralShowLoading, fetchCustomerList, listCustomerShowLoading, isCustomerCommonDetailsLoaded, isCustomerCommonDetailsLoading, customerCommonDetails } = props;
     const [form] = Form.useForm();
@@ -281,6 +285,17 @@ export const CustomerDetailsMain = (props) => {
 
     const fnSetData = (data) => {
         console.log('selected customer', data);
+        if(data?.customerId){
+            fetchCustomerDetailData({
+                setIsLoading: listShowLoading,
+                extraParams: defaultExtraParam,
+                userId,
+                onSuccessAction: (res) => {
+                    setFormData(res?.data?.[0]);
+                },
+                onErrorAction,
+            });
+        }
     };
     const formProps = {
         ...props,
