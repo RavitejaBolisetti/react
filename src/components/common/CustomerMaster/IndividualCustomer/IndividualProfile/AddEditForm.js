@@ -5,7 +5,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Card, Empty } from 'antd';
+import { Collapse, Form, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Card, Empty } from 'antd';
 import Svg from 'assets/images/Filter.svg';
 import { FiDownload, FiTrash } from 'react-icons/fi';
 
@@ -30,7 +30,7 @@ const AddEditFormMain = (props) => {
     const [isRead, setIsRead] = useState(false);
     const [isReadUpload, setIsReadUpload] = useState(false);
     const [customer, setCustomer] = useState(false);
-    const [activeKey, setActiveKey] = useState([1]);
+    const [activeKey, setActiveKey] = useState([]);
 
     useEffect(() => {
         setCustomer(formData?.customerCategory);
@@ -516,7 +516,6 @@ const AddEditFormMain = (props) => {
 
                         <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel header="Upload Customer Form" key="5">
-                                <Divider />
                                 <>
                                     <Space direction="vertical">
                                         <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">

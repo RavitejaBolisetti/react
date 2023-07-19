@@ -23,7 +23,7 @@ import { TransferMaster } from './OTFTransfer/TransferMaster';
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { BASE_URL_OTF_DETAILS as baseURL } from 'constants/routingApi';
+import { BASE_URL_OTF_DETAILS as baseURL, BASE_URL_OTF_TRANSFER as otfTransferURL, BASE_URL_OTF_CANCELLATION as otfCancelURL } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
 import { validateOTFMenu } from './utils/validateOTFMenu';
@@ -90,7 +90,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfMasterBase = (props) => {
-    const { fetchOTFDetail, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
+    const { showGlobalNotification, fetchOTFDetail, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
     const { ChangeHistoryTitle } = props;
 
     const { typeData, moduleTitle, transferOTF } = props;
@@ -116,9 +116,6 @@ export const OtfMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isCancelVisible, setIsCancelVisible] = useState(false);
     const [isTransferVisible, setIsTransferVisible] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalTitle, setModalTitle] = useState('');
-    const [modalMessage, setModalMessage] = useState('');
 
     const [otfTransferForm] = Form.useForm();
 
@@ -397,7 +394,28 @@ export const OtfMasterBase = (props) => {
     };
 
     const title = 'Search OTF';
-    const showConfirm = ({ modalTitle, modalMessage, data, callBackMethod }) => {
+
+    const fnOTFTransfer = ({ modalTitle, modalMessage, finalData, callBackMethod, customURL }) => {
+        const onSuccess = (res) => {
+            setIsTransferVisible(false);
+            otfTransferForm.resetFields();
+            setShowDataLoading(true);
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            setButtonData({ ...buttonData, formBtnActive: false });
+            setIsFormVisible(false);
+        };
+
+        const requestData = {
+            data: finalData,
+            customURL,
+            method: 'put',
+            setIsLoading: () => {},
+            userId,
+            onSuccessAction: onSuccess,
+            onErrorAction,
+        };
+
         confirm({
             title: modalTitle,
             icon: '',
@@ -409,15 +427,6 @@ export const OtfMasterBase = (props) => {
             centered: true,
             closable: true,
             onOk() {
-                const onSuccess = (res) => {};
-                const onError = (message) => {};
-                const requestData = {
-                    data,
-                    userId,
-                    onError,
-                    onSuccess,
-                    setIsLoading: listShowLoading,
-                };
                 callBackMethod(requestData);
             },
             onCancel() {},
@@ -425,52 +434,28 @@ export const OtfMasterBase = (props) => {
     };
 
     const onFinishOTFTansfer = (values) => {
-        setIsTransferVisible(false);
+        // setIsTransferVisible(false);
 
-        const onSuccess = (res) => {
-            // otfTransferForm.resetFields();
-            setShowDataLoading(true);
-
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-
-            setButtonData({ ...buttonData, formBtnActive: false });
-
-            setIsFormVisible(false);
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        const requestData = {
-            data: data,
-            baseURL,
-            method: 'put',
-            setIsLoading: () => {},
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        showConfirm({
+        fnOTFTransfer({
             modalTitle: 'OTF Transfer',
             modalMessage: `Do you want to transfer this ${otfData?.otfNumber}`,
-            data: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
-            callBackMethod: transferOTF(requestData),
+            finalData: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
+            callBackMethod: transferOTF,
+            customURL: otfTransferURL,
         });
     };
 
     const onFinishOTFCancellation = (values) => {
-        setModalTitle('OTF Cancel');
-        setModalMessage(`Do you want to cancel this ${values?.otfNumber}`);
-        setIsCancelVisible(false);
-        showConfirm(values, transferOTF);
+        // setIsCancelVisible(false);
+        fnOTFTransfer({
+            modalTitle: 'OTF Cancel',
+            modalMessage: `Do you want to cancel this ${otfData?.otfNumber}`,
+            finalData: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
+            callBackMethod: transferOTF,
+            customURL: otfCancelURL,
+        });
     };
 
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
@@ -574,9 +559,12 @@ export const OtfMasterBase = (props) => {
     const onCancelCloseAction = () => {
         setIsCancelVisible(false);
         setIsTransferVisible(false);
+        otfTransferForm.resetFields();
     };
+
     const cancelProps = {
         ...props,
+        otfTransferForm,
         otfData,
         selectedOrder,
         CANCEL_ACTION,
@@ -593,14 +581,6 @@ export const OtfMasterBase = (props) => {
         TRANSFER_ACTION,
         isVisible: isTransferVisible,
         onCloseAction: onCancelCloseAction,
-    };
-
-    const modalProps = {
-        isVisible: isModalOpen,
-        titleOverride: modalTitle,
-        closable: false,
-        information: modalMessage,
-        handleCloseModal,
     };
 
     return (

@@ -59,7 +59,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchOTFSearchedList: otfDataActions.fetchList,
             setFilterString: otfDataActions.setFilter,
             resetData: otfDataActions.reset,
-
             fetchList: otfDataActions.fetchList,
             saveData: otfDataActions.saveData,
             listShowLoading: otfDataActions.listShowLoading,

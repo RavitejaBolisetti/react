@@ -90,6 +90,7 @@ const ViewAddressList = (props) => {
                                     </Row>
                                 }
                             >
+                                <Divider />
                                 {!isEditing ? <ViewIndividualAddressDetails styles={styles} formData={data} index={i} {...detailProps} /> : <AddEditForm {...formProps} />}
                             </Panel>
                         </Collapse>
