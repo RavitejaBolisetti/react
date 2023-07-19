@@ -179,6 +179,7 @@ const AddEditFormMain = (props) => {
                                         }
                                         key={index}
                                     >
+                                        <Divider />
                                         {editedMode && !showForm ? <FormContainer {...formProps} item /> : <ViewDetail {...viewProps} mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} relationCustomerId={item?.relationCustomerId} />}
                                     </Panel>
                                 </Collapse>

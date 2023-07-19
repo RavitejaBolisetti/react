@@ -22,7 +22,6 @@ const mapStateToProps = (state) => {
         data: {
             ApplicationMaster: { dealerLocations = [] },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
             OTF: {
                 salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
             },
@@ -35,9 +34,6 @@ const mapStateToProps = (state) => {
         accessToken,
         token,
         typeData: typeData && typeData[PARAM_MASTER.TRNSFER_REASON.id],
-        isDataLoaded,
-        isLoading,
-        supportingData,
         moduleTitle,
         isSalesConsultantDataLoaded,
         salesConsultantLov,
