@@ -39,7 +39,7 @@
 }
 
 .leftMenuBox .logoContainer {
-    padding: 0px 14px;
+    padding: 0px 24px;
 }
 
 .leftMenuBox .logoContainerCollapsed {
@@ -55,7 +55,7 @@
 }
 
 .leftMenuBox .brandLink .brandImage {
-    max-height: 26px;
+    max-height: 24px;
     width: auto;
 }
 
@@ -81,13 +81,22 @@
     margin-bottom: 10px;
 }
 
+.leftMenuBox .searchContainer :global .ant-input-group .ant-input-affix-wrapper {
+    padding: 3px 12px;
+}
+
+.leftMenuBox .searchContainer :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child {
+    padding: 3px 12px;
+    padding-left: 0;
+}
+
 .leftMenuBox .menuIcon {
     font-size: 22px !important;
     vertical-align: middle;
 }
 
 .leftMenuBox .menuTitle {
-    padding-left: 4px;
+    padding-left: 8px;
 }
 
 .leftMenuBox .subMenuParent .menuTitle {
@@ -109,6 +118,7 @@
     background: #ffffff;
     width: 100%;
     bottom: 0;
+    padding: 10px 16px;
     -webkit-box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.15);
     -moz-box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.15);
     box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.15);
@@ -118,9 +128,8 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    border: 1px solid #dedede;
+    border: 1px solid #E6E6E6;
     border-radius: 4px;
-    padding: 4px;
 }
 
 .leftMenuBox .changeTheme button>span {
@@ -134,9 +143,10 @@
 .leftMenuBox .changeTheme .changeThemeBorder .darkTheme,
 .leftMenuBox .changeTheme .changeThemeBorder .darkThemeActive {
     width: 50%;
-    padding: 4px !important;
+    padding: 3px;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .leftMenuBox .changeTheme .changeThemeBorder .lightTheme svg,
@@ -144,12 +154,11 @@
 .leftMenuBox .changeTheme .changeThemeBorder .darkTheme svg,
 .leftMenuBox .changeTheme .changeThemeBorder .darkThemeActive svg {
     margin-right: 6px;
-    margin-left: 3px;
 }
 
 .leftMenuBox .changeTheme .changeThemeBorder .lightTheme,
 .leftMenuBox .changeTheme .changeThemeBorder .lightThemeActive {
-    margin-right: 4px !important;
+    margin-right: 16px;
 }
 
 .leftMenuBox .changeTheme .changeThemeBorder .lightTheme,
@@ -162,13 +171,12 @@
 .leftMenuBox .changeTheme :global .ant-btn-default.ant-btn-dangerous:not(:disabled):active {
     background-color: transparent;
     border: 1px solid #FF3E5B !important;
-    color: #ff3e5b !important;
+    color: #FF3E5B !important;
 }
 
 .leftMenuBox .changeTheme .sun,
 .leftMenuBox .changeTheme .moon {
     cursor: pointer;
-    margin: 5px 0;
 }
 
 .leftMenuBox li.subMenuItemNew:hover {
