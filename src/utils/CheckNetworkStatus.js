@@ -5,17 +5,16 @@
  */
 import React, { useEffect, useState } from 'react';
 
-export const Sample = () => {
+export const CheckNetworkStatus = () => {
     const [online, setOnline] = useState(null);
 
     useEffect(() => {
         const timer = setInterval(() => {
-            console.log('ticking');
             setOnline(navigator.onLine);
         }, 1000);
 
         return () => clearInterval(timer);
     }, []);
 
-return online===false ? <div>Your are Offline</div> : undefined;
+    return online === false ? <div>You’re Offline. Check Your Connection</div> : undefined;
 };
