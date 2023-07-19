@@ -587,9 +587,39 @@
 /* AntD Picker Design End*/
 
 /* AntD Collapse Design Start*/
-:global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-texts {
-    font-weight: 600;
+:global .ant-collapse {
+    margin-bottom: 10px;
+    background-color: #F2F2F2;
+    border: 1px solid #E6E6E6;
+}
+
+:global .ant-collapse>.ant-collapse-item {
+    border-bottom: none;
+}
+
+:global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
+    align-items: center;
     font-size: 16px;
+    line-height: 24px;
+    color: #0B0B0C;
+}
+
+:global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text {
+    font-weight: 600;
+}
+
+:global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
+    height: 24px;
+    color: #FF3E5B;
+}
+
+:global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon span {
+    font-size: 24px;
+}
+
+:global .ant-collapse .ant-collapse-content {
+    background-color: #F2F2F2;
+    border-top: none;
 }
 
 /* AntD Collapse Design End*/
