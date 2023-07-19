@@ -6,16 +6,16 @@
 import React, { useEffect, useState } from 'react';
 
 export const Sample = () => {
-    const [count, setCount] = useState(0);
+    const [online, setOnline] = useState(null);
 
     useEffect(() => {
         const timer = setInterval(() => {
             console.log('ticking');
-            setCount(count + 1);
+            setOnline(navigator.onLine);
         }, 1000);
 
         return () => clearInterval(timer);
     }, []);
 
-    return <div>count is: {count}</div>;
+return online===false ? <div>Your are Offline</div> : undefined;
 };
