@@ -17,7 +17,7 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 
 const AddEditFormBase = (props) => {
-    const { form, sameAsBookingCustomer, formData, setSameAsBookingCustomer } = props;
+    const { form, sameAsBookingCustomer, formData, setSameAsBookingCustomer, fnSetData } = props;
     const { typeData, activeKey, handleCollapse, searchForm } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -54,6 +54,7 @@ const AddEditFormBase = (props) => {
         formType: 'ownerCustomer',
         onSearch,
         searchForm,
+        fnSetData: (data) => fnSetData(data, 'ownerCustomer'),
     };
 
     const bilingCustomerProps = {
@@ -66,22 +67,23 @@ const AddEditFormBase = (props) => {
         searchForm,
         disabledProps: { disabled: sameAsBookingCustomer },
         handleOnChange,
+        fnSetData: (data) => fnSetData(data, 'billingCustomer'),
     };
 
     const keyAccountDetailsProps = {
         ...props,
         AutoComplete,
         typeData,
-        formData: formData?.keyaccount,
-        formType: 'keyaccount',
+        formData: formData?.vehicleKeyAccountDetails,
+        formType: 'vehicleKeyAccountDetails',
     };
 
     const loyaltyProps = {
         ...props,
         AutoComplete,
         typeData,
-        formData: formData?.loyalty,
-        formType: 'loyalty',
+        formData: formData?.vehicleCustomerLoyaltyDetails,
+        formType: 'vehicleCustomerLoyaltyDetails',
     };
 
     const handleCancel = () => {

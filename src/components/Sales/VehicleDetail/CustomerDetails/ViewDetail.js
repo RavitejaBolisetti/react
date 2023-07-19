@@ -94,7 +94,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions {...viewProps}>
                                     <Descriptions.Item label="Loyality Card Number">{checkAndSetDefaultValue(vehicleCustomerLoyaltyDetails?.loyalityCardNumber, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Assured Buy Back">{checkAndSetDefaultValue(vehicleCustomerLoyaltyDetails?.assuredBuyBack, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Status Of Vehicle">{checkAndSetDefaultValue(vehicleCustomerLoyaltyDetail?.statusOfVehicle, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Status Of Vehicle">{checkAndSetDefaultValue(vehicleCustomerLoyaltyDetails?.statusOfVehicle, isLoading)}</Descriptions.Item>
                                 </Descriptions>
                             </Panel>
                         </Collapse>

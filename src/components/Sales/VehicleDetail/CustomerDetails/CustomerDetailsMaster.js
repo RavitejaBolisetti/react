@@ -14,6 +14,7 @@ import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
+import { BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL as customURL } from 'constants/routingApi';
 
 import styles from 'components/common/Common.module.css';
 import { vehicleCustomerDetailsDataAction } from 'store/actions/data/vehicle/customerDetails';
@@ -85,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMain = (props) => {
-    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, fetchCustomerDetailData,showGlobalNotification, data, onFinishFailed } = props;
+    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, fetchCustomerDetailData, showGlobalNotification, data, onFinishFailed } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section } = props;
     const { setButtonData, buttonData, typeData, selectedRecordId, filterString, isReferralDataLoaded, referralData, fetchOtfReferralList, setFilterString, listOtfReferralShowLoading, fetchCustomerList, listCustomerShowLoading, isCustomerCommonDetailsLoaded, isCustomerCommonDetailsLoading, customerCommonDetails } = props;
     const [form] = Form.useForm();
@@ -256,8 +257,8 @@ export const CustomerDetailsMain = (props) => {
         const recordId = data?.id || '';
         form.getFieldsValue();
         const finaldata = {
-            ownerCustomer: { ...values?.ownerCustomer, vin: selectedRecordId, id: data?.ownerCustomer?.id },
-            billingCustomer: { ...values?.billingCustomer, vin: selectedRecordId, id: data?.billingCustomer?.id },
+            ownerCustomer: { ...values?.ownerCustomer, vin: selectedRecordId, id: data?.ownerCustomer?.id || '' },
+            billingCustomer: { ...values?.billingCustomer, vin: selectedRecordId, id: data?.billingCustomer?.id || '' },
             vehicleKeyAccountDetails: { ...values?.vehicleKeyAccountDetails, vin: selectedRecordId, id: data?.vehicleKeyAccountDetails?.id },
             vehicleCustomerLoyaltyDetails: { ...values?.vehicleCustomerLoyaltyDetails, vin: selectedRecordId, id: data?.vehicleCustomerLoyaltyDetails?.id },
             id: recordId,
@@ -274,7 +275,8 @@ export const CustomerDetailsMain = (props) => {
 
         const requestData = {
             data: finaldata,
-            method: data?.ownerCustomer || data?.billingCustomer ? 'put' : 'post',
+            // method: data?.ownerCustomer || data?.billingCustomer ? 'put' : 'post',
+            method: 'put',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -283,15 +285,23 @@ export const CustomerDetailsMain = (props) => {
         saveData(requestData);
     };
 
-    const fnSetData = (data) => {
-        console.log('selected customer', data);
-        if(data?.customerId){
+    const fnSetData = (data, type) => {
+        if (data?.customerId) {
+            const extraParams = [
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: data?.customerId,
+                    name: 'Customer ID',
+                },
+            ];
             fetchCustomerDetailData({
-                setIsLoading: listShowLoading,
-                extraParams: defaultExtraParam,
+                customURL,
+                setIsLoading: () => {},
+                extraParams,
                 userId,
-                onSuccessAction: (res) => {
-                    setFormData(res?.data?.[0]);
+                onSuccessAction: (response) => {
+                    setFormData({ ...formData, [type]: { ...response?.data } });
                 },
                 onErrorAction,
             });

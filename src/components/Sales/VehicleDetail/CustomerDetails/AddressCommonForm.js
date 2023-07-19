@@ -12,16 +12,19 @@ import { CustomerListMaster } from 'components/utils/CustomerListModal';
 import styles from 'components/common/Common.module.css';
 
 export const AddressCommonForm = (props) => {
-    const { formType, formData, handleOnChange, fnSetData } = props;
+    const { formType, formData, handleOnChange, fnSetData, data } = props;
+    const canUpdate = (formType === 'ownerCustomer' && !data?.ownerCustomer?.customerId) || formType === 'billingCustomer';
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.referralSearch}>
-                    <CustomerListMaster fnSetData={fnSetData} />
-                </Col>
-            </Row>
+            {canUpdate && (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <CustomerListMaster fnSetData={fnSetData} />
+                    </Col>
+                </Row>
+            )}
 
-            <Row gutter={20}>
+            <Row gutter={20} className={styles.marT20}>
                 {formType === 'billingCustomer' && (
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item name={[formType, 'sameAsOwner']} label="" initialValue={formData?.sameAsOwner} valuePropName="checked">
