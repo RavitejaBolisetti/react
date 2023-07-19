@@ -2997,6 +2997,9 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     margin-bottom: 20px;
 }
 
+.noLeftPadding :global .ant-input {
+    padding-left: 0px !important;
+}
 .customerChooseContainer :global .ant-table .ant-table-content .ant-table-thead .ant-table-selection-column {
     background: #f2f2f2;
 }
