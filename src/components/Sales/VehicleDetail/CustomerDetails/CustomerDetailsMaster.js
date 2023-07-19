@@ -279,8 +279,12 @@ export const CustomerDetailsMain = (props) => {
         saveData(requestData);
     };
 
+    const fnSetData = (data) => {
+        console.log('selected customer', data);
+    };
     const formProps = {
         ...props,
+        fnSetData,
         form,
         billCstmForm,
         data,

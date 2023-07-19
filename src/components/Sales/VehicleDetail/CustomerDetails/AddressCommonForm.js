@@ -7,30 +7,17 @@ import React from 'react';
 import { Col, Input, Form, Row, Checkbox } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { SearchBox } from 'components/utils/SearchBox';
+import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 import styles from 'components/common/Common.module.css';
 
 export const AddressCommonForm = (props) => {
-    const { formType, onSearch, formData, searchForm, optionType, filterString, setFilterString, handleOnChange } = props;
-    const { isModalOpen, setIsModalOpen, disabledProps } = props;
-
-    const searchBoxProps = {
-        searchForm,
-        filterString,
-        optionType: optionType,
-        setFilterString,
-        handleChange: onSearch,
-        isModalOpen,
-        setIsModalOpen,
-        disabledProps: disabledProps,
-    };
-
+    const { formType, formData, handleOnChange, fnSetData } = props;
     return (
         <>
-            <Row gutter={20} className={styles.marB20}>
+            <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.referralSearch}>
-                    <SearchBox {...searchBoxProps} />
+                    <CustomerListMaster fnSetData={fnSetData} />
                 </Col>
             </Row>
 
