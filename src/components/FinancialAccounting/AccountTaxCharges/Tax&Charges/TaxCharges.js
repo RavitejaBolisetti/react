@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Input, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { HierarchyFormButton } from 'components/common/Button';
+import { financialAccTaxChargeActions } from 'store/actions/data/financialAccounting/taxCharges'
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
@@ -34,6 +35,7 @@ const mapStateToProps = (state) => {
             FinancialAccounting: {
                 FinancialAccountHead: { isLoaded: isFinancialAccountHeadLoaded = false, data: financialAccount = [] },
                 DocumentDescription: { isLoaded: isDocumentDescriptionLoaded = false, data: documentDescription = [] },
+                TaxCharges: { isLoaded: isTaxChargeLoaded = false, data: taxChargeList = [] }
             },
         },
         common: {
@@ -55,6 +57,8 @@ const mapStateToProps = (state) => {
         manufacturerOrgHierarchyData,
         isDataAttributeLoaded,
         viewTitle,
+        isTaxChargeLoaded,
+        taxChargeList,
         attributeData: attributeData?.filter((i) => i?.status),
         unFilteredAttributeData: attributeData,
     };
@@ -75,6 +79,10 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
 
+            fetchListTaxCharge: financialAccTaxChargeActions.fetchList,
+            saveDataTaxCharge: financialAccTaxChargeActions.saveData,
+            listShowLoadingTaxCharge: financialAccTaxChargeActions.listShowLoading,
+
             fetchFinancialAccountHead: financialAccountHeadDataActions.fetchList,
 
             fetchDocumentDescriptionHead: documentDescriptionDataActions.fetchList,
@@ -85,7 +93,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocumentDescriptionHead, documentDescription, isDocumentDescriptionLoaded, fetchFinancialAccountHead, isFinancialAccountHeadLoaded, financialAccount, fetchChangeHistoryList, viewTitle, userId, changeHistoryModelOpen, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, manufacturerOrgHierarchyData, showGlobalNotification, unFilteredAttributeData }) => {
+export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocumentDescriptionHead, documentDescription, isDocumentDescriptionLoaded, fetchFinancialAccountHead, isFinancialAccountHeadLoaded, financialAccount, fetchChangeHistoryList, viewTitle, userId, changeHistoryModelOpen, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, manufacturerOrgHierarchyData, showGlobalNotification, unFilteredAttributeData, fetchListTaxCharge,saveDataTaxCharge,listShowLoadingTaxCharge,isTaxChargeLoaded,taxChargeList }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -136,6 +144,13 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
+
+    useEffect(() => {
+        if (!isTaxChargeLoaded && userId) {
+            fetchListTaxCharge({ setIsLoading: listShowLoadingTaxCharge, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isTaxChargeLoaded, userId]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -270,7 +285,7 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
         selectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
-        treeData: manufacturerOrgHierarchyData,
+        treeData: taxChargeList,
         searchValue,
         setSearchValue,
     };
