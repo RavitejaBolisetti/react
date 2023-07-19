@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import {BASE_URL_LOGIN, BASE_URL_HEADER_DETAIL  } from 'constants/routingApi';
+import {BASE_URL_LOGIN, BASE_URL_HEADER_DETAIL, BASE_URL_VERIFY_USER  } from 'constants/routingApi';
 
 export const handlers = [
   rest.post(BASE_URL_LOGIN, (req, res, ctx) => {
@@ -17,5 +17,20 @@ export const handlers = [
     }
 
   }),
-  rest.get(BASE_URL_HEADER_DETAIL, null)
+  rest.get(BASE_URL_HEADER_DETAIL, null),
+  rest.post(BASE_URL_VERIFY_USER, (req, res, ctx) => {
+    const { userId } = req.json();
+    if ( userId == 'test' ) {
+      return res(
+        ctx.status(200),
+        ctx.json({  
+          responseMessage: "User credentials verified successfully" })
+      );
+    } else{
+      return res(
+        ctx.status(401),
+        ctx.json({ error: 'USER_NOT_FOUND' })
+      );
+    }
+  }),
 ];

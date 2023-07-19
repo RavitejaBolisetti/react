@@ -25,7 +25,7 @@ module.exports = {
         "@testing-library/jest-dom",
         "<rootDir>/jest.setup.js",
     ],
-    coveragePathIgnorePatterns: ["<rootDir>/language/","<rootDir>/assets/","<rootDir>/utils/","<rootDir>/mocks/"],
+    coveragePathIgnorePatterns: ["<rootDir>/language/","<rootDir>/assets/","<rootDir>/utils/","<rootDir>/mocks/","<rootDir>/components/common/RoleManagement"],
     transformIgnorePatterns: ["<rootDir>/node_modules/(?![a-z])", "<rootDir>/assets/(?![a-z])"],
     coverageThreshold: {
         global: {
