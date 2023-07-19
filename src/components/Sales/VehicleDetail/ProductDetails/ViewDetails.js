@@ -20,7 +20,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { openAccordian, onChange, styles, formData, tooltTipText, isLoading, optionsServiceModified } = props;
+    const { openAccordian, handleCollapse, styles, formData, tooltTipText, isLoading, optionsServiceModified, formActionType } = props;
 
     const viewProps = {
         bordered: false,
@@ -32,10 +32,9 @@ const ViewDetailMain = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => onChange(1)} expandIconPosition="end">
+                <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(1)} expandIconPosition="end">
                     <Panel header="Product Attribute Details" key="1">
                         <Descriptions {...viewProps}>
-                            <br />
                             <Descriptions.Item label="Product Division">{checkAndSetDefaultValue(formData?.dateOfBirth, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Model Family">{checkAndSetDefaultValue(formData?.dateOfBirth, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(formData?.dateOfBirth, isLoading)}</Descriptions.Item>
@@ -58,7 +57,7 @@ const ViewDetailMain = (props) => {
                     </Panel>
                 </Collapse>
 
-                <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => onChange(2)} expandIconPosition="end">
+                <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(2)} expandIconPosition="end">
                     <Panel header="Connected Vehicle" key="2">
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="TCU ID">{checkAndSetDefaultValue(formData?.accountCode, isLoading)}</Descriptions.Item>
@@ -70,9 +69,9 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </Panel>
                 </Collapse>
-                <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => onChange(3)} expandIconPosition="end">
+                <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(3)} expandIconPosition="end">
                     <Panel header="Aggregates" key="3">
-                        <DataTable tableColumn={tableColumn({ viewMode: true })} tableData={optionsServiceModified} pagination={false} />
+                        <DataTable tableColumn={tableColumn({ formActionType })} tableData={optionsServiceModified} removePagination={true} />
                     </Panel>
                 </Collapse>
             </Space>
