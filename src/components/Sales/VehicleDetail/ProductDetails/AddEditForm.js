@@ -380,7 +380,6 @@ const AddEditFormMain = (props) => {
             }
             default: {
                 return text;
-
             }
         }
     };
@@ -500,7 +499,7 @@ const AddEditFormMain = (props) => {
                             >
                                 {isReadOnly && <AggregatesForm {...OptionServicesFormProps} />}
                                 <Form autoComplete="off" layout="vertical" form={tableForm}>
-                                    <DataTable tableColumn={tableColumn({ handleEdit, identification, isEditing, handleCancel: handleTableCancel, renderFormItems, handleSave, handleDelete })} tableData={optionsServiceModified} removePagination={true} />
+                                    <DataTable tableColumn={tableColumn({ handleEdit, identification, isEditing, handleCancel: handleTableCancel, renderFormItems, handleSave, handleDelete })} tableData={optionsServiceModified} pagination={false} />
                                 </Form>
                             </Panel>
                         </Collapse>
