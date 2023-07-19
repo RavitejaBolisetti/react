@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
             ApplicationMaster: { dealerLocations = [] },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
-                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
+                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, detailData: salesConsultantLov = [] },
             },
         },
     } = state;
@@ -49,7 +49,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
             locationDataLoding: applicationMasterDataActions.locationDataLoding,
 
-            fetchSalesConsultant: salesConsultantActions.fetchList,
+            fetchSalesConsultant: salesConsultantActions.fetchDetail,
+            reset: salesConsultantActions.reset,
             listConsultantShowLoading: salesConsultantActions.listShowLoading,
 
             showGlobalNotification,
@@ -60,7 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const TransferMasterBase = (props) => {
     const { otfData, selectedOrder, fetchSalesConsultant, listConsultantShowLoading, fetchDealerLocations, dealerLocations, locationDataLoding } = props;
-    const { userId, salesConsultantLov } = props;
+    const { userId, salesConsultantLov, reset } = props;
     const { moduleTitle } = props;
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOtfBtn: false, transferOtfBtn: true };
@@ -70,11 +71,21 @@ const TransferMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
-            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
+            reset();
             fetchDealerLocations({ setIsLoading: locationDataLoding, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
+
+    const handleOtfTransferLocationChange = (value) => {
+        const extraParams = [
+            {
+                key: 'locationCode',
+                value: value,
+            }
+        ];
+        fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, extraParams, userId });
+    }
 
     const formProps = {
         ...props,
@@ -86,6 +97,7 @@ const TransferMasterBase = (props) => {
         handleButtonClick,
         salesConsultantLov,
         dealerLocations,
+        handleOtfTransferLocationChange,
     };
 
     return <AddEditForm {...formProps} />;

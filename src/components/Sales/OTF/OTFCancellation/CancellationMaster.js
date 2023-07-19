@@ -64,18 +64,30 @@ const mapDispatchToProps = (dispatch) => ({
 const CancellationMasterBase = (props) => {
     const { otfData, selectedOrder } = props;
     const { userId, listShowLoading, uploadDocumentFile } = props;
-    const { moduleTitle } = props;
+    const { moduleTitle, setUploadedFile } = props;
     const { fetchProductHierarchyList, productHierarchyData, onFinishOTFCancellation, fetchDealerList, dealerDataList } = props;
 
-    const [uploadedFile, setUploadedFile] = useState();
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOtfBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [formData, setFormData] = useState([]);
     const [emptyList, setEmptyList] = useState(true);
     const [searchDealerValue, setSearchDealerValue] = useState('');
+    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
 
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
     const handleButtonClick = ({ record = null, buttonAction }) => {};
+
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
+
+    const handleSelectTreeClick = (value) => {
+        // if (value === selectedTreeKey[0]) {
+        //     return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
+        // }
+        setSelectedTreeSelectKey(value);
+        // setFormBtnActive(true);
+    };
 
     useEffect(() => {
         if (userId) {
@@ -85,7 +97,19 @@ const CancellationMasterBase = (props) => {
     }, [userId]);
 
     useEffect(() => {
-        if (searchDealerValue?.length >= 3 && userId) fetchDealerList({ customURL, setIsLoading: listShowLoading, searchParam: searchDealerValue });
+        if (searchDealerValue?.length >= 3 && userId) {
+            const extraParams = [
+                {
+                    key: 'searchType',
+                    value: 'code',
+                },
+                {
+                    key: 'searchParam',
+                    value: searchDealerValue,
+                },
+            ];
+            fetchDealerList({ customURL, setIsLoading: listShowLoading, extraParams, onErrorAction });
+        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchDealerValue, userId]);
@@ -107,6 +131,8 @@ const CancellationMasterBase = (props) => {
         searchDealerValue,
         setSearchDealerValue,
         dealerDataList,
+        handleSelectTreeClick,
+        setSelectedTreeSelectKey,
     };
 
     return <AddEditForm {...formProps} />;
