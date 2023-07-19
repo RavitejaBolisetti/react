@@ -151,7 +151,7 @@ export const CustomerDetailsMain = (props) => {
                 extraParams: searchParams,
                 onSuccessAction: (res) => {
                     // res?.data?.referralData && setFormData(res?.data?.referralData?.[0]);
-                    res?.data?.ownerCustomerResponse && setFormData(res?.data?.ownerCustomerResponse?.[0]);
+                    res?.data?.ownerCustomer && setFormData(res?.data?.ownerCustomer?.[0]);
 
                     // res?.data?.referralData?.referralDetails.length === 1 ? setFormData(res?.data?.referralData?.referralDetails[0]);
                 },
@@ -227,7 +227,7 @@ export const CustomerDetailsMain = (props) => {
             extraParams: defaultExtraParam,
             userId,
             onSuccessAction: (res) => {
-                setFormData(res?.data?.ownerCustomerResponse[0]);
+                setFormData(res?.data?.ownerCustomer[0]);
             },
             onErrorAction,
         });
@@ -252,10 +252,10 @@ export const CustomerDetailsMain = (props) => {
         const recordId = data?.id || '';
         form.getFieldsValue();
         const finaldata = {
-            ownerCustomerResponse: { ...values?.ownerCustomerResponse, vin: selectedRecordId, id: data?.ownerCustomerResponse?.id },
-            billingCustomerResponse: { ...values?.billingCustomerResponse, vin: selectedRecordId, id: data?.billingCustomerResponse?.id },
-            vehicleKeyAccountDetailsResponse: { ...values?.vehicleKeyAccountDetailsResponse, vin: selectedRecordId, id: data?.vehicleKeyAccountDetailsResponse?.id },
-            vehicleCustomerLoyaltyDetailsResponse: { ...values?.vehicleCustomerLoyaltyDetailsResponse, vin: selectedRecordId, id: data?.vehicleCustomerLoyaltyDetailsResponse?.id },
+            ownerCustomer: { ...values?.ownerCustomer, vin: selectedRecordId, id: data?.ownerCustomer?.id },
+            billingCustomer: { ...values?.billingCustomer, vin: selectedRecordId, id: data?.billingCustomer?.id },
+            vehicleKeyAccountDetails: { ...values?.vehicleKeyAccountDetails, vin: selectedRecordId, id: data?.vehicleKeyAccountDetails?.id },
+            vehicleCustomerLoyaltyDetails: { ...values?.vehicleCustomerLoyaltyDetails, vin: selectedRecordId, id: data?.vehicleCustomerLoyaltyDetails?.id },
             id: recordId,
         };
         const onSuccess = (res) => {
@@ -270,7 +270,7 @@ export const CustomerDetailsMain = (props) => {
 
         const requestData = {
             data: finaldata,
-            method: data?.ownerCustomerResponse || data?.billingCustomerResponse ? 'put' : 'post',
+            method: data?.ownerCustomer || data?.billingCustomer ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -332,8 +332,8 @@ export const CustomerDetailsMain = (props) => {
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
         if (sameAsBookingCustomer) {
-            let ownerCustomerResponse = form.getFieldsValue()?.ownerCustomerResponse;
-            form?.setFieldsValue({ billingCustomerResponse: { ...ownerCustomerResponse } });
+            let ownerCustomer = form.getFieldsValue()?.ownerCustomer;
+            form?.setFieldsValue({ billingCustomer: { ...ownerCustomer } });
         }
     };
 

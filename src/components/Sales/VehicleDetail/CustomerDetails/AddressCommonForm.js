@@ -22,7 +22,7 @@ export const AddressCommonForm = (props) => {
             </Row>
 
             <Row gutter={20}>
-                {formType === 'billingCustomerResponse' && (
+                {formType === 'billingCustomer' && (
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item name={[formType, 'sameAsOwner']} label="" initialValue={formData?.sameAsOwner} valuePropName="checked">
                             <Checkbox onClick={handleOnChange}>Same As Owner</Checkbox>
