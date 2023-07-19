@@ -19,8 +19,7 @@ import { OTF_STATUS } from 'constants/OTFStatus';
 import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
-import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
+import { otfDataActions } from 'store/actions/data/otf/otf';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { validateVehicleReceiptMenu } from './utils/validateVehicleReceiptMenu';
@@ -32,8 +31,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
-                OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
-                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString },
+                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString, isDetailLoaded, detailData: otfData = [] },
             },
         },
     } = state;
@@ -41,11 +39,11 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         typeData,
-        isDataLoaded,
+        isDataLoaded: isDetailLoaded,
         data: data?.otfDetails,
         otfStatusList: Object.values(OTF_STATUS),
         otfData,
-        isLoading,
+        isLoading: !isDetailLoaded,
         moduleTitle,
         isOTFSearchLoading,
         isSearchDataLoaded,
@@ -58,12 +56,12 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchOTFSearchedList: otfSearchListAction.fetchList,
-            setFilterString: otfSearchListAction.setFilter,
-            resetData: otfSearchListAction.reset,
-            fetchList: otfDetailsDataActions.fetchList,
-            saveData: otfDetailsDataActions.saveData,
-            listShowLoading: otfDetailsDataActions.listShowLoading,
+            fetchOTFSearchedList: otfDataActions.fetchList,
+            setFilterString: otfDataActions.setFilter,
+            resetData: otfDataActions.reset,
+            fetchList: otfDataActions.fetchList,
+            saveData: otfDataActions.saveData,
+            listShowLoading: otfDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch

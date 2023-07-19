@@ -58,7 +58,7 @@ export const CustomerListBase = (props) => {
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                     <Button htmlType="submit" type="primary" onClick={handleSelectedData} disabled={!formBtnActive}>
-                        Select
+                        View Details
                     </Button>
                 </Col>
             </Row>

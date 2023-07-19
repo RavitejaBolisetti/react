@@ -654,6 +654,7 @@
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
 }
+
 .accordianContainer :global .ant-input-group:hover {
     border: 1px solid #0b0b0c;
 }
@@ -1925,7 +1926,7 @@
 
 .drawerBodyRight :global .ant-card .ant-card-body {
     padding: 20px 30px;
-    /* padding-bottom: 0; */
+    padding-bottom: 0;
     background-color: #f2f2f2;
     border-radius: 8px;
 }
@@ -2317,7 +2318,7 @@
 .drawerBodyRight :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
     background: #f2f2f2;
     border-radius: 0 0 8px 8px;
-    padding: 0 20px 20px;
+    padding: 0 20px;
 }
 
 /* .drawerBodyRight .viewDrawerContainer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
@@ -2375,7 +2376,7 @@
  } */
 
 .drawerBodyRight :global .ant-checkbox + span {
-    padding-inline-start: 4px;
+    padding-inline-start: 10px;
     color: #0b0b0c;
     font-size: 14px;
     font-weight: 500;
@@ -2391,8 +2392,8 @@
 }
 
 .drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
     background-color: #fff;
     border: 1px solid #0b0b0c;
 }
@@ -2680,7 +2681,11 @@
     margin-bottom: 40px;
     background: #f2f2f2;
     border-radius: 8px;
-    margin-bottom: 50px;
+    margin-bottom: 24px;
+}
+
+.ExchangeCard :global .ant-card-body {
+    padding: 20px 30px;
 }
 
 /* .marginBottom60 {
@@ -2696,8 +2701,13 @@
     color: #00a310;
 }
 
-.drawerCardView :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
+.drawerCardView :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item,
+.ExchangeCard :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
     padding-bottom: 0px;
+}
+
+.ExchangeCard :global .ant-card-body .ant-descriptions .ant-descriptions-row:last-child > td {
+    padding-bottom: 0;
 }
 
 .drawerCardView :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(even) .ant-descriptions-item {
@@ -2713,13 +2723,14 @@
 }
 
 .viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-content .anticon-check-square {
+    vertical-align: bottom;
     color: #b5b5b6;
-    margin-right: 10.83px;
+    margin-right: 10px;
 }
 
 .viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-content .anticon-check-square svg {
-    width: 18.33px;
-    height: 18.33px;
+    width: 22px;
+    height: 22px;
 }
 
 .viewDrawerContainer :global .ant-card-bordered {
@@ -2969,6 +2980,10 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 
 .customerChooseContainer :global .ant-table .ant-table-content {
     margin-bottom: 20px;
+}
+
+.customerChooseContainer :global .ant-table .ant-table-content .ant-table-thead .ant-table-selection-column {
+    background: #f2f2f2;
 }
 
 @media (max-width: 768px) {
