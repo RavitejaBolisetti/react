@@ -44,22 +44,18 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <Card className={styles.drawerCardView}>
+        <div className={styles.accessInfo}>
             <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                 <Panel
                     header={
-                        <Row justify="space-between">
-                            <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                <Space>
-                                    <Text className={styles.headText}> Model: Scorpio </Text>
-                                    <Text className={styles.headText}> {`|`}</Text>
-                                    <Text className={styles.headText}> VIN: 234254543453"</Text>
-                                </Space>
-                                <Row>
-                                    <Text className={styles.subSection}> Vehicle Status: Received</Text>
-                                </Row>
-                            </Col>
-                        </Row>
+                        <Space direction="vertical">
+                            <Space>
+                                <Text className={styles.headText}> Model: Scorpio </Text>
+                                <Text className={styles.headText}> {`|`}</Text>
+                                <Text className={styles.headText}> VIN: 234254543453</Text>
+                            </Space>
+                            <Text className={styles.subSection}> Vehicle Status: Received</Text>
+                        </Space>
                     }
                     key="1"
                 >
@@ -79,7 +75,7 @@ const ViewDetailMain = (props) => {
                     </Descriptions>
                 </Panel>
             </Collapse>
-        </Card>
+        </div>
     );
 };
 
