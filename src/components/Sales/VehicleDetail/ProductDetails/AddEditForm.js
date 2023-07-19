@@ -35,11 +35,11 @@ const AddEditFormMain = (props) => {
     const [AdvanceformData, setAdvanceformData] = useState();
 
     useEffect(() => {
-        if (formData?.productAttributeDetails) {
+        if (formData?.productDetail) {
             form.setFieldsValue({
-                ...formData?.productAttributeDetails,
-                manufacturerInvoiceDate: convertDateToCalender(formData?.productAttributeDetails?.manufacturerInvoiceDate),
-                manufacturerWarrantyStartDate: convertDateToCalender(formData?.productAttributeDetails?.manufacturerWarrantyStartDate),
+                ...formData?.productDetail,
+                manufacturerInvoiceDate: convertDateToCalender(formData?.productDetail?.manufacturerInvoiceDate),
+                manufacturerWarrantyStartDate: convertDateToCalender(formData?.productDetail?.manufacturerWarrantyStartDate),
             });
         }
         if (formData?.connectedVehicle?.length) {
