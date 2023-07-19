@@ -135,11 +135,11 @@
 }
 
 .contentHeaderBackground {
-    background-color: #f2f2f2;
-    border: 1px solid #e6e6e6;
-    padding: 8px 20px !important;
+    background-color: #F2F2F2;
+    border: 1px solid #E6E6E6;
+    padding: 7px 19px;
     margin-bottom: 20px;
-    border-radius: 4px !important;
+    border-radius: 4px;
     font-weight: 500;
 }
 
@@ -207,21 +207,21 @@
 }
 
 .contentHeaderBackground .headingToggle {
-    /* min-width: 154px; */
-    border: 1px solid #e6e6e6;
+    border: 1px solid #E6E6E6;
     border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
-    padding: 5px 0;
+    padding: 4px 0;
     display: flex;
     flex-wrap: nowrap;
-    /* margin-left: 8px; */
-    margin-right: 16px;
+    margin-right: 20px;
 }
 
 .contentHeaderBackground .headingToggle :global .ant-btn {
     height: 26px;
     padding: 2px 6px;
+    margin: 0 6px;
+    line-height: 20px;
 }
 
 .autoCompleteContent :global .ant-input-search .ant-input:hover,
@@ -239,7 +239,7 @@
 } */
 
 .contentHeaderBackground :global .ant-select .ant-select-clear {
-    background: #e6e6e6 !important;
+    background: #E6E6E6 !important;
 }
 
 .autoCompleteContent :global .ant-btn-default:not(:disabled):hover {
@@ -471,7 +471,7 @@
 .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
     height: 40px;
     /* margin-top: 20px; */
-    background-color: #e6e6e6;
+    background-color: #E6E6E6;
     border-radius: 6px;
     padding: 6px 20px;
     border: #b5b5b6 1px solid;
@@ -482,7 +482,7 @@
 .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
     height: 40px;
     margin-top: 20px;
-    background-color: #e6e6e6;
+    background-color: #E6E6E6;
     border-radius: 6px;
     color: #0b0b0c;
 }
@@ -699,7 +699,7 @@
 
 .accordianContainer :global .ant-collapse {
     margin-bottom: 12px !important;
-    background: #f2f2f2;
+    background: #F2F2F2;
 }
 
 .accordianContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
@@ -708,7 +708,7 @@
 
 .accordianContainer :global .ant-collapse>.ant-collapse-item.ant-collapse-item-active>.ant-collapse-header {
     color: #0b0b0c;
-    background: #f2f2f2;
+    background: #F2F2F2;
     border-radius: 7px 7px 0 0;
 }
 
@@ -808,7 +808,7 @@
 }
 
 .viewCardSize .disabledClass :global .ant-space-item .ant-btn-link span {
-    color: #e6e6e6 !important;
+    color: #E6E6E6 !important;
 }
 
 .viewCardSize :global .ant-card-body .ant-space .ant-space-item p {
@@ -842,10 +842,10 @@
     align-items: center;
 }
 
-.searchAndLabelAlign .headingToggle button {
+/* .searchAndLabelAlign .headingToggle button {
     margin-right: 6px;
     margin-left: 6px;
-}
+} */
 
 .searchContainer .searchField {
     vertical-align: middle;
@@ -917,8 +917,8 @@
 }
 
 .contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
-    background-color: #e6e6e6;
-    border-left: #e6e6e6;
+    background-color: #E6E6E6;
+    border-left: #E6E6E6;
 }
 
 .contentHeaderBackground .userManagement :global .ant-btn-link {
@@ -930,7 +930,7 @@
     margin-top: 10px;
     padding: 10px 0 0 0;
     padding-bottom: 0;
-    border-top: 1px solid #e6e6e6;
+    border-top: 1px solid #E6E6E6;
 }
 
 .contentHeaderBackground .errorDisplay {
@@ -1190,7 +1190,7 @@
 }
 
 :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
-    background: #f2f2f2;
+    background: #F2F2F2;
     border-radius: 0 0 8px 8px;
 }
 
@@ -1350,7 +1350,7 @@
     margin-top: 18px;
     /* margin-bottom: -8px; */
     padding-top: 4px;
-    border-top: solid 1px #e6e6e6;
+    border-top: solid 1px #E6E6E6;
 }
 
 .advanceFilterContainer {
@@ -1427,7 +1427,7 @@
 }
 
 .viewTiming .separator {
-    border-top: solid 1px #e6e6e6;
+    border-top: solid 1px #E6E6E6;
     margin-bottom: 20px;
 }
 
@@ -1490,7 +1490,7 @@
 }
 
 .drawerBodyLeft {
-    background: #f2f2f2;
+    background: #F2F2F2;
     /* padding: 20px; */
     height: calc(100vh - 60px);
     overflow-y: overlay;
@@ -1516,7 +1516,7 @@
 }
 
 .drawerBodyLeft :global .ant-collapse {
-    background: #f2f2f2;
+    background: #F2F2F2;
     border: 0.5px solid #b5b5b6;
     margin: 30px 30px 0px 30px;
     border-radius: 4px;
@@ -1556,7 +1556,7 @@
 }
 
 .drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
-    background: #f2f2f2;
+    background: #F2F2F2;
     border-radius: 0 0 4px 4px;
     padding: 0 16px 12px;
 }
@@ -1602,7 +1602,7 @@
 }
 
 .drawerBodyLeft :global .ant-avatar {
-    background: #e6e6e6;
+    background: #E6E6E6;
     border: 1px solid #b5b5b6;
     /* float: left; */
 }
@@ -1860,7 +1860,7 @@
 .drawerBodyRight :global .ant-card .ant-card-body {
     padding: 20px 30px;
     /* padding-bottom: 0; */
-    background-color: #f2f2f2;
+    background-color: #F2F2F2;
     border-radius: 8px;
 }
 
@@ -1941,7 +1941,7 @@
 .drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input[disabled] {
     height: 36px;
     color: #858585;
-    background-color: #e6e6e6;
+    background-color: #E6E6E6;
     border-color: #858585;
 }
 
@@ -1974,13 +1974,13 @@
 .drawerBodyRight .blockSection {
     margin-top: 0px !important;
     margin-bottom: 20px;
-    border-bottom: #e6e6e6 1px solid;
+    border-bottom: #E6E6E6 1px solid;
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
     margin-top: 0;
     margin-bottom: 20px;
-    border-color: #e6e6e6;
+    border-color: #E6E6E6;
 }
 
 .drawerBodyRight .cardInsideBox :global .ant-divider-horizontal {
@@ -1994,10 +1994,10 @@
 }
 
 .drawerBodyRight :global .ant-table-wrapper .ant-table-content {
-    background: #f2f2f2;
+    background: #F2F2F2;
     margin-bottom: 20px;
     padding-top: 20px;
-    border-top: 1px solid #e6e6e6;
+    border-top: 1px solid #E6E6E6;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
@@ -2039,7 +2039,7 @@
 .drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-vertical,
 .drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-descriptions {
     padding-top: 20px;
-    border-top: 1px solid #e6e6e6;
+    border-top: 1px solid #E6E6E6;
 }
 
 .drawerBodyRight :global .ant-descriptions-view table tbody tr td {
@@ -2110,29 +2110,29 @@
      margin-left: 10px;
  } */
 /* :global .ant-collapse {
-     background-color: #f2f2f2;
+     background-color: #F2F2F2;
  } */
 
 .drawerBodyRight .accordianContainer :global .ant-collapse {
     border: 1px solid #b5b5b6;
-    background: #f2f2f2;
+    background: #F2F2F2;
     margin-bottom: 20px !important;
 }
 
 .drawerBodyRight .accordianContainer :global .ant-collapse .ant-select-disabled .ant-select-selector,
 .drawerBodyRight :global .ant-card-bordered .ant-select-disabled .ant-select-selector {
-    border: 1px solid #e6e6e6 !important;
+    border: 1px solid #E6E6E6 !important;
 }
 
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
     padding: 16px 20px;
-    background: #f2f2f2;
+    background: #F2F2F2;
     border-radius: 8px;
     align-items: center;
     font-weight: 700;
     font-size: 16px;
     line-height: 24px;
-    /* border: 1px solid #f2f2f2; */
+    /* border: 1px solid #F2F2F2; */
 }
 
 .drawerBodyRight .accordianContainer :global .ant-collapse>.ant-collapse-item {
@@ -2146,11 +2146,11 @@
 }
 
 .drawerBodyRight .sectionborder :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
-    background: #e6e6e6;
+    background: #E6E6E6;
 }
 
 .drawerBodyRight .sectionborder :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
-    background: #e6e6e6;
+    background: #E6E6E6;
 }
 
 .drawerBodyRight .sectionborder .viewDrawerContainer {
@@ -2209,7 +2209,7 @@
 .drawerBodyRight :global .ant-input-disabled:hover,
 .drawerBodyRight :global .ant-input[disabled]:hover,
 .drawerBodyRight :global .ant-select-selector[disabled] {
-    border-color: #e6e6e6 !important;
+    border-color: #E6E6E6 !important;
 }
 
 /* .drawerBodyRight :global .ant-upload-wrapper .ant-upload-drag {
@@ -2218,7 +2218,7 @@
 
 .drawerBodyRight .uploadDragger :global .ant-card .ant-card-body {
     padding: 20px;
-    background-color: #f2f2f2;
+    background-color: #F2F2F2;
     border-radius: 6px;
 }
 
@@ -2272,7 +2272,7 @@
 /* .drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
      height: 40px;
      margin-top: 20px;
-     background-color: #e6e6e6;
+     background-color: #E6E6E6;
      border-radius: 6px;
      padding: 6px 20px;
      border: #b5b5b6 1px solid;
@@ -2303,7 +2303,7 @@
 .drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
     /* height: 40px;
      margin-top: 20px; */
-    background-color: #e6e6e6;
+    background-color: #E6E6E6;
     border-radius: 6px;
     color: #0b0b0c;
 }
@@ -2311,7 +2311,7 @@
 .drawerBodyRight .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
     height: 40px;
     margin-top: 20px;
-    background-color: #e6e6e6;
+    background-color: #E6E6E6;
     border-radius: 6px;
     color: #0b0b0c;
 }
@@ -2355,7 +2355,7 @@
 }
 
 .drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
-    background: #f2f2f2;
+    background: #F2F2F2;
     border-radius: 0 0 8px 8px;
     padding: 0 20px 20px;
 }
@@ -2365,7 +2365,7 @@
  } */
 
 .drawerBodyRight .sectionborder {
-    border-top: 1px solid #e6e6e6;
+    border-top: 1px solid #E6E6E6;
     padding-top: 20px;
 }
 
@@ -2495,15 +2495,15 @@
 .viewDrawerContainer :global .ant-card .ant-card-body .ant-divider-horizontal {
     margin-top: 0;
     margin-bottom: 20px;
-    border-color: #e6e6e6;
+    border-color: #E6E6E6;
 }
 
 /* .viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions:first-child {
-     border-bottom: 1px solid #e6e6e6;
+     border-bottom: 1px solid #E6E6E6;
  } */
 
 .viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions:not(:first-child) {
-    border-top: 1px solid #e6e6e6;
+    border-top: 1px solid #E6E6E6;
     padding-top: 20px;
 }
 
@@ -2641,7 +2641,7 @@
 }
 
 .cardInsideBox {
-    border: 1px solid #e6e6e6;
+    border: 1px solid #E6E6E6;
     border-radius: 4px;
     color: #0b0b0c;
     padding: 20px;
@@ -2658,7 +2658,7 @@
 }
 
 .customerName {
-    border: 1px solid #e6e6e6;
+    border: 1px solid #E6E6E6;
     border-radius: 4px;
     padding: 10px 20px;
     color: #0b0b0c;
@@ -2677,7 +2677,7 @@
 
 .viewDocumentStrip {
     margin-bottom: 20px !important;
-    background: #e6e6e6;
+    background: #E6E6E6;
     border-radius: 6px;
     border: 1px solid #b5b5b6 !important;
 }
@@ -2705,7 +2705,7 @@
 
 .ExchangeCard {
     margin-bottom: 40px;
-    background: #f2f2f2;
+    background: #F2F2F2;
     border-radius: 8px;
     margin-bottom: 50px;
 }
@@ -2758,7 +2758,7 @@
 }
 
 .drawerBodyRight .accordianContainer :global .ant-table-wrapper .ant-table-thead>tr>th {
-    background: #f2f2f2 !important;
+    background: #F2F2F2 !important;
 }
 
 .drawerBodyRight .uploadContainer {
@@ -2780,7 +2780,7 @@
 .drawerBodyRight .uploadContainer :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-container {
     margin-top: 20px;
     padding: 10px 20px;
-    background: #e6e6e6;
+    background: #E6E6E6;
     border: 1px solid #b5b5b6;
     border-radius: 6px;
 }
