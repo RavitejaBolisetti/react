@@ -11,7 +11,7 @@ import { validateRequiredSelectField } from 'utils/validation';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
 import { convertDateTime } from 'utils/formatDateTime';
 import styles from 'components/common/Common.module.css';
 
@@ -54,7 +54,7 @@ const AddEditFormMain = (props) => {
                     <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Model">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Order Status">{checkAndSetDefaultValue(selectedOrder?.orderStatus, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Order Status">{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
                 </Descriptions>
             </Card>
             <Form form={otfTransferForm} onFinish={onFinishOTFTansfer} layout="vertical" autocomplete="off" colon="false">
