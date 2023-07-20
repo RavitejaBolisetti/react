@@ -13,6 +13,7 @@ export const customSelectBox = ({ data, placeholder = 'Select', loading = false,
         showSearch: true,
         allowClear: true,
         loading,
+        disabled,
     };
     return (
         <Select placeholder={placeholder} onChange={onChange} {...selectProps}>

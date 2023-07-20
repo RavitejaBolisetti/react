@@ -301,6 +301,13 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
+    [getMenyKey('FINA-01.04')]: {
+        key:'FINA-01.04',
+        link: routing.ROUTING_TAX_CHARGES,
+        icon: undefined,
+        parentMenuId: 'WEB',
+    },
+
     [getMenyKey('HR')]: {
         link: undefined,
         icon: <HrIcon fontSize={22} />,

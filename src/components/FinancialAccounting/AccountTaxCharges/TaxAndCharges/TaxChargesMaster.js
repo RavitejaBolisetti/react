@@ -121,6 +121,7 @@ export const TaxChargesMain = ({
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
+    const [calType, setCalType] = useState(null);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
 
@@ -131,6 +132,7 @@ export const TaxChargesMain = ({
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [attributeType, setAttributeType] = useState();
+    const [calculationType, setCalculationType] = useState();
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -208,10 +210,13 @@ export const TaxChargesMain = ({
                 const isChildAllowed = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === formData?.data?.attributeTypeCode)?.isChildAllowed;
                 setFormData({ ...formData?.data, isChildAllowed });
 
+                setAttributeType(formData?.data?.attributeTypeCode);
+                setCalculationType(formData?.data?.calculationType);
+
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChildAllowed, siblingBtn: true });
 
                 const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute?.hierarchyAttribueCode === formData?.data?.attributeTypeCode)?.hierarchyAttribueName;
-                const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.attributeTypeCode;
+                const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.taxChargesTypeCode;
                 setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: attributeParentName });
             } else {
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
@@ -230,7 +235,7 @@ export const TaxChargesMain = ({
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.taxChargesTypeCode || '';
+        const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, parentCode: codeToBeSaved };
 
@@ -239,16 +244,18 @@ export const TaxChargesMain = ({
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
+                setAttributeType(formData?.data?.attributeTypeCode);
+                setCalculationType(formData?.data?.calculationType);
+
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
 
                 fetchList({ setIsLoading: listShowLoading, userId });
-                fetchChangeHistoryList({ setIsLoading: listShowLoading, userId });
 
                 const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === res?.data?.attributeTypeCode)?.hierarchyAttribueName;
-                const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.attributeTypeCode;
+                const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.taxChargesTypeCode;
                 res?.data && setSelectedTreeData({ ...res?.data, hierarchyAttribueName, parentName: attributeParentName });
 
-                setSelectedTreeKey([res?.data?.id]);
+                setSelectedTreeKey([res?.data?.id || res?.data?.taxChargesTypeCode]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
                 setIsFormVisible(false);
@@ -261,7 +268,7 @@ export const TaxChargesMain = ({
 
         const requestData = {
             data: data,
-            method: recordId ? 'put' : 'post',
+            method: formData?.attributeTypeCode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -316,6 +323,7 @@ export const TaxChargesMain = ({
         onCloseAction: () => {
             setIsFormVisible(false);
             setAttributeType();
+            setCalculationType();
         },
         titleOverride: (formData?.taxChargesTypeCode ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
@@ -335,17 +343,28 @@ export const TaxChargesMain = ({
         setFormBtnActive,
         attributeType,
         setAttributeType,
+        calculationType,
+        setCalculationType,
         financialAccount,
         documentDescription,
+        calType,
+        setCalType,
     };
 
     const viewProps = {
+        typeData,
         buttonData,
         attributeData,
         selectedTreeData,
         handleButtonClick,
         styles,
         viewTitle,
+        calType,
+        attributeType,
+        calculationType,
+        setCalType,
+        documentDescription,
+        financialAccount,
     };
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
