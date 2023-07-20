@@ -15,6 +15,7 @@ import { AdvancedSearch } from './AdvancedSearch';
 import ListDataTable from 'utils/ListDataTable/ListDataTable';
 
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { BASE_URL_VEHICLE_PRICE_MASTER_SEARCH as customURL } from 'constants/routingApi';
@@ -36,6 +37,8 @@ const mapStateToProps = (state) => {
             CustomerMaster: {
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
+            SupportingDocument: { isLoaded: isSupportingDataLoaded = false, isSupportingDataLoading, data: supportingData },
+
             VehiclePriceMaster: { isLoaded: isVehiclePriceDataLoaded = false, isLoading: isVehiclePriceLoading, data: vehiclePriceData = [], filter: filterString },
             Geo: {
                 Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData },
@@ -62,6 +65,9 @@ const mapStateToProps = (state) => {
         token,
         viewDocument,
         isViewDataLoaded,
+        isSupportingDataLoaded,
+        isSupportingDataLoading,
+        supportingData,
         moduleTitle,
         isCountryLoading,
         countryData: finalCountryData,
@@ -100,6 +106,9 @@ const mapDispatchToProps = (dispatch) => ({
             viewListShowLoading: documentViewDataActions.listShowLoading,
             resetViewData: documentViewDataActions.reset,
 
+            downloadFile: supportingDocumentDataActions.downloadFile,
+            listShowLoading: supportingDocumentDataActions.listShowLoading,
+
             fetchVehiclePriceList: vehiclePriceMasterDataAction.fetchList,
             listVehiclePriceShowLoading: vehiclePriceMasterDataAction.listShowLoading,
             setFilterString: vehiclePriceMasterDataAction.setFilter,
@@ -116,7 +125,7 @@ export const VehiclePriceMasterBase = (props) => {
     const { accessToken, token, viewDocument, isViewDataLoaded, viewListShowLoading, resetViewData, fetchViewDocument } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, isDistrictDataLoaded, districtData, typeData, fetchVehiclePriceList, listVehiclePriceShowLoading } = props;
     const { isStateDataLoaded, stateData, moduleTitle, vehiclePriceData, isCityDataLoaded, cityData, isProductHierarchyDataLoaded, productHierarchyList, isProductHierarchyLoading, isTehsilDataLoaded, tehsilData } = props;
-
+    const { isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -347,10 +356,6 @@ export const VehiclePriceMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const onCloseUploadFormAction = () => {
-        setIsUploadFormVisible(false);
-    };
-
     const tableProps = {
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
@@ -471,6 +476,7 @@ export const VehiclePriceMasterBase = (props) => {
             setIsUploadFormVisible(false);
             form.resetFields();
             setFileList();
+            resetViewData();
         },
         buttonData,
         setButtonData,
@@ -484,6 +490,11 @@ export const VehiclePriceMasterBase = (props) => {
         uploadedFileName,
         setUploadedFileName,
         isViewDataLoaded,
+        isSupportingDataLoaded,
+        isSupportingDataLoading,
+        supportingData,
+        downloadFile,
+        listShowLoading,
 
         listVehiclePriceShowLoading,
         showGlobalNotification,

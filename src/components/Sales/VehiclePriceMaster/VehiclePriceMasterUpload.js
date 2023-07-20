@@ -15,7 +15,7 @@ import { UploadUtil } from 'utils/Upload';
 import styles from 'components/common/Common.module.css';
 
 const VehiclePriceMasterUploadMain = (uploadProps) => {
-    const { isViewDataLoaded, resetViewData, form, formData, onCloseAction, onFinish, onFinishFailed } = uploadProps;
+    const { isSupportingDataLoaded, isSupportingDataLoading, supportingData, listShowLoading, downloadFile, isViewDataLoaded, resetViewData, form, formData, onCloseAction, onFinish, onFinishFailed } = uploadProps;
 
     const { handleButtonClick } = uploadProps;
     const { typeData, userId, showGlobalNotification, viewDocument } = uploadProps;
@@ -24,25 +24,9 @@ const VehiclePriceMasterUploadMain = (uploadProps) => {
     const defaultBtnVisiblity = { editBtn: false, saveBtn: true, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    useEffect(() => {
-        if (isViewDataLoaded && viewDocument) {
-            let a = document.createElement('a');
-            a.href = `data:image/png;base64,${viewDocument?.base64}`;
-            a.download = viewDocument?.fileName;
-            a.click();
-            resetViewData();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isViewDataLoaded, viewDocument]);
+    
 
     const handleTemplateDownLoad = () => {
-        const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-        };
-
-        const onErrorAction = (res) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
-        };
         const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.VCLPRCMSTTMPLT.id);
         let templateID = null;
         if (filteredTypeData.length === 1) {
@@ -56,10 +40,8 @@ const VehiclePriceMasterUploadMain = (uploadProps) => {
                 name: 'docId',
             },
         ];
-        const name = {
-            docName: 'Vehicle Price Master Template',
-        };
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, name, onSuccessAction, onErrorAction });
+
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams });
     };
 
     const handleFormValueChange = () => {
