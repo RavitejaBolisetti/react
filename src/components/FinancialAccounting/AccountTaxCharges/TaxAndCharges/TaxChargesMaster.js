@@ -210,10 +210,13 @@ export const TaxChargesMain = ({
                 const isChildAllowed = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === formData?.data?.attributeTypeCode)?.isChildAllowed;
                 setFormData({ ...formData?.data, isChildAllowed });
 
+                setAttributeType(formData?.data?.attributeTypeCode);
+                setCalculationType(formData?.data?.calculationType);
+
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChildAllowed, siblingBtn: true });
 
                 const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute?.hierarchyAttribueCode === formData?.data?.attributeTypeCode)?.hierarchyAttribueName;
-                const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.attributeTypeCode;
+                const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.taxChargesTypeCode;
                 setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: attributeParentName });
             } else {
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
@@ -241,15 +244,18 @@ export const TaxChargesMain = ({
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
+                setAttributeType(formData?.data?.attributeTypeCode);
+                setCalculationType(formData?.data?.calculationType);
+
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
 
                 fetchList({ setIsLoading: listShowLoading, userId });
 
                 const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === res?.data?.attributeTypeCode)?.hierarchyAttribueName;
-                const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.attributeTypeCode;
+                const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.taxChargesTypeCode;
                 res?.data && setSelectedTreeData({ ...res?.data, hierarchyAttribueName, parentName: attributeParentName });
 
-                setSelectedTreeKey([res?.data?.id || res?.data?.taxChargesTypeCode ]);
+                setSelectedTreeKey([res?.data?.id || res?.data?.taxChargesTypeCode]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
                 setIsFormVisible(false);
@@ -346,6 +352,7 @@ export const TaxChargesMain = ({
     };
 
     const viewProps = {
+        typeData,
         buttonData,
         attributeData,
         selectedTreeData,
@@ -353,6 +360,7 @@ export const TaxChargesMain = ({
         styles,
         viewTitle,
         calType,
+        attributeType,
         calculationType,
         setCalType,
         documentDescription,
