@@ -1953,6 +1953,9 @@
 .drawerBodyRight :global .ant-collapse > .ant-collapse-item,
 .viewDrawerContainer :global .ant-collapse > .ant-collapse-item {
     border-bottom: 1px solid #d9d9d9 !important;
+    -webkit-box-shadow: 0px 1px 0.15px 0px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 1px 0.15px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 1px 0.15px 0px rgba(0, 0, 0, 0.15);
 }
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-form-item-label > label,
@@ -2221,9 +2224,6 @@
     font-size: 16px;
     line-height: 24px;
     /* border: 1px solid #e6e6e6; */
-    -webkit-box-shadow: 0px 1px 0.15px 0px rgba(0, 0, 0, 0.15);
-    -moz-box-shadow: 0px 1px 0.15px 0px rgba(0, 0, 0, 0.15);
-    box-shadow: 0px 1px 0.15px 0px rgba(0, 0, 0, 0.15);
 }
 
 .drawerBodyRight .accordianContainer :global .ant-collapse > .ant-collapse-item {
