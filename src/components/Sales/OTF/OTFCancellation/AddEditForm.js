@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState, useMemo } from 'react';
-import { Row, Col, Input, Form, Select, Card, Descriptions, Upload, Button, Empty, AutoComplete, Space } from 'antd';
+import { Row, Col, Input, Form, Select, Card, Descriptions, Upload, AutoComplete } from 'antd';
 
 import styles from 'components/common/Common.module.css';
 import style from '../../../common/LeftSideBar/LeftSideBar.module.css';
@@ -20,14 +20,12 @@ import { productHierarchyData } from './ProductHierarchyJSON';
 import { UploadUtil } from 'utils/Upload';
 
 import { FiEye, FiTrash } from 'react-icons/fi';
-import Svg from 'assets/images/Filter.svg';
 
 const { TextArea, Search } = Input;
-const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
     const { otfCancellationForm, formData, otfData, selectedOrder, fieldNames, onFinishOTFCancellation, selectedTreeSelectKey, treeCodeId } = props;
-    const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview, emptyList, setEmptyList } = props;
+    const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
     const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setparentAppCode } = props;
 
@@ -85,33 +83,12 @@ const AddEditFormMain = (props) => {
         otfCancellationForm.setFieldsValue({dealerCode: "", dealerName: "", oemCode:"", productCode:""  });
     };
 
-    const handleUpload = (options) => {
-        const { file, onSuccess, onError } = options;
-        setEmptyList(true);
-
-        const data = new FormData();
-        data.append('applicationId', 'app');
-        data.append('file', file);
-
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        uploadDocumentFile(requestData);
-    };
-
     const onSearchDealer = debounce(function (text) {
         setSearchDealerValue(text?.trim());
     }, 300);
 
     const handleSelect = (value) => {
         let dealerDetails = dealerDataList?.find((dealer) => dealer?.dealerName === value);
-        let formValues = otfCancellationForm.getFieldsValue();
         otfCancellationForm.setFieldsValue({dealerCode: dealerDetails?.dealerCode});
     };
 
@@ -221,7 +198,6 @@ const AddEditFormMain = (props) => {
                                 {...selectProps}
                                 placeholder="Select"
                                 onChange={handleCancellationReasonTypeChange}
-                                // loading={isConfigLoading}
                                 allowClear
                                 fieldNames={{ label: 'value', value: 'key' }}
                                 options={typeData['OTF_CANCL_REASON_TYPE']}
@@ -293,30 +269,6 @@ const AddEditFormMain = (props) => {
                 </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        {/* <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                            <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
-                                <div>
-                                    <img src={Svg} alt="" />
-                                </div>
-                                <Empty
-                                    description={
-                                        <>
-                                            <span>
-                                                Click or drop your file here to upload the signed and <br />
-                                                scanned customer form.
-                                            </span>
-                                            <span>
-                                                <br />
-                                                File type should be png, jpg or pdf and max file size to be 5Mb
-                                            </span>
-                                        </>
-                                    }
-                                />
-
-                                <Button type="primary">Upload File</Button>
-                            </Dragger>
-                        </div> */}
-
                         <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
                     </Col>
                 </Row>
