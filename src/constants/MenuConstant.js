@@ -199,6 +199,12 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'COMN-11',
     },
+    [getMenyKey('SACT-03.04')]: {
+        key: 'SACT-03.04',
+        link: routing.ROUTING_VEHICLE_PRICE_MASTER,
+        icon: undefined,
+        parentMenuId: 'SACT-03',
+    },
 
     [getMenyKey('MILE-01.04')]: {
         key: 'MILE-01.04',

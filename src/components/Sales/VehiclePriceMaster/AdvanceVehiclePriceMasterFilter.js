@@ -8,17 +8,15 @@ import { Button, Row, Col } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
-import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'components/common/Common.module.css';
 
-export default function AdvanceOTFFilter(props) {
+export default function AdvanceVehiclePriceMasterFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm, moduleTitle, handleOnClick } = props;
-
     const serachBoxProps = {
         searchForm,
         filterString,
-        optionType: typeData?.[PARAM_MASTER.OTF_SER.id],
+        optionType: typeData,
         setFilterString,
     };
 
@@ -26,7 +24,7 @@ export default function AdvanceOTFFilter(props) {
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
                 <span className={styles.headerText}>{title}</span>
-                <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.subheading}>
+                <Col xs={24} sm={21} md={21} lg={21} xl={21} className={styles.subheading}>
                     <Row gutter={20}>
                         {otfFilter && (
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -47,11 +45,12 @@ export default function AdvanceOTFFilter(props) {
                                 </Button>
                             </Col>
                         )}
-                        {moduleTitle === 'Vehicle Price Master' && (
-                            <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.alignRight}>
-                                <Button type="primary" onClick={handleOnClick}>Upload</Button>
-                            </Col>
-                        )}
+
+                        <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.alignRight}>
+                            <Button type="primary" onClick={handleOnClick}>
+                                Upload
+                            </Button>
+                        </Col>
                     </Row>
                 </Col>
             </Row>
