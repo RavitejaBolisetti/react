@@ -18,7 +18,7 @@ export const AdvanceForm = (props) => {
     const { handleCancel, handleFormValueChange, optionsServiceModified, setoptionsServiceModified, aggregateForm } = props;
     const { setAdvanceSearchVisible } = props;
     const { isVisible, setisEditing, isEditing } = props;
-    const { itemOptions, makeOptions, MakefieldNames, ItemFieldNames } = props;
+    const { itemOptions, setitemOptions, makeOptions, MakefieldNames, ItemFieldNames } = props;
 
     useEffect(() => {
         if (AdvanceformData && isVisible) {
@@ -32,6 +32,25 @@ export const AdvanceForm = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [AdvanceformData]);
+    useEffect(() => {
+        const arr = [];
+        if (itemOptions && itemOptions?.length) {
+            optionsServiceModified?.map((element) => {
+                arr.push(element?.item);
+            });
+            setitemOptions(
+                itemOptions?.map((element) => {
+                    if (arr?.includes(element?.value) || arr?.includes(element?.key)) {
+                        return { ...element, disabled: true };
+                    } else {
+                        return { ...element, disabled: false };
+                    }
+                })
+            );
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [optionsServiceModified]);
 
     const onFinish = () => {
         aggregateForm

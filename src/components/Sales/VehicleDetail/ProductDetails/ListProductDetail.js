@@ -103,6 +103,31 @@ const ProductDetailMasterMain = (props) => {
         if (isDataLoaded && ProductDetailsData) {
             setformData(ProductDetailsData);
             setoptionsServiceModified(ProductDetailsData?.aggregates);
+            settooltTipText(
+                <div>
+                    <p>
+                        Color - <span>{ProductDetailsData?.productDetail?.color ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Trim Level - <span>{ProductDetailsData?.productDetail?.trimLevel ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Engine Type - <span>{ProductDetailsData?.productDetail?.engineType ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Drive Train - <span>{ProductDetailsData?.productDetail?.driveTrain ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Transmission - <span>{ProductDetailsData?.productDetail?.transmission ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Wheel Size - <span>{ProductDetailsData?.productDetail?.wheelSize ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Interior Uphoistery - <span>{ProductDetailsData?.productDetail?.interiorUpholstery ?? 'Na'}</span>
+                    </p>
+                </div>
+            );
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, ProductDetailsData]);
@@ -143,7 +168,7 @@ const ProductDetailMasterMain = (props) => {
 
         const requestData = {
             data: data,
-            method: 'put',
+            method: 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,

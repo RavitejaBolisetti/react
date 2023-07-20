@@ -11,6 +11,8 @@ import { PlusOutlined } from '@ant-design/icons';
 import { DataTable } from 'utils/dataTable';
 import { addToolTip } from 'utils/customMenuLink';
 
+import { AiOutlineInfoCircle } from 'react-icons/ai';
+
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { AggregateAddEditForm } from './AggregateAddEditForm';
@@ -27,13 +29,27 @@ const AddEditFormMain = (props) => {
     const { itemOptions, setitemOptions, makeOptions, setmakeOptions } = props;
     const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, form, openAccordian, setOpenAccordian, optionsServiceModified, setoptionsServiceModified, handleFormValueChange, tooltTipText } = props;
     const { MakefieldNames, ItemFieldNames } = props;
+
+    const collapseProps = { collapsible: 'icon' };
+    const disabledProps = { disabled: true };
+
     const [aggregateForm] = Form.useForm();
     const [connectedForm] = Form.useForm();
     const [InnerCollapse, setInnerCollapse] = useState();
 
     const [isEditing, setisEditing] = useState(false);
     const [AdvanceformData, setAdvanceformData] = useState();
-
+    const bindStatus = (element, key, statusActive) => {
+        if (element && key && element[key]) {
+            if (element[key]) {
+                return statusActive?.active;
+            } else {
+                return statusActive?.inActive;
+            }
+        } else {
+            return 'NA ';
+        }
+    };
     useEffect(() => {
         if (formData?.productDetail) {
             form.setFieldsValue({
@@ -44,7 +60,7 @@ const AddEditFormMain = (props) => {
         }
         if (formData?.connectedVehicle?.length) {
             formData?.connectedVehicle?.map((element, index) => {
-                connectedForm.setFieldsValue({ [index]: { ...element } });
+                connectedForm.setFieldsValue({ [index]: { ...element, esimStatus: bindStatus(element, 'esimStatus', { active: 'Active', inactive: 'Inctive' }), kycStatus: bindStatus(element, 'kycStatus', { active: 'Recieved', inactive: 'Not Recieved' }) } });
             });
         }
 
@@ -163,98 +179,98 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space direction="vertical" size="small" className={styles.accordianContainer}>
-                        <Collapse onChange={() => handleCollapse('Attribute')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian}>
+                        <Collapse onChange={() => handleCollapse('Attribute')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
                             <Panel header="Product Attribute Details" key="Attribute">
                                 <Divider />
 
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Product Division" name="productDivision">
-                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('product division')} disabled={true} />
+                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('product division')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Model Group" name="modelGroup">
-                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('model group')} disabled={true} />
+                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('model group')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Model Family" name="modelFamily">
-                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('model familiy')} disabled={true} />
+                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('model familiy')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Model Variant" name="modelVariant">
-                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('model variant')} disabled={true} />
+                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('model variant')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.modelTooltip}>
-                                        {/* {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)} */}
+                                        {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                                         <Form.Item label="Model" name="model">
-                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('model ')} disabled={true} />
+                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('model ')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Manufacturer Invoice Date" name="manufacturerInvoiceDate">
-                                            <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} disabled={true} />
+                                            <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Manufacturer Warranty Start Date" name="manufacturerWarrantyStartDate">
-                                            <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} disabled={true} />
+                                            <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                             </Panel>
                         </Collapse>
                         <Form layout="vertical" autoComplete="off" form={connectedForm}>
-                            <Collapse onChange={() => handleCollapse('Vehicle')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian}>
+                            <Collapse onChange={() => handleCollapse('Vehicle')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
                                 <Panel header="Connected Vehicle" key="Vehicle">
                                     <Divider />
                                     {formData?.connectedVehicle?.map((element, index) => {
                                         return (
-                                            <Collapse onChange={() => handleInnerCollapse(index)} expandIconPosition="end" expandIcon={expandIcon} activeKey={InnerCollapse}>
+                                            <Collapse onChange={() => handleInnerCollapse(index)} expandIconPosition="end" expandIcon={expandIcon} activeKey={InnerCollapse} {...collapseProps}>
                                                 <Panel header={`${element?.tcuId} | ${element?.esimNo}`} key={index}>
                                                     <Divider />
                                                     <Row gutter={20}>
                                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                             <Form.Item label="TCU ID" name={[index, 'tcuId']}>
-                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('tcu id')} disabled={true} />
+                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('tcu id')} {...disabledProps} />
                                                             </Form.Item>
                                                         </Col>
 
                                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                             <Form.Item label="E-Sim No" name={[index, 'esimNo']}>
-                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('Sim no.')} disabled={true} />
+                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('Sim no.')} {...disabledProps} />
                                                             </Form.Item>
                                                         </Col>
 
                                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                             <Form.Item label="E-Sim Status" name={[index, 'esimStatus']}>
-                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('Sim status')} disabled={true} />
+                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('Sim status')} {...disabledProps} />
                                                             </Form.Item>
                                                         </Col>
                                                     </Row>
                                                     <Row gutter={20}>
                                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                             <Form.Item label="Preffered Mobile No 1" name={[index, 'preferredMobileNo1']}>
-                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('mobile no')} disabled={true} />
+                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('mobile no')} {...disabledProps} />
                                                             </Form.Item>
                                                         </Col>
 
                                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                             <Form.Item label="Preffered Mobile No 2" name={[index, 'preferredMobileNo2']}>
-                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('mobile no')} disabled={true} />
+                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('mobile no')} {...disabledProps} />
                                                             </Form.Item>
                                                         </Col>
 
                                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                             <Form.Item label="KYC Status" name={[index, 'kycStatus']}>
-                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('kyc status')} disabled={true} />
+                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('kyc status')} {...disabledProps} />
                                                             </Form.Item>
                                                         </Col>
                                                     </Row>
@@ -265,7 +281,7 @@ const AddEditFormMain = (props) => {
                                 </Panel>
                             </Collapse>
                         </Form>
-                        <Collapse onChange={() => handleCollapse('Aggregates')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian}>
+                        <Collapse onChange={() => handleCollapse('Aggregates')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
                             <Panel
                                 header={
                                     <Row>
