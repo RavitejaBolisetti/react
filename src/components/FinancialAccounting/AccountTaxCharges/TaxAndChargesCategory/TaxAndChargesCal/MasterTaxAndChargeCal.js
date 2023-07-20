@@ -5,8 +5,8 @@
  */
 import React, { useReducer, useState } from 'react';
 import { Form } from 'antd';
-import CardProductAttribute from './CardTax&ChargeCal';
-import FormProductAttribute from './FormTax&ChargeCal';
+import CardProductAttribute from './CardTaxAndChargeCal';
+import FormProductAttribute from './FormTaxAndChargeCal';
 
 const MasterTaxChargeCal = (props) => {
     const { isVisible, selectedTreeData, showGlobalNotification } = props;

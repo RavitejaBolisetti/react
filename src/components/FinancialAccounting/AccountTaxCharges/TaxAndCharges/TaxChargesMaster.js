@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Input, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { HierarchyFormButton } from 'components/common/Button';
-import { financialAccTaxChargeActions } from 'store/actions/data/financialAccounting/taxCharges'
+import { financialAccTaxChargeActions } from 'store/actions/data/financialAccounting/taxCharges';
 import { documentDescriptionDataActions } from 'store/actions/data/financialAccounting/documentDescription';
 import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
@@ -35,7 +35,7 @@ const mapStateToProps = (state) => {
             FinancialAccounting: {
                 FinancialAccountHead: { isLoaded: isFinancialAccountHeadLoaded = false, data: financialAccount = [] },
                 DocumentDescription: { isLoaded: isDocumentDescriptionLoaded = false, data: documentDescription = [] },
-                TaxCharges: { isLoaded: isTaxChargeLoaded = false, data: taxChargeList = [] }
+                TaxCharges: { isLoaded: isTaxChargeLoaded = false, data: taxChargeList = [] },
             },
         },
         common: {
@@ -93,7 +93,36 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocumentDescriptionHead, documentDescription, isDocumentDescriptionLoaded, fetchFinancialAccountHead, isFinancialAccountHeadLoaded, financialAccount, fetchChangeHistoryList, viewTitle, userId, changeHistoryModelOpen, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, manufacturerOrgHierarchyData, showGlobalNotification, unFilteredAttributeData, fetchListTaxCharge,saveDataTaxCharge,listShowLoadingTaxCharge,isTaxChargeLoaded,taxChargeList }) => {
+export const TaxChargesMain = ({
+    moduleTitle,
+    isChangeHistoryVisible,
+    fetchDocumentDescriptionHead,
+    documentDescription,
+    isDocumentDescriptionLoaded,
+    fetchFinancialAccountHead,
+    isFinancialAccountHeadLoaded,
+    financialAccount,
+    fetchChangeHistoryList,
+    viewTitle,
+    userId,
+    changeHistoryModelOpen,
+    isDataLoaded,
+    fetchList,
+    hierarchyAttributeFetchList,
+    saveData,
+    listShowLoading,
+    isDataAttributeLoaded,
+    attributeData,
+    hierarchyAttributeListShowLoading,
+    manufacturerOrgHierarchyData,
+    showGlobalNotification,
+    unFilteredAttributeData,
+    fetchListTaxCharge,
+    saveDataTaxCharge,
+    listShowLoadingTaxCharge,
+    isTaxChargeLoaded,
+    taxChargeList,
+}) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -412,4 +441,4 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
     );
 };
 
-export const TaxCharges = connect(mapStateToProps, mapDispatchToProps)(TaxChargesMain);
+export const TaxChargesMaster = connect(mapStateToProps, mapDispatchToProps)(TaxChargesMain);
