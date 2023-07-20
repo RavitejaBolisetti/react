@@ -304,6 +304,7 @@
 /* menu Search  */
 .searchField :global .ant-input {
     border: 0px;
+    width:100%;
 }
 
 .searchField :global .ant-input-search .ant-input:hover {
