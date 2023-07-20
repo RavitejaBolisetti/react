@@ -96,9 +96,6 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
         e.key === 'Enter' && e.preventDefault();
     };
 
-    console.log(manufacturerOrgHierarchyData,"1");
-    console.log(attributeData,"2");
-
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId });
