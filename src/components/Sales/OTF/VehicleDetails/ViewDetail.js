@@ -66,14 +66,14 @@ const ViewDetailMain = (props) => {
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
                             <Panel header="Tax Details" key="2">
                                 <Divider />
-                                <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
+                                <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} pagination={false} />
                             </Panel>
                         </Collapse>
 
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" className={styles.collapseContainer}>
                             <Panel header="Charges" key="3">
                                 <Divider />
-                                <DataTable tableColumn={optionalServicesColumns} tableData={formData['optionalServices']} removePagination={true} />
+                                <DataTable tableColumn={optionalServicesColumns} tableData={formData['optionalServices']} pagination={false} />
                             </Panel>
                         </Collapse>
                     </Space>

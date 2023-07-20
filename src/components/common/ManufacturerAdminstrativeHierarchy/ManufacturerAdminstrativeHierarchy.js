@@ -26,7 +26,7 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { AddEditForm } from './AddEditForm';
 import { ManufactureAdminHierarchyUpload } from '../ManufacturerAdminstrativeHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
-import { ChangeHistory1 } from './ChangeHistory';
+import { ChangeHistory } from './ChangeHistory';
 import { disableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
 import LeftPanel from '../LeftPanel';
@@ -419,8 +419,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         cardBtnDisableAction,
         viewMode: true,
     };
-    const leftCol = manufacturerAdminHierarchyData?.length > 0 && organizationId ? 16 : 24;
-    const rightCol = manufacturerAdminHierarchyData?.length > 0 && organizationId ? 8 : 24;
+    const leftCol = manufacturerAdminHierarchyData?.length > 0 && organizationId ? 14 : 24;
+    const rightCol = manufacturerAdminHierarchyData?.length > 0 && organizationId ? 10 : 24;
 
     const noDataTitle = !organizationId ? 'Please Select Organization from dropdown' : LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = organizationId && LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
@@ -540,27 +540,25 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
     return (
         <>
-            <Row gutter={20} span={24}>
-                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                                <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onfinishHeader} onFinishFailed={onFinishFailed}>
-                                    <Form.Item label={`${title}`} name="code">
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                                <TreeSelectField {...treeSelectFieldProps} />
-                                            </Col>
-                                            {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
-                                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                                    <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
-                                                </Col>
-                                            )}
-                                        </Row>
-                                    </Form.Item>
-                                </Form>
-                            </Col>
-                            {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
+            <div className={styles.contentHeaderBackground}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onfinishHeader} onFinishFailed={onFinishFailed}>
+                            <Form.Item label={`${title}`} name="code">
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                        <TreeSelectField {...treeSelectFieldProps} />
+                                    </Col>
+                                    {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
+                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                            <Search placeholder="Search" allowClear onChange={onChange} className={`${styles.headerSearchField} ${styles.headerSearchInput}`} />
+                                        </Col>
+                                    )}
+                                </Row>
+                            </Form.Item>
+                        </Form>
+                    </Col>
+                    {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
                                 <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
                                     <Button type="primary" onClick={handleOnClickUpload}>
                                         Upload
@@ -577,8 +575,10 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                     </Button>
                                 </Col>
                             )}
-                        </Row>
-                    </div>
+                </Row>
+            </div>
+            <Row gutter={20} span={24}>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={styles.marT20}>
                     <div className={styles.content}>
                         {!manufacturerAdminHierarchyData?.length ? (
                             <div className={styles.emptyContainer}>
@@ -608,7 +608,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
                     {selectedTreeKey && selectedTreeKey?.length && organizationId ? (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight0}>
                             <HierarchyView {...viewProps} />
                             <div className={styles.hyrbuttonContainer}>
                                 <HierarchyFormButton {...viewProps} />
@@ -637,7 +637,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             </Row>
 
             <ManufactureAdminHierarchyUpload {...uploadProps} />
-            <ChangeHistory1 {...drawerProps} />
+            <ChangeHistory {...drawerProps} />
             <AddEditForm {...formProps} />
         </>
     );

@@ -90,7 +90,7 @@ export const ListCustomerCreationBase = (props) => {
     const { listLessorShowLoading, isSupportingDataLoaded, isSupportingDataLoading, supportingData, accessToken, token } = props;
 
     const { typeData, saveData, fetchList, lessorData } = props;
-    const { isViewDataLoaded, isLoading, viewListShowLoading, fetchViewDocument, viewDocument } = props;
+    const { downloadFile,isViewDataLoaded, isLoading, viewListShowLoading, fetchViewDocument, viewDocument } = props;
 
     const [form] = Form.useForm();
 
@@ -121,16 +121,7 @@ export const ListCustomerCreationBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isStateDataLoaded]);
 
-    useEffect(() => {
-        if (isViewDataLoaded && viewDocument) {
-            let a = document.createElement('a');
-            a.href = `data:image/png;base64,${viewDocument?.base64}`;
-            a.download = viewDocument?.fileName;
-            a.click();
-            resetViewData();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isViewDataLoaded, viewDocument]);
+    
 
     const onFinish = () => {
         const data = { docId: uploadedFile };
@@ -139,6 +130,7 @@ export const ListCustomerCreationBase = (props) => {
             setIsFormVisible(false);
             setEmptyList(false);
             setUploadedFile();
+            setFileList()
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
@@ -168,24 +160,7 @@ export const ListCustomerCreationBase = (props) => {
     };
     const drawerTitle = downloadForm ? 'Download ' : 'Upload ';
 
-    const downloadFileFromButton = (uploadData) => {
-        const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        };
-        const onErrorAction = (res) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res });
-        };
-        const extraParams = [
-            {
-                key: 'docId',
-                title: 'docId',
-                value: uploadData?.docId,
-                name: 'docId',
-            },
-        ];
-        const supportingDocument = uploadData?.documentName;
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument, onSuccessAction, onErrorAction });
-    };
+   
 
     const formProps = {
         ...props,
@@ -247,9 +222,9 @@ export const ListCustomerCreationBase = (props) => {
         setUploadedFileName,
 
         listShowLoading,
+        downloadFile,
         showGlobalNotification,
         viewDocument,
-        downloadFileFromButton,
         viewListShowLoading,
 
         uploadedFile,
@@ -268,6 +243,7 @@ export const ListCustomerCreationBase = (props) => {
 
     const handleOnClick = () => {
         setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: true, saveBtn: true });
+        setFileList([])
         setDownLoadForm(false);
         setIsFormVisible(true);
         form.resetFields();

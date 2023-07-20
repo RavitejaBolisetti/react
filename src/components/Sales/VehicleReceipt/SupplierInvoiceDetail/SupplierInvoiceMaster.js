@@ -13,7 +13,7 @@ import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
+import { otfDataActions } from 'store/actions/data/otf/otf';
 import { showGlobalNotification } from 'store/actions/notification';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 
@@ -49,10 +49,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: otfDetailsDataActions.fetchList,
-            saveData: otfDetailsDataActions.saveData,
-            resetData: otfDetailsDataActions.reset,
-            listShowLoading: otfDetailsDataActions.listShowLoading,
+            fetchList: otfDataActions.fetchList,
+            saveData: otfDataActions.saveData,
+            resetData: otfDataActions.reset,
+            listShowLoading: otfDataActions.listShowLoading,
 
             fetchSalesConsultant: salesConsultantActions.fetchList,
             listConsultantShowLoading: salesConsultantActions.listShowLoading,
