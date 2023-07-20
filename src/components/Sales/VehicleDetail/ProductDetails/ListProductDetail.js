@@ -72,6 +72,8 @@ const ProductDetailMasterMain = (props) => {
     const [makeOptions, setmakeOptions] = useState();
     const MakefieldNames = { label: 'value', value: 'key' };
     const ItemFieldNames = { label: 'value', value: 'key' };
+    const collapseProps = { collapsible: 'icon' };
+    const disabledProps = { disabled: true };
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -91,6 +93,32 @@ const ProductDetailMasterMain = (props) => {
         ];
         return params;
     };
+    const bindCodeValue = (value, item) => {
+        switch (item) {
+            case 'item': {
+                const codeVal = itemOptions?.find((element, index) => {
+                    if (element?.value === value || element?.key === value) {
+                        return element;
+                    }
+                });
+                if (codeVal) return codeVal?.value;
+                return 'NA';
+            }
+            case 'make': {
+                const codeVal = makeOptions?.find((element, index) => {
+                    if (element?.value === value || element?.key === value) {
+                        return element;
+                    }
+                });
+
+                if (codeVal) return codeVal?.value;
+                return 'NA';
+            }
+            default: {
+                return;
+            }
+        }
+    };
 
     useEffect(() => {
         if (userId && selectedRecordId) {
@@ -106,25 +134,25 @@ const ProductDetailMasterMain = (props) => {
             settooltTipText(
                 <div>
                     <p>
-                        Color - <span>{ProductDetailsData?.productDetail?.color ?? 'Na'}</span>
+                        Color - <span>{ProductDetailsData?.productAttributeDetail?.color ?? 'Na'}</span>
                     </p>
                     <p>
-                        Trim Level - <span>{ProductDetailsData?.productDetail?.trimLevel ?? 'Na'}</span>
+                        Trim Level - <span>{ProductDetailsData?.productAttributeDetail?.trimLevel ?? 'Na'}</span>
                     </p>
                     <p>
-                        Engine Type - <span>{ProductDetailsData?.productDetail?.engineType ?? 'Na'}</span>
+                        Engine Type - <span>{ProductDetailsData?.productAttributeDetail?.engineType ?? 'Na'}</span>
                     </p>
                     <p>
-                        Drive Train - <span>{ProductDetailsData?.productDetail?.driveTrain ?? 'Na'}</span>
+                        Drive Train - <span>{ProductDetailsData?.productAttributeDetail?.driveTrain ?? 'Na'}</span>
                     </p>
                     <p>
-                        Transmission - <span>{ProductDetailsData?.productDetail?.transmission ?? 'Na'}</span>
+                        Transmission - <span>{ProductDetailsData?.productAttributeDetail?.transmission ?? 'Na'}</span>
                     </p>
                     <p>
-                        Wheel Size - <span>{ProductDetailsData?.productDetail?.wheelSize ?? 'Na'}</span>
+                        Wheel Size - <span>{ProductDetailsData?.productAttributeDetail?.wheelSize ?? 'Na'}</span>
                     </p>
                     <p>
-                        Interior Uphoistery - <span>{ProductDetailsData?.productDetail?.interiorUpholstery ?? 'Na'}</span>
+                        Interior Uphoistery - <span>{ProductDetailsData?.productAttributeDetail?.interiorUpholstery ?? 'Na'}</span>
                     </p>
                 </div>
             );
@@ -205,6 +233,9 @@ const ProductDetailMasterMain = (props) => {
         setmakeOptions,
         MakefieldNames,
         ItemFieldNames,
+        bindCodeValue,
+        collapseProps,
+        disabledProps,
     };
 
     const viewProps = {
@@ -221,6 +252,9 @@ const ProductDetailMasterMain = (props) => {
         optionsServiceModified,
         formActionType,
         typeData,
+        bindCodeValue,
+        collapseProps,
+        disabledProps,
     };
 
     return (

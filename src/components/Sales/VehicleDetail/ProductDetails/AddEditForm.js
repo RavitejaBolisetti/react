@@ -28,10 +28,9 @@ const AddEditFormMain = (props) => {
     const { isReadOnly, setIsReadOnly, typeData } = props;
     const { itemOptions, setitemOptions, makeOptions, setmakeOptions } = props;
     const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, form, openAccordian, setOpenAccordian, optionsServiceModified, setoptionsServiceModified, handleFormValueChange, tooltTipText } = props;
-    const { MakefieldNames, ItemFieldNames } = props;
-
-    const collapseProps = { collapsible: 'icon' };
-    const disabledProps = { disabled: true };
+    const { MakefieldNames, ItemFieldNames, bindCodeValue } = props;
+    const { collapseProps, disabledProps } = props;
+    
 
     const [aggregateForm] = Form.useForm();
     const [connectedForm] = Form.useForm();
@@ -51,11 +50,11 @@ const AddEditFormMain = (props) => {
         }
     };
     useEffect(() => {
-        if (formData?.productDetail) {
+        if (formData?.productAttributeDetail) {
             form.setFieldsValue({
-                ...formData?.productDetail,
-                manufacturerInvoiceDate: convertDateToCalender(formData?.productDetail?.manufacturerInvoiceDate),
-                manufacturerWarrantyStartDate: convertDateToCalender(formData?.productDetail?.manufacturerWarrantyStartDate),
+                ...formData?.productAttributeDetail,
+                manufacturerInvoiceDate: convertDateToCalender(formData?.productAttributeDetail?.manufacturerInvoiceDate),
+                manufacturerWarrantyStartDate: convertDateToCalender(formData?.productAttributeDetail?.manufacturerWarrantyStartDate),
             });
         }
         if (formData?.connectedVehicle?.length) {
@@ -131,32 +130,6 @@ const AddEditFormMain = (props) => {
         setoptionsServiceModified(optionsServiceModified.filter((element, i) => i !== index));
     };
 
-    const bindCodeValue = (value, item) => {
-        switch (item) {
-            case 'item': {
-                const codeVal = itemOptions?.find((element, index) => {
-                    if (element?.value === value || element?.key === value) {
-                        return element;
-                    }
-                });
-                if (codeVal) return codeVal?.value;
-                return 'NA';
-            }
-            case 'make': {
-                const codeVal = makeOptions?.find((element, index) => {
-                    if (element?.value === value || element?.key === value) {
-                        return element;
-                    }
-                });
-
-                if (codeVal) return codeVal?.value;
-                return 'NA';
-            }
-            default: {
-                return;
-            }
-        }
-    };
     const handleButtonClick = ({ buttonAction, record, index }) => {
         switch (buttonAction) {
             case 'edit': {
