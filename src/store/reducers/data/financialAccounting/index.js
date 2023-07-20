@@ -8,7 +8,7 @@ import { TaxCharges } from './taxCharges';
 import { TaxChargesCategory } from './taxChargesCategory';
 import { FinancialAccountHead } from './financialAccountHead';
 import { DocumentDescription } from './documentDescription';
-import { TaxChargeCategoryType } from './taxChargeType'
+import { TaxChargeCategoryType } from './taxChargeType';
 
 export const FinancialAccounting = combineReducers({
     TaxCharges,
