@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -101,19 +101,19 @@ export const doLogout = (res) => (dispatch) => {
 
 const authPostLoginActions =
     ({ idToken, accessToken, refreshToken, userId, passwordStatus, saveTokenAndRoleRights = true }) =>
-        (dispatch) => {
-            if (saveTokenAndRoleRights) {
-                localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN, idToken);
-                localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN, accessToken);
-                localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_REFERSH_TOKEN, refreshToken);
-                localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_USER_ID, userId);
-                localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS, JSON.stringify(passwordStatus));
-            }
+    (dispatch) => {
+        if (saveTokenAndRoleRights) {
+            localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN, idToken);
+            localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN, accessToken);
+            localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_REFERSH_TOKEN, refreshToken);
+            localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_USER_ID, userId);
+            localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS, JSON.stringify(passwordStatus));
+        }
 
-            const { username: userName } = jwtDecode(idToken);
+        const { username: userName } = jwtDecode(idToken);
 
-            dispatch(authLoginSucess(idToken, accessToken, refreshToken, userName, userId, passwordStatus));
-        };
+        dispatch(authLoginSucess(idToken, accessToken, refreshToken, userName, userId, passwordStatus));
+    };
 
 export const readFromStorageAndValidateAuth = () => (dispatch) => {
     try {
@@ -213,7 +213,6 @@ export const doLogin = (requestData, showFormLoading, onLogin, onError) => (disp
     axiosAPICall(apiCallParams);
 };
 
-
 export const doRefreshToken = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { onSuccess, onError, data } = params;
     const url = BASE_URL_REFRESH_TOKEN;
@@ -232,7 +231,7 @@ export const doRefreshToken = withAuthToken((params) => ({ token, accessToken, u
         onSuccess: onSuccessAction,
         onError: onError,
         onTimeout: () => dispatch(authUserLogout()),
-        postRequest: () => { },
+        postRequest: () => {},
         onUnAuthenticated: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
         onUnauthorized: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
     };
@@ -258,11 +257,9 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
         onSuccess: onSuccessAction,
         onError: onError,
         onTimeout: () => dispatch(authUserLogout()),
-        postRequest: () => { },
+        postRequest: () => {},
         onUnAuthenticated: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
         onUnauthorized: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
     };
     axiosAPICall(apiCallParams);
 });
-
-
