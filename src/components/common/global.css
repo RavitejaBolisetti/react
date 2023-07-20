@@ -372,10 +372,6 @@
     border-color: #E6E6E6;
 }
 
-:global .ant-input-search .ant-input-search-button {
-    height: 20px;
-}
-
 :global .ant-input-group {
     border-radius: 4px;
     -moz-border-radius: 4px;
@@ -407,6 +403,7 @@
     color: #ff3e5b;
     border: none;
     width: 20px;
+    height: 20px;
     box-shadow: none;
 }
 
