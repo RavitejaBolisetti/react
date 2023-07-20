@@ -244,13 +244,12 @@ export const TaxChargesMain = ({
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
 
                 fetchList({ setIsLoading: listShowLoading, userId });
-                fetchChangeHistoryList({ setIsLoading: listShowLoading, userId });
 
                 const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === res?.data?.attributeTypeCode)?.hierarchyAttribueName;
                 const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.attributeTypeCode;
                 res?.data && setSelectedTreeData({ ...res?.data, hierarchyAttribueName, parentName: attributeParentName });
 
-                setSelectedTreeKey([res?.data?.id]);
+                setSelectedTreeKey([res?.data?.id || res?.data?.taxChargesTypeCode ]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
                 setIsFormVisible(false);
@@ -263,7 +262,7 @@ export const TaxChargesMain = ({
 
         const requestData = {
             data: data,
-            method: recordId ? 'put' : 'post',
+            method: formData?.attributeTypeCode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
