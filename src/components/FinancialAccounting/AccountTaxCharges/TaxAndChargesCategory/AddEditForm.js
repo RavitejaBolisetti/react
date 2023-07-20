@@ -64,12 +64,12 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.code} label="Code" name="taxCategoryCode" rules={[validateRequiredInputField('Code')]}>
+                            <Form.Item initialValue={formData?.taxCategoryCode} label="Code" name="taxCategoryCode" rules={[validateRequiredInputField('Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Description" initialValue={formData?.name} rules={[validateRequiredInputField('Description')]} name="taxCategoryDesc">
+                            <Form.Item label="Description" initialValue={formData?.taxCategoryDescription} rules={[validateRequiredInputField('Description')]} name="taxCategoryDesc">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Description')} maxLength={50} />
                             </Form.Item>
                         </Col>
