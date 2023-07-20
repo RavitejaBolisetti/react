@@ -8,8 +8,8 @@ import { Form } from 'antd';
 import CardProductAttribute from './CardTaxAndChargeCal';
 import FormProductAttribute from './FormTaxAndChargeCal';
 
-const MasterTaxChargeCal = (props) => {
-    const { isVisible, selectedTreeData, showGlobalNotification,taxChargeCategoryTypeData } = props;
+export const TaxAndChargesCalculationMaster = (props) => {
+    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [taxChargeCalForm] = Form.useForm();
     const [disableSaveButton, setDisableSaveButton] = useState(false);
@@ -48,7 +48,7 @@ const MasterTaxChargeCal = (props) => {
         forceUpdate,
         isVisible,
         selectedTreeData,
-        taxCharge : taxChargeCategoryTypeData,
+        taxCharge: taxChargeCategoryTypeData,
         taxCode,
         objTaxCharge: taxChargeCategoryTypeData,
         objTaxCode: taxCode,
@@ -79,5 +79,3 @@ const MasterTaxChargeCal = (props) => {
         </>
     );
 };
-
-export default MasterTaxChargeCal;

@@ -91,6 +91,7 @@ const Login = (props) => {
         hideGlobalNotification();
         setIsLoading(false);
         const passwordStatus = data?.passwordStatus;
+        // const loginFromRegisteredDevice = data?.userRegisteredDevice;
         if (passwordStatus) {
             authPreLogin(data);
             updatePasswordStatusInfo(data);
