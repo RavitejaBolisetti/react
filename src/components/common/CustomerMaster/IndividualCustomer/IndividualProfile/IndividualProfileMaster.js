@@ -240,7 +240,7 @@ const IndividualProfileBase = (props) => {
         ];
         downloadFile({ setIsLoading: listIndiviualShowLoading, userId, extraParams });
     };
-  
+
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);

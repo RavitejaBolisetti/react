@@ -1,13 +1,13 @@
-// /*
-//  *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
-//  *   All rights reserved.
-//  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
-//  */
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Row, Col, Button, Typography, Upload, Image, Space, Avatar, message, Empty } from 'antd';
+import { Row, Col, Button, Typography, Upload, Image, Space, Avatar, Empty } from 'antd';
 
 import { FiDownload, FiTrash } from 'react-icons/fi';
 
@@ -15,13 +15,11 @@ import { supportingDocumentDataActions } from 'store/actions/data/supportingDocu
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { FiEye } from 'react-icons/fi';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { HiCheck } from 'react-icons/hi';
 import styles from 'components/common/Common.module.css';
 
 const { Dragger } = Upload;
-const { Text, Title } = Typography;
+const { Title } = Typography;
 
 const mapStateToProps = (state) => {
     const {
@@ -70,7 +68,6 @@ const UploadBase = (props) => {
     const {
         listType = 'text',
         accept = '',
-        key = undefined,
         handleFormValueChange = () => {},
         multiple = false,
         showRemoveIcon = true,
