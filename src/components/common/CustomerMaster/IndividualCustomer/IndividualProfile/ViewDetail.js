@@ -9,6 +9,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { FiDownload } from 'react-icons/fi';
 import { getCodeValue } from 'utils/getCodeValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
@@ -40,12 +41,12 @@ const ViewDetailMain = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                     <Panel header="Individual Information" key="1">
                         <Divider />
                         <Descriptions {...viewProps}>
                             <div>
-                                <img alt="uploaded suppoting document" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
+                                <img alt="Uploaded profile picture" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
                             </div>
                             <br />
                             <br />
@@ -79,7 +80,7 @@ const ViewDetailMain = (props) => {
                         ) : null}
                     </Panel>
                 </Collapse>
-                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end">
+                <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end">
                     <Panel header="Social Profile" key="5">
                         <Divider />
                         <Descriptions {...viewProps}>
@@ -92,7 +93,7 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </Panel>
                 </Collapse>
-                {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                {/* <Collapse collapsible='icon'expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                      <Panel header="Key Account Details" key="2">
                          <Descriptions {...viewProps}>
                              <Descriptions.Item label="Account Code">{checkAndSetDefaultValue(formData?.accountCode, isLoading)}</Descriptions.Item>
@@ -104,7 +105,7 @@ const ViewDetailMain = (props) => {
 	                     </Panel>
                  </Collapse> */}
 
-                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                     <Panel header="Authority Details (Who Knows Whom)" key="2">
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Name Of Person">{checkAndSetDefaultValue(formData?.authorityDetails?.personName, isLoading)}</Descriptions.Item>
@@ -114,10 +115,10 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </Panel>
                 </Collapse>
-                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
+                <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
                     <Panel header="Upload Customer Form" key="3">
                         <Divider />
-                        <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
+                        {formData?.customerConsentForm?.length > 0 ? <Card className={styles.viewDocumentStrip} key={formData?.customerConsentForm} title={formData?.customerConsentDocumentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card> : <div className={styles.viewNoDataFound}>No consent has been provided</div>}
                     </Panel>
                 </Collapse>
             </Space>

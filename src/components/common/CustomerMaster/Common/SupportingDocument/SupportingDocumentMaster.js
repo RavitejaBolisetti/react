@@ -103,16 +103,16 @@ const SupportingDocumentBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
-    useEffect(() => {
-        if (viewDocument && isViewDataLoaded) {
-            let a = document.createElement('a');
-            a.href = `data:image/png;base64,${viewDocument?.base64}`;
-            a.download = viewDocument?.fileName;
-            a.click();
-            resetViewData();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isViewDataLoaded, viewDocument]);
+    // useEffect(() => {
+    //     if (viewDocument && isViewDataLoaded) {
+    //         let a = document.createElement('a');
+    //         a.href = `data:image/png;base64,${viewDocument?.base64}`;
+    //         a.download = viewDocument?.fileName;
+    //         a.click();
+    //         resetViewData();
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isViewDataLoaded, viewDocument]);
 
     const downloadFileFromButton = (uploadData) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
@@ -211,6 +211,7 @@ const SupportingDocumentBase = (props) => {
         fetchViewDocument,
         viewListShowLoading,
         userId,
+        downloadFile,
     };
 
     const formProps = {
@@ -244,8 +245,9 @@ const SupportingDocumentBase = (props) => {
         setEmptyList,
         fileList,
         setFileList,
-
+        formActionType,
         supportedFileTypes,
+        isReplaceEnabled: false,
     };
 
     const myProps = {
@@ -276,4 +278,5 @@ const SupportingDocumentBase = (props) => {
     );
 };
 
-export const SupportingDocumentMaster = connect(mapStateToProps, mapDispatchToProps)(SupportingDocumentBase);
+const SupportingDocumentMaster = connect(mapStateToProps, mapDispatchToProps)(SupportingDocumentBase);
+export default SupportingDocumentMaster;

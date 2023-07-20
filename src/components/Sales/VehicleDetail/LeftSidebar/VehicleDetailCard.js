@@ -33,11 +33,11 @@ const VehicleDetailCard = (props) => {
                 header={
                     <>
                         <Space>
-                            <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
+                            {/* <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar> */}
                             <div>
-                                <Title level={5} style={{ textTransform: 'capitalize' }}>
+                                {/* <Title level={5} style={{ textTransform: 'capitalize' }}>
                                     {selectedRecord?.customerName?.toLowerCase()}
-                                </Title>
+                                </Title> */}
                                 <div>
                                     VIN.: <span>{selectedRecordId}</span>
                                 </div>
@@ -50,9 +50,11 @@ const VehicleDetailCard = (props) => {
                 }
                 key={1}
             >
-                <p>
-                    Customer ID: <span>{selectedRecord?.customerCode}</span>
-                </p>
+                {selectedRecord?.customerCode && (
+                    <p>
+                        Customer ID: <span>{selectedRecord?.customerCode}</span>
+                    </p>
+                )}
                 <p>
                     Mobile No.: <span>{selectedRecord?.mobileNumber || 'NA'}</span>
                 </p>
@@ -64,7 +66,7 @@ const VehicleDetailCard = (props) => {
                     Color: <span>{selectedRecord?.color || 'NA'}</span>
                 </p>
                 <p>
-                    MFG Warrenty: <span>{selectedRecord?.mfgWarranty || 'NA'}</span>
+                    MFG Warranty: <span>{selectedRecord?.mfgWarranty || 'NA'}</span>
                 </p>
             </Panel>
         </Collapse>

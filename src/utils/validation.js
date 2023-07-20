@@ -208,6 +208,11 @@ export const validateVoterId = (fieldName) => ({
     mesage: 'Please enter valid ' + fieldName,
 });
 
+export const valueOfPer = (fieldName) => ({
+    pattern: /^(100(\.00?)?|[1-9]?\d(\.\d\d?)?)$/,
+    message: 'Please enter ' + fieldName + ' between 0 to 100',
+});
+
 export const ageGreator18 = (value) => {
     let dateString = dayjs(value).format('YYYY-MM-DD');
     let calAge = GetAge(dateString);
