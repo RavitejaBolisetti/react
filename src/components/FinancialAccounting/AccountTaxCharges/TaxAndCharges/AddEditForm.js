@@ -168,9 +168,10 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                        <Form.Item initialValue={formData?.status === null || false ? false : true} label="Status" name="status">
-                            <Switch value={formData?.status === null || false ? false : true} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
+                    <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.status ? true : false} label="Status" name="status">
+                            <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.status === true || null || undefined ? true : false} {...disabledProps} />
                         </Form.Item>
+                        
                     </Col>
                 </Row>
 

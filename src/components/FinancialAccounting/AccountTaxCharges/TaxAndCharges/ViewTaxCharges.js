@@ -27,7 +27,7 @@ export const ViewTaxChargesMain = ({ viewTitle, buttonData, attributeData, selec
                 <Descriptions.Item label="Parent">{selectedTreeData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
                 <Descriptions.Item label="Tax/Charge Type Code">{selectedTreeData?.taxChargesTypeCode}</Descriptions.Item>
                 <Descriptions.Item label="Tax/Charge Type Descrption">{selectedTreeData?.taxChargesTypeDescription}</Descriptions.Item>
-                <Descriptions.Item label="Status">{selectedTreeData?.active === true ? 'Active' : 'InActive'}</Descriptions.Item>
+                <Descriptions.Item label="Status">{selectedTreeData?.status === true ? 'Active' : 'InActive'}</Descriptions.Item>
                 {TAX_CHARGES_TYPE?.TAX_CHARGES_TYPE_CALCULATION?.KEY === selectedTreeData?.attributeTypeCode &&
                 ( <>
                     <Descriptions.Item label="Calculation Type">{selectedTreeData?.calculationType}</Descriptions.Item>
