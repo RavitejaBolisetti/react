@@ -13,7 +13,7 @@ import { financialAccTaxChargeActions } from 'store/actions/data/financialAccoun
 import { documentDescriptionDataActions } from 'store/actions/data/financialAccounting/documentDescription';
 import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
-import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
+
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { AddEditForm } from './AddEditForm';
@@ -31,6 +31,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
             FinancialAccounting: {
                 FinancialAccountHead: { isLoaded: isFinancialAccountHeadLoaded = false, data: financialAccount = [] },
@@ -58,6 +59,8 @@ const mapStateToProps = (state) => {
         isDataAttributeLoaded,
         viewTitle,
         isTaxChargeLoaded,
+        attributeData,
+        typeData,
         unFilteredAttributeData: attributeData?.filter((i) => i?.status),
     };
     return returnValue;
@@ -67,22 +70,14 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: manufacturerOrgHierarchyDataActions.fetchList,
-            saveData: manufacturerOrgHierarchyDataActions.saveData,
-            listShowLoading: manufacturerOrgHierarchyDataActions.listShowLoading,
-            changeHistoryModelOpen: manufacturerOrgHierarchyDataActions.changeHistoryModelOpen,
-            fetchChangeHistoryList: manufacturerOrgHierarchyDataActions.fetchChangeHistoryList,
-
             hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
-            hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
 
-            fetchListTaxCharge: financialAccTaxChargeActions.fetchList,
-            saveDataTaxCharge: financialAccTaxChargeActions.saveData,
-            listShowLoadingTaxCharge: financialAccTaxChargeActions.listShowLoading,
+            fetchList: financialAccTaxChargeActions.fetchList,
+            saveData: financialAccTaxChargeActions.saveData,
+            listShowLoading: financialAccTaxChargeActions.listShowLoading,
 
             fetchFinancialAccountHead: financialAccountHeadDataActions.fetchList,
-
             fetchDocumentDescriptionHead: documentDescriptionDataActions.fetchList,
 
             showGlobalNotification,
@@ -91,7 +86,36 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocumentDescriptionHead, documentDescription, isDocumentDescriptionLoaded, fetchFinancialAccountHead, isFinancialAccountHeadLoaded, financialAccount, fetchChangeHistoryList, viewTitle, userId, changeHistoryModelOpen, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, taxChargeData, showGlobalNotification, unFilteredAttributeData, fetchListTaxCharge, saveDataTaxCharge, listShowLoadingTaxCharge, isTaxChargeLoaded }) => {
+export const TaxChargesMain = ({
+    typeData,
+    moduleTitle,
+    isChangeHistoryVisible,
+    fetchDocumentDescriptionHead,
+    documentDescription,
+    isDocumentDescriptionLoaded,
+    fetchFinancialAccountHead,
+    isFinancialAccountHeadLoaded,
+    financialAccount,
+    fetchChangeHistoryList,
+    viewTitle,
+    userId,
+    changeHistoryModelOpen,
+    isDataLoaded,
+    fetchList,
+    hierarchyAttributeFetchList,
+    saveData,
+    listShowLoading,
+    isDataAttributeLoaded,
+    attributeData,
+    hierarchyAttributeListShowLoading,
+    taxChargeData,
+    showGlobalNotification,
+    unFilteredAttributeData,
+    fetchListTaxCharge,
+    saveDataTaxCharge,
+    listShowLoadingTaxCharge,
+    isTaxChargeLoaded,
+}) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -102,6 +126,7 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
 
     const [formData, setFormData] = useState([]);
     const [selectedTreeData, setSelectedTreeData] = useState([]);
+    console.log('🚀 ~ file: TaxChargesMaster.js:98 ~ TaxChargesMain ~ selectedTreeData:', selectedTreeData);
 
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -139,24 +164,17 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
 
     useEffect(() => {
         if (userId) {
-            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: HIERARCHY_ATTRIBUTES?.TAX_AND_CHARGES?.key });
+            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: HIERARCHY_ATTRIBUTES?.TAX_AND_CHARGES?.KEY });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
-
-    useEffect(() => {
-        if (!isTaxChargeLoaded && userId) {
-            fetchListTaxCharge({ setIsLoading: listShowLoadingTaxCharge, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isTaxChargeLoaded, userId]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
 
-    const finalManufacturerOrgHierarchyData = taxChargeData?.map((i) => {
-        return { ...i, manufacturerOrgHierarchyParentData: attributeData?.find((a) => i.attributeTypeCode === a.hierarchyAttribueId) };
+    const finalTaxAndChargesData = taxChargeData?.map((i) => {
+        return { ...i, taxAndChargesParentData: attributeData?.find((a) => i.attributeTypeCode === a.hierarchyAttribueId) };
     });
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
@@ -177,9 +195,7 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
         return dataList;
     };
 
-    const flatternData = generateList(finalManufacturerOrgHierarchyData);
-    console.log('🚀 ~ file: TaxChargesMaster.js:214 ~ flatternData:', flatternData);
-
+    const flatternData = generateList(finalTaxAndChargesData);
     const handleTreeViewClick = (keys) => {
         form.resetFields();
         setFormData([]);
@@ -187,16 +203,16 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
 
         if (keys && keys?.length > 0) {
             setFormActionType(FROM_ACTION_TYPE.VIEW);
-            const formData = flatternData.find((i) => keys[0] === i.key);
-
+            const formData = flatternData.find((i) => keys?.[0] === i?.key);
             if (formData) {
-                const isChildAllowed = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.data?.attributeTypeCode)?.isChildAllowed;
+                const isChildAllowed = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === formData?.data?.attributeTypeCode)?.isChildAllowed;
                 setFormData({ ...formData?.data, isChildAllowed });
 
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChildAllowed, siblingBtn: true });
-                const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.data?.attributeTypeCode)?.hierarchyAttribueName;
-                const manufactureOrgShrtName = flatternData.find((i) => formData?.data?.taxChargesTypeCode === i.key)?.data?.manufactureOrgShrtName;
-                setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: manufactureOrgShrtName });
+
+                const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute?.hierarchyAttribueCode === formData?.data?.attributeTypeCode)?.hierarchyAttribueName;
+                const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.attributeTypeCode;
+                setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: attributeParentName });
             } else {
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             }
@@ -214,9 +230,9 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.id || '';
+        const recordId = formData?.taxChargesTypeCode || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
-        const data = { ...values, id: recordId, manufactureOrgParntId: codeToBeSaved };
+        const data = { ...values, id: recordId, parentCode: codeToBeSaved };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -228,9 +244,9 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
                 fetchList({ setIsLoading: listShowLoading, userId });
                 fetchChangeHistoryList({ setIsLoading: listShowLoading, userId });
 
-                const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.id === res?.data?.attributeTypeCode)?.hierarchyAttribueName;
-                const manufactureOrgShrtName = flatternData.find((i) => res?.data?.manufactureOrgParntId === i.key)?.data?.manufactureOrgShrtName;
-                res?.data && setSelectedTreeData({ ...res?.data, hierarchyAttribueName, parentName: manufactureOrgShrtName });
+                const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === res?.data?.attributeTypeCode)?.hierarchyAttribueName;
+                const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.attributeTypeCode;
+                res?.data && setSelectedTreeData({ ...res?.data, hierarchyAttribueName, parentName: attributeParentName });
 
                 setSelectedTreeKey([res?.data?.id]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
@@ -245,6 +261,7 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
 
         const requestData = {
             data: data,
+            method: recordId ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -290,6 +307,7 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
         setSearchValue,
     };
     const formProps = {
+        typeData,
         setSelectedTreeKey,
         flatternData,
         formActionType,
@@ -299,7 +317,7 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
             setIsFormVisible(false);
             setAttributeType();
         },
-        titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (formData?.taxChargesTypeCode ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         selectedTreeKey,
         selectedTreeData,
@@ -345,7 +363,7 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                                 <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                    <Form.Item label={`${title}`} name="code" validateTrigger={['onSearch']}>
+                                    <Form.Item label={title} name="code" validateTrigger={['onSearch']}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                                 <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
@@ -382,7 +400,7 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
                 </Col>
 
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.pad0}>
-                    {selectedTreeData && selectedTreeData?.id ? (
+                    {selectedTreeData && selectedTreeData?.taxChargesTypeCode ? (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <ViewTaxCharges {...viewProps} />
                             <div className={styles.hyrbuttonContainer}>

@@ -6,6 +6,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
+import { TAX_CHARGES_TYPE } from 'constants/modules/taxChargesType';
 
 export const ViewTaxChargesMain = ({ viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
     const viewProps = {
@@ -24,6 +25,8 @@ export const ViewTaxChargesMain = ({ viewTitle, buttonData, attributeData, selec
                 <Descriptions.Item label="Tax/Charge Type Code">{selectedTreeData?.taxChargesTypeCode}</Descriptions.Item>
                 <Descriptions.Item label="Tax/Charge Type Descrption">{selectedTreeData?.taxChargesTypeDescription}</Descriptions.Item>
                 <Descriptions.Item label="Status">{selectedTreeData?.active === true ? 'Active' : 'InActive'}</Descriptions.Item>
+                {TAX_CHARGES_TYPE?.TAX_CHARGES_TYPE_CALCULATION?.KEY === selectedTreeData?.attributeTypeCode && <Descriptions.Item label="Calculation">Calculation</Descriptions.Item>}
+                {TAX_CHARGES_TYPE?.TAX_CHARGES_TYPE_ACCOUNT_AND_DOCUMENT_MAPPING?.KEY === selectedTreeData?.attributeTypeCode && <Descriptions.Item label="Mapping">Mapping</Descriptions.Item>}
             </Descriptions>
         </div>
     );
