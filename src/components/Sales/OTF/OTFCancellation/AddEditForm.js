@@ -26,10 +26,10 @@ const { TextArea, Search } = Input;
 const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { otfCancellationForm, formData, otfData, selectedOrder, fieldNames, onFinishOTFCancellation, selectedTreeSelectKey, handleSelectTreeClick, treeCodeId } = props;
+    const { otfCancellationForm, formData, otfData, selectedOrder, fieldNames, onFinishOTFCancellation, selectedTreeSelectKey, treeCodeId } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview, emptyList, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
-    const { uploadedFileName, setUploadedFileName, uploadedFile } = props;
+    const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setparentAppCode } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const [showStatus, setShowStatus] = useState('');
@@ -155,6 +155,16 @@ const AddEditFormMain = (props) => {
         [searchDealerValue]
     );
 
+    const handleSelectTreeClick = (value) => {
+        // if (value === selectedTreeKey[0]) {
+        //     return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
+        // }
+        //setSelectedTreeSelectKey(value);
+        setparentAppCode(value);
+        otfCancellationForm.setFieldsValue({productCode: value});
+        // setFormBtnActive(true);
+    };
+    
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: false,
@@ -181,7 +191,7 @@ const AddEditFormMain = (props) => {
         treeFieldNames,
         treeData: productHierarchyData,
         //treeDisabled: treeCodeReadOnly || isReadOnly,
-        selectedTreeSelectKey,
+        selectedTreeSelectKey: parentAppCode,
         handleSelectTreeClick,
         //defaultValue: treeCodeId,
         placeholder: preparePlaceholderSelect('Parent'),

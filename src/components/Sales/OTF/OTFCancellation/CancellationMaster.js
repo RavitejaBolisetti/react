@@ -75,20 +75,13 @@ const CancellationMasterBase = (props) => {
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
 
     const [uploadedFileName, setUploadedFileName] = useState('');
+    const [parentAppCode, setparentAppCode] = useState();
 
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
     const handleButtonClick = ({ record = null, buttonAction }) => {};
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
-    };
-
-    const handleSelectTreeClick = (value) => {
-        // if (value === selectedTreeKey[0]) {
-        //     return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
-        // }
-        setSelectedTreeSelectKey(value);
-        // setFormBtnActive(true);
     };
 
     useEffect(() => {
@@ -132,13 +125,13 @@ const CancellationMasterBase = (props) => {
         searchDealerValue,
         setSearchDealerValue,
         dealerDataList,
-        handleSelectTreeClick,
         setSelectedTreeSelectKey,
         emptyList,
         setEmptyList,
         uploadedFileName,
         setUploadedFileName,
         uploadedFile,
+        parentAppCode, setparentAppCode
     };
 
     return <AddEditForm {...formProps} />;
