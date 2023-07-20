@@ -64,7 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
 const CancellationMasterBase = (props) => {
     const { otfData, selectedOrder } = props;
     const { userId, listShowLoading, uploadDocumentFile } = props;
-    const { moduleTitle, setUploadedFile } = props;
+    const { moduleTitle, setUploadedFile, uploadedFile } = props;
     const { fetchProductHierarchyList, productHierarchyData, onFinishOTFCancellation, fetchDealerList, dealerDataList } = props;
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOtfBtn: true };
@@ -73,6 +73,8 @@ const CancellationMasterBase = (props) => {
     const [emptyList, setEmptyList] = useState(true);
     const [searchDealerValue, setSearchDealerValue] = useState('');
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
+
+    const [uploadedFileName, setUploadedFileName] = useState('');
 
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
     const handleButtonClick = ({ record = null, buttonAction }) => {};
@@ -123,7 +125,6 @@ const CancellationMasterBase = (props) => {
         setButtonData,
         handleButtonClick,
         uploadDocumentFile,
-        setEmptyList,
         setUploadedFile,
         fieldNames,
         productHierarchyData,
@@ -133,6 +134,11 @@ const CancellationMasterBase = (props) => {
         dealerDataList,
         handleSelectTreeClick,
         setSelectedTreeSelectKey,
+        emptyList,
+        setEmptyList,
+        uploadedFileName,
+        setUploadedFileName,
+        uploadedFile,
     };
 
     return <AddEditForm {...formProps} />;
