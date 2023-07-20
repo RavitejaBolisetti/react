@@ -140,7 +140,7 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
 
     useEffect(() => {
         if (userId) {
-            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Organization' });
+            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Tax and Charges' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
