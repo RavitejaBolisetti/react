@@ -116,6 +116,7 @@ export const OtfMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isCancelVisible, setIsCancelVisible] = useState(false);
     const [isTransferVisible, setIsTransferVisible] = useState(false);
+    const [uploadedFile, setUploadedFile] = useState();
 
     const [otfTransferForm] = Form.useForm();
 
@@ -446,11 +447,12 @@ export const OtfMasterBase = (props) => {
     };
 
     const onFinishOTFCancellation = (values) => {
+        console.log("🚀 ~ file: OtfMaster.js:450 ~ onFinishOTFCancellation ~ values:", otfTransferForm.getFieldsValue())
         // setIsCancelVisible(false);
         fnOTFTransfer({
             modalTitle: 'OTF Cancel',
             modalMessage: `Do you want to cancel this ${otfData?.otfNumber}`,
-            finalData: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
+            finalData: { dealerCode: otfTransferForm.getFieldsValue()?.dealerCode , oemCode:"", productCode:"", ...values, id: otfData?.id, otfNumber: otfData?.otfNumber, uploadCancellationLetterDocId: uploadedFile },
             callBackMethod: transferOTF,
             customURL: otfCancelURL,
         });
@@ -571,6 +573,7 @@ export const OtfMasterBase = (props) => {
         isVisible: isCancelVisible,
         onCloseAction: onCancelCloseAction,
         onFinishOTFCancellation,
+        setUploadedFile,
     };
 
     const transferOTFProps = {

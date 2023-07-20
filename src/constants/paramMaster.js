@@ -196,4 +196,12 @@ export const PARAM_MASTER = {
         id: 'CUST_VEH_SEARCH',
         title: 'Yes CUST_VEH_SEARCH Flag',
     },
+    VEH_MAKE: {
+        id: 'VEH_MAKE',
+        title: 'product Details Vehicle Make',
+    },
+    VEH_ITEM: {
+        id: 'VEH_ITEM',
+        title: 'product Details Vehicle Item',
+    },
 };

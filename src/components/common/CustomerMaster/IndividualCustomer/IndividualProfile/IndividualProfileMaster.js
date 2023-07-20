@@ -84,9 +84,12 @@ const IndividualProfileBase = (props) => {
     const [activeKey, setActiveKey] = useState([1]);
     const [uploadedFile, setUploadedFile] = useState();
     const [uploadedFiles, setUploadedFiles] = useState();
+    const [fileList, setFileList] = useState([]);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+
+    const [isWhoKnowsWhom, setIsWhoKnowsWhom] = useState(false);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -226,7 +229,7 @@ const IndividualProfileBase = (props) => {
                 name: 'docId',
             },
         ];
-        downloadFile({ setIsLoading: listIndiviualShowLoading, userId, extraParams });
+        fetchViewDocument({ setIsLoading: listIndiviualShowLoading, userId, extraParams });
     };
     const onCloseAction = () => {
         form.resetFields();
@@ -263,7 +266,11 @@ const IndividualProfileBase = (props) => {
         isViewDocumentLoading,
         handleOnClickCustomerForm,
         NEXT_ACTION,
-    };
+        isWhoKnowsWhom,
+        setIsWhoKnowsWhom,
+        fileList,
+        setFileList,
+  };
 
     const viewProps = {
         ...props,
@@ -278,8 +285,26 @@ const IndividualProfileBase = (props) => {
         downloadFileFromButton,
     };
 
+    function checkProperties(obj) {
+        for (var key in obj) {
+            if (obj[key].length > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
+        const valuesForm = form.getFieldsValue(['personName', 'postion', 'companyName', 'remarks']);
+
+        const isEmpty = checkProperties(valuesForm);
+        if (isEmpty === true) {
+            setIsWhoKnowsWhom(true);
+            // form.validateFields(['personName', 'companyName']);
+        } else if (isEmpty === false) {
+            setIsWhoKnowsWhom(false);
+        }
     };
 
     return (

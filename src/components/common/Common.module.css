@@ -40,7 +40,9 @@
 .marR20 {
     margin-right: 20px;
 }
-
+.marB10 {
+    margin-bottom: 10px;
+}
 .marB20 {
     margin-bottom: 20px;
 }
@@ -2974,6 +2976,19 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 
 .inputWrapper :global .ant-input-affix-wrapper .ant-input-suffix {
     margin-top: 5px;
+}
+
+.inputAutFillWrapper :global .ant-input-affix-wrapper {
+    border: none !important;
+    padding-top: 0px;
+    height: 36px !important;
+}
+.inputAutFillWrapper :global .ant-input-affix-wrapper .ant-input-suffix {
+    margin-top: 5px;
+}
+
+.inputAutFillWrapper :global .ant-select-single {
+    width: 100%;
 }
 
 .customerChooseContainer :global .ant-table .ant-table-content {

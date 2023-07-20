@@ -113,7 +113,7 @@ const CustomerListBase = (props) => {
                 setIsLoading: listShowLoading,
                 extraParams: searchParams,
                 onSuccessAction: (res) => {
-                    if (res?.data?.customerMasterDetails?.length > 0) {
+                    if (res?.data?.customerMasterDetails?.length > 1) {
                         setCusomerSearchVisible(true);
                         setCustomerList(res?.data?.customerMasterDetails);
                     } else {
@@ -129,10 +129,6 @@ const CustomerListBase = (props) => {
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
-    };
-
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const handleResetFilter = (e) => {
