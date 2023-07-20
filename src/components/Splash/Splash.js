@@ -9,6 +9,7 @@ import * as IMAGES from 'assets';
 
 import styles from './Splash.module.css';
 
+
 export const Splash = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [showB, setShowB] = useState(false);
@@ -33,11 +34,11 @@ export const Splash = () => {
                     </div>
                     <div className={styles.splashMainAnimation}>
                         <div className={styles.splashAnimationInner}>
-                            <img src={IMAGES.R_IMG} className={`${isLoading ? styles.opacity1 : styles.opacity0} ${styles.duration200} ${styles.splashAnimationR}`} alt="logo-images" />
-                            <img src={IMAGES.O_IMG} className={`${isLoading ? styles.opacity1 : styles.opacity0} ${styles.duration1000} ${styles.splashAnimationO}`} alt="logo-images" />
-                            <img src={IMAGES.B_IMG} className={`${showB ? styles.opacity1 : styles.opacity0} ${styles.delay800} ${styles.splashAnimationB}`} alt="logo-images" />
-                            <img src={IMAGES.I_IMG} className={`${isLoading ? styles.opacity1 : styles.opacity0} ${styles.duration1400} ${styles.splashAnimationI}`} alt="logo-images" />
-                            <img src={IMAGES.N_IMG} className={`${isLoading ? styles.opacity1 : styles.opacity0} ${styles.duration1900} ${styles.splashAnimationN}`} alt="logo-images" />
+                            <img src={IMAGES.R_IMG} className={`${isLoading ? styles.opacity1 : styles.opacity0} ${styles.duration200} ${styles.splashAnimationR}`} alt="logo-imagesR" />
+                            <img src={IMAGES.O_IMG} className={`${isLoading ? styles.opacity1 : styles.opacity0} ${styles.duration1000} ${styles.splashAnimationO}`} alt="logo-imagesO" />
+                            <img src={IMAGES.B_IMG} className={`${showB ? styles.opacity1 : styles.opacity0} ${styles.delay800} ${styles.splashAnimationB}`} alt="logo-imagesB" />
+                            <img src={IMAGES.I_IMG} className={`${isLoading ? styles.opacity1 : styles.opacity0} ${styles.duration1400} ${styles.splashAnimationI}`} alt="logo-imagesI" />
+                            <img src={IMAGES.N_IMG} className={`${isLoading ? styles.opacity1 : styles.opacity0} ${styles.duration1900} ${styles.splashAnimationN}`} alt="logo-imagesN" />
                         </div>
                         <span className={styles.splashUnderline}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="319" height="3" viewBox="0 0 319 3" fill="none">
