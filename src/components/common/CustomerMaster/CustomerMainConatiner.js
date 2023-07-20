@@ -24,7 +24,7 @@ const CustomerMainConatinerMain = (props) => {
         resetViewData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, resetViewData]);
-    
+
     const myProps = {
         ...props,
     };
@@ -95,8 +95,8 @@ const CustomerMainConatinerMain = (props) => {
             <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
                 <LeftSidebar {...myProps} />
             </Col>
-            <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18} className={styles.drawerRightMainContainer}>
-                <div className={styles.marginBottom60}>{renderElement()}</div>
+            <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
+                <div>{renderElement()}</div>
             </Col>
         </Row>
     );

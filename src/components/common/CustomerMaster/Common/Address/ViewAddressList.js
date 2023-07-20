@@ -59,7 +59,7 @@ const ViewAddressList = (props) => {
     };
 
     return (
-        <div>
+        <>
             {addressData?.length > 0 &&
                 addressData?.map((data, i) => {
                     return (
@@ -96,7 +96,7 @@ const ViewAddressList = (props) => {
                         </Collapse>
                     );
                 })}
-        </div>
+        </>
     );
 };
 
