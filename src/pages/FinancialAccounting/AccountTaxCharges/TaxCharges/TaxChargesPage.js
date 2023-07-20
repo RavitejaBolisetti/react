@@ -6,7 +6,7 @@
 import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import { TaxCharges } from 'components/FinancialAccounting'
+import { TaxChargesMaster } from 'components/FinancialAccounting';
 
 const TaxChargesBase = (props) => {
     const pageTitle = 'Tax & Charges';
@@ -18,7 +18,7 @@ const TaxChargesBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <TaxCharges />
+            <TaxChargesMaster />
         </>
     );
 };

@@ -19,7 +19,7 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, manufacturerOrgHierarchyData, attributeType, setAttributeType } = props;
-    const { isFormBtnActive, setFormBtnActive,onFinish, onFinishFailed } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
@@ -91,9 +91,9 @@ const AddEditFormMain = (props) => {
             <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={'Tax_Type'} name="attributeTypeCode" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
-                            <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} disabled={formData?.id || isReadOnly}>
-                                {ATTRIBUTE_TYPE?.map((item) => (
+                        <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
+                            <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} disabled={formData?.id || isReadOnly} showSearch allowClear>
+                                {attributeData?.map((item) => (
                                     <Option key={'key' + item?.key} value={item?.key}>
                                         {item?.value}
                                     </Option>
@@ -107,7 +107,6 @@ const AddEditFormMain = (props) => {
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                     </Col>
-                    
                 </Row>
 
                 <Row gutter={20}>

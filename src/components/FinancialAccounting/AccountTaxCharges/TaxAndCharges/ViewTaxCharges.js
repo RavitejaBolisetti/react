@@ -21,8 +21,8 @@ export const ViewTaxChargesMain = ({ viewTitle, buttonData, attributeData, selec
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Attribute Level">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
                 <Descriptions.Item label="Parent">{selectedTreeData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
-                <Descriptions.Item label="Tax/Charge Type Code">{selectedTreeData?.manufactureOrgShrtName}</Descriptions.Item>
-                <Descriptions.Item label="Tax/Charge Type Descrption">{selectedTreeData?.manufactureOrgLongName}</Descriptions.Item>
+                <Descriptions.Item label="Tax/Charge Type Code">{selectedTreeData?.taxChargesTypeCode}</Descriptions.Item>
+                <Descriptions.Item label="Tax/Charge Type Descrption">{selectedTreeData?.taxChargesTypeDescription}</Descriptions.Item>
                 <Descriptions.Item label="Status">{selectedTreeData?.active === true ? 'Active' : 'InActive'}</Descriptions.Item>
             </Descriptions>
         </div>
