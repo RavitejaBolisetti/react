@@ -221,7 +221,7 @@
 }
 
 :global .ant-drawer-body .ant-form-item {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 :global .ant-drawer-body .ant-input-number {
@@ -369,8 +369,13 @@
     border-radius: 4px;
 }
 
+:global .ant-table-wrapper .ant-table {
+    border-radius: 4px;
+}
+
 :global .ant-table-wrapper .ant-table .ant-table-content {
     border-radius: 4px 4px 0 0;
+    margin-bottom: 20px;
 }
 
 :global .ant-table-wrapper .ant-table-ping-left:not(.ant-table-has-fix-left) .ant-table-container::before {

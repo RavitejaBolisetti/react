@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { Button, Space, Tag } from 'antd';
-import { FiEdit, FiEye } from 'react-icons/fi';
+import { FiEdit, FiEye, FiTrash } from 'react-icons/fi';
 
 import { DEFAULT_PAGE_SIZE } from 'constants/constants';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -66,13 +66,13 @@ export const tblStatusColumn = ({ styles, width = '15%', fixed = '' }) => {
     };
 };
 
-export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixed = '', EditIcon = true, EyeIcon = true }) => {
+export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixed = '', EditIcon = true, EyeIcon = true, DeleteIcon = false }) => {
     return {
         title: 'Action',
         dataIndex: '',
         width,
         fixed: fixed,
-        render: (record) => [
+        render: (text, record, index) => [
             <Space wrap>
                 {EyeIcon && (
                     <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
@@ -81,10 +81,11 @@ export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixe
                 )}
 
                 {EditIcon && (
-                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
+                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
                         <FiEdit />
                     </Button>
                 )}
+                {DeleteIcon && !record?.id && <Button data-testid="delete" className={styles.tableIcons} aria-label="fa-trash" icon={<FiTrash />} onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })} />}
             </Space>,
         ],
     };

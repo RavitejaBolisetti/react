@@ -7,35 +7,37 @@ import { Tag } from 'antd';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import styles from 'components/common/Common.module.css';
 
-export const OTFStatusTag = (status) => {
+export const OTFStatusTag = (status, type = 'tag') => {
     let tag = '';
+    const showTag = type === 'tag';
+
     switch (status) {
         case OTF_STATUS.BOOKED.key:
-            tag = <Tag className={styles.success}>{OTF_STATUS.BOOKED.desc}</Tag>;
+            tag = showTag ? <Tag className={styles.success}>{OTF_STATUS.BOOKED.desc}</Tag> : OTF_STATUS.BOOKED.desc;
             break;
         case OTF_STATUS.ALLOTED.key:
-            tag = <Tag className={styles.success}>{OTF_STATUS.ALLOTED.desc}</Tag>;
+            tag = showTag ? <Tag className={styles.success}>{OTF_STATUS.ALLOTED.desc}</Tag> : OTF_STATUS.ALLOTED.desc;
             break;
         case OTF_STATUS.CANCELLED.key:
-            tag = <Tag className={styles.error}>{OTF_STATUS.CANCELLED.desc}</Tag>;
+            tag = showTag ? <Tag className={styles.error}>{OTF_STATUS.CANCELLED.desc}</Tag> : OTF_STATUS.ALLOTED.desc;
             break;
         case OTF_STATUS.INVOICED.key:
-            tag = <Tag className={styles.violet}>{OTF_STATUS.INVOICED.desc}</Tag>;
+            tag = showTag ? <Tag className={styles.violet}>{OTF_STATUS.INVOICED.desc}</Tag> : OTF_STATUS.ALLOTED.desc;
             break;
         case OTF_STATUS.DELIVERED.key:
-            tag = <Tag className={styles.success}>{OTF_STATUS.DELIVERED.desc}</Tag>;
+            tag = showTag ? <Tag className={styles.success}>{OTF_STATUS.DELIVERED.desc}</Tag> : OTF_STATUS.ALLOTED.desc;
             break;
         case OTF_STATUS.TRANSFERRED.key:
-            tag = <Tag className={styles.info}>{OTF_STATUS.TRANSFERRED.desc}</Tag>;
+            tag = showTag ? <Tag className={styles.info}>{OTF_STATUS.TRANSFERRED.desc}</Tag> : OTF_STATUS.ALLOTED.desc;
             break;
         case OTF_STATUS.PENDING_FOR_CANCELLATION.key:
-            tag = <Tag className={styles.warning}>{OTF_STATUS.PENDING_FOR_CANCELLATION.desc}</Tag>;
+            tag = showTag ? <Tag className={styles.warning}>{OTF_STATUS.PENDING_FOR_CANCELLATION.desc}</Tag> : OTF_STATUS.ALLOTED.desc;
             break;
         case OTF_STATUS.CANCELLATION_REQUESTED.key:
-            tag = <Tag className={styles.warning}>{OTF_STATUS.CANCELLATION_REQUESTED.desc}</Tag>;
+            tag = showTag ? <Tag className={styles.warning}>{OTF_STATUS.CANCELLATION_REQUESTED.desc}</Tag> : OTF_STATUS.ALLOTED.desc;
             break;
         case OTF_STATUS.REJECTED.key:
-            tag = <Tag className={styles.error}>{OTF_STATUS.REJECTED.desc}</Tag>;
+            tag = showTag ? <Tag className={styles.error}>{OTF_STATUS.REJECTED.desc}</Tag> : OTF_STATUS.ALLOTED.desc;
             break;
         default:
     }

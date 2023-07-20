@@ -9,12 +9,17 @@ import { OTF_STATUS } from 'constants/OTFStatus';
 export const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
 export const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
 export const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+export const VIEW_ONLY_ACTION = FROM_ACTION_TYPE?.VIEW_ONLY;
 export const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
+export const CANCEL_ACTION = FROM_ACTION_TYPE?.CANCEL_OTF;
+export const TRANSFER_ACTION = FROM_ACTION_TYPE?.TRANSFER_OTF;
 
 export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn = true, orderStatus = false }) => {
     let btnVisibility = defaultBtnVisiblity;
     if (buttonAction === VIEW_ACTION) {
         btnVisibility = { ...btnVisibility, closeBtn: true, editBtn: true, nextBtn: true };
+    } else if (buttonAction === VIEW_ONLY_ACTION) {
+        btnVisibility = { ...btnVisibility, saveBtn: false, cancelBtn: false, closeBtn: true };
     } else if (buttonAction === EDIT_ACTION) {
         btnVisibility = { ...btnVisibility, saveBtn: true, cancelBtn: true };
     } else {
