@@ -9,7 +9,7 @@ import TreeSelectField from 'components/common/TreeSelectField';
 import { validateRequiredInputField, validateRequiredSelectField, valueOfPer, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import styles from 'components/common/Common.module.css';
-import { CALCULTION_TYPE } from './AttributeTypeConstant';
+import { CALCULTION_TYPE } from '../../../../constants/modules/AttributeTypeConstant';
 import { TAX_CHARGES_TYPE } from 'constants/modules/taxChargesType';
 import { customSelectBox } from 'utils/customSelectBox';
 
@@ -20,13 +20,12 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { typeData, onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, manufacturerOrgHierarchyData, attributeType, setAttributeType } = props;
+    const { typeData, onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, taxChargeData, attributeType, setAttributeType, calType, setCalType,calculationType,setCalculationType } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
     const [form] = Form.useForm();
-    const [calType, setCalType] = useState(null);
 
     let attributeHierarchyFieldValidation = {
         rules: [validateRequiredSelectField('attribute level')],
@@ -60,12 +59,13 @@ const AddEditFormMain = (props) => {
     useEffect(() => {
         setSelectedTreeSelectKey(treeCodeId);
         setAttributeType(formData?.attributeTypeCode);
+        setCalculationType(formData?.calculationType);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
 
     const treeSelectFieldProps = {
         treeFieldNames,
-        treeData: manufacturerOrgHierarchyData,
+        treeData: taxChargeData,
         treeDisabled: treeCodeReadOnly || isReadOnly,
         selectedTreeSelectKey,
         handleSelectTreeClick,
@@ -87,6 +87,7 @@ const AddEditFormMain = (props) => {
 
     const calTypeFun = (val) => {
         setCalType(val);
+        setCalculationType(val);
     };
 
     return (
@@ -124,21 +125,21 @@ const AddEditFormMain = (props) => {
                     <>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item label="Calculation Type" name="calculationType" rules={[validateRequiredInputField('Calculation_Type')]}>
+                                <Form.Item initialValue={formData?.calculationType} label="Calculation Type" name="calculationType" rules={[validateRequiredInputField('Calculation_Type')]}>
                                     {customSelectBox({ data: typeData?.CAL_TYPE, placeholder: preparePlaceholderSelect('Calculation Type'), onChange: calTypeFun })}
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
-                            {calType === CALCULTION_TYPE[1]?.key ? (
+                            {calculationType === CALCULTION_TYPE[1]?.key ? (
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item initialValue={null} label="Percentage" name="percentage" rules={[validateRequiredInputField('Percentage'), valueOfPer('Percentage')]}>
+                                    <Form.Item initialValue={formData?.percentage} label="Percentage" name="percentage" rules={[validateRequiredInputField('Percentage'), valueOfPer('Percentage')]}>
                                         <InputNumber placeholder={preparePlaceholderText('Percentage')} className={styles.inputBox} type="number" />
                                     </Form.Item>
                                 </Col>
-                            ) : calType === CALCULTION_TYPE[0]?.key ? (
+                            ) : calculationType === CALCULTION_TYPE[0]?.key ? (
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item initialValue={null} label="Rate" name="rate" rules={[validateRequiredInputField('Rate'), validateNumberWithTwoDecimalPlaces('Rate')]}>
+                                    <Form.Item initialValue={formData?.rate} label="Rate" name="rate" rules={[validateRequiredInputField('Rate'), validateNumberWithTwoDecimalPlaces('Rate')]}>
                                         <InputNumber placeholder={preparePlaceholderText('Rate')} className={styles.inputBox} type="number" />
                                     </Form.Item>
                                 </Col>
@@ -149,27 +150,16 @@ const AddEditFormMain = (props) => {
                     <>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item name="documentTypeCode" label="Document Description" rules={[validateRequiredSelectField('Document Description')]}>
-                                    <Select loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Document Description')} disabled={formData?.id || isReadOnly} showSearch allowClear>
-                                        {documentDescription?.map((item) => (
-                                            <Option key={'005cc66b-6bb8-4861-83fc-724697eedaa4'} value={'005cc66b-6bb8-4861-83fc-724697eedaa4'}>
-                                                {item?.documentDescription}
-                                            </Option>
-                                        ))}
-                                    </Select>
+                                <Form.Item initialValue={formData?.documentTypeCode} name="documentTypeCode" label="Document Description" rules={[validateRequiredSelectField('Document Description')]}>
+                                {customSelectBox({ data: documentDescription, fieldNames: { key: 'id', value: 'documentDescription' },placeholder: preparePlaceholderSelect('Document Description') })}
+    
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item name="financialAccountHeadCode" label="Financial Account Head" rules={[validateRequiredSelectField('Financial Account Head')]}>
-                                    <Select loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Financial Account Head')} disabled={formData?.id || isReadOnly}>
-                                        {financialAccount?.map((item) => (
-                                            <Option key={item?.id} value={item?.key}>
-                                                {item?.value}
-                                            </Option>
-                                        ))}
-                                    </Select>
+                                <Form.Item initialValue={formData?.financialAccountHeadCode} name="financialAccountHeadCode" label="Financial Account Head" rules={[validateRequiredSelectField('Financial Account Head')]}>
+                                {customSelectBox({ data: financialAccount, placeholder: preparePlaceholderSelect('Financial Account Head') })}
                                 </Form.Item>
                             </Col>
                         </Row>

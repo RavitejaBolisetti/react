@@ -7,8 +7,11 @@ import React from 'react';
 import { Descriptions } from 'antd';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 import { TAX_CHARGES_TYPE } from 'constants/modules/taxChargesType';
+import { CALCULTION_TYPE } from '../../../../constants/modules/AttributeTypeConstant'
+import { getCodeValue } from 'utils/getCodeValue';
 
-export const ViewTaxChargesMain = ({ viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
+
+export const ViewTaxChargesMain = ({ viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, financialAccount, calculationType,documentDescription,handleChildBtn, handleSiblingBtn, setClosePanels, styles,calType }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -25,8 +28,18 @@ export const ViewTaxChargesMain = ({ viewTitle, buttonData, attributeData, selec
                 <Descriptions.Item label="Tax/Charge Type Code">{selectedTreeData?.taxChargesTypeCode}</Descriptions.Item>
                 <Descriptions.Item label="Tax/Charge Type Descrption">{selectedTreeData?.taxChargesTypeDescription}</Descriptions.Item>
                 <Descriptions.Item label="Status">{selectedTreeData?.active === true ? 'Active' : 'InActive'}</Descriptions.Item>
-                {TAX_CHARGES_TYPE?.TAX_CHARGES_TYPE_CALCULATION?.KEY === selectedTreeData?.attributeTypeCode && <Descriptions.Item label="Calculation">Calculation</Descriptions.Item>}
-                {TAX_CHARGES_TYPE?.TAX_CHARGES_TYPE_ACCOUNT_AND_DOCUMENT_MAPPING?.KEY === selectedTreeData?.attributeTypeCode && <Descriptions.Item label="Mapping">Mapping</Descriptions.Item>}
+                {TAX_CHARGES_TYPE?.TAX_CHARGES_TYPE_CALCULATION?.KEY === selectedTreeData?.attributeTypeCode &&
+                ( <>
+                    <Descriptions.Item label="Calculation Type">{selectedTreeData?.calculationType}</Descriptions.Item>
+                    {calculationType === CALCULTION_TYPE[1]?.key ? (
+                    <Descriptions.Item label="Percentage">{getCodeValue(CALCULTION_TYPE, selectedTreeData?.percentage)}</Descriptions.Item>
+                    ):( calculationType === CALCULTION_TYPE[0]?.key ? (
+                    <Descriptions.Item label="Amount">{getCodeValue(CALCULTION_TYPE, selectedTreeData?.rate)}</Descriptions.Item>):null)}
+                </>)}
+                {TAX_CHARGES_TYPE?.TAX_CHARGES_TYPE_ACCOUNT_AND_DOCUMENT_MAPPING?.KEY === selectedTreeData?.attributeTypeCode && (<>
+                <Descriptions.Item label="Document Description">{getCodeValue(documentDescription, selectedTreeData?.documentTypeCode)}</Descriptions.Item>
+                <Descriptions.Item label="Financial Account Head">{getCodeValue(financialAccount, selectedTreeData?.financialAccountHeadCode)}</Descriptions.Item>
+                </>)}
             </Descriptions>
         </div>
     );

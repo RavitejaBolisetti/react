@@ -121,6 +121,7 @@ export const TaxChargesMain = ({
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
+    const [calType, setCalType] = useState(null);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
 
@@ -131,6 +132,7 @@ export const TaxChargesMain = ({
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [attributeType, setAttributeType] = useState();
+    const [calculationType, setCalculationType] = useState();
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -230,7 +232,7 @@ export const TaxChargesMain = ({
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.taxChargesTypeCode || '';
+        const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, parentCode: codeToBeSaved };
 
@@ -316,6 +318,7 @@ export const TaxChargesMain = ({
         onCloseAction: () => {
             setIsFormVisible(false);
             setAttributeType();
+            setCalculationType();
         },
         titleOverride: (formData?.taxChargesTypeCode ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
@@ -335,8 +338,12 @@ export const TaxChargesMain = ({
         setFormBtnActive,
         attributeType,
         setAttributeType,
+        calculationType,
+        setCalculationType,
         financialAccount,
         documentDescription,
+        calType,
+        setCalType,
     };
 
     const viewProps = {
@@ -346,6 +353,11 @@ export const TaxChargesMain = ({
         handleButtonClick,
         styles,
         viewTitle,
+        calType,
+        calculationType,
+        setCalType,
+        documentDescription,
+        financialAccount,
     };
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
