@@ -59,8 +59,8 @@ const mapStateToProps = (state) => {
         viewTitle,
         isTaxChargeLoaded,
         taxChargeList,
-        attributeData: attributeData?.filter((i) => i?.status),
-        unFilteredAttributeData: attributeData,
+        //taxChargeList: attributeData?.filter((i) => i?.status),
+        unFilteredAttributeData: taxChargeList,
     };
     return returnValue;
 };
@@ -112,7 +112,7 @@ export const TaxChargesMain = ({ moduleTitle, isChangeHistoryVisible, fetchDocum
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
+    const fieldNames = { title: 'taxChargesTypeCode', key: 'id', children: 'subChargeTypes' };
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
