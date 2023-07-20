@@ -15,14 +15,15 @@ const buttonData = {
     saveBtn: true,
     saveAndNewBtn: true,
     editBtn: true,
-    formBtnActive: true,
+    formBtnActive: false,
   };
   const saveButtonName = 'Save';
   const isLoadingOnSave = false;
+  const saveAndNewBtnClicked = true;
 
 describe('DrawerFormButton Components', () => {
     it('should render DrawerFormButton components', () => {
-        const { container } = render(<DrawerFormButton />);
+        const { container } = customRender(<DrawerFormButton />);
         expect(container.firstChild).toHaveClass('formFooter');
     });
 });
@@ -30,30 +31,27 @@ describe('DrawerFormButton Components', () => {
 describe('DrawerFormButton components', () => {
     it('should renders all buttons correctly', () => {
   
-      render(
-   <DrawerFormButton
-          formData={{}}
-          onCloseAction={jest.fn()}
-          buttonData={buttonData}
-          setButtonData={jest.fn()}
-          saveButtonName={saveButtonName}
-          handleButtonClick={jest.fn()}
-          isLoadingOnSave={isLoadingOnSave}
-        />
-      );
-   
-      // Assert that all buttons are rendered
-      expect(screen.getByText('Close')).toBeInTheDocument();
-      expect(screen.getByText('Cancel')).toBeInTheDocument();
-      expect(screen.getByText(saveButtonName)).toBeInTheDocument();
-      expect(screen.getByText('Save & Add New')).toBeInTheDocument();
-      expect(screen.getByText('Edit')).toBeInTheDocument();
-   
-      // Add more assertions for button behavior and attributes if needed
-    });
-   });
+        customRender(
+            <DrawerFormButton
+                formData={{}}
+                onCloseAction={jest.fn()}
+                buttonData={buttonData}
+                setButtonData={jest.fn()}
+                saveButtonName={saveButtonName}
+                handleButtonClick={jest.fn()}
+                isLoadingOnSave={isLoadingOnSave}
+                saveAndNewBtnClicked={saveAndNewBtnClicked}
+                />
+        );
+        expect(screen.getByText('Close')).toBeInTheDocument();
+        expect(screen.getByText('Cancel')).toBeInTheDocument();
+        expect(screen.getByText(saveButtonName)).toBeInTheDocument();
+        expect(screen.getByText('Save & Add New')).toBeInTheDocument();
+        expect(screen.getByText('Edit')).toBeInTheDocument();
+     });
    it("should check all button click events", async()=> {
-        customRender(<DrawerFormButton
+    const onClick = jest.fn();
+        const {getByRole, getByText} = customRender(<DrawerFormButton
             formData={{}}
             onCloseAction={jest.fn()}
             buttonData={buttonData}
@@ -61,29 +59,61 @@ describe('DrawerFormButton components', () => {
             saveButtonName={saveButtonName}
             handleButtonClick={jest.fn()}
             isLoadingOnSave={isLoadingOnSave}
+            saveAndNewBtnClicked={saveAndNewBtnClicked}
         />);
         await act(async () => {
-            const closeButton = screen.getByRole('button', {
+            const closeButton = getByRole('button', {
                 name: /Close/i
             });
             fireEvent.click(closeButton); 
         });
         await act(async () => {
-            const cancleButton = screen.getByRole('button', {
+            const cancleButton = getByRole('button', {
                 name: /Cancel/i
             });
             fireEvent.click(cancleButton); 
         });
+
         await act(async () => {
-            const saveAddNewButton = screen.getByRole('button', {
+            const saveButton = getByText('Save');
+            fireEvent.click(saveButton);
+            expect(onClick).not.toHaveBeenCalled();
+        });
+        await act(async () => {
+            const saveActiveButton = getByText('Save');
+            fireEvent.click(saveActiveButton); 
+
+        });
+        await act(async () => {
+            const saveAddNewDisableButton = getByRole('button', {
+                name: /Save & Add New/i
+            });
+            fireEvent.click(saveAddNewDisableButton);
+            expect(onClick).not.toHaveBeenCalled();
+        });
+        await act(async () => {
+            const saveAddNewButton = getByRole('button', {
                 name: /Save & Add New/i
             });
             fireEvent.click(saveAddNewButton); 
         });
         await act(async () => {
-            const editButton = screen.getByRole('button', {
+            const editButton = getByRole('button', {
                 name: /Edit/i
             });
             fireEvent.click(editButton); 
         });
-})
+    });
+    // it("should check button is disabled", ()=>{
+    //     customRender(<DrawerFormButton
+    //         formData={{}}
+    //         onCloseAction={jest.fn()}
+    //         buttonData={buttonData}
+    //         setButtonData={jest.fn()}
+    //         saveButtonName={saveButtonName}
+    //         handleButtonClick={jest.fn()}
+    //         isLoadingOnSave={isLoadingOnSave}
+    //     />);
+    //     expect(screen.getByText(/Save/i)).toHaveAttribute('disabled');
+    // });
+});
