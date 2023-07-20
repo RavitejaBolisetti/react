@@ -77,7 +77,7 @@ const CancellationMasterBase = (props) => {
     const [uploadedFileName, setUploadedFileName] = useState('');
     const [parentAppCode, setparentAppCode] = useState();
 
-    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
+    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
     const handleButtonClick = ({ record = null, buttonAction }) => {};
 
     const onErrorAction = (message) => {
