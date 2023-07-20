@@ -6,14 +6,14 @@
 import React, { useState } from 'react';
 import { Input, Form, Col, Row, Button, Select } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField, duplicateProductValidator } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
     const { taxChargeCalForm, isVisible, taxCharge, taxCode, addTaxChargeCal, formEdit, editForm, taxChargeCalList } = props;
     const [changeValue, setChangeValue] = useState(null);
 
-    const fieldNames = { label: 'title', value: 'key' };
+    const fieldNames = { label: 'taxDescription', value: 'taxCode' };
 
     const onChange = (val) => {
         let newFormData = formEdit ? editForm?.getFieldsValue() : taxChargeCalForm?.getFieldsValue();

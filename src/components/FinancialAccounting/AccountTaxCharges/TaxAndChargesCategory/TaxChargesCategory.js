@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -14,7 +14,8 @@ import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { dealerManpowerBayTypeMasterDataActions } from 'store/actions/data/dealerManpower/bayMasterType';
-
+import { geoStateDataActions } from 'store/actions/data/geo/states';
+import { taxChargeCategoryTypeDataActions } from 'store/actions/data/financialAccounting/taxChargeType';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
@@ -24,15 +25,22 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-
+import { PARAM_MASTER } from 'constants/paramMaster';
 import { AddEditForm } from './AddEditForm';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
+            ConfigurableParameterEditing: { filteredListData: saleData = [] },
             DealerManpower: {
                 BayTypeMaster: { isLoaded: isDataLoaded = false, isLoading, data },
+            },
+            Geo: {
+                State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading = false, data: stateData = [] },
+            },
+            FinancialAccounting: {
+                TaxChargeCategoryType: { isLoaded: isTaxChargeCategoryTypeLoaded = false, isLoading: isTaxChargeCategoryTypeLoading = false, data: taxChargeCategoryTypeData = [] },
             },
         },
     } = state;
@@ -45,6 +53,13 @@ const mapStateToProps = (state) => {
         data,
         isLoading,
         moduleTitle,
+        isStateDataLoaded,
+        isStateLoading,
+        stateData,
+        saleData: saleData && saleData[PARAM_MASTER.SALE_TYP.id],
+        isTaxChargeCategoryTypeLoaded,
+        taxChargeCategoryTypeData,
+        isTaxChargeCategoryTypeLoading,
     };
     return returnValue;
 };
@@ -56,6 +71,13 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: dealerManpowerBayTypeMasterDataActions.fetchList,
             saveData: dealerManpowerBayTypeMasterDataActions.saveData,
             listShowLoading: dealerManpowerBayTypeMasterDataActions.listShowLoading,
+
+            fetchStateList: geoStateDataActions.fetchList,
+            listStateShowLoading: geoStateDataActions.listShowLoading,
+
+            fetchTaxChargeCategoryType: taxChargeCategoryTypeDataActions.fetchList,
+            listShowLoadingTaxChargeCategoryType: taxChargeCategoryTypeDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -63,7 +85,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const TaxChargesCategoryMain = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, isTaxChargeCategoryTypeLoaded, fetchTaxChargeCategoryType, isTaxChargeCategoryTypeLoading, taxChargeCategoryTypeData,listShowLoadingTaxChargeCategoryType } = props;
+
+    console.log(taxChargeCategoryTypeData, 'taxChargeCategoryTypeDatataxChargeCategoryTypeData');
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -98,6 +122,20 @@ export const TaxChargesCategoryMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded]);
+
+    useEffect(() => {
+        if (userId && !isStateDataLoaded) {
+            fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isStateDataLoaded]);
+
+    useEffect(() => {
+        if (userId && !isTaxChargeCategoryTypeLoaded) {
+            fetchTaxChargeCategoryType({ setIsLoading: listShowLoadingTaxChargeCategoryType, userId, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isTaxChargeCategoryTypeLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {
@@ -149,12 +187,10 @@ export const TaxChargesCategoryMain = (props) => {
         setShowDataLoading(false);
     };
 
-    
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
-        }
-        else if (e?.target?.value === '') {
+        } else if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
@@ -237,6 +273,9 @@ export const TaxChargesCategoryMain = (props) => {
 
         setButtonData,
         handleButtonClick,
+        stateData,
+        saleData,
+        taxChargeCategoryTypeData,
     };
 
     const tableProps = {
