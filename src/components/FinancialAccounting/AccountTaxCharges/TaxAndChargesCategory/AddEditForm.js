@@ -11,7 +11,7 @@ import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
-import MasterTaxChargeCal from './Tax&ChargesCal/MasterTax&ChargeCal'
+import MasterTaxChargeCal from './TaxAndChargesCal/MasterTaxAndChargeCal';
 
 import styles from 'components/common/Common.module.css';
 
@@ -68,7 +68,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="State" initialValue={formData?.name} rules={[validateRequiredInputField('State')]} name="stateCode">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State')}  />
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>

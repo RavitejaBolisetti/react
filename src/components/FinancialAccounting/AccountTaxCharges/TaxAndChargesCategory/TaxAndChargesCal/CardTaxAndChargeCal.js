@@ -7,20 +7,19 @@ import React, { useState, Fragment, useEffect } from 'react';
 import { Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
-import FormProductAttribute from './FormTax&ChargeCal';
+import FormProductAttribute from './FormTaxAndChargeCal';
 
 const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
-    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, productHierarchyAttributeData, showGlobalNotification, setDisabledEdit, taxChargeCalList, setTaxChargeCalList,objTaxCharge,objTaxCode,setOpenAccordian} = props;
-  
-    console.log(props,'taxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCode')
+    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, productHierarchyAttributeData, showGlobalNotification, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, objTaxCode, setOpenAccordian } = props;
+
+    console.log(props, 'taxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCode');
 
     const [editForm] = Form.useForm();
     const [formEdit, setFormEdit] = useState(false);
 
     const taxChargeCalEdit = (props) => {
-        
         setFormEdit(true);
         editForm.setFieldsValue({
             taxChargeTypeCode: props?.taxChargeTypeCode,
@@ -28,7 +27,7 @@ const CardProductAttribute = (props) => {
             chargeDesc: props?.chargeDesc,
             internalId: props?.internalId,
         });
-        
+
         //setFormBtnActive(true);
     };
 
