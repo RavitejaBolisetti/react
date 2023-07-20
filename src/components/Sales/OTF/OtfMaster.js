@@ -124,19 +124,18 @@ export const OtfMasterBase = (props) => {
     const defaultBtnVisiblity = {
         editBtn: false,
         saveBtn: false,
+        cancelBtn: false,
         saveAndNewBtn: false,
         saveAndNewBtnClicked: false,
         closeBtn: false,
-        cancelBtn: false,
         formBtnActive: false,
-        transferBtn: false,
+        cancelOTFBtn: false,
+        transferOTFBtn: false,
         allotBtn: false,
         unAllotBtn: false,
         invoiceBtn: false,
         deliveryNote: false,
-        cancelOtfBtn: false,
         changeHistory: true,
-        transferOtfBtn: true,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -204,7 +203,7 @@ export const OtfMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 10,
+                value: 100,
                 canRemove: true,
                 filter: false,
             },
@@ -223,6 +222,7 @@ export const OtfMasterBase = (props) => {
         return () => {
             resetData();
             setFilterString();
+            setUploadedFile();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -400,6 +400,8 @@ export const OtfMasterBase = (props) => {
     const fnOTFTransfer = ({ modalTitle, modalMessage, finalData, callBackMethod, customURL }) => {
         const onSuccess = (res) => {
             setIsTransferVisible(false);
+            setIsTransferVisible(false);
+            setIsCancelVisible(false);
             otfTransferForm.resetFields();
             otfCancellationForm.resetFields();
             setShowDataLoading(true);
@@ -437,7 +439,6 @@ export const OtfMasterBase = (props) => {
     };
 
     const onFinishOTFTansfer = (values) => {
-        setIsTransferVisible(false);
         fnOTFTransfer({
             modalTitle: 'OTF Transfer',
             modalMessage: `Do you want to transfer this ${otfData?.otfNumber}`,
@@ -448,12 +449,10 @@ export const OtfMasterBase = (props) => {
     };
 
     const onFinishOTFCancellation = (values) => {
-        console.log("🚀 ~ file: OtfMaster.js:450 ~ onFinishOTFCancellation ~ values:", otfCancellationForm.getFieldsValue())
-        setIsCancelVisible(false);
         fnOTFTransfer({
             modalTitle: 'OTF Cancel',
             modalMessage: `Do you want to cancel this ${otfData?.otfNumber}`,
-            finalData: { dealerCode:"" , oemCode:"", productCode:"", ...values, id: otfData?.id, otfNumber: otfData?.otfNumber, uploadCancellationLetterDocId: uploadedFile },
+            finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: otfData?.id, otfNumber: otfData?.otfNumber, uploadCancellationLetterDocId: uploadedFile },
             callBackMethod: transferOTF,
             customURL: otfCancelURL,
         });
@@ -576,7 +575,7 @@ export const OtfMasterBase = (props) => {
         onCloseAction: onCancelCloseAction,
         onFinishOTFCancellation,
         setUploadedFile,
-        uploadedFile
+        uploadedFile,
     };
 
     const transferOTFProps = {

@@ -67,4 +67,11 @@ export const OTF_STATUS = {
         desc: 'Rejected',
         displayOnView: false,
     },
+    DELIVERY_NOTE: {
+        id: 9,
+        key: 'N',
+        title: 'Delivery Note',
+        desc: 'Delivery Note',
+        displayOnView: false,
+    },
 };

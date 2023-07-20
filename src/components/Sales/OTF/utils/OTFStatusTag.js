@@ -37,6 +37,9 @@ export const OTFStatusTag = (status) => {
         case OTF_STATUS.REJECTED.key:
             tag = <Tag className={styles.error}>{OTF_STATUS.REJECTED.desc}</Tag>;
             break;
+        case OTF_STATUS.DELIVERY_NOTE.key:
+            tag = <Tag className={styles.error}>{OTF_STATUS.DELIVERY_NOTE.desc}</Tag>;
+            break;
         default:
     }
     return tag;

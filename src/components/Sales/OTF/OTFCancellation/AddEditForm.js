@@ -66,8 +66,8 @@ const AddEditFormMain = (props) => {
         uploadedFile,
         setUploadedFile,
         uploadedFileName,
-        setUploadedFileName 
-    }
+        setUploadedFileName,
+    };
 
     useEffect(() => {
         if (showStatus.status === 'done') {
@@ -80,7 +80,7 @@ const AddEditFormMain = (props) => {
 
     const handleCancellationReasonTypeChange = (value) => {
         setReasonTypeChange(value);
-        otfCancellationForm.setFieldsValue({dealerCode: "", dealerName: "", oemCode:"", productCode:""  });
+        otfCancellationForm.setFieldsValue({ dealerCode: '', dealerName: '', oemCode: '', productCode: '' });
     };
 
     const onSearchDealer = debounce(function (text) {
@@ -89,7 +89,7 @@ const AddEditFormMain = (props) => {
 
     const handleSelect = (value) => {
         let dealerDetails = dealerDataList?.find((dealer) => dealer?.dealerName === value);
-        otfCancellationForm.setFieldsValue({dealerCode: dealerDetails?.dealerCode});
+        otfCancellationForm.setFieldsValue({ dealerCode: dealerDetails?.dealerCode });
     };
 
     useEffect(() => {
@@ -133,15 +133,10 @@ const AddEditFormMain = (props) => {
     );
 
     const handleSelectTreeClick = (value) => {
-        // if (value === selectedTreeKey[0]) {
-        //     return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
-        // }
-        //setSelectedTreeSelectKey(value);
         setparentAppCode(value);
-        otfCancellationForm.setFieldsValue({productCode: value});
-        // setFormBtnActive(true);
+        otfCancellationForm.setFieldsValue({ productCode: value });
     };
-    
+
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: false,
@@ -189,19 +184,12 @@ const AddEditFormMain = (props) => {
             </Card>
             <Form form={otfCancellationForm} onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false">
                 <Row gutter={20}>
-                        <Form.Item name="dealerCode">
-                            <Input  type="hidden"/>
-                        </Form.Item>
+                    <Form.Item name="dealerCode">
+                        <Input type="hidden" />
+                    </Form.Item>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item name="cancellationReasonType" label="Cancellation Reason Type" rules={[validateRequiredSelectField('Reason Type')]}>
-                            <Select
-                                {...selectProps}
-                                placeholder="Select"
-                                onChange={handleCancellationReasonTypeChange}
-                                allowClear
-                                fieldNames={{ label: 'value', value: 'key' }}
-                                options={typeData['OTF_CANCL_REASON_TYPE']}
-                            ></Select>
+                            <Select {...selectProps} placeholder="Select" onChange={handleCancellationReasonTypeChange} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['OTF_CANCL_REASON_TYPE']}></Select>
                         </Form.Item>
                     </Col>
                 </Row>

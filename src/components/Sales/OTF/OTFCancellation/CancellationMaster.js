@@ -67,12 +67,10 @@ const CancellationMasterBase = (props) => {
     const { moduleTitle, setUploadedFile, uploadedFile } = props;
     const { fetchProductHierarchyList, productHierarchyData, onFinishOTFCancellation, fetchDealerList, dealerDataList } = props;
 
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOtfBtn: true };
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn:true, cancelOTFBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const [formData, setFormData] = useState([]);
     const [emptyList, setEmptyList] = useState(true);
     const [searchDealerValue, setSearchDealerValue] = useState('');
-    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
 
     const [uploadedFileName, setUploadedFileName] = useState('');
     const [parentAppCode, setparentAppCode] = useState();
@@ -125,13 +123,13 @@ const CancellationMasterBase = (props) => {
         searchDealerValue,
         setSearchDealerValue,
         dealerDataList,
-        setSelectedTreeSelectKey,
         emptyList,
         setEmptyList,
         uploadedFileName,
         setUploadedFileName,
         uploadedFile,
-        parentAppCode, setparentAppCode
+        parentAppCode,
+        setparentAppCode,
     };
 
     return <AddEditForm {...formProps} />;
