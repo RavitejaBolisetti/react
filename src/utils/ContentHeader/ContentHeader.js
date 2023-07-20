@@ -16,7 +16,7 @@ const ContentHeader = ({ isAdvanceFilter = false, isTogglePresent = false, isDef
         return <AppliedAdvanceFilter {...advanceFilterResultProps} />;
     } else if (isTogglePresent) {
         return (
-            <div className={styles.contentHeaderBackground}>
+            <div className={styles.contentHeaderBackground} >
                 <Row gutter={20}>
                     <Col xs={16} sm={16} md={16} lg={16} xl={16} className={styles.searchAndLabelAlign}>
                         <div className={`${styles.userManagement} ${styles.headingToggle}`}>

@@ -156,6 +156,14 @@ export const PARAM_MASTER = {
         id: 'MONTH',
         title: 'Months of year',
     },
+    FILE_DOWNLOAD_TMPLT: {
+        id: 'FILE_DOWNLOAD_TMPLT',
+        title: 'Template download',
+    },
+    LSRCUSTTMPLT: {
+        id: 'LSRCUSTTMPLT',
+        title: 'Lessor creation template download',
+    },
     TRNSFER_REASON: {
         id: 'TRNSFER_REASON',
         title: 'TRNSFER_REASON',
@@ -180,6 +188,10 @@ export const PARAM_MASTER = {
         id: 'LSRCUSTTMPLT',
         title: 'Lessor creation template download',
     },
+    VCLPRCMSTTMPLT: {
+        id: 'VCLPRCMSTTMPLT',
+        title: 'Vehicle Price Master template download',
+    },
     ADMINAUTHTMPLT: {
         id: 'ADMINAUTHTMPLT',
         title: 'Authority template download',
@@ -203,5 +215,9 @@ export const PARAM_MASTER = {
     VEH_ITEM: {
         id: 'VEH_ITEM',
         title: 'product Details Vehicle Item',
+    },
+    VH_PRC_SRCH: {
+        id: 'VH_PRC_SRCH',
+        title: 'Vehicle Price Search',
     },
 };

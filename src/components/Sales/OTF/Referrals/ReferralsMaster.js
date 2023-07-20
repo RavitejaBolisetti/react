@@ -77,7 +77,6 @@ const ReferralsMasterBase = (props) => {
     const [viewFormData, setViewFormData] = useState();
     const [resetField, setResetField] = useState(false);
     const [selectedRowData, setSelectedRowData] = useState();
-    console.log('🚀 ~ file: ReferralsMaster.js:80 ~ ReferralsMasterBase ~ selectedRowData:', selectedRowData);
     const { filterString, setFilterString } = props;
 
     const [isCusomerSearchVisible, setCusomerSearchVisible] = useState(false);

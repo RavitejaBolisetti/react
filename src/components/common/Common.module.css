@@ -632,11 +632,14 @@
 
 .contentHeaderRightBackground {
     background-color: #f4f4f4;
-    padding: 24px 12px;
+    padding: 16px 20px;
     border-radius: 3px 3px 0px 0px;
     -moz-border-radius: 3px 3px 0px 0px;
     -webkit-border-radius: 3px 3px 0px 0px;
     border-bottom: 1px solid #e8e8e8;
+    -webkit-box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
 }
 
 .viewProductDetail .contentHeaderRightBackground {
@@ -1018,12 +1021,13 @@
     border-radius: 0 0 4px 4px;
     margin-top: -21px;
     overflow-y: hidden;
-    height: 62.2vh;
+    /* height: 62.2vh; */
+    height: calc(100vh - 248px);
 }
 
-.productHierarchy .content {
+/* .productHierarchy .content {
     height: 62.6vh;
-}
+} */
 
 .content .emptyContainer {
     border: none !important;
@@ -1034,7 +1038,8 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    height: calc(100vh - 170px);
+    /* height: calc(100vh - 170px); */
+    height: calc(100vh - 248px);
     border: 1px solid #e8e8e8;
     border-radius: 4px;
 }
@@ -1098,12 +1103,16 @@
 
 .hierarchyRightContaner :global .ant-descriptions .ant-descriptions-view {
     overflow-y: auto;
-    height: calc(100vh - 300px);
+    /* height: calc(100vh - 300px); */
+    height: calc(100vh - 362px);
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .viewProductDetail :global .ant-descriptions .ant-descriptions-view {
     overflow-y: auto;
-    height: calc(100vh - 288px);
+    /* height: calc(100vh - 288px); */
+    height: calc(100vh - 367px);
 }
 
 :global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-track,
@@ -1115,6 +1124,7 @@
 :global .ant-table-wrapper .ant-table .ant-table-content::-webkit-scrollbar {
     background-color: #ffffff;
     height: 8px;
+    width: 8px;
 }
 
 :global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-thumb,
@@ -2038,6 +2048,9 @@
     font-weight: 400;
     color: #0B0B0C;
 } */
+.selectPlaceholderLineHeight :global .ant-select-single .ant-select-selector .ant-select-selection-placeholder {
+    line-height: 34px !important;
+}
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector .ant-select-selection-placeholder {
     color: #B5B5B6;
@@ -2268,6 +2281,12 @@
     font-size: 16px;
     line-height: 22px;
     /* margin-bottom: 20px; */
+}
+
+.drawerBodyRight :global .ant-typography.ant-typography-secondary {
+    font-size: 14px;
+    font-weight: 400;
+    color: #858585;
 }
 
 .drawerBodyRight :global .ant-space {
@@ -3031,6 +3050,10 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
         padding: 0;
         text-align: center;
         padding-right: 0px !important;
+    }
+
+    .buttonHeadingContainer :global .ant-btn-primary {
+        box-shadow: none;
     }
 
     .hierarchyRightContaner {

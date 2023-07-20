@@ -9,6 +9,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { FiDownload } from 'react-icons/fi';
 import { getCodeValue } from 'utils/getCodeValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
@@ -104,7 +105,6 @@ const ViewDetailMain = (props) => {
                          </Descriptions>
 	                     </Panel>
                  </Collapse> */}
-
             <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                 <Panel header="Authority Details (Who Knows Whom)" key="2">
                     <Descriptions {...viewProps}>
