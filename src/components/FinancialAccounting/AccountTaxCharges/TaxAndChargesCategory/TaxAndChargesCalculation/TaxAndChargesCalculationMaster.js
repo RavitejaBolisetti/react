@@ -9,7 +9,7 @@ import CardProductAttribute from './CardTaxAndChargeCal';
 import FormProductAttribute from './FormTaxAndChargeCal';
 
 export const TaxAndChargesCalculationMaster = (props) => {
-    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData ,taxChargeCategoryCodeData ,handleCodeFunction} = props;
+    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData ,taxChargeCategoryCodeData ,handleCodeFunction,form} = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [taxChargeCalForm] = Form.useForm();
     const [disableSaveButton, setDisableSaveButton] = useState(false);
@@ -61,7 +61,8 @@ export const TaxAndChargesCalculationMaster = (props) => {
         taxChargeCalList,
         setTaxChargeCalList,
         taxChargeCategoryCodeData,
-        handleCodeFunction
+        handleCodeFunction,
+        form,
     };
 
     const formProductAttributeProps = {

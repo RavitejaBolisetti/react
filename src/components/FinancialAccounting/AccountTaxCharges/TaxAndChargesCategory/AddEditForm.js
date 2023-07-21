@@ -60,6 +60,7 @@ const AddEditFormMain = (props) => {
         taxChargeCategoryTypeData,
         taxChargeCategoryCodeData,
         handleCodeFunction,
+        form,
     };
 
     return (
