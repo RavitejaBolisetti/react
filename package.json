@@ -35,8 +35,10 @@
         "react-router-dom": "^6.7.0",
         "react-scripts": "5.0.1",
         "redux": "^4.2.0",
+        "redux-test-utils": "^1.0.2",
         "redux-thunk": "^2.4.2",
         "sass": "^1.57.1",
+        "test-utils": "^1.1.1",
         "ts-node": "^10.9.1",
         "web-vitals": "^2.1.4"
     },

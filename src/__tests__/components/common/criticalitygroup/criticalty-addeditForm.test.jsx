@@ -21,6 +21,8 @@ const buttonData = {
 const saveButtonName = 'Save';
 const isLoadingOnSave = true;
 const props = {
+    setTimesegmentLengthTracker: jest.fn(),
+    TimesegmentLengthTracker: [],
     deletedTime: [],
     setDeletedTime: jest.fn(),
     timeData: [],
@@ -73,6 +75,12 @@ describe('should render AddEditForm', () => {
 
         const criticalityDefaultGroup = screen.getByText('Add Time');
         user.click(criticalityDefaultGroup);
+        expect(
+            await screen.findByText('Start Time', undefined, {
+                timeout: 2000,
+            })
+        ).toBeVisible();
+
         screen.debug();
 
         // const saveBtn = screen.getByText('Save');
