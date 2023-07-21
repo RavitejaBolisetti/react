@@ -157,7 +157,7 @@ const AddEditFormMain = (props) => {
 
                                                 {!VIEW_ACTION && !showForm && (
                                                     <Button
-                                                        type="secondary"
+                                                        type="link"
                                                         icon={<FiEdit />}
                                                         onClick={() => {
                                                             onEdit(item, index);

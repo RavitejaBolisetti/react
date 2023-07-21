@@ -81,6 +81,20 @@
     color: #B5B5B6;
 }
 
+:global .ant-btn-primary.ant-btn-dangerous:disabled,
+:global .ant-btn-primary:disabled {
+    border-color: #B5B5B6;
+    background-color: #E6E6E6;
+    color: #B5B5B6;
+}
+
+:global .ant-btn-primary.ant-btn-dangerous:disabled:not(.ant-btn-icon-only)>.ant-btn-icon.ant-btn-loading-icon .anticon,
+:global .ant-btn-primary.ant-btn-dangerous:disabled:not(.ant-btn-icon-only)>.ant-btn-icon:not(:last-child) .anticon,
+:global .ant-btn-primary:disabled:not(.ant-btn-icon-only)>.ant-btn-icon.ant-btn-loading-icon .anticon,
+:global .ant-btn-primary:disabled:not(.ant-btn-icon-only)>.ant-btn-icon:not(:last-child) .anticon {
+    color: #B5B5B6;
+}
+
 :global .ant-btn-link:disabled,
 :global .ant-btn-link.ant-btn-disabled {
     color: #B5B5B6;

@@ -165,21 +165,22 @@ const FormBase = (props) => {
                 </Col>
             </Row>
 
-            <Row style={{ display: 'flex' }}>
-                <Button
-                    type="primary"
-                    onClick={() => {
-                        // form.submit();
-                        onSave();
-                    }}
-                    className={styles.marR20}
-                >
-                    Save
-                </Button>
-
-                <Button onClick={onCancel} className={styles.marB20} danger>
-                    Cancel
-                </Button>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Button
+                        type="primary"
+                        onClick={() => {
+                            // form.submit();
+                            onSave();
+                        }}
+                        className={styles.marR20}
+                    >
+                        Save
+                    </Button>
+                    <Button onClick={onCancel} className={styles.marB20} danger>
+                        Cancel
+                    </Button>
+                </Col>
             </Row>
         </div>
     );
