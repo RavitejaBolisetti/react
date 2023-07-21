@@ -44,11 +44,11 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'orderStatus',
-            width: '14%',
+            width: '12%',
             render: (_, record) => VehicleReceiptStatusTag(record.orderStatus),
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%', EditIcon: true }),
+        tblActionColumn({ handleButtonClick, styles, width: '10%', EditIcon: true }),
     ];
 
     return tableColumn;

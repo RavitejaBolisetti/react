@@ -59,7 +59,7 @@ const AddEditFormMain = (props) => {
                     {/* <Panel header="Model: Scorpio | VIN: 234254543453" key="1"> */}
                     <Divider />
                     <Row gutter={20}>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.infoWrapper}>
                             <Form.Item label="Model Description" name="initialPromiseDeliveryDate">
                                 <Input
                                     maxLength={10}
