@@ -21,20 +21,14 @@ export const TaxAndChargesCalculationMaster = (props) => {
             .validateFields()
             .then(() => {
                 let data = taxChargeCalForm.getFieldsValue();
-                let pushData = { taxChargeTypeCode: data?.taxChargeTypeCode?.title, taxChargeCode: data?.taxChargeCode?.title, chargeDesc: data?.chargeDesc, internalId: Math.floor(Math.random() * 100000000 + 1) };
-                setTaxChargeCalList((item) => [pushData, ...item]);
+                //internalId: Math.floor(Math.random() * 100000000 + 1)
+                setTaxChargeCalList((item) => [data, ...item]);
                 taxChargeCalForm.resetFields();
                 forceUpdate();
                 // setFormBtnActive(true);
             })
             .catch((error) => console.log(error));
     };
-
-    const taxCharge = [
-        { key: 1, title: 'A' },
-        { key: 2, title: 'B' },
-        { key: 3, title: 'C' },
-    ];
 
     const taxCode = [
         { key: 1, title: 'AOP' },

@@ -12,7 +12,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
-    const { taxChargeCalForm, isVisible, taxCharge, taxCode, addTaxChargeCal, formEdit, editForm, form,taxChargeCalList ,taxChargeCategoryCodeData , handleCodeFunction} = props;
+    const { taxChargeCalForm, isVisible, taxCharge, taxCode, addTaxChargeCal, formEdit, editForm, form, taxChargeCalList, taxChargeCategoryCodeData, handleCodeFunction } = props;
     const [changeValue, setChangeValue] = useState(null);
 
     const fieldNames = { label: 'taxDescription', value: 'taxCode' };
@@ -26,8 +26,8 @@ function FormProductAttribute(props) {
         formEdit ? editForm?.setFieldsValue({ chargeDesc: val?.title }) : taxChargeCalForm.setFieldsValue({ chargeDesc: val?.title });
     };
 
-    const handleDescriptionChange =(val)=>{
-        form.setFieldValue('taxDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxCode);
+    const handleDescriptionChange = (taxCode) => {
+        taxChargeCalForm.setFieldValue('taxDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
     }
 
     return (
@@ -56,7 +56,7 @@ function FormProductAttribute(props) {
                             // { validator: () => duplicateProductValidator(changeValue, taxChargeCalList) }
                         ]}
                     >
-                        {customSelectBox({ data: taxChargeCategoryCodeData, fieldNames: { key: 'id', value: 'taxCode' }, placeholder: preparePlaceholderSelect('Tax Code') , onChange: handleDescriptionChange})}
+                        {customSelectBox({ data: taxChargeCategoryCodeData, fieldNames: { key: 'taxCode', value: 'taxCode' }, placeholder: preparePlaceholderSelect('Tax Code'), onChange: handleDescriptionChange })}
 
                     </Form.Item>
                 </Col>
