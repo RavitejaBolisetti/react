@@ -12,7 +12,7 @@ import FormProductAttribute from './FormTaxAndChargeCal';
 const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
-    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, productHierarchyAttributeData, showGlobalNotification, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, objTaxCode, setOpenAccordian } = props;
+    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, objTaxCode, setOpenAccordian,changeValue, setChangeValue } = props;
 
     console.log(props, 'taxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCode');
 
@@ -78,7 +78,10 @@ const CardProductAttribute = (props) => {
         taxChargeCalList,
         taxCharge: objTaxCharge,
         taxCode: objTaxCode,
+        taxChargeCategoryCodeData,
         setOpenAccordian,
+        changeValue,
+        setChangeValue,
     };
 
     useEffect(() => {

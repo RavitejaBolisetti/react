@@ -15,6 +15,7 @@ export const TaxAndChargesCalculationMaster = (props) => {
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [taxChargeCalList, setTaxChargeCalList] = useState([]);
     const [disabledEdit, setDisabledEdit] = useState(false);
+    const [changeValue, setChangeValue] = useState(null);
 
     const addTaxChargeCal = (val) => {
         taxChargeCalForm
@@ -57,6 +58,8 @@ export const TaxAndChargesCalculationMaster = (props) => {
         taxChargeCategoryCodeData,
         handleCodeFunction,
         form,
+        changeValue,
+        setChangeValue,
     };
 
     const formProductAttributeProps = {

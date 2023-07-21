@@ -3,8 +3,8 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
-import { Input, Form, Col, Row, Button, Select } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Input, Form, Col, Row, Button } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
@@ -12,23 +12,18 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
-    const { taxChargeCalForm, isVisible, taxCharge, taxCode, addTaxChargeCal, formEdit, editForm, form, taxChargeCalList, taxChargeCategoryCodeData, handleCodeFunction } = props;
-    const [changeValue, setChangeValue] = useState(null);
+    const { taxChargeCalForm, isVisible, taxCharge, taxCode, addTaxChargeCal, formEdit, editForm, form, taxChargeCalList, taxChargeCategoryCodeData, handleCodeFunction, changeValue, setChangeValue } = props;
 
-    const fieldNames = { label: 'taxDescription', value: 'taxCode' };
-
-    const onChange = (val) => {
-        let newFormData = formEdit ? editForm?.getFieldsValue() : taxChargeCalForm?.getFieldsValue();
-        setChangeValue(newFormData);
-    };
-
-    const onTaxCodeChange = (val) => {
-        formEdit ? editForm?.setFieldsValue({ chargeDesc: val?.title }) : taxChargeCalForm.setFieldsValue({ chargeDesc: val?.title });
-    };
 
     const handleDescriptionChange = (taxCode) => {
-        taxChargeCalForm.setFieldValue('taxDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
+        setChangeValue(taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription)
+        formEdit ? editForm.setFieldValue('taxDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription) : taxChargeCalForm.setFieldValue('taxDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
     }
+
+    useEffect(() => {
+        if (formEdit) editForm.setFieldValue('taxDescription', changeValue);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <Form form={formEdit ? editForm : taxChargeCalForm} id="myForm" autoComplete="off" layout="vertical">
