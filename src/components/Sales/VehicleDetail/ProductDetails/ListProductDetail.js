@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Details';
+    const moduleTitle = 'Vehicle Details ';
 
     let returnValue = {
         userId,
@@ -83,15 +83,12 @@ const ProductDetailMasterMain = (props) => {
 
     const [tooltTipText, settooltTipText] = useState();
     const [isReadOnly, setIsReadOnly] = useState(false);
-<<<<<<< HEAD
-=======
     const [itemOptions, setitemOptions] = useState();
     const [makeOptions, setmakeOptions] = useState();
     const MakefieldNames = { label: 'value', value: 'key' };
     const ItemFieldNames = { label: 'value', value: 'key' };
     const collapseProps = { collapsible: 'icon' };
     const disabledProps = { disabled: true };
->>>>>>> feature
 
     const [ProductHierarchyDataOptions, setProductHierarchyDataOptions] = useState();
     const [modelData, setmodelData] = useState();
@@ -315,7 +312,6 @@ const ProductDetailMasterMain = (props) => {
             .then(() => {})
             .catch(() => {});
     };
-    
 
     const formProps = {
         ...props,
