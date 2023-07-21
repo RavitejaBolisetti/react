@@ -22,7 +22,6 @@ export const AdvanceForm = (props) => {
 
     useEffect(() => {
         if (AdvanceformData && isVisible) {
-            console.log('AdvanceformData', AdvanceformData);
             aggregateForm.setFieldsValue({
                 item: AdvanceformData?.item ?? '',
                 make: AdvanceformData?.make ?? '',
@@ -57,16 +56,19 @@ export const AdvanceForm = (props) => {
             .validateFields()
             .then(() => {
                 const values = aggregateForm.getFieldsValue();
-
                 if (!isEditing) {
                     const data = { ...values, id: '' };
                     setoptionsServiceModified([data, ...optionsServiceModified]); //Adding data to table
+
                     aggregateForm.resetFields();
                     handleFormValueChange();
                     setAdvanceSearchVisible(false);
                 } else {
                     const data = { ...values };
+                    console.log('data', data);
                     const newarr = [...optionsServiceModified];
+                    console.log('newarr', newarr);
+
                     newarr[AdvanceformData?.index] = data;
                     setoptionsServiceModified(newarr);
                     setAdvanceSearchVisible(false);
