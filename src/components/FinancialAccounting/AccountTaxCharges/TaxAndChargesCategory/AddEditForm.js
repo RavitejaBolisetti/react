@@ -22,7 +22,7 @@ const { Option } = Select;
 
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, taxChargeCategoryCodeData,onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined,handleCodeFunction, taxChargeCategoryCodeData,onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
 
     const [openAccordian, setOpenAccordian] = useState(1);
@@ -59,6 +59,7 @@ const AddEditFormMain = (props) => {
     const masterTaxChargeCalProp = {
         taxChargeCategoryTypeData,
         taxChargeCategoryCodeData,
+        handleCodeFunction,
     };
 
     return (

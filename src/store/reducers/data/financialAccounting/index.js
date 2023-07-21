@@ -6,6 +6,7 @@
 import { combineReducers } from 'redux';
 import { TaxCharges } from './taxCharges';
 import { TaxChargesCategory } from './taxChargesCategory';
+import { TaxChargesCode } from './taxChargesCode';
 import { FinancialAccountHead } from './financialAccountHead';
 import { DocumentDescription } from './documentDescription';
 import { TaxChargeCategoryType } from './taxChargeType';
@@ -13,6 +14,7 @@ import { TaxChargeCategoryType } from './taxChargeType';
 export const FinancialAccounting = combineReducers({
     TaxCharges,
     TaxChargesCategory,
+    TaxChargesCode,
     FinancialAccountHead,
     DocumentDescription,
     TaxChargeCategoryType,
