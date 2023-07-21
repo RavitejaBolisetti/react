@@ -417,9 +417,8 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.modelTooltip}>
                                         {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
-
                                         <Form.Item label="Model" name="model">
-                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('model ')} disabled={true} />
+                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('model ')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

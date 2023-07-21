@@ -13,9 +13,9 @@ body {
 //     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 // }
 
-button:focus {
-    outline: 0px auto -webkit-focus-ring-color !important;
-}
+// button:focus {
+//     outline: 0px auto -webkit-focus-ring-color !important;
+// }
 
 .textfield {
     position: relative;
@@ -97,11 +97,11 @@ button:focus {
         z-index: 0 !important;
         top: 6px;
         font-weight: 400;
-        left: 53px;
+        left: 50px;
         // display: block;
         font-size: 16px !important;
         line-height: 24px;
-        color: #827a7a;
+        color: #b5b5b6;
         user-select: none;
         cursor: text;
 

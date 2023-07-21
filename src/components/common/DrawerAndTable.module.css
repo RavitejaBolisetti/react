@@ -262,14 +262,6 @@
     width: 180px;
 }
 
-:global .ant-btn-link {
-    color: #ff3e5b;
-}
-
-:global .ant-btn-link:not(:disabled):hover {
-    color: #ff3e5b !important;
-}
-
 :global .ant-drawer .ant-drawer-header-title {
     display: inline-block;
 }
