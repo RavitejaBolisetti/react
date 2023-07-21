@@ -120,7 +120,7 @@ export const AddressCommonForm = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'birthDate']} label="Birth Date">
-                        <DatePicker disabledDate={disableFutureDate} format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} {...disabledProps} />
+                        <DatePicker disabledDate={disableFutureDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>

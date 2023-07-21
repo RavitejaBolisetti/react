@@ -15,7 +15,7 @@ const { Panel } = Collapse;
 
 const AddEditFormBase = (props) => {
     const { form, formData, sameAsBookingCustomer, setSameAsBookingCustomer } = props;
-    const { customerFormData, typeData, activeKey, setActiveKey } = props;
+    const { typeData, activeKey, setActiveKey } = props;
 
     useEffect(() => {
         if (formData) {
@@ -49,12 +49,7 @@ const AddEditFormBase = (props) => {
         if (vall.target.checked) {
             setSameAsBookingCustomer(true);
             let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
-
-            if (typeof bookingCustomer === 'undefined') {
-                form?.setFieldsValue({ billingCustomer: { ...customerFormData?.bookingCustomer, birthDate: convertDateToCalender(formData?.bookingCustomer?.birthDate) } });
-            } else {
-                form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
-            }
+            form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
         } else {
             setSameAsBookingCustomer(false);
         }

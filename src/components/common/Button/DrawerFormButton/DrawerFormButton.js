@@ -45,13 +45,13 @@ export const DrawerFormButton = ({ formData, onCloseAction, buttonData, setButto
                     </Button>
                 )}
 
-                {buttonData?.cancelOtfBtn && (
+                {buttonData?.cancelOTFBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF })} type="primary" htmlType="submit">
                         Cancel OTF
                     </Button>
                 )}
 
-                {buttonData?.transferOtfBtn && (
+                {buttonData?.transferOTFBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF })} type="primary" htmlType="submit">
                         Transfer OTF
                     </Button>

@@ -14,7 +14,6 @@ import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
-import { convertDateToCalender } from 'utils/formatDateTime';
 import { OTFFormButton } from '../OTFFormButton';
 
 import { ViewDetail } from './ViewDetail';
@@ -133,7 +132,7 @@ export const CustomerDetailsMain = (props) => {
             return false;
         }
         form.getFieldsValue();
-        const data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, birthDate: values?.bookingCustomer.birthDate.format('YYYY-MM-DD'), sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer,birthDate: values?.billingCustomer.birthDate.format('YYYY-MM-DD') } };
+        const data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onError, extraParams });
@@ -176,7 +175,6 @@ export const CustomerDetailsMain = (props) => {
         isLoading,
         activeKey,
         setActiveKey,
-        customerFormData,
     };
 
     const viewProps = {

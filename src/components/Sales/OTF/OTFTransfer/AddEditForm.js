@@ -11,10 +11,8 @@ import { validateRequiredSelectField } from 'utils/validation';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
 import { convertDateTime } from 'utils/formatDateTime';
-import { OTFStatusTag } from 'components/Sales/OTF/utils/OTFStatusTag';
-
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
@@ -56,14 +54,14 @@ const AddEditFormMain = (props) => {
                     <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Model">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Order Status">{OTFStatusTag(selectedOrder?.orderStatus, 'title')}</Descriptions.Item>
+                    <Descriptions.Item label="Order Status">{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
                 </Descriptions>
             </Card>
             <Form form={otfTransferForm} onFinish={onFinishOTFTansfer} layout="vertical" autocomplete="off" colon="false">
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="otfTransferLocation" label="Transfer To Location" initialValue={formData?.otfTransferLocation} rules={[validateRequiredSelectField('Transfer To Location')]}>
-                            <Select placeholder="Select" showSearch allowClear onChange={handleOtfTransferLocationChange}>
+                            <Select placeholder="Select" showSearch allowClear onChange={ handleOtfTransferLocationChange }>
                                 {dealerLocations?.map((item) => (
                                     <Option value={item.locationId}>{item.dealerLocationName}</Option>
                                 ))}

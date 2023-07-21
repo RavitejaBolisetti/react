@@ -13,8 +13,13 @@ import { Table } from 'antd';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { tblSerialNumberColumn } from 'utils/tableCloumn';
 
-export default function DataTable({ isLoading, rowSelection = undefined, pagination = true, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
-    const showTotal = (total) => total && `Total ${total} items`;
+export default function DataTable({ isLoading, rowSelection = undefined, pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
+    const showTotal = (total) =>
+        total && (
+            <>
+                Total <span style={{ color: '#0B0B0C' }}> {total} </span> items
+            </>
+        );
 
     const [tablePagination, setPagination] = useState({ pageSize: 10, current: 1, position: ['bottomRight'], showSizeChanger: true, hideOnSinglePage: false, showTotal });
 

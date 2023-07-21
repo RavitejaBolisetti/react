@@ -29,13 +29,15 @@ export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn 
     if (orderStatus) {
         switch (orderStatus) {
             case OTF_STATUS?.BOOKED?.key:
-                return { ...btnVisibility, transferBtn: true, allotBtn: true, cancelOtfBtn: true };
+                return { ...btnVisibility, transferOTFBtn: true, allotBtn: true, cancelOTFBtn: true };
             case OTF_STATUS?.ALLOTED?.key:
                 return { ...btnVisibility, unAllotBtn: true, invoiceBtn: true };
             case OTF_STATUS?.INVOICED?.key:
-                return { ...btnVisibility, deliveryNoteBtn: true };
+                return { ...btnVisibility, editBtn: false, deliveryNoteBtn: true };
             case OTF_STATUS?.TRANSFERRED?.key:
-                return { ...btnVisibility, allotBtn: true, cancelOtfBtn: true };
+                return { ...btnVisibility, editBtn: false, allotBtn: true, cancelOTFBtn: true };
+            case OTF_STATUS?.DELIVERY_NOTE?.key:
+                return { ...btnVisibility, editBtn: false };
             case OTF_STATUS?.CANCELLED?.key:
             case OTF_STATUS?.DELIVERED?.key:
                 return { ...btnVisibility, editBtn: false };

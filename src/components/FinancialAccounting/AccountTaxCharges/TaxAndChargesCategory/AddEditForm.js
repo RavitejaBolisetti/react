@@ -4,14 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Col, Input, Form, Row, Collapse, Select } from 'antd';
+import { Col, Input, Form, Row, Collapse, Select, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
-import MasterTaxChargeCal from './TaxAndChargesCal/MasterTaxAndChargeCal';
+import { TaxAndChargesCalculationMaster } from './TaxAndChargesCalculation';
 
 import styles from 'components/common/Common.module.css';
 
@@ -74,14 +74,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item
-                                label="State"
-                                name="stateCode"
-                                rules={[
-                                    validateRequiredSelectField('State'),
-                                    //{ validator: () => duplicateProductValidator(changeValue, taxChargeCalList) }
-                                ]}
-                            >
+                            <Form.Item label="State" name="stateCode" rules={[validateRequiredSelectField('State')]}>
                                 <Select
                                     getPopupContainer={(triggerNode) => triggerNode.parentElement}
                                     placeholder={preparePlaceholderSelect('State')}
@@ -92,21 +85,13 @@ const AddEditFormMain = (props) => {
                                     fieldNames={fieldNames}
                                     allowClear
                                     labelInValue
-                                    //onChange={onChange}
                                     key={stateData?.key}
                                     value={stateData?.key}
                                 />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item
-                                label="Sale Type"
-                                name="saleTypeCode"
-                                rules={[
-                                    validateRequiredSelectField('Sale Type'),
-                                    //{ validator: () => duplicateProductValidator(changeValue, taxChargeCalList) }
-                                ]}
-                            >
+                            <Form.Item label="Sale Type" name="saleTypeCode" rules={[validateRequiredSelectField('Sale Type')]}>
                                 <Select
                                     getPopupContainer={(triggerNode) => triggerNode.parentElement}
                                     placeholder={preparePlaceholderSelect('Sale Type')}
@@ -117,21 +102,20 @@ const AddEditFormMain = (props) => {
                                     fieldNames={fieldSaleNames}
                                     allowClear
                                     labelInValue
-                                    //onChange={onChange}
                                     key={saleData?.key}
                                     value={saleData?.key}
                                 />
                             </Form.Item>
                         </Col>
-                        {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
-                        </Col> */}
+                        </Col>
                     </Row>
                     <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon}>
                         <Panel header="Tax & Charges Calculation" key="1">
-                            <MasterTaxChargeCal {...masterTaxChargeCalProp} />
+                            <TaxAndChargesCalculationMaster {...masterTaxChargeCalProp} />
                         </Panel>
                     </Collapse>
                 </>

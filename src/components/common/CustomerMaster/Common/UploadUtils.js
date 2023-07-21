@@ -63,7 +63,6 @@ const UploadUtilsMain = (props) => {
     const [uploadedFile, setUploadedFile] = useState();
     const [visible, setVisible] = useState(false);
     const [isReplacing, setIsReplacing] = useState(false);
-    const [base64Img, setBase64Img] = useState('');
 
     const onDrop = (e) => {
         // console.log('Dropped files', e.dataTransfer.files);
@@ -76,13 +75,6 @@ const UploadUtilsMain = (props) => {
         e.stopPropagation();
         setIsReplacing(false);
     };
-
-    useEffect(() => {
-        setBase64Img(viewDocument?.base64);
-        return () => {
-            resetData();
-        };
-    }, [viewDocument?.base64]);
 
     useEffect(() => {
         if (uploadedFile || formData?.docId) {
@@ -182,13 +174,13 @@ const UploadUtilsMain = (props) => {
                                     preview={{
                                         visible,
                                         scaleStep: 0.5,
-                                        src: `data:image/png;base64,${base64Img}`,
+                                        src: `data:image/png;base64,${viewDocument?.base64}`,
                                         onVisibleChange: (value) => {
                                             setVisible(value);
                                         },
                                     }}
-                                    placeholder={<Image preview={false} src={`data:image/png;base64,${base64Img}`} width={80} />}
-                                    src={`data:image/png;base64,${base64Img}`}
+                                    placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={80} />}
+                                    src={`data:image/png;base64,${viewDocument?.base64}`}
                                 />
                                 {!formActionType?.viewMode && (
                                     <Button onClick={onReplaceClick} type="link">

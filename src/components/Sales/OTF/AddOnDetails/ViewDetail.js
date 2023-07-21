@@ -8,8 +8,6 @@ import { Space, Collapse, Typography, Row, Col, Divider } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import AccessoriesInformationCard from './ViewDetails/AccessoriesInformationCard';
-import { NoDataFound } from 'utils/noDataFound';
-
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import ShieldForm from './Shield/ShieldForm';
@@ -34,7 +32,7 @@ const ViewDetailMain = (props) => {
                         <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('ci')} expandIconPosition="end">
                             <Panel header="Accessories Information" key={'ci'}>
                                 <Divider />
-                                {!formData?.partDetailsResponses?.length && <NoDataFound />}
+
                                 {formData?.partDetailsResponses?.map((element, i) => {
                                     return (
                                         <div className={styles.accessInfo}>

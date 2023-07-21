@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState, useMemo } from 'react';
-import { Row, Col, Input, Form, Select, Card, Descriptions, AutoComplete } from 'antd';
+import { Row, Col, Input, Form, Select, Card, Descriptions, Upload, AutoComplete } from 'antd';
 
 import styles from 'components/common/Common.module.css';
 import style from '../../../common/LeftSideBar/LeftSideBar.module.css';
@@ -13,21 +13,21 @@ import { preparePlaceholderText, preparePlaceholderSelect, preparePlaceholderAut
 import { validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
 import TreeSelectField from 'components/common/TreeSelectField';
 import { debounce } from 'utils/debounce';
 import { productHierarchyData } from './ProductHierarchyJSON';
 import { UploadUtil } from 'utils/Upload';
 
 import { FiEye, FiTrash } from 'react-icons/fi';
-import { OTFStatusTag } from 'components/Sales/OTF/utils/OTFStatusTag';
 
 const { TextArea, Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { otfTransferForm, formData, otfData, selectedOrder, fieldNames, onFinishOTFCancellation, selectedTreeSelectKey, handleSelectTreeClick, treeCodeId } = props;
-    const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, handlePreview, emptyList, setEmptyList } = props;
+    const { otfCancellationForm, formData, otfData, selectedOrder, fieldNames, onFinishOTFCancellation, selectedTreeSelectKey, treeCodeId } = props;
+    const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
+    const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setparentAppCode } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const [showStatus, setShowStatus] = useState('');
@@ -49,6 +49,7 @@ const AddEditFormMain = (props) => {
 
     const uploadProps = {
         messageText: 'Upload Cancellation Letter',
+        fileList,
         setFileList,
         setEmptyList,
         multiple: false,
@@ -62,15 +63,10 @@ const AddEditFormMain = (props) => {
         },
         progress: { strokeWidth: 3, showInfo: true },
         onDrop,
+        uploadedFile,
         setUploadedFile,
-        // onChange: (info) => {
-        //     // handleFormValueChange();
-        //     const { status } = info.file;
-        //     setShowStatus(info.file);
-        //     if (status === 'done') {
-        //         setUploadedFile(info?.file?.response?.docId);
-        //     }
-        // },
+        uploadedFileName,
+        setUploadedFileName,
     };
 
     useEffect(() => {
@@ -84,26 +80,7 @@ const AddEditFormMain = (props) => {
 
     const handleCancellationReasonTypeChange = (value) => {
         setReasonTypeChange(value);
-    };
-
-    const handleUpload = (options) => {
-        const { file, onSuccess, onError } = options;
-        setEmptyList(true);
-
-        const data = new FormData();
-        data.append('applicationId', 'app');
-        data.append('file', file);
-
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        uploadDocumentFile(requestData);
+        otfCancellationForm.setFieldsValue({ dealerCode: '', dealerName: '', oemCode: '', productCode: '' });
     };
 
     const onSearchDealer = debounce(function (text) {
@@ -112,9 +89,7 @@ const AddEditFormMain = (props) => {
 
     const handleSelect = (value) => {
         let dealerDetails = dealerDataList?.find((dealer) => dealer?.dealerName === value);
-        let formValues = otfTransferForm.getFieldsValue();
-        otfTransferForm.setFieldsValue({ ...formValues, dealerCode: dealerDetails?.dealerCode, dealerCodess: 'hi' });
-        console.log(dealerDetails, ' handleSelect ~ values:', otfTransferForm.getFieldsValue());
+        otfCancellationForm.setFieldsValue({ dealerCode: dealerDetails?.dealerCode });
     };
 
     useEffect(() => {
@@ -157,6 +132,11 @@ const AddEditFormMain = (props) => {
         [searchDealerValue]
     );
 
+    const handleSelectTreeClick = (value) => {
+        setparentAppCode(value);
+        otfCancellationForm.setFieldsValue({ productCode: value });
+    };
+
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: false,
@@ -183,9 +163,9 @@ const AddEditFormMain = (props) => {
         treeFieldNames,
         treeData: productHierarchyData,
         //treeDisabled: treeCodeReadOnly || isReadOnly,
-        selectedTreeSelectKey,
+        selectedTreeSelectKey: parentAppCode,
         handleSelectTreeClick,
-        defaultValue: treeCodeId,
+        //defaultValue: treeCodeId,
         placeholder: preparePlaceholderSelect('Parent'),
     };
 
@@ -199,22 +179,17 @@ const AddEditFormMain = (props) => {
                     <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Model">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Order Status">{OTFStatusTag(selectedOrder?.orderStatus, 'title')}</Descriptions.Item>
+                    <Descriptions.Item label="Order Status">{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
                 </Descriptions>
             </Card>
-            <Form form={otfTransferForm} onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false">
+            <Form form={otfCancellationForm} onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false">
                 <Row gutter={20}>
+                    <Form.Item name="dealerCode">
+                        <Input type="hidden" />
+                    </Form.Item>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="reasonType" label="Cancellation Reason Type" initialValue={formData?.reasonType} rules={[validateRequiredSelectField('Reason Type')]}>
-                            <Select
-                                {...selectProps}
-                                placeholder="Select"
-                                onChange={handleCancellationReasonTypeChange}
-                                // loading={isConfigLoading}
-                                allowClear
-                                fieldNames={{ label: 'value', value: 'key' }}
-                                options={typeData['OTF_CANCL_REASON_TYPE']}
-                            ></Select>
+                        <Form.Item name="cancellationReasonType" label="Cancellation Reason Type" rules={[validateRequiredSelectField('Reason Type')]}>
+                            <Select {...selectProps} placeholder="Select" onChange={handleCancellationReasonTypeChange} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['OTF_CANCL_REASON_TYPE']}></Select>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -228,7 +203,7 @@ const AddEditFormMain = (props) => {
                                         width: '100%',
                                     }}
                                     fieldNames={{ label: 'value', value: 'key' }}
-                                    options={typeData['OEM_CODE']}
+                                    options={typeData['COMPTR_MFG']}
                                     placeholder={preparePlaceholderSelect('OEM Name')}
                                 />
                             </Form.Item>
@@ -260,13 +235,13 @@ const AddEditFormMain = (props) => {
 
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="reasonForCancellation" label="Reason For Cancellation" initialValue={formData?.reasonForCancellation} rules={[validateRequiredSelectField('Reason For Cancellation')]}>
+                        <Form.Item name="reasonForCancellation" label="Reason For Cancellation" rules={[validateRequiredSelectField('Reason For Cancellation')]}>
                             <Select
                                 {...selectProps}
                                 style={{
                                     width: '100%',
                                 }}
-                                // loading={isConfigLoading}
+                                fieldNames={{ label: 'value', value: 'key' }}
                                 options={typeData['DLR_OTF_CANC_RSN']}
                                 placeholder={preparePlaceholderSelect('Reason For Cancellation')}
                             />
@@ -275,37 +250,13 @@ const AddEditFormMain = (props) => {
                 </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="remarks" label="Cancellation Remarks" initialValue={formData?.remarks}>
+                        <Form.Item name="cancellationRemark" label="Cancellation Remarks">
                             <TextArea placeholder={preparePlaceholderText('Cancellation Remarks')} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        {/* <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                            <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
-                                <div>
-                                    <img src={Svg} alt="" />
-                                </div>
-                                <Empty
-                                    description={
-                                        <>
-                                            <span>
-                                                Click or drop your file here to upload the signed and <br />
-                                                scanned customer form.
-                                            </span>
-                                            <span>
-                                                <br />
-                                                File type should be png, jpg or pdf and max file size to be 5Mb
-                                            </span>
-                                        </>
-                                    }
-                                />
-
-                                <Button type="primary">Upload File</Button>
-                            </Dragger>
-                        </div> */}
-
                         <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
                     </Col>
                 </Row>

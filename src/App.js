@@ -77,10 +77,11 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => 
                             colorPrimary: '#ff3e5b',
                             colorBgContainer: '#ffffff',
                             fontFamily: 'Lato',
+                            borderRadius: 4, //this sets the border-radius to 4px, for every single element having a border-radius in AntD
                         },
                         components: {
                             Button: {
-                                borderRadius: 5,
+                                // borderRadius: 5,
                                 colorErrorActive: '#ff4d4f',
                                 colorBg: '#ff4d4f',
                                 colorBorder: '#ff3e5b',

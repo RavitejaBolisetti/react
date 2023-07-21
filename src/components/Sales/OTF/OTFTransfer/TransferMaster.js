@@ -64,7 +64,7 @@ const TransferMasterBase = (props) => {
     const { userId, salesConsultantLov, reset } = props;
     const { moduleTitle } = props;
 
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOtfBtn: false, transferOtfBtn: true };
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, transferOTFBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const handleButtonClick = ({ record = null, buttonAction }) => {};
@@ -82,10 +82,10 @@ const TransferMasterBase = (props) => {
             {
                 key: 'locationCode',
                 value: value,
-            }
+            },
         ];
         fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, extraParams, userId });
-    }
+    };
 
     const formProps = {
         ...props,

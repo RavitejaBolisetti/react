@@ -296,7 +296,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
                                             </span>
                                         }
                                     >
-                                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleAdd('add')}>
+                                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleAdd('add')}>
                                             Add
                                         </Button>
                                     </Empty>
