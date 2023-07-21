@@ -272,8 +272,6 @@ const IndividualProfileBase = (props) => {
         isViewDocumentLoading,
         downloadFileFromButton,
         NEXT_ACTION,
-        isWhoKnowsWhom,
-        setIsWhoKnowsWhom,
         fileList,
         setFileList,
         uploadedFile,
