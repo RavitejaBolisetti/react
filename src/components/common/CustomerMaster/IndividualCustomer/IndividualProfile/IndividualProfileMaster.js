@@ -82,8 +82,16 @@ const IndividualProfileBase = (props) => {
     const [form] = Form.useForm();
 
     const [activeKey, setActiveKey] = useState([1]);
+
+    const [fileList, setFileList] = useState([]);
     const [uploadedFile, setUploadedFile] = useState();
-    const [uploadedFiles, setUploadedFiles] = useState();
+    const [emptyList, setEmptyList] = useState(true);
+    const [uploadedFileName, setUploadedFileName] = useState('');
+
+    const [fileConsentList, setFileConsentList] = useState([]);
+    const [uploadedConsentFile, setUploadedConsentFile] = useState();
+    const [emptyConsentList, setEmptyConsentList] = useState(true);
+    const [uploadedConsentFileName, setUploadedConsentFileName] = useState('');
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -91,16 +99,6 @@ const IndividualProfileBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-
-    useEffect(() => {
-        if (viewDocument && isViewDataLoaded && isIndiviualProfileLoaded) {
-            let a = document.createElement('a');
-            a.href = `data:image/png;base64,${viewDocument?.base64}`;
-            a.download = viewDocument?.fileName;
-            a.click();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isViewDataLoaded, viewDocument]);
 
     useEffect(() => {
         return () => {
@@ -128,7 +126,12 @@ const IndividualProfileBase = (props) => {
     }, [userId, selectedCustomerId, isIndiviualProfileLoaded]);
 
     const downloadFileFromButton = () => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        };
+        const onErrorAction = (res) => {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res });
+        };
         const extraParams = [
             {
                 key: 'docId',
@@ -137,7 +140,7 @@ const IndividualProfileBase = (props) => {
                 name: 'docId',
             },
         ];
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams });
+        downloadFile({ setIsLoading: listIndiviualShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
 
     useEffect(() => {
@@ -163,6 +166,24 @@ const IndividualProfileBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [indiviualData]);
 
+    useEffect(() => {
+        if (userId && selectedCustomerId && indiviualData) {
+            const extraParams = [
+                {
+                    key: 'docId',
+                    title: 'docId',
+                    value: indiviualData?.image,
+                    name: 'docId',
+                },
+            ];
+            fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams });
+        }
+        return () => {
+            resetViewData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedCustomerId, isIndiviualProfileLoaded, indiviualData]);
+
     const onFinish = (values) => {
         const recordId = '';
         const { accountCode, accountName, accountSegment, accountClientName, accountMappingDate, personName, postion, companyName, remarks, ...rest } = values;
@@ -176,7 +197,7 @@ const IndividualProfileBase = (props) => {
             authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
             id: recordId,
             profileFileDocId: uploadedFile ? uploadedFile : '',
-            customerFormDocId: uploadedFiles ? uploadedFiles : '',
+            customerFormDocId: uploadedConsentFile ? uploadedConsentFile : '',
         };
 
         const onSuccess = (res) => {
@@ -217,17 +238,6 @@ const IndividualProfileBase = (props) => {
         ];
         downloadFile({ setIsLoading: listIndiviualShowLoading, userId, extraParams });
     };
-    const handleOnClickCustomerForm = () => {
-        const extraParams = [
-            {
-                key: 'docId',
-                title: 'docId',
-                value: indiviualData?.customerConsentForm,
-                name: 'docId',
-            },
-        ];
-        downloadFile({ setIsLoading: listIndiviualShowLoading, userId, extraParams });
-    };
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -250,10 +260,9 @@ const IndividualProfileBase = (props) => {
         listDocumentShowLoading,
         uploadDocumentFile,
         uploadConsentDocumentFile,
-        setUploadedFile,
-        uploadedFile,
-        setUploadedFiles,
-        uploadedFiles,
+
+        setUploadedConsentFile,
+        uploadedConsentFile,
         showGlobalNotification,
 
         saveDocumentData,
@@ -261,8 +270,26 @@ const IndividualProfileBase = (props) => {
         showDataLoading,
         viewDocument,
         isViewDocumentLoading,
-        handleOnClickCustomerForm,
+        downloadFileFromButton,
         NEXT_ACTION,
+        isWhoKnowsWhom,
+        setIsWhoKnowsWhom,
+        fileList,
+        setFileList,
+        uploadedFile,
+        setUploadedFile,
+        emptyList,
+        setEmptyList,
+        uploadedFileName,
+        setUploadedFileName,
+
+        fileConsentList,
+        setFileConsentList,
+
+        emptyConsentList,
+        setEmptyConsentList,
+        uploadedConsentFileName,
+        setUploadedConsentFileName,
     };
 
     const viewProps = {

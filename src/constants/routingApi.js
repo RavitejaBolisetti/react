@@ -171,11 +171,22 @@ export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
 export const BASE_URL_VEHICLE_SEARCH = BASE_URL_VEHICLE + 'search';
 export const BASE_URL_VIEW_VEHICLE_DETAILS = BASE_URL_VEHICLE + 'details';
 export const BASE_URL_VEHICLE_CONTACTS = BASE_URL_VEHICLE + 'contacts';
+export const BASE_URL_VEHICLE_PRODUCT_DETAILS = BASE_URL_VEHICLE + 'productdetails';
+export const BASE_URL_VEHICLE_DETAILS_DOCUMENT = BASE_URL_VEHICLE + 'documents';
+export const BASE_URL_VEHICLE_ENTITELMENT = BASE_URL_VEHICLE + 'schemes';
 
 export const BASE_URL_VEHICLE_VARIANT = BASE_URL_VEHICLE + 'variant';
 export const BASE_URL_VEHICLE_MAKE = BASE_URL_VEHICLE + 'make';
 export const BASE_URL_VEHICLE_MODEL = BASE_URL_VEHICLE + 'model';
-export const BASE_URL_VEHICLE_DETAILS_DOCUMENT = BASE_URL_VEHICLE + 'documents';
-export const BASE_URL_VEHICLE_ENTITELMENT = BASE_URL_VEHICLE + 'schemes';
+
+export const BASE_URL_ACCOUNT_HEAD = BASE_URL + 'finance/financialaccountheads';
+export const BASE_URL_DOCUMENT_DESCRIPTION = BASE_URL + 'appmst/documenttypes';
+
+export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE = BASE_URL + 'finance/tax/charges';
+export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CATEGORY = BASE_URL + 'finance/tax/chargecategory/search';
+export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_TYPE = BASE_URL + 'finance/tax/chargetypes/lov';
+
+export const BASE_URL_VEHICLE_PRICE_MASTER = BASE_URL_VEHICLE + 'pricemaster';
+export const BASE_URL_VEHICLE_PRICE_MASTER_SEARCH = BASE_URL_VEHICLE + 'pricemaster/search';
 export const BASE_URL_VEHICLE_CUSTOMER_DETAIL = BASE_URL_VEHICLE + 'customerdetails';
-export const BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL = BASE_URL + 'customers/commondetails'
+export const BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL = BASE_URL + 'customers/commondetails';

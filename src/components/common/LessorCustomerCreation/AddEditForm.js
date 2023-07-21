@@ -21,7 +21,7 @@ const AddEditFormMain = (props) => {
 
     const { buttonData, setButtonData, handleButtonClick } = props;
     const { lessorData, fetchList, typeData, userId, showGlobalNotification } = props;
-    const { downloadForm, isDataLoaded, listLessorShowLoading, stateData, viewListShowLoading, fetchViewDocument } = props;
+    const { downloadFile,listShowLoading,downloadForm, isDataLoaded, listLessorShowLoading, stateData, viewListShowLoading, fetchViewDocument } = props;
 
     const { uploadProps } = props;
 
@@ -35,7 +35,7 @@ const AddEditFormMain = (props) => {
                     name: 'docId',
                 },
             ];
-            fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, lessorData });
+            downloadFile({ setIsLoading: listShowLoading, userId, extraParams });
             resetData();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,7 +65,7 @@ const AddEditFormMain = (props) => {
         const name = {
             docName: 'Lessor Template',
         };
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, name, onSuccessAction, onErrorAction });
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, name, onSuccessAction, onErrorAction });
         resetData();
     };
 
@@ -77,9 +77,8 @@ const AddEditFormMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    const [showStatus, setShowStatus] = useState('');
 
-    const handleDownload = (file) => {
+    const handleDownload = () => {
         const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
         };

@@ -194,6 +194,13 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded, userId]);
 
+    // useEffect(() => {
+    //     if (!isDataLoaded && userId) {
+    //         hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Tax and Charges' });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isDataLoaded, isDataAttributeLoaded, userId]);
+
     useEffect(() => {
         if (selectedId && userId && organizationId) {
             setFormData([]);
