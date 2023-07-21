@@ -1,15 +1,13 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import {render, screen, waitFor} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { AddEditForm } from '@components/common/CriticalityGroup/AddEditForm';
 beforeEach(() => {
     jest.clearAllMocks();
 });
 
 const user = userEvent.setup();
-
-
 
 const buttonData = {
     closeBtn: true,
@@ -23,6 +21,8 @@ const buttonData = {
 const saveButtonName = 'Save';
 const isLoadingOnSave = true;
 const props = {
+    setTimesegmentLengthTracker: jest.fn(),
+    TimesegmentLengthTracker: [],
     deletedTime: [],
     setDeletedTime: jest.fn(),
     timeData: [],
@@ -75,5 +75,10 @@ describe('should render AddEditForm', () => {
 
         const criticalityDefaultGroup = screen.getByText('Add Time');
         user.click(criticalityDefaultGroup);
+        expect(
+            await screen.findByText('Start Time', undefined, {
+                timeout: 2000,
+            })
+        ).toBeVisible();
     });
 });

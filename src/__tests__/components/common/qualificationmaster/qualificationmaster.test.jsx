@@ -14,7 +14,8 @@ import { QualificationMaster } from '@components/common/QualificationMaster/Qual
 describe('Qualification Master Test', () => {
     it('should render qualification master page', () => {
         customRender(<QualificationMaster />);
-        expect(screen.getAllByText(/Qualification Name/i)).toBeTruthy();
+        const qualificationName = screen.getAllByText('Qualification Name');
+        expect(qualificationName).toBeTruthy();
     });
     it('should able to search data', async () => {
         customRender(<QualificationMaster />);
@@ -54,6 +55,6 @@ describe('Qualification Master Test', () => {
                 timeout: 5000,
             })
         ).toBeVisible();
+        screen.debug();
     });
-    
 });
