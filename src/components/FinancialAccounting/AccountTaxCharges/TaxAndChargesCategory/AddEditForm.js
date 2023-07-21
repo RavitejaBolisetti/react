@@ -12,10 +12,14 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { TaxAndChargesCalculationMaster } from './TaxAndChargesCalculation';
+import { customSelectBox } from 'utils/customSelectBox';
+
 
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
+const { Option } = Select;
+
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData } = props;
@@ -74,37 +78,13 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item label="State" name="stateCode" rules={[validateRequiredSelectField('State')]}>
-                                <Select
-                                    getPopupContainer={(triggerNode) => triggerNode.parentElement}
-                                    placeholder={preparePlaceholderSelect('State')}
-                                    style={{
-                                        width: '100%',
-                                    }}
-                                    options={stateData}
-                                    fieldNames={fieldNames}
-                                    allowClear
-                                    labelInValue
-                                    key={stateData?.key}
-                                    value={stateData?.key}
-                                />
+                            <Form.Item label="State" initialValue={formData?.stateCode} name="stateCode" rules={[validateRequiredSelectField('State')]}>
+                                {customSelectBox({ data: stateData, fieldNames: { key: 'code', value: 'name' } ,placeholder: preparePlaceholderSelect('State') })}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item label="Sale Type" name="saleTypeCode" rules={[validateRequiredSelectField('Sale Type')]}>
-                                <Select
-                                    getPopupContainer={(triggerNode) => triggerNode.parentElement}
-                                    placeholder={preparePlaceholderSelect('Sale Type')}
-                                    style={{
-                                        width: '100%',
-                                    }}
-                                    options={saleData}
-                                    fieldNames={fieldSaleNames}
-                                    allowClear
-                                    labelInValue
-                                    key={saleData?.key}
-                                    value={saleData?.key}
-                                />
+                                {customSelectBox({ data: saleData,placeholder: preparePlaceholderSelect('State') })}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>

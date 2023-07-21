@@ -7,6 +7,8 @@ import React, { useState } from 'react';
 import { Input, Form, Col, Row, Button, Select } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { customSelectBox } from 'utils/customSelectBox';
+
 import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
@@ -36,20 +38,8 @@ function FormProductAttribute(props) {
                             //{ validator: () => duplicateProductValidator(changeValue, taxChargeCalList) }
                         ]}
                     >
-                        <Select
-                            getPopupContainer={(triggerNode) => triggerNode.parentElement}
-                            placeholder={preparePlaceholderSelect('Tax Charge')}
-                            style={{
-                                width: '100%',
-                            }}
-                            options={taxCharge}
-                            fieldNames={fieldNames}
-                            allowClear
-                            labelInValue
-                            onChange={onChange}
-                            key={taxCharge?.key}
-                            value={taxCharge?.key}
-                        />
+                        {customSelectBox({ data: taxCharge, fieldNames: { key: 'id', value: 'taxType' } ,placeholder: preparePlaceholderSelect('Tax Charge') })}
+
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -62,24 +52,12 @@ function FormProductAttribute(props) {
                             // { validator: () => duplicateProductValidator(changeValue, taxChargeCalList) }
                         ]}
                     >
-                        <Select
-                            getPopupContainer={(triggerNode) => triggerNode.parentElement}
-                            placeholder={preparePlaceholderSelect('Tax Code')}
-                            style={{
-                                width: '100%',
-                            }}
-                            options={taxCode}
-                            fieldNames={fieldNames}
-                            allowClear
-                            labelInValue
-                            onChange={onTaxCodeChange}
-                            key={taxCode?.key}
-                            value={taxCode?.key}
-                        />
+                        {customSelectBox({ data: taxCharge, fieldNames: { key: 'id', value: 'taxCode' } ,placeholder: preparePlaceholderSelect('Tax Code') })}
+
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item labelAlign="left" name="chargeDesc" label="Description" rules={[validateRequiredInputField('Description')]} initialValue={props?.value}>
+                    <Form.Item labelAlign="left" name="taxDescription" label="Description" rules={[validateRequiredInputField('Description')]} initialValue={props?.value}>
                         <Input placeholder={preparePlaceholderText('Description')} className={styles.inputBox} disabled />
                     </Form.Item>
                 </Col>
