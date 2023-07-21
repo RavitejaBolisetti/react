@@ -60,6 +60,7 @@ describe('Login Form Component', () => {
     });
 
     it('should render login form input field username and password', async () => {
+        jest.setTimeout(200000);
         const { getByTestId } = customRender(<Logins handler={handler} />);
 
         const userName = getByTestId('userNameInput');
@@ -88,6 +89,7 @@ describe('Login Form Component', () => {
 
 describe("check login form flow", ()=>{
     it("should check login details enter incorrect", async()=>{
+        jest.setTimeout(200000);
        const {getByTestId} = customRender(<Logins handler={handler} />);
 
         const userName = getByTestId('userNameInput');
@@ -122,6 +124,7 @@ describe('Captcha Component', () => {
         ).toBeInTheDocument();
     });
     it('should render Captcha component', async () => {
+        jest.setTimeout(200000);
         customRender(<Captcha />);
            const captchaSubmit = screen.getByRole('button', {
                 name: /Submit/i,

@@ -51,7 +51,7 @@ describe("List party master Components", () => {
     });
    
     it('should validate search', async () => {
-        jest.setTimeout(200000)
+        jest.setTimeout(200000);
         customRender(<ListPartyMaster />);
         const inputBox = screen.getByRole('textbox');
         fireEvent.change(inputBox, { target: { value: 'Dm' } });

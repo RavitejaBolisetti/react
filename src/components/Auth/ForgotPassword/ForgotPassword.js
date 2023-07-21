@@ -358,13 +358,13 @@ const ForgotPasswordBase = (props) => {
                                                             >
                                                                 <Row>
                                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.fielderror}>
-                                                                        <Checkbox className={styles.registered} value="sentOnMobile">
+                                                                        <Checkbox className={styles.registered} name="mobileCheckBox" value="sentOnMobile">
                                                                             Registered Mobile Number
                                                                             <p>{verifiedUserData?.contactNumber}</p>
                                                                         </Checkbox>
                                                                     </Col>
                                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.fielderror}>
-                                                                        <Checkbox className={styles.registered} value="sentOnEmail">
+                                                                        <Checkbox className={styles.registered} name="emailCheckBox" value="sentOnEmail">
                                                                             Registered Email Address
                                                                             <p>{verifiedUserData?.email}</p>
                                                                         </Checkbox>

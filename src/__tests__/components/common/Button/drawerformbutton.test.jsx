@@ -104,16 +104,5 @@ describe('DrawerFormButton components', () => {
             fireEvent.click(editButton); 
         });
     });
-    // it("should check button is disabled", ()=>{
-    //     customRender(<DrawerFormButton
-    //         formData={{}}
-    //         onCloseAction={jest.fn()}
-    //         buttonData={buttonData}
-    //         setButtonData={jest.fn()}
-    //         saveButtonName={saveButtonName}
-    //         handleButtonClick={jest.fn()}
-    //         isLoadingOnSave={isLoadingOnSave}
-    //     />);
-    //     expect(screen.getByText(/Save/i)).toHaveAttribute('disabled');
-    // });
+
 });

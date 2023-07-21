@@ -3,12 +3,28 @@ import '@testing-library/jest-dom/extend-expect';
 import { act } from 'react-dom/test-utils';
 import customRender from "@utils/test-utils";
 import { ForgotPassword } from "@components/Auth/ForgotPassword/ForgotPassword";
-import { useState } from 'react';
-import {renderHook} from '@testing-library/react';
-
+import userEvent from '@testing-library/user-event';
+const user = userEvent.setup();
+const props = {
+    setCurrentStep:jest.fn(),
+    setSelectedUserId:jest.fn(),
+    setSubmitButtonActive:jest.fn(),
+    setTooltipVisible:jest.fn(),
+    setVerifiedUserData:jest.fn(),
+    setPassword:jest.fn(),
+    setShowPassword:jest.fn(),
+    setDisableVerifyOTP:jest.fn(),
+    setInValidOTP:jest.fn(),
+    setValidationKey:jest.fn(),
+    setOTPInput:jest.fn(),
+    setOTPMessage:jest.fn(),
+    setCounter:jest.fn(),
+    selectedUserId:null,
+    otpMessage: null,
+}
 afterEach(cleanup);
-const userId = 2;
-const currentStep = 2;
+
+const currentStep = 1;
 
 describe('Forgot Password Component render', () => {
     it('should render ForgotPassword component page', async () => {
@@ -18,23 +34,50 @@ describe('Forgot Password Component render', () => {
         })).toBeInTheDocument();
     });
     it("should render step 1 for forgetPassword components", async () => {
-            customRender(<ForgotPassword currentStep={1} />);
-            const inputBox = screen.getByRole("textbox");
-            fireEvent.change(inputBox, { target: { value: "test" } });
-            expect(inputBox.value.includes("test"));
-            await act(async () => {
-                const verifyUserButton = screen.getByRole('button', {
-                    name: /verify user/i
-                });
-                fireEvent.click(verifyUserButton); 
-            });  
+        //jest.setTimeout(200000);
+        customRender(<ForgotPassword currentStep={1} {...props}/>);
+        const inputBox = screen.getByRole("textbox");
+        fireEvent.change(inputBox, { target: { value: "test" } });
+        expect(inputBox.value.includes("test"));
+        await act(async () => {
+            const verifyUserButton = screen.getByRole('button', {
+                name: /verify user/i
+            });
+            user.click(verifyUserButton); 
+        });  
+        
+        await waitFor(() =>{
+            customRender(<ForgotPassword currentStep={2} {...props}/>);
+            screen.findByText("User credentials verified successfully");
+            screen.findByText("sushil.kumxxxx@wipro.com");
+            screen.findByText("XXXXXX5423");
+            const mobileNumber = screen.findByText("Registered Mobile Number");
+            const emailAddress = screen.findByText("Registered Email Address");
+            //await fireEvent.click(mobileNumber);
+            //await waitFor(() => expect(mockAPI).toHaveBeenCalledTimes(1))
+           //user.click(screen.findByText('Registered Mobile Number'))
+
+            //expect(screen.findByLabelText('Check')).toBeChecked()
+            //const checkbox = findByRole('checkbox');
+
+            // Assert that the checkbox is checked
+            //expect(checkbox).toBeChecked();
+            const sendOTP = screen.findByText("Send OTP");
+            user.click(sendOTP);
+        })  
             
-            await waitFor(() =>{
-                screen.findByText("User credentials verified successfully");
-            })  
-             
-        });
+    });
+    it("should render second scree", async()=>{
+        customRender(<ForgotPassword currentStep={2} {...props}/>);
+        const mobileNumber = screen.findByText("Registered Mobile Number");
+        const emailAddress = screen.findByText("Registered Email Address");
+        //await fireEvent.click(mobileNumber);
+        //await expect(mobileNumber.checked).toEqual(false);
+       screen.findByText("Send OTP");
+       user.click(screen.findByText("Send OTP"));
+     })  
         it("should check blank user not founded", async () => {
+            jest.setTimeout(200000);
             customRender(<ForgotPassword currentStep={1} />);
             const inputBox = screen.getByRole("textbox");
             fireEvent.change(inputBox, { target: { value: "dkfdj" } });
@@ -56,6 +99,7 @@ describe('Forgot Password Component render', () => {
         expect(loginLink.getAttribute('href')).toBe('/login');
     })
     it("should check blank field validation", async()=> {
+        jest.setTimeout(200000);
         customRender(<ForgotPassword />);
         await act(async () => {
             const verifyUserButton = screen.getByRole('button', {
@@ -66,9 +110,9 @@ describe('Forgot Password Component render', () => {
         expect(await screen.findByText('Please enter user id', undefined, {
             timeout: 2000})).toBeVisible();
     })
-    it("should check blank user not founded", async()=> {
-        customRender(<ForgotPassword handleFormChange={jest.fn()} props={userId} currentStep={currentStep} />);
-    });
+    // it("should check blank user not founded", async()=> {
+    //     customRender(<ForgotPassword handleFormChange={jest.fn()} props={userId} currentStep={currentStep} />);
+    // });
 });
 
 

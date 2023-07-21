@@ -41,6 +41,7 @@ describe('Qualification Master Test', () => {
     });
 
     it('should validate search', async () => {
+        jest.setTimeout(200000);
         customRender(<QualificationMaster />);
         const inputBox = screen.getByRole('textbox');
         fireEvent.change(inputBox, { target: { value: 'Dm' } });

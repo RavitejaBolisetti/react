@@ -75,16 +75,5 @@ describe('should render AddEditForm', () => {
 
         const criticalityDefaultGroup = screen.getByText('Add Time');
         user.click(criticalityDefaultGroup);
-
-        // const saveBtn = screen.getByText('Save');
-        // user.click(saveBtn);
-
-        // const closeBtn = screen.getByRole('button', {name: /close/i});
-        // user.click(closeBtn);
-
-
-        // const cancelBtn = screen.getByText('Cancel');
-        // user.click(cancelBtn);
-        // screen.debug();
     });
 });

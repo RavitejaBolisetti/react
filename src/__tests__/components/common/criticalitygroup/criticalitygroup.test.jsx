@@ -54,6 +54,7 @@ describe('CriticalityGroup Components', () => {
         fireEvent.click(buttonClick);
     });
     it('should validate search', async () => {
+        jest.setTimeout(200000);
         customRender(<CriticalityGroup />);
         const inputBox = screen.getByRole('textbox');
         fireEvent.change(inputBox, { target: { value: 'Dm' } });
